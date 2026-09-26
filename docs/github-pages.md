@@ -5,7 +5,7 @@
 - `node verify.cjs` checks the teaching calculations and content.
 - `node scripts/build-pages.cjs` builds `_site/` using a fixed public-file allowlist.
 - The artifact contains the site, lessons and synthetic practice data. It excludes `.git`, workflow configuration, verification snapshots, tests and personal progress exports.
-- Relative asset links and hash navigation support `https://abdul-shaikh-dev.github.io/valuation-lab/` and direct lesson links such as `#start/1` or `#lesson/1`.
+- Relative asset links and hash navigation support `https://abdul-shaikh-dev.github.io/learning-notebook/` and direct lesson links such as `#start/1` or `#lesson/1`.
 - The site remains usable by opening the root `index.html` locally.
 
 ## Enable and publish after approving public site visibility
@@ -22,7 +22,7 @@ Publishing is manual; a push runs validation/build only. To publish an update, r
 
 ## Local project-path preview
 
-Serve the directory containing the repository, then open `/ipv/`, or place the `_site` output under a `valuation-lab` subdirectory of a temporary web root. This checks that relative asset URLs work with a path prefix rather than only at `/`.
+Serve the directory containing the repository, then open `/ipv/`, or place the `_site` output under a `learning-notebook` subdirectory of a temporary web root. This checks that relative asset URLs work with a path prefix rather than only at `/`.
 
 ## Official references
 
@@ -31,3 +31,7 @@ Serve the directory containing the repository, then open `/ipv/`, or place the `
 - https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site
 
 Prepared 26 September 2026. Actual hosting availability is determined by GitHub account entitlement and repository settings.
+
+## Current publication status
+
+On 26 September 2026, GitHub rejected Pages setup for this private repository with: "Your current plan does not support GitHub Pages for this repository." The site is not live. The repository was renamed to `learning-notebook` and remains private. An eligible plan or a separately approved public site repository is needed.

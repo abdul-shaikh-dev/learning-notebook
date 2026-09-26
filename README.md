@@ -1,4 +1,4 @@
-# Valuation Lab
+# Learning Notebook
 
 Open **index.html** in Edge, Chrome or Firefox. No installation, account or internet connection is needed for the learning content. Internet is only needed to follow the primary-source links.
 
@@ -66,7 +66,7 @@ Start with **Start from zero** in the app: six introductions explain instruments
 
 ## GitHub Pages and phone access
 
-See [the hosting guide](docs/github-pages.md). Run `node scripts/build-pages.cjs` to create `_site/`, a static deployment artifact with relative URLs that work at `/valuation-lab/`. No server-side application, account login or installation is needed to use the site.
+See [the hosting guide](docs/github-pages.md). Run `node scripts/build-pages.cjs` to create `_site/`, a static deployment artifact with relative URLs that work at `/learning-notebook/`. No server-side application, account login or installation is needed to use the site.
 
 The GitHub Actions workflow validates and packages the site on pushes. Publishing is a separate manual workflow action (`publish: true`) after Pages has been enabled. Your private repository can remain private, but a standard personal-account Pages website is public. GitHub Pro or another eligible plan is required to publish Pages from a private repository. A private website requires a different supported access-control arrangement.
 
