@@ -8,7 +8,7 @@ const LEARNING_PATHS = [
     "description": "From your first trade to independent checks, reserves and prudent valuation. Foundation explainers, applied practice and a complete study pack.",
     "level": "Beginner to intermediate",
     "lessons": 24,
-    "href": "course.html#start"
+    "href": "course.html#explore"
   },
   {
     "id": "agent-harnesses",

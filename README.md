@@ -39,3 +39,7 @@ node scripts/build-pages.cjs
 Serve the build at a project prefix such as `/learning-notebook/` for browser checks. GitHub Actions builds on pushes; publishing remains an explicit run of `pages.yml` with `publish=true`. Only ready-path allowlisted assets enter `_site/`. The repository is public; excluded source/docs remain visible on GitHub even though they are absent from the website artifact. See [hosting](docs/github-pages.md).
 
 The financial materials use synthetic positions and dated primary-source references. They teach concepts and controls, not a complete production methodology. Exact articles, versions and source-access limitations appear in the evidence register and technical sections.
+
+### Visual stories
+
+The financial path opens with a topic map and three visual stories: trades → positions → realised/unrealised P&L, accounting versus prudent adjustments, and entity/desk/book relationships. The sliders and trade steps share tested arithmetic in runtime/story-math.js; course-specific UI lives in runtime/visual-stories.js and styles/visuals.css. Worked versions are included in the printable handbook. The course menu collapses on phones.

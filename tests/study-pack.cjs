@@ -14,7 +14,7 @@ assert.equal(data.CASE_STEPS.length,6);assert.equal(data.PRACTICE_ROWS.length,6)
 for(const file of ['sample-positions.csv','answers.md'])assert.equal(fs.readFileSync('practice/'+file,'utf8'),fs.readFileSync(root+'practice/'+file,'utf8'));
 const nodes=new Map();const node=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',value:'',addEventListener(type,fn){this[type]=fn;}});return nodes.get(id);};
 vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/handbook.js','utf8'),{document:{getElementById:node},window:{print(){}}});
-const pack=node('book').innerHTML;for(const id of ['introductions','foundations','main-lessons','labs','case','population','practice','reference','answers','sources'])assert.ok(pack.includes('id="'+id+'"'),id);
+const pack=node('book').innerHTML;for(const id of ['introductions','foundations','main-lessons','labs','case','population','practice','reference','answers','sources','visual-stories'])assert.ok(pack.includes('id="'+id+'"'),id);
 for(const g of data.LAB_GUIDES)assert.ok(pack.includes(g.id==='pv'?'Discounting':data.LABS[g.id].name));
 for(const r of data.PRACTICE_ROWS)assert.ok(pack.includes(r.TradeId));
 assert.ok(pack.indexOf('id="answers"')>pack.indexOf('id="practice"'));
