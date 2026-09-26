@@ -802,21 +802,22 @@
             "A locally attractive choice needs a proof, not intuition.",
             "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
           ],
-          "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish < start:\n            raise ValueError(\"invalid interval\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
+          "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish <= start:\n            raise ValueError(\"positive-duration intervals required\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
         },
         {
           "title": "Correctness, cost and failure cases",
           "paragraphs": [
-            "Intervals use half-open boundaries, so end==start is compatible. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+            "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set.",
-        "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))",
+        "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set. Check empty input and rejection of zero-duration and reversed intervals.",
+        "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))\nassert schedule([]) == []\nfor invalid in [(1, 1), (2, 1)]:\n    try:\n        schedule([(0, 1), invalid])\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"nonpositive duration accepted\")",
         "checks": [
           "Long interval blocks three short compatible intervals.",
           "Touching intervals are allowed.",
+          "Empty input returns []; zero-duration and reversed intervals are rejected.",
           "A weighted objective needs a different analysis."
         ]
       },
@@ -1042,7 +1043,7 @@
         "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
         "requirements": [
           "Find routes on a nonnegative weighted graph and reject unsupported weights.",
-          "Schedule the maximum number of compatible unweighted intervals.",
+          "Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.",
           "Choose items under an integer budget with each item used at most once.",
           "Compare small cases against independent brute-force oracles.",
           "Write invariants, termination arguments and representation-specific complexity.",
@@ -1051,7 +1052,7 @@
         "rubric": [
           "Each task uses the correct objective and preconditions.",
           "Counterexamples explain why plausible alternatives fail.",
-          "Tests include ties, duplicates, zero/empty cases and disconnected inputs.",
+          "Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.",
           "Pseudo-polynomial and exponential costs are described honestly.",
           "Results remain correct without performance optimizations."
         ],

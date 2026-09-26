@@ -29,3 +29,8 @@ main p a:hover,main li a:hover,.sources-inline a:hover{background:#dce8fa}
 @media print{.catalog .handbook pre{white-space:pre-wrap;overflow-wrap:anywhere}.catalog .handbook .path-guide{display:block}.catalog .handbook article{break-before:page}.catalog .handbook a{color:inherit}}
 
 .curriculum-stage{border-top:2px solid var(--line);margin:32px 0;padding-top:24px}.stage-project{background:#edf4fa;padding:24px;margin:24px 0;border-left:4px solid #315e79}.stage-project h3{margin-top:0}.stage-project summary{cursor:pointer;min-height:44px;font-weight:600;padding:10px 0}.stage-project pre{white-space:pre-wrap;overflow-wrap:anywhere}.stage-project button{margin-top:15px}.curriculum-stage>p{max-width:75ch}.staged-curriculum>p{max-width:75ch}@media(max-width:700px){.stage-project{padding:16px}}@media print{.stage-project{break-inside:auto}}
+
+/* Worked answers include prose and code: preserve indentation while wrapping on phones. */
+.catalog .coding-exercise pre{white-space:pre-wrap;overflow-wrap:anywhere}
+
+.coding-exercise pre code{background:transparent;padding:0}.worked-prose p{white-space:pre-line}.worked-prose p:first-child{margin-top:0}@media(max-width:700px){.coding-exercise{padding:16px}.coding-exercise details{padding:12px}.coding-exercise .example{padding:16px}}

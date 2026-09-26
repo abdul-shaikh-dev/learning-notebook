@@ -6,6 +6,7 @@ For the reducer workshop, copy AdvancedApp.tsx to src/App.tsx and tracker-core.t
 Keep the generated main.tsx. Run npm run build to type-check and build.
 
 The workshop supports add/toggle/remove/search, JSON export preparation and backup validation.
+The tracker and backup format share a 1,000-lesson limit. At capacity, Add shows an explanation and preserves the title draft; removing a lesson allows another addition. The domain reducer rejects additions beyond capacity and the encoder rejects unsupported oversized input instead of generating a backup its decoder cannot read.
 It stores changes in memory. It does not automatically save or import/replace work.
 Persistence, API integration and routing are explicit advanced-project requirements.
 

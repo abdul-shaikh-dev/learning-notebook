@@ -192,7 +192,8 @@
           "Tool choice and tool permission are distinct.",
           "The model cannot replace the trusted identity.",
           "A sandbox is identified separately from the loop."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "A model emits a tool call. What has happened?",
@@ -238,7 +239,8 @@
           "The allowed resource set is explicit.",
           "Acceptance distinguishes drafting from saving.",
           "An out-of-scope proposal has a defined outcome."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Where should an authenticated subject come from?",
@@ -284,7 +286,8 @@
           "Late input cannot revive terminal state.",
           "Waiting is not counted as successful completion.",
           "No fake write occurs after cancellation."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why distinguish uncertain from failed?",
@@ -330,7 +333,8 @@
           "Every item has an owner and trust level.",
           "Summaries do not become approval records.",
           "User-visible status can be reconstructed from receipts."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which should establish that a note was saved?",
@@ -376,7 +380,8 @@
           "Unknown names cannot reach arbitrary code.",
           "Registry metadata and permission policy are separate.",
           "Secrets are not accepted from model-generated arguments."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which registry strategy creates the narrowest dispatch boundary?",
@@ -422,7 +427,8 @@
           "Test missing, extra and wrong-type fields.",
           "Bounds are documented in characters or bytes as applicable.",
           "No handler call occurs on validation failure."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "A schema-valid call is necessarily authorized: true or false?",
@@ -468,7 +474,8 @@
           "Identity comes from trusted configuration.",
           "Approval cannot override a denial.",
           "Permissions are re-evaluated after pause."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What should happen when approval exists but current policy denies the action?",
@@ -514,7 +521,8 @@
           "Proposals and effects have different event types.",
           "No success is invented from missing errors.",
           "Sensitive payloads are excluded from default events."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "A missing tool_confirmed event proves no business effect happened: true or false?",
@@ -560,7 +568,8 @@
           "Repeated proposals terminate predictably.",
           "Resume does not reset counters.",
           "Partial effects are reported honestly."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which limit does max_steps alone enforce?",
@@ -606,7 +615,8 @@
           "Mutation after review invalidates approval.",
           "A trusted caller supplies the decision.",
           "Restored pending actions require fresh review."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does an action digest establish by itself?",
@@ -693,7 +703,8 @@
           "Tests use a fake clock, not real sleeping.",
           "Documentation states cooperative versus hard limits.",
           "Cancellation does not imply remote rollback."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What can an in-process boundary check guarantee?",
@@ -739,7 +750,8 @@
           "Attempt counts include the first call.",
           "Validation and policy failures are not retried.",
           "Uncertain writes take a separate path."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which outcome is safest to retry under an explicit bounded read policy?",
@@ -785,7 +797,8 @@
           "Same ID with changed arguments conflicts.",
           "Response loss does not duplicate the fake note.",
           "Uncertainty remains visible until evidence resolves it."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which is evidence that an uncertain operation committed?",
@@ -848,7 +861,7 @@
         {
           "title": "Build the mental model",
           "paragraphs": [
-            "A checkpoint records the run ID, subject, status, used budget, script position, pending action and selected outcomes. It needs a schema version and input validation. A production service must protect checkpoint confidentiality and integrity, restrict access, and coordinate writes. The workshop serializes state to a JSON string in memory; it performs no file or database I/O and accepts checkpoints only from a trusted host."
+            "A checkpoint records the run ID, subject, status, used budget, script position, pending action, final answer, stop reason and selected outcomes. It needs a schema version and input validation. A production service must protect checkpoint confidentiality and integrity, restrict access, and coordinate writes. The workshop serializes state to a JSON string in memory; it performs no file or database I/O and accepts checkpoints only from a trusted host."
           ]
         },
         {
@@ -856,12 +869,13 @@
           "paragraphs": [
             "Resume against the same fake store so an uncertain operation can be reconciled. Restoring a JSON string cannot restore an external business system."
           ],
-          "example": "Checkpoint schema v1\nContains: run identity, state, cursor, counted steps, elapsed usage\nContains: pending proposal and confirmed receipt references\nDoes not contain: live approval capability or credentials\nResume validates schema and script identity\nPending writes return to review; used budgets remain used."
+          "example": "Checkpoint schema v2\nContains: run identity, state, cursor, counted steps, elapsed usage\nContains: pending proposal, final answer, stop reason and receipt references\nDoes not contain: live approval capability or credentials\nResume validates schema and script identity\nPending writes return to review; used budgets remain used."
         },
         {
           "title": "Failure cases and design choices",
           "paragraphs": [
-            "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text."
+            "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
+            "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
           ]
         }
       ],
@@ -872,7 +886,8 @@
           "Unknown versions fail closed.",
           "Step usage survives resume.",
           "Approval authority is not copied from JSON."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does schema validation prove a checkpoint was written by an authorized host?",
@@ -959,7 +974,8 @@
           "Summaries distinguish source and authority.",
           "Truncation is visible.",
           "Critical permissions remain in structured host state."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What should survive context compaction outside model prose?",
@@ -1005,7 +1021,8 @@
           "Adversarial content cannot alter registry or subject.",
           "Schema-valid unauthorized calls are denied.",
           "Test claims distinguish containment from model robustness."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does valid structured output eliminate prompt injection?",
@@ -1090,7 +1107,8 @@
           "No dynamic code evaluation is introduced.",
           "Trust boundary and resource controls are drawn separately.",
           "Claims match actual isolation evidence."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which statement is accurate?",
@@ -1136,7 +1154,8 @@
           "State ownership and side effects are considered separately.",
           "The protected store enforces fencing/CAS.",
           "Single-worker demo limits are explicit."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Where must a fencing token be enforced to prevent stale writes?",
@@ -1182,7 +1201,8 @@
           "Replay cannot accidentally invoke real effects.",
           "Tool semantic versions are recorded.",
           "Changed scripts fail resume checks."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What distinguishes safe historical replay from live resume?",
@@ -1228,7 +1248,8 @@
           "Note text is absent from the normal event stream.",
           "Error handling does not dump raw arguments.",
           "Telemetry access and retention are specified."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why prefer an event-field allowlist?",
@@ -1274,7 +1295,8 @@
           "Each metric names its evaluated layer.",
           "Test cases include failures and adversarial proposals.",
           "No LLM intelligence claim is inferred from mocks."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does an unknown-tool rejection test prove?",
@@ -1320,7 +1342,8 @@
           "In-flight checkpoint compatibility is tested.",
           "Rollback limits include already committed effects.",
           "Pilot metrics separate uncertainty from confirmed failure."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does rolling back code undo notes already saved?",
@@ -1366,7 +1389,8 @@
           "Do not erase evidence before reconciliation.",
           "Operator authority is scoped.",
           "Incident follow-up changes tests or controls."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What is the first safe response to an uncertain side effect?",
@@ -1412,7 +1436,8 @@
           "A fresh reviewer can run the suite without credentials.",
           "Every major policy has a failure test.",
           "Unimplemented guarantees are explicit."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What is the strongest honest claim after this workshop passes?",

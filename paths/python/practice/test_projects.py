@@ -137,6 +137,40 @@ class AdvancedTests(unittest.TestCase):
         self.write(rows)
         advanced.import_report(self.source,self.target)
         self.assertEqual(len(advanced.load_report(self.target)),1000)
+    def test_unique_unicode_topics_roundtrip(self):
+        rows = [{"id":str(i),"topic":"\U0001f600" * 77 + f"{i:03}","minutes":1} for i in range(600)]
+        self.source.write_text("\n".join(json.dumps(row,ensure_ascii=False) for row in rows),encoding="utf-8")
+        self.assertLessEqual(self.source.stat().st_size,advanced.MAX_BYTES)
+        report = advanced.import_report(self.source,self.target,workers=2)
+        restored = advanced.load_report(self.target)
+        self.assertLessEqual(self.target.stat().st_size,advanced.MAX_REPORT_BYTES)
+        self.assertEqual([record.topic for record in restored],[row["topic"] for row in rows])
+        self.assertEqual(advanced.summary(restored),report["totals"])
+    def test_oversized_report_preserves_output_before_replacement(self):
+        self.target.write_bytes(b"previous report")
+        with patch.object(advanced.os,"replace") as replace:
+            with self.assertRaisesRegex(ValueError,"report exceeds byte limit"):
+                advanced.atomic_write(self.target,{"oversized":"x" * advanced.MAX_REPORT_BYTES})
+        replace.assert_not_called()
+        self.assertEqual(self.target.read_bytes(),b"previous report")
+        self.assertEqual(set(self.folder.iterdir()),{self.target})
+    def test_unicode_string_boundaries_and_jsonl_delimiters(self):
+        for separator in ["\u0085","\u2028","\u2029"]:
+            for delimiter in ["\n","\r\n"]:
+                for trailing in [False,True]:
+                    with self.subTest(separator=separator,delimiter=delimiter,trailing=trailing):
+                        rows = [{"id":"a","topic":"x" + separator + "y","minutes":1},
+                                {"id":"b","topic":"Other","minutes":2}]
+                        text = delimiter.join(json.dumps(row,ensure_ascii=False) for row in rows)
+                        self.source.write_bytes((text + (delimiter if trailing else "")).encode("utf-8"))
+                        records = advanced.read_batch(self.source,workers=2)
+                        self.assertEqual([record.id for record in records],["a","b"])
+                        self.assertEqual(records[0].topic,rows[0]["topic"])
+        for text in ["\n","\r\n",'{}\n\n']:
+            with self.subTest(blank=text):
+                self.source.write_bytes(text.encode("utf-8"))
+                with self.assertRaisesRegex(ValueError,"blank records"):
+                    advanced.read_batch(self.source)
 
 if __name__ == "__main__":
     unittest.main()

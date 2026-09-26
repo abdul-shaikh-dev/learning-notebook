@@ -150,8 +150,8 @@ else:
 def schedule(intervals):
     chosen, end = [], None
     for start, finish in sorted(intervals, key=lambda x: x[1]):
-        if finish < start:
-            raise ValueError("invalid interval")
+        if finish <= start:
+            raise ValueError("positive-duration intervals required")
         if end is None or start >= end:
             chosen.append((start, finish)); end = finish
     return chosen
@@ -161,6 +161,36 @@ assert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3
 result = schedule([(0,10),(0,2),(2,4),(4,6)])
 assert len(result) == 3
 assert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))
+assert schedule([]) == []
+for invalid in [(1, 1), (2, 1)]:
+    try:
+        schedule([(0, 1), invalid])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("nonpositive duration accepted")
+
+# Independent small-instance oracle: enumerate subsets, not greedy choices.
+# Positive-duration ties and duplicate intervals must not change the best count.
+from itertools import combinations, permutations
+
+def maximum_compatible_count(intervals):
+    best = 0
+    for size in range(len(intervals) + 1):
+        for subset in combinations(intervals, size):
+            ordered = sorted(subset)
+            if all(left[1] <= right[0] for left, right in zip(ordered, ordered[1:])):
+                best = max(best, size)
+    return best
+
+for sample in [[], [(0, 1)], [(0, 2), (1, 2), (2, 3), (2, 3)],
+               [(-2, 0), (-1, 1), (0, 2), (1, 2), (2, 4)]]:
+    expected = maximum_compatible_count(sample)
+    for ordering in permutations(sample):
+        chosen = schedule(ordering)
+        assert len(chosen) == expected
+        assert all(left[1] <= right[0] for left, right in zip(chosen, chosen[1:]))
+
 
 def subsets(items):
     output, selected = [], []

@@ -11,3 +11,7 @@ valuation-lab-progress*.json
 
 # Generated GitHub Pages artifact
 _site/
+
+# Temporary executable-check copies
+validation/react/.check-*/
+__pycache__/

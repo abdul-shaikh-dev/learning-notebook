@@ -1,4 +1,4 @@
-import {reducer, decodeSaved, encodeSaved} from "./tracker-core.ts";
+import {reducer, decodeSaved, encodeSaved, MAX_LESSONS} from "./tracker-core.ts";
 import type {Lesson} from "./tracker-core.ts";
 function assert(ok: boolean, message: string) {if(!ok) throw new Error(message);}
 const start: Lesson[] = [{id:"a",title:"Alpha",done:false}];
@@ -14,5 +14,17 @@ for(const value of ['{}','{"version":2,"lessons":[]}','{"version":1,"lessons":[n
   let rejected=false;try {decodeSaved(value);} catch {rejected=true;}
   assert(rejected,"invalid record accepted");
 }
+const almostFull: Lesson[] = Array.from({length:MAX_LESSONS-1},(_,i)=>({id:String(i),title:`Lesson ${i}`,done:false}));
+const full = reducer(almostFull,{type:"add",id:"last",title:"Last lesson"});
+assert(full.length === MAX_LESSONS && almostFull.length === MAX_LESSONS-1,"final supported addition");
+assert(JSON.stringify(decodeSaved(encodeSaved(full))) === JSON.stringify(full),"capacity boundary round trip");
+assert(reducer(full,{type:"add",id:"overflow",title:"Overflow lesson"}) === full,"over-capacity add preserves state");
+const afterRemove = reducer(full,{type:"remove",id:"last"});
+assert(reducer(afterRemove,{type:"add",id:"replacement",title:"Replacement"}).length === MAX_LESSONS,"removal releases capacity");
+const oversized = [...full,{id:"overflow",title:"Overflow lesson",done:false}];
+let encodeRejected=false;try {encodeSaved(oversized);} catch {encodeRejected=true;}
+assert(encodeRejected,"encoder rejects unsupported external state");
+let decodeRejected=false;try {decodeSaved(JSON.stringify({version:1,lessons:oversized}));} catch {decodeRejected=true;}
+assert(decodeRejected,"decoder rejects over-capacity payload");
 console.log("All tracker domain tests passed.");
 

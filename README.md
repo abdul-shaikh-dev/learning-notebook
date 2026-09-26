@@ -68,3 +68,26 @@ A useful sequence is one programming-language path first, then Design Patterns. 
 Start with AI Agents for model behavior, tool use, context, grounding, planning and evaluation. Continue with Agent Harnesses for the surrounding runtime: state transitions, permissions, approval pauses, execution budgets, retries, persistence boundaries, observability and release review. Python foundations help with the optional runnable workshops; conceptual lessons can be studied without credentials or infrastructure.
 
 The workshops use scripted decisions and synthetic local tools. They test the demonstrated application rules, not a language model's intelligence, real-provider behavior or a production security boundary. Optional live-integration guidance identifies the further evidence needed. Provider-specific references are dated; verify current official documentation before implementing them. No model pricing or availability is assumed.
+
+
+## Executable release checks
+
+The Pages workflow runs the site checks plus isolated Python workshop suites on
+Python 3.11 and 3.14, React strict TypeScript/domain checks on Node 24, and C#
+foundation/HTTP acceptance checks on .NET 10. Publishing requires all jobs to pass.
+Run the same checks locally from the repository root:
+
+```text
+node verify.cjs
+python scripts/verify-python.py
+npm ci --prefix validation/react --ignore-scripts
+npm test --prefix validation/react
+python scripts/verify-dotnet.py
+```
+
+The .NET runner defaults to net10.0; `--framework net9.0` permits a local comparison
+with an installed .NET 9 SDK but does not establish .NET 10 compatibility. Its
+temporary API is bound to loopback and stopped after testing. React dependencies
+are pinned in validation/react/package-lock.json; they are not published to Pages.
+SQL engine/concurrency checks, real-model evaluations and the advanced-project
+extensions remain separate from these executable baseline checks.

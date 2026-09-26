@@ -37,6 +37,23 @@ The proposal list takes the place of a model. It does not read the lesson text o
 
 `Harness.run()` advances until a final answer, pause or stop. `approve()` is called only by the trusted host and must match the current pending fingerprint. `deny()` and `cancel()` stop dispatch. `reconcile()` looks up an uncertain operation; it never sends a fresh save. `checkpoint()` returns JSON in memory, and `restore()` validates it against host-provided identity, script and current policy.
 
+### Checkpoint versions and result recovery
+
+New checkpoints use schema version 2 and retain the validated final text and stop
+reason as well as status and receipts. Completed and stopped runs remain terminal
+after restore; displaying their result does not execute another proposal. A final
+answer is still model/script text, not proof that a business effect occurred.
+
+Version 1 snapshots remain supported through explicit migration. For a completed
+run, the answer is recovered only from the final action at the verified script
+position. Earlier stopped snapshots never stored their historical reason, so they
+restore with `legacy_checkpoint_reason_unavailable` rather than a guessed cause.
+Waiting and uncertain version 1 runs retain their lifecycle/counters and require
+the same approval or reconciliation controls. Saving again emits version 2.
+Unknown versions, missing version 2 result fields, mismatched final text and
+reasons incompatible with a state are rejected. This validation does not make a
+snapshot authentic; the trusted-host source requirement still applies.
+
 ## Practice one failure at a time
 
 1. Change an action name to an unknown tool and verify zero effects.

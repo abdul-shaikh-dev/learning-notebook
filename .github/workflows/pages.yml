@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
       - name: Verify lessons and calculations
         run: node verify.cjs
       - name: Build portable static site
@@ -33,9 +36,49 @@ jobs:
         with:
           path: _site
 
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python: ["3.11", "3.14"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Run downloadable Python workshops and algorithms
+        run: python scripts/verify-python.py
+
+  react:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - run: npm ci --prefix validation/react --ignore-scripts
+      - name: Compile React workshops and run domain tests
+        run: npm test --prefix validation/react
+
+  dotnet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build C# downloads and run HTTP acceptance checks
+        run: python scripts/verify-dotnet.py
+
   deploy:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
-    needs: build
+    needs: [build, python, react, dotnet]
     runs-on: ubuntu-latest
     permissions:
       pages: write

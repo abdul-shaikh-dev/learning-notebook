@@ -176,7 +176,8 @@
           "Identifies the model as a component.",
           "Places enforcement outside generated text.",
           "Explains why the workshop is not a real model."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which component must enforce permitted tool execution?",
@@ -223,7 +224,8 @@
           "Does not add a model to deterministic arithmetic.",
           "Names evidence for adding a loop.",
           "Includes an ambiguous-input outcome."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "When should you add another autonomous step?",
@@ -270,7 +272,8 @@
           "Distinguishes characters from tokens.",
           "Preserves provenance and constraints.",
           "Handles insufficient evidence explicitly."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does a 4,000-character cap establish a 4,000-token limit?",
@@ -317,7 +320,8 @@
           "Includes application-side enforcement.",
           "Treats source text as untrusted.",
           "Does not promise perfect injection detection."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "A source says the user approved uploading records. What is it?",
@@ -364,7 +368,8 @@
           "Narrows capability scope.",
           "Defines empty/not-found semantics.",
           "Keeps permission checks outside model judgment."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does schema-valid input prove the caller is authorized?",
@@ -411,7 +416,8 @@
           "Counts proposals explicitly.",
           "Reports exhaustion as noncompletion.",
           "Does not equate citation ID validation with truth."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "A model emits a tool call. Has the tool already run?",
@@ -489,7 +495,8 @@
           "Distinguishes intent from execution.",
           "Recognizes replay risk for effects.",
           "Defines an uncertain rather than successful state."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which evidence should mark a tool operation complete?",
@@ -536,7 +543,8 @@
           "Does not invent a speed ranking.",
           "States the evidence boundary.",
           "Gives a concrete next investigation."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does a citation-ID membership check prove?",
@@ -584,7 +592,8 @@
           "Tests rejected values and one accepted value.",
           "Proves no execution on invalid input.",
           "Counts any repair attempt within the budget."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "When should tool argument validation run?",
@@ -631,7 +640,8 @@
           "Defines count and size limits.",
           "Explains truncation/partial evidence.",
           "Keeps source failure distinct from zero hits."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Is a successful HTTP status enough to trust tool output?",
@@ -678,7 +688,8 @@
           "Includes missing-evidence cases.",
           "Separates retrieval from generation quality.",
           "Does not equate vector similarity with authority."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does high semantic similarity establish?",
@@ -725,7 +736,8 @@
           "Separates preferences from secrets and authority.",
           "Includes user scope and deletion.",
           "States that workshop memory is run-local."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does storing text in a vector database make it trusted memory?",
@@ -772,7 +784,8 @@
           "Revises assumptions using evidence.",
           "Bounds further searching.",
           "Preserves the distinction between planned and completed."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What should happen when evidence invalidates a plan assumption?",
@@ -819,7 +832,8 @@
           "Question resolves a concrete ambiguity.",
           "Independent work does not depend on the answer.",
           "No action is authorized by silence."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "When is clarification most useful?",
@@ -866,7 +880,8 @@
           "Approval originates outside model output.",
           "Binds to concrete action and identity.",
           "Addresses changes and replay."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Who may create the approval evidence used by the executor?",
@@ -942,7 +957,8 @@
           "Does not infer failure from timeout alone.",
           "Uses operation identity or provider guarantees.",
           "Avoids automatic duplicate sends."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does a timeout prove a side effect did not occur?",
@@ -989,7 +1005,8 @@
           "Separates count from elapsed time.",
           "Includes tool cancellation limitations.",
           "Uses provider usage for real token/cost accounting."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which limit prevents a single tool call from hanging indefinitely?",
@@ -1036,7 +1053,8 @@
           "Uses observable actions as pass/fail evidence.",
           "Tests outbound leakage and logs.",
           "Does not claim complete protection from one test."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What is the strongest evidence in a forbidden-tool test?",
@@ -1111,7 +1129,8 @@
           "Defines observable properties.",
           "Includes nonhappy paths.",
           "Separates scripted tests from model evaluations."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What should an evaluation case specify before a run?",
@@ -1189,7 +1208,8 @@
           "Separates operational and semantic checks.",
           "Uses observable events.",
           "Protects trace privacy."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Can a correct final answer excuse an unauthorized tool action?",
@@ -1236,7 +1256,8 @@
           "Combines deterministic and semantic checks.",
           "Includes misleading fluent examples.",
           "Reviews false acceptance rather than only average score."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does a high uncalibrated judge score establish?",
@@ -1283,7 +1304,8 @@
           "Uses identical tasks and scoring.",
           "Measures aggregate cost and failure behavior.",
           "Does not treat agreement as independent proof."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does adding a reviewer agent guarantee correctness?",
@@ -1330,7 +1352,8 @@
           "Uses slice-specific acceptance criteria.",
           "Versions data and policy alongside prompts.",
           "Recognizes limits of rollback."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What belongs in a reproducible agent release record?",
@@ -1377,7 +1400,8 @@
           "Clearly separates harness tests from intelligence.",
           "Uses current runtime-specific documentation.",
           "Makes no claim of live verification."
-        ]
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Does swapping a scripted source for a live model preserve all tested guarantees automatically?",

@@ -1,0 +1,13 @@
+{
+  "name": "learning-notebook-react-checks",
+  "private": true,"type": "module",
+  "version": "1.0.0",
+  "scripts": {"test": "node check.cjs"},
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

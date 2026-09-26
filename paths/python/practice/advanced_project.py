@@ -14,6 +14,7 @@ from tempfile import TemporaryDirectory, NamedTemporaryFile
 MAX_BYTES = 262144
 MAX_RECORDS = 1000
 MAX_LINE_BYTES = 2048
+MAX_REPORT_BYTES = 1048576
 logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
@@ -70,7 +71,12 @@ def validate_batch(records):
 def read_batch(path: Path, workers: int = 1) -> list[Session]:
     if type(workers) is not int or not 1 <= workers <= 8:
         raise ValueError("workers must be 1 through 8")
-    lines = bounded_read(path).splitlines()
+    # JSONL delimiters are LF (optionally preceded by CR), not Unicode separators
+    # such as U+2028 that may legitimately occur inside a JSON string.
+    lines = bounded_read(path).split("\n")
+    if lines[-1] == "":
+        lines.pop()  # Empty input or one final newline is not a blank record.
+    lines = [line.removesuffix("\r") for line in lines]
     if len(lines) > MAX_RECORDS:
         raise ValueError("too many records")
     if any(not line.strip() for line in lines):
@@ -90,12 +96,18 @@ def summary(records):
     return totals
 
 def atomic_write(path: Path, value) -> None:
+    # Prepare and bound the exact bytes the reader will receive before creating
+    # a temporary file or replacing prior output. UTF-8 avoids ASCII-escape
+    # expansion for non-ASCII topics appearing in both records and totals.
+    payload = (json.dumps(value, indent=2, sort_keys=True, allow_nan=False,
+                          ensure_ascii=False) + "\n").encode("utf-8")
+    if len(payload) > MAX_REPORT_BYTES:
+        raise ValueError("report exceeds byte limit")
     temporary = None
     try:
-        with NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False) as stream:
+        with NamedTemporaryFile("wb", dir=path.parent, delete=False) as stream:
             temporary = Path(stream.name)
-            json.dump(value, stream, indent=2, sort_keys=True, allow_nan=False)
-            stream.write("\n")
+            stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
         os.replace(temporary, path)
@@ -113,7 +125,7 @@ def import_report(source: Path, target: Path, workers: int = 1):
     return report
 
 def load_report(path: Path):
-    value = decode(bounded_read(path, 1048576))
+    value = decode(bounded_read(path, MAX_REPORT_BYTES))
     if type(value) is not dict or set(value) != {"version", "sessions", "totals"}:
         raise ValueError("invalid report fields")
     if type(value["version"]) is not int or value["version"] != 1:

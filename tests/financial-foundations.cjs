@@ -51,3 +51,31 @@ console.log('PASS: legacy progress compatibility and introduction completion val
 
 const restored=validate({done:[1],answers:{1:0},starterDone:[2],study:{foundations:{practised:true,checked:true},revision:{practised:false,checked:true},unknown:{practised:true}}});
 assert.equal(restored.study.foundations.checked,true);assert.equal(restored.study.revision.checked,false);assert.ok(!restored.study.unknown);
+
+// Exercise the actual lab renderer with its real field contract, including sd=0.
+const labs=vm.runInNewContext(fs.readFileSync('paths/financial-foundations/content/activities.js','utf8')+';LABS');
+const labSource=app.slice(app.indexOf('const row='),app.indexOf('function caseView'));
+function renderUncertainty(sd,side){
+  const nodes={lab:{dataset:{key:'uncertainty'}},result:{},experiment:{},side:{value:side}};
+  for(const [id,,value] of labs.uncertainty.fields)nodes[id]={value:String(id==='sd'?sd:value),setAttribute(){}};
+  const render=vm.runInNewContext(labSource+';updateLab',{
+    $:selector=>nodes[selector.slice(1)],LABS:labs,Calc:C,
+    num:(value,digits=2)=>Number(value).toFixed(digits),money:value=>'$'+value.toFixed(2),esc:String
+  });
+  render();return {html:nodes.result.innerHTML,experiment:nodes.experiment.textContent};
+}
+for(const side of ['long','short']){
+  const zero=renderUncertainty(0,side);
+  assert.match(zero.html,/Deterministic price/);
+  assert.match(zero.html,/100% at this price, none strictly above or below/);
+  assert.match(zero.html,/no uncertainty deduction/);
+  assert.doesNotMatch(zero.html,/90%|percentile/);
+  assert.match(zero.experiment,/Increase the standard deviation above zero/);
+  const numeric=C.uncertainty(100,0,10000000,side);
+  near(numeric.price,100);near(numeric.low,100);near(numeric.high,100);near(numeric.deduction,0);
+  const positive=renderUncertainty(.2,side);
+  assert.match(positive.html,new RegExp(side==='long'?'10th percentile':'90th percentile'));
+  assert.match(positive.html,new RegExp(side==='long'?'90% of this assumed distribution lies above':'90% of this assumed distribution lies below'));
+  assert.doesNotMatch(positive.html,/Deterministic price/);
+}
+console.log('PASS: uncertainty lab rendering for zero and positive spread, long and short.');

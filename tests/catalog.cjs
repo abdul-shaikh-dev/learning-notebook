@@ -26,3 +26,17 @@ vm.runInNewContext('renderCatalog()',context);
 assert.ok(element('main').innerHTML.includes('1 planned'));
 assert.ok(element('main').innerHTML.includes('Planned paths are ideas'));
 console.log('PASS: completed catalog hides planned-only guidance; future drafts retain it.');
+
+// Skip navigation preserves the route and rendered lesson rather than dispatching #main.
+context.location.hash='#topic/test-topic/one';vm.runInNewContext('renderCatalog()',context);
+const lessonBeforeSkip=element('main').innerHTML;let focused=false,scrolled=false,prevented=false;
+element('main').focus=()=>{focused=true;};element('main').scrollIntoView=()=>{scrolled=true;};
+element('skip-content').click({preventDefault(){prevented=true;}});
+assert.ok(prevented&&focused&&scrolled);assert.equal(context.location.hash,'#topic/test-topic/one');
+assert.equal(element('main').innerHTML,lessonBeforeSkip);
+console.log('PASS: keyboard skip focuses existing content without changing the lesson.');
+
+const prose=vm.runInNewContext("workedSolution({solutionFormat:'prose',solution:'Use <trusted> evidence.'})",context);
+assert.ok(prose.includes('<p>Use &lt;trusted&gt; evidence.</p>'));assert.ok(!prose.includes('<pre'));
+const code=vm.runInNewContext("workedSolution({solution:'return 1;'})",context);assert.ok(code.includes('<pre'));
+console.log('PASS: prose answers render as escaped paragraphs; code retains its formatting.');

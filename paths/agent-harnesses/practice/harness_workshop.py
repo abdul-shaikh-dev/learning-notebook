@@ -13,6 +13,14 @@ import time
 
 TERMINAL = {'done', 'denied', 'rejected', 'limited', 'cancelled', 'failed'}
 ALL_STATES = TERMINAL | {'ready', 'waiting', 'uncertain'}
+LEGACY_REASON = 'legacy_checkpoint_reason_unavailable'
+STOP_REASONS = {
+    'denied': {'resource_policy', 'host_denied'},
+    'rejected': {'invalid_action', 'intent_conflict', 'missing_resource'},
+    'limited': {'elapsed_budget', 'step_budget'},
+    'cancelled': {'host_cancelled'},
+    'failed': {'read_attempt_budget', 'read_adapter_error', 'script_exhausted_without_final'},
+}
 
 
 def canonical(value):
@@ -232,6 +240,7 @@ class Harness:
         self.pending = None
         self.approval = None
         self.status = 'ready'
+        self.reason = None
         # Preserve actual confirmed effect even if the call exhausted elapsed time.
         self._boundary()
 
@@ -363,11 +372,12 @@ class Harness:
 
     def checkpoint(self):
         """Sensitive trusted-host JSON; no file I/O, signing, encryption or approval."""
-        return canonical({'version': 1, 'run_id': self.run_id, 'subject': self.subject,
+        return canonical({'version': 2, 'run_id': self.run_id, 'subject': self.subject,
                           'script_hash': self.script_hash, 'status': self.status,
                           'cursor': self.cursor, 'steps': self.steps,
                           'elapsed': self.elapsed(), 'pending': self.pending,
                           'cancel_requested': self.cancel_requested,
+                          'final_text': self.final_text, 'reason': self.reason,
                           'confirmed_notes': self.confirmed_notes})
 
     @classmethod
@@ -384,10 +394,13 @@ class Harness:
             data = json.loads(snapshot)
         except (ValueError, TypeError) as error:
             raise ValueError('invalid checkpoint JSON') from error
-        exact_keys(data, {'version', 'run_id', 'subject', 'script_hash', 'status', 'cursor',
-                          'steps', 'elapsed', 'pending', 'cancel_requested', 'confirmed_notes'})
-        if type(data['version']) is not int or data['version'] != 1:
+        if not isinstance(data, dict) or type(data.get('version')) is not int or data['version'] not in {1, 2}:
             raise ValueError('unsupported checkpoint version')
+        fields = {'version', 'run_id', 'subject', 'script_hash', 'status', 'cursor',
+                  'steps', 'elapsed', 'pending', 'cancel_requested', 'confirmed_notes'}
+        if data['version'] == 2:
+            fields |= {'final_text', 'reason'}
+        exact_keys(data, fields)
         if data['run_id'] != expected_run_id or data['subject'] != subject:
             raise ValueError('checkpoint identity mismatch')
         new = cls(script, store, run_id=expected_run_id, subject=subject, **policy)
@@ -402,6 +415,38 @@ class Harness:
         elapsed = duration(data['elapsed'], 'elapsed')
         if type(data['cancel_requested']) is not bool:
             raise ValueError('invalid cancellation flag')
+        status = data['status']
+        if status == 'done':
+            # Match completion to the final action in the verified script/cursor.
+            if cursor == 0 or cursor != steps or data['pending'] is not None:
+                raise ValueError('invalid completed checkpoint')
+            completed_action = new.script[cursor - 1]
+            validate_action(completed_action)
+            if completed_action['kind'] != 'final':
+                raise ValueError('completed checkpoint lacks a final action')
+            expected_final = completed_action['text']
+        else:
+            expected_final = None
+        if data['version'] == 1:
+            # V1 omitted outcomes. Recover text only from the verified final action;
+            # never invent a historical failure reason that was not stored.
+            final_text = expected_final
+            reason = LEGACY_REASON if status in STOP_REASONS else None
+            if status == 'uncertain' and data['cancel_requested']:
+                reason = 'cancelled_pending_reconciliation'
+        else:
+            final_text, reason = data['final_text'], data['reason']
+        if final_text != expected_final or (final_text is not None and not isinstance(final_text, str)):
+            raise ValueError('invalid checkpoint final text')
+        if status in STOP_REASONS:
+            if not isinstance(reason, str) or reason not in STOP_REASONS[status] | {LEGACY_REASON}:
+                raise ValueError('invalid checkpoint stop reason')
+        elif status == 'uncertain':
+            if reason is not None and (not isinstance(reason, str) or reason not in {
+                    'cancelled_pending_reconciliation', 'expired_pending_reconciliation'}):
+                raise ValueError('invalid uncertain checkpoint reason')
+        elif reason is not None:
+            raise ValueError('unexpected checkpoint reason')
         pending = data['pending']
         if data['status'] in {'waiting', 'uncertain'}:
             validate_action(pending)
@@ -422,6 +467,7 @@ class Harness:
         new.pending, new.confirmed_notes = deepcopy(pending), list(notes)
         new.prior_elapsed = elapsed
         new.cancel_requested = data['cancel_requested']
+        new.final_text, new.reason = final_text, reason
         new._event('checkpoint_restored')
         return new
 

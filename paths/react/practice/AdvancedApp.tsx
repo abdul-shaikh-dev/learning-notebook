@@ -1,6 +1,6 @@
 import {useReducer, useState} from "react";
 import type {FormEvent} from "react";
-import {reducer, decodeSaved, encodeSaved} from "./tracker-core";
+import {reducer, decodeSaved, encodeSaved, MAX_LESSONS} from "./tracker-core";
 import type {Lesson} from "./tracker-core";
 const initial: Lesson[] = [{id:"types",title:"Types",done:false},{id:"state",title:"State",done:false}];
 export default function AdvancedApp() {
@@ -12,6 +12,9 @@ export default function AdvancedApp() {
   const [importText, setImportText] = useState("");
   function add(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if(rows.length >= MAX_LESSONS) {
+      setMessage(`The tracker holds at most ${MAX_LESSONS} lessons. Remove a lesson before adding another.`); return;
+    }
     if(title.trim().length < 2 || title.trim().length > 100) {
       setMessage("Use a title between 2 and 100 characters."); return;
     }

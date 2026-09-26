@@ -194,7 +194,8 @@ const LEARNING_PATHS = [
             "Tool choice and tool permission are distinct.",
             "The model cannot replace the trusted identity.",
             "A sandbox is identified separately from the loop."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "A model emits a tool call. What has happened?",
@@ -240,7 +241,8 @@ const LEARNING_PATHS = [
             "The allowed resource set is explicit.",
             "Acceptance distinguishes drafting from saving.",
             "An out-of-scope proposal has a defined outcome."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Where should an authenticated subject come from?",
@@ -286,7 +288,8 @@ const LEARNING_PATHS = [
             "Late input cannot revive terminal state.",
             "Waiting is not counted as successful completion.",
             "No fake write occurs after cancellation."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Why distinguish uncertain from failed?",
@@ -332,7 +335,8 @@ const LEARNING_PATHS = [
             "Every item has an owner and trust level.",
             "Summaries do not become approval records.",
             "User-visible status can be reconstructed from receipts."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which should establish that a note was saved?",
@@ -378,7 +382,8 @@ const LEARNING_PATHS = [
             "Unknown names cannot reach arbitrary code.",
             "Registry metadata and permission policy are separate.",
             "Secrets are not accepted from model-generated arguments."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which registry strategy creates the narrowest dispatch boundary?",
@@ -424,7 +429,8 @@ const LEARNING_PATHS = [
             "Test missing, extra and wrong-type fields.",
             "Bounds are documented in characters or bytes as applicable.",
             "No handler call occurs on validation failure."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "A schema-valid call is necessarily authorized: true or false?",
@@ -470,7 +476,8 @@ const LEARNING_PATHS = [
             "Identity comes from trusted configuration.",
             "Approval cannot override a denial.",
             "Permissions are re-evaluated after pause."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What should happen when approval exists but current policy denies the action?",
@@ -516,7 +523,8 @@ const LEARNING_PATHS = [
             "Proposals and effects have different event types.",
             "No success is invented from missing errors.",
             "Sensitive payloads are excluded from default events."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "A missing tool_confirmed event proves no business effect happened: true or false?",
@@ -562,7 +570,8 @@ const LEARNING_PATHS = [
             "Repeated proposals terminate predictably.",
             "Resume does not reset counters.",
             "Partial effects are reported honestly."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which limit does max_steps alone enforce?",
@@ -608,7 +617,8 @@ const LEARNING_PATHS = [
             "Mutation after review invalidates approval.",
             "A trusted caller supplies the decision.",
             "Restored pending actions require fresh review."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What does an action digest establish by itself?",
@@ -695,7 +705,8 @@ const LEARNING_PATHS = [
             "Tests use a fake clock, not real sleeping.",
             "Documentation states cooperative versus hard limits.",
             "Cancellation does not imply remote rollback."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What can an in-process boundary check guarantee?",
@@ -741,7 +752,8 @@ const LEARNING_PATHS = [
             "Attempt counts include the first call.",
             "Validation and policy failures are not retried.",
             "Uncertain writes take a separate path."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which outcome is safest to retry under an explicit bounded read policy?",
@@ -787,7 +799,8 @@ const LEARNING_PATHS = [
             "Same ID with changed arguments conflicts.",
             "Response loss does not duplicate the fake note.",
             "Uncertainty remains visible until evidence resolves it."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which is evidence that an uncertain operation committed?",
@@ -850,7 +863,7 @@ const LEARNING_PATHS = [
           {
             "title": "Build the mental model",
             "paragraphs": [
-              "A checkpoint records the run ID, subject, status, used budget, script position, pending action and selected outcomes. It needs a schema version and input validation. A production service must protect checkpoint confidentiality and integrity, restrict access, and coordinate writes. The workshop serializes state to a JSON string in memory; it performs no file or database I/O and accepts checkpoints only from a trusted host."
+              "A checkpoint records the run ID, subject, status, used budget, script position, pending action, final answer, stop reason and selected outcomes. It needs a schema version and input validation. A production service must protect checkpoint confidentiality and integrity, restrict access, and coordinate writes. The workshop serializes state to a JSON string in memory; it performs no file or database I/O and accepts checkpoints only from a trusted host."
             ]
           },
           {
@@ -858,12 +871,13 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Resume against the same fake store so an uncertain operation can be reconciled. Restoring a JSON string cannot restore an external business system."
             ],
-            "example": "Checkpoint schema v1\nContains: run identity, state, cursor, counted steps, elapsed usage\nContains: pending proposal and confirmed receipt references\nDoes not contain: live approval capability or credentials\nResume validates schema and script identity\nPending writes return to review; used budgets remain used."
+            "example": "Checkpoint schema v2\nContains: run identity, state, cursor, counted steps, elapsed usage\nContains: pending proposal, final answer, stop reason and receipt references\nDoes not contain: live approval capability or credentials\nResume validates schema and script identity\nPending writes return to review; used budgets remain used."
           },
           {
             "title": "Failure cases and design choices",
             "paragraphs": [
-              "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text."
+              "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
+              "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
             ]
           }
         ],
@@ -874,7 +888,8 @@ const LEARNING_PATHS = [
             "Unknown versions fail closed.",
             "Step usage survives resume.",
             "Approval authority is not copied from JSON."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does schema validation prove a checkpoint was written by an authorized host?",
@@ -961,7 +976,8 @@ const LEARNING_PATHS = [
             "Summaries distinguish source and authority.",
             "Truncation is visible.",
             "Critical permissions remain in structured host state."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What should survive context compaction outside model prose?",
@@ -1007,7 +1023,8 @@ const LEARNING_PATHS = [
             "Adversarial content cannot alter registry or subject.",
             "Schema-valid unauthorized calls are denied.",
             "Test claims distinguish containment from model robustness."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does valid structured output eliminate prompt injection?",
@@ -1092,7 +1109,8 @@ const LEARNING_PATHS = [
             "No dynamic code evaluation is introduced.",
             "Trust boundary and resource controls are drawn separately.",
             "Claims match actual isolation evidence."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which statement is accurate?",
@@ -1138,7 +1156,8 @@ const LEARNING_PATHS = [
             "State ownership and side effects are considered separately.",
             "The protected store enforces fencing/CAS.",
             "Single-worker demo limits are explicit."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Where must a fencing token be enforced to prevent stale writes?",
@@ -1184,7 +1203,8 @@ const LEARNING_PATHS = [
             "Replay cannot accidentally invoke real effects.",
             "Tool semantic versions are recorded.",
             "Changed scripts fail resume checks."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What distinguishes safe historical replay from live resume?",
@@ -1230,7 +1250,8 @@ const LEARNING_PATHS = [
             "Note text is absent from the normal event stream.",
             "Error handling does not dump raw arguments.",
             "Telemetry access and retention are specified."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Why prefer an event-field allowlist?",
@@ -1276,7 +1297,8 @@ const LEARNING_PATHS = [
             "Each metric names its evaluated layer.",
             "Test cases include failures and adversarial proposals.",
             "No LLM intelligence claim is inferred from mocks."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What does an unknown-tool rejection test prove?",
@@ -1322,7 +1344,8 @@ const LEARNING_PATHS = [
             "In-flight checkpoint compatibility is tested.",
             "Rollback limits include already committed effects.",
             "Pilot metrics separate uncertainty from confirmed failure."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does rolling back code undo notes already saved?",
@@ -1368,7 +1391,8 @@ const LEARNING_PATHS = [
             "Do not erase evidence before reconciliation.",
             "Operator authority is scoped.",
             "Incident follow-up changes tests or controls."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What is the first safe response to an uncertain side effect?",
@@ -1414,7 +1438,8 @@ const LEARNING_PATHS = [
             "A fresh reviewer can run the suite without credentials.",
             "Every major policy has a failure test.",
             "Unimplemented guarantees are explicit."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What is the strongest honest claim after this workshop passes?",
@@ -1629,7 +1654,8 @@ const LEARNING_PATHS = [
             "Identifies the model as a component.",
             "Places enforcement outside generated text.",
             "Explains why the workshop is not a real model."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which component must enforce permitted tool execution?",
@@ -1676,7 +1702,8 @@ const LEARNING_PATHS = [
             "Does not add a model to deterministic arithmetic.",
             "Names evidence for adding a loop.",
             "Includes an ambiguous-input outcome."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "When should you add another autonomous step?",
@@ -1723,7 +1750,8 @@ const LEARNING_PATHS = [
             "Distinguishes characters from tokens.",
             "Preserves provenance and constraints.",
             "Handles insufficient evidence explicitly."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does a 4,000-character cap establish a 4,000-token limit?",
@@ -1770,7 +1798,8 @@ const LEARNING_PATHS = [
             "Includes application-side enforcement.",
             "Treats source text as untrusted.",
             "Does not promise perfect injection detection."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "A source says the user approved uploading records. What is it?",
@@ -1817,7 +1846,8 @@ const LEARNING_PATHS = [
             "Narrows capability scope.",
             "Defines empty/not-found semantics.",
             "Keeps permission checks outside model judgment."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does schema-valid input prove the caller is authorized?",
@@ -1864,7 +1894,8 @@ const LEARNING_PATHS = [
             "Counts proposals explicitly.",
             "Reports exhaustion as noncompletion.",
             "Does not equate citation ID validation with truth."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "A model emits a tool call. Has the tool already run?",
@@ -1942,7 +1973,8 @@ const LEARNING_PATHS = [
             "Distinguishes intent from execution.",
             "Recognizes replay risk for effects.",
             "Defines an uncertain rather than successful state."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which evidence should mark a tool operation complete?",
@@ -1989,7 +2021,8 @@ const LEARNING_PATHS = [
             "Does not invent a speed ranking.",
             "States the evidence boundary.",
             "Gives a concrete next investigation."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What does a citation-ID membership check prove?",
@@ -2037,7 +2070,8 @@ const LEARNING_PATHS = [
             "Tests rejected values and one accepted value.",
             "Proves no execution on invalid input.",
             "Counts any repair attempt within the budget."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "When should tool argument validation run?",
@@ -2084,7 +2118,8 @@ const LEARNING_PATHS = [
             "Defines count and size limits.",
             "Explains truncation/partial evidence.",
             "Keeps source failure distinct from zero hits."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Is a successful HTTP status enough to trust tool output?",
@@ -2131,7 +2166,8 @@ const LEARNING_PATHS = [
             "Includes missing-evidence cases.",
             "Separates retrieval from generation quality.",
             "Does not equate vector similarity with authority."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What does high semantic similarity establish?",
@@ -2178,7 +2214,8 @@ const LEARNING_PATHS = [
             "Separates preferences from secrets and authority.",
             "Includes user scope and deletion.",
             "States that workshop memory is run-local."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does storing text in a vector database make it trusted memory?",
@@ -2225,7 +2262,8 @@ const LEARNING_PATHS = [
             "Revises assumptions using evidence.",
             "Bounds further searching.",
             "Preserves the distinction between planned and completed."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What should happen when evidence invalidates a plan assumption?",
@@ -2272,7 +2310,8 @@ const LEARNING_PATHS = [
             "Question resolves a concrete ambiguity.",
             "Independent work does not depend on the answer.",
             "No action is authorized by silence."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "When is clarification most useful?",
@@ -2319,7 +2358,8 @@ const LEARNING_PATHS = [
             "Approval originates outside model output.",
             "Binds to concrete action and identity.",
             "Addresses changes and replay."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Who may create the approval evidence used by the executor?",
@@ -2395,7 +2435,8 @@ const LEARNING_PATHS = [
             "Does not infer failure from timeout alone.",
             "Uses operation identity or provider guarantees.",
             "Avoids automatic duplicate sends."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does a timeout prove a side effect did not occur?",
@@ -2442,7 +2483,8 @@ const LEARNING_PATHS = [
             "Separates count from elapsed time.",
             "Includes tool cancellation limitations.",
             "Uses provider usage for real token/cost accounting."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Which limit prevents a single tool call from hanging indefinitely?",
@@ -2489,7 +2531,8 @@ const LEARNING_PATHS = [
             "Uses observable actions as pass/fail evidence.",
             "Tests outbound leakage and logs.",
             "Does not claim complete protection from one test."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What is the strongest evidence in a forbidden-tool test?",
@@ -2564,7 +2607,8 @@ const LEARNING_PATHS = [
             "Defines observable properties.",
             "Includes nonhappy paths.",
             "Separates scripted tests from model evaluations."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What should an evaluation case specify before a run?",
@@ -2642,7 +2686,8 @@ const LEARNING_PATHS = [
             "Separates operational and semantic checks.",
             "Uses observable events.",
             "Protects trace privacy."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Can a correct final answer excuse an unauthorized tool action?",
@@ -2689,7 +2734,8 @@ const LEARNING_PATHS = [
             "Combines deterministic and semantic checks.",
             "Includes misleading fluent examples.",
             "Reviews false acceptance rather than only average score."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What does a high uncalibrated judge score establish?",
@@ -2736,7 +2782,8 @@ const LEARNING_PATHS = [
             "Uses identical tasks and scoring.",
             "Measures aggregate cost and failure behavior.",
             "Does not treat agreement as independent proof."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does adding a reviewer agent guarantee correctness?",
@@ -2783,7 +2830,8 @@ const LEARNING_PATHS = [
             "Uses slice-specific acceptance criteria.",
             "Versions data and policy alongside prompts.",
             "Recognizes limits of rollback."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "What belongs in a reproducible agent release record?",
@@ -2830,7 +2878,8 @@ const LEARNING_PATHS = [
             "Clearly separates harness tests from intelligence.",
             "Uses current runtime-specific documentation.",
             "Makes no claim of live verification."
-          ]
+          ],
+          "solutionFormat": "prose"
         },
         "quiz": {
           "question": "Does swapping a scripted source for a live model preserve all tested guarantees automatically?",
@@ -5090,21 +5139,22 @@ const LEARNING_PATHS = [
               "A locally attractive choice needs a proof, not intuition.",
               "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
             ],
-            "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish < start:\n            raise ValueError(\"invalid interval\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
+            "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish <= start:\n            raise ValueError(\"positive-duration intervals required\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
           },
           {
             "title": "Correctness, cost and failure cases",
             "paragraphs": [
-              "Intervals use half-open boundaries, so end==start is compatible. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+              "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
             ]
           }
         ],
         "exercise": {
-          "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set.",
-          "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))",
+          "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set. Check empty input and rejection of zero-duration and reversed intervals.",
+          "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))\nassert schedule([]) == []\nfor invalid in [(1, 1), (2, 1)]:\n    try:\n        schedule([(0, 1), invalid])\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"nonpositive duration accepted\")",
           "checks": [
             "Long interval blocks three short compatible intervals.",
             "Touching intervals are allowed.",
+            "Empty input returns []; zero-duration and reversed intervals are rejected.",
             "A weighted objective needs a different analysis."
           ]
         },
@@ -5330,7 +5380,7 @@ const LEARNING_PATHS = [
           "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
           "requirements": [
             "Find routes on a nonnegative weighted graph and reject unsupported weights.",
-            "Schedule the maximum number of compatible unweighted intervals.",
+            "Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.",
             "Choose items under an integer budget with each item used at most once.",
             "Compare small cases against independent brute-force oracles.",
             "Write invariants, termination arguments and representation-specific complexity.",
@@ -5339,7 +5389,7 @@ const LEARNING_PATHS = [
           "rubric": [
             "Each task uses the correct objective and preconditions.",
             "Counterexamples explain why plausible alternatives fail.",
-            "Tests include ties, duplicates, zero/empty cases and disconnected inputs.",
+            "Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.",
             "Pseudo-polynomial and exponential costs are described honestly.",
             "Results remain correct without performance optimizations."
           ],
@@ -9157,7 +9207,7 @@ const LEARNING_PATHS = [
             "CLI error status and safe logging are explained.",
             "Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
           ],
-          "solution": "\"\"\"Advanced practice: bounded JSONL import, ordered workers and one replacement.\nOne writer, trusted local directory. No power-loss durability certification.\nRun python advanced_project.py --demo, or input.jsonl output.json --workers 2.\n\"\"\"\nimport argparse\nfrom concurrent.futures import ThreadPoolExecutor\nfrom dataclasses import dataclass, asdict\nimport json\nimport logging\nimport os\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\n\nMAX_BYTES = 262144\nMAX_RECORDS = 1000\nMAX_LINE_BYTES = 2048\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    id: str\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.id, str) or not 1 <= len(self.id) <= 64 or self.id != self.id.strip():\n            raise ValueError(\"id must be 1 through 64 characters without edge spaces\")\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef unique_object(pairs):\n    result = {}\n    for key, value in pairs:\n        if key in result:\n            raise ValueError(\"duplicate JSON key\")\n        result[key] = value\n    return result\n\ndef decode(text):\n    try:\n        return json.loads(text, object_pairs_hook=unique_object)\n    except RecursionError as error:\n        raise ValueError(\"JSON nesting too deep\") from error\n\ndef make_session(value):\n    if type(value) is not dict or set(value) != {\"id\", \"topic\", \"minutes\"}:\n        raise ValueError(\"record needs exactly id, topic and minutes\")\n    return Session(value[\"id\"], value[\"topic\"], value[\"minutes\"])\n\ndef bounded_read(path: Path, limit: int = MAX_BYTES) -> str:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(limit + 1)\n    if len(raw) > limit:\n        raise ValueError(\"input exceeds byte limit\")\n    return raw.decode(\"utf-8\")\n\ndef parse_line(line: str) -> Session:\n    if len(line.encode(\"utf-8\")) > MAX_LINE_BYTES:\n        raise ValueError(\"record exceeds byte limit\")\n    return make_session(decode(line))\n\ndef validate_batch(records):\n    if len(records) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if len({record.id for record in records}) != len(records):\n        raise ValueError(\"duplicate session id\")\n\ndef read_batch(path: Path, workers: int = 1) -> list[Session]:\n    if type(workers) is not int or not 1 <= workers <= 8:\n        raise ValueError(\"workers must be 1 through 8\")\n    lines = bounded_read(path).splitlines()\n    if len(lines) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if any(not line.strip() for line in lines):\n        raise ValueError(\"blank records are not allowed\")\n    if workers == 1:\n        records = [parse_line(line) for line in lines]\n    else:\n        with ThreadPoolExecutor(max_workers=workers) as pool:\n            records = list(pool.map(parse_line, lines))\n    validate_batch(records)\n    return records\n\ndef summary(records):\n    totals = {}\n    for record in records:\n        totals[record.topic] = totals.get(record.topic, 0) + record.minutes\n    return totals\n\ndef atomic_write(path: Path, value) -> None:\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            json.dump(value, stream, indent=2, sort_keys=True, allow_nan=False)\n            stream.write(\"\\n\")\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\n\ndef import_report(source: Path, target: Path, workers: int = 1):\n    if source.resolve() == target.resolve():\n        raise ValueError(\"input and report must be different files\")\n    records = read_batch(source, workers)\n    report = {\"version\": 1, \"sessions\": [asdict(r) for r in records], \"totals\": summary(records)}\n    atomic_write(target, report)\n    logger.info(\"imported %d records\", len(records))\n    return report\n\ndef load_report(path: Path):\n    value = decode(bounded_read(path, 1048576))\n    if type(value) is not dict or set(value) != {\"version\", \"sessions\", \"totals\"}:\n        raise ValueError(\"invalid report fields\")\n    if type(value[\"version\"]) is not int or value[\"version\"] != 1:\n        raise ValueError(\"unsupported report version\")\n    if type(value[\"sessions\"]) is not list or len(value[\"sessions\"]) > MAX_RECORDS:\n        raise ValueError(\"invalid report records\")\n    records = [make_session(row) for row in value[\"sessions\"]]\n    validate_batch(records)\n    totals = value[\"totals\"]\n    if type(totals) is not dict or any(type(k) is not str or type(v) is not int for k, v in totals.items()):\n        raise ValueError(\"invalid totals\")\n    if totals != summary(records):\n        raise ValueError(\"totals do not match records\")\n    return records\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Validate JSONL and publish one study report\")\n    parser.add_argument(\"input\", nargs=\"?\", type=Path)\n    parser.add_argument(\"output\", nargs=\"?\", type=Path)\n    parser.add_argument(\"--workers\", type=int, default=1)\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and (args.input or args.output):\n        parser.error(\"choose --demo or two file paths\")\n    if not args.demo and (args.input is None or args.output is None):\n        parser.error(\"provide input and output, or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                source, target = Path(folder)/\"input.jsonl\", Path(folder)/\"report.json\"\n                rows = [{\"id\":\"a\",\"topic\":\"Python\",\"minutes\":25},{\"id\":\"b\",\"topic\":\"Python\",\"minutes\":15}]\n                source.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")\n                import_report(source, target, args.workers)\n                print(json.dumps(summary(load_report(target)), sort_keys=True))\n        else:\n            report = import_report(args.input, args.output, args.workers)\n            print(json.dumps(report[\"totals\"], sort_keys=True))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Import failed: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
+          "solution": "\"\"\"Advanced practice: bounded JSONL import, ordered workers and one replacement.\r\nOne writer, trusted local directory. No power-loss durability certification.\r\nRun python advanced_project.py --demo, or input.jsonl output.json --workers 2.\r\n\"\"\"\r\nimport argparse\r\nfrom concurrent.futures import ThreadPoolExecutor\r\nfrom dataclasses import dataclass, asdict\r\nimport json\r\nimport logging\r\nimport os\r\nfrom pathlib import Path\r\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\r\n\r\nMAX_BYTES = 262144\r\nMAX_RECORDS = 1000\r\nMAX_LINE_BYTES = 2048\r\nMAX_REPORT_BYTES = 1048576\r\nlogger = logging.getLogger(__name__)\r\n\r\n@dataclass(frozen=True)\r\nclass Session:\r\n    id: str\r\n    topic: str\r\n    minutes: int\r\n    def __post_init__(self):\r\n        if not isinstance(self.id, str) or not 1 <= len(self.id) <= 64 or self.id != self.id.strip():\r\n            raise ValueError(\"id must be 1 through 64 characters without edge spaces\")\r\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\r\n            raise ValueError(\"topic must contain 1 through 80 characters\")\r\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\r\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\r\n        object.__setattr__(self, \"topic\", self.topic.strip())\r\n\r\ndef unique_object(pairs):\r\n    result = {}\r\n    for key, value in pairs:\r\n        if key in result:\r\n            raise ValueError(\"duplicate JSON key\")\r\n        result[key] = value\r\n    return result\r\n\r\ndef decode(text):\r\n    try:\r\n        return json.loads(text, object_pairs_hook=unique_object)\r\n    except RecursionError as error:\r\n        raise ValueError(\"JSON nesting too deep\") from error\r\n\r\ndef make_session(value):\r\n    if type(value) is not dict or set(value) != {\"id\", \"topic\", \"minutes\"}:\r\n        raise ValueError(\"record needs exactly id, topic and minutes\")\r\n    return Session(value[\"id\"], value[\"topic\"], value[\"minutes\"])\r\n\r\ndef bounded_read(path: Path, limit: int = MAX_BYTES) -> str:\r\n    with path.open(\"rb\") as stream:\r\n        raw = stream.read(limit + 1)\r\n    if len(raw) > limit:\r\n        raise ValueError(\"input exceeds byte limit\")\r\n    return raw.decode(\"utf-8\")\r\n\r\ndef parse_line(line: str) -> Session:\r\n    if len(line.encode(\"utf-8\")) > MAX_LINE_BYTES:\r\n        raise ValueError(\"record exceeds byte limit\")\r\n    return make_session(decode(line))\r\n\r\ndef validate_batch(records):\r\n    if len(records) > MAX_RECORDS:\r\n        raise ValueError(\"too many records\")\r\n    if len({record.id for record in records}) != len(records):\r\n        raise ValueError(\"duplicate session id\")\r\n\r\ndef read_batch(path: Path, workers: int = 1) -> list[Session]:\r\n    if type(workers) is not int or not 1 <= workers <= 8:\r\n        raise ValueError(\"workers must be 1 through 8\")\r\n    # JSONL delimiters are LF (optionally preceded by CR), not Unicode separators\r\n    # such as U+2028 that may legitimately occur inside a JSON string.\r\n    lines = bounded_read(path).split(\"\\n\")\r\n    if lines[-1] == \"\":\r\n        lines.pop()  # Empty input or one final newline is not a blank record.\r\n    lines = [line.removesuffix(\"\\r\") for line in lines]\r\n    if len(lines) > MAX_RECORDS:\r\n        raise ValueError(\"too many records\")\r\n    if any(not line.strip() for line in lines):\r\n        raise ValueError(\"blank records are not allowed\")\r\n    if workers == 1:\r\n        records = [parse_line(line) for line in lines]\r\n    else:\r\n        with ThreadPoolExecutor(max_workers=workers) as pool:\r\n            records = list(pool.map(parse_line, lines))\r\n    validate_batch(records)\r\n    return records\r\n\r\ndef summary(records):\r\n    totals = {}\r\n    for record in records:\r\n        totals[record.topic] = totals.get(record.topic, 0) + record.minutes\r\n    return totals\r\n\r\ndef atomic_write(path: Path, value) -> None:\r\n    # Prepare and bound the exact bytes the reader will receive before creating\r\n    # a temporary file or replacing prior output. UTF-8 avoids ASCII-escape\r\n    # expansion for non-ASCII topics appearing in both records and totals.\r\n    payload = (json.dumps(value, indent=2, sort_keys=True, allow_nan=False,\r\n                          ensure_ascii=False) + \"\\n\").encode(\"utf-8\")\r\n    if len(payload) > MAX_REPORT_BYTES:\r\n        raise ValueError(\"report exceeds byte limit\")\r\n    temporary = None\r\n    try:\r\n        with NamedTemporaryFile(\"wb\", dir=path.parent, delete=False) as stream:\r\n            temporary = Path(stream.name)\r\n            stream.write(payload)\r\n            stream.flush()\r\n            os.fsync(stream.fileno())\r\n        os.replace(temporary, path)\r\n    finally:\r\n        if temporary is not None and temporary.exists():\r\n            temporary.unlink()\r\n\r\ndef import_report(source: Path, target: Path, workers: int = 1):\r\n    if source.resolve() == target.resolve():\r\n        raise ValueError(\"input and report must be different files\")\r\n    records = read_batch(source, workers)\r\n    report = {\"version\": 1, \"sessions\": [asdict(r) for r in records], \"totals\": summary(records)}\r\n    atomic_write(target, report)\r\n    logger.info(\"imported %d records\", len(records))\r\n    return report\r\n\r\ndef load_report(path: Path):\r\n    value = decode(bounded_read(path, MAX_REPORT_BYTES))\r\n    if type(value) is not dict or set(value) != {\"version\", \"sessions\", \"totals\"}:\r\n        raise ValueError(\"invalid report fields\")\r\n    if type(value[\"version\"]) is not int or value[\"version\"] != 1:\r\n        raise ValueError(\"unsupported report version\")\r\n    if type(value[\"sessions\"]) is not list or len(value[\"sessions\"]) > MAX_RECORDS:\r\n        raise ValueError(\"invalid report records\")\r\n    records = [make_session(row) for row in value[\"sessions\"]]\r\n    validate_batch(records)\r\n    totals = value[\"totals\"]\r\n    if type(totals) is not dict or any(type(k) is not str or type(v) is not int for k, v in totals.items()):\r\n        raise ValueError(\"invalid totals\")\r\n    if totals != summary(records):\r\n        raise ValueError(\"totals do not match records\")\r\n    return records\r\n\r\ndef main(argv=None) -> int:\r\n    parser = argparse.ArgumentParser(description=\"Validate JSONL and publish one study report\")\r\n    parser.add_argument(\"input\", nargs=\"?\", type=Path)\r\n    parser.add_argument(\"output\", nargs=\"?\", type=Path)\r\n    parser.add_argument(\"--workers\", type=int, default=1)\r\n    parser.add_argument(\"--demo\", action=\"store_true\")\r\n    args = parser.parse_args(argv)\r\n    if args.demo and (args.input or args.output):\r\n        parser.error(\"choose --demo or two file paths\")\r\n    if not args.demo and (args.input is None or args.output is None):\r\n        parser.error(\"provide input and output, or --demo\")\r\n    try:\r\n        if args.demo:\r\n            with TemporaryDirectory() as folder:\r\n                source, target = Path(folder)/\"input.jsonl\", Path(folder)/\"report.json\"\r\n                rows = [{\"id\":\"a\",\"topic\":\"Python\",\"minutes\":25},{\"id\":\"b\",\"topic\":\"Python\",\"minutes\":15}]\r\n                source.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")\r\n                import_report(source, target, args.workers)\r\n                print(json.dumps(summary(load_report(target)), sort_keys=True))\r\n        else:\r\n            report = import_report(args.input, args.output, args.workers)\r\n            print(json.dumps(report[\"totals\"], sort_keys=True))\r\n        return 0\r\n    except (OSError, ValueError) as error:\r\n        logger.error(\"Import failed: %s\", error)\r\n        return 1\r\n\r\nif __name__ == \"__main__\":\r\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\r\n    raise SystemExit(main())\r\n"
         }
       }
     ],

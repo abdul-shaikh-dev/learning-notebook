@@ -16,7 +16,7 @@ Advanced input is JSONL, one object per line with id, topic and minutes. For exa
 
 Run `python advanced_project.py input.jsonl report.json --workers 2`. It replaces report.json only after complete validation. Use a disposable folder. Input must not be the output file.
 
-Limits: 256 KiB input, 1000 records, 2048 bytes per JSONL record, 64-character IDs, 80-character trimmed topics, integer minutes from 0 to 1440, 1–8 workers. Empty input is an empty batch; blank record lines are errors. Duplicate IDs and JSON object keys are rejected. Saved reports allow up to 1 MiB because indented output expands data.
+Limits: 256 KiB input, 1000 records, 2048 bytes per JSONL record, 64-character IDs, 80-character trimmed topics, integer minutes from 0 to 1440, 1–8 workers. JSONL records use LF or CRLF delimiters; one final delimiter is allowed. Unicode separators inside JSON strings remain data. Empty input is an empty batch; blank record lines are errors. Duplicate IDs and JSON object keys are rejected. Saved reports use UTF-8 without unnecessary ASCII escaping and allow up to 1 MiB. The writer checks the exact serialized bytes against the reader's limit before replacing prior output; oversized reports fail without changing that output.
 
 The advanced reference assumes one writer and a trusted local directory. It is not a sandbox, authenticated service or database. Same-directory replacement improves whole-file visibility, but does not certify power-loss durability or prevent lost updates between concurrent writers. Threads are demonstrated for composition; benchmark before using them for CPU-bound validation.
 
