@@ -11,5 +11,5 @@ for(const file of files){const src=path.join(root,file);if(!fs.statSync(src).isF
 fs.rmSync(out,{recursive:true,force:true});fs.mkdirSync(out,{recursive:true});
 for(const file of files){const target=path.join(out,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(path.join(root,file),target);}
 fs.writeFileSync(path.join(out,'.nojekyll'),'');
-for(const html of files.filter(f=>f.endsWith('.html'))){for(const m of fs.readFileSync(path.join(out,html),'utf8').matchAll(/(?:href|src)="([^"#]+)"/g)){const ref=m[1].split('#')[0];if(/^(https?:|data:|\$)/.test(ref)||ref.includes('${'))continue;if(ref.startsWith('/')||!fs.existsSync(path.resolve(out,path.dirname(html),ref)))throw Error('Missing/nonportable reference: '+html+' → '+ref);}}
+for(const html of files.filter(f=>f.endsWith('.html'))){for(const m of fs.readFileSync(path.join(out,html),'utf8').matchAll(/(?:href|src)="([^"#]+)"/g)){const ref=m[1].split(/[?#]/)[0];if(/^(https?:|data:|\$)/.test(ref)||ref.includes('${'))continue;if(ref.startsWith('/')||!fs.existsSync(path.resolve(out,path.dirname(html),ref)))throw Error('Missing/nonportable reference: '+html+' → '+ref);}}
 console.log(`Built ${files.length+1} public files. Draft paths, tests, documentation and Git history excluded.`);
