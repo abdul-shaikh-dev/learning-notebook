@@ -12,3 +12,6 @@ require('./journey.cjs');
 require('./programming-paths.cjs');
 
 require('./resource-navigation.cjs');
+
+require('./notebook-search.cjs');
+require('./notebook-backup.cjs');

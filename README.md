@@ -126,3 +126,20 @@ node scripts/build-pages.cjs
 Commit the regenerated ZIPs and catalog together with their sources. The release
 workflow rejects stale bundles and the public build includes only the explicit
 course inventory. The reader and resource links also work when opened via file://.
+
+
+## Search and move your progress
+
+Use **Search notebook** in either reader to find concepts, lesson passages,
+project tasks and practice filenames. Filter by learning path or content type.
+Search runs locally; result URLs retain the query for bookmarks and browser Back.
+File results include a download and a link to their course instructions.
+
+Use **Progress & backups** to download a notebook-wide JSON backup, then open
+the same page on another device and preview the file before merging it. This is
+a manual transfer, not automatic cloud synchronization. Keep using the same site
+address: local files, localhost and GitHub Pages have separate browser storage.
+
+The search index is generated from ready courses and their published resources.
+Run `node scripts/sync-catalog.cjs` after content changes; it rebuilds both catalog
+and search. Verification and publication reject stale search data.

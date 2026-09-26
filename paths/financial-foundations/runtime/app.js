@@ -87,3 +87,6 @@ if(document.modelContext?.registerTool){
   },{signal:lifecycle.signal})).catch(()=>{});}catch{}
   window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
 }
+
+// Keep imported progress safe when this reader is open in another tab.
+window.addEventListener('storage',event=>{if(event.key!==KEY||!event.newValue)return;try{state=validateState(JSON.parse(event.newValue));progress();const button=document.getElementById('complete');if(button)button.textContent=state.done.includes(Number(button.dataset.id))?'✓ Read · mark unread':'Mark lesson read';toast('Progress updated from another tab.');}catch{}});
