@@ -47,3 +47,11 @@ The financial path opens with a topic map and three visual stories: trades → p
 ### Trade lifecycle walkthrough
 
 Follow one trade through eight stages at course.html#journey/booking. Each stage includes inputs, outputs, illustrative owners, controls, data lineage and a self-check. Switch between usable and stale evidence to compare an approved correction with an unresolved exception. Content and arithmetic live in content/journey.js; runtime/journey.js and styles/journey.css provide the course UI. The same content is included in the printable study pack.
+
+### Programming learning paths — first edition
+
+Five independent paths now use the shared reader: Python (12 lessons), C# & .NET (12), JavaScript → TypeScript → React (11), SQL Server & T-SQL (12), and Data Structures & Algorithms (10). Each includes prerequisites, setup, outcomes, exercises, worked solutions, quizzes, primary references, a capstone and explicit next steps.
+
+Use index.html#path/<id> for the course overview and #pack/<id> for a printable complete pack. Practice code executes in the learner's tools; there is no browser code runner. React and DSA include step-through traces. Progress stays separate by path and local to the browser.
+
+Validation: all Python examples/exercises and DSA examples/solutions ran; complete JavaScript examples were checked in Node. C# console examples and the API example were checked using installed .NET 9; the curriculum targets .NET 10 LTS. The .NET 10 SDK, package-based test/EF fragments, React TSX compilation and SQL Server engine execution were not available/undertaken. SQL fixtures and expected results were reviewed; use a dedicated training instance. These first editions are learning foundations, not exhaustive language/platform references.

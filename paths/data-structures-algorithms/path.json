@@ -1,0 +1,490 @@
+{
+  "id": "data-structures-algorithms",
+  "title": "Data Structures & Algorithms",
+  "category": "Computer science",
+  "status": "ready",
+  "description": "Choose structures, trace algorithms and reason about correctness and cost using small Python examples.",
+  "level": "Beginner · first edition",
+  "prerequisites": [
+    "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
+    "You only need arithmetic and a willingness to trace a few steps on paper."
+  ],
+  "setup": [
+    "Examples use Python 3 and its standard library. Save them in a .py file and run python filename.py (or py filename.py on Windows).",
+    "Download algorithms.py to run the binary search, BFS and dynamic-programming examples with assertions. No packages or network access are required.",
+    "Before running code, predict the output and identify empty, one-element, duplicate and missing-value cases."
+  ],
+  "outcomes": [
+    "Describe time and auxiliary-space growth under stated assumptions.",
+    "Choose arrays, maps, stacks, queues, heaps and graph representations.",
+    "Trace binary search and traversal invariants.",
+    "Build and test a small shortest-hop learning-prerequisite explorer."
+  ],
+  "nextSteps": [
+    "Implement linked-list insertion/deletion and compare with array-based collections.",
+    "Study balanced search trees, merge sort, quicksort and stable sorting in more depth.",
+    "Add weighted shortest paths, topological sorting and cycle detection.",
+    "Practise backtracking, greedy proofs, dynamic-programming state design and amortized analysis."
+  ],
+  "sources": [
+    {
+      "title": "Princeton: Algorithms and data structures",
+      "url": "https://introcs.cs.princeton.edu/java/40algorithms/"
+    },
+    {
+      "title": "Princeton: Sorting and searching",
+      "url": "https://introcs.cs.princeton.edu/java/42sort/"
+    },
+    {
+      "title": "Python: collections and deque",
+      "url": "https://docs.python.org/3/library/collections.html"
+    },
+    {
+      "title": "Python: heapq",
+      "url": "https://docs.python.org/3/library/heapq.html"
+    },
+    {
+      "title": "Python: sorting guide",
+      "url": "https://docs.python.org/3/howto/sorting.html"
+    }
+  ],
+  "publicFiles": [
+    "practice/algorithms.py"
+  ],
+  "downloads": [
+    {
+      "title": "Algorithms and executable checks",
+      "href": "paths/data-structures-algorithms/practice/algorithms.py"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "cost",
+      "title": "1. Correctness before speed",
+      "takeaway": "State the contract, then count how work grows.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "An algorithm is a procedure for solving a problem. Its contract says what inputs it accepts and what result it promises. Test a tiny example by hand before discussing speed.",
+            "Big-O describes an upper bound on growth, not a stopwatch reading. A single pass over n values has O(n) time if each step costs constant time. Auxiliary space counts extra storage, separately from the input."
+          ],
+          "example": "def contains(items, target):\n    for item in items:\n        if item == target:\n            return True\n    return False\n\nprint(contains([2, 4, 6], 4))  # True"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Early exit can improve a particular run without changing the worst-case bound. State whether you mean best, average, expected or worst case."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Count comparisons for a missing target in [2,4,6]. Then write a version returning that count.",
+        "solution": "def comparisons(items, target):\n    count = 0\n    for item in items:\n        count += 1\n        if item == target:\n            break\n    return count\n\nassert comparisons([2, 4, 6], 9) == 3\nassert comparisons([], 9) == 0",
+        "checks": [
+          "Missing target takes three comparisons.",
+          "Empty input takes zero.",
+          "Worst case scales with the list length."
+        ]
+      },
+      "quiz": {
+        "question": "A full scan of n values has which typical time bound?",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "correct": 1,
+        "explanation": "Each element is inspected once, assuming constant-cost comparisons."
+      }
+    },
+    {
+      "id": "arrays",
+      "title": "2. Arrays, lists and linked nodes",
+      "takeaway": "Access patterns matter more than the name of a structure.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A Python list is a dynamic array of references. Index access is constant-time under the usual model. Inserting at the front shifts existing references and takes linear time.",
+            "A linked list stores references between nodes instead of adjacent index slots. Inserting after an already-known node can be constant-time, but finding that node may require a linear walk. Neither representation is universally faster."
+          ],
+          "example": "values = [10, 20, 30]\nprint(values[1])  # 20\nvalues.insert(0, 5)\nprint(values)     # [5, 10, 20, 30]"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Appending to a dynamic array is amortized O(1), not a promise that every individual append costs the same. Slicing copies selected references and uses extra memory."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Reverse a list into a new list and explain the cost.",
+        "solution": "def reversed_copy(items):\n    result = []\n    for i in range(len(items) - 1, -1, -1):\n        result.append(items[i])\n    return result\n\nassert reversed_copy([1, 2, 3]) == [3, 2, 1]",
+        "checks": [
+          "Original list is unchanged.",
+          "Empty input returns an empty list.",
+          "Time O(n), extra space O(n)."
+        ]
+      },
+      "quiz": {
+        "question": "Is insertion at the front of a Python list O(1)?",
+        "options": [
+          "Yes",
+          "No, existing references must shift"
+        ],
+        "correct": 1,
+        "explanation": "Front insertion moves references across the array, so its cost grows with n."
+      }
+    },
+    {
+      "id": "maps",
+      "title": "3. Hash maps and sets",
+      "takeaway": "Use a map for keyed information and a set for membership.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A dictionary associates keys with values; a set records unique membership. For well-behaved hashes, lookups have expected constant time, but collision behavior can worsen the cost. Hashing a long key itself may also cost time.",
+            "A frequency table is a natural dictionary problem. Store the count seen so far for each item rather than repeatedly scanning the entire list."
+          ],
+          "example": "counts = {}\nfor topic in ['sql', 'python', 'sql']:\n    counts[topic] = counts.get(topic, 0) + 1\nprint(counts)  # {'sql': 2, 'python': 1}"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "A map can use more memory than a scan. Keys need valid hashing/equality behavior; Python lists are not dictionary keys."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Return the first repeated item, or None if no item repeats.",
+        "solution": "def first_repeat(items):\n    seen = set()\n    for item in items:\n        if item in seen:\n            return item\n        seen.add(item)\n    return None\n\nassert first_repeat(['a', 'b', 'a']) == 'a'\nassert first_repeat([]) is None",
+        "checks": [
+          "Returns the first repetition in traversal order.",
+          "Expected O(n) time and O(n) extra space.",
+          "Contract: hashable items; None is the no-result sentinel."
+        ]
+      },
+      "quiz": {
+        "question": "Which structure fits unique membership?",
+        "options": [
+          "Set",
+          "Stack only",
+          "Sorted matrix"
+        ],
+        "correct": 0,
+        "explanation": "A set directly models whether an item has been seen."
+      }
+    },
+    {
+      "id": "stacks-queues",
+      "title": "4. Stacks and queues",
+      "takeaway": "A stack removes the newest item; a queue removes the oldest.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
+            "Python list append/pop work well for a stack. Use collections.deque for removing from the front of a queue; repeatedly using list.pop(0) adds shifting work."
+          ],
+          "example": "from collections import deque\nqueue = deque(['A', 'B'])\nqueue.append('C')\nprint(queue.popleft())  # A\nstack = ['A', 'B']\nprint(stack.pop())      # B"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "A structure’s ordering policy is part of correctness, not just performance. Replacing a queue with a stack changes graph traversal order."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Check balanced round parentheses, rejecting an unmatched close immediately.",
+        "solution": "def balanced(text):\n    depth = 0\n    for char in text:\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n            if depth < 0:\n                return False\n    return depth == 0\n\nassert balanced('(())')\nassert not balanced(')(')",
+        "checks": [
+          "Handles empty text as balanced.",
+          "Other characters are ignored by this contract.",
+          "One bracket type only; multiple types require a stack of opening brackets."
+        ]
+      },
+      "quiz": {
+        "question": "What leaves a FIFO queue first?",
+        "options": [
+          "Most recently inserted item",
+          "Oldest queued item"
+        ],
+        "correct": 1,
+        "explanation": "FIFO preserves insertion order when serving queued items."
+      }
+    },
+    {
+      "id": "binary-search",
+      "title": "5. Binary search and invariants",
+      "takeaway": "Discard half the candidates only when order justifies it.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Binary search requires data sorted under the same comparison used by the search. Maintain inclusive low and high indexes. If the middle value is below the target, all values at or left of it can be excluded.",
+            "The invariant is: if the target exists and has not been found, it lies in the remaining range. Each update must shrink that range. This version returns any matching index, not necessarily the first duplicate."
+          ],
+          "example": "def binary_search(values, target):\n    low, high = 0, len(values) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if values[mid] == target:\n            return mid\n        if values[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\nassert binary_search([2, 5, 8, 12, 16], 12) == 3"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Sorting an unsorted list first has a cost. For one search, a linear scan may be simpler; binary search is valuable when sorted data already exists or is reused."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Trace target 6 in [2,5,8,12,16], then test empty and one-element arrays.",
+        "solution": "# Using binary_search above:\nassert binary_search([2, 5, 8, 12, 16], 6) == -1\nassert binary_search([], 6) == -1\nassert binary_search([6], 6) == 0\n# Mid values: 8, 2, 5; then low > high.",
+        "checks": [
+          "Every iteration shrinks the candidate interval.",
+          "Worst-case search time O(log n), auxiliary space O(1).",
+          "Duplicates may produce any matching index."
+        ]
+      },
+      "quiz": {
+        "question": "What precondition does this search require?",
+        "options": [
+          "Unique values",
+          "Sorted values",
+          "At least ten values"
+        ],
+        "correct": 1,
+        "explanation": "Sorted order makes it safe to discard a half-range."
+      },
+      "trace": {
+        "title": "Find 12 without scanning every value",
+        "frames": [
+          {
+            "label": "Start with all candidates",
+            "items": [
+              "2",
+              "5",
+              "8 ← mid",
+              "12",
+              "16"
+            ],
+            "explanation": "low=0, high=4, mid=2. Since 8 < 12, indexes 0–2 can be discarded."
+          },
+          {
+            "label": "Keep the upper half",
+            "items": [
+              "12 ← mid",
+              "16"
+            ],
+            "explanation": "low=3, high=4, mid=3. The middle value equals the target."
+          },
+          {
+            "label": "Return the matching index",
+            "items": [
+              "index = 3"
+            ],
+            "explanation": "Two comparisons found the target. This does not imply every search takes two comparisons."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sorting",
+      "title": "6. Sorting and stable order",
+      "takeaway": "A comparison rule and tie policy are part of the result.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Sorting enables grouped display, merging and efficient search. Python’s sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
+            "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
+          ],
+          "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Never benchmark only already-sorted tiny inputs and conclude an algorithm is best. Include reversed input, duplicates and representative sizes."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Sort tasks by descending priority, breaking ties by ascending title.",
+        "solution": "tasks = [('SQL', 2), ('React', 3), ('Python', 2)]\nordered = sorted(tasks, key=lambda task: (-task[1], task[0]))\nassert ordered == [('React', 3), ('Python', 2), ('SQL', 2)]",
+        "checks": [
+          "Priority 3 comes first.",
+          "Equal priority uses title.",
+          "Input order remains unchanged."
+        ]
+      },
+      "quiz": {
+        "question": "What does stable sorting preserve?",
+        "options": [
+          "Original order among equal keys",
+          "All original positions",
+          "Only numeric values"
+        ],
+        "correct": 0,
+        "explanation": "Stability specifies tie behavior, not that the entire order stays unchanged."
+      }
+    },
+    {
+      "id": "recursion",
+      "title": "7. Recursion, base cases and trees",
+      "takeaway": "A recursive call must move toward a smaller problem.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Recursion expresses a problem in terms of smaller instances. A base case stops expansion. A recursive algorithm can still consume substantial stack space even if its code is short.",
+            "A tree represents parent-child relationships without cycles. A recursive traversal can process a node and then its children. A highly skewed tree may have depth n; Python recursion has practical limits, so an explicit stack is often safer for deep input."
+          ],
+          "example": "def total(tree):\n    return tree['minutes'] + sum(total(child) for child in tree['children'])\n\ntree = {'minutes': 10, 'children': [{'minutes': 20, 'children': []}]}\nassert total(tree) == 30"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "This example assumes a real acyclic tree and well-formed records. A cycle would never reach a base case. Counting calls and maximum depth are different measurements."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Count nodes in the same tree format.",
+        "solution": "def node_count(tree):\n    return 1 + sum(node_count(child) for child in tree['children'])\n\nassert node_count({'minutes': 0, 'children': []}) == 1",
+        "checks": [
+          "Leaf returns one.",
+          "Each node is visited once: O(n) time.",
+          "Call-stack depth is O(h), where h is tree height."
+        ]
+      },
+      "quiz": {
+        "question": "What must every terminating recursive path reach?",
+        "options": [
+          "A base case",
+          "A sorted array",
+          "A hash collision"
+        ],
+        "correct": 0,
+        "explanation": "Without a base case and progress toward it, recursion does not terminate."
+      }
+    },
+    {
+      "id": "graphs",
+      "title": "8. Graphs and breadth-first search",
+      "takeaway": "Use a queue to explore unweighted shortest paths by layers.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A graph stores vertices and edges. Unlike a tree, it can contain cycles and multiple routes. An adjacency list maps each vertex to its neighbors; directed edges have a direction.",
+            "Breadth-first search discovers vertices in increasing edge distance from the start. Mark a vertex seen when enqueuing it, not after repeated enqueues. It finds shortest paths by number of edges in an unweighted graph, not cheapest routes with arbitrary weights."
+          ],
+          "example": "from collections import deque\n\ndef distances(graph, start):\n    distance = {start: 0}\n    queue = deque([start])\n    while queue:\n        node = queue.popleft()\n        for neighbor in graph.get(node, []):\n            if neighbor not in distance:\n                distance[neighbor] = distance[node] + 1\n                queue.append(neighbor)\n    return distance\n\nassert distances({'A':['B'], 'B':['C'], 'C':['A']}, 'A') == {'A':0, 'B':1, 'C':2}"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "A seen set prevents cycles from causing repeated traversal. With adjacency lists and expected constant-time hashing, traversal is O(V+E) over reachable vertices/edges."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add an unreachable node D and explain its result.",
+        "solution": "graph = {'A':['B'], 'B':['C'], 'C':['A'], 'D':[]}\nresult = distances(graph, 'A')\nassert 'D' not in result\n# Absence means unreachable, not distance zero.",
+        "checks": [
+          "Cycles terminate.",
+          "Start has distance zero.",
+          "Unreachable vertices are omitted."
+        ]
+      },
+      "quiz": {
+        "question": "When does ordinary BFS give shortest path distances?",
+        "options": [
+          "For arbitrary weighted edges",
+          "For unweighted edges measured in hop count"
+        ],
+        "correct": 1,
+        "explanation": "Queue layers correspond to increasing numbers of edges, not arbitrary weights."
+      }
+    },
+    {
+      "id": "heaps",
+      "title": "9. Heaps and priority queues",
+      "takeaway": "A heap efficiently exposes an extreme, not a fully sorted sequence.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A min-heap keeps the smallest element at its root. In Python heapq operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
+            "A scheduler can use (priority, sequence, task) entries. A sequence number provides a defined tie-breaker and avoids comparing task objects when priorities tie. Real schedulers also need cancellation and fairness policies."
+          ],
+          "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Iteration over the underlying heap list is not guaranteed sorted order. Repeated popping sorts the extracted sequence but consumes the heap."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add React at priority 1 with sequence 2. Predict the pop order.",
+        "solution": "import heapq\nheap = [(2, 0, 'SQL'), (1, 1, 'Python'), (1, 2, 'React')]\nheapq.heapify(heap)\norder = [heapq.heappop(heap)[2] for _ in range(3)]\nassert order == ['Python', 'React', 'SQL']",
+        "checks": [
+          "Smaller priority values are served first here.",
+          "Sequence resolves equal priority.",
+          "Check for an empty heap before popping."
+        ]
+      },
+      "quiz": {
+        "question": "Is the entire heap list sorted?",
+        "options": [
+          "Yes",
+          "No, only the heap ordering invariant is guaranteed"
+        ],
+        "correct": 1,
+        "explanation": "The smallest is at the root; siblings and subtrees are not globally sorted."
+      }
+    },
+    {
+      "id": "dynamic-programming",
+      "title": "10. Dynamic programming and a capstone",
+      "takeaway": "Reuse solutions to overlapping subproblems with a clearly defined state.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Dynamic programming stores answers to repeated subproblems. Define what each state means before writing a recurrence. For ways to climb n steps using moves of one or two, ways(n)=ways(n−1)+ways(n−2).",
+            "Set ways(0)=1 for the empty sequence and ways(1)=1. The iterative version retains only two prior counts. It uses O(n) additions and a constant number of integer variables; exact large-integer arithmetic still grows as the result gets larger."
+          ],
+          "example": "def ways(n):\n    if not isinstance(n, int) or isinstance(n, bool) or n < 0:\n        raise ValueError('nonnegative integer required')\n    previous, current = 1, 1\n    for _ in range(n):\n        previous, current = current, previous + current\n    return previous\n\nassert ways(0) == 1\nassert ways(4) == 5"
+        },
+        {
+          "title": "Reason about the tradeoff",
+          "paragraphs": [
+            "Memoization is not a substitute for a valid recurrence. Test base cases separately. A greedy choice needs a proof; it does not follow from having a short implementation."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Capstone: model topics as an unweighted directed graph and find hop distances from Python. Use the downloaded BFS implementation and explain whether edges mean prerequisites or possible next topics.",
+        "solution": "graph = {'Python':['Algorithms','Automation'], 'Algorithms':['Graphs'], 'Automation':[], 'Graphs':[]}\nresult = distances(graph, 'Python')\nassert result['Graphs'] == 2\n# Here edges mean possible next topics, not proof that all prerequisites are complete.",
+        "checks": [
+          "Define the edge meaning before traversing.",
+          "Handle cycles and unreachable topics.",
+          "Explain O(V+E) under the stated representation.",
+          "Passing a reachability check is not the same as completing all prerequisites."
+        ]
+      },
+      "quiz": {
+        "question": "What is essential before writing a DP recurrence?",
+        "options": [
+          "Define the meaning of a state and its base cases",
+          "Sort every input",
+          "Use recursion"
+        ],
+        "correct": 0,
+        "explanation": "State meaning and base cases make the recurrence assessable; recursion is optional."
+      }
+    }
+  ]
+}

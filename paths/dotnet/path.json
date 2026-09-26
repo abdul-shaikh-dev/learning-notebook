@@ -1,0 +1,592 @@
+{
+  "id": "dotnet",
+  "title": "C# & .NET",
+  "category": "Programming",
+  "status": "ready",
+  "description": "Learn C# fundamentals, test reusable logic, and build a small ASP.NET Core task API with safe SQLite persistence.",
+  "level": "Beginner",
+  "prerequisites": [
+    "Comfort using a terminal and editing a text file.",
+    "No prior C# experience required; basic HTTP and SQL help with the final lessons."
+  ],
+  "outcomes": [
+    "Run and debug C# console projects.",
+    "Use types, null checks, collections, methods, objects, LINQ and exceptions.",
+    "Await asynchronous operations and write focused unit tests.",
+    "Build validated HTTP endpoints with dependency injection and parameterized persistence."
+  ],
+  "setup": [
+    "Install the current patched .NET 10 LTS SDK from Microsoft's download page using the installer for your OS; these instructions do not install software automatically.",
+    "Use a text editor or IDE with C# support. Verify dotnet --info and dotnet --list-sdks in a new terminal.",
+    "Create a separate console project for snippets with dotnet new console -n LearningConsole -f net10.0; replace Program.cs for each console lesson and run dotnet run.",
+    "As of September 26, 2026, Microsoft's policy lists .NET 10 LTS through November 14, 2028. Recheck the policy at study time and keep patches current.",
+    "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson."
+  ],
+  "nextSteps": [
+    "Study ASP.NET Core integration testing with WebApplicationFactory.",
+    "Learn EF Core migrations, relational constraints and transactions.",
+    "Add authentication, authorization, structured logging and deployment only after the local capstone works.",
+    "Study interfaces, generics and concurrency in greater depth."
+  ],
+  "sources": [
+    {
+      "title": ".NET downloads",
+      "url": "https://dotnet.microsoft.com/en-us/download"
+    },
+    {
+      "title": ".NET support policy",
+      "url": "https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core"
+    },
+    {
+      "title": "C# documentation",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/"
+    },
+    {
+      "title": "Testing with dotnet test",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test"
+    },
+    {
+      "title": "Minimal API tutorial",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-10.0"
+    },
+    {
+      "title": "Dependency injection in ASP.NET Core",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0"
+    },
+    {
+      "title": "EF Core SQL queries and parameterization",
+      "url": "https://learn.microsoft.com/en-us/ef/core/querying/sql-queries"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "first-program",
+      "title": "Run a C# program",
+      "takeaway": "C# is the language; the SDK builds and runs .NET projects.",
+      "sections": [
+        {
+          "title": "The project and runtime",
+          "paragraphs": [
+            "The SDK includes tools for creating projects, compiling C#, restoring packages and running applications. The runtime executes compiled applications. Installing only a runtime is insufficient for these lessons.",
+            "Use the current patched .NET 10 LTS SDK for new work. Check the linked support policy before installation; do not choose a preview just because its number is higher. These lessons use features that also work in .NET 8 and 9, but their support windows differ."
+          ],
+          "example": "dotnet --info\ndotnet new console -n LearningConsole -f net10.0\ncd LearningConsole\ndotnet run\n# Expected: Hello, World!"
+        },
+        {
+          "title": "Edit and repeat",
+          "paragraphs": [
+            "Replace Program.cs with the example below. Top-level statements provide the entry point without writing a Program class. Console.WriteLine writes text followed by a newline.",
+            "Every console example in lessons 1–8 is a separate complete Program.cs unless labeled otherwise. Do not append all examples to one file. A missing semicolon or a quote without its partner is a compiler error; read the first error and its line before changing unrelated code."
+          ],
+          "example": "Console.WriteLine(\"Hello, C#!\");\n// Expected: Hello, C#!"
+        }
+      ],
+      "exercise": {
+        "prompt": "Print your name and one learning goal on separate lines.",
+        "starter": "// Add two Console.WriteLine calls.",
+        "solution": "Console.WriteLine(\"Asha\");\nConsole.WriteLine(\"Build a task API\");",
+        "checks": [
+          "dotnet run prints exactly two lines.",
+          "Change the name without changing the goal."
+        ]
+      },
+      "quiz": {
+        "question": "Which component is required to compile these projects?",
+        "options": [
+          "The .NET SDK",
+          "Only a browser",
+          "Only the runtime"
+        ],
+        "correct": 0,
+        "explanation": "The SDK contains the compiler and project tools."
+      }
+    },
+    {
+      "id": "types-null",
+      "title": "Types, values and missing data",
+      "takeaway": "Choose types deliberately and handle null before using a value.",
+      "sections": [
+        {
+          "title": "Numbers and strings",
+          "paragraphs": [
+            "int represents whole numbers; decimal is useful for decimal money arithmetic; bool represents true or false; string holds text. var asks the compiler to infer a type and does not make a variable dynamically typed.",
+            "Integer division discards the fractional part. Use a decimal operand when the fraction matters. The m suffix marks a decimal literal."
+          ],
+          "example": "int count = 3;\ndecimal total = 10m;\nConsole.WriteLine(10 / count);\nConsole.WriteLine(total / count > 3m);\n// Expected: 3 then True"
+        },
+        {
+          "title": "Null and input",
+          "paragraphs": [
+            "A nullable string, written string?, may contain no string. Console.ReadLine can return null when input ends, so validate before using it. The ?? operator supplies a fallback; ?. accesses a member only when the receiver exists.",
+            "Nullable annotations guide compiler analysis; they do not validate user input at runtime. Avoid adding ! just to silence a warning. TryParse handles an expected invalid input without an exception."
+          ],
+          "example": "string? input = \"12\";\nif (int.TryParse(input, out int age))\n    Console.WriteLine(age + 1);\nelse\n    Console.WriteLine(\"Enter a whole number\");\n// Expected: 13"
+        }
+      ],
+      "exercise": {
+        "prompt": "Parse a quantity and reject missing, invalid or negative values.",
+        "starter": "string? input = \"-2\";\n// Validate and print a message.",
+        "solution": "string? input = \"-2\";\nif (int.TryParse(input, out int quantity) && quantity >= 0)\n    Console.WriteLine($\"Quantity: {quantity}\");\nelse\n    Console.WriteLine(\"Invalid quantity\");",
+        "checks": [
+          "-2 and null print Invalid quantity.",
+          "0 and 4 are accepted.",
+          "abc does not throw."
+        ]
+      },
+      "quiz": {
+        "question": "What does var change?",
+        "options": [
+          "Runtime type can change freely",
+          "The compiler infers the fixed type",
+          "Null checks are disabled"
+        ],
+        "correct": 1,
+        "explanation": "var changes how a type is written, not how the type system works."
+      }
+    },
+    {
+      "id": "control-collections",
+      "title": "Control flow and collections",
+      "takeaway": "Use branches for decisions and collections for groups of values.",
+      "sections": [
+        {
+          "title": "Branch and loop",
+          "paragraphs": [
+            "if selects code based on a boolean condition. foreach visits each item in a collection; it is clearer than manually tracking indexes when you only need values.",
+            "An array has a fixed length. List<T> can grow. Generic T specifies the element type so an accidental string cannot enter a List<int>. Do not add or remove items from a list while enumerating it with foreach."
+          ],
+          "example": "var scores = new List<int> { 40, 75, 90 };\nforeach (int score in scores)\n{\n    if (score >= 60) Console.WriteLine($\"Pass: {score}\");\n}\n// Expected: Pass: 75 then Pass: 90"
+        },
+        {
+          "title": "Lookup by key",
+          "paragraphs": [
+            "Dictionary<TKey,TValue> associates unique keys with values, useful for looking up a task by its ID. TryGetValue handles a missing key; indexing a missing key throws.",
+            "Decide whether duplicate keys should be rejected or replace a value. A loop boundary using <= instead of < can access one element beyond an array."
+          ],
+          "example": "var names = new Dictionary<int, string> { [1] = \"Read\" };\nConsole.WriteLine(names.TryGetValue(2, out string? name) ? name : \"Missing\");\n// Expected: Missing"
+        }
+      ],
+      "exercise": {
+        "prompt": "Count passing scores without storing a second collection.",
+        "starter": "var scores = new List<int> { 59, 60, 100 };\nint passes = 0;",
+        "solution": "var scores = new List<int> { 59, 60, 100 };\nint passes = 0;\nforeach (int score in scores)\n    if (score >= 60) passes++;\nConsole.WriteLine(passes);",
+        "checks": [
+          "The sample prints 2.",
+          "An empty list prints 0.",
+          "A score of 60 counts."
+        ]
+      },
+      "quiz": {
+        "question": "Which collection supports lookup by an ID key?",
+        "options": [
+          "Array only",
+          "Dictionary<int, string>",
+          "bool"
+        ],
+        "correct": 1,
+        "explanation": "A dictionary maps keys to values."
+      }
+    },
+    {
+      "id": "methods",
+      "title": "Methods and contracts",
+      "takeaway": "A method names a small operation with explicit inputs and output.",
+      "sections": [
+        {
+          "title": "Parameters and return values",
+          "paragraphs": [
+            "A method isolates logic so callers do not repeat it. Parameters are local names for supplied values. A return type describes the result; void means no result.",
+            "Prefer returning a computed value over printing inside every method. This lets the same logic support a console, a web endpoint and a test. Local functions below work in a top-level Program.cs."
+          ],
+          "example": "Console.WriteLine(Total(3, 2.50m));\nstatic decimal Total(int quantity, decimal price) => quantity * price;\n// Expected: 7.50 (decimal separator can vary by culture)"
+        },
+        {
+          "title": "Define invalid inputs",
+          "paragraphs": [
+            "State the method's contract: for example quantity and price must be nonnegative. Validate at the boundary rather than silently producing impossible results.",
+            "Parameters are passed by value by default. For a reference type the copied value is a reference, so mutating an object's contents can still affect its caller. Avoid hidden mutation when a return value is enough."
+          ],
+          "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0 || price < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Values must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write IsPassing so 60 is the minimum passing score.",
+        "starter": "static bool IsPassing(int score) => false;",
+        "solution": "Console.WriteLine(IsPassing(59));\nConsole.WriteLine(IsPassing(60));\nstatic bool IsPassing(int score) => score >= 60;",
+        "checks": [
+          "59 returns false.",
+          "60 returns true.",
+          "100 returns true."
+        ]
+      },
+      "quiz": {
+        "question": "Why return a value instead of always printing?",
+        "options": [
+          "It lets callers reuse and test the result",
+          "It avoids all errors",
+          "It makes every operation asynchronous"
+        ],
+        "correct": 0,
+        "explanation": "Computation can be reused independently of its presentation."
+      }
+    },
+    {
+      "id": "objects",
+      "title": "Classes, records and state",
+      "takeaway": "Model related data and protect the operations that change it.",
+      "sections": [
+        {
+          "title": "An object with behavior",
+          "paragraphs": [
+            "A class combines state with operations. A constructor creates a valid instance. Properties expose data; a private setter allows only the class to change a property.",
+            "Place class declarations after top-level statements. Public fields make it easy for unrelated code to bypass your rules. A method such as Complete makes the allowed change visible."
+          ],
+          "example": "var item = new TaskItem(\"Read\");\nitem.Complete();\nConsole.WriteLine($\"{item.Title}: {item.Done}\");\nclass TaskItem\n{\n    public string Title { get; }\n    public bool Done { get; private set; }\n    public TaskItem(string title) => Title = title;\n    public void Complete() => Done = true;\n}\n// Expected: Read: True"
+        },
+        {
+          "title": "Records and boundaries",
+          "paragraphs": [
+            "A record is convenient for data represented by values, such as a request body. Positional records generate properties and value-based equality. A class remains useful for an entity whose identity and changing state matter.",
+            "An interface describes behavior without prescribing storage. Later an API can depend on a service interface and tests can substitute an implementation. Avoid inheritance merely to share a few lines."
+          ],
+          "example": "var first = new TaskRequest(\"Read\");\nvar second = new TaskRequest(\"Read\");\nConsole.WriteLine(first == second);\nrecord TaskRequest(string Title);\n// Expected: True"
+        }
+      ],
+      "exercise": {
+        "prompt": "Make a task reject a blank title and trim valid titles.",
+        "starter": "// Implement constructor validation in TaskItem.",
+        "solution": "var item = new TaskItem(\"  Read  \");\nConsole.WriteLine(item.Title);\nclass TaskItem\n{\n    public string Title { get; }\n    public TaskItem(string title)\n    {\n        if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException(\"Title required\", nameof(title));\n        Title = title.Trim();\n    }\n}",
+        "checks": [
+          "A spaced title prints Read.",
+          "An empty or whitespace title throws ArgumentException.",
+          "The Title setter is not public."
+        ]
+      },
+      "quiz": {
+        "question": "What does a private setter enforce?",
+        "options": [
+          "Only code inside the class can assign that property",
+          "The value is always null",
+          "Objects cannot be created"
+        ],
+        "correct": 0,
+        "explanation": "Access control constrains how state changes."
+      }
+    },
+    {
+      "id": "exceptions",
+      "title": "Exceptions and resource cleanup",
+      "takeaway": "Handle failures at a boundary and release resources reliably.",
+      "sections": [
+        {
+          "title": "Expected versus exceptional",
+          "paragraphs": [
+            "A failed TryParse is normal invalid input. An inaccessible file is an operation failure that may throw. Catch an exception only where you can recover or present a useful message.",
+            "Catch the specific type you understand. An empty catch hides failures. If you must rethrow the same exception, use throw; so its original stack information is retained."
+          ],
+          "example": "try\n{\n    string text = File.ReadAllText(\"missing-file.txt\");\n    Console.WriteLine(text);\n}\ncatch (FileNotFoundException)\n{\n    Console.WriteLine(\"File not found\");\n}\n// Expected when the file does not exist: File not found"
+        },
+        {
+          "title": "Dispose owned resources",
+          "paragraphs": [
+            "Some objects hold operating-system resources. using ensures Dispose runs even if the operation throws. The scope should be short and ownership clear.",
+            "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether data was actually saved."
+          ],
+          "example": "using var reader = new StringReader(\"Read\\nPractice\");\nConsole.WriteLine(reader.ReadLine());\n// Expected: Read; reader is disposed when its scope ends"
+        }
+      ],
+      "exercise": {
+        "prompt": "Read a supplied file and return a friendly message only when it is missing.",
+        "starter": "// Use File.ReadAllText and catch FileNotFoundException.",
+        "solution": "try { Console.WriteLine(File.ReadAllText(\"notes.txt\")); }\ncatch (FileNotFoundException) { Console.WriteLine(\"Create notes.txt first\"); }",
+        "checks": [
+          "Existing notes.txt prints its contents.",
+          "A missing file prints the friendly message.",
+          "Other failures are not silently converted to success."
+        ]
+      },
+      "quiz": {
+        "question": "What does using primarily guarantee?",
+        "options": [
+          "All exceptions are suppressed",
+          "Dispose runs when the scope exits",
+          "A file always exists"
+        ],
+        "correct": 1,
+        "explanation": "using provides deterministic cleanup."
+      }
+    },
+    {
+      "id": "linq",
+      "title": "Query collections with LINQ",
+      "takeaway": "Compose filtering, ordering and projection without hiding when work executes.",
+      "sections": [
+        {
+          "title": "A query pipeline",
+          "paragraphs": [
+            "LINQ extension methods work on sequences. Where filters, OrderBy sorts, and Select transforms each item. A lambda such as n => n >= 60 defines the operation for an item.",
+            "ToList materializes the result into a list. Many sequence operators are deferred: creating a query does not necessarily enumerate its source. This matters if you mutate the source before enumeration."
+          ],
+          "example": "var scores = new List<int> { 90, 40, 75 };\nvar results = scores.Where(n => n >= 60).OrderBy(n => n).Select(n => $\"Pass {n}\").ToList();\nConsole.WriteLine(string.Join(\", \", results));\n// Expected: Pass 75, Pass 90"
+        },
+        {
+          "title": "Choose terminal operations",
+          "paragraphs": [
+            "Any answers whether a match exists and Count counts matches. First throws on an empty sequence; FirstOrDefault supplies a default. For a reference type that default may be null.",
+            "LINQ over in-memory collections executes C#. LINQ through a database provider is translated and supports a provider-specific subset. Do not assume every helper method can become SQL."
+          ],
+          "example": "var titles = new List<string> { \"Read\", \"Practice\" };\nstring? match = titles.FirstOrDefault(t => t.StartsWith(\"Z\"));\nConsole.WriteLine(match ?? \"No match\");\n// Expected: No match"
+        }
+      ],
+      "exercise": {
+        "prompt": "Return even numbers in descending order.",
+        "starter": "var values = new[] { 5, 2, 4, 1 };",
+        "solution": "var values = new[] { 5, 2, 4, 1 };\nvar result = values.Where(n => n % 2 == 0).OrderByDescending(n => n).ToList();\nConsole.WriteLine(string.Join(\", \", result));",
+        "checks": [
+          "The sample prints 4, 2.",
+          "An all-odd input produces an empty list.",
+          "The original array is unchanged."
+        ]
+      },
+      "quiz": {
+        "question": "Which operator changes each item into another shape?",
+        "options": [
+          "Where",
+          "Select",
+          "Any"
+        ],
+        "correct": 1,
+        "explanation": "Select projects each source item into a result."
+      }
+    },
+    {
+      "id": "async",
+      "title": "Asynchronous operations and cancellation",
+      "takeaway": "await represents waiting for an operation without synchronously blocking the caller.",
+      "sections": [
+        {
+          "title": "Tasks and await",
+          "paragraphs": [
+            "An async method commonly returns Task or Task<T>. await suspends that method until the operation completes and then retrieves its result or propagates its exception.",
+            "Async is especially useful for I/O such as files, HTTP and databases. It does not automatically make CPU work faster or place every method on a new thread. Avoid .Result and .Wait in asynchronous paths."
+          ],
+          "example": "Console.WriteLine(await DescribeAsync());\nstatic async Task<string> DescribeAsync()\n{\n    await Task.Delay(20);\n    return \"Ready\";\n}\n// Expected after a short delay: Ready"
+        },
+        {
+          "title": "Cancellation is cooperative",
+          "paragraphs": [
+            "CancellationToken lets the caller request cancellation. Pass it through to APIs that accept it. A cancelled operation may throw OperationCanceledException, which can be handled at the boundary.",
+            "Use async void only for event handlers that require it; callers cannot await its completion. Await started tasks so their failures are observed. Artificial delay here teaches the mechanism, not network performance."
+          ],
+          "example": "using var cts = new CancellationTokenSource();\ncts.Cancel();\ntry { await Task.Delay(1000, cts.Token); }\ncatch (OperationCanceledException) { Console.WriteLine(\"Cancelled\"); }\n// Expected: Cancelled"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a cancellable method that returns 42 after a short delay.",
+        "starter": "static async Task<int> LoadAsync(CancellationToken token) { return 0; }",
+        "solution": "Console.WriteLine(await LoadAsync(CancellationToken.None));\nstatic async Task<int> LoadAsync(CancellationToken token)\n{\n    await Task.Delay(20, token);\n    return 42;\n}",
+        "checks": [
+          "Normal completion returns 42.",
+          "A pre-cancelled token causes cancellation.",
+          "The caller awaits the task."
+        ]
+      },
+      "quiz": {
+        "question": "Does async automatically make a CPU calculation faster?",
+        "options": [
+          "Yes",
+          "No",
+          "Only for int values"
+        ],
+        "correct": 1,
+        "explanation": "Async models waiting; CPU parallelism is a separate decision."
+      }
+    },
+    {
+      "id": "testing",
+      "title": "Test reusable logic",
+      "takeaway": "A test proves a specific behavior using inputs and assertions.",
+      "sections": [
+        {
+          "title": "Create separate projects",
+          "paragraphs": [
+            "Put reusable logic in a class library and tests in a test project. The reference lets tests call the library. Package restore requires network access; inspect generated files and package versions rather than assuming templates never change.",
+            "These commands create projects, not an entire finished application. A test runner reports failure when an assertion does not match; dotnet build only checks compilation."
+          ],
+          "example": "dotnet new classlib -n TaskLogic -f net10.0\ndotnet new xunit -n TaskLogic.Tests -f net10.0\ndotnet add TaskLogic.Tests/TaskLogic.Tests.csproj reference TaskLogic/TaskLogic.csproj\ndotnet test TaskLogic.Tests/TaskLogic.Tests.csproj\n# Expected: generated test project builds and tests run"
+        },
+        {
+          "title": "Assert boundaries",
+          "paragraphs": [
+            "Add the first code block to TaskLogic/Rules.cs and the second to a test file. Tests should cover a normal input and the threshold on both sides. Keep file-system and network dependencies out of a unit test when testing arithmetic or validation.",
+            "A passing test is evidence for its cases, not proof that all inputs work. Start with a failing assertion to confirm the test is discovered, then restore the correct expectation."
+          ],
+          "example": "// TaskLogic/Rules.cs\nnamespace TaskLogic;\npublic static class Rules { public static bool IsPassing(int score) => score >= 60; }\n\n// TaskLogic.Tests/RulesTests.cs\nusing Xunit;\npublic class RulesTests\n{\n    [Theory]\n    [InlineData(59, false)]\n    [InlineData(60, true)]\n    public void Passing_threshold(int score, bool expected)\n        => Assert.Equal(expected, TaskLogic.Rules.IsPassing(score));\n}\n// Expected: both theory cases pass"
+        }
+      ],
+      "exercise": {
+        "prompt": "Add a 100-point case and demonstrate one failing test before fixing it.",
+        "starter": "// Add another InlineData attribute.",
+        "solution": "[InlineData(100, true)]\n// Add above Passing_threshold. Temporarily use false, run dotnet test,\n// observe a failure, then restore true and rerun.",
+        "checks": [
+          "All three cases pass after correction.",
+          "The intentional wrong expectation produces a test failure.",
+          "Production logic is not changed to satisfy a wrong expectation."
+        ]
+      },
+      "quiz": {
+        "question": "What does a successful build establish?",
+        "options": [
+          "All behavior is correct",
+          "The code compiled",
+          "Every test passed"
+        ],
+        "correct": 1,
+        "explanation": "Compilation and behavior verification answer different questions."
+      }
+    },
+    {
+      "id": "api-di",
+      "title": "Build an ASP.NET Core API with dependency injection",
+      "takeaway": "HTTP endpoints translate requests into service calls and explicit responses.",
+      "sections": [
+        {
+          "title": "A complete small API",
+          "paragraphs": [
+            "Create an empty ASP.NET Core project, then replace Program.cs with the code below. A GET reads data; a POST accepts a JSON request and returns 201 with a resource location. Request binding constructs the record from JSON.",
+            "Use the printed listening address or the explicit URL shown here. Local HTTP is sufficient for this exercise; it is not a deployment recipe. A singleton store holds shared memory and must synchronize access. This example does so, but data disappears on restart."
+          ],
+          "example": "dotnet new web -n TaskApi -f net10.0\ncd TaskApi\n# Replace Program.cs with the next section's complete file.\ndotnet run --urls http://localhost:5080\n# In another terminal:\ncurl.exe http://localhost:5080/tasks\n# Expected initially: []"
+        },
+        {
+          "title": "Register and inject a service",
+          "paragraphs": [
+            "Dependency injection creates registered services and supplies them to endpoint parameters. Singleton means one instance for the application; scoped usually means one per request; transient means a new instance per resolution.",
+            "Do not inject a scoped database context into a singleton store. The following complete file validates titles and protects its list with a lock; it is intentionally small enough to replace with a persistent store later."
+          ],
+          "example": "var builder = WebApplication.CreateBuilder(args);\nbuilder.Services.AddSingleton<TaskStore>();\nvar app = builder.Build();\napp.MapGet(\"/tasks\", (TaskStore store) => store.All());\napp.MapPost(\"/tasks\", (TaskRequest request, TaskStore store) =>\n{\n    if (string.IsNullOrWhiteSpace(request.Title)) return Results.BadRequest(\"Title required\");\n    var item = store.Add(request.Title.Trim());\n    return Results.Created($\"/tasks/{item.Id}\", item);\n});\napp.MapGet(\"/tasks/{id:int}\", (int id, TaskStore store) =>\n    store.All().FirstOrDefault(t => t.Id == id) is { } item\n        ? Results.Ok(item) : Results.NotFound());\napp.Run();\nrecord TaskRequest(string Title);\nrecord TaskItem(int Id, string Title);\nclass TaskStore\n{\n    private readonly List<TaskItem> items = new();\n    private readonly object gate = new();\n    private int nextId = 1;\n    public TaskItem[] All() { lock (gate) return items.ToArray(); }\n    public TaskItem Add(string title)\n    {\n        lock (gate) { var item = new TaskItem(nextId++, title); items.Add(item); return item; }\n    }\n}\n// POST /tasks with {\"title\":\"Read\"} => 201, {\"id\":1,\"title\":\"Read\"}"
+        }
+      ],
+      "exercise": {
+        "prompt": "Send valid and blank POST requests, then retrieve a missing task.",
+        "starter": "# Use an HTTP client with Content-Type: application/json.",
+        "solution": "curl.exe -i -X POST http://localhost:5080/tasks -H \"Content-Type: application/json\" --data-raw \"{\\\"title\\\":\\\"Read\\\"}\"\n# Shell quoting varies: an HTTP client or JSON file with --data-binary @request.json avoids escaping issues.\n# POST {\"title\":\"  \"} => 400; GET /tasks/999 => 404.",
+        "checks": [
+          "Valid POST returns 201 and a Location header.",
+          "Whitespace title returns 400.",
+          "Unknown ID returns 404.",
+          "GET /tasks includes the created task."
+        ]
+      },
+      "quiz": {
+        "question": "How long does a singleton service live?",
+        "options": [
+          "One instance for the application",
+          "One instance per request",
+          "One instance per SQL row"
+        ],
+        "correct": 0,
+        "explanation": "Singleton services share application-wide state and require safe concurrency."
+      }
+    },
+    {
+      "id": "database",
+      "title": "Persist data and parameterize queries",
+      "takeaway": "Database values belong in parameters, with schema and lifetimes managed explicitly.",
+      "sections": [
+        {
+          "title": "Use a scoped context",
+          "paragraphs": [
+            "EF Core maps entities to tables and LINQ queries to SQL. In the existing TaskApi project, add the SQLite provider from the 10.x release family that matches this path's target framework. Keep runtime, provider and tooling versions compatible.",
+            "Replace the in-memory registration and endpoint implementation rather than mixing both stores. A DbContext is normally scoped to a request and is not thread-safe. Await an operation before starting another on the same context."
+          ],
+          "example": "dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 10.0.0\n# Use a current supported 10.x patch for real projects; 10.0.0 is a reproducible lesson baseline.\n# Program.cs fragment; add before builder.Build():\n# builder.Services.AddDbContext<TaskDb>(o => o.UseSqlite(\"Data Source=tasks.db\"));"
+        },
+        {
+          "title": "A database endpoint fragment",
+          "paragraphs": [
+            "This fragment shows the key pieces, not a complete replacement Program.cs. Add the using directive at the file top, the context and entity after top-level statements, and register the context before building the app. Initialize after building and before app.Run.",
+            "EnsureCreated is convenient for an isolated learning database. It does not manage an evolving production schema and should not be mixed with a migrations workflow. Use migrations and review generated changes as the model evolves."
+          ],
+          "example": "using Microsoft.EntityFrameworkCore;\n// After var app = builder.Build():\nusing (var scope = app.Services.CreateScope())\n    scope.ServiceProvider.GetRequiredService<TaskDb>().Database.EnsureCreated();\napp.MapGet(\"/saved-tasks\", async (TaskDb db, CancellationToken token) =>\n    await db.Tasks.AsNoTracking().OrderBy(t => t.Id).ToListAsync(token));\n// Type declarations:\nclass TaskDb(DbContextOptions<TaskDb> options) : DbContext(options)\n{\n    public DbSet<SavedTask> Tasks => Set<SavedTask>();\n}\nclass SavedTask\n{\n    public int Id { get; set; }\n    public string Title { get; set; } = \"\";\n}\n// GET /saved-tasks => [] for a new database."
+        },
+        {
+          "title": "Keep SQL and data separate",
+          "paragraphs": [
+            "LINQ predicates let the provider bind input as data. EF Core's interpolated FromSql form also parameterizes values when the interpolated expression is passed directly. Building a SQL string with concatenation and sending it through FromSqlRaw allows input to change SQL structure.",
+            "Parameters cannot substitute table names or sort keywords. Choose structural options from a fixed allowlist. Do not log secrets or put database credentials in committed code."
+          ],
+          "example": "// Inside an async endpoint with TaskDb db and string title:\nvar rows = await db.Tasks.Where(t => t.Title == title).ToListAsync();\n// Equivalent parameterized raw-SQL form for this entity:\nvar rowsFromSql = await db.Tasks.FromSql($\"SELECT * FROM Tasks WHERE Title = {title}\").ToListAsync();\n// A title containing an apostrophe remains a value, not SQL syntax."
+        }
+      ],
+      "exercise": {
+        "prompt": "Add POST /saved-tasks using validation, Add and SaveChangesAsync; verify persistence after restart.",
+        "starter": "// Register TaskDb, then map a POST endpoint.",
+        "solution": "app.MapPost(\"/saved-tasks\", async (TaskRequest request, TaskDb db, CancellationToken token) =>\n{\n    if (string.IsNullOrWhiteSpace(request.Title)) return Results.BadRequest(\"Title required\");\n    var item = new SavedTask { Title = request.Title.Trim() };\n    db.Tasks.Add(item);\n    await db.SaveChangesAsync(token);\n    return Results.Created($\"/saved-tasks/{item.Id}\", item);\n});\n// Add GET /saved-tasks/{id:int} before claiming the Location URL is retrievable.",
+        "checks": [
+          "POST stores a valid task.",
+          "Restarting from the same working directory preserves the row.",
+          "A title such as O'Brien is stored literally.",
+          "Invalid titles produce no rows."
+        ]
+      },
+      "quiz": {
+        "question": "Which query keeps input as data?",
+        "options": [
+          "Concatenating input into FromSqlRaw",
+          "Where(t => t.Title == title)",
+          "Trusting input because it came from JSON"
+        ],
+        "correct": 1,
+        "explanation": "The provider parameterizes the predicate's value."
+      }
+    },
+    {
+      "id": "capstone",
+      "title": "Capstone: a tested task service",
+      "takeaway": "Combine contracts, persistence, HTTP responses and tests into a small explainable application.",
+      "sections": [
+        {
+          "title": "Define observable behavior",
+          "paragraphs": [
+            "Build a task service with create, list, fetch and complete operations. Each task has an integer ID, a trimmed nonblank title and a Done flag. An unknown task returns 404; invalid creation returns 400; valid creation returns 201.",
+            "Persist tasks in SQLite and use a scoped context. Add a GET endpoint matching the Location returned by POST. The API should await database calls and pass cancellation through. This is a local learning service; authentication and deployment remain next steps."
+          ],
+          "example": "POST /tasks {\"title\":\"  Read  \"} -> 201 with title Read and done false\nGET /tasks/{id} -> 200\nPATCH /tasks/{id}/complete -> 204\nGET /tasks/{id} -> done true\nPATCH /tasks/999/complete -> 404"
+        },
+        {
+          "title": "Implement and verify deliberately",
+          "paragraphs": [
+            "Start from the preceding database lesson, remove duplicate in-memory routes and add Done to the entity before creating a fresh learning database or using a reviewed migration. Isolate title validation into a pure method and test blank, whitespace and valid input.",
+            "Add HTTP-level checks for status codes and persistence so a correct helper cannot mask a broken route. Do not delete an existing database containing valuable data to work around a schema mismatch. Explain each route, service lifetime and input rule in a short README."
+          ],
+          "example": "// Endpoint fragment for an existing app and TaskDb:\napp.MapPatch(\"/tasks/{id:int}/complete\", async (int id, TaskDb db, CancellationToken token) =>\n{\n    var item = await db.Tasks.FindAsync(new object[] { id }, token);\n    if (item is null) return Results.NotFound();\n    item.Done = true; // Add public bool Done { get; set; } to SavedTask.\n    await db.SaveChangesAsync(token);\n    return Results.NoContent();\n});\n// Expected: 204 for an existing ID, 404 for a missing ID."
+        }
+      ],
+      "exercise": {
+        "prompt": "Finish the service and write a repeatable acceptance sequence covering creation, completion and restart.",
+        "starter": "// Extend SavedTask with Done and use one persistent set of /tasks routes.",
+        "solution": "// Implementation outline:\n// 1. Validate title before Add; return Created with a working GET location.\n// 2. GET by ID uses FindAsync and returns Ok or NotFound.\n// 3. PATCH uses the endpoint above; repeating it leaves Done true.\n// 4. GET list uses AsNoTracking and OrderBy(Id).\n// 5. Run unit tests, then the acceptance sequence; restart and repeat GET.\n// This is a capstone outline, not a complete runnable project.",
+        "checks": [
+          "dotnet build and dotnet test succeed for your projects.",
+          "Blank creation returns 400; valid creation returns 201.",
+          "The Location resource can be fetched.",
+          "Complete twice leaves Done true.",
+          "Missing IDs return 404.",
+          "Restart preserves title and completion state."
+        ]
+      },
+      "quiz": {
+        "question": "Why also test the HTTP boundary?",
+        "options": [
+          "A unit-tested helper cannot establish route binding and status behavior",
+          "Unit tests are never useful",
+          "HTTP tests replace all database checks"
+        ],
+        "correct": 0,
+        "explanation": "The boundary adds behavior that a pure helper test does not exercise."
+      }
+    }
+  ],
+  "publicFiles": []
+}

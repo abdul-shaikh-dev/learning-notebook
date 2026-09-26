@@ -1,0 +1,534 @@
+{
+  "id": "react",
+  "title": "JavaScript → TypeScript → React",
+  "category": "Web development",
+  "status": "ready",
+  "description": "Start with browser and JavaScript fundamentals, then build a typed, accessible learning tracker with React.",
+  "level": "Beginner · first edition",
+  "prerequisites": [
+    "No React experience required. Be comfortable creating folders and editing text files.",
+    "Work through JavaScript lessons before the React sections. Familiarity with HTML is useful but introduced here."
+  ],
+  "outcomes": [
+    "Model information with JavaScript arrays and objects.",
+    "Use TypeScript to describe values and handle optional data.",
+    "Build components, forms and state transitions without mutating previous state.",
+    "Explain loading, error and empty states, then test a small tracker."
+  ],
+  "setup": [
+    "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website’s console.",
+    "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool’s requirements.",
+    "A learning-only Vite setup: npm create vite@latest notebook-practice -- --template react-ts; cd notebook-practice; npm install; npm run dev. These commands download tools; this notebook does not run them.",
+    "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build."
+  ],
+  "nextSteps": [
+    "Add routing with a maintained router and study URL/history behavior.",
+    "Add server persistence, authentication and API validation; browser storage is not an access-control boundary.",
+    "Learn a framework’s data loading, server rendering and deployment before building production applications.",
+    "Practise automated component tests, browser tests, performance profiling and accessibility audits."
+  ],
+  "sources": [
+    {
+      "title": "MDN JavaScript Guide",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+    },
+    {
+      "title": "MDN promises",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises"
+    },
+    {
+      "title": "TypeScript Handbook",
+      "url": "https://www.typescriptlang.org/docs/handbook/"
+    },
+    {
+      "title": "React: Thinking in React",
+      "url": "https://react.dev/learn/thinking-in-react"
+    },
+    {
+      "title": "React: Updating arrays in state",
+      "url": "https://react.dev/learn/updating-arrays-in-state"
+    },
+    {
+      "title": "React: Synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects"
+    },
+    {
+      "title": "React: build from scratch",
+      "url": "https://react.dev/learn/build-a-react-app-from-scratch"
+    }
+  ],
+  "publicFiles": [
+    "practice/App.tsx"
+  ],
+  "downloads": [
+    {
+      "title": "Runnable React tracker — App.tsx",
+      "href": "paths/react/practice/App.tsx"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "web-basics",
+      "title": "1. The browser, HTML and JavaScript",
+      "takeaway": "HTML gives meaning, CSS controls presentation and JavaScript changes behavior.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "A browser turns a document into an interactive page. A button has a role, focus behavior and keyboard activation that a clickable div does not automatically provide. Start with meaningful elements before styling.",
+            "The tiny example is a complete HTML fragment. Its label tells a user what the input means. A React application still produces ordinary browser elements; React is not a replacement for HTML or accessibility."
+          ],
+          "example": "<label for=\"topic\">Topic</label>\n<input id=\"topic\" name=\"topic\" />\n<button type=\"button\">Add topic</button>"
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "A placeholder disappears when typing and is not a substitute for a persistent label. Avoid using color alone to indicate errors."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write markup for a study-minutes number input with a label and a Save button.",
+        "solution": "<label for=\"minutes\">Study minutes</label>\n<input id=\"minutes\" type=\"number\" min=\"0\" />\n<button type=\"button\">Save</button>",
+        "checks": [
+          "Clicking the label focuses the input.",
+          "Tab reaches the input and button.",
+          "This markup does not save anything until behavior is added."
+        ]
+      },
+      "quiz": {
+        "question": "Which element already supports keyboard activation?",
+        "options": [
+          "A native button",
+          "A div with blue text",
+          "A span with a click handler"
+        ],
+        "correct": 0,
+        "explanation": "Native controls provide useful behavior and semantics. Styling a generic element does not add them."
+      }
+    },
+    {
+      "id": "values",
+      "title": "2. Values, equality and conversion",
+      "takeaway": "Convert at boundaries; do not rely on accidental coercion.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "Input values arrive as strings even when they look numeric. Convert deliberately, then validate. Number('') is zero, so check for blank input before conversion.",
+            "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
+          ],
+          "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Treating every falsy value as missing rejects valid zero. Check the condition you actually mean."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write parseMinutes(raw) that returns null for blanks, negatives or non-integers.",
+        "solution": "function parseMinutes(raw) {\n  if (raw.trim() === \"\") return null;\n  const n = Number(raw);\n  return Number.isInteger(n) && n >= 0 ? n : null;\n}\nconsole.log(parseMinutes(\"0\"), parseMinutes(\"\"), parseMinutes(\"2.5\"));\n// 0 null null",
+        "checks": [
+          "Zero is accepted.",
+          "Blank and fractional input are rejected.",
+          "Use null explicitly rather than testing result with !result."
+        ]
+      },
+      "quiz": {
+        "question": "What is Number('')?",
+        "options": [
+          "NaN",
+          "0",
+          "undefined"
+        ],
+        "correct": 1,
+        "explanation": "An empty string converts to zero; validate blank input before converting."
+      }
+    },
+    {
+      "id": "collections",
+      "title": "3. Arrays, objects and transformations",
+      "takeaway": "Keep source records separate from derived views.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "An array is an ordered collection. An object groups named properties for one record. map transforms every element, filter selects elements and reduce combines them into one value.",
+            "A learning tracker can store records once and derive completed titles or totals when needed. A derived array need not be another mutable source of truth."
+          ],
+          "example": "const lessons = [{id: 1, title: \"Types\", done: true}, {id: 2, title: \"Arrays\", done: false}];\nconst titles = lessons.filter(x => x.done).map(x => x.title);\nconsole.log(titles); // [\"Types\"]"
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "sort mutates an array. Use [...items].sort(...) when the original order must remain intact. A shallow copy still shares nested objects."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Return total minutes for completed records only.",
+        "solution": "const rows = [{done:true, minutes:20},{done:false, minutes:50},{done:true, minutes:15}];\nconst total = rows.filter(x => x.done).reduce((sum,x) => sum + x.minutes, 0);\nconsole.log(total); // 35",
+        "checks": [
+          "The result is 35.",
+          "An empty array returns 0.",
+          "The input records remain unchanged."
+        ]
+      },
+      "quiz": {
+        "question": "Which operation selects a subset?",
+        "options": [
+          "map",
+          "filter",
+          "reduce"
+        ],
+        "correct": 1,
+        "explanation": "filter keeps matching elements. map transforms elements without changing the count."
+      }
+    },
+    {
+      "id": "functions",
+      "title": "4. Functions and predictable behavior",
+      "takeaway": "A small pure function is easier to explain and test.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "A function receives inputs and returns an output. A pure function depends only on its inputs and does not change external state. Logging and network calls are side effects; they are useful, but keep them at clear boundaries.",
+            "Arrow functions are concise syntax, not a separate execution model. A function passed as an argument can be called later; calling it immediately passes its result instead."
+          ],
+          "example": "function completion(done, total) {\n  return total === 0 ? 0 : Math.round(100 * done / total);\n}\nconsole.log(completion(3, 4)); // 75"
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Returning nothing yields undefined. In an arrow function with braces, write return explicitly."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement toggleById(rows, id) without changing rows or its objects.",
+        "solution": "function toggleById(rows, id) {\n  return rows.map(row => row.id === id ? {...row, done: !row.done} : row);\n}\nconst before = [{id:1, done:false}];\nconst after = toggleById(before, 1);\nconsole.log(before[0].done, after[0].done); // false true",
+        "checks": [
+          "The selected item flips.",
+          "An unknown ID leaves all values unchanged.",
+          "The original selected object is not mutated."
+        ]
+      },
+      "quiz": {
+        "question": "What should an event handler receive?",
+        "options": [
+          "A function to call later",
+          "Always the result of calling a function now",
+          "Only a string"
+        ],
+        "correct": 0,
+        "explanation": "Passing a function defers work until the event occurs."
+      }
+    },
+    {
+      "id": "async",
+      "title": "5. Promises and API boundaries",
+      "takeaway": "An asynchronous result needs success, failure and loading behavior.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "A Promise represents eventual completion or failure. await pauses the current async function, not the whole browser. Use try/catch to handle rejections and decide what the user should see.",
+            "fetch resolves for many HTTP errors, including 404; inspect response.ok. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
+          ],
+          "example": "async function loadTitles(url) {\n  const response = await fetch(url);\n  if (!response.ok) throw new Error(\"HTTP \" + response.status);\n  const data = await response.json();\n  if (!Array.isArray(data) || !data.every(x => typeof x === \"string\")) {\n    throw new Error(\"Expected a list of titles\");\n  }\n  return data;\n}\n// Example function: requires a real compatible endpoint; not run automatically."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with Promise.all; one rejection rejects that combined promise."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Handle a simulated rejection and return an empty list only after explicitly recording the error.",
+        "solution": "async function demo() {\n  try { return await Promise.reject(new Error(\"offline\")); }\n  catch (error) { console.log(error.message); return []; }\n}\ndemo().then(console.log); // offline, then []",
+        "checks": [
+          "The rejection is handled.",
+          "The fallback is deliberate, not a silent success.",
+          "In a UI, display an error and retry option rather than disguising failure as an empty dataset."
+        ]
+      },
+      "quiz": {
+        "question": "Does fetch automatically reject on HTTP 404?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "correct": 1,
+        "explanation": "Check response.ok or status; an HTTP response can resolve the promise even when its status is an error."
+      }
+    },
+    {
+      "id": "typescript",
+      "title": "6. TypeScript and narrowing",
+      "takeaway": "Types check assumptions during development; validate external data at runtime.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "TypeScript adds a static type checker to JavaScript. A union such as string | null describes alternatives. A conditional can narrow that union before an operation is used.",
+            "An interface describes an expected shape, but it does not inspect a network response. Casting with as does not make unknown data valid. Start with unknown at external boundaries and check it."
+          ],
+          "example": "type Lesson = {id: number; title: string; done: boolean};\nfunction label(title: string | null): string {\n  return title === null ? \"Untitled\" : title.toUpperCase();\n}\nconsole.log(label(null)); // Untitled\n// Run in a TypeScript project or the official playground."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "any disables useful checking. Prefer a specific type or unknown with narrowing when the shape is not yet established."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Accept unknown and return a nonnegative integer or null.",
+        "solution": "function readCount(value: unknown): number | null {\n  return typeof value === \"number\" && Number.isInteger(value) && value >= 0\n    ? value : null;\n}\nconsole.log(readCount(\"3\"), readCount(3)); // null 3",
+        "checks": [
+          "String '3' is not accepted as a number.",
+          "Negative, fractional and NaN values return null.",
+          "No unsafe assertion is needed."
+        ]
+      },
+      "quiz": {
+        "question": "Does an interface validate JSON?",
+        "options": [
+          "Yes, automatically",
+          "No, runtime checks are separate"
+        ],
+        "correct": 1,
+        "explanation": "Types are not runtime validators; a server can return data that violates your declared type."
+      }
+    },
+    {
+      "id": "components",
+      "title": "7. Components, props and lists",
+      "takeaway": "Pass data down and keep each component’s responsibility clear.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "A component renders one part of the interface from its inputs. Props are supplied by its parent. Begin with a static screen so the component boundaries are understandable before adding behavior.",
+            "Use stable record IDs for list keys. The key helps React match elements between renders; it is not an ordinary prop automatically received by the child. In the snippet, the parent passes title separately."
+          ],
+          "example": "type RowProps = {title: string};\nfunction LessonRow({title}: RowProps) { return <li>{title}</li>; }\nexport default function App() {\n  const rows = [{id: \"types\", title: \"Types\"}, {id: \"state\", title: \"State\"}];\n  return <ul>{rows.map(r => <LessonRow key={r.id} title={r.title} />)}</ul>;\n}\n// App.tsx in the practice React project. Displays two list items."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Array indexes are fragile keys when records can be inserted, deleted or reordered. Do not generate new random keys on every render."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Extend LessonRow to display a completed marker using a done prop.",
+        "solution": "type RowProps = {title: string; done: boolean};\nfunction LessonRow({title, done}: RowProps) {\n  return <li>{title} — {done ? \"Complete\" : \"To do\"}</li>;\n}\n// Usage: <LessonRow title=\"Types\" done={true} />",
+        "checks": [
+          "Complete and To do are visible text.",
+          "Props are not modified by the component.",
+          "The parent supplies the status."
+        ]
+      },
+      "quiz": {
+        "question": "Which key is most appropriate for reorderable records?",
+        "options": [
+          "Array index",
+          "Stable record ID",
+          "A new random number every render"
+        ],
+        "correct": 1,
+        "explanation": "A stable identity lets React match the same record through list changes."
+      }
+    },
+    {
+      "id": "state",
+      "title": "8. Events, state and immutable updates",
+      "takeaway": "State is a snapshot; request the next state instead of mutating the current one.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "React state retains information between renders. A setter requests another render. The current event handler still sees the snapshot from the render that created it.",
+            "When an update depends on previous state, a functional updater communicates that dependency. Create new arrays and changed objects so the update is explicit. Keep calculated totals derived from the current records."
+          ],
+          "example": "import {useState} from \"react\";\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(c => c + 1)}>Sessions: {count}</button>;\n}"
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Directly changing an object in state does not request a render. Also avoid storing both records and a separately maintained completed count when the count can be derived."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write the state update to toggle record id 'types'.",
+        "solution": "setLessons(previous => previous.map(row =>\n  row.id === \"types\" ? {...row, done: !row.done} : row\n));\n// Assumes lessons state is an array with id and done properties.",
+        "checks": [
+          "The selected object is copied.",
+          "Unchanged records retain their values.",
+          "A second toggle returns to the original status."
+        ]
+      },
+      "quiz": {
+        "question": "What does a state setter do?",
+        "options": [
+          "Mutates the current local variable immediately",
+          "Requests a future render with updated state"
+        ],
+        "correct": 1,
+        "explanation": "The current render’s snapshot remains unchanged; a new render receives the next state."
+      },
+      "trace": {
+        "title": "Step through a state update",
+        "frames": [
+          {
+            "label": "Render one",
+            "items": [
+              "count = 0",
+              "button: Sessions 0"
+            ],
+            "explanation": "The handler closes over this render’s snapshot."
+          },
+          {
+            "label": "User clicks",
+            "items": [
+              "setCount(c => c + 1)",
+              "update queued"
+            ],
+            "explanation": "The updater computes the next count. The current snapshot is still zero."
+          },
+          {
+            "label": "Render two",
+            "items": [
+              "count = 1",
+              "button: Sessions 1"
+            ],
+            "explanation": "React renders using the next state and updates the visible result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "forms",
+      "title": "9. Forms, validation and derived views",
+      "takeaway": "Store user input; derive filtered output from it.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "A controlled input receives its value from state and reports changes through an event handler. Keep the input’s accessible label visible. A form can handle submission from both a button and the Enter key.",
+            "Search results are derived from records plus the search query. There is no need to copy them into another state variable. Validate on submit, and explain errors in text near the field."
+          ],
+          "example": "const [query, setQuery] = useState(\"\");\nconst visible = lessons.filter(row => row.title.toLowerCase().includes(query.toLowerCase()));\n// Inside a component with lessons and useState:\n<label htmlFor=\"search\">Find a lesson</label>\n<input id=\"search\" value={query} onChange={e => setQuery(e.target.value)} />\n// Render visible.map(...) below the input."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "This is a component fragment, not a full file. Hooks must be called at the top level of a component or custom Hook, not inside a conditional."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Describe and implement a trimmed title validator.",
+        "solution": "function validTitle(value: string): string | null {\n  const title = value.trim();\n  return title.length >= 2 ? title : null;\n}\n// Submit handler calls event.preventDefault(), validates, then updates records.",
+        "checks": [
+          "Whitespace-only input fails.",
+          "A valid title is trimmed.",
+          "Show a visible error; do not rely on an alert or red border alone."
+        ]
+      },
+      "quiz": {
+        "question": "Should filtered results usually be stored separately?",
+        "options": [
+          "Yes, always",
+          "No, calculate them from records and query"
+        ],
+        "correct": 1,
+        "explanation": "A derived value avoids synchronizing duplicate state."
+      }
+    },
+    {
+      "id": "effects",
+      "title": "10. Effects and external systems",
+      "takeaway": "Use Effects to synchronize external systems, not to calculate ordinary derived values.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "An Effect can connect a component to something outside rendering, such as browser storage or a subscription. Cleanup releases resources or prevents obsolete work from affecting the current screen.",
+            "Fetching data in an Effect needs loading and error handling plus protection from stale results. Frameworks and data libraries can manage these concerns. Do not suppress dependencies just to stop an Effect from running."
+          ],
+          "example": "useEffect(() => {\n  const controller = new AbortController();\n  fetch(\"/api/lessons\", {signal: controller.signal})\n    .then(r => { if (!r.ok) throw new Error(\"HTTP \" + r.status); return r.json(); })\n    .then(data => { /* validate shape, then update data state */ })\n    .catch(error => { if (error.name !== \"AbortError\") { /* show error state */ } });\n  return () => controller.abort();\n}, []);\n// Pattern fragment: import useEffect and supply a real API; comments are required implementation work."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "An Effect may be set up and cleaned up extra times in development Strict Mode. Design correct cleanup instead of relying on a single execution."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose whether a completed count needs an Effect, then implement it.",
+        "solution": "const completedCount = lessons.filter(row => row.done).length;\n// Derived during rendering; no Effect or separate count state required.",
+        "checks": [
+          "Changing lessons changes the count on the next render.",
+          "No extra synchronization step exists.",
+          "Use Effects only for actual external synchronization."
+        ]
+      },
+      "quiz": {
+        "question": "Which operation needs no Effect?",
+        "options": [
+          "Subscribing to an external event source",
+          "Calculating a filtered count"
+        ],
+        "correct": 1,
+        "explanation": "Pure calculations can run during rendering."
+      }
+    },
+    {
+      "id": "capstone",
+      "title": "11. Build and test a learning tracker",
+      "takeaway": "Finish a small complete feature before adding a larger architecture.",
+      "sections": [
+        {
+          "title": "Build the mental model",
+          "paragraphs": [
+            "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It deliberately keeps data in memory so state behavior is visible without storage complications.",
+            "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
+          ],
+          "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
+        },
+        {
+          "title": "Common mistake to avoid",
+          "paragraphs": [
+            "Do not claim persistence just because a value survives changing a filter. This example resets after a page reload and has no backend."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add a Show incomplete only checkbox and combine it with text filtering.",
+        "solution": "const [onlyIncomplete, setOnlyIncomplete] = useState(false);\nconst visible = lessons.filter(row =>\n  (!onlyIncomplete || !row.done) && row.title.toLowerCase().includes(query.toLowerCase())\n);\n// Bind checked={onlyIncomplete} and onChange={e => setOnlyIncomplete(e.target.checked)}.",
+        "checks": [
+          "Both filters apply together.",
+          "The total completion count still reflects all records.",
+          "An empty list has an explanatory message."
+        ]
+      },
+      "quiz": {
+        "question": "What must be added for progress across devices?",
+        "options": [
+          "Only another useState call",
+          "A persistence/synchronization design, usually involving a backend"
+        ],
+        "correct": 1,
+        "explanation": "Memory state is local to a running page. Cross-device data needs storage, identity and synchronization decisions."
+      }
+    }
+  ]
+}

@@ -1,0 +1,633 @@
+{
+  "id": "python",
+  "title": "Python",
+  "category": "Programming",
+  "status": "ready",
+  "description": "Learn Python by running small programs, practicing each concept, and building a persistent study log. Twelve lessons form a practical beginner foundation, with offline examples and self-checks.",
+  "level": "Beginner",
+  "prerequisites": [
+    "Comfort creating files and opening a terminal; no programming experience required.",
+    "A computer with a current supported Python 3 interpreter."
+  ],
+  "outcomes": [
+    "Run and explain short Python scripts.",
+    "Use values, collections, conditions, loops, and functions to transform data.",
+    "Validate inputs, read tracebacks, and persist records as UTF-8 JSON.",
+    "Organize modules and understand project environments.",
+    "Write small deterministic tests and distinguish API I/O from data processing.",
+    "Build and extend a local study log with explicit limitations."
+  ],
+  "setup": [
+    "Install a supported Python 3 release from python.org if needed; this path uses only the standard library.",
+    "Confirm python --version (Windows may use py; macOS/Linux may use python3).",
+    "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
+    "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
+    "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required."
+  ],
+  "nextSteps": [
+    "Add an argparse command interface and regression tests to your study log.",
+    "Study classes, iterators, generators, and type hints in the official tutorial.",
+    "Choose one real API, read its authentication and rate-limit documentation, and build a separate integration test.",
+    "Learn packaging and dependency management when your project needs external libraries."
+  ],
+  "sources": [
+    {
+      "title": "Python tutorial: language and standard-library foundations",
+      "url": "https://docs.python.org/3/tutorial/"
+    },
+    {
+      "title": "Virtual environments and packages",
+      "url": "https://docs.python.org/3/tutorial/venv.html"
+    },
+    {
+      "title": "JSON encoding and decoding",
+      "url": "https://docs.python.org/3/library/json.html"
+    },
+    {
+      "title": "unittest reference",
+      "url": "https://docs.python.org/3/library/unittest.html"
+    },
+    {
+      "title": "urllib.request reference",
+      "url": "https://docs.python.org/3/library/urllib.request.html"
+    },
+    {
+      "title": "pathlib reference",
+      "url": "https://docs.python.org/3/library/pathlib.html"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "run-a-program",
+      "title": "1. Run your first program",
+      "takeaway": "A program is a sequence of instructions executed by an interpreter.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Python reads your source code and performs its instructions. A script is a plain text file ending in .py. The interpreter is the program that runs it; a terminal is where you ask the interpreter to run a file.",
+            "Save the example as hello.py in a folder you can find. Open a terminal in that folder and run python hello.py. On Windows, py hello.py may work instead; on macOS or Linux the command is often python3 hello.py. Use the same interpreter command throughout this path."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "print sends a value to the terminal. Quotation marks delimit text, called a string; they do not appear in the output. Python runs these lines from top to bottom."
+          ],
+          "example": "print(\"Hello, Python!\")\nprint(\"One small step\")\n\n# Expected output:\n# Hello, Python!\n# One small step"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "The interactive prompt shows >>> and runs one instruction at a time. Do not copy >>> into a script. If the terminal cannot find Python, fix the installation or interpreter selection before debugging your code. A file named python.py can also shadow library imports later."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Create a greeting script that prints your name on one line and one learning goal on the next. Use the sample values below to check your version.",
+        "starter": "print(\"YOUR NAME\")\n# Print your goal next",
+        "solution": "print(\"Asha\")\nprint(\"Build a useful script\")",
+        "checks": [
+          "Running the script finishes without an error.",
+          "There are two lines: Asha, then Build a useful script.",
+          "Change both strings and run the file again; the output changes."
+        ]
+      },
+      "quiz": {
+        "question": "What runs the instructions in a .py file?",
+        "options": [
+          "The Python interpreter",
+          "The filename extension by itself",
+          "The terminal font"
+        ],
+        "correct": 0,
+        "explanation": "The interpreter executes Python source. The terminal gives you a way to invoke it."
+      }
+    },
+    {
+      "id": "values-and-names",
+      "title": "2. Values, variables, and numbers",
+      "takeaway": "Variables name values; arithmetic produces new values.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "An assignment such as count = 3 binds a name to a value. Reading count later retrieves that value. Reassigning count changes what the name refers to; = is assignment, while == compares values.",
+            "Integers represent whole numbers, floats represent approximate fractional numbers, strings represent text, and booleans are True or False. Choose names that describe the value, such as minutes_per_day, and use type(value) when you need to inspect a type."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The example totals study time and uses an f-string to insert values into text. Division / produces a float. The // operator gives floor division, and % gives a remainder."
+          ],
+          "example": "minutes_per_day = 25\ndays = 4\ntotal = minutes_per_day * days\nprint(f\"Total: {total} minutes\")\nprint(f\"Hours: {total / 60:.2f}\")\n\n# Expected output:\n# Total: 100 minutes\n# Hours: 1.67"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Decimal floats can have tiny representation errors: 0.1 + 0.2 need not equal 0.3 exactly. Avoid exact equality for measured fractional values; for money use integer smallest units or learn decimal.Decimal. A name is case sensitive: Minutes and minutes are different names."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Compute the cost of 3 notebooks at 125 cents each. Print total cents and a two-decimal price in dollars.",
+        "starter": "quantity = 3\nunit_cents = 125\n# Compute and print total",
+        "solution": "quantity = 3\nunit_cents = 125\ntotal_cents = quantity * unit_cents\nprint(total_cents)\nprint(f\"${total_cents / 100:.2f}\")",
+        "checks": [
+          "Output is 375 then $3.75.",
+          "Changing quantity to 0 yields 0 and $0.00.",
+          "The stored total uses integer cents."
+        ]
+      },
+      "quiz": {
+        "question": "What does total = total + 1 do?",
+        "options": [
+          "Checks whether total is 1",
+          "Binds total to its previous value plus 1",
+          "Creates a second variable with the same name"
+        ],
+        "correct": 1,
+        "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
+      }
+    },
+    {
+      "id": "text-and-input",
+      "title": "3. Text and user input",
+      "takeaway": "Convert text deliberately before doing numeric work.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Strings are sequences of characters. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts characters, and methods such as strip and lower return transformed strings.",
+            "input displays an optional prompt and returns a string, even when a user types digits. int converts suitable text to an integer; float converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "Trimming surrounding spaces and normalizing case helps compare user input. The example converts the age before adding one. Try replacing raw_age with input(\"Age: \") after you understand the deterministic version."
+          ],
+          "example": "raw_name = \"  Mira  \"\nraw_age = \"20\"\nname = raw_name.strip()\nage = int(raw_age)\nprint(f\"Hi {name}, next year you will be {age + 1}.\")\nprint(name.lower())\n\n# Expected output:\n# Hi Mira, next year you will be 21.\n# mira"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Strings do not change in place: name.strip() returns a value you must use or assign. int(\"twenty\") raises ValueError; we handle this in lesson 8. Never use eval to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Normalize the text \"  PYTHON  \" to lowercase without surrounding spaces, then print its length.",
+        "starter": "raw = \"  PYTHON  \"\n# Normalize and measure",
+        "solution": "raw = \"  PYTHON  \"\nclean = raw.strip().lower()\nprint(clean)\nprint(len(clean))",
+        "checks": [
+          "Output is python then 6.",
+          "The original raw string still contains spaces.",
+          "Replacing raw with \"  \" yields an empty string and length 0."
+        ]
+      },
+      "quiz": {
+        "question": "What type does input return?",
+        "options": [
+          "Always an integer",
+          "A string",
+          "Whatever type the user intended"
+        ],
+        "correct": 1,
+        "explanation": "Input returns text. Your program decides whether and how to convert it."
+      }
+    },
+    {
+      "id": "conditions",
+      "title": "4. Make decisions",
+      "takeaway": "Conditions select which instructions run.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A comparison returns a boolean: score >= 50 asks whether the score meets a threshold. An if block runs only when its condition is true. elif tests another condition, and else handles the remaining cases.",
+            "Indentation defines the body of a block. Use four spaces consistently. Combine conditions with and, or, and not; use parentheses when the intended grouping is not obvious."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The first matching branch wins. Test the highest threshold first here so a score of 85 does not get caught by the lower passing threshold. Predict the output before running."
+          ],
+          "example": "score = 85\nif score >= 80:\n    result = \"excellent\"\nelif score >= 50:\n    result = \"pass\"\nelse:\n    result = \"retry\"\nprint(result)\n\n# Expected output:\n# excellent"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Use == to compare, not =. Separate conditions such as score >= 50 and score < 80 must each express a comparison; Python also supports 50 <= score < 80. Put boundary values in your checks because > and >= differ at exactly the threshold."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Classify a temperature: below 10 is cold, from 10 through 29 is mild, and 30 or above is hot. Start with 30.",
+        "starter": "temperature = 30\n# Select a label",
+        "solution": "temperature = 30\nif temperature < 10:\n    label = \"cold\"\nelif temperature < 30:\n    label = \"mild\"\nelse:\n    label = \"hot\"\nprint(label)",
+        "checks": [
+          "30 prints hot.",
+          "10 prints mild; 9 prints cold.",
+          "29 prints mild, covering both boundaries."
+        ]
+      },
+      "quiz": {
+        "question": "If both if and elif conditions are true, which branch runs?",
+        "options": [
+          "Both",
+          "Only the first matching branch",
+          "Only else"
+        ],
+        "correct": 1,
+        "explanation": "An if/elif/else chain selects the first condition that is true and skips the remaining branches."
+      }
+    },
+    {
+      "id": "collections",
+      "title": "5. Store related values",
+      "takeaway": "Choose a collection by how you need to access and change data.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A list stores an ordered sequence and can be changed with append or item assignment. A tuple is an ordered sequence whose item references cannot be reassigned. A dictionary maps unique keys to values; use meaningful keys for records such as a task title and status.",
+            "A set stores unique values and is useful for membership checks and removing duplicates. Set iteration order is not a display contract, so sort a set before producing predictable output. Dictionary indexing raises KeyError for a missing key; get supplies an optional fallback."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The list keeps task order, while the dictionary connects task names to durations. A set removes repeated tags. The copy operation matters when you want an independent list instead of another name for the same one."
+          ],
+          "example": "tasks = [\"read\", \"code\"]\ntasks.append(\"review\")\nminutes = {\"read\": 15, \"code\": 30}\nprint(tasks[1])\nprint(minutes.get(\"review\", 0))\nprint(sorted(set([\"python\", \"study\", \"python\"])))\n\n# Expected output:\n# code\n# 0\n# ['python', 'study']"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Create a dictionary for a book with title \"Orbit\" and pages 120. Increase pages by 10 and print the title and updated pages.",
+        "starter": "book = {\"title\": \"Orbit\", \"pages\": 120}\n# Update and print",
+        "solution": "book = {\"title\": \"Orbit\", \"pages\": 120}\nbook[\"pages\"] += 10\nprint(book[\"title\"])\nprint(book[\"pages\"])",
+        "checks": [
+          "Output is Orbit then 130.",
+          "The dictionary still has exactly two keys.",
+          "A missing optional author can be read with book.get(\"author\", \"Unknown\")."
+        ]
+      },
+      "quiz": {
+        "question": "Which collection maps a task name to its duration?",
+        "options": [
+          "A dictionary",
+          "A set",
+          "A string"
+        ],
+        "correct": 0,
+        "explanation": "A dictionary stores key/value associations and retrieves a duration using its task-name key."
+      }
+    },
+    {
+      "id": "loops",
+      "title": "6. Repeat work with loops",
+      "takeaway": "Loops process each item and accumulate results.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A for loop iterates over items in a sequence or other iterable. range(3) produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
+            "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown, but the body must eventually make the condition false. break exits a loop and continue skips the remainder of the current iteration."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "This loop includes only study sessions that last at least 20 minutes. The list comprehension expresses the same filtering when a new list is useful. Keep an ordinary loop when there are several actions or complex logic."
+          ],
+          "example": "sessions = [10, 25, 30]\ntotal = 0\nfor minutes in sessions:\n    if minutes >= 20:\n        total += minutes\nprint(total)\nprint([m for m in sessions if m >= 20])\n\n# Expected output:\n# 55\n# [25, 30]"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Resetting total inside the loop discards earlier work. Avoid removing list items while iterating over that same list; build a new filtered list. Watch for infinite while loops whose counters never change."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Given [2, 5, 8, 11], compute the sum of even numbers with a for loop.",
+        "starter": "numbers = [2, 5, 8, 11]\ntotal = 0\n# Add even numbers",
+        "solution": "numbers = [2, 5, 8, 11]\ntotal = 0\nfor number in numbers:\n    if number % 2 == 0:\n        total += number\nprint(total)",
+        "checks": [
+          "Output is 10.",
+          "An empty list prints 0.",
+          "A list of only odd numbers prints 0."
+        ]
+      },
+      "quiz": {
+        "question": "What values are produced by range(1, 4)?",
+        "options": [
+          "1, 2, 3, 4",
+          "1, 2, 3",
+          "0, 1, 2, 3"
+        ],
+        "correct": 1,
+        "explanation": "The start is included and the stop is excluded."
+      }
+    },
+    {
+      "id": "functions",
+      "title": "7. Write reusable functions",
+      "takeaway": "A function turns inputs into an explicit result.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "def defines a function with parameters: names for its inputs. Calling the function supplies arguments. return sends a result to the caller and ends that call. A function that reaches the end without return produces None.",
+            "Variables created inside a function are usually local to that call. Prefer passing data in and returning data out instead of changing global variables. This makes the function easier to reuse and test. A short docstring can explain its contract."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The function computes minutes from a number of sessions, and a default argument supplies a usual session length. Printing remains outside the calculation, so another caller could save or compare the returned number."
+          ],
+          "example": "def study_minutes(sessions, length=25):\n    \"\"\"Return total minutes for equally long sessions.\"\"\"\n    return sessions * length\n\nprint(study_minutes(3))\nprint(study_minutes(2, length=15))\n\n# Expected output:\n# 75\n# 30"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use None and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write rectangle_area(width, height) returning the product. Call it for 4 by 3 and for 0 by 7.",
+        "starter": "def rectangle_area(width, height):\n    pass\n# Print two results",
+        "solution": "def rectangle_area(width, height):\n    return width * height\n\nprint(rectangle_area(4, 3))\nprint(rectangle_area(0, 7))",
+        "checks": [
+          "Output is 12 then 0.",
+          "The function returns a value without printing inside it.",
+          "rectangle_area(3, 4) also returns 12."
+        ]
+      },
+      "quiz": {
+        "question": "What is the result of a function with no return statement?",
+        "options": [
+          "0",
+          "None",
+          "The last printed value"
+        ],
+        "correct": 1,
+        "explanation": "Python returns None when execution reaches the end without an explicit return value."
+      }
+    },
+    {
+      "id": "errors",
+      "title": "8. Read errors and validate input",
+      "takeaway": "Handle expected failures specifically and let unexpected bugs remain visible.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A syntax error means Python could not parse the program. An exception occurs while a valid program runs, such as converting \"abc\" to an integer. Read the exception type and message, then find the relevant line in the traceback.",
+            "try contains an operation that may fail; except names the failure you know how to handle. raise reports a violated rule. Validation establishes a function contract before the rest of the program uses the data."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. Valid input and invalid input are deliberately tried in the same example."
+          ],
+          "example": "def parse_minutes(text):\n    minutes = int(text)\n    if minutes < 0:\n        raise ValueError(\"minutes must be nonnegative\")\n    return minutes\n\nfor text in [\"15\", \"-2\"]:\n    try:\n        print(parse_minutes(text))\n    except ValueError as error:\n        print(f\"Invalid: {error}\")\n\n# Expected output:\n# 15\n# Invalid: minutes must be nonnegative"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "A bare except can hide programming errors and interrupt signals. Catch a narrow type near the operation you understand. Do not return a fake success value after a failure; the caller should be able to distinguish valid zero minutes from invalid input."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write parse_count(text) that accepts whole numbers of 1 or more and raises ValueError for zero or negative values. Demonstrate \"3\" and \"0\".",
+        "starter": "def parse_count(text):\n    pass",
+        "solution": "def parse_count(text):\n    count = int(text)\n    if count < 1:\n        raise ValueError(\"count must be positive\")\n    return count\n\nfor text in [\"3\", \"0\"]:\n    try:\n        print(parse_count(text))\n    except ValueError as error:\n        print(error)",
+        "checks": [
+          "Output is 3 then count must be positive.",
+          "\"abc\" also raises ValueError from int.",
+          "\"1\" is accepted; do not reject the lower valid boundary."
+        ]
+      },
+      "quiz": {
+        "question": "Which exception should you catch around int(\"abc\")?",
+        "options": [
+          "KeyError",
+          "ValueError",
+          "Every exception with bare except"
+        ],
+        "correct": 1,
+        "explanation": "ValueError describes a value unsuitable for the requested conversion. A narrow handler preserves unrelated failures."
+      }
+    },
+    {
+      "id": "files-and-json",
+      "title": "9. Save files and structured data",
+      "takeaway": "Use explicit encoding and JSON to persist ordinary records.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A file stores data after the process ends. pathlib.Path describes a filesystem path. read_text and write_text work with text; specify encoding=\"utf-8\" so behavior is consistent across machines. A relative path is resolved from the current working directory.",
+            "JSON represents objects, arrays, strings, numbers, booleans, and null. json.dumps converts supported Python values to JSON text; json.loads reads JSON text into Python values. Saving and loading are separate operations, and loaded data still needs validation."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "This example uses a temporary directory so it does not overwrite your own files. It writes a small session record, reads it back, and prints the recovered fields. In your project, choose a deliberate data path."
+          ],
+          "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"sessions.json\"\n    path.write_text(json.dumps({\"topic\": \"loops\", \"minutes\": 25}), encoding=\"utf-8\")\n    saved = json.loads(path.read_text(encoding=\"utf-8\"))\n    print(saved[\"topic\"])\n    print(saved[\"minutes\"])\n\n# Expected output:\n# loops\n# 25"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Writing a file replaces its previous contents. Do not use a valuable existing file for experiments. JSON object keys become strings, and JSON does not automatically preserve custom classes or tuples. A missing file raises FileNotFoundError and broken JSON raises json.JSONDecodeError; these are different recovery cases."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Round-trip a list containing \"read\" and \"code\" through a temporary tasks.json file. Print the recovered list length and first item.",
+        "starter": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n# Write, read, and inspect a list",
+        "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"tasks.json\"\n    path.write_text(json.dumps([\"read\", \"code\"]), encoding=\"utf-8\")\n    tasks = json.loads(path.read_text(encoding=\"utf-8\"))\n    print(len(tasks))\n    print(tasks[0])",
+        "checks": [
+          "Output is 2 then read.",
+          "The JSON file contains an array, not Python source.",
+          "Repeat with an empty list and verify the length is 0 before indexing."
+        ]
+      },
+      "quiz": {
+        "question": "What does json.loads need as its input?",
+        "options": [
+          "A JSON text string",
+          "A Python filename only",
+          "A compiled Python function"
+        ],
+        "correct": 0,
+        "explanation": "loads parses JSON text; load is the related function that reads from a file-like object."
+      }
+    },
+    {
+      "id": "modules-and-environments",
+      "title": "10. Modules and project environments",
+      "takeaway": "Separate reusable code and select the interpreter intentionally.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A module is a Python file whose definitions can be imported. A package groups modules. Standard library modules ship with Python, while third-party packages require separate installation. Avoid naming your files json.py, unittest.py, or other library names.",
+            "A virtual environment gives a project its own interpreter context and installed packages. Create one with python -m venv .venv. On Windows call .venv\\Scripts\\python.exe directly; on macOS/Linux call .venv/bin/python. Direct invocation avoids shell activation differences. Use that interpreter with -m pip when installing a needed dependency."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The runnable example uses only the standard library. For a two-file project, put your function in helpers.py, then import it from main.py in the same folder. The guard if __name__ == \"__main__\": limits script entry code to direct execution, keeping imports from unexpectedly running the program."
+          ],
+          "example": "from statistics import mean\n\ndef average_minutes(values):\n    return mean(values)\n\nif __name__ == \"__main__\":\n    print(average_minutes([10, 20, 30]))\n\n# Expected output:\n# 20"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Installing into one interpreter and running another causes confusing missing-module errors. Inspect sys.executable to see which interpreter is active. Keep .venv out of version control and document dependencies; do not copy an environment between machines. No third-party installation is needed for this path."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write format_label(topic, minutes) in helpers.py and import it in main.py. For a quick one-file check, use the solution below; then split the definition and the call into the two files.",
+        "starter": "# helpers.py: define format_label\n# main.py: import and call it",
+        "solution": "def format_label(topic, minutes):\n    return f\"{topic}: {minutes} min\"\n\nif __name__ == \"__main__\":\n    print(format_label(\"functions\", 20))",
+        "checks": [
+          "One-file output is functions: 20 min.",
+          "After splitting files, python main.py gives the same output.",
+          "Importing helpers in the interactive prompt does not print anything.",
+          "Run the program with the virtual environment interpreter and inspect sys.executable."
+        ]
+      },
+      "quiz": {
+        "question": "Which command ties pip to the selected Python interpreter?",
+        "options": [
+          "python -m pip",
+          "Any pip command always selects the right project",
+          "python install"
+        ],
+        "correct": 0,
+        "explanation": "The -m form runs pip as a module of that interpreter. Substitute your virtual environment interpreter path for python."
+      }
+    },
+    {
+      "id": "testing-and-api-boundaries",
+      "title": "11. Test behavior and understand APIs",
+      "takeaway": "Separate data processing from external I/O so it can be checked offline.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "A test states an expected behavior for an input. Start with a normal case, an empty case, and an invalid or boundary case. unittest.TestCase supplies assertions and a runner in the standard library; a test failure should identify a behavior worth investigating.",
+            "An HTTP API is a remote service accepting requests and returning responses. A response has a status, headers, and body. JSON is one common body format. Networks can time out, services can reject requests, and returned data can differ from what you expected; HTTP success alone does not prove a usable schema."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The example processes an API-shaped JSON fixture entirely offline and tests the same parser. Real retrieval could use urllib.request.urlopen(url, timeout=10) in a with block followed by json.load(response). Keep the URL configured, inspect service documentation, handle HTTPError/URLError, and validate the decoded data before passing it to your calculation."
+          ],
+          "example": "import json\nimport unittest\n\ndef total_minutes(payload):\n    return sum(item[\"minutes\"] for item in payload[\"sessions\"])\n\nclass TotalTests(unittest.TestCase):\n    def test_empty(self):\n        self.assertEqual(total_minutes({\"sessions\": []}), 0)\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(TotalTests)\nresult = unittest.TestResult()\nsuite.run(result)\nprint(f\"Tests passed: {result.wasSuccessful()}\")\npayload = json.loads('{\"sessions\":[{\"minutes\":15},{\"minutes\":20}]}')\nprint(total_minutes(payload))\n\n# Expected output:\n# Tests passed: True\n# 35"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "A test that only prints a value does not check it. Keep a unit test deterministic: do not depend on a live service staying available. Never place API keys in source or publish them; load credentials from environment variables when a real service needs them. Retrying writes can duplicate actions, so learn the API semantics before retrying."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write count_completed(tasks) for records with a boolean done field. Test an empty list and a list with one completed and one incomplete task. Use unittest assertions, then print the number of passing tests.",
+        "starter": "import unittest\ndef count_completed(tasks):\n    pass\n# Add two tests",
+        "solution": "import unittest\n\ndef count_completed(tasks):\n    return sum(1 for task in tasks if task[\"done\"])\n\nclass TaskTests(unittest.TestCase):\n    def test_empty(self):\n        self.assertEqual(count_completed([]), 0)\n    def test_mixed(self):\n        self.assertEqual(count_completed([{\"done\": True}, {\"done\": False}]), 1)\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(TaskTests)\nresult = unittest.TestResult()\nsuite.run(result)\nprint(result.testsRun)\nprint(result.wasSuccessful())",
+        "checks": [
+          "Output is 2 then True.",
+          "Temporarily change the expected mixed result to 2; success becomes False.",
+          "Restore the correct expectation after proving the test can fail.",
+          "Explain which fields a real API response must provide before this function can use it."
+        ]
+      },
+      "quiz": {
+        "question": "Why use a saved JSON fixture in a unit test?",
+        "options": [
+          "It guarantees the real API never changes",
+          "It makes parsing checks deterministic without a network dependency",
+          "It removes the need to validate real responses"
+        ],
+        "correct": 1,
+        "explanation": "A fixed fixture isolates your parsing behavior. Separate integration checks are needed for a real service."
+      }
+    },
+    {
+      "id": "study-log-capstone",
+      "title": "12. Capstone: a persistent study log",
+      "takeaway": "Combine validation, functions, storage, and checks into a useful small program.",
+      "sections": [
+        {
+          "title": "Understand the idea",
+          "paragraphs": [
+            "Build a study log that stores records with a topic and nonnegative whole minutes, and reports total minutes. Plan the data format and functions before writing the terminal interface: validate a record, add it to a list, save/load the list, and summarize it.",
+            "Keep this first version small. A list of dictionaries is enough; a class is optional, not a requirement. A class would bundle state and methods into objects, useful when behavior grows, but dictionaries and functions make the current contract easy to inspect."
+          ]
+        },
+        {
+          "title": "Work through an example",
+          "paragraphs": [
+            "The example adds two validated records, saves them in a temporary folder, reloads them, and summarizes the result. The practical exercise extends the program with a topic summary. A real CLI could use argparse for commands such as add and summary; learn that module after the core functions work."
+          ],
+          "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic is required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\nwith TemporaryDirectory() as folder:\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Python\", 15)\n    path = Path(folder) / \"study.json\"\n    path.write_text(json.dumps(log, indent=2), encoding=\"utf-8\")\n    restored = json.loads(path.read_text(encoding=\"utf-8\"))\n    print(f\"Sessions: {len(restored)}\")\n    print(f\"Minutes: {sum(s['minutes'] for s in restored)}\")\n\n# Expected output:\n# Sessions: 2\n# Minutes: 40"
+        },
+        {
+          "title": "Avoid a common mistake",
+          "paragraphs": [
+            "Do not silently overwrite malformed data with an empty log. Report JSON or schema errors and keep the file for recovery. Concurrent writers and interrupted writes require more careful storage; this beginner version is for one local process. Before using a permanent file, back it up and add tests for invalid records."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Extend the log with totals_by_topic(log), returning a dictionary of accumulated minutes per topic. Use Python 25, Reading 10, and Python 15 as the sample. Then integrate it with lesson 9 storage and lesson 11 tests.",
+        "starter": "def totals_by_topic(log):\n    pass\n# Accumulate each topic",
+        "solution": "def totals_by_topic(log):\n    totals = {}\n    for session in log:\n        topic = session[\"topic\"]\n        totals[topic] = totals.get(topic, 0) + session[\"minutes\"]\n    return totals\n\nlog = [{\"topic\": \"Python\", \"minutes\": 25}, {\"topic\": \"Reading\", \"minutes\": 10}, {\"topic\": \"Python\", \"minutes\": 15}]\nprint(totals_by_topic(log))",
+        "checks": [
+          "Output is {'Python': 40, 'Reading': 10}.",
+          "An empty log returns {}.",
+          "Two records with the same topic add instead of replacing the earlier minutes.",
+          "Save and reload the sample log; totals stay the same.",
+          "Add tests proving blank topics, negative minutes, and True as minutes are rejected by add_session.",
+          "Explain an intentional limitation: one process, local file storage, no account system."
+        ]
+      },
+      "quiz": {
+        "question": "What should happen when an existing log contains malformed JSON?",
+        "options": [
+          "Replace it immediately with []",
+          "Report the error and preserve the file for recovery",
+          "Treat it as a successful empty log"
+        ],
+        "correct": 1,
+        "explanation": "A parse failure does not mean the user has no data. Preserve the file and make the failure visible."
+      }
+    }
+  ],
+  "publicFiles": [
+    "path.json"
+  ]
+}
