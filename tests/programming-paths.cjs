@@ -1,6 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const ids=['python','dotnet','react','sql-server','data-structures-algorithms'];
-const paths=ids.map(id=>JSON.parse(fs.readFileSync('paths/'+id+'/path.json','utf8')));
+const {readPaths}=require('../scripts/manifest.cjs');
+const paths=readPaths().filter(p=>p.status==='ready'&&!p.href&&p.stages);
+assert.ok(paths.length>=5);
 const nodes=new Map(),stored=new Map();
 function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',disabled:false,addEventListener(t,fn){this[t]=fn;},querySelectorAll(){return [];}});return nodes.get(id);}
 const context={LEARNING_PATHS:paths,document:{getElementById:node},location:{hash:''},window:{addEventListener(){},scrollTo(){},print(){}},localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)}};
@@ -16,7 +17,12 @@ for(const p of paths){
  context.location.hash='#path/'+p.id;vm.runInContext('renderCatalog()',context);
  assert.ok(node('main').innerHTML.includes('Set up your practice environment'));
  for(const l of p.lessons){count++;assert.ok(l.sections.length>=2);assert.ok(l.exercise.prompt&&l.exercise.solution&&l.exercise.checks.length);assert.ok(l.quiz.options[l.quiz.correct]);
+ const choices=l.quiz.options.map((_,i)=>({dataset:{choice:String(i)},addEventListener(t,fn){this[t]=fn;}}));
+ node('main').querySelectorAll=selector=>selector==='[data-choice]'?choices:[];
  context.location.hash='#topic/'+p.id+'/'+l.id;vm.runInContext('renderCatalog()',context);
+ choices[l.quiz.correct].click();assert.equal(node('feedback').textContent,'Correct. '+l.quiz.explanation);
+ choices[(l.quiz.correct+1)%choices.length].click();assert.equal(node('feedback').textContent,'Not quite. '+l.quiz.explanation);
+ node('main').querySelectorAll=()=>[];
  assert.ok(node('main').innerHTML.includes('Compare with a worked solution'));
  assert.ok(!node('main').innerHTML.includes('<script>'));
  if(l.trace){node('trace-next').click();assert.ok(node('trace-frame').innerHTML.includes('Step 2'));node('trace-prev').click();assert.ok(node('trace-frame').innerHTML.includes('Step 1'));assert.equal(node('trace-prev').disabled,true);}
@@ -24,6 +30,8 @@ for(const p of paths){
  context.location.hash='#pack/'+p.id;vm.runInContext('renderCatalog()',context);
  assert.ok(node('main').innerHTML.includes('Print / save PDF'));assert.ok(node('main').innerHTML.includes('Worked solution'));
  assert.equal((node('main').innerHTML.match(/<h3>Worked solution/g)||[]).length,p.lessons.length);
+ assert.equal((node('main').innerHTML.match(/<h4>Reference approach/g)||[]).length,p.stages.length);
+ assert.ok(!node('main').innerHTML.includes('data-stage-check'));
 }
 console.log('PASS: '+count+' programming lessons, exercises, official references, downloads, visual traces and complete printable packs.');
 

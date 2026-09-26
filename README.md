@@ -56,3 +56,9 @@ Use index.html#path/<id> for the course overview and #pack/<id> for the complete
 
 Validation: all Python lesson examples/exercise solutions and the 18 project tests ran; DSA reference scripts and oracle checks passed. React practice TSX and domain modules passed strict TypeScript compilation, and domain tests ran in Node; illustrative browser-component tests were not executed. New C# console/API examples and HTTP acceptance checks ran using installed .NET 9; the curriculum targets .NET 10 LTS, which was not available. Package-based EF/auth examples remain extensions. SQL fixtures and expected results were checked without a SQL Server engine or live cross-session concurrency test; use a dedicated training instance. Run the curriculum and site checks with node verify.cjs.
 
+
+### Design and architecture learning paths
+
+Design Patterns (22 lessons) focuses on responsibilities and collaboration inside code: when a pattern helps, how to refactor toward it, and when a plain function or simple class is better. System Design (24 lessons) focuses on service requirements, data flows, capacity, reliability, security and operational tradeoffs. Both use the same three-stage reader, exercises, visual traces, project rubrics and printable packs.
+
+A useful sequence is one programming-language path first, then Design Patterns. SQL Server and basic API experience help with System Design; its foundations introduce the architecture vocabulary before scaling and failure scenarios. You can study both design paths together: code structure and system architecture inform each other, but they solve different kinds of problems.

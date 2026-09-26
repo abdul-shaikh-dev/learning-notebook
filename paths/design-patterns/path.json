@@ -1,0 +1,1315 @@
+{
+  "id": "design-patterns",
+  "title": "Design Patterns",
+  "category": "Software design",
+  "status": "ready",
+  "description": "Learn to choose and apply patterns through 22 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
+  "level": "Foundations → intermediate → advanced practice",
+  "prerequisites": [
+    "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
+    "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
+  ],
+  "outcomes": [
+    "Identify a real variation point before choosing a pattern.",
+    "Distinguish similarly shaped patterns by intent and contract.",
+    "Compose strategies, adapters, facades and decorators with explicit failure behavior.",
+    "Model state transitions and explain command/undo limitations.",
+    "Design repository and unit-of-work boundaries without overstating fake-storage guarantees.",
+    "Refactor incrementally and document alternatives, costs and evidence."
+  ],
+  "setup": [
+    "Use Python 3.11+ and save each lesson example in its own file; examples are independent.",
+    "Download workshop.py and test_workshop.py into the same empty folder. Run python -m unittest -v test_workshop.py.",
+    "Run python workshop.py for a deterministic demonstration. No packages, credentials or live services are required.",
+    "Lesson code is deliberately small; read the stated contracts and limits before adapting it to production."
+  ],
+  "nextSteps": [
+    "Apply one justified pattern to a small existing application and compare change effort before and after.",
+    "Use the System Design path for service boundaries, capacity, reliability and distributed tradeoffs.",
+    "Add a real database adapter and run provider integration tests for constraints, rollback and concurrent conflicts.",
+    "Study additional patterns such as Bridge, Visitor and Mediator only when their problem contexts arise.",
+    "These projects provide advanced practice, not exhaustive coverage or a professional certification."
+  ],
+  "sources": [
+    {
+      "title": "Python typing and structural protocols",
+      "url": "https://docs.python.org/3/library/typing.html"
+    },
+    {
+      "title": "Python abstract base classes",
+      "url": "https://docs.python.org/3/library/abc.html"
+    },
+    {
+      "title": "Python functools and wrapper metadata",
+      "url": "https://docs.python.org/3/library/functools.html"
+    },
+    {
+      "title": "Python data model: iterators",
+      "url": "https://docs.python.org/3/reference/datamodel.html#object.__iter__"
+    },
+    {
+      "title": "Python context managers",
+      "url": "https://docs.python.org/3/library/contextlib.html"
+    },
+    {
+      "title": "Martin Fowler: dependency injection",
+      "url": "https://martinfowler.com/articles/injection.html"
+    },
+    {
+      "title": "Martin Fowler: Repository",
+      "url": "https://martinfowler.com/eaaCatalog/repository.html"
+    },
+    {
+      "title": "Martin Fowler: Unit of Work",
+      "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html"
+    },
+    {
+      "title": "Microsoft: persistence infrastructure and repository tradeoffs",
+      "url": "https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations: recognize a useful boundary",
+      "description": "Start from small functions, contracts and a real source of change before introducing a named pattern.",
+      "exitCriteria": [
+        "Explain a contract including side effects and failures.",
+        "Distinguish a strategy from construction and a protocol from runtime validation.",
+        "Choose a function when a class adds no useful state or lifecycle."
+      ],
+      "project": {
+        "title": "Two-format study exporter",
+        "brief": "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+        "requirements": [
+          "Validate all titles before producing output.",
+          "Use two compatible formatting strategies selected at one entry point.",
+          "Reject unknown formats and preserve input order.",
+          "Include an empty-input test and a malformed-title test."
+        ],
+        "rubric": [
+          "Both output formats are correct for the same input.",
+          "No mutation of caller records occurs.",
+          "The design note explains why a simple factory/function is enough.",
+          "Tests assert observable behavior, including failures."
+        ],
+        "solution": "Use validate_titles to return an immutable tuple, formatter_for to select lines or JSON and a workflow that delegates once. Keep format-specific logic out of validation. The downloadable workshop demonstrates these seams; its tests cover empty data, rejected values and format selection."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate: compose and translate behavior",
+      "description": "Build adapters and wrappers, explain traversal and notification policies, and avoid hidden lifecycle assumptions.",
+      "exitCriteria": [
+        "Translate units and errors explicitly at an adapter.",
+        "Explain wrapper ordering and callback failure policy.",
+        "Recognize tree, caching and object-lifetime assumptions."
+      ],
+      "project": {
+        "title": "Measured export preview",
+        "brief": "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+        "requirements": [
+          "Adapt a legacy seconds field with an explicit conversion policy.",
+          "Use a measurement decorator that delegates once and records only success.",
+          "Test wrapper failure and input immutability.",
+          "Write a note comparing facade, adapter, decorator and proxy intentions."
+        ],
+        "rubric": [
+          "Boundary conversion is correct at 59/60/61 seconds.",
+          "Failures are propagated and not counted as successful output.",
+          "Facade remains focused on the preview workflow.",
+          "The design note explains one case where each wrapper would be unnecessary."
+        ],
+        "solution": "Keep the adapter responsible for seconds validation/conversion; keep formatting independent. Wrap the chosen formatter with a success-size recorder, then call it through export_preview. The workshop uses no delivery side effect, so it does not need retry or transaction logic. Add explicit tests before changing that boundary."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced practice: failure-aware design and refactoring",
+      "description": "Combine a few justified patterns, test negative paths and state the limits of in-memory implementations.",
+      "exitCriteria": [
+        "Model legal and illegal state transitions.",
+        "Separate unit tests from real-provider integration guarantees.",
+        "Explain why transactions do not roll back external messages.",
+        "Write a decision record including an alternative and migration plan."
+      ],
+      "project": {
+        "title": "Local completion workflow with a design review",
+        "brief": "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+        "requirements": [
+          "Reject missing IDs and repeated completion according to a stated policy.",
+          "Commit a valid transition and keep the original store unchanged when validation fails.",
+          "Run the provided rollback tests and add a failing repository substitute.",
+          "Propose provider integration tests and a notification failure policy.",
+          "Write a decision record rejecting at least one unnecessary pattern."
+        ],
+        "rubric": [
+          "Success changes exactly the intended record.",
+          "The failure path does not leak a working-copy update.",
+          "Limitations explicitly include concurrency, durability and external effects.",
+          "A fake repository is not presented as proof of database behavior.",
+          "The refactoring plan preserves public contracts and can be reviewed in small changes."
+        ],
+        "solution": "The reference uses immutable lesson records, a repository for identity lookup and a sequential copy-on-write unit of work. complete_lesson validates the current lifecycle before replacing a record; exceptions avoid publishing the working copy. A production variant needs actual database transactions, a conflict/version policy, authorization and provider integration tests. If notifications must survive crashes, evaluate an outbox and duplicate handling rather than sending mail inside the local commit block."
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": "intent",
+      "title": "1. Patterns solve recurring design pressures",
+      "stage": "foundation",
+      "takeaway": "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name is a vocabulary for reasoning, not a requirement to create classes.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name is a vocabulary for reasoning, not a requirement to create classes.",
+            "Imagine a study notebook that exports progress. At first a small function is enough. A second export format creates a variation point: formatting changes while selecting records stays stable. Name that pressure before choosing an abstraction. Creational patterns concern construction; structural patterns concern assembling interfaces and objects; behavioral patterns concern responsibility and collaboration. These categories organize discussion, not strict technical boundaries."
+          ]
+        },
+        {
+          "title": "A small vocabulary for reading designs",
+          "paragraphs": [
+            "A collaborator is an object or function called to perform part of a job. A dependency is something a component needs to do its work. A contract describes accepted inputs, outputs, failures and side effects. An invariant is a rule that must remain true at a specified boundary.",
+            "A variation point is a part expected to change independently. Coupling describes how changes in one part affect another; cohesion asks whether the responsibilities within one part belong together. These are reasoning tools, not scores that can be maximized without tradeoffs."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def export_titles(rows):\n    return \"\\n\".join(row[\"title\"] for row in rows)\nassert export_titles([{\"title\": \"Patterns\"}]) == \"Patterns\"\nassert export_titles([]) == \"\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "A one-off function has fewer moving parts than a hierarchy. Add an abstraction when a real variation, testing boundary or lifecycle requires it. Pattern names alone do not establish correctness, speed or maintainability; compare the concrete cost of the current change."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a design note for adding JSON export. State what varies, what remains stable and the simplest change you would first try.",
+        "solution": "Formatting varies; record selection and validation remain stable. First extract formatting functions and pass the selected one to the export flow. Keep a small explicit selection branch at the application boundary. Revisit construction or plugins only when their requirements appear.",
+        "checks": [
+          "Names a concrete changing requirement.",
+          "Does not require a class for a stateless function.",
+          "States a reason to revisit the decision."
+        ]
+      },
+      "quiz": {
+        "question": "What is the best first input to pattern selection?",
+        "options": [
+          "A concrete source of change or coupling",
+          "A list of fashionable pattern names",
+          "Whether the implementation can be made object-oriented"
+        ],
+        "correct": 0,
+        "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
+      }
+    },
+    {
+      "id": "contracts",
+      "title": "2. Contracts, invariants and substitutability",
+      "stage": "foundation",
+      "takeaway": "A contract includes accepted inputs, returned values, failures and side effects. Matching method names is only one part of being substitutable.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "A contract includes accepted inputs, returned values, failures and side effects. Matching method names is only one part of being substitutable.",
+            "An invariant is a rule that remains true at a boundary: study minutes are nonnegative whole numbers, for example. A caller expecting a formatter that leaves records unchanged cannot safely substitute one that deletes them. Python annotations describe expectations for tools and readers; they do not automatically validate untrusted runtime inputs."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Document the smallest useful contract. Overly broad promises such as any iterable or every number create obligations you may not implement. Substitutes must preserve caller-relevant guarantees; silently accepting invalid values can be as harmful as rejecting previously valid ones."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Specify a title formatter contract and one test that catches a contract violation.",
+        "solution": "Accept a sequence of records containing string titles; return a string; preserve record order; do not mutate records; malformed titles raise ValueError. Snapshot the input, call the formatter and compare the input to the snapshot. Test empty input returns an empty string.",
+        "checks": [
+          "Includes mutation behavior.",
+          "Includes empty input.",
+          "States failure policy."
+        ]
+      },
+      "quiz": {
+        "question": "Can annotations alone reject invalid JSON at runtime?",
+        "options": [
+          "Yes; Python checks all annotations automatically",
+          "No; boundary validation must enforce the required invariants",
+          "Only Protocol annotations validate external data"
+        ],
+        "correct": 1,
+        "explanation": "Annotations support tools and readers. Runtime boundary checks enforce invariants on actual values."
+      }
+    },
+    {
+      "id": "composition",
+      "title": "3. Composition and responsibilities",
+      "stage": "foundation",
+      "takeaway": "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
+            "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. This creates a seam for a fake delivery recorder in tests."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary.",
+            "Collaboration: caller → remind → formatter, then remind → delivery. The caller assembles the collaborators; remind owns the order of work."
+          ],
+          "example": "def remind(title, deliver):\n    deliver(f\"Review {title}\")\nsent = []\nremind(\"Patterns\", sent.append)\nassert sent == [\"Review Patterns\"]"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Prefer a small function when it expresses the entire variation clearly."
+          ]
+        },
+        {
+          "title": "Read the collaboration diagram",
+          "paragraphs": [
+            "Follow the arrows as calls. The application supplies collaborators, the reminder coordinates them, and the delivery recorder gives the test observable evidence. This is one process, not a distributed system."
+          ],
+          "example": "# Application entry point\n#       | supplies collaborators\n#       v\n#    remind ----> message formatter\n#       |             |\n#       | <---- formatted message\n#       v\n#    delivery ----> recorded message\n#\n# The arrows describe dependencies and call order, not inheritance."
+        }
+      ],
+      "exercise": {
+        "prompt": "Add an independently supplied message formatter without adding subclasses.",
+        "solution": "def remind(title, format_message, deliver):\n    deliver(format_message(title))\nsent = []\nremind(\"SQL\", lambda t: f\"Practice {t}\", sent.append)\nassert sent == [\"Practice SQL\"]",
+        "checks": [
+          "Formatter and delivery vary separately.",
+          "Test records one delivery.",
+          "No hidden global delivery client."
+        ]
+      },
+      "quiz": {
+        "question": "Why inject the delivery function?",
+        "options": [
+          "To guarantee delivery never fails",
+          "To make every reminder inherit a delivery base class",
+          "To separate workflow from delivery and make the boundary explicit"
+        ],
+        "correct": 2,
+        "explanation": "Supplying a collaborator exposes the dependency and lets tests record delivery without constructing an external client."
+      }
+    },
+    {
+      "id": "solid",
+      "title": "4. SOLID as questions, not commandments",
+      "stage": "foundation",
+      "takeaway": "SOLID collects design heuristics: single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion. Use them to ask about change and contracts.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "SOLID collects design heuristics: single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion. Use them to ask about change and contracts.",
+            "Single responsibility asks which reasons to change belong together, not whether a class has one method. Open/closed suggests a stable extension boundary when variation is known. Substitution preserves expectations. Interface segregation lets a consumer depend on only the operations it needs. Dependency inversion places the policy-facing contract above replaceable technical details; it does not require a dependency injection framework."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from typing import Protocol\nclass TitleSource(Protocol):\n    def titles(self) -> list[str]: ...\nclass MemorySource:\n    def titles(self):\n        return [\"Patterns\"]\ndef summary(source: TitleSource):\n    return \", \".join(source.titles())\nassert summary(MemorySource()) == \"Patterns\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "The protocol above supports structural static typing; no inheritance is required for MemorySource. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A report consumer needs only titles, but its dependency exposes save, delete, connect and titles. Propose a smaller contract and explain what it cannot guarantee.",
+        "solution": "Give the report a TitleSource with titles(). The adapter may wrap a larger storage object. This makes the report dependency smaller, but does not prove latency, authorization, ordering or error behavior; those remain documented and tested contract obligations.",
+        "checks": [
+          "Contract contains only consumer needs.",
+          "Separates type shape from behavior.",
+          "Avoids claiming the protocol validates runtime data."
+        ]
+      },
+      "quiz": {
+        "question": "What does interface segregation optimize for?",
+        "options": [
+          "The operations a particular consumer actually needs",
+          "The maximum number of interfaces",
+          "Ensuring every interface contains exactly one method"
+        ],
+        "correct": 0,
+        "explanation": "A consumer-facing contract should be small enough for its needs, without imposing unrelated operations or a rigid method-count rule."
+      }
+    },
+    {
+      "id": "strategy",
+      "title": "5. Strategy: exchange a policy",
+      "stage": "foundation",
+      "takeaway": "Strategy lets a workflow use an interchangeable policy with a shared contract. A callable is often enough in Python.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Strategy lets a workflow use an interchangeable policy with a shared contract. A callable is often enough in Python.",
+            "A notebook can order lessons alphabetically or by duration. Selecting lessons stays unchanged; the ranking policy varies. Keep input and output conventions explicit so changing a strategy does not change the meaning of the workflow. Selection can remain a simple branch at the application boundary."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def arrange(rows, key):\n    return sorted(rows, key=key)\nrows = [{\"title\": \"SQL\", \"minutes\": 30}, {\"title\": \"Python\", \"minutes\": 10}]\nassert [r[\"title\"] for r in arrange(rows, lambda r: r[\"minutes\"])] == [\"Python\", \"SQL\"]\nassert rows[0][\"title\"] == \"SQL\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Strategy is helpful when alternatives represent the same job. Policies that return unrelated result types weaken the boundary. Do not wrap a single arithmetic expression in multiple classes unless state, lifecycle or a language constraint makes that useful."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Order by duration, breaking ties alphabetically, without modifying arrange.",
+        "solution": "def arrange(rows, key):\n    return sorted(rows, key=key)\nrows = [{\"title\": \"B\", \"minutes\": 5}, {\"title\": \"A\", \"minutes\": 5}]\nassert [r[\"title\"] for r in arrange(rows, lambda r: (r[\"minutes\"], r[\"title\"]))] == [\"A\", \"B\"]",
+        "checks": [
+          "Tie-break is deterministic.",
+          "Original input remains ordered as before.",
+          "Empty input produces an empty result."
+        ]
+      },
+      "quiz": {
+        "question": "What is exchanged by Strategy?",
+        "options": [
+          "The entire application and all its contracts",
+          "An implementation of a policy with compatible expectations",
+          "The object creation mechanism regardless of its policy"
+        ],
+        "correct": 1,
+        "explanation": "Strategies perform the same policy role under compatible input, output and side-effect contracts."
+      },
+      "trace": {
+        "title": "One workflow, two policies",
+        "frames": [
+          {
+            "label": "Input",
+            "items": [
+              "SQL: 30 minutes",
+              "Python: 10 minutes"
+            ],
+            "explanation": "The workflow receives the same records; selection is already complete."
+          },
+          {
+            "label": "Policy",
+            "items": [
+              "key = minutes",
+              "Python comes first"
+            ],
+            "explanation": "Only the ranking decision changes; sorted produces a new list."
+          },
+          {
+            "label": "Alternative",
+            "items": [
+              "key = title",
+              "Python then SQL"
+            ],
+            "explanation": "The caller supplies another compatible policy without editing the workflow."
+          }
+        ]
+      }
+    },
+    {
+      "id": "factories",
+      "title": "6. Simple factories, Factory Method and Abstract Factory",
+      "stage": "foundation",
+      "takeaway": "A factory separates choosing or constructing a collaborator from using it. Distinguish a simple selection function from the named Factory Method and Abstract Factory patterns.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "A factory separates choosing or constructing a collaborator from using it. Distinguish a simple selection function from the named Factory Method and Abstract Factory patterns.",
+            "A simple factory maps a format name to a formatter. Factory Method delegates a construction step to an overridable operation in a creator. Abstract Factory supplies a family of related products that must work together. A function returning another function is a useful factory without being the full class-based Factory Method pattern."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "import json\ndef formatter_for(name):\n    if name == \"json\":\n        return lambda titles: json.dumps(titles)\n    if name == \"lines\":\n        return lambda titles: \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\nassert formatter_for(\"lines\")([\"A\", \"B\"]) == \"A\\nB\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Keep factory lookup explicit and bounded; never interpret an arbitrary user string as executable code. A family factory is useful when a renderer and theme must match, but unnecessary if there is only one product. Construction ownership also includes cleanup for resources such as connections."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Decide which factory style fits selecting JSON versus line export, and reject an unsupported format.",
+        "solution": "A simple factory is enough because there is one stateless product role. Calling formatter_for(\"xml\") should raise ValueError. Factory Method becomes relevant if a creator workflow deliberately delegates construction to subclasses; Abstract Factory becomes relevant for a compatible family of products.",
+        "checks": [
+          "Does not mislabel a lookup as Factory Method.",
+          "Unknown format fails explicitly.",
+          "States when another construction pattern might become useful."
+        ]
+      },
+      "quiz": {
+        "question": "Which use most strongly suggests Abstract Factory?",
+        "options": [
+          "Any function containing an if statement",
+          "Returning a single stateless formatter selected by name",
+          "Creating several products that must belong to a compatible family"
+        ],
+        "correct": 2,
+        "explanation": "A related family of products motivates Abstract Factory; selecting one product can remain a simple factory."
+      }
+    },
+    {
+      "id": "builder",
+      "title": "7. Builder: construct a valid configuration",
+      "stage": "intermediate",
+      "takeaway": "Builder separates staged construction from the finished object. It is useful when construction has several choices or ordering rules, but a validated constructor is often enough.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Builder separates staged construction from the finished object. It is useful when construction has several choices or ordering rules, but a validated constructor is often enough.",
+            "A report configuration has a title and selected fields. Build temporary choices, then validate at build time and return an immutable snapshot. A frozen dataclass prevents attribute reassignment, but nested mutable values would still need care; the example uses a tuple for fields."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Report:\n    title: str\n    fields: tuple[str, ...]\nclass Builder:\n    def __init__(self):\n        self.fields = []\n    def field(self, name):\n        self.fields.append(name)\n        return self\n    def build(self, title):\n        if not title.strip() or not self.fields or any(not f.strip() for f in self.fields):\n            raise ValueError(\"title and fields required\")\n        return Report(title.strip(), tuple(self.fields))\nb = Builder().field(\"title\")\nr = b.build(\" Progress \")\nb.field(\"minutes\")\nassert r.fields == (\"title\",)"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Mutable builders can accidentally carry options from one request to another. Do not share one across requests or threads. Fluent chaining does not make invalid combinations valid. For two required parameters, a constructor with validation may be clearer."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why copying fields into a tuple matters, and add a duplicate-field policy.",
+        "solution": "The tuple snapshots the field list so later builder edits cannot change an existing report. Reject duplicates at build time with len(set(self.fields)) != len(self.fields), or deliberately deduplicate while preserving order. Document the choice and test it; silently retaining duplicate columns may surprise users.",
+        "checks": [
+          "Earlier report is unaffected by later builder changes.",
+          "Empty title and field list fail.",
+          "Duplicate behavior is explicit."
+        ]
+      },
+      "quiz": {
+        "question": "What must build() establish?",
+        "options": [
+          "A finished object satisfying the documented configuration rules",
+          "Only that method calls were chained",
+          "That later builder changes also update previous products"
+        ],
+        "correct": 0,
+        "explanation": "The construction boundary validates the configuration and snapshots it; fluent syntax alone establishes neither property."
+      }
+    },
+    {
+      "id": "adapter",
+      "title": "8. Adapter: translate an incompatible interface",
+      "stage": "intermediate",
+      "takeaway": "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
+            "A legacy progress system reports seconds while the notebook expects whole minutes. The adapter explicitly chooses floor conversion for this example. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class Legacy:\n    def seconds_spent(self):\n        return 125\nclass MinutesAdapter:\n    def __init__(self, legacy):\n        self.legacy = legacy\n    def minutes(self):\n        seconds = self.legacy.seconds_spent()\n        if type(seconds) is not int or seconds < 0:\n            raise ValueError(\"invalid seconds\")\n        return seconds // 60\nassert MinutesAdapter(Legacy()).minutes() == 2"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Adapters can become places where undocumented rounding, time zones and error swallowing accumulate. Keep the translation narrow and test actual boundary cases. A fake legacy implementation verifies your translation logic; it does not prove a real service conforms to your assumptions."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "List boundary tests for the conversion policy and explain why rounding must be documented.",
+        "solution": "Test 0→0, 59→0, 60→1 and 125→2; reject negative, bool and noninteger values. Floor conversion loses partial minutes by design. If billing or accounting requires exact precision, retain seconds or a decimal amount instead of reusing this policy.",
+        "checks": [
+          "Covers the minute boundary.",
+          "Rejects malformed upstream values.",
+          "Does not treat floor conversion as universally appropriate."
+        ]
+      },
+      "quiz": {
+        "question": "What distinguishes Adapter from a plain alias?",
+        "options": [
+          "It guarantees upstream uptime",
+          "It reconciles the consumer contract with the existing component semantics",
+          "It makes the source and consumer units identical without conversion"
+        ],
+        "correct": 1,
+        "explanation": "An adapter must preserve meaning across the boundary, including units, rounding and failures."
+      }
+    },
+    {
+      "id": "facade",
+      "title": "9. Facade: offer a coherent workflow",
+      "stage": "intermediate",
+      "takeaway": "Facade presents a simpler entry point to a subsystem with several operations. It coordinates a use case while preserving meaningful failures.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Facade presents a simpler entry point to a subsystem with several operations. It coordinates a use case while preserving meaningful failures.",
+            "A study pack needs validation, formatting and delivery. A facade gives the caller one publish operation while collaborators retain their roles. It should not imply atomicity: formatting may succeed and delivery may fail. Return success only after the required operations succeed."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def publish(titles, format_titles, deliver):\n    if any(not isinstance(t, str) or not t.strip() for t in titles):\n        raise ValueError(\"invalid title\")\n    document = format_titles(titles)\n    deliver(document)\n    return len(titles)\nout = []\nassert publish([\"Patterns\"], lambda xs: \"|\".join(xs), out.append) == 1\nassert out == [\"Patterns\"]"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "A facade can grow into a god object if every unrelated operation is added. Keep it aligned with a coherent use case. It does not automatically supply retries, compensation or database transactions. Expose enough outcome information for callers to handle partial failures."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design a test proving invalid input never reaches delivery.",
+        "solution": "Pass [\"\"] with a delivery recorder. Assert ValueError and an empty recorder. Also use a delivery function that raises RuntimeError; assert the facade propagates failure rather than returning a successful count.",
+        "checks": [
+          "Validation runs before side effects.",
+          "Delivery failure is visible.",
+          "No claim of distributed atomicity."
+        ]
+      },
+      "quiz": {
+        "question": "What does a facade primarily simplify?",
+        "options": [
+          "Every possible failure inside the subsystem",
+          "Making every subsystem operation commit atomically",
+          "How callers use a subsystem"
+        ],
+        "correct": 2,
+        "explanation": "A facade simplifies a use case entry point. Transaction or compensation guarantees require additional mechanisms."
+      }
+    },
+    {
+      "id": "decorator",
+      "title": "10. Decorator: layer behavior around the same role",
+      "stage": "intermediate",
+      "takeaway": "Decorator wraps a collaborator to add behavior while preserving its role. A function wrapper can express the same collaboration as an object decorator.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Decorator wraps a collaborator to add behavior while preserving its role. A function wrapper can express the same collaboration as an object decorator.",
+            "Wrap a formatter to record successful output sizes. The caller still receives a string. The wrapper delegates exactly once and records after success. Python @decorator syntax can implement wrappers, but syntax and the object-oriented pattern are not identical concepts."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from functools import wraps\ndef measured(formatter, sizes):\n    @wraps(formatter)\n    def wrapped(titles):\n        text = formatter(titles)\n        sizes.append(len(text))\n        return text\n    return wrapped\nsizes = []\nformat_titles = measured(lambda xs: \",\".join(xs), sizes)\nassert format_titles([\"A\", \"BC\"]) == \"A,BC\"\nassert sizes == [4]"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Wrapper order matters: authorization before caching differs from caching before authorization. Avoid recording sensitive payloads. Retrying a wrapper around a side effect can duplicate that effect. Preserve exceptions unless translating them is part of the declared contract."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Specify what happens to the sizes recorder when the wrapped formatter raises.",
+        "solution": "It remains unchanged because append happens only after the formatter returns. Test a formatter that raises ValueError; assert the same failure reaches the caller and sizes remains empty. If failure metrics are desired, record a separate outcome in an explicit except/finally policy.",
+        "checks": [
+          "Delegates exactly once.",
+          "Does not swallow exceptions.",
+          "Distinguishes success metrics from failure metrics."
+        ]
+      },
+      "quiz": {
+        "question": "Why must wrapper order be reviewed?",
+        "options": [
+          "Each wrapper changes what the next wrapper observes",
+          "Wrappers always commute",
+          "Because only the outer wrapper can ever raise"
+        ],
+        "correct": 0,
+        "explanation": "Wrappers observe inputs, outputs and errors at different positions; moving authorization or caching changes the effective behavior."
+      }
+    },
+    {
+      "id": "composite",
+      "title": "11. Composite: uniform operations over trees",
+      "stage": "intermediate",
+      "takeaway": "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
+            "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and integer minute values already validated at creation."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    minutes: int\n    def duration(self):\n        return self.minutes\n@dataclass(frozen=True)\nclass Module:\n    children: tuple\n    def duration(self):\n        return sum(child.duration() for child in self.children)\nplan = Module((Lesson(10), Module((Lesson(20),))))\nassert plan.duration() == 30\nassert Module(()).duration() == 0"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not actually a tree."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A lesson occurs in two modules. Decide whether total duration counts occurrences or unique lessons and explain the implementation impact.",
+        "solution": "Occurrence counting can keep the current traversal. Unique-lesson counting requires stable lesson IDs and a visited set shared across traversal. Detect cycles separately if cycles indicate invalid input; silently skipping all visited nodes can conceal malformed structure.",
+        "checks": [
+          "States a counting policy.",
+          "Distinguishes shared nodes from cycles.",
+          "Handles an empty group."
+        ]
+      },
+      "quiz": {
+        "question": "Which assumption makes this recursive example straightforward?",
+        "options": [
+          "Every graph is a tree",
+          "The structure is a finite acyclic tree",
+          "The hierarchy contains no empty groups"
+        ],
+        "correct": 1,
+        "explanation": "The recursion assumes finite acyclic containment. Empty groups are valid here and sum to zero."
+      }
+    },
+    {
+      "id": "proxy",
+      "title": "12. Proxy: control access to a collaborator",
+      "stage": "intermediate",
+      "takeaway": "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
+            "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate None result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class LazyDocument:\n    def __init__(self, load):\n        self.load, self.loaded, self.value = load, False, None\n    def get(self):\n        if not self.loaded:\n            value = self.load()\n            self.value, self.loaded = value, True\n        return self.value\ncalls = []\np = LazyDocument(lambda: calls.append(\"load\"))\nassert p.get() is None and p.get() is None\nassert calls == [\"load\"]"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "If load fails, this implementation remains unloaded and a future call tries again. That can be unsuitable for expensive or non-idempotent operations. A remote proxy cannot hide latency, timeouts or partial failure merely by using a familiar method signature. Authorization caches must account for user identity and policy changes."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why checking value is None is insufficient and identify a concurrency limitation.",
+        "solution": "None may be a successfully loaded value, so it cannot also reliably represent the unloaded state. Two concurrent callers can both observe loaded=False and perform duplicate loads; synchronization or a single-flight mechanism is needed if that violates the contract.",
+        "checks": [
+          "Explains the sentinel ambiguity.",
+          "Explains retry-after-failure behavior.",
+          "Does not claim thread safety."
+        ]
+      },
+      "quiz": {
+        "question": "Does a remote proxy make a network call equivalent to a local call?",
+        "options": [
+          "Yes; the method signature removes network failures",
+          "Yes, if the proxy caches the first successful response",
+          "No; latency and failure semantics still matter"
+        ],
+        "correct": 2,
+        "explanation": "A wrapper can provide a familiar interface, but network latency, failure and cache freshness remain part of the contract."
+      }
+    },
+    {
+      "id": "observer",
+      "title": "13. Observer: announce a change to subscribers",
+      "stage": "intermediate",
+      "takeaway": "Observer lets a publisher notify registered subscribers without naming their concrete implementations. Local callbacks are not a durable message broker.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Observer lets a publisher notify registered subscribers without naming their concrete implementations. Local callbacks are not a durable message broker.",
+            "A lesson-completed event may update a badge and a session counter. In this example notification is synchronous, subscriber order is registration order and the first exception stops delivery. Iterating over a tuple snapshots membership so a callback can unsubscribe without changing the current iteration."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class Events:\n    def __init__(self):\n        self.handlers = []\n    def subscribe(self, handler):\n        self.handlers.append(handler)\n    def unsubscribe(self, handler):\n        self.handlers.remove(handler)\n    def publish(self, event):\n        for handler in tuple(self.handlers):\n            handler(event)\nevents = Events()\nseen = []\nevents.subscribe(seen.append)\nevents.publish(\"lesson-completed\")\nassert seen == [\"lesson-completed\"]"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Subscribers can retain objects and leak memory if not removed. Reentrant publication can trigger unexpected nested work. Define whether to stop, aggregate errors or isolate subscribers; none of those policies gives durable, exactly-once delivery. Do not use this in-memory example as a financial event log."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "What happens if the first subscriber raises? Propose an alternative policy for independent UI widgets.",
+        "solution": "The current loop stops immediately and later subscribers are skipped. For independent widgets, catch each handler exception, continue to the remaining handlers and return or log a bounded error summary. Do not quietly report all subscribers succeeded, and do not retry callbacks blindly.",
+        "checks": [
+          "States current stop-on-first-error behavior.",
+          "Makes partial success observable.",
+          "Addresses unsubscribe lifecycle."
+        ]
+      },
+      "quiz": {
+        "question": "What guarantee does this local observer example provide?",
+        "options": [
+          "Synchronous callback invocation according to its stated policy",
+          "Durable delivery after process crashes",
+          "Automatic retry until every subscriber succeeds"
+        ],
+        "correct": 0,
+        "explanation": "The loop invokes callbacks locally and synchronously. The stated exception policy can stop it; no durable retry mechanism exists."
+      },
+      "trace": {
+        "title": "A synchronous event fan-out",
+        "frames": [
+          {
+            "label": "Registered",
+            "items": [
+              "Publisher",
+              "Badge subscriber",
+              "Counter subscriber"
+            ],
+            "explanation": "Callbacks are registered in a known order."
+          },
+          {
+            "label": "Publish",
+            "items": [
+              "lesson-completed",
+              "Snapshot subscribers"
+            ],
+            "explanation": "The publisher takes a membership snapshot before callbacks run."
+          },
+          {
+            "label": "Deliver",
+            "items": [
+              "Badge runs",
+              "Counter runs if badge succeeds"
+            ],
+            "explanation": "This policy stops on the first exception; it does not promise durable delivery."
+          }
+        ]
+      }
+    },
+    {
+      "id": "command",
+      "title": "14. Command: represent an action explicitly",
+      "stage": "advanced",
+      "takeaway": "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
+            "Renaming a local notebook can store the previous title and restore it if nothing else has changed. That is a deliberately narrow undo contract. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class Rename:\n    def __init__(self, book, title):\n        self.book, self.title, self.before = book, title, None\n    def execute(self):\n        if self.before is not None:\n            raise ValueError(\"already executed\")\n        self.before = self.book[\"title\"]\n        self.book[\"title\"] = self.title\n    def undo(self):\n        if self.before is None or self.book[\"title\"] != self.title:\n            raise ValueError(\"cannot safely undo\")\n        self.book[\"title\"] = self.before\n        self.before = None\nbook = {\"title\": \"A\"}\ncmd = Rename(book, \"B\")\ncmd.execute(); cmd.undo()\nassert book[\"title\"] == \"A\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "This example assumes non-None string titles and local sequential use. Its value comparison cannot detect an A→B→A history or concurrent edits that restore the same value. Use a version check for stronger conflict detection. Sending email has no true inverse; a follow-up message is compensation, not erasure."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why an undoable local rename does not imply every queued command is reversible.",
+        "solution": "External effects may be irreversible and another actor may change state before undo. A durable command needs identity, validation, execution outcome and a retry policy. If compensation is possible, specify it separately and record that it may fail. Do not replay arbitrary Python objects from untrusted serialized data.",
+        "checks": [
+          "Distinguishes inverse from compensation.",
+          "Mentions conflicts between execute and undo.",
+          "Avoids unsafe object deserialization."
+        ]
+      },
+      "quiz": {
+        "question": "What must be established before promising undo?",
+        "options": [
+          "Only that the action is represented by a class",
+          "A valid inverse or explicit compensation under documented conditions",
+          "That the command stores its input arguments"
+        ],
+        "correct": 1,
+        "explanation": "Storing inputs does not establish reversibility. Conflicts and external effects can invalidate an inverse or require fallible compensation."
+      }
+    },
+    {
+      "id": "state",
+      "title": "15. State: behavior depends on lifecycle",
+      "stage": "advanced",
+      "takeaway": "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+            "A study session starts as draft, becomes active, then completes. Pause returns active to draft here; complete from draft is illegal. A State object pattern delegates state-specific behavior to objects when transitions and operations become substantial. The table below is the simpler alternative for a small finite lifecycle."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "TRANSITIONS = {(\"draft\", \"start\"): \"active\", (\"active\", \"pause\"): \"draft\", (\"active\", \"finish\"): \"done\"}\ndef transition(state, action):\n    try:\n        return TRANSITIONS[state, action]\n    except KeyError:\n        raise ValueError(\"illegal transition\") from None\nassert transition(\"draft\", \"start\") == \"active\"\nassert transition(\"active\", \"finish\") == \"done\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "A state machine does not solve concurrent updates by itself. Two callers reading draft may both start a session unless the persistence layer enforces a conditional update. State and Strategy differ in intent: Strategy selects a policy; State models lifecycle-dependent behavior and transitions."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add a cancelled terminal state reachable from draft or active. Explain what a terminal state means.",
+        "solution": "Add (\"draft\", \"cancel\")→\"cancelled\" and (\"active\", \"cancel\")→\"cancelled\". Do not add outgoing transitions unless reopening is a real requirement. Test that cancelled/start raises ValueError and that the previous state remains unchanged when a transition fails.",
+        "checks": [
+          "Terminal state has an explicit outgoing-transition policy.",
+          "Illegal transitions fail visibly.",
+          "Mentions separate concurrency enforcement."
+        ]
+      },
+      "quiz": {
+        "question": "When is State a better framing than Strategy?",
+        "options": [
+          "Whenever there are two functions",
+          "When the caller selects a sorting policy independently",
+          "Behavior changes with legal lifecycle transitions"
+        ],
+        "correct": 2,
+        "explanation": "State describes a lifecycle and legal transitions; an independently chosen ranking policy is better described as Strategy."
+      }
+    },
+    {
+      "id": "template-method",
+      "title": "16. Template Method and pipeline alternatives",
+      "stage": "advanced",
+      "takeaway": "Template Method fixes an algorithm skeleton in a base class while subclasses provide selected steps. Use it when the order and extension points form a stable contract.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Template Method fixes an algorithm skeleton in a base class while subclasses provide selected steps. Use it when the order and extension points form a stable contract.",
+            "A report workflow obtains rows, validates them and formats a result. A base class can own this order and subclasses can implement loading or rendering. In Python a subclass can still override run; this is a design convention, not a security boundary. Composition can provide the same variation without inheritance."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class ReportJob:\n    def run(self):\n        rows = self.load()\n        if any(not isinstance(x, str) for x in rows):\n            raise ValueError(\"strings required\")\n        return self.render(rows)\n    def load(self):\n        raise NotImplementedError\n    def render(self, rows):\n        return \"\\n\".join(rows)\nclass MemoryJob(ReportJob):\n    def load(self):\n        return [\"Patterns\"]\nassert MemoryJob().run() == \"Patterns\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Too many hooks make it hard to understand which subclass controls the algorithm. Subclass hooks can also violate sequencing assumptions or return lazy iterators consumed twice. This example assumes a reusable list. If steps vary independently, a pipeline of injected functions may be easier to test."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Express the same workflow with composition and state its input assumption.",
+        "solution": "def run(load, render):\n    rows = list(load())\n    if any(not isinstance(x, str) for x in rows):\n        raise ValueError(\"strings required\")\n    return render(rows)\nassert run(lambda: iter([\"A\"]), lambda xs: \"|\".join(xs)) == \"A\"",
+        "checks": [
+          "Validation precedes rendering.",
+          "Materialization supports one-shot iterators but uses memory.",
+          "Explains why composition may reduce subclass coupling."
+        ]
+      },
+      "quiz": {
+        "question": "What does Template Method keep centralized?",
+        "options": [
+          "The algorithm skeleton and ordering of its steps",
+          "Every possible implementation detail",
+          "Only construction of the subclass instance"
+        ],
+        "correct": 0,
+        "explanation": "The base algorithm controls the sequence while selected steps are supplied by subclasses."
+      }
+    },
+    {
+      "id": "iterator",
+      "title": "17. Iterator: traverse without exposing storage",
+      "stage": "advanced",
+      "takeaway": "Iterator gives a traversal interface without requiring callers to know the underlying representation. Python generators provide a compact way to implement lazy traversal.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Iterator gives a traversal interface without requiring callers to know the underlying representation. Python generators provide a compact way to implement lazy traversal.",
+            "A notebook stores modules containing lesson titles. Yield titles one at a time and let the consumer choose when to stop. A generator is a one-shot iterator: after exhaustion, it does not restart. A function that creates a new generator can supply repeatable traversals."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def titles(modules):\n    for module in modules:\n        yield from module\ng = titles([[\"A\", \"B\"], [\"C\"]])\nassert next(g) == \"A\"\nassert list(g) == [\"B\", \"C\"]\nassert list(g) == []"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on next(), so document deadlines and page failures."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A caller needs two complete passes. Give two valid designs and compare memory cost.",
+        "solution": "Call titles(modules) twice to create independent traversals when the underlying modules remain available and unchanged. Alternatively materialize list(titles(modules)) once and reuse it, paying memory proportional to the total output. Reusing the same exhausted generator is not a second traversal.",
+        "checks": [
+          "Recognizes one-shot exhaustion.",
+          "Explains memory tradeoff.",
+          "Considers underlying data mutation between passes."
+        ]
+      },
+      "quiz": {
+        "question": "When can a lazy iterator raise an error?",
+        "options": [
+          "Only when the generator function is called",
+          "During consumption, after its creation has succeeded",
+          "Only after the iterator has been fully exhausted"
+        ],
+        "correct": 1,
+        "explanation": "Generator execution is deferred, so consuming the next item can trigger work and exceptions."
+      }
+    },
+    {
+      "id": "dependency-injection",
+      "title": "18. Dependency injection and the composition root",
+      "stage": "advanced",
+      "takeaway": "Dependency injection supplies collaborators from outside a component. A composition root is the place that assembles concrete implementations and owns their lifetimes.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Dependency injection supplies collaborators from outside a component. A composition root is the place that assembles concrete implementations and owns their lifetimes.",
+            "A progress service needs a repository and a clock. Pass them explicitly so tests control time and storage without global patching. A dependency injection container is optional. A service locator instead lets the consumer look dependencies up; that can hide requirements and make lifecycle ownership harder to see."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "class Progress:\n    def __init__(self, save, clock):\n        self.save, self.clock = save, clock\n    def complete(self, title):\n        self.save({\"title\": title, \"at\": self.clock()})\nrecords = []\nservice = Progress(records.append, lambda: \"2026-01-01T00:00:00Z\")\nservice.complete(\"Patterns\")\nassert records[0][\"at\"] == \"2026-01-01T00:00:00Z\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Injection does not decide whether an object is safe to share. A request-scoped transaction must not be captured by a process-lifetime service. Too many constructor dependencies may indicate mixed responsibilities, but an arbitrary parameter limit is not a design law. Avoid injecting trivial pure operations merely to create more mocks."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Identify ownership for a clock, connection and request transaction in a service application.",
+        "solution": "A stateless clock can usually be shared. A connection must follow the database driver concurrency rules and be closed or returned to a pool by its owner. A transaction belongs to a specific unit of work and must not be reused across unrelated requests. Assemble these lifetimes at the boundary rather than hiding them in globals.",
+        "checks": [
+          "Separates construction from use.",
+          "Identifies transaction lifetime.",
+          "Does not require a container."
+        ]
+      },
+      "quiz": {
+        "question": "Does dependency injection require a framework?",
+        "options": [
+          "Yes; otherwise it is not injection",
+          "Only if the parameters are declared using Protocol",
+          "No; explicit function or constructor parameters are sufficient"
+        ],
+        "correct": 2,
+        "explanation": "Injection is external provision of collaborators. A container and explicit protocol declarations are optional implementation choices."
+      }
+    },
+    {
+      "id": "repository",
+      "title": "19. Repository: a domain-facing collection boundary",
+      "stage": "advanced",
+      "takeaway": "Repository provides a domain-facing way to retrieve and persist entities while isolating storage details. Its API should reflect useful domain operations rather than blindly duplicate every database operation.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Repository provides a domain-facing way to retrieve and persist entities while isolating storage details. Its API should reflect useful domain operations rather than blindly duplicate every database operation.",
+            "A lesson repository can expose add and get by stable ID. An in-memory implementation is useful for fast domain tests, but it does not emulate a SQL database automatically. Identity, uniqueness, missing values and mutation ownership must be specified. Return immutable domain objects or copies if callers must not mutate stored state accidentally."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    id: str\n    title: str\nclass Repository:\n    def __init__(self):\n        self.rows = {}\n    def add(self, lesson):\n        if lesson.id in self.rows:\n            raise ValueError(\"duplicate ID\")\n        self.rows[lesson.id] = lesson\n    def get(self, id):\n        return self.rows.get(id)\nr = Repository()\nr.add(Lesson(\"1\", \"Patterns\"))\nassert r.get(\"1\").title == \"Patterns\"\nassert r.get(\"missing\") is None"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "A generic CRUD wrapper around an ORM can add indirection without a useful boundary. Some ORMs already supply repository/unit-of-work-like behavior. Fakes cannot prove SQL constraints, isolation, collation, query performance or provider translation; run integration tests against the actual provider for those guarantees."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Specify contract tests shared by memory and SQL implementations, plus two SQL-only integration checks.",
+        "solution": "Shared tests: add/get preserves fields, duplicate ID fails according to a documented error contract, missing ID returns None, failed add leaves existing data unchanged. SQL integration: verify the actual unique constraint under concurrency and rollback of a multi-write transaction. Query plan/performance tests need realistic data and a measured workload.",
+        "checks": [
+          "Separates domain contract from provider behavior.",
+          "Defines duplicate and missing semantics.",
+          "Avoids claiming a fake validates isolation."
+        ]
+      },
+      "quiz": {
+        "question": "What does a successful in-memory repository test establish?",
+        "options": [
+          "The tested domain behavior of that implementation",
+          "The production database isolation level is correct",
+          "That all future repository implementations satisfy the same contract"
+        ],
+        "correct": 0,
+        "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
+      }
+    },
+    {
+      "id": "unit-of-work",
+      "title": "20. Unit of Work: coordinate changes and commit",
+      "stage": "advanced",
+      "takeaway": "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
+            "A local copy-on-write model can teach commit boundaries. Make a working copy, modify it and replace the original only on success. This example is sequential and process-local. It is not a database, crash-safe journal or concurrency-control mechanism."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "from contextlib import contextmanager\nfrom copy import deepcopy\n@contextmanager\ndef unit_of_work(store):\n    working = deepcopy(store)\n    yield working\n    store.clear()\n    store.update(working)\nstore = {\"completed\": 0}\ntry:\n    with unit_of_work(store) as work:\n        work[\"completed\"] = 1\n        raise ValueError(\"abort\")\nexcept ValueError:\n    pass\nassert store == {\"completed\": 0}\nwith unit_of_work(store) as work:\n    work[\"completed\"] = 1\nassert store == {\"completed\": 1}"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "The example avoids publishing working changes when the body raises, but replacement itself is not an atomic multi-thread or crash-safe operation. Real persistence needs a transaction and conflict policy. An email sent before commit cannot be rolled back with database rows; coordinate such effects explicitly, for example with a transactional outbox when that complexity is justified."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why save progress and send email inside a database transaction is not automatically one atomic operation.",
+        "solution": "The database controls its own records, not the mail provider. Email can succeed and commit fail, or commit can succeed and email fail. A transactional outbox records an intent alongside the business update; a separate sender retries delivery. That sender still needs duplicate handling and operational monitoring, so do not promise exactly-once email.",
+        "checks": [
+          "Identifies the transaction boundary.",
+          "Explains both failure orders.",
+          "Does not equate an outbox with exactly-once external effects."
+        ]
+      },
+      "quiz": {
+        "question": "Where does durable database atomicity come from?",
+        "options": [
+          "Calling a class UnitOfWork",
+          "The database transaction and its guarantees",
+          "From copying records before modifying them"
+        ],
+        "correct": 1,
+        "explanation": "Working copies can isolate local edits, but durability and atomic storage changes rely on the actual transactional provider."
+      },
+      "trace": {
+        "title": "A commit boundary",
+        "frames": [
+          {
+            "label": "Begin",
+            "items": [
+              "Stored completed = 0",
+              "Working completed = 0"
+            ],
+            "explanation": "Create a private working copy for this local demonstration."
+          },
+          {
+            "label": "Change",
+            "items": [
+              "Stored completed = 0",
+              "Working completed = 1"
+            ],
+            "explanation": "A pending change is not yet published."
+          },
+          {
+            "label": "Outcome",
+            "items": [
+              "Success → publish working copy",
+              "Exception → keep original"
+            ],
+            "explanation": "This illustrates rollback of the body; real durability and concurrency need storage guarantees."
+          }
+        ]
+      }
+    },
+    {
+      "id": "refactoring",
+      "title": "21. Refactor toward a justified pattern",
+      "stage": "advanced",
+      "takeaway": "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
+            "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible so a changed expectation is deliberate and reviewable."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "def old(titles, kind):\n    if kind == \"lines\":\n        return \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\ndef lines(titles):\n    return \"\\n\".join(titles)\ndef new(titles, formatter):\n    return formatter(titles)\nfor titles in ([], [\"A\"], [\"A\", \"B\"]):\n    assert old(titles, \"lines\") == new(titles, lines)"
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a three-step migration plan for an exporter that currently validates, formats and writes in one function.",
+        "solution": "First capture output and failure behavior using a fake writer. Next extract formatting without changing validation or write order, and rerun those checks. Finally inject the formatter and select it at the entry point. Add the new format with shared contract tests. Keep deployment rollback possible until real consumer behavior is checked.",
+        "checks": [
+          "Preserves public behavior at each step.",
+          "Tests failure timing as well as output.",
+          "Adds abstraction only at the variation point."
+        ]
+      },
+      "quiz": {
+        "question": "What makes a structural change a refactoring?",
+        "options": [
+          "It adds more patterns",
+          "That the new code has fewer lines",
+          "Its externally relevant behavior is preserved"
+        ],
+        "correct": 2,
+        "explanation": "Refactoring preserves observable behavior while changing structure. Line count is not an equivalence criterion."
+      }
+    },
+    {
+      "id": "selection",
+      "title": "22. Pattern selection, anti-patterns and a design review",
+      "stage": "advanced",
+      "takeaway": "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
+      "sections": [
+        {
+          "title": "The problem and the intent",
+          "paragraphs": [
+            "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
+            "Use a decision record with context, options, decision and consequences. A strategy varies a policy; an adapter translates a boundary; a facade offers a workflow; a decorator layers compatible behavior; a proxy controls access; a state machine governs lifecycle. Similar diagrams do not make their intentions interchangeable."
+          ]
+        },
+        {
+          "title": "Follow the collaboration",
+          "paragraphs": [
+            "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+          ],
+          "example": "# A runnable minimal alternative: explicit functions and one selection point.\ndef preview(titles, format_name):\n    formatters = {\"lines\": lambda xs: \"\\n\".join(xs), \"count\": lambda xs: str(len(xs))}\n    if format_name not in formatters:\n        raise ValueError(\"unsupported preview\")\n    return formatters[format_name](titles)\nassert preview([\"A\", \"B\"], \"count\") == \"2\""
+        },
+        {
+          "title": "Tradeoffs and failure cases",
+          "paragraphs": [
+            "Watch for speculative generality, a god object coordinating unrelated domains, deep fragile inheritance, hidden service locators and singleton mutable state. Singleton controls instance access, but does not make that instance thread-safe and can couple tests through global state. A module-level constant is different from a global mutable transaction manager. Remove abstractions whose benefits no longer justify their cost."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Review a proposed exporter containing a singleton registry, six abstract factories and one JSON format. Write an alternative and an evidence threshold for expanding it.",
+        "solution": "Use one validated formatting function and an explicit entry-point selection if needed. Keep state local and inject the writer. Expand to interchangeable strategies when a real second policy appears, and consider a family factory only when related products must vary together. Measure change effort and failure risk rather than counting classes or pattern names.",
+        "checks": [
+          "Identifies unnecessary construction complexity.",
+          "Preserves useful testing boundaries.",
+          "Names a future trigger rather than guessing every future need."
+        ]
+      },
+      "quiz": {
+        "question": "What is a strong design-review outcome?",
+        "options": [
+          "A justified choice, its tradeoffs and a simpler alternative considered",
+          "The highest count of named patterns",
+          "Every known future feature is supported immediately"
+        ],
+        "correct": 0,
+        "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
+      }
+    }
+  ],
+  "publicFiles": [
+    "workshop.py",
+    "test_workshop.py",
+    "README.md"
+  ],
+  "downloads": [
+    {
+      "title": "Pattern workshop reference",
+      "href": "paths/design-patterns/workshop.py"
+    },
+    {
+      "title": "Workshop behavioral tests",
+      "href": "paths/design-patterns/test_workshop.py"
+    },
+    {
+      "title": "Workshop setup and limitations",
+      "href": "paths/design-patterns/README.md"
+    }
+  ]
+}

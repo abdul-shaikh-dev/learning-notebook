@@ -2486,6 +2486,1316 @@ const LEARNING_PATHS = [
     ]
   },
   {
+    "id": "design-patterns",
+    "title": "Design Patterns",
+    "category": "Software design",
+    "status": "ready",
+    "description": "Learn to choose and apply patterns through 22 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
+      "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
+    ],
+    "outcomes": [
+      "Identify a real variation point before choosing a pattern.",
+      "Distinguish similarly shaped patterns by intent and contract.",
+      "Compose strategies, adapters, facades and decorators with explicit failure behavior.",
+      "Model state transitions and explain command/undo limitations.",
+      "Design repository and unit-of-work boundaries without overstating fake-storage guarantees.",
+      "Refactor incrementally and document alternatives, costs and evidence."
+    ],
+    "setup": [
+      "Use Python 3.11+ and save each lesson example in its own file; examples are independent.",
+      "Download workshop.py and test_workshop.py into the same empty folder. Run python -m unittest -v test_workshop.py.",
+      "Run python workshop.py for a deterministic demonstration. No packages, credentials or live services are required.",
+      "Lesson code is deliberately small; read the stated contracts and limits before adapting it to production."
+    ],
+    "nextSteps": [
+      "Apply one justified pattern to a small existing application and compare change effort before and after.",
+      "Use the System Design path for service boundaries, capacity, reliability and distributed tradeoffs.",
+      "Add a real database adapter and run provider integration tests for constraints, rollback and concurrent conflicts.",
+      "Study additional patterns such as Bridge, Visitor and Mediator only when their problem contexts arise.",
+      "These projects provide advanced practice, not exhaustive coverage or a professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Python typing and structural protocols",
+        "url": "https://docs.python.org/3/library/typing.html"
+      },
+      {
+        "title": "Python abstract base classes",
+        "url": "https://docs.python.org/3/library/abc.html"
+      },
+      {
+        "title": "Python functools and wrapper metadata",
+        "url": "https://docs.python.org/3/library/functools.html"
+      },
+      {
+        "title": "Python data model: iterators",
+        "url": "https://docs.python.org/3/reference/datamodel.html#object.__iter__"
+      },
+      {
+        "title": "Python context managers",
+        "url": "https://docs.python.org/3/library/contextlib.html"
+      },
+      {
+        "title": "Martin Fowler: dependency injection",
+        "url": "https://martinfowler.com/articles/injection.html"
+      },
+      {
+        "title": "Martin Fowler: Repository",
+        "url": "https://martinfowler.com/eaaCatalog/repository.html"
+      },
+      {
+        "title": "Martin Fowler: Unit of Work",
+        "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html"
+      },
+      {
+        "title": "Microsoft: persistence infrastructure and repository tradeoffs",
+        "url": "https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations: recognize a useful boundary",
+        "description": "Start from small functions, contracts and a real source of change before introducing a named pattern.",
+        "exitCriteria": [
+          "Explain a contract including side effects and failures.",
+          "Distinguish a strategy from construction and a protocol from runtime validation.",
+          "Choose a function when a class adds no useful state or lifecycle."
+        ],
+        "project": {
+          "title": "Two-format study exporter",
+          "brief": "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+          "requirements": [
+            "Validate all titles before producing output.",
+            "Use two compatible formatting strategies selected at one entry point.",
+            "Reject unknown formats and preserve input order.",
+            "Include an empty-input test and a malformed-title test."
+          ],
+          "rubric": [
+            "Both output formats are correct for the same input.",
+            "No mutation of caller records occurs.",
+            "The design note explains why a simple factory/function is enough.",
+            "Tests assert observable behavior, including failures."
+          ],
+          "solution": "Use validate_titles to return an immutable tuple, formatter_for to select lines or JSON and a workflow that delegates once. Keep format-specific logic out of validation. The downloadable workshop demonstrates these seams; its tests cover empty data, rejected values and format selection."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate: compose and translate behavior",
+        "description": "Build adapters and wrappers, explain traversal and notification policies, and avoid hidden lifecycle assumptions.",
+        "exitCriteria": [
+          "Translate units and errors explicitly at an adapter.",
+          "Explain wrapper ordering and callback failure policy.",
+          "Recognize tree, caching and object-lifetime assumptions."
+        ],
+        "project": {
+          "title": "Measured export preview",
+          "brief": "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+          "requirements": [
+            "Adapt a legacy seconds field with an explicit conversion policy.",
+            "Use a measurement decorator that delegates once and records only success.",
+            "Test wrapper failure and input immutability.",
+            "Write a note comparing facade, adapter, decorator and proxy intentions."
+          ],
+          "rubric": [
+            "Boundary conversion is correct at 59/60/61 seconds.",
+            "Failures are propagated and not counted as successful output.",
+            "Facade remains focused on the preview workflow.",
+            "The design note explains one case where each wrapper would be unnecessary."
+          ],
+          "solution": "Keep the adapter responsible for seconds validation/conversion; keep formatting independent. Wrap the chosen formatter with a success-size recorder, then call it through export_preview. The workshop uses no delivery side effect, so it does not need retry or transaction logic. Add explicit tests before changing that boundary."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice: failure-aware design and refactoring",
+        "description": "Combine a few justified patterns, test negative paths and state the limits of in-memory implementations.",
+        "exitCriteria": [
+          "Model legal and illegal state transitions.",
+          "Separate unit tests from real-provider integration guarantees.",
+          "Explain why transactions do not roll back external messages.",
+          "Write a decision record including an alternative and migration plan."
+        ],
+        "project": {
+          "title": "Local completion workflow with a design review",
+          "brief": "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+          "requirements": [
+            "Reject missing IDs and repeated completion according to a stated policy.",
+            "Commit a valid transition and keep the original store unchanged when validation fails.",
+            "Run the provided rollback tests and add a failing repository substitute.",
+            "Propose provider integration tests and a notification failure policy.",
+            "Write a decision record rejecting at least one unnecessary pattern."
+          ],
+          "rubric": [
+            "Success changes exactly the intended record.",
+            "The failure path does not leak a working-copy update.",
+            "Limitations explicitly include concurrency, durability and external effects.",
+            "A fake repository is not presented as proof of database behavior.",
+            "The refactoring plan preserves public contracts and can be reviewed in small changes."
+          ],
+          "solution": "The reference uses immutable lesson records, a repository for identity lookup and a sequential copy-on-write unit of work. complete_lesson validates the current lifecycle before replacing a record; exceptions avoid publishing the working copy. A production variant needs actual database transactions, a conflict/version policy, authorization and provider integration tests. If notifications must survive crashes, evaluate an outbox and duplicate handling rather than sending mail inside the local commit block."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "intent",
+        "title": "1. Patterns solve recurring design pressures",
+        "stage": "foundation",
+        "takeaway": "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name is a vocabulary for reasoning, not a requirement to create classes.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name is a vocabulary for reasoning, not a requirement to create classes.",
+              "Imagine a study notebook that exports progress. At first a small function is enough. A second export format creates a variation point: formatting changes while selecting records stays stable. Name that pressure before choosing an abstraction. Creational patterns concern construction; structural patterns concern assembling interfaces and objects; behavioral patterns concern responsibility and collaboration. These categories organize discussion, not strict technical boundaries."
+            ]
+          },
+          {
+            "title": "A small vocabulary for reading designs",
+            "paragraphs": [
+              "A collaborator is an object or function called to perform part of a job. A dependency is something a component needs to do its work. A contract describes accepted inputs, outputs, failures and side effects. An invariant is a rule that must remain true at a specified boundary.",
+              "A variation point is a part expected to change independently. Coupling describes how changes in one part affect another; cohesion asks whether the responsibilities within one part belong together. These are reasoning tools, not scores that can be maximized without tradeoffs."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def export_titles(rows):\n    return \"\\n\".join(row[\"title\"] for row in rows)\nassert export_titles([{\"title\": \"Patterns\"}]) == \"Patterns\"\nassert export_titles([]) == \"\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A one-off function has fewer moving parts than a hierarchy. Add an abstraction when a real variation, testing boundary or lifecycle requires it. Pattern names alone do not establish correctness, speed or maintainability; compare the concrete cost of the current change."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a design note for adding JSON export. State what varies, what remains stable and the simplest change you would first try.",
+          "solution": "Formatting varies; record selection and validation remain stable. First extract formatting functions and pass the selected one to the export flow. Keep a small explicit selection branch at the application boundary. Revisit construction or plugins only when their requirements appear.",
+          "checks": [
+            "Names a concrete changing requirement.",
+            "Does not require a class for a stateless function.",
+            "States a reason to revisit the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What is the best first input to pattern selection?",
+          "options": [
+            "A concrete source of change or coupling",
+            "A list of fashionable pattern names",
+            "Whether the implementation can be made object-oriented"
+          ],
+          "correct": 0,
+          "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
+        }
+      },
+      {
+        "id": "contracts",
+        "title": "2. Contracts, invariants and substitutability",
+        "stage": "foundation",
+        "takeaway": "A contract includes accepted inputs, returned values, failures and side effects. Matching method names is only one part of being substitutable.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "A contract includes accepted inputs, returned values, failures and side effects. Matching method names is only one part of being substitutable.",
+              "An invariant is a rule that remains true at a boundary: study minutes are nonnegative whole numbers, for example. A caller expecting a formatter that leaves records unchanged cannot safely substitute one that deletes them. Python annotations describe expectations for tools and readers; they do not automatically validate untrusted runtime inputs."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Document the smallest useful contract. Overly broad promises such as any iterable or every number create obligations you may not implement. Substitutes must preserve caller-relevant guarantees; silently accepting invalid values can be as harmful as rejecting previously valid ones."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify a title formatter contract and one test that catches a contract violation.",
+          "solution": "Accept a sequence of records containing string titles; return a string; preserve record order; do not mutate records; malformed titles raise ValueError. Snapshot the input, call the formatter and compare the input to the snapshot. Test empty input returns an empty string.",
+          "checks": [
+            "Includes mutation behavior.",
+            "Includes empty input.",
+            "States failure policy."
+          ]
+        },
+        "quiz": {
+          "question": "Can annotations alone reject invalid JSON at runtime?",
+          "options": [
+            "Yes; Python checks all annotations automatically",
+            "No; boundary validation must enforce the required invariants",
+            "Only Protocol annotations validate external data"
+          ],
+          "correct": 1,
+          "explanation": "Annotations support tools and readers. Runtime boundary checks enforce invariants on actual values."
+        }
+      },
+      {
+        "id": "composition",
+        "title": "3. Composition and responsibilities",
+        "stage": "foundation",
+        "takeaway": "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
+              "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. This creates a seam for a fake delivery recorder in tests."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary.",
+              "Collaboration: caller → remind → formatter, then remind → delivery. The caller assembles the collaborators; remind owns the order of work."
+            ],
+            "example": "def remind(title, deliver):\n    deliver(f\"Review {title}\")\nsent = []\nremind(\"Patterns\", sent.append)\nassert sent == [\"Review Patterns\"]"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Prefer a small function when it expresses the entire variation clearly."
+            ]
+          },
+          {
+            "title": "Read the collaboration diagram",
+            "paragraphs": [
+              "Follow the arrows as calls. The application supplies collaborators, the reminder coordinates them, and the delivery recorder gives the test observable evidence. This is one process, not a distributed system."
+            ],
+            "example": "# Application entry point\n#       | supplies collaborators\n#       v\n#    remind ----> message formatter\n#       |             |\n#       | <---- formatted message\n#       v\n#    delivery ----> recorded message\n#\n# The arrows describe dependencies and call order, not inheritance."
+          }
+        ],
+        "exercise": {
+          "prompt": "Add an independently supplied message formatter without adding subclasses.",
+          "solution": "def remind(title, format_message, deliver):\n    deliver(format_message(title))\nsent = []\nremind(\"SQL\", lambda t: f\"Practice {t}\", sent.append)\nassert sent == [\"Practice SQL\"]",
+          "checks": [
+            "Formatter and delivery vary separately.",
+            "Test records one delivery.",
+            "No hidden global delivery client."
+          ]
+        },
+        "quiz": {
+          "question": "Why inject the delivery function?",
+          "options": [
+            "To guarantee delivery never fails",
+            "To make every reminder inherit a delivery base class",
+            "To separate workflow from delivery and make the boundary explicit"
+          ],
+          "correct": 2,
+          "explanation": "Supplying a collaborator exposes the dependency and lets tests record delivery without constructing an external client."
+        }
+      },
+      {
+        "id": "solid",
+        "title": "4. SOLID as questions, not commandments",
+        "stage": "foundation",
+        "takeaway": "SOLID collects design heuristics: single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion. Use them to ask about change and contracts.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "SOLID collects design heuristics: single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion. Use them to ask about change and contracts.",
+              "Single responsibility asks which reasons to change belong together, not whether a class has one method. Open/closed suggests a stable extension boundary when variation is known. Substitution preserves expectations. Interface segregation lets a consumer depend on only the operations it needs. Dependency inversion places the policy-facing contract above replaceable technical details; it does not require a dependency injection framework."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from typing import Protocol\nclass TitleSource(Protocol):\n    def titles(self) -> list[str]: ...\nclass MemorySource:\n    def titles(self):\n        return [\"Patterns\"]\ndef summary(source: TitleSource):\n    return \", \".join(source.titles())\nassert summary(MemorySource()) == \"Patterns\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "The protocol above supports structural static typing; no inheritance is required for MemorySource. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A report consumer needs only titles, but its dependency exposes save, delete, connect and titles. Propose a smaller contract and explain what it cannot guarantee.",
+          "solution": "Give the report a TitleSource with titles(). The adapter may wrap a larger storage object. This makes the report dependency smaller, but does not prove latency, authorization, ordering or error behavior; those remain documented and tested contract obligations.",
+          "checks": [
+            "Contract contains only consumer needs.",
+            "Separates type shape from behavior.",
+            "Avoids claiming the protocol validates runtime data."
+          ]
+        },
+        "quiz": {
+          "question": "What does interface segregation optimize for?",
+          "options": [
+            "The operations a particular consumer actually needs",
+            "The maximum number of interfaces",
+            "Ensuring every interface contains exactly one method"
+          ],
+          "correct": 0,
+          "explanation": "A consumer-facing contract should be small enough for its needs, without imposing unrelated operations or a rigid method-count rule."
+        }
+      },
+      {
+        "id": "strategy",
+        "title": "5. Strategy: exchange a policy",
+        "stage": "foundation",
+        "takeaway": "Strategy lets a workflow use an interchangeable policy with a shared contract. A callable is often enough in Python.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Strategy lets a workflow use an interchangeable policy with a shared contract. A callable is often enough in Python.",
+              "A notebook can order lessons alphabetically or by duration. Selecting lessons stays unchanged; the ranking policy varies. Keep input and output conventions explicit so changing a strategy does not change the meaning of the workflow. Selection can remain a simple branch at the application boundary."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def arrange(rows, key):\n    return sorted(rows, key=key)\nrows = [{\"title\": \"SQL\", \"minutes\": 30}, {\"title\": \"Python\", \"minutes\": 10}]\nassert [r[\"title\"] for r in arrange(rows, lambda r: r[\"minutes\"])] == [\"Python\", \"SQL\"]\nassert rows[0][\"title\"] == \"SQL\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Strategy is helpful when alternatives represent the same job. Policies that return unrelated result types weaken the boundary. Do not wrap a single arithmetic expression in multiple classes unless state, lifecycle or a language constraint makes that useful."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Order by duration, breaking ties alphabetically, without modifying arrange.",
+          "solution": "def arrange(rows, key):\n    return sorted(rows, key=key)\nrows = [{\"title\": \"B\", \"minutes\": 5}, {\"title\": \"A\", \"minutes\": 5}]\nassert [r[\"title\"] for r in arrange(rows, lambda r: (r[\"minutes\"], r[\"title\"]))] == [\"A\", \"B\"]",
+          "checks": [
+            "Tie-break is deterministic.",
+            "Original input remains ordered as before.",
+            "Empty input produces an empty result."
+          ]
+        },
+        "quiz": {
+          "question": "What is exchanged by Strategy?",
+          "options": [
+            "The entire application and all its contracts",
+            "An implementation of a policy with compatible expectations",
+            "The object creation mechanism regardless of its policy"
+          ],
+          "correct": 1,
+          "explanation": "Strategies perform the same policy role under compatible input, output and side-effect contracts."
+        },
+        "trace": {
+          "title": "One workflow, two policies",
+          "frames": [
+            {
+              "label": "Input",
+              "items": [
+                "SQL: 30 minutes",
+                "Python: 10 minutes"
+              ],
+              "explanation": "The workflow receives the same records; selection is already complete."
+            },
+            {
+              "label": "Policy",
+              "items": [
+                "key = minutes",
+                "Python comes first"
+              ],
+              "explanation": "Only the ranking decision changes; sorted produces a new list."
+            },
+            {
+              "label": "Alternative",
+              "items": [
+                "key = title",
+                "Python then SQL"
+              ],
+              "explanation": "The caller supplies another compatible policy without editing the workflow."
+            }
+          ]
+        }
+      },
+      {
+        "id": "factories",
+        "title": "6. Simple factories, Factory Method and Abstract Factory",
+        "stage": "foundation",
+        "takeaway": "A factory separates choosing or constructing a collaborator from using it. Distinguish a simple selection function from the named Factory Method and Abstract Factory patterns.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "A factory separates choosing or constructing a collaborator from using it. Distinguish a simple selection function from the named Factory Method and Abstract Factory patterns.",
+              "A simple factory maps a format name to a formatter. Factory Method delegates a construction step to an overridable operation in a creator. Abstract Factory supplies a family of related products that must work together. A function returning another function is a useful factory without being the full class-based Factory Method pattern."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "import json\ndef formatter_for(name):\n    if name == \"json\":\n        return lambda titles: json.dumps(titles)\n    if name == \"lines\":\n        return lambda titles: \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\nassert formatter_for(\"lines\")([\"A\", \"B\"]) == \"A\\nB\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Keep factory lookup explicit and bounded; never interpret an arbitrary user string as executable code. A family factory is useful when a renderer and theme must match, but unnecessary if there is only one product. Construction ownership also includes cleanup for resources such as connections."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Decide which factory style fits selecting JSON versus line export, and reject an unsupported format.",
+          "solution": "A simple factory is enough because there is one stateless product role. Calling formatter_for(\"xml\") should raise ValueError. Factory Method becomes relevant if a creator workflow deliberately delegates construction to subclasses; Abstract Factory becomes relevant for a compatible family of products.",
+          "checks": [
+            "Does not mislabel a lookup as Factory Method.",
+            "Unknown format fails explicitly.",
+            "States when another construction pattern might become useful."
+          ]
+        },
+        "quiz": {
+          "question": "Which use most strongly suggests Abstract Factory?",
+          "options": [
+            "Any function containing an if statement",
+            "Returning a single stateless formatter selected by name",
+            "Creating several products that must belong to a compatible family"
+          ],
+          "correct": 2,
+          "explanation": "A related family of products motivates Abstract Factory; selecting one product can remain a simple factory."
+        }
+      },
+      {
+        "id": "builder",
+        "title": "7. Builder: construct a valid configuration",
+        "stage": "intermediate",
+        "takeaway": "Builder separates staged construction from the finished object. It is useful when construction has several choices or ordering rules, but a validated constructor is often enough.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Builder separates staged construction from the finished object. It is useful when construction has several choices or ordering rules, but a validated constructor is often enough.",
+              "A report configuration has a title and selected fields. Build temporary choices, then validate at build time and return an immutable snapshot. A frozen dataclass prevents attribute reassignment, but nested mutable values would still need care; the example uses a tuple for fields."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Report:\n    title: str\n    fields: tuple[str, ...]\nclass Builder:\n    def __init__(self):\n        self.fields = []\n    def field(self, name):\n        self.fields.append(name)\n        return self\n    def build(self, title):\n        if not title.strip() or not self.fields or any(not f.strip() for f in self.fields):\n            raise ValueError(\"title and fields required\")\n        return Report(title.strip(), tuple(self.fields))\nb = Builder().field(\"title\")\nr = b.build(\" Progress \")\nb.field(\"minutes\")\nassert r.fields == (\"title\",)"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Mutable builders can accidentally carry options from one request to another. Do not share one across requests or threads. Fluent chaining does not make invalid combinations valid. For two required parameters, a constructor with validation may be clearer."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why copying fields into a tuple matters, and add a duplicate-field policy.",
+          "solution": "The tuple snapshots the field list so later builder edits cannot change an existing report. Reject duplicates at build time with len(set(self.fields)) != len(self.fields), or deliberately deduplicate while preserving order. Document the choice and test it; silently retaining duplicate columns may surprise users.",
+          "checks": [
+            "Earlier report is unaffected by later builder changes.",
+            "Empty title and field list fail.",
+            "Duplicate behavior is explicit."
+          ]
+        },
+        "quiz": {
+          "question": "What must build() establish?",
+          "options": [
+            "A finished object satisfying the documented configuration rules",
+            "Only that method calls were chained",
+            "That later builder changes also update previous products"
+          ],
+          "correct": 0,
+          "explanation": "The construction boundary validates the configuration and snapshots it; fluent syntax alone establishes neither property."
+        }
+      },
+      {
+        "id": "adapter",
+        "title": "8. Adapter: translate an incompatible interface",
+        "stage": "intermediate",
+        "takeaway": "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
+              "A legacy progress system reports seconds while the notebook expects whole minutes. The adapter explicitly chooses floor conversion for this example. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class Legacy:\n    def seconds_spent(self):\n        return 125\nclass MinutesAdapter:\n    def __init__(self, legacy):\n        self.legacy = legacy\n    def minutes(self):\n        seconds = self.legacy.seconds_spent()\n        if type(seconds) is not int or seconds < 0:\n            raise ValueError(\"invalid seconds\")\n        return seconds // 60\nassert MinutesAdapter(Legacy()).minutes() == 2"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Adapters can become places where undocumented rounding, time zones and error swallowing accumulate. Keep the translation narrow and test actual boundary cases. A fake legacy implementation verifies your translation logic; it does not prove a real service conforms to your assumptions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "List boundary tests for the conversion policy and explain why rounding must be documented.",
+          "solution": "Test 0→0, 59→0, 60→1 and 125→2; reject negative, bool and noninteger values. Floor conversion loses partial minutes by design. If billing or accounting requires exact precision, retain seconds or a decimal amount instead of reusing this policy.",
+          "checks": [
+            "Covers the minute boundary.",
+            "Rejects malformed upstream values.",
+            "Does not treat floor conversion as universally appropriate."
+          ]
+        },
+        "quiz": {
+          "question": "What distinguishes Adapter from a plain alias?",
+          "options": [
+            "It guarantees upstream uptime",
+            "It reconciles the consumer contract with the existing component semantics",
+            "It makes the source and consumer units identical without conversion"
+          ],
+          "correct": 1,
+          "explanation": "An adapter must preserve meaning across the boundary, including units, rounding and failures."
+        }
+      },
+      {
+        "id": "facade",
+        "title": "9. Facade: offer a coherent workflow",
+        "stage": "intermediate",
+        "takeaway": "Facade presents a simpler entry point to a subsystem with several operations. It coordinates a use case while preserving meaningful failures.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Facade presents a simpler entry point to a subsystem with several operations. It coordinates a use case while preserving meaningful failures.",
+              "A study pack needs validation, formatting and delivery. A facade gives the caller one publish operation while collaborators retain their roles. It should not imply atomicity: formatting may succeed and delivery may fail. Return success only after the required operations succeed."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def publish(titles, format_titles, deliver):\n    if any(not isinstance(t, str) or not t.strip() for t in titles):\n        raise ValueError(\"invalid title\")\n    document = format_titles(titles)\n    deliver(document)\n    return len(titles)\nout = []\nassert publish([\"Patterns\"], lambda xs: \"|\".join(xs), out.append) == 1\nassert out == [\"Patterns\"]"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A facade can grow into a god object if every unrelated operation is added. Keep it aligned with a coherent use case. It does not automatically supply retries, compensation or database transactions. Expose enough outcome information for callers to handle partial failures."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a test proving invalid input never reaches delivery.",
+          "solution": "Pass [\"\"] with a delivery recorder. Assert ValueError and an empty recorder. Also use a delivery function that raises RuntimeError; assert the facade propagates failure rather than returning a successful count.",
+          "checks": [
+            "Validation runs before side effects.",
+            "Delivery failure is visible.",
+            "No claim of distributed atomicity."
+          ]
+        },
+        "quiz": {
+          "question": "What does a facade primarily simplify?",
+          "options": [
+            "Every possible failure inside the subsystem",
+            "Making every subsystem operation commit atomically",
+            "How callers use a subsystem"
+          ],
+          "correct": 2,
+          "explanation": "A facade simplifies a use case entry point. Transaction or compensation guarantees require additional mechanisms."
+        }
+      },
+      {
+        "id": "decorator",
+        "title": "10. Decorator: layer behavior around the same role",
+        "stage": "intermediate",
+        "takeaway": "Decorator wraps a collaborator to add behavior while preserving its role. A function wrapper can express the same collaboration as an object decorator.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Decorator wraps a collaborator to add behavior while preserving its role. A function wrapper can express the same collaboration as an object decorator.",
+              "Wrap a formatter to record successful output sizes. The caller still receives a string. The wrapper delegates exactly once and records after success. Python @decorator syntax can implement wrappers, but syntax and the object-oriented pattern are not identical concepts."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from functools import wraps\ndef measured(formatter, sizes):\n    @wraps(formatter)\n    def wrapped(titles):\n        text = formatter(titles)\n        sizes.append(len(text))\n        return text\n    return wrapped\nsizes = []\nformat_titles = measured(lambda xs: \",\".join(xs), sizes)\nassert format_titles([\"A\", \"BC\"]) == \"A,BC\"\nassert sizes == [4]"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Wrapper order matters: authorization before caching differs from caching before authorization. Avoid recording sensitive payloads. Retrying a wrapper around a side effect can duplicate that effect. Preserve exceptions unless translating them is part of the declared contract."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify what happens to the sizes recorder when the wrapped formatter raises.",
+          "solution": "It remains unchanged because append happens only after the formatter returns. Test a formatter that raises ValueError; assert the same failure reaches the caller and sizes remains empty. If failure metrics are desired, record a separate outcome in an explicit except/finally policy.",
+          "checks": [
+            "Delegates exactly once.",
+            "Does not swallow exceptions.",
+            "Distinguishes success metrics from failure metrics."
+          ]
+        },
+        "quiz": {
+          "question": "Why must wrapper order be reviewed?",
+          "options": [
+            "Each wrapper changes what the next wrapper observes",
+            "Wrappers always commute",
+            "Because only the outer wrapper can ever raise"
+          ],
+          "correct": 0,
+          "explanation": "Wrappers observe inputs, outputs and errors at different positions; moving authorization or caching changes the effective behavior."
+        }
+      },
+      {
+        "id": "composite",
+        "title": "11. Composite: uniform operations over trees",
+        "stage": "intermediate",
+        "takeaway": "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
+              "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and integer minute values already validated at creation."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    minutes: int\n    def duration(self):\n        return self.minutes\n@dataclass(frozen=True)\nclass Module:\n    children: tuple\n    def duration(self):\n        return sum(child.duration() for child in self.children)\nplan = Module((Lesson(10), Module((Lesson(20),))))\nassert plan.duration() == 30\nassert Module(()).duration() == 0"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not actually a tree."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A lesson occurs in two modules. Decide whether total duration counts occurrences or unique lessons and explain the implementation impact.",
+          "solution": "Occurrence counting can keep the current traversal. Unique-lesson counting requires stable lesson IDs and a visited set shared across traversal. Detect cycles separately if cycles indicate invalid input; silently skipping all visited nodes can conceal malformed structure.",
+          "checks": [
+            "States a counting policy.",
+            "Distinguishes shared nodes from cycles.",
+            "Handles an empty group."
+          ]
+        },
+        "quiz": {
+          "question": "Which assumption makes this recursive example straightforward?",
+          "options": [
+            "Every graph is a tree",
+            "The structure is a finite acyclic tree",
+            "The hierarchy contains no empty groups"
+          ],
+          "correct": 1,
+          "explanation": "The recursion assumes finite acyclic containment. Empty groups are valid here and sum to zero."
+        }
+      },
+      {
+        "id": "proxy",
+        "title": "12. Proxy: control access to a collaborator",
+        "stage": "intermediate",
+        "takeaway": "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
+              "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate None result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class LazyDocument:\n    def __init__(self, load):\n        self.load, self.loaded, self.value = load, False, None\n    def get(self):\n        if not self.loaded:\n            value = self.load()\n            self.value, self.loaded = value, True\n        return self.value\ncalls = []\np = LazyDocument(lambda: calls.append(\"load\"))\nassert p.get() is None and p.get() is None\nassert calls == [\"load\"]"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "If load fails, this implementation remains unloaded and a future call tries again. That can be unsuitable for expensive or non-idempotent operations. A remote proxy cannot hide latency, timeouts or partial failure merely by using a familiar method signature. Authorization caches must account for user identity and policy changes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why checking value is None is insufficient and identify a concurrency limitation.",
+          "solution": "None may be a successfully loaded value, so it cannot also reliably represent the unloaded state. Two concurrent callers can both observe loaded=False and perform duplicate loads; synchronization or a single-flight mechanism is needed if that violates the contract.",
+          "checks": [
+            "Explains the sentinel ambiguity.",
+            "Explains retry-after-failure behavior.",
+            "Does not claim thread safety."
+          ]
+        },
+        "quiz": {
+          "question": "Does a remote proxy make a network call equivalent to a local call?",
+          "options": [
+            "Yes; the method signature removes network failures",
+            "Yes, if the proxy caches the first successful response",
+            "No; latency and failure semantics still matter"
+          ],
+          "correct": 2,
+          "explanation": "A wrapper can provide a familiar interface, but network latency, failure and cache freshness remain part of the contract."
+        }
+      },
+      {
+        "id": "observer",
+        "title": "13. Observer: announce a change to subscribers",
+        "stage": "intermediate",
+        "takeaway": "Observer lets a publisher notify registered subscribers without naming their concrete implementations. Local callbacks are not a durable message broker.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Observer lets a publisher notify registered subscribers without naming their concrete implementations. Local callbacks are not a durable message broker.",
+              "A lesson-completed event may update a badge and a session counter. In this example notification is synchronous, subscriber order is registration order and the first exception stops delivery. Iterating over a tuple snapshots membership so a callback can unsubscribe without changing the current iteration."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class Events:\n    def __init__(self):\n        self.handlers = []\n    def subscribe(self, handler):\n        self.handlers.append(handler)\n    def unsubscribe(self, handler):\n        self.handlers.remove(handler)\n    def publish(self, event):\n        for handler in tuple(self.handlers):\n            handler(event)\nevents = Events()\nseen = []\nevents.subscribe(seen.append)\nevents.publish(\"lesson-completed\")\nassert seen == [\"lesson-completed\"]"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Subscribers can retain objects and leak memory if not removed. Reentrant publication can trigger unexpected nested work. Define whether to stop, aggregate errors or isolate subscribers; none of those policies gives durable, exactly-once delivery. Do not use this in-memory example as a financial event log."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "What happens if the first subscriber raises? Propose an alternative policy for independent UI widgets.",
+          "solution": "The current loop stops immediately and later subscribers are skipped. For independent widgets, catch each handler exception, continue to the remaining handlers and return or log a bounded error summary. Do not quietly report all subscribers succeeded, and do not retry callbacks blindly.",
+          "checks": [
+            "States current stop-on-first-error behavior.",
+            "Makes partial success observable.",
+            "Addresses unsubscribe lifecycle."
+          ]
+        },
+        "quiz": {
+          "question": "What guarantee does this local observer example provide?",
+          "options": [
+            "Synchronous callback invocation according to its stated policy",
+            "Durable delivery after process crashes",
+            "Automatic retry until every subscriber succeeds"
+          ],
+          "correct": 0,
+          "explanation": "The loop invokes callbacks locally and synchronously. The stated exception policy can stop it; no durable retry mechanism exists."
+        },
+        "trace": {
+          "title": "A synchronous event fan-out",
+          "frames": [
+            {
+              "label": "Registered",
+              "items": [
+                "Publisher",
+                "Badge subscriber",
+                "Counter subscriber"
+              ],
+              "explanation": "Callbacks are registered in a known order."
+            },
+            {
+              "label": "Publish",
+              "items": [
+                "lesson-completed",
+                "Snapshot subscribers"
+              ],
+              "explanation": "The publisher takes a membership snapshot before callbacks run."
+            },
+            {
+              "label": "Deliver",
+              "items": [
+                "Badge runs",
+                "Counter runs if badge succeeds"
+              ],
+              "explanation": "This policy stops on the first exception; it does not promise durable delivery."
+            }
+          ]
+        }
+      },
+      {
+        "id": "command",
+        "title": "14. Command: represent an action explicitly",
+        "stage": "advanced",
+        "takeaway": "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
+              "Renaming a local notebook can store the previous title and restore it if nothing else has changed. That is a deliberately narrow undo contract. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class Rename:\n    def __init__(self, book, title):\n        self.book, self.title, self.before = book, title, None\n    def execute(self):\n        if self.before is not None:\n            raise ValueError(\"already executed\")\n        self.before = self.book[\"title\"]\n        self.book[\"title\"] = self.title\n    def undo(self):\n        if self.before is None or self.book[\"title\"] != self.title:\n            raise ValueError(\"cannot safely undo\")\n        self.book[\"title\"] = self.before\n        self.before = None\nbook = {\"title\": \"A\"}\ncmd = Rename(book, \"B\")\ncmd.execute(); cmd.undo()\nassert book[\"title\"] == \"A\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "This example assumes non-None string titles and local sequential use. Its value comparison cannot detect an A→B→A history or concurrent edits that restore the same value. Use a version check for stronger conflict detection. Sending email has no true inverse; a follow-up message is compensation, not erasure."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why an undoable local rename does not imply every queued command is reversible.",
+          "solution": "External effects may be irreversible and another actor may change state before undo. A durable command needs identity, validation, execution outcome and a retry policy. If compensation is possible, specify it separately and record that it may fail. Do not replay arbitrary Python objects from untrusted serialized data.",
+          "checks": [
+            "Distinguishes inverse from compensation.",
+            "Mentions conflicts between execute and undo.",
+            "Avoids unsafe object deserialization."
+          ]
+        },
+        "quiz": {
+          "question": "What must be established before promising undo?",
+          "options": [
+            "Only that the action is represented by a class",
+            "A valid inverse or explicit compensation under documented conditions",
+            "That the command stores its input arguments"
+          ],
+          "correct": 1,
+          "explanation": "Storing inputs does not establish reversibility. Conflicts and external effects can invalidate an inverse or require fallible compensation."
+        }
+      },
+      {
+        "id": "state",
+        "title": "15. State: behavior depends on lifecycle",
+        "stage": "advanced",
+        "takeaway": "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+              "A study session starts as draft, becomes active, then completes. Pause returns active to draft here; complete from draft is illegal. A State object pattern delegates state-specific behavior to objects when transitions and operations become substantial. The table below is the simpler alternative for a small finite lifecycle."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "TRANSITIONS = {(\"draft\", \"start\"): \"active\", (\"active\", \"pause\"): \"draft\", (\"active\", \"finish\"): \"done\"}\ndef transition(state, action):\n    try:\n        return TRANSITIONS[state, action]\n    except KeyError:\n        raise ValueError(\"illegal transition\") from None\nassert transition(\"draft\", \"start\") == \"active\"\nassert transition(\"active\", \"finish\") == \"done\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A state machine does not solve concurrent updates by itself. Two callers reading draft may both start a session unless the persistence layer enforces a conditional update. State and Strategy differ in intent: Strategy selects a policy; State models lifecycle-dependent behavior and transitions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a cancelled terminal state reachable from draft or active. Explain what a terminal state means.",
+          "solution": "Add (\"draft\", \"cancel\")→\"cancelled\" and (\"active\", \"cancel\")→\"cancelled\". Do not add outgoing transitions unless reopening is a real requirement. Test that cancelled/start raises ValueError and that the previous state remains unchanged when a transition fails.",
+          "checks": [
+            "Terminal state has an explicit outgoing-transition policy.",
+            "Illegal transitions fail visibly.",
+            "Mentions separate concurrency enforcement."
+          ]
+        },
+        "quiz": {
+          "question": "When is State a better framing than Strategy?",
+          "options": [
+            "Whenever there are two functions",
+            "When the caller selects a sorting policy independently",
+            "Behavior changes with legal lifecycle transitions"
+          ],
+          "correct": 2,
+          "explanation": "State describes a lifecycle and legal transitions; an independently chosen ranking policy is better described as Strategy."
+        }
+      },
+      {
+        "id": "template-method",
+        "title": "16. Template Method and pipeline alternatives",
+        "stage": "advanced",
+        "takeaway": "Template Method fixes an algorithm skeleton in a base class while subclasses provide selected steps. Use it when the order and extension points form a stable contract.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Template Method fixes an algorithm skeleton in a base class while subclasses provide selected steps. Use it when the order and extension points form a stable contract.",
+              "A report workflow obtains rows, validates them and formats a result. A base class can own this order and subclasses can implement loading or rendering. In Python a subclass can still override run; this is a design convention, not a security boundary. Composition can provide the same variation without inheritance."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class ReportJob:\n    def run(self):\n        rows = self.load()\n        if any(not isinstance(x, str) for x in rows):\n            raise ValueError(\"strings required\")\n        return self.render(rows)\n    def load(self):\n        raise NotImplementedError\n    def render(self, rows):\n        return \"\\n\".join(rows)\nclass MemoryJob(ReportJob):\n    def load(self):\n        return [\"Patterns\"]\nassert MemoryJob().run() == \"Patterns\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Too many hooks make it hard to understand which subclass controls the algorithm. Subclass hooks can also violate sequencing assumptions or return lazy iterators consumed twice. This example assumes a reusable list. If steps vary independently, a pipeline of injected functions may be easier to test."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Express the same workflow with composition and state its input assumption.",
+          "solution": "def run(load, render):\n    rows = list(load())\n    if any(not isinstance(x, str) for x in rows):\n        raise ValueError(\"strings required\")\n    return render(rows)\nassert run(lambda: iter([\"A\"]), lambda xs: \"|\".join(xs)) == \"A\"",
+          "checks": [
+            "Validation precedes rendering.",
+            "Materialization supports one-shot iterators but uses memory.",
+            "Explains why composition may reduce subclass coupling."
+          ]
+        },
+        "quiz": {
+          "question": "What does Template Method keep centralized?",
+          "options": [
+            "The algorithm skeleton and ordering of its steps",
+            "Every possible implementation detail",
+            "Only construction of the subclass instance"
+          ],
+          "correct": 0,
+          "explanation": "The base algorithm controls the sequence while selected steps are supplied by subclasses."
+        }
+      },
+      {
+        "id": "iterator",
+        "title": "17. Iterator: traverse without exposing storage",
+        "stage": "advanced",
+        "takeaway": "Iterator gives a traversal interface without requiring callers to know the underlying representation. Python generators provide a compact way to implement lazy traversal.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Iterator gives a traversal interface without requiring callers to know the underlying representation. Python generators provide a compact way to implement lazy traversal.",
+              "A notebook stores modules containing lesson titles. Yield titles one at a time and let the consumer choose when to stop. A generator is a one-shot iterator: after exhaustion, it does not restart. A function that creates a new generator can supply repeatable traversals."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def titles(modules):\n    for module in modules:\n        yield from module\ng = titles([[\"A\", \"B\"], [\"C\"]])\nassert next(g) == \"A\"\nassert list(g) == [\"B\", \"C\"]\nassert list(g) == []"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on next(), so document deadlines and page failures."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A caller needs two complete passes. Give two valid designs and compare memory cost.",
+          "solution": "Call titles(modules) twice to create independent traversals when the underlying modules remain available and unchanged. Alternatively materialize list(titles(modules)) once and reuse it, paying memory proportional to the total output. Reusing the same exhausted generator is not a second traversal.",
+          "checks": [
+            "Recognizes one-shot exhaustion.",
+            "Explains memory tradeoff.",
+            "Considers underlying data mutation between passes."
+          ]
+        },
+        "quiz": {
+          "question": "When can a lazy iterator raise an error?",
+          "options": [
+            "Only when the generator function is called",
+            "During consumption, after its creation has succeeded",
+            "Only after the iterator has been fully exhausted"
+          ],
+          "correct": 1,
+          "explanation": "Generator execution is deferred, so consuming the next item can trigger work and exceptions."
+        }
+      },
+      {
+        "id": "dependency-injection",
+        "title": "18. Dependency injection and the composition root",
+        "stage": "advanced",
+        "takeaway": "Dependency injection supplies collaborators from outside a component. A composition root is the place that assembles concrete implementations and owns their lifetimes.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Dependency injection supplies collaborators from outside a component. A composition root is the place that assembles concrete implementations and owns their lifetimes.",
+              "A progress service needs a repository and a clock. Pass them explicitly so tests control time and storage without global patching. A dependency injection container is optional. A service locator instead lets the consumer look dependencies up; that can hide requirements and make lifecycle ownership harder to see."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "class Progress:\n    def __init__(self, save, clock):\n        self.save, self.clock = save, clock\n    def complete(self, title):\n        self.save({\"title\": title, \"at\": self.clock()})\nrecords = []\nservice = Progress(records.append, lambda: \"2026-01-01T00:00:00Z\")\nservice.complete(\"Patterns\")\nassert records[0][\"at\"] == \"2026-01-01T00:00:00Z\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Injection does not decide whether an object is safe to share. A request-scoped transaction must not be captured by a process-lifetime service. Too many constructor dependencies may indicate mixed responsibilities, but an arbitrary parameter limit is not a design law. Avoid injecting trivial pure operations merely to create more mocks."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify ownership for a clock, connection and request transaction in a service application.",
+          "solution": "A stateless clock can usually be shared. A connection must follow the database driver concurrency rules and be closed or returned to a pool by its owner. A transaction belongs to a specific unit of work and must not be reused across unrelated requests. Assemble these lifetimes at the boundary rather than hiding them in globals.",
+          "checks": [
+            "Separates construction from use.",
+            "Identifies transaction lifetime.",
+            "Does not require a container."
+          ]
+        },
+        "quiz": {
+          "question": "Does dependency injection require a framework?",
+          "options": [
+            "Yes; otherwise it is not injection",
+            "Only if the parameters are declared using Protocol",
+            "No; explicit function or constructor parameters are sufficient"
+          ],
+          "correct": 2,
+          "explanation": "Injection is external provision of collaborators. A container and explicit protocol declarations are optional implementation choices."
+        }
+      },
+      {
+        "id": "repository",
+        "title": "19. Repository: a domain-facing collection boundary",
+        "stage": "advanced",
+        "takeaway": "Repository provides a domain-facing way to retrieve and persist entities while isolating storage details. Its API should reflect useful domain operations rather than blindly duplicate every database operation.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Repository provides a domain-facing way to retrieve and persist entities while isolating storage details. Its API should reflect useful domain operations rather than blindly duplicate every database operation.",
+              "A lesson repository can expose add and get by stable ID. An in-memory implementation is useful for fast domain tests, but it does not emulate a SQL database automatically. Identity, uniqueness, missing values and mutation ownership must be specified. Return immutable domain objects or copies if callers must not mutate stored state accidentally."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    id: str\n    title: str\nclass Repository:\n    def __init__(self):\n        self.rows = {}\n    def add(self, lesson):\n        if lesson.id in self.rows:\n            raise ValueError(\"duplicate ID\")\n        self.rows[lesson.id] = lesson\n    def get(self, id):\n        return self.rows.get(id)\nr = Repository()\nr.add(Lesson(\"1\", \"Patterns\"))\nassert r.get(\"1\").title == \"Patterns\"\nassert r.get(\"missing\") is None"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A generic CRUD wrapper around an ORM can add indirection without a useful boundary. Some ORMs already supply repository/unit-of-work-like behavior. Fakes cannot prove SQL constraints, isolation, collation, query performance or provider translation; run integration tests against the actual provider for those guarantees."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify contract tests shared by memory and SQL implementations, plus two SQL-only integration checks.",
+          "solution": "Shared tests: add/get preserves fields, duplicate ID fails according to a documented error contract, missing ID returns None, failed add leaves existing data unchanged. SQL integration: verify the actual unique constraint under concurrency and rollback of a multi-write transaction. Query plan/performance tests need realistic data and a measured workload.",
+          "checks": [
+            "Separates domain contract from provider behavior.",
+            "Defines duplicate and missing semantics.",
+            "Avoids claiming a fake validates isolation."
+          ]
+        },
+        "quiz": {
+          "question": "What does a successful in-memory repository test establish?",
+          "options": [
+            "The tested domain behavior of that implementation",
+            "The production database isolation level is correct",
+            "That all future repository implementations satisfy the same contract"
+          ],
+          "correct": 0,
+          "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
+        }
+      },
+      {
+        "id": "unit-of-work",
+        "title": "20. Unit of Work: coordinate changes and commit",
+        "stage": "advanced",
+        "takeaway": "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
+              "A local copy-on-write model can teach commit boundaries. Make a working copy, modify it and replace the original only on success. This example is sequential and process-local. It is not a database, crash-safe journal or concurrency-control mechanism."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "from contextlib import contextmanager\nfrom copy import deepcopy\n@contextmanager\ndef unit_of_work(store):\n    working = deepcopy(store)\n    yield working\n    store.clear()\n    store.update(working)\nstore = {\"completed\": 0}\ntry:\n    with unit_of_work(store) as work:\n        work[\"completed\"] = 1\n        raise ValueError(\"abort\")\nexcept ValueError:\n    pass\nassert store == {\"completed\": 0}\nwith unit_of_work(store) as work:\n    work[\"completed\"] = 1\nassert store == {\"completed\": 1}"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "The example avoids publishing working changes when the body raises, but replacement itself is not an atomic multi-thread or crash-safe operation. Real persistence needs a transaction and conflict policy. An email sent before commit cannot be rolled back with database rows; coordinate such effects explicitly, for example with a transactional outbox when that complexity is justified."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why save progress and send email inside a database transaction is not automatically one atomic operation.",
+          "solution": "The database controls its own records, not the mail provider. Email can succeed and commit fail, or commit can succeed and email fail. A transactional outbox records an intent alongside the business update; a separate sender retries delivery. That sender still needs duplicate handling and operational monitoring, so do not promise exactly-once email.",
+          "checks": [
+            "Identifies the transaction boundary.",
+            "Explains both failure orders.",
+            "Does not equate an outbox with exactly-once external effects."
+          ]
+        },
+        "quiz": {
+          "question": "Where does durable database atomicity come from?",
+          "options": [
+            "Calling a class UnitOfWork",
+            "The database transaction and its guarantees",
+            "From copying records before modifying them"
+          ],
+          "correct": 1,
+          "explanation": "Working copies can isolate local edits, but durability and atomic storage changes rely on the actual transactional provider."
+        },
+        "trace": {
+          "title": "A commit boundary",
+          "frames": [
+            {
+              "label": "Begin",
+              "items": [
+                "Stored completed = 0",
+                "Working completed = 0"
+              ],
+              "explanation": "Create a private working copy for this local demonstration."
+            },
+            {
+              "label": "Change",
+              "items": [
+                "Stored completed = 0",
+                "Working completed = 1"
+              ],
+              "explanation": "A pending change is not yet published."
+            },
+            {
+              "label": "Outcome",
+              "items": [
+                "Success → publish working copy",
+                "Exception → keep original"
+              ],
+              "explanation": "This illustrates rollback of the body; real durability and concurrency need storage guarantees."
+            }
+          ]
+        }
+      },
+      {
+        "id": "refactoring",
+        "title": "21. Refactor toward a justified pattern",
+        "stage": "advanced",
+        "takeaway": "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
+              "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible so a changed expectation is deliberate and reviewable."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "def old(titles, kind):\n    if kind == \"lines\":\n        return \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\ndef lines(titles):\n    return \"\\n\".join(titles)\ndef new(titles, formatter):\n    return formatter(titles)\nfor titles in ([], [\"A\"], [\"A\", \"B\"]):\n    assert old(titles, \"lines\") == new(titles, lines)"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a three-step migration plan for an exporter that currently validates, formats and writes in one function.",
+          "solution": "First capture output and failure behavior using a fake writer. Next extract formatting without changing validation or write order, and rerun those checks. Finally inject the formatter and select it at the entry point. Add the new format with shared contract tests. Keep deployment rollback possible until real consumer behavior is checked.",
+          "checks": [
+            "Preserves public behavior at each step.",
+            "Tests failure timing as well as output.",
+            "Adds abstraction only at the variation point."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a structural change a refactoring?",
+          "options": [
+            "It adds more patterns",
+            "That the new code has fewer lines",
+            "Its externally relevant behavior is preserved"
+          ],
+          "correct": 2,
+          "explanation": "Refactoring preserves observable behavior while changing structure. Line count is not an equivalence criterion."
+        }
+      },
+      {
+        "id": "selection",
+        "title": "22. Pattern selection, anti-patterns and a design review",
+        "stage": "advanced",
+        "takeaway": "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
+        "sections": [
+          {
+            "title": "The problem and the intent",
+            "paragraphs": [
+              "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
+              "Use a decision record with context, options, decision and consequences. A strategy varies a policy; an adapter translates a boundary; a facade offers a workflow; a decorator layers compatible behavior; a proxy controls access; a state machine governs lifecycle. Similar diagrams do not make their intentions interchangeable."
+            ]
+          },
+          {
+            "title": "Follow the collaboration",
+            "paragraphs": [
+              "Run this complete example in its own Python file. Predict the assertion before executing it; identify who makes each decision and which information crosses the boundary."
+            ],
+            "example": "# A runnable minimal alternative: explicit functions and one selection point.\ndef preview(titles, format_name):\n    formatters = {\"lines\": lambda xs: \"\\n\".join(xs), \"count\": lambda xs: str(len(xs))}\n    if format_name not in formatters:\n        raise ValueError(\"unsupported preview\")\n    return formatters[format_name](titles)\nassert preview([\"A\", \"B\"], \"count\") == \"2\""
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Watch for speculative generality, a god object coordinating unrelated domains, deep fragile inheritance, hidden service locators and singleton mutable state. Singleton controls instance access, but does not make that instance thread-safe and can couple tests through global state. A module-level constant is different from a global mutable transaction manager. Remove abstractions whose benefits no longer justify their cost."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Review a proposed exporter containing a singleton registry, six abstract factories and one JSON format. Write an alternative and an evidence threshold for expanding it.",
+          "solution": "Use one validated formatting function and an explicit entry-point selection if needed. Keep state local and inject the writer. Expand to interchangeable strategies when a real second policy appears, and consider a family factory only when related products must vary together. Measure change effort and failure risk rather than counting classes or pattern names.",
+          "checks": [
+            "Identifies unnecessary construction complexity.",
+            "Preserves useful testing boundaries.",
+            "Names a future trigger rather than guessing every future need."
+          ]
+        },
+        "quiz": {
+          "question": "What is a strong design-review outcome?",
+          "options": [
+            "A justified choice, its tradeoffs and a simpler alternative considered",
+            "The highest count of named patterns",
+            "Every known future feature is supported immediately"
+          ],
+          "correct": 0,
+          "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Pattern workshop reference",
+        "href": "paths/design-patterns/workshop.py"
+      },
+      {
+        "title": "Workshop behavioral tests",
+        "href": "paths/design-patterns/test_workshop.py"
+      },
+      {
+        "title": "Workshop setup and limitations",
+        "href": "paths/design-patterns/README.md"
+      }
+    ]
+  },
+  {
     "id": "financial-foundations",
     "title": "Financial foundations",
     "category": "Finance",
@@ -6493,6 +7803,1435 @@ const LEARNING_PATHS = [
           ],
           "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
         }
+      }
+    ]
+  },
+  {
+    "id": "system-design",
+    "title": "System Design",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "Build and defend a system from requirements to recovery: 24 lessons on APIs, data, capacity, distributed behavior and operations, with three design projects and a tested offline calculator.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Comfort with a small application, basic HTTP and database concepts is helpful; the foundation lessons explain the vocabulary.",
+      "No cloud account or paid service is required. Optional calculator exercises need Python 3.10+ and basic terminal use."
+    ],
+    "outcomes": [
+      "Translate user needs into invariants, SLIs and scoped architecture decisions.",
+      "Estimate workload, storage, concurrency and backlog with explicit assumptions.",
+      "Compare APIs, indexing, caches, queues, replicas and partitions.",
+      "Reason about concurrent bookings, CAP, idempotency and uncertain outcomes.",
+      "Plan bounded retries, observability, authorization, recovery and compatible evolution.",
+      "Create a reviewable architecture portfolio with failure tests and three stage projects."
+    ],
+    "setup": [
+      "Read each scenario before opening the worked answer; sketches and calculations can be completed on paper.",
+      "Download the workbook and ADR template into your practice folder.",
+      "For executable arithmetic, download capacity_calculator.py and test_capacity_calculator.py together. Run python capacity_calculator.py and python -m unittest -v test_capacity_calculator.py.",
+      "The calculator is deterministic scenario arithmetic, not a load test, simulator or sizing guarantee. This path does not deploy or benchmark infrastructure."
+    ],
+    "nextSteps": [
+      "Implement one proposed API and verify its actual transaction and authorization behavior with concurrent clients.",
+      "Run controlled load and failure experiments using synthetic data and compare measured distributions with estimates.",
+      "Study consensus, storage-engine internals and multi-region protocols after mastering these contracts.",
+      "Review the design with another developer and revise the weakest assumption; completion is practice, not professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Google SRE: implementing SLOs",
+        "url": "https://sre.google/workbook/implementing-slos/"
+      },
+      {
+        "title": "Google SRE: monitoring distributed systems",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "title": "IETF RFC 9110: HTTP semantics",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
+      },
+      {
+        "title": "Azure Architecture: cache-aside",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside"
+      },
+      {
+        "title": "Azure Architecture: competing consumers",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
+      },
+      {
+        "title": "Azure Architecture: sharding",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding"
+      },
+      {
+        "title": "Gilbert and Lynch: CAP impossibility result",
+        "url": "https://www.cs.princeton.edu/courses/archive/spr22/cos418/papers/cap.pdf"
+      },
+      {
+        "title": "AWS Builders Library: timeouts, retries and jitter",
+        "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+      },
+      {
+        "title": "AWS Builders Library: idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+      },
+      {
+        "title": "AWS: transactional outbox",
+        "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html"
+      },
+      {
+        "title": "AWS Well-Architected: disaster recovery",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html"
+      },
+      {
+        "title": "OWASP: authorization",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+      },
+      {
+        "title": "OpenTelemetry: signals",
+        "url": "https://opentelemetry.io/docs/concepts/signals/"
+      },
+      {
+        "title": "Azure Architecture: microservice data considerations",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations · reason from a user action",
+        "description": "Build a vocabulary of requirements, contracts, data and measurable capacity before distributing the system.",
+        "exitCriteria": [
+          "Separate functional requirements, invariants and quality targets.",
+          "Calculate rates, bytes and average concurrency with units and stated assumptions.",
+          "Explain an API request and an uncertain response."
+        ],
+        "project": {
+          "title": "Notebook sync design brief",
+          "brief": "Design a hypothetical signed-in progress-sync service for 10,000 daily learners. Produce a design another developer could challenge.",
+          "requirements": [
+            "Write user flows, exclusions, ownership and two invariants.",
+            "Specify save/list API contracts, conflict behavior and a relational data model.",
+            "Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×.",
+            "Define availability and latency SLIs with windows and error classification.",
+            "Draw browser → API → database with trust boundaries."
+          ],
+          "rubric": [
+            "Every number includes units and assumptions.",
+            "A stale edit and timeout have documented user outcomes.",
+            "Data constraints match the stated invariants.",
+            "The simplest proposed architecture is justified and limitations are explicit."
+          ],
+          "solution": "Start with one modular API and a relational database behind HTTPS. Use user/lesson identity, a unique progress key and conditional version updates. The scenario gives 400,000 requests/day, 4.63 average requests/s and 37.04 assumed peak. Set a chosen user-facing save SLO separately from latency; targets require agreement, not copying. Authorize per-user access and test uncertain outcomes. See the workbook for an example ADR and calculation table."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate · coordinate state and scaling",
+        "description": "Introduce caches, workers and copies only with explicit correctness and failure contracts.",
+        "exitCriteria": [
+          "Explain cache loss, lagging reads, duplicate messages and hot keys.",
+          "Preserve a booking invariant under concurrency and retries.",
+          "Describe per-operation consistency and behavior during partition."
+        ],
+        "project": {
+          "title": "Workshop booking and export architecture",
+          "brief": "Extend the notebook with 20-seat workshops and asynchronous study-pack exports. Preserve seat correctness while keeping slow export work separate.",
+          "requirements": [
+            "Specify atomic booking/cancellation and duplicate-operation handling.",
+            "Draw a sequence for response loss after commit and retry with the same key.",
+            "Define export job states, acknowledgment, retry exhaustion and replay.",
+            "Model cache outage and replica lag, including user-visible behavior.",
+            "Compare one database with sharding and record a trigger before adding shards."
+          ],
+          "rubric": [
+            "Final-seat safety comes from a database or proven coordination mechanism.",
+            "Same-key concurrent requests and mismatched payloads are addressed.",
+            "Public cached counts never authorize bookings.",
+            "Queue age, replay responsibility and private export authorization are specified."
+          ],
+          "solution": "Keep workshop capacity and booking changes under one transactional owner. Add durable caller-scoped idempotency records and uniqueness for active bookings. Serve public versioned lesson content through cache while bookings consult authority. Use an export queue with durable job status and idempotent output naming. Route dependent reads consistently and allow bounded stale public content during partitions while rejecting unsupported authoritative writes. The design remains a paper exercise until actual concurrency and fault tests pass."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice · operate and evolve",
+        "description": "Defend the design under overload, partial failure, recovery and incompatible change; make claims testable.",
+        "exitCriteria": [
+          "Bound retry and queue amplification within deadlines and capacity.",
+          "Explain outbox scope, compensation and external-effect limitations.",
+          "Produce a threat model, restore plan, rollout plan and evidence-based ADR."
+        ],
+        "project": {
+          "title": "Failure-aware launch review",
+          "brief": "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
+          "requirements": [
+            "Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals.",
+            "Document retries at every layer and a bounded end-to-end deadline.",
+            "Specify outbox/consumer crash handling and unresolved external-effect risks.",
+            "Threat-model cross-user data access, upload abuse and credential exposure.",
+            "Define RPO/RTO, an isolated restore drill and an expand-and-contract migration.",
+            "Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice."
+          ],
+          "rubric": [
+            "The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.",
+            "Every important claim identifies a verification method and a remaining unknown.",
+            "Runbooks identify ownership, rollback limits and validation criteria.",
+            "No benchmark, availability or cost claim is invented from calculator output."
+          ],
+          "solution": "The reference workbook links requirements to mechanisms and experiments. Protect interactive work with separate bounded concurrency from exports; centralize intentional retries and stop at the deadline. Record booking and outbox event atomically, then make consumers duplicate-safe. A restore drill must validate correctness and elapsed recovery time. Use additive migration steps while versions coexist. Retain a modular deployment unless measured isolation needs justify extraction. A completed self-review is practice evidence, not certification or a production approval."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "requirements",
+        "title": "1. Start with users, boundaries and invariants",
+        "stage": "foundation",
+        "takeaway": "A design is an argument that a system can meet explicit needs under stated constraints.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A system includes people, software, data and operational responsibilities. A box diagram alone is not a design. Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Our running example is a learning notebook with accounts, lesson progress and optional workshop bookings. The current static notebook is much simpler; these are hypothetical extensions, not claims about its infrastructure.",
+              "Functional requirements describe behavior: a learner marks a lesson read. Quality requirements constrain that behavior: the saved state survives refresh, other users cannot change it, and a response arrives within a measured target. An invariant is a rule such as one active booking per learner per workshop. Scope excludes features deliberately; recording exclusions prevents accidental overbuilding."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Translate an ambiguous request into testable statements before selecting services."
+            ],
+            "example": "Request: \"Make progress sync reliably.\"\nActor: signed-in learner\nAction: set lesson completion to true or false\nInvariant: only its owner can change a progress record\nConflict policy: reject stale edits with the current version\nOut of scope: simultaneous offline collaboration\nAcceptance: reload from another browser and see the saved state"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A requirement without a measurement method can hide disagreement. \"Fast\" means different things to a commuter on mobile and a batch importer. A useful first design may be one application and one database. More components introduce operational work, credentials, network failures and ownership decisions; each added boundary needs a reason."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define requirements for reserving one of 20 workshop seats. Include two invariants and one excluded feature.",
+          "solution": "Require signed-in reservation and cancellation. Invariants: confirmed bookings never exceed 20 and a learner has at most one active booking for that workshop. Exclude payments initially. Test concurrent attempts for the final seat and retries after an uncertain response.",
+          "checks": [
+            "Requirements describe observable behavior.",
+            "Capacity and duplicate-booking invariants are explicit.",
+            "Exclusions do not silently remove an agreed user need."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement is an invariant?",
+          "options": [
+            "Confirmed bookings never exceed capacity.",
+            "Use three microservices.",
+            "The page should feel modern."
+          ],
+          "correct": 0,
+          "explanation": "An invariant must remain true across valid operations, including concurrent ones; component choices are implementation decisions."
+        }
+      },
+      {
+        "id": "slos",
+        "title": "2. Service indicators, objectives and error budgets",
+        "stage": "foundation",
+        "takeaway": "Define reliability from a user action and a measurement window.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "An SLI is a measured service indicator; an SLO is its target over a stated window. An SLA is a separate contractual commitment. For progress saves, measure successful eligible requests at the boundary visible to users. Specify which errors count: excluding overload responses would hide a failure users experience. Keep availability and latency objectives distinct so fast failures do not look healthy."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "This is a teaching target, not a universal requirement. A request-based budget counts bad requests; it does not directly equal downtime minutes."
+            ],
+            "example": "Window: 28 days\nEligible save requests: 1,000,000\nAvailability target: 99.9%\nAllowed bad requests: 1,000,000 × 0.001 = 1,000\nObserved bad requests: 600 → 400 remaining\nSeparate latency target: 99% of successful saves ≤ 500 ms"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A 99.9% request objective and 99.9% time objective can produce different results when traffic is uneven. Agree an action when the budget is burning too quickly: investigate, reduce risky changes and improve a known failure mode. Raising the target adds cost and complexity; choose it from user needs, then refine with evidence."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A service has 200,000 eligible requests and a 99.5% target. It records 1,200 bad requests. Calculate the budget and result.",
+          "solution": "The budget is 200,000 × 0.005 = 1,000 bad requests. Actual failures exceed it by 200. The observed success ratio is 99.4%, below the 99.5% target; a separate latency objective still requires separate measurement.",
+          "checks": [
+            "Use eligible requests as denominator.",
+            "Distinguish counts from minutes.",
+            "Record a measurement window and policy owner."
+          ]
+        },
+        "quiz": {
+          "question": "A request-based error budget directly measures what?",
+          "options": [
+            "Exact downtime minutes.",
+            "The number of servers required.",
+            "Allowed bad requests within the defined window."
+          ],
+          "correct": 2,
+          "explanation": "The denominator is eligible requests in the stated window. Traffic variation prevents converting this directly into downtime minutes."
+        }
+      },
+      {
+        "id": "workload",
+        "title": "3. Estimate traffic with units and uncertainty",
+        "stage": "foundation",
+        "takeaway": "Capacity estimates are explicit hypotheses that measurements must refine.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Start from active users and actions rather than impressive totals. Registered users are not simultaneous connections, and daily activity is not peak request rate. Separate reads, writes, background work and payload sizes. Every estimate needs units, a time window and an assumption range. The downloadable calculator uses decimal bytes, not binary GiB, and labels its outputs."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Assume 10,000 daily active learners each making 40 API requests; real traffic is unlikely to be flat."
+            ],
+            "example": "Requests/day = 10,000 × 40 = 400,000\nAverage rate = 400,000 / 86,400 ≈ 4.63 requests/s\nAssumed peak multiplier = 8\nPeak rate ≈ 37.04 requests/s\nIf 25% are writes: ≈ 9.26 writes/s at this peak\nAt 2,000 response bytes/request: ≈ 74,074 bytes/s peak payload"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A peak multiplier is an assumption, not a law. Scheduled workshops can create sharp bursts that a daily average misses. Payload bandwidth excludes protocol overhead, retries and images unless explicitly included. A backend may receive fewer requests because public content is cached, or more because each user action fans out internally. Keep those layers separate."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Double daily users and keep behavior constant. Then suppose request count per user also doubles. What happens to peak API traffic?",
+          "solution": "Doubling only users doubles the estimate to about 74.07 requests/s. Doubling both users and requests per user gives four times the original, about 148.15 requests/s. The same peak multiplier is only a simplifying assumption; validate the changed usage pattern.",
+          "checks": [
+            "Show every unit conversion.",
+            "Do not confuse average and peak.",
+            "Name at least two excluded sources of load."
+          ]
+        },
+        "quiz": {
+          "question": "Which assumption most directly changes burst sizing?",
+          "options": [
+            "The length of a class name.",
+            "The peak-to-average multiplier.",
+            "The color of the API diagram."
+          ],
+          "correct": 1,
+          "explanation": "The peak multiplier estimates how concentrated arrivals are relative to the daily average; scheduled bursts require separate evidence."
+        }
+      },
+      {
+        "id": "latency",
+        "title": "4. Latency, throughput and work in flight",
+        "stage": "foundation",
+        "takeaway": "Averages, percentiles and concurrency answer different questions.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Latency is elapsed time for one operation; throughput is completed operations per unit time. Averages can hide a slow minority, so inspect distributions and relevant percentiles. p99 is the value at or below which roughly 99% of measured samples fall, under the chosen measurement method. It is not the maximum. Do not average machine p99 values to obtain the global p99; merge distributions or appropriately aggregate raw observations."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Little's Law relates long-run averages in a stable, consistently bounded system: work in flight L = arrival rate λ × average time W."
+            ],
+            "example": "Stable arrival rate: 200 requests/s\nAverage total time in this boundary: 0.25 s\nAverage requests in flight: 200 × 0.25 = 50\nIf average latency grows to 1 s at the same stable rate: 200 in flight\nThis is not a p99 calculation or a worker-count prescription."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Queueing delay often grows as a bottleneck approaches saturation. Adding API instances does not remove a saturated database or a connection limit. Serial component means can be added under consistent boundaries; component p99 values generally cannot be added to claim an end-to-end p99. Measure the actual user operation and separate queue time from service time."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "At a stable 80 requests/s with average end-to-end time 0.4 seconds, estimate average in-flight requests. Explain one limitation.",
+          "solution": "L = 80 × 0.4 = 32 average in-flight requests. This uses averages and a stable system boundary; it does not mean 32 threads are sufficient, nor does it predict tail latency or an unstable growing queue.",
+          "checks": [
+            "Use seconds consistently.",
+            "Do not substitute a percentile for the mean.",
+            "State the stable-boundary assumption."
+          ]
+        },
+        "quiz": {
+          "question": "Can the average of two servers' p99 latencies be treated as fleet p99?",
+          "options": [
+            "No; aggregate the underlying latency distribution.",
+            "Yes, always.",
+            "Only if there are two servers."
+          ],
+          "correct": 0,
+          "explanation": "Percentiles are positions in a distribution, so averages of subgroup percentiles do not reconstruct the combined distribution."
+        }
+      },
+      {
+        "id": "network",
+        "title": "5. Follow a request across the network",
+        "stage": "foundation",
+        "takeaway": "Every network boundary introduces delay and uncertain outcomes.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A browser resolves a name, establishes or reuses a connection, sends an HTTP request and waits for a response. HTTPS adds authenticated encryption in transit; it does not decide whether an account may edit a record. A reverse proxy can terminate TLS and route traffic. Connection reuse means setup cost is not necessarily paid on every request, while DNS caching means an address change may take time to reach clients."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Trace one progress update rather than drawing an unexplained cloud."
+            ],
+            "example": "Browser\n  → name resolution / connection setup if needed\n  → HTTPS reverse proxy\n  → authenticated API handler\n  → database transaction\n  → response\nFailure: commit succeeds, connection breaks before response\nClient sees timeout; database may already contain the update."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A timeout means the caller did not receive a usable result before its deadline. It does not prove the server did nothing. DNS, connection establishment, TLS, queueing and database work need compatible budgets. Avoid logging credentials in URLs or request bodies. A browser CORS policy is not a substitute for server authorization; non-browser clients are not restricted by it."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "After a booking request times out, should the client assume no seat was reserved? Write a safer recovery flow.",
+          "solution": "The outcome is unknown. Reuse the same operation identifier with an idempotent booking API or query the operation status. Do not blindly submit a new independent booking. The server must enforce the operation contract and the seat invariant.",
+          "checks": [
+            "Distinguish timeout from rollback.",
+            "Keep the operation identifier stable across a retry.",
+            "Authorize status retrieval as well as creation."
+          ]
+        },
+        "quiz": {
+          "question": "A timeout after sending a request proves what?",
+          "options": [
+            "The transaction rolled back.",
+            "No bytes reached the server.",
+            "The caller did not obtain a timely result."
+          ],
+          "correct": 2,
+          "explanation": "The operation may have committed before its response was lost. Silence establishes uncertainty, not rollback."
+        }
+      },
+      {
+        "id": "api-contracts",
+        "title": "6. Design APIs around contracts",
+        "stage": "foundation",
+        "takeaway": "A stable API specifies identities, validation, errors and concurrency behavior.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "An API is an agreement between independently changing callers and servers. Describe resource identity, inputs, response shape, errors, authorization and pagination. GET should not intentionally change business state. PUT commonly sets a resource representation and has idempotent semantics; repeated requests can still produce different responses. POST needs an explicit application contract when callers must retry safely."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Setting a completion value is easier to retry than toggling it. Versions detect stale edits."
+            ],
+            "example": "PUT /users/me/progress/lesson-7\nBody: {\"completed\": true, \"expectedVersion\": 4}\nSuccess: {\"completed\": true, \"version\": 5}\nStale version: conflict + current version, per documented contract\nInvalid body: validation error\nUnauthorized record access: reject\nList endpoint: bounded page size + stable order + cursor"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A cursor should reflect a deterministic ordering, often including a unique tie-breaker. Offset pagination can skip or repeat results as concurrent inserts move boundaries. Do not expose database errors or internal stack traces as public errors. Backward compatibility depends on client behavior; even adding an enum value may break a client that assumes the set is closed."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Replace POST /toggle-done with a retry-safe contract. Explain the remaining concurrency issue.",
+          "solution": "Use an operation that sets completed to a specified boolean. A repeated set has the same intended state, but two different editors can still overwrite each other. Include an expected version and let the server perform a conditional update; expose a conflict path in the client.",
+          "checks": [
+            "Differentiate repeated requests from concurrent different requests.",
+            "Return a documented conflict result.",
+            "Bound list sizes and validate inputs."
+          ]
+        },
+        "quiz": {
+          "question": "Which operation is naturally safer to repeat?",
+          "options": [
+            "Increment a booking count without a key.",
+            "Set completed=true.",
+            "Toggle completed."
+          ],
+          "correct": 1,
+          "explanation": "Setting a specified value repeats the same intended state. Toggling or incrementing can produce a new effect on every attempt."
+        }
+      },
+      {
+        "id": "data-model",
+        "title": "7. Choose data from access patterns and invariants",
+        "stage": "foundation",
+        "takeaway": "Model identity and relationships before choosing a storage brand.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A relational table stores rows with keys and constraints. A document store groups data into documents; a key-value store emphasizes lookup by key. Each can be useful, but product labels do not guarantee a particular isolation or consistency level. Start with questions: which records are read together, which values must change atomically, and what uniqueness rules must always hold?"
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "For notebook progress, a composite key naturally encodes one record per learner and lesson."
+            ],
+            "example": "User(user_id, display_name)\nLesson(lesson_id, path_id, title)\nProgress(user_id, lesson_id, completed, version, updated_at)\nPrimary key: (user_id, lesson_id)\nQueries: list progress for one user; find one lesson state\nWorkshop(workshop_id, capacity)\nBooking(booking_id, workshop_id, user_id, status)"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Duplicating a lesson title into every progress record speeds some reads but creates an update and freshness policy. A join is not automatically slow; measure data volume and indexing. Timestamps alone are weak conflict tokens if clock behavior or precision is uncertain. A database-generated revision can express record ordering without claiming global time order."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe a schema rule preventing duplicate progress records and one query it supports efficiently.",
+          "solution": "Use a unique composite key (user_id, lesson_id). A lookup specifying both identifies at most one progress record. With an index ordered by user_id then lesson_id, the prefix also supports the per-user progress access pattern; validate the actual query plan.",
+          "checks": [
+            "Keys express business identity.",
+            "Referential rules and deletion policy are stated.",
+            "Access patterns inform index order."
+          ]
+        },
+        "quiz": {
+          "question": "What should drive the first data model?",
+          "options": [
+            "Queries, relationships and invariants.",
+            "The largest number of available products.",
+            "A requirement to avoid every join."
+          ],
+          "correct": 0,
+          "explanation": "A useful model preserves business identity and supports required queries. Storage products follow those needs."
+        }
+      },
+      {
+        "id": "indexes-storage",
+        "title": "8. Indexes, storage and retention",
+        "stage": "foundation",
+        "takeaway": "An index buys read efficiency with write, space and maintenance costs.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "An index provides an additional access structure. An index on (user_id, updated_at, lesson_id) can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Estimate retained logical data separately from physical provisioning."
+            ],
+            "example": "200,000 new events/day × 500 bytes/event × 30 days\n= 3,000,000,000 bytes = 3.0 decimal GB raw\nAssumed index/metadata factor 1.5 → 4.5 GB per copy\nThree copies → 13.5 GB modeled storage\nExcluded: backups, logs, compression, temporary space, growth margin"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "The overhead factor is a scenario assumption, not a universal database multiplier. Retention must cover replicas, backups and analytics exports as appropriate. More indexes can slow every insert and enlarge restore time. A large text or binary attachment may belong in object storage, with metadata and authorization in the application; the database still needs a consistency strategy for missing or orphaned objects."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "If retention doubles with unchanged event volume, what happens to raw storage? Does this prove the database should be sharded?",
+          "solution": "Raw retained storage doubles from 3.0 GB to 6.0 GB in this example. That estimate alone does not justify sharding; inspect supported capacity, write throughput, query behavior, recovery time and operational constraints before introducing partitions across databases.",
+          "checks": [
+            "Separate raw and modeled storage.",
+            "Use decimal GB consistently.",
+            "List at least two omitted physical costs."
+          ]
+        },
+        "quiz": {
+          "question": "Adding an index usually introduces which tradeoff?",
+          "options": [
+            "Guaranteed faster writes.",
+            "Automatic authorization.",
+            "Additional write work and storage."
+          ],
+          "correct": 2,
+          "explanation": "An index is another structure to maintain when rows change, which consumes work and space even when it accelerates reads."
+        }
+      },
+      {
+        "id": "scaling",
+        "title": "9. Scale application workers and balance load",
+        "stage": "intermediate",
+        "takeaway": "Adding instances helps only when state and downstream limits permit it.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Vertical scaling increases resources on a machine; horizontal scaling adds machines or processes. A stateless request handler does not depend on its own local memory for durable user state, allowing another worker to serve a later request. It still uses state somewhere, such as a database. A load balancer chooses a healthy destination and needs connection draining during replacement."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Use measured sustainable capacity at the required latency, then model loss of an instance. This is arithmetic, not a deployment recommendation."
+            ],
+            "example": "Peak demand: 370 requests/s\nMeasured instance limit at target latency: 100 requests/s\nPlanning utilization factor: 0.7 → 70 requests/s per instance\nceil(370 / 70) = 6 serving instances\nTo retain that modeled capacity after losing one: 7 total\nThen verify shared database and connection limits."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Autoscaling has detection and startup delay; it cannot absorb an instant burst merely because a policy exists. Sticky sessions may simplify local state temporarily but complicate failover and uneven loads. Readiness should reflect whether an instance can serve traffic; restarting every instance during a shared database outage can amplify the incident. Capacity depends on workload mix and data size."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "At 240 requests/s and a measured 80 requests/s instance limit, use a 0.75 planning factor and tolerate one lost instance. Calculate the model.",
+          "solution": "Usable modeled capacity is 80 × 0.75 = 60 requests/s per instance. Four instances meet 240 requests/s; five total retain four after one failure. The test must still validate tail latency, load distribution and downstream capacity.",
+          "checks": [
+            "Round serving instance count upward.",
+            "Separate redundancy from utilization factor.",
+            "Test a lost-instance scenario under representative load."
+          ]
+        },
+        "quiz": {
+          "question": "Why might more API instances fail to improve throughput?",
+          "options": [
+            "Stateless handlers cannot use databases.",
+            "A shared database remains the bottleneck.",
+            "Load balancers always serialize all requests."
+          ],
+          "correct": 1,
+          "explanation": "API capacity cannot bypass a saturated shared dependency. Identify the actual bottleneck before adding workers."
+        }
+      },
+      {
+        "id": "cache",
+        "title": "10. Cache public data without losing correctness",
+        "stage": "intermediate",
+        "takeaway": "Every cache needs a key, ownership, expiry and invalidation policy.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A cache keeps a reusable result nearer a caller. Cache-aside first checks the cache, loads the origin on a miss, then populates it. A TTL bounds how long an entry may remain without refresh, but it does not automatically solve all races. Public lesson content is a better starting point than private authorization decisions or the final available workshop seat."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "An illustrative read cache reduces origin reads, but cache hits still consume some resources."
+            ],
+            "example": "Incoming reads: 1,000/s\nHit ratio: 90%\nModeled origin reads: 1,000 × (1 − 0.9) = 100/s\nCache outage: potentially 1,000 origin reads/s\nKey: public-lesson:{lesson_id}:{content_version}\nPrivate data keys must include the relevant tenant/user scope."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "On expiry, many callers can miss together and stampede the origin. Coalescing duplicate loads and varying refresh times can help; bounded stale content is acceptable only when the product permits it. Evicting after a write can race with an old reader repopulating stale data, so use versioned keys or a deliberate consistency strategy. A high hit ratio does not excuse incorrect user isolation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A lesson title can be stale for five minutes, but seat availability cannot be trusted from an old cache. Design those two reads.",
+          "solution": "Cache public lesson versions with an explicit refresh/expiry policy. Display approximate seat availability only if labeled, and enforce capacity in the authoritative booking transaction. Never grant a seat solely because the cached count said one remained.",
+          "checks": [
+            "Define stale-data tolerance per field.",
+            "Simulate complete cache loss.",
+            "Keep authorization scope in private cache keys."
+          ]
+        },
+        "quiz": {
+          "question": "What must decide whether a seat can be reserved?",
+          "options": [
+            "The authoritative concurrency-controlled write.",
+            "The last cached count alone.",
+            "The browser's local counter."
+          ],
+          "correct": 0,
+          "explanation": "An old cache entry cannot coordinate concurrent claims on the final seat; enforce the invariant at the authoritative write."
+        },
+        "trace": {
+          "title": "A lesson travels through cache-aside",
+          "frames": [
+            {
+              "label": "Cold read",
+              "items": [
+                "Learner asks for lesson v3",
+                "Cache has no v3",
+                "Origin receives one read"
+              ],
+              "explanation": "A miss reaches the authoritative content source; simultaneous misses need a bounded loading policy."
+            },
+            {
+              "label": "Populate",
+              "items": [
+                "Origin returns v3",
+                "Cache stores versioned v3",
+                "Learner receives v3"
+              ],
+              "explanation": "The result is cached under a key that identifies its content version."
+            },
+            {
+              "label": "Warm read",
+              "items": [
+                "Next learner asks for v3",
+                "Cache returns v3",
+                "Origin receives no read for this request"
+              ],
+              "explanation": "A hit saves origin work but still needs correct public/private scope."
+            },
+            {
+              "label": "New version",
+              "items": [
+                "Editor publishes v4",
+                "Manifest references v4",
+                "A new key is loaded"
+              ],
+              "explanation": "Versioning avoids silently treating v3 as v4; discovery and publication still need their own freshness policy."
+            }
+          ]
+        }
+      },
+      {
+        "id": "queues",
+        "title": "11. Queues, acknowledgments and duplicate delivery",
+        "stage": "intermediate",
+        "takeaway": "A queue decouples timing; consumers still need correctness and limits.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "An asynchronous queue lets the request record work and return before a slow task finishes. The user needs a status model: accepted, processing, completed or failed. Competing consumers distribute jobs, but ordering may only exist within a partition or group. A worker can perform an effect and crash before acknowledging, causing the same message to be delivered again."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Generate a study-pack export in a worker instead of holding an HTTP connection open."
+            ],
+            "example": "API → durable job record / reliable enqueue contract\nResponse: accepted + job ID + status URL\nWorker → generate output → record result → acknowledge\nCrash after output but before acknowledge → job may repeat\nIdempotent output key: exports/{job_id}/{version}\nBound attempts; quarantine repeatedly failing jobs for review."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A queue is a buffer, not extra processing capacity. If arrivals exceed completions for long enough, age and storage grow without bound unless admission is controlled. A dead-letter queue requires ownership and safe replay; it is not automatic resolution. Avoid claiming end-to-end exactly-once effects solely from a broker guarantee. Database effects and external email delivery need their own contracts."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A consumer writes a completed export and crashes before acknowledgment. What must the replay do?",
+          "solution": "Use the stable job ID to discover the recorded result and return or acknowledge that result without creating a second independent export. Make the result write and state transition concurrency-safe. External effects need a separate idempotency or reconciliation policy.",
+          "checks": [
+            "Test crash before and after result persistence.",
+            "Track oldest job age as well as depth.",
+            "Define retry exhaustion and replay ownership."
+          ]
+        },
+        "quiz": {
+          "question": "Does durable queueing alone guarantee one external email per job?",
+          "options": [
+            "Yes, for every broker.",
+            "Only if workers are fast.",
+            "No; delivery and effect contracts must handle duplicates."
+          ],
+          "correct": 2,
+          "explanation": "A consumer may perform an effect then crash before acknowledgment. End-to-end effects need their own duplicate handling."
+        }
+      },
+      {
+        "id": "replication",
+        "title": "12. Replication and read-your-writes",
+        "stage": "intermediate",
+        "takeaway": "Copies improve some failure and read scenarios but introduce coordination and lag.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Replication copies data between nodes. A leader may serialize writes while followers serve reads. With asynchronous replication, a follower can lag; a learner may save progress then read an old value from a different copy. Synchronous acknowledgment policies can reduce some data-loss windows while increasing latency or rejecting work when the required replicas are unavailable. The exact guarantee depends on the database configuration."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Make a stale-read scenario explicit rather than calling every replica interchangeable."
+            ],
+            "example": "t0: leader version 8; follower version 8\nt1: learner writes version 9; leader acknowledges\nt2: follower still version 8; next read appears to undo save\nt3: replication reaches follower; it becomes version 9\nPossible policy: read own recent updates from leader\nAlternative: carry a version token and wait/route until satisfied."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Replication is not backup: an accidental deletion can replicate immediately. Failover requires leader election, fencing or equivalent protection against conflicting writers, and an understood acknowledged-write guarantee. Routing recent reads to a leader is a design pattern, not universal proof of linearizability. Test behavior during failover and after reconnect, not only healthy lag."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A learner immediately sees stale progress after saving. Explain two possible remedies and their costs.",
+          "solution": "Route the dependent read to the authoritative writer, accepting its load and availability limits; or require a version at least as new as the saved result, waiting or routing to a sufficiently caught-up replica. A temporary optimistic UI can improve display but cannot prove server durability.",
+          "checks": [
+            "Document the required consistency for each operation.",
+            "Distinguish backup from replication.",
+            "Test acknowledged writes through failover."
+          ]
+        },
+        "quiz": {
+          "question": "Why is a replicated deletion still a recovery problem?",
+          "options": [
+            "Deletes cannot be replicated.",
+            "Replication may copy the unwanted deletion to every replica.",
+            "Replicas automatically retain all history forever."
+          ],
+          "correct": 1,
+          "explanation": "Replication maintains copies of current state; an unwanted deletion may reach all of them, so recoverable history is separate."
+        }
+      },
+      {
+        "id": "consistency-cap",
+        "title": "13. Consistency, partitions and CAP carefully",
+        "stage": "intermediate",
+        "takeaway": "During a network partition, some guarantees cannot all be maintained.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "In the CAP result, consistency means an atomic or linearizable view of operations, and availability means every request to a non-failing node eventually receives a valid result according to the operation under the model; merely returning an error does not meet that property. A partition means messages between parts of the system can be lost. The theorem is not a menu where a real service casually disables network failures, and its availability definition is not an operational uptime percentage."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Consider the last workshop seat and two isolated sides. Both cannot independently promise that same unique seat while preserving a single-copy booking invariant."
+            ],
+            "example": "Side A sees 1 seat\nSide B sees 1 seat\nNetwork messages between A and B are lost\nPolicy 1: restrict authoritative writes; one side waits/rejects\nPolicy 2: allow both writes and reconcile conflicts later\nPolicy 2 cannot also promise no conflicting booking occurred."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A service can choose different policies for different data: stale public lesson text may be acceptable, while booking commits require coordination. Outside partitions, latency and consistency still involve tradeoffs, but CAP alone does not quantify them. Eventual consistency needs a convergence mechanism and assumptions; it does not specify how long a learner will wait or how conflicting edits are resolved."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "During a partition, allow public lesson reads but reject bookings on a side without authority. Is that an inconsistent architecture decision?",
+          "solution": "No. Requirements differ by operation. Public content can tolerate an older version under an explicit policy; the booking invariant requires authoritative coordination, so some writes become unavailable. Describe this per operation rather than labeling the entire product with a simplistic two-letter category.",
+          "checks": [
+            "Use CAP consistency in its technical sense.",
+            "Explain the sacrificed behavior during partition.",
+            "Do not equate CAP availability with the SLO percentage."
+          ]
+        },
+        "quiz": {
+          "question": "What does CAP force you to examine?",
+          "options": [
+            "Behavior under a network partition.",
+            "A rule that every database can choose to prevent partitions.",
+            "Whether the website has a dark theme."
+          ],
+          "correct": 0,
+          "explanation": "CAP analyzes whether its consistency and availability properties can both hold when communication partitions occur."
+        }
+      },
+      {
+        "id": "partitioning",
+        "title": "14. Partition data and handle hot keys",
+        "stage": "intermediate",
+        "takeaway": "A shard key distributes work and determines which operations need coordination.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing user_id can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Compare a notebook progress workload and a flash booking event."
+            ],
+            "example": "Progress shard key: user_id\nBenefit: a learner's progress stays together\nCross-user report: scatter/gather or separate projection\nBooking shard key: workshop_id\nBenefit: one workshop invariant stays local\nRisk: one popular workshop dominates one partition\nMitigation requires workload-specific admission or redesign."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Moving from N to N+1 resources must preserve routing and ownership while data moves. A directory or virtual partitions can reduce movement, but introduce metadata and migration work. Cross-shard transactions and global uniqueness need a deliberate mechanism. Before sharding, examine query tuning, retention, vertical capacity and read replicas; each addresses different bottlenecks."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why can hashing by workshop_id still fail during one hugely popular workshop?",
+          "solution": "All bookings for that workshop share a key and land on the same logical partition. Hashing spreads many keys, not the work inside one key. Admission control can protect that authority; splitting inventory requires a new correctness protocol rather than a cosmetic hash change.",
+          "checks": [
+            "Analyze the hottest key, not only the average.",
+            "Name cross-partition queries.",
+            "Plan migration, routing and rollback."
+          ]
+        },
+        "quiz": {
+          "question": "An even record count guarantees what about load?",
+          "options": [
+            "Equal CPU use.",
+            "Equal request latency.",
+            "Nothing by itself; access frequency may be highly skewed."
+          ],
+          "correct": 2,
+          "explanation": "One popular record can receive most requests even if partitions contain the same number of records."
+        }
+      },
+      {
+        "id": "transactions",
+        "title": "15. Transactions, isolation and the final seat",
+        "stage": "intermediate",
+        "takeaway": "A transaction boundary must enforce the invariant under concurrent attempts.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A transaction groups database work according to its atomicity, isolation and durability guarantees. Isolation levels determine which concurrent observations are allowed; a transaction is not automatically serializable. The classic read-then-write race occurs when two callers read one remaining seat and both decide to book it. Application checks alone do not establish exclusivity."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "This is conceptual SQL; exact syntax, constraints and isolation behavior require the chosen engine and an actual concurrency test."
+            ],
+            "example": "BEGIN TRANSACTION\nUPDATE Workshop\nSET remaining = remaining - 1\nWHERE workshop_id = @id AND remaining > 0;\nIF affected_rows != 1: ROLLBACK; report sold out\nINSERT Booking(...); -- uniqueness rule for active booking\nCOMMIT\nIf insert fails, rollback must restore the decrement."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "The conditional update and booking insert must share the same atomic boundary. Define cancellation, expiry and duplicate-operation behavior too. Deadlocks or serialization failures may require retrying the complete transaction from a safe boundary, with a bounded policy. Sending an email inside a database transaction cannot make the external email atomic with that transaction and may hold locks while the network stalls."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Two users attempt the last seat. What outcome should a concurrency test assert?",
+          "solution": "Exactly one confirmed booking succeeds, the other receives a documented sold-out or conflict outcome, and remaining never becomes negative. Add a failure after decrement but before insert and verify rollback. Also test two retries from the same learner against the uniqueness and idempotency rules.",
+          "checks": [
+            "Use real concurrent connections when validating an implementation.",
+            "Test rollback between dependent writes.",
+            "Include cancellation and duplicate requests."
+          ]
+        },
+        "quiz": {
+          "question": "Why is checking remaining > 0 before a separate later write unsafe?",
+          "options": [
+            "Transactions cannot update counters.",
+            "Another transaction can change the value between the operations.",
+            "SELECT always deletes rows."
+          ],
+          "correct": 1,
+          "explanation": "Separate read and write steps allow interleaving. The decision and dependent changes need a correct concurrency boundary."
+        }
+      },
+      {
+        "id": "idempotency",
+        "title": "16. Idempotency and uncertain outcomes",
+        "stage": "intermediate",
+        "takeaway": "A retry-safe operation needs stable intent and durable coordination.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Idempotency means repeating the same intended operation does not repeat its business effect. For create-booking, a client-generated key can identify one intent. Scope it to the caller and operation, validate a fingerprint of the meaningful request, and persist the outcome. Reusing a key for a different workshop must not silently return an unrelated booking. Two simultaneous requests with the same key must coordinate, not both pass an in-memory check."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Store the key and booking effect in a consistent boundary when possible."
+            ],
+            "example": "Key: learner-17 / reserve / request-abc\nPayload fingerprint: workshop=42\nFirst call: create booking B9 + durable key/result\nResponse lost\nRetry same key + payload: return B9\nSame key + different payload: reject conflict\nIn-progress duplicate: wait or documented retry/status response"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Retention sets the replay window: deleting a key too soon can allow an old retry to create another effect. Infinite retention has its own cost and privacy implications. Idempotency is not authentication or authorization. If a third-party side effect is involved, its own idempotency contract or a reconciliation process is necessary; a local key cannot retroactively undo a duplicate external action."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A handler checks an in-memory set, creates a booking and then records the key. Identify two failures.",
+          "solution": "Concurrent handlers can both pass the check before either records it. A crash after booking creation loses the in-memory record, so a retry can create another effect. Use durable uniqueness and an atomic or otherwise proven coordination protocol for the key and effect.",
+          "checks": [
+            "Test simultaneous same-key calls.",
+            "Reject same-key different intent.",
+            "Document retention and post-expiry behavior."
+          ]
+        },
+        "quiz": {
+          "question": "A correct idempotency record must be scoped to what?",
+          "options": [
+            "The caller and operation intent.",
+            "Only the current process ID.",
+            "The browser window size."
+          ],
+          "correct": 0,
+          "explanation": "The record must distinguish caller identity and operation intent, including mismatched payloads and concurrent duplicates."
+        },
+        "trace": {
+          "title": "The response disappeared, not the booking",
+          "frames": [
+            {
+              "label": "First intent",
+              "items": [
+                "Learner sends key K1",
+                "Payload: workshop42",
+                "Server begins transaction"
+              ],
+              "explanation": "The key identifies one caller intention, not every booking that learner will ever make."
+            },
+            {
+              "label": "Commit",
+              "items": [
+                "Booking B9 created",
+                "K1 → B9 stored durably",
+                "Transaction commits"
+              ],
+              "explanation": "The booking and key/result must be coordinated so a crash cannot separate their meaning."
+            },
+            {
+              "label": "Lost response",
+              "items": [
+                "Network breaks",
+                "Caller sees timeout",
+                "B9 still exists"
+              ],
+              "explanation": "The caller cannot infer rollback from silence."
+            },
+            {
+              "label": "Safe repeat",
+              "items": [
+                "Same K1 + same payload",
+                "Server finds B9",
+                "Existing outcome returned"
+              ],
+              "explanation": "No new business effect is needed. A different payload with K1 should conflict."
+            }
+          ]
+        }
+      },
+      {
+        "id": "resilience",
+        "title": "17. Deadlines, bounded retries and isolation",
+        "stage": "advanced",
+        "takeaway": "Recovery mechanisms must not turn a partial failure into overload.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A deadline limits the entire operation; a timeout often limits one call or phase. Pass remaining time downstream rather than letting every nested call spend a fresh full budget. Retry only failures that the operation contract permits, and make side effects safe first. Backoff increases delays, jitter spreads synchronized callers, and a retry budget limits additional load. None creates missing capacity."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Multiplication across layers is a common hidden cost."
+            ],
+            "example": "Three layers each allow 3 attempts including the first\nWorst-case deepest attempts: 3 × 3 × 3 = 27\nChoose one intentional retry owner where practical\nOverall deadline: 1,000 ms\nReserve time for response/cleanup; stop retries when budget is spent\nIsolate export-worker concurrency from interactive-save capacity."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A circuit breaker temporarily avoids calls to a failing dependency and probes recovery; it does not replace deadlines, idempotency or an error response. Separate resource pools can prevent a slow export dependency from consuming all interactive connections. Aggressive identical retry schedules create bursts. Timeouts must include the phases the client library actually covers, and cancellation does not prove a remote operation stopped."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An API allows three total attempts including the first when calling a worker, and each worker call allows three total storage attempts including the first. What is the maximum number of storage attempts for one API call?",
+          "solution": "With three total attempts at each of two layers, the maximum is nine storage attempts. Clarify attempts versus retries: three retries after the first would mean four attempts at each layer and sixteen deepest attempts. Assign one owner and fit attempts plus waiting inside the deadline.",
+          "checks": [
+            "Count original attempts explicitly.",
+            "Test persistent as well as transient failure.",
+            "Keep total time and additional load bounded."
+          ]
+        },
+        "quiz": {
+          "question": "What does jitter primarily help with?",
+          "options": [
+            "Guaranteeing a successful retry.",
+            "Making duplicate side effects safe.",
+            "Reducing synchronized retry bursts."
+          ],
+          "correct": 2,
+          "explanation": "Jitter spreads retries in time. It cannot create capacity, guarantee success or prevent duplicated business effects."
+        }
+      },
+      {
+        "id": "backpressure",
+        "title": "18. Admission control, rate limits and backlog",
+        "stage": "advanced",
+        "takeaway": "A bounded system decides what to reject before resources are exhausted.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Backpressure slows or stops producers when consumers cannot keep up. At a public HTTP boundary, callers may not cooperate, so rate limits, concurrency caps, bounded queues and load shedding protect the service. A rate limit bounds arrivals over time; a concurrency limit bounds simultaneous work. They solve different problems. A slow dependency can exhaust in-flight slots even with a modest request rate."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Model a finite burst with constant rates; this fluid model ignores variance and is not a latency percentile prediction."
+            ],
+            "example": "Arrivals: 120 jobs/s for 60 s\nProcessing: 100 jobs/s\nBacklog added: (120 − 100) × 60 = 1,200 jobs\nAfter burst: arrivals fall to 80 jobs/s\nSpare processing: 100 − 80 = 20 jobs/s\nDrain time: 1,200 / 20 = 60 s\nIf arrivals stay at 100/s, this backlog never drains in the model."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Protect fair access per tenant as well as aggregate capacity. A global cap can let one client consume everything. Reject with a documented response and retry guidance where appropriate; blindly retrying rejected work defeats the protection. Separate optional analytics from essential saves, but define what degradation means to users. Queue depth without processing rate or job age is difficult to interpret."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A backlog of 900 jobs remains, service capacity is 50/s and new arrivals are 35/s. How long to drain in the constant-rate model?",
+          "solution": "Net drain rate is 15 jobs/s, so 900/15 = 60 seconds. At arrival rate 50/s or above the existing backlog would not drain. Real task durations, failures and parallelism require measurement; this estimate is an idealized planning calculation.",
+          "checks": [
+            "Use spare capacity rather than total capacity.",
+            "Handle arrival rate equal to service rate.",
+            "State fairness and rejection behavior."
+          ]
+        },
+        "quiz": {
+          "question": "Which directly bounds simultaneous work?",
+          "options": [
+            "An unlimited queue.",
+            "A concurrency limit.",
+            "A daily storage-retention rule."
+          ],
+          "correct": 1,
+          "explanation": "Concurrency limits bound current in-flight work; rate limits bound arrivals over an interval, so they address different risks."
+        },
+        "trace": {
+          "title": "Watch a burst fill and drain a queue",
+          "frames": [
+            {
+              "label": "Balanced",
+              "items": [
+                "Arrival 80 jobs/s",
+                "Service 100 jobs/s",
+                "Backlog 0"
+              ],
+              "explanation": "There is spare service capacity under the simplified constant-rate model."
+            },
+            {
+              "label": "Burst",
+              "items": [
+                "Arrival 120 jobs/s for 60 s",
+                "Service 100 jobs/s",
+                "Backlog grows 20 jobs/s"
+              ],
+              "explanation": "The queue buffers the mismatch, but does not increase the service rate."
+            },
+            {
+              "label": "Peak backlog",
+              "items": [
+                "End of 60 s burst",
+                "Backlog 1200 jobs",
+                "Admission and storage must be bounded"
+              ],
+              "explanation": "A real system also tracks job age, payload sizes and retry effects."
+            },
+            {
+              "label": "Recovery",
+              "items": [
+                "Arrival returns 80/s",
+                "Spare capacity 20/s",
+                "Drain in 60 s"
+              ],
+              "explanation": "If arrivals remained 100/s, there would be no spare capacity to drain the existing queue."
+            }
+          ]
+        }
+      },
+      {
+        "id": "outbox",
+        "title": "19. Reliable events, outbox and compensating workflows",
+        "stage": "advanced",
+        "takeaway": "Cross-system workflows need explicit intermediate states and recovery.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Writing a database row and publishing a message are two effects. If one succeeds and the other fails, systems disagree. A transactional outbox stores the domain change and an event record in one local database transaction. A relay publishes pending records later. Because publishing may succeed before the relay records success, duplicates remain possible and consumers need deduplication or idempotent effects."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Keep the invariant local, then make notification delivery recoverable."
+            ],
+            "example": "One transaction:\n  create confirmed booking B9\n  insert outbox event E7: BookingConfirmed(B9)\nRelay publishes E7; crash before marking sent\nRelay later republishes E7\nConsumer tracks E7 and handles duplicate safely\nBooking stays confirmed even if notification is delayed."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why does an outbox not by itself guarantee a single email is delivered?",
+          "solution": "The relay can publish twice, and a consumer can send an email then crash before recording completion. The email provider needs an appropriate idempotency contract, or the application needs a deliberate duplicate/reconciliation policy. The outbox solves the local database-change/event-record atomicity gap, not every downstream effect.",
+          "checks": [
+            "Draw crash points between effects.",
+            "Use stable event identifiers.",
+            "Specify compensation and reconciliation ownership."
+          ]
+        },
+        "quiz": {
+          "question": "What does a transactional outbox make atomic?",
+          "options": [
+            "The domain write and local event record in one database transaction.",
+            "Every external side effect across the internet.",
+            "The user reading an email and a database commit."
+          ],
+          "correct": 0,
+          "explanation": "An outbox transaction couples the local domain change with its event record; publishing and external effects happen later."
+        }
+      },
+      {
+        "id": "observability",
+        "title": "20. Observe user outcomes and investigate causality",
+        "stage": "advanced",
+        "takeaway": "Telemetry should answer what users lost and where time or work went.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Metrics summarize measurements, logs record events, and traces connect spans of a request across components. A trace ID helps correlate work but does not prove causality by itself. Measure user outcomes and also the internal signals needed to investigate them: latency, traffic, errors and saturation. A successful HTTP response with an incorrect result is still a product failure."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "A slow-save investigation should join evidence rather than guess from one chart."
+            ],
+            "example": "Symptom: save p99 rises from measured baseline\nCheck: error ratio, volume, in-flight requests\nTrace: API queue 180 ms; DB call 420 ms\nDB evidence: lock waits increased after deployment\nCompare: affected operation and release window\nAction: mitigate, then verify user-level recovery"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Do not put user IDs, arbitrary URLs or request IDs into unbounded metric labels; cardinality can become expensive. Logs and traces can leak secrets and personal data, so choose fields, retention and access controls deliberately. Sampling can miss rare failures. Alerts need an actionable owner and runbook, and should be tied to meaningful symptoms or imminent capacity exhaustion rather than every unusual number."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design telemetry for exports that are accepted but never complete.",
+          "solution": "Measure accepted jobs, completions, failures, oldest pending age and age distribution against an explicit completion objective. Correlate a job ID through logs or traces, without using every job ID as a metric label. Alert an owner when completion behavior breaches the agreed policy and provide a replay/diagnosis runbook.",
+          "checks": [
+            "Observe asynchronous completion, not only HTTP acceptance.",
+            "Bound metric label cardinality.",
+            "Exclude secrets from diagnostic records."
+          ]
+        },
+        "quiz": {
+          "question": "Why can a healthy API success rate hide an export incident?",
+          "options": [
+            "Metrics never apply to queues.",
+            "A 202 response proves the file exists.",
+            "Acceptance can succeed while background completion fails."
+          ],
+          "correct": 2,
+          "explanation": "The synchronous request may only accept a job. Measure asynchronous completion and age to detect the actual user failure."
+        }
+      },
+      {
+        "id": "security",
+        "title": "21. Trust boundaries and authorization",
+        "stage": "advanced",
+        "takeaway": "Security decisions belong at every protected server boundary.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Authentication establishes identity; authorization decides which action that identity may perform on which resource. For notebook progress, ownership must be checked server-side on reads and writes, not inferred from a hidden button. Tenant identifiers supplied by a client are inputs to validate, not proof of membership. Least privilege restricts what each service account can do if compromised."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Model an attacker who changes a URL and request body, not just a cooperative UI."
+            ],
+            "example": "Authenticated learner A requests /users/B/progress\nServer loads identity A from verified session/token\nServer evaluates policy for resource owner B\nReject unauthorized access before returning private data\nAlso test export/status/download endpoints\nAudit relevant decisions without storing access tokens"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Encryption in transit and at rest protects different threats but does not stop a legitimately authenticated user exploiting broken object authorization. Bound upload sizes and parsing work, validate input, use parameterized queries and isolate secrets from source code. Define session revocation and secret rotation behavior. Threat modeling asks what can go wrong at each trust boundary and how a control can be verified."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "List three negative authorization tests for notebook exports.",
+          "solution": "User A cannot create an export of B's records, poll B's job status, or download B's generated object using a guessed identifier. Repeat checks after membership revocation; signed download URLs, if used, need a deliberate scope and expiry policy.",
+          "checks": [
+            "Test resources by identity, not only role names.",
+            "Cover background and download paths.",
+            "Do not log credentials during tests."
+          ]
+        },
+        "quiz": {
+          "question": "Does knowing an unguessable object ID replace authorization?",
+          "options": [
+            "Only for mobile clients.",
+            "No; enforce the resource policy on the server.",
+            "Yes, always."
+          ],
+          "correct": 1,
+          "explanation": "Unpredictable identifiers are useful defense in depth, but they do not decide whether a caller is allowed to access a resource."
+        }
+      },
+      {
+        "id": "recovery",
+        "title": "22. Backups, recovery objectives and restore drills",
+        "stage": "advanced",
+        "takeaway": "Recovery is a tested procedure, not a checkbox saying backups exist.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "RPO expresses the targeted maximum tolerable data-loss interval; RTO expresses the targeted time to restore the required service. These are objectives, not guarantees supplied by naming a backup product. A restore depends on intact backups, keys, configuration, dependencies, operators and enough capacity. Replication can improve availability while faithfully spreading deletion or corruption."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "A toy failure timeline reveals whether objectives are being met."
+            ],
+            "example": "Last recoverable point: 10:00\nFailure: 10:12\nRequired service restored and validated: 10:47\nObserved potential data-loss interval: 12 minutes\nObserved recovery duration from failure: 35 minutes\nTargets: RPO 15 min, RTO 30 min\nResult: RPO interval fits; recovery misses RTO by 5 min"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A backup schedule alone does not prove a recovery point: the newest backup may be incomplete or unusable. Test restore into an isolated environment and validate record counts, relationships, critical workflows and access controls. Decide whether stale analytical data can recover later than booking authority. Regional recovery also needs routing, configuration and protection from two simultaneous writers."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A daily backup exists, but nobody has restored it. Can the team claim a tested one-hour RTO?",
+          "solution": "No. Run a timed isolated restore with realistic data and dependencies, include validation and service startup, then compare the observed duration with the target. Record missing keys, permissions or configuration as recovery failures. A backup file alone is not evidence of an achievable RTO.",
+          "checks": [
+            "Record the recoverable point and failure time.",
+            "Validate restored correctness, not only process exit.",
+            "Keep drills isolated from production data mutation."
+          ]
+        },
+        "quiz": {
+          "question": "Which is the strongest evidence of recoverability?",
+          "options": [
+            "A successful timed restore with data and workflow validation.",
+            "A green backup scheduler icon alone.",
+            "Three live replicas with no history."
+          ],
+          "correct": 0,
+          "explanation": "A restore with correctness checks exercises data, credentials, configuration and procedure; a scheduled backup alone does not."
+        }
+      },
+      {
+        "id": "evolution",
+        "title": "23. Evolve schemas and choose service boundaries",
+        "stage": "advanced",
+        "takeaway": "Change architecture where evidence justifies an independently operated boundary.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "A modular monolith is one deployable application with internal ownership boundaries. Microservices add independently deployed services and network contracts. Separate services can support different scaling or team needs, but introduce partial failure, observability, version compatibility and operational overhead. A notebook does not need a service per noun merely because it has users, lessons and progress."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Expand-and-contract avoids assuming every client upgrades simultaneously."
+            ],
+            "example": "1. Add optional preferred_name; old name still works\n2. Deploy readers that understand both representations\n3. Backfill existing records with a restartable process\n4. Deploy writers for the new contract; observe old usage\n5. Remove old field only after compatibility criteria pass\nRollback plan must account for any new data already written."
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "Rolling deployments temporarily mix versions. A rollback of application binaries may not reverse a destructive schema migration. For a service extraction, draw data ownership and synchronization before copying a module behind HTTP. Record the trigger: perhaps exports have independent resource needs and failure isolation, while progress and booking invariants benefit from one transactional owner."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Should the learning notebook begin with eight services? Give a decision and a measurable trigger to revisit it.",
+          "solution": "Start with a modular application unless requirements justify independent services. Isolate module interfaces and ownership. Revisit export extraction when measured export work harms interactive latency or requires a distinct runtime, and when the team can operate its queue, deployment and failure recovery. The count of domain nouns is not a scaling measurement.",
+          "checks": [
+            "State both benefits and new operational costs.",
+            "Handle mixed versions and rollback data.",
+            "Give a measurable reconsideration trigger."
+          ]
+        },
+        "quiz": {
+          "question": "What is essential during a rolling schema change?",
+          "options": [
+            "Deleting the old field first.",
+            "Assuming rollback removes all new data.",
+            "Compatibility while old and new versions coexist."
+          ],
+          "correct": 2,
+          "explanation": "Rolling deployments temporarily run different versions, so readers, writers and schema must remain compatible during transition."
+        }
+      },
+      {
+        "id": "design-review",
+        "title": "24. Make the design reviewable with experiments",
+        "stage": "advanced",
+        "takeaway": "A good design exposes assumptions and proposes tests that could prove it wrong.",
+        "sections": [
+          {
+            "title": "Build the mental model",
+            "paragraphs": [
+              "Finish a design with evidence, not a gallery of components. An architecture decision record states context, options, choice, consequences and a revisit trigger. A load test measures a specified workload and environment; results do not automatically transfer to a different dataset or failure mode. A failure drill tests a recovery hypothesis. Keep synthetic data and controlled environments for learning."
+            ]
+          },
+          {
+            "title": "Work through the design",
+            "paragraphs": [
+              "Review the notebook booking extension as an argument."
+            ],
+            "example": "Claim: one seat cannot be double-booked\nMechanism: conditional inventory change + unique booking + transaction\nEvidence: concurrent final-seat and rollback tests\nClaim: repeated uncertain requests do not duplicate bookings\nMechanism: durable scoped idempotency key\nEvidence: response-loss and simultaneous retry tests\nUnknown: regional failover write behavior → needs separate drill"
+          },
+          {
+            "title": "Tradeoffs and failure cases",
+            "paragraphs": [
+              "A benchmark must report concurrency, arrival model, payloads, dataset, duration, warmup and failures. Closed-loop clients that wait before sending again can hide overload behavior; an arrival-rate model asks a different question. Track tail latency and correctness, not only requests per second. A paper design and calculator cannot certify production reliability, security or cost."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a review checklist for the final architecture. Include a test that might change your chosen design.",
+          "solution": "Review requirements, invariants, workload ranges, ownership, consistency per operation, failure timelines, authorization, observability, restore and migration. Run a cache-loss load scenario; if the database cannot sustain protected origin traffic, introduce admission or a stronger degraded-read policy before launch. Record this as evidence, not as a predetermined success.",
+          "checks": [
+            "Each important claim has a mechanism and verification plan.",
+            "Unknowns have owners and next experiments.",
+            "Alternatives and costs are honestly compared."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a capacity claim reviewable?",
+          "options": [
+            "An unqualified claim of infinite scale.",
+            "Assumptions, units, measurements and a falsifiable test plan.",
+            "A diagram with many cloud icons."
+          ],
+          "correct": 1,
+          "explanation": "Explicit assumptions and a test that can fail make the claim inspectable; a diagram alone supplies no capacity evidence."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Capacity and backlog calculator",
+        "href": "paths/system-design/practice/capacity_calculator.py"
+      },
+      {
+        "title": "Calculator boundary and arithmetic tests",
+        "href": "paths/system-design/practice/test_capacity_calculator.py"
+      },
+      {
+        "title": "Design workbook and reference reasoning",
+        "href": "paths/system-design/practice/design-workbook.md"
+      },
+      {
+        "title": "Architecture decision record template",
+        "href": "paths/system-design/practice/adr-template.md"
+      },
+      {
+        "title": "Practice run instructions",
+        "href": "paths/system-design/practice/README.md"
       }
     ]
   },
