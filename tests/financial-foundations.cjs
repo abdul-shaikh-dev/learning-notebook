@@ -30,7 +30,7 @@ assert.equal(data.LESSONS.length,18);checks++;
 const sourceIds=new Set(data.SOURCES.map(x=>x.id));
 for(const [i,l] of data.LESSONS.entries()){assert.equal(l.id,i+1);assert.ok(l.body.length>=4);assert.ok(l.deep&&l.data&&l.pitfall&&l.example&&l.quiz.explain);assert.ok(l.quiz.correct>=0&&l.quiz.correct<l.quiz.options.length);for(const s of l.sources)assert.ok(sourceIds.has(s));checks++;}
 for(const file of ['index.html','handbook.html','assets/css/styles.css','paths/financial-foundations/runtime/calculations.js','paths/financial-foundations/runtime/app.js','paths/financial-foundations/content/curriculum.js','practice/sample-positions.csv','practice/answers.md','README.md'])assert.ok(fs.existsSync(file),file);
-for(const file of ['index.html','handbook.html']){const html=fs.readFileSync(file,'utf8');for(const m of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=m[1];if(/^(https?:|data:|\$)/.test(ref)||ref.includes('${'))continue;assert.ok(fs.existsSync(ref),`${file}: ${ref}`);checks++;}}
+for(const file of ['index.html','handbook.html']){const html=fs.readFileSync(file,'utf8');for(const m of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=m[1].split(/[?#]/)[0];if(/^(https?:|data:|\$)/.test(ref)||ref.includes('${'))continue;assert.ok(fs.existsSync(ref),`${file}: ${ref}`);checks++;}}
 const words=JSON.stringify(data.LESSONS).split(/\s+/).length;
 console.log(`PASS: ${checks} arithmetic/content/link checks; ${data.LESSONS.length} lessons; ${data.GLOSSARY.length} glossary terms; approximately ${words} lesson-data words.`);
 
