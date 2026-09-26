@@ -8,7 +8,10 @@ vm.createContext(context);vm.runInContext(fs.readFileSync('assets/js/catalog.js'
 let count=0;
 for(const p of paths){
  assert.ok(p.prerequisites.length&&p.setup.length&&p.outcomes.length&&p.nextSteps.length&&p.sources.length);
- assert.ok(p.lessons.length>=10);
+ assert.ok(p.lessons.length>=20);
+ assert.deepEqual(p.stages.map(s=>s.id),['foundation','intermediate','advanced']);
+ for(const stage of p.stages){assert.ok(stage.exitCriteria.length&&stage.project.requirements.length&&stage.project.rubric.length&&stage.project.solution);assert.ok(p.lessons.some(l=>l.stage===stage.id));}
+ assert.ok(p.lessons.every(l=>p.stages.some(s=>s.id===l.stage)));
  for(const download of p.downloads||[]){assert.ok(fs.existsSync(download.href));assert.ok(p.publicFiles.includes(download.href.replace('paths/'+p.id+'/','')));}
  context.location.hash='#path/'+p.id;vm.runInContext('renderCatalog()',context);
  assert.ok(node('main').innerHTML.includes('Set up your practice environment'));
@@ -24,3 +27,15 @@ for(const p of paths){
 }
 console.log('PASS: '+count+' programming lessons, exercises, official references, downloads, visual traces and complete printable packs.');
 
+
+const p=paths[0],key='learning-notebook:path:'+p.id+':assessments:v1';
+const button={dataset:{stageCheck:'foundation'},addEventListener(t,fn){this[t]=fn;}};
+node('main').querySelectorAll=selector=>selector==='[data-stage-check]'?[button]:[];
+context.location.hash='#path/'+p.id;vm.runInContext('renderCatalog()',context);
+const readingBefore=stored.get('learning-notebook:path:'+p.id+':v1');
+button.click();assert.equal(stored.get(key),'["foundation"]');
+assert.equal(stored.get('learning-notebook:path:'+p.id+':v1'),readingBefore);
+button.click();assert.equal(stored.get(key),'[]');
+stored.set(key,'broken');button.click();assert.equal(stored.get(key),'["foundation"]');
+context.localStorage.setItem=()=>{throw new Error('blocked');};button.click();assert.match(button.textContent,/Could not save/);
+console.log('PASS: stage coverage, project rubrics, independent self-assessment toggle and storage recovery.');

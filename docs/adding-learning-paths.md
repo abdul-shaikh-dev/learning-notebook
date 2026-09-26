@@ -25,3 +25,10 @@ A source record needs issuer/jurisdiction, edition or effective period, exact pa
 ## Publication boundaries
 
 Manifests have an explicit publicFiles allowlist. Planned lesson payloads and nonlisted files are not bundled. This protects the website build from accidental extras; it does not make files secret in a public GitHub repository. Keep private material out of the repository entirely.
+## Staged programming curricula
+
+Standard paths can supply `stages`, ordered as foundation, intermediate and advanced. Each stage contains `id`, `title`, `description`, `exitCriteria` (strings) and `project` with `title`, `brief`, `requirements`, `rubric` and `solution`. Assign every lesson a matching `stage` ID; preserve existing lesson IDs. Keep lessons in reading order as well as stage order.
+
+The shared reader groups lessons, shows project self-check controls, and includes reference approaches in the printable pack. Reading uses the existing v1 key; project self-assessment uses `learning-notebook:path:<id>:assessments:v1`. Neither is a certification. Paths without stages retain the basic reader.
+
+For downloadable exercises, list files in `publicFiles` relative to the path directory and supply `downloads` entries with a `title` and repo-relative `href`. Document runtime requirements and distinguish executable reference code from illustrative fragments and learner extensions.

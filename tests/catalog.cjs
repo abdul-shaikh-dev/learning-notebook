@@ -13,6 +13,6 @@ vm.runInNewContext(fs.readFileSync('assets/js/catalog.js','utf8'),context);
 assert.ok(element('main').innerHTML.includes('&lt;safe text&gt;'));
 element('mark-done').click({target:element('mark-done')});assert.equal(stored.get('learning-notebook:path:test-topic:v1'),'["one"]');
 element('mark-done').click({target:element('mark-done')});assert.equal(stored.get('learning-notebook:path:test-topic:v1'),'[]');
-context.location.hash='#path/test-topic';vm.runInNewContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('0 of 1 complete'));
+context.location.hash='#path/test-topic';vm.runInNewContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('0 of 1 read'));
 context.location.hash='#topic/test-topic/missing';vm.runInNewContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Path unavailable'));
 console.log('PASS: future-course rendering, text escaping, completion toggle and invalid routes.');

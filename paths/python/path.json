@@ -3,8 +3,8 @@
   "title": "Python",
   "category": "Programming",
   "status": "ready",
-  "description": "Learn Python by running small programs, practicing each concept, and building a persistent study log. Twelve lessons form a practical beginner foundation, with offline examples and self-checks.",
-  "level": "Beginner",
+  "description": "Progress through 23 Python lessons from first scripts to typed domain models, reusable CLI tools, resource management, concurrency, profiling and a bounded import pipeline. Three staged projects provide practice and review criteria; completion does not certify professional mastery.",
+  "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "Comfort creating files and opening a terminal; no programming experience required.",
     "A computer with a current supported Python 3 interpreter."
@@ -15,20 +15,27 @@
     "Validate inputs, read tracebacks, and persist records as UTF-8 JSON.",
     "Organize modules and understand project environments.",
     "Write small deterministic tests and distinguish API I/O from data processing.",
-    "Build and extend a local study log with explicit limitations."
+    "Build and extend a local study log with explicit limitations.",
+    "Model invariants with dataclasses; distinguish static contracts from runtime validation.",
+    "Build a reusable CLI with cleanup, logging and meaningful failure tests.",
+    "Explain threads, async task lifetimes and measurement-based optimization.",
+    "Bound external data and preserve prior output on batch or replacement failure."
   ],
   "setup": [
     "Install a supported Python 3 release from python.org if needed; this path uses only the standard library.",
     "Confirm python --version (Windows may use py; macOS/Linux may use python3).",
     "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
     "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
-    "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required."
+    "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required.",
+    "Intermediate and advanced practice require Python 3.11+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
   ],
   "nextSteps": [
-    "Add an argparse command interface and regression tests to your study log.",
-    "Study classes, iterators, generators, and type hints in the official tutorial.",
-    "Choose one real API, read its authentication and rate-limit documentation, and build a separate integration test.",
-    "Learn packaging and dependency management when your project needs external libraries."
+    "Rebuild each stage project from its brief before comparing the reference; explain its failure tests.",
+    "Run a separate static type checker and improve contracts; executing annotations does not certify checker coverage.",
+    "Package the intermediate tool with pyproject.toml, a build backend and an installed-artifact test in a clean environment.",
+    "Use transactional storage when multiple writers or durable service guarantees are required.",
+    "Study production API authentication, deadlines, retries, deployment and observability on a real project.",
+    "Explore process pools and advanced asyncio cancellation on measured workloads; this path offers advanced practice, not exhaustive mastery."
   ],
   "sources": [
     {
@@ -54,6 +61,46 @@
     {
       "title": "pathlib reference",
       "url": "https://docs.python.org/3/library/pathlib.html"
+    },
+    {
+      "title": "dataclasses",
+      "url": "https://docs.python.org/3/library/dataclasses.html"
+    },
+    {
+      "title": "typing and protocols",
+      "url": "https://docs.python.org/3/library/typing.html"
+    },
+    {
+      "title": "contextlib",
+      "url": "https://docs.python.org/3/library/contextlib.html"
+    },
+    {
+      "title": "argparse",
+      "url": "https://docs.python.org/3/library/argparse.html"
+    },
+    {
+      "title": "Logging HOWTO",
+      "url": "https://docs.python.org/3/howto/logging.html"
+    },
+    {
+      "title": "concurrent futures",
+      "url": "https://docs.python.org/3/library/concurrent.futures.html"
+    },
+    {
+      "title": "asyncio",
+      "url": "https://docs.python.org/3/library/asyncio.html"
+    },
+    {
+      "title": "Python profilers",
+      "url": "https://docs.python.org/3/library/profile.html"
+    },
+    {
+      "title": "Packaging Python projects",
+      "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/"
+    },
+    {
+      "title": "os.replace semantics",
+      "url": "https://docs.python.org/3/library/os.html#os.replace"
     }
   ],
   "lessons": [
@@ -102,7 +149,8 @@
         ],
         "correct": 0,
         "explanation": "The interpreter executes Python source. The terminal gives you a way to invoke it."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "values-and-names",
@@ -149,7 +197,8 @@
         ],
         "correct": 1,
         "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "text-and-input",
@@ -196,7 +245,8 @@
         ],
         "correct": 1,
         "explanation": "Input returns text. Your program decides whether and how to convert it."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "conditions",
@@ -243,7 +293,8 @@
         ],
         "correct": 1,
         "explanation": "An if/elif/else chain selects the first condition that is true and skips the remaining branches."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "collections",
@@ -290,7 +341,8 @@
         ],
         "correct": 0,
         "explanation": "A dictionary stores key/value associations and retrieves a duration using its task-name key."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "loops",
@@ -337,7 +389,8 @@
         ],
         "correct": 1,
         "explanation": "The start is included and the stop is excluded."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "functions",
@@ -384,7 +437,8 @@
         ],
         "correct": 1,
         "explanation": "Python returns None when execution reaches the end without an explicit return value."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "errors",
@@ -431,7 +485,8 @@
         ],
         "correct": 1,
         "explanation": "ValueError describes a value unsuitable for the requested conversion. A narrow handler preserves unrelated failures."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "files-and-json",
@@ -478,7 +533,8 @@
         ],
         "correct": 0,
         "explanation": "loads parses JSON text; load is the related function that reads from a file-like object."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "modules-and-environments",
@@ -526,7 +582,8 @@
         ],
         "correct": 0,
         "explanation": "The -m form runs pip as a module of that interpreter. Substitute your virtual environment interpreter path for python."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "testing-and-api-boundaries",
@@ -574,7 +631,8 @@
         ],
         "correct": 1,
         "explanation": "A fixed fixture isolates your parsing behavior. Separate integration checks are needed for a real service."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "study-log-capstone",
@@ -624,10 +682,662 @@
         ],
         "correct": 1,
         "explanation": "A parse failure does not mean the user has no data. Preserve the file and make the failure visible."
+      },
+      "stage": "foundation"
+    },
+    {
+      "id": "classes-and-dataclasses",
+      "stage": "intermediate",
+      "title": "13. Classes, invariants and dataclasses",
+      "takeaway": "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
+            "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. __post_init__ can enforce invariants after construction; frozen=True blocks ordinary assignment but is not deep immutability."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because bool subclasses int. hours is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
+          ],
+          "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not self.topic.strip():\n            raise ValueError(\"topic required\")\n        if type(self.minutes) is not int or self.minutes < 0:\n            raise ValueError(\"invalid minutes\")\n    def hours(self):\n        return self.minutes / 60\ns = Session(\"Python\", 90)\nprint(s.hours())\nprint(s == Session(\"Python\", 90))\n\n# Expected output:\n# 1.5\n# True"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Mutable defaults need field(default_factory=list) to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
+            "Equality compares fields; it is not persistent identity. Equal topic/duration records can still represent separate events."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Build a Playlist dataclass with an independent tracks list and add method rejecting blank titles. Prove two instances do not share state.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "from dataclasses import dataclass, field\n@dataclass\nclass Playlist:\n    tracks: list[str] = field(default_factory=list)\n    def add(self, title):\n        if not title.strip():\n            raise ValueError(\"title required\")\n        self.tracks.append(title.strip())\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"] and b.tracks == []\ntry:\n    a.add(\" \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
+        "checks": [
+          "Run the solution assertions; each checks a behavior, not only printed output.",
+          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+          "Explain the normal case, boundary and failure policy in your own words."
+        ]
+      },
+      "quiz": {
+        "question": "Does @dataclass enforce int annotations at runtime?",
+        "options": [
+          "Yes",
+          "No; explicit validation is separate",
+          "Only with frozen=True"
+        ],
+        "correct": 1,
+        "explanation": "The generated constructor stores values without validating annotated types."
+      }
+    },
+    {
+      "id": "typing-and-protocols",
+      "stage": "intermediate",
+      "title": "14. Type contracts and protocols",
+      "takeaway": "Annotations express intended inputs and outputs to readers and static checkers. Python execution normally does not enforce them. A checker is a separate tool; this lesson runs without installing one.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Annotations express intended inputs and outputs to readers and static checkers. Python execution normally does not enforce them. A checker is a separate tool; this lesson runs without installing one.",
+            "A Protocol describes required operations structurally. An object can satisfy it without inheriting from it, letting consumers depend on a small interface instead of a specific disk or network client."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "summarize accepts anything with records(). MemorySource gives predictable data without I/O. The declared list[int] is a contract, not a JSON validator; external data needs runtime checks before use."
+          ],
+          "example": "from typing import Protocol\nclass MinuteSource(Protocol):\n    def records(self) -> list[int]: ...\nclass MemorySource:\n    def records(self) -> list[int]:\n        return [10, 20]\ndef summarize(source: MinuteSource) -> int:\n    return sum(source.records())\nprint(summarize(MemorySource()))\n\n# Expected output:\n# 30"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Casting JSON to a desired type does not validate it. Check container and value types before constructing domain records.",
+            "A runtime-checkable Protocol checks attribute presence rather than full signature/value validity. It is a design aid, not a security boundary."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write normalize_minutes(value: object) -> int accepting actual nonnegative integers. Test zero, True, a string and negative input.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+        "checks": [
+          "Run the solution assertions; each checks a behavior, not only printed output.",
+          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+          "Explain the normal case, boundary and failure policy in your own words."
+        ]
+      },
+      "quiz": {
+        "question": "Why use a Protocol?",
+        "options": [
+          "To force one inheritance tree",
+          "To describe minimal required operations",
+          "To validate every JSON field"
+        ],
+        "correct": 1,
+        "explanation": "A structural contract permits independent implementations and test doubles with compatible operations."
+      }
+    },
+    {
+      "id": "iterators-and-generators",
+      "stage": "intermediate",
+      "title": "15. Iterators and lazy pipelines",
+      "takeaway": "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+            "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but list(...) materializes all results."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "sum consumes the filtered stream, so a later list finds it exhausted. Call the generator function again for a fresh pass. This example makes consumption visible before introducing file streams."
+          ],
+          "example": "def valid_minutes(values):\n    for value in values:\n        if value >= 0:\n            yield value\nstream = valid_minutes([10, -1, 20])\nprint(sum(stream))\nprint(list(stream))\nprint(list(valid_minutes([0, 5])))\n\n# Expected output:\n# 30\n# []\n# [0, 5]"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Generators are not automatically faster; choose streaming for its memory/lifetime properties and measure relevant workloads.",
+            "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it deliberately on early exit."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement running_totals(values) yielding cumulative sums; check empty and partially consumed streams.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nprint(\"generator checks passed\")",
+        "checks": [
+          "Run the solution assertions; each checks a behavior, not only printed output.",
+          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+          "Explain the normal case, boundary and failure policy in your own words."
+        ]
+      },
+      "quiz": {
+        "question": "After sum consumes a generator, list on that same generator returns?",
+        "options": [
+          "The original items",
+          "An empty list",
+          "The total"
+        ],
+        "correct": 1,
+        "explanation": "An exhausted iterator has no remaining values; create a fresh one for another pass."
+      }
+    },
+    {
+      "id": "context-managers",
+      "stage": "intermediate",
+      "title": "16. Resource lifetimes and cleanup",
+      "takeaway": "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
+            "contextlib.contextmanager expresses acquisition before yield and cleanup in finally. Yield exactly once. An exception in the body is delivered at yield; do not accidentally suppress it."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "The trace records cleanup despite failure, then the outer handler sees the original exception. Prefer a native context manager when the resource already provides one."
+          ],
+          "example": "from contextlib import contextmanager\ntrace = []\n@contextmanager\ndef resource():\n    trace.append(\"open\")\n    try:\n        yield \"handle\"\n    finally:\n        trace.append(\"close\")\ntry:\n    with resource() as handle:\n        trace.append(handle)\n        raise ValueError(\"failed\")\nexcept ValueError:\n    trace.append(\"caught\")\nprint(trace)\n\n# Expected output:\n# ['open', 'handle', 'close', 'caught']"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Catching an exception inside a context manager without reraising can suppress it. Logging alone is not a reason to hide a failure.",
+            "Cleanup itself can fail. Prefer existing tested managers and write custom ones when you own a real lifetime rule."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Manage a StringIO buffer and prove it closes while preserving an exception raised by its body.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nassert stream.closed\nprint(\"cleanup checks passed\")",
+        "checks": [
+          "Run the solution assertions; each checks a behavior, not only printed output.",
+          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+          "Explain the normal case, boundary and failure policy in your own words."
+        ]
+      },
+      "quiz": {
+        "question": "Where should unconditional cleanup go?",
+        "options": [
+          "Only before yield",
+          "In finally around yield",
+          "Only in except ValueError"
+        ],
+        "correct": 1,
+        "explanation": "finally runs after normal and exceptional exits and expresses the resource lifetime directly."
+      }
+    },
+    {
+      "id": "packaging-and-cli",
+      "stage": "intermediate",
+      "title": "17. Packages and command interfaces",
+      "takeaway": "Keep domain logic importable and argument parsing at a deliberate entry point.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Keep domain logic importable and argument parsing at a deliberate entry point.",
+            "A package groups modules under an import name; a distribution is an installable artifact. __init__.py makes a regular package; __main__.py supports python -m package. For distribution, pyproject.toml declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "argparse parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
+          ],
+          "example": "import argparse\ndef parser():\n    result = argparse.ArgumentParser(description=\"Summarize study time\")\n    result.add_argument(\"minutes\", type=int, nargs=\"+\")\n    return result\nargs = parser().parse_args([\"10\", \"20\"])\nprint(sum(args.minutes))\n\n# Expected output:\n# 30"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
+            "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Prove zero is accepted and a negative exits with status 2.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\np = argparse.ArgumentParser()\np.add_argument(\"--topic\", required=True)\np.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nwith redirect_stderr(StringIO()):\n    try:\n        p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"-1\"])\n    except SystemExit as error:\n        assert error.code == 2\n    else:\n        raise AssertionError(\"negative accepted\")\nprint(\"CLI checks passed\")",
+        "checks": [
+          "Run the solution assertions and explain the failure cases.",
+          "Introduce one deliberate defect, confirm its check fails, then restore it.",
+          "Compare with the relevant staged project; state what your checks do not prove."
+        ]
+      },
+      "quiz": {
+        "question": "Why keep parsing out of module scope?",
+        "options": [
+          "Imports remain reusable without triggering CLI work",
+          "It automatically builds a wheel",
+          "It requires inheritance"
+        ],
+        "correct": 0,
+        "explanation": "A caller can import functions without consuming its own arguments or starting a command."
+      }
+    },
+    {
+      "id": "logging-and-test-design",
+      "stage": "intermediate",
+      "title": "18. Logging and test design",
+      "takeaway": "Test contracts and failure behavior, then log useful operational facts.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Test contracts and failure behavior, then log useful operational facts.",
+            "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. unittest supports assertRaises, assertLogs and subTest for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "A dedicated logger and StringIO handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
+          ],
+          "example": "import logging\nfrom io import StringIO\nstream = StringIO()\nlogger = logging.getLogger(\"lesson.validation\")\nlogger.handlers.clear()\nlogger.propagate = False\nlogger.setLevel(logging.INFO)\nhandler = logging.StreamHandler(stream)\nhandler.setFormatter(logging.Formatter(\"%(levelname)s:%(message)s\"))\nlogger.addHandler(handler)\nlogger.warning(\"rejected record %s\", 2)\nprint(stream.getvalue().strip())\nlogger.removeHandler(handler)\nhandler.close()\n\n# Expected output:\n# WARNING:rejected record 2"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Avoid secrets and raw sensitive payloads in logs. Include safe identifiers/counts that explain which operation failed.",
+            "Tests that only print or mirror a private helper can miss a broken contract. Demonstrate a relevant deliberate defect fails. Patch dependencies where the consumer looks them up, and keep ordinary pure-function tests on real code."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Build a unittest validation suite using subTest for True, negatives, strings and fractional input; assert that its runner succeeds.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "import unittest\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        self.assertEqual(validate(0), 0)\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                with self.assertRaises(ValueError):\n                    validate(value)\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
+        "checks": [
+          "Run the solution assertions and explain the failure cases.",
+          "Introduce one deliberate defect, confirm its check fails, then restore it.",
+          "Compare with the relevant staged project; state what your checks do not prove."
+        ]
+      },
+      "quiz": {
+        "question": "Which test most directly checks rejection?",
+        "options": [
+          "Printing input",
+          "Asserting the exception and preserved state",
+          "Checking a private helper call"
+        ],
+        "correct": 1,
+        "explanation": "Invalid-input behavior and unchanged data are observable contracts worth protecting."
+      }
+    },
+    {
+      "id": "concurrency-models",
+      "stage": "advanced",
+      "title": "19. Threads, futures and async tasks",
+      "takeaway": "Choose concurrency by workload and keep shared state controlled.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Choose concurrency by workload and keep shared state controlled.",
+            "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. asyncio cooperatively schedules coroutines at await points, and TaskGroup provides bounded task lifetimes and failure propagation."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "Executor.map returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
+          ],
+          "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
+            "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
+        "checks": [
+          "Run the solution assertions and explain the failure cases.",
+          "Introduce one deliberate defect, confirm its check fails, then restore it.",
+          "Compare with the relevant staged project; state what your checks do not prove."
+        ]
+      },
+      "quiz": {
+        "question": "Does future.result(timeout=...) terminate a running worker?",
+        "options": [
+          "Yes",
+          "No; it only bounds that wait",
+          "Only when writing JSON"
+        ],
+        "correct": 1,
+        "explanation": "A timeout does not forcibly interrupt work; cancellation/deadlines must be supported by the actual operation."
+      }
+    },
+    {
+      "id": "profiling-and-complexity",
+      "stage": "advanced",
+      "title": "20. Profiling and complexity",
+      "takeaway": "Check correctness, then measure representative workloads before optimizing.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Check correctness, then measure representative workloads before optimizing.",
+            "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. cProfile helps locate cumulative time; timeit repeats focused measurements. Report workload size, environment and methodology. tracemalloc tracks Python allocations rather than every native allocation."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "The aggregation visits each row once. Its profile is inspected but only deterministic data and call-count presence are printed. Actual timings vary; the exercise compares equivalent algorithms without a brittle speed assertion."
+          ],
+          "example": "import cProfile, pstats\nfrom collections import defaultdict\ndef totals(rows):\n    result = defaultdict(int)\n    for topic, minutes in rows:\n        result[topic] += minutes\n    return dict(result)\nprofile = cProfile.Profile()\nanswer = profile.runcall(totals, [(\"Python\", 10), (\"Python\", 20), (\"Reading\", 5)])\nstats = pstats.Stats(profile)\nprint(answer)\nprint(stats.total_calls > 0)\n\n# Expected output:\n# {'Python': 30, 'Reading': 5}\n# True"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Compare equivalent behavior before timing; a fast incorrect shortcut is not an optimization. Include empty and edge cases.",
+            "Decide whether data setup belongs in timed work. Warm caches, build configuration and input distribution matter. Never turn a particular speedup into a universal unit-test expectation."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement repeated-scan and one-pass totals; assert equivalent results, then repeat timings on 2,000 rows. Inspect times locally without asserting a winner.",
+        "starter": "# Implement the contract and edge-case checks.",
+        "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nassert rescans([]) == one_pass([]) == {}\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nassert len(scan_times) == len(pass_times) == 3\nprint(\"equivalence and timing checks passed\")",
+        "checks": [
+          "Run the solution assertions and explain the failure cases.",
+          "Introduce one deliberate defect, confirm its check fails, then restore it.",
+          "Compare with the relevant staged project; state what your checks do not prove."
+        ]
+      },
+      "quiz": {
+        "question": "Before accepting a faster calculation, do what?",
+        "options": [
+          "Check representative and edge result equivalence",
+          "Remove tests",
+          "Require under one millisecond"
+        ],
+        "correct": 0,
+        "explanation": "Timing is useful only when the promised behavior remains correct."
+      }
+    },
+    {
+      "id": "security-and-input-boundaries",
+      "stage": "advanced",
+      "title": "21. External input and security boundaries",
+      "takeaway": "Parsing, schema validation and authorization are separate steps.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Parsing, schema validation and authorization are separate steps.",
+            "JSON decoding establishes syntax, not expected shape. Check exact fields, types, sizes and ranges before constructing domain objects. Bound bytes before parsing, plus record count and field lengths. Never eval user input or deserialize untrusted pickle."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "The parser limits encoded bytes, requires exact fields and rejects booleans as minutes. Normalization is an explicit policy; a schema-valid record still does not prove its sender has permission. The full project also rejects duplicate JSON keys."
+          ],
+          "example": "import json\ndef parse_record(text):\n    if len(text.encode(\"utf-8\")) > 1024:\n        raise ValueError(\"record too large\")\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"topic\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    topic, minutes = value[\"topic\"], value[\"minutes\"]\n    if not isinstance(topic, str) or not 1 <= len(topic.strip()) <= 80:\n        raise ValueError(\"invalid topic\")\n    if type(minutes) is not int or not 0 <= minutes <= 1440:\n        raise ValueError(\"invalid minutes\")\n    return {\"topic\": topic.strip(), \"minutes\": minutes}\nprint(parse_record('{\"topic\":\"  Python \",\"minutes\":0}'))\n\n# Expected output:\n# {'topic': 'Python', 'minutes': 0}"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "A size check after reading an entire file does not prevent the allocation. Read at most limit+1 bytes at the real boundary and reject excess.",
+            "This local project assumes trusted directories. Path containment alone cannot defeat hostile symlink races; production isolation and authentication require a separate deployment design. Bounded JSON still needs care with deeply nested hostile documents."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Parse a JSON object containing only limit, an integer 1 through 100; reject oversized text, bool, extra fields and zero.",
+        "starter": "# Implement the contract and failure checks.",
+        "solution": "import json\ndef parse_limit(text):\n    if len(text.encode(\"utf-8\")) > 128:\n        raise ValueError(\"too large\")\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"limit\"}:\n        raise ValueError(\"invalid fields\")\n    count = value[\"limit\"]\n    if type(count) is not int or not 1 <= count <= 100:\n        raise ValueError(\"invalid limit\")\n    return count\nassert parse_limit('{\"limit\":1}') == 1\nassert parse_limit('{\"limit\":100}') == 100\nfor text in ['{\"limit\":true}', '{\"limit\":0}', '{\"limit\":2,\"extra\":1}', ' ' * 129]:\n    try:\n        parse_limit(text)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"bad input accepted\")\nprint(\"input boundary checks passed\")",
+        "checks": [
+          "Run each assertion and explain why a failure would matter.",
+          "Run test_projects.py in the downloaded project folder.",
+          "Explain the input bounds and unsupported deployment guarantees."
+        ]
+      },
+      "quiz": {
+        "question": "Successful json.loads establishes what?",
+        "options": [
+          "The application schema is valid",
+          "The text can be decoded as JSON",
+          "The sender is authorized"
+        ],
+        "correct": 1,
+        "explanation": "Decoding must be followed by domain validation and independent authorization where applicable."
+      }
+    },
+    {
+      "id": "robust-storage",
+      "stage": "advanced",
+      "title": "22. Safe replacement and failure recovery",
+      "takeaway": "Prepare a complete new file before replacing previous output.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Prepare a complete new file before replacing previous output.",
+            "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, flush and fsync its contents, close it, then replace the target with os.replace. Atomic visibility differs from power-loss durability and concurrency control."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "Closing before replacement matters on Windows. finally removes abandoned temporary files after preparation or replacement failure. Validate data before entering the write path. Tests inject a failure at the I/O boundary rather than relying on a real disk fault."
+          ],
+          "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\nimport json, os\ndef replace_json(path, value):\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            json.dump(value, stream)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"log.json\"\n    replace_json(path, [1])\n    replace_json(path, [1, 2])\n    print(json.loads(path.read_text(encoding=\"utf-8\")))\n    print(len(list(Path(folder).iterdir())))\n\n# Expected output:\n# [1, 2]\n# 1"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Atomic replacement does not prevent two read-modify-write operations losing updates. Use coordinated ownership, a lock or transactional storage before accepting multiple writers.",
+            "Power-loss durability can require directory syncing and platform-specific guarantees. Do not hide malformed files or permission failures by pretending the log is empty."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write save_text and inject os.replace failure. Prove the old bytes survive and the temporary file is cleaned.",
+        "starter": "# Implement the contract and failure checks.",
+        "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\nfrom unittest.mock import patch\nimport os\ndef save_text(path, text):\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            stream.write(text)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"data.txt\"\n    path.write_text(\"old\", encoding=\"utf-8\")\n    with patch(\"os.replace\", side_effect=OSError(\"injected\")):\n        try:\n            save_text(path, \"new\")\n        except OSError:\n            pass\n        else:\n            raise AssertionError(\"failure hidden\")\n    assert path.read_text(encoding=\"utf-8\") == \"old\"\n    assert list(Path(folder).iterdir()) == [path]\nprint(\"replacement failure checks passed\")",
+        "checks": [
+          "Run each assertion and explain why a failure would matter.",
+          "Run test_projects.py in the downloaded project folder.",
+          "Explain the input bounds and unsupported deployment guarantees."
+        ]
+      },
+      "quiz": {
+        "question": "Does atomic replacement prevent two writers losing updates?",
+        "options": [
+          "Yes",
+          "No; coordinate ownership or use transactions",
+          "Only with indent=2"
+        ],
+        "correct": 1,
+        "explanation": "Whole-file visibility does not stop a later writer overwriting another writer's valid update."
+      }
+    },
+    {
+      "id": "robust-import-capstone",
+      "stage": "advanced",
+      "title": "23. Capstone: a bounded import pipeline",
+      "takeaway": "Validate a complete batch before one deliberate commit.",
+      "sections": [
+        {
+          "title": "Reason about the design",
+          "paragraphs": [
+            "Validate a complete batch before one deliberate commit.",
+            "Build an importer for newline-delimited records with id, topic and minutes. IDs must be unique. Bound input, validate all rows and save a versioned report only when all pass. This policy keeps partial success from looking like a complete import."
+          ]
+        },
+        {
+          "title": "Trace and run",
+          "paragraphs": [
+            "The mini example shows ordered workers and batch validation. advanced_project.py adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run --demo with temporary files, then run test_projects.py before extending it. Threads demonstrate composition, not a promised speed advantage."
+          ],
+          "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30"
+        },
+        {
+          "title": "Pitfalls and tradeoffs",
+          "paragraphs": [
+            "Do not publish each worker's output as it finishes. Collect and validate the batch, then commit once. A failing worker does not forcefully terminate remaining threads.",
+            "The full project assumes one writer and a trusted local directory. It has no account system, network retries, sandbox, database transaction or power-loss certification. State those limits in your project review."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Inject a publish callback and prove valid rows publish once while duplicate IDs publish zero times; repeat with the full file importer.",
+        "starter": "# Implement the contract and failure checks.",
+        "solution": "def import_and_publish(rows, publish):\n    ids = [row[\"id\"] for row in rows]\n    if len(set(ids)) != len(ids):\n        raise ValueError(\"duplicate id\")\n    publish(rows)\ncalls = []\nimport_and_publish([{\"id\": \"a\"}, {\"id\": \"b\"}], calls.append)\nassert len(calls) == 1\ncalls.clear()\ntry:\n    import_and_publish([{\"id\": \"a\"}, {\"id\": \"a\"}], calls.append)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"duplicate accepted\")\nassert calls == []\nprint(\"commit policy checks passed\")",
+        "checks": [
+          "Run each assertion and explain why a failure would matter.",
+          "Run test_projects.py in the downloaded project folder.",
+          "Explain the input bounds and unsupported deployment guarantees."
+        ]
+      },
+      "quiz": {
+        "question": "When should an import publish?",
+        "options": [
+          "After each worker",
+          "Only after all records and batch invariants pass",
+          "Before parsing"
+        ],
+        "correct": 1,
+        "explanation": "One commit follows complete validation, preserving the old report on any rejected record."
       }
     }
   ],
   "publicFiles": [
-    "path.json"
+    "path.json",
+    "practice/foundation_project.py",
+    "practice/intermediate_project.py",
+    "practice/advanced_project.py",
+    "practice/test_projects.py",
+    "practice/README.md"
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations",
+      "description": "First scripts through a persistent study log; learn to explain basic behavior.",
+      "exitCriteria": [
+        "Explain names, conditions, loops and function return values.",
+        "Reject invalid minutes without changing the log.",
+        "Save/load the sample and compute the same topic totals."
+      ],
+      "project": {
+        "title": "Personal study log",
+        "brief": "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+        "requirements": [
+          "Accept nonblank topics and actual nonnegative whole minutes.",
+          "Preserve existing records when validation fails.",
+          "Round-trip sample data through UTF-8 JSON and summarize repeated topics."
+        ],
+        "rubric": [
+          "Correct repeated-topic and empty totals.",
+          "Explicit validation and unchanged state on errors.",
+          "Explains that simple JSON persistence assumes one process."
+        ],
+        "solution": "\"\"\"Foundation reference: validated study records and topic totals.\"\"\"\nimport json\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\ndef totals_by_topic(log):\n    totals = {}\n    for row in log:\n        totals[row[\"topic\"]] = totals.get(row[\"topic\"], 0) + row[\"minutes\"]\n    return totals\n\ndef demo():\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Reading\", 10)\n    add_session(log, \"Python\", 15)\n    with TemporaryDirectory() as folder:\n        path = Path(folder) / \"study.json\"\n        path.write_text(json.dumps(log), encoding=\"utf-8\")\n        restored = json.loads(path.read_text(encoding=\"utf-8\"))\n        print(totals_by_topic(restored))\n\nif __name__ == \"__main__\":\n    demo()\n"
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate",
+      "description": "Reusable domain models, resource lifetimes and a tested command tool.",
+      "exitCriteria": [
+        "Explain dataclass invariants and static versus runtime contracts.",
+        "Trace a one-pass generator and cleanup after failure.",
+        "Run a reusable CLI and meaningful normal/boundary/failure tests."
+      ],
+      "project": {
+        "title": "Validated study-summary CLI",
+        "brief": "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+        "requirements": [
+          "Use a frozen Session dataclass with explicit range/shape rules.",
+          "Bound file reads and close handles on errors.",
+          "Separate main argument parsing from importable calculation functions.",
+          "Return 0 on success and 1 on expected read/validation failure.",
+          "Document how to split into a package and add pyproject.toml; no package publication is required."
+        ],
+        "rubric": [
+          "Valid zero and trimmed topics work.",
+          "Invalid shapes and minutes fail without rewriting input.",
+          "Tests use temporary files and verify output/status.",
+          "Explains why a type hint is not schema validation."
+        ],
+        "solution": "\"\"\"Intermediate reference: typed value objects, JSON file summary CLI.\nRun: python intermediate_project.py --demo\nOr: python intermediate_project.py sessions.json\nReads existing input; it never rewrites that file.\n\"\"\"\nimport argparse\nfrom dataclasses import dataclass\nimport json\nimport logging\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef parse_sessions(value: object) -> list[Session]:\n    if type(value) is not list or len(value) > 1000:\n        raise ValueError(\"expected at most 1000 records\")\n    result = []\n    for row in value:\n        if type(row) is not dict or set(row) != {\"topic\", \"minutes\"}:\n            raise ValueError(\"expected topic and minutes fields\")\n        result.append(Session(row[\"topic\"], row[\"minutes\"]))\n    return result\n\ndef load_sessions(path: Path) -> list[Session]:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(262145)\n    if len(raw) > 262144:\n        raise ValueError(\"input exceeds 256 KiB\")\n    return parse_sessions(json.loads(raw.decode(\"utf-8\")))\n\ndef totals_by_topic(sessions: list[Session]) -> dict[str, int]:\n    result: dict[str, int] = {}\n    for session in sessions:\n        result[session.topic] = result.get(session.topic, 0) + session.minutes\n    return result\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Summarize a validated study-log JSON array\")\n    parser.add_argument(\"input\", type=Path, nargs=\"?\")\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and args.input is not None:\n        parser.error(\"choose --demo or input, not both\")\n    if not args.demo and args.input is None:\n        parser.error(\"provide input or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                path = Path(folder) / \"sessions.json\"\n                path.write_text(json.dumps([{\"topic\":\"Python\",\"minutes\":25},{\"topic\":\"Python\",\"minutes\":15}]), encoding=\"utf-8\")\n                sessions = load_sessions(path)\n        else:\n            sessions = load_sessions(args.input)\n        print(json.dumps(totals_by_topic(sessions), sort_keys=True))\n        logger.info(\"summarized %d sessions\", len(sessions))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Cannot summarize: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced practice",
+      "description": "Measured concurrency, bounded inputs and failure-aware batch publishing. This is applied practice rather than professional certification.",
+      "exitCriteria": [
+        "Explain worker ordering, cancellation limits and when concurrency may hurt.",
+        "Compare equivalent algorithms before interpreting timing results.",
+        "Demonstrate input limits and preserve output on validation/replacement failure.",
+        "State single-writer and durability limitations."
+      ],
+      "project": {
+        "title": "Bounded study import pipeline",
+        "brief": "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+        "requirements": [
+          "Bound bytes, records, fields and worker count.",
+          "Reject duplicate keys, duplicate IDs and invalid minutes.",
+          "Keep worker output order deterministic and commit only after batch validation.",
+          "Write a same-directory temporary file, fsync contents, replace once and clean on failure.",
+          "Validate loaded report version and recomputed totals.",
+          "Profile sequential versus threaded validation; do not promise a speedup."
+        ],
+        "rubric": [
+          "Round-trip, empty, boundary and corruption tests pass.",
+          "Injected replacement failure preserves exact prior bytes and leaves no temporary files.",
+          "CLI error status and safe logging are explained.",
+          "Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+        ],
+        "solution": "\"\"\"Advanced practice: bounded JSONL import, ordered workers and one replacement.\nOne writer, trusted local directory. No power-loss durability certification.\nRun python advanced_project.py --demo, or input.jsonl output.json --workers 2.\n\"\"\"\nimport argparse\nfrom concurrent.futures import ThreadPoolExecutor\nfrom dataclasses import dataclass, asdict\nimport json\nimport logging\nimport os\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\n\nMAX_BYTES = 262144\nMAX_RECORDS = 1000\nMAX_LINE_BYTES = 2048\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    id: str\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.id, str) or not 1 <= len(self.id) <= 64 or self.id != self.id.strip():\n            raise ValueError(\"id must be 1 through 64 characters without edge spaces\")\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef unique_object(pairs):\n    result = {}\n    for key, value in pairs:\n        if key in result:\n            raise ValueError(\"duplicate JSON key\")\n        result[key] = value\n    return result\n\ndef decode(text):\n    try:\n        return json.loads(text, object_pairs_hook=unique_object)\n    except RecursionError as error:\n        raise ValueError(\"JSON nesting too deep\") from error\n\ndef make_session(value):\n    if type(value) is not dict or set(value) != {\"id\", \"topic\", \"minutes\"}:\n        raise ValueError(\"record needs exactly id, topic and minutes\")\n    return Session(value[\"id\"], value[\"topic\"], value[\"minutes\"])\n\ndef bounded_read(path: Path, limit: int = MAX_BYTES) -> str:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(limit + 1)\n    if len(raw) > limit:\n        raise ValueError(\"input exceeds byte limit\")\n    return raw.decode(\"utf-8\")\n\ndef parse_line(line: str) -> Session:\n    if len(line.encode(\"utf-8\")) > MAX_LINE_BYTES:\n        raise ValueError(\"record exceeds byte limit\")\n    return make_session(decode(line))\n\ndef validate_batch(records):\n    if len(records) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if len({record.id for record in records}) != len(records):\n        raise ValueError(\"duplicate session id\")\n\ndef read_batch(path: Path, workers: int = 1) -> list[Session]:\n    if type(workers) is not int or not 1 <= workers <= 8:\n        raise ValueError(\"workers must be 1 through 8\")\n    lines = bounded_read(path).splitlines()\n    if len(lines) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if any(not line.strip() for line in lines):\n        raise ValueError(\"blank records are not allowed\")\n    if workers == 1:\n        records = [parse_line(line) for line in lines]\n    else:\n        with ThreadPoolExecutor(max_workers=workers) as pool:\n            records = list(pool.map(parse_line, lines))\n    validate_batch(records)\n    return records\n\ndef summary(records):\n    totals = {}\n    for record in records:\n        totals[record.topic] = totals.get(record.topic, 0) + record.minutes\n    return totals\n\ndef atomic_write(path: Path, value) -> None:\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            json.dump(value, stream, indent=2, sort_keys=True, allow_nan=False)\n            stream.write(\"\\n\")\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\n\ndef import_report(source: Path, target: Path, workers: int = 1):\n    if source.resolve() == target.resolve():\n        raise ValueError(\"input and report must be different files\")\n    records = read_batch(source, workers)\n    report = {\"version\": 1, \"sessions\": [asdict(r) for r in records], \"totals\": summary(records)}\n    atomic_write(target, report)\n    logger.info(\"imported %d records\", len(records))\n    return report\n\ndef load_report(path: Path):\n    value = decode(bounded_read(path, 1048576))\n    if type(value) is not dict or set(value) != {\"version\", \"sessions\", \"totals\"}:\n        raise ValueError(\"invalid report fields\")\n    if type(value[\"version\"]) is not int or value[\"version\"] != 1:\n        raise ValueError(\"unsupported report version\")\n    if type(value[\"sessions\"]) is not list or len(value[\"sessions\"]) > MAX_RECORDS:\n        raise ValueError(\"invalid report records\")\n    records = [make_session(row) for row in value[\"sessions\"]]\n    validate_batch(records)\n    totals = value[\"totals\"]\n    if type(totals) is not dict or any(type(k) is not str or type(v) is not int for k, v in totals.items()):\n        raise ValueError(\"invalid totals\")\n    if totals != summary(records):\n        raise ValueError(\"totals do not match records\")\n    return records\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Validate JSONL and publish one study report\")\n    parser.add_argument(\"input\", nargs=\"?\", type=Path)\n    parser.add_argument(\"output\", nargs=\"?\", type=Path)\n    parser.add_argument(\"--workers\", type=int, default=1)\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and (args.input or args.output):\n        parser.error(\"choose --demo or two file paths\")\n    if not args.demo and (args.input is None or args.output is None):\n        parser.error(\"provide input and output, or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                source, target = Path(folder)/\"input.jsonl\", Path(folder)/\"report.json\"\n                rows = [{\"id\":\"a\",\"topic\":\"Python\",\"minutes\":25},{\"id\":\"b\",\"topic\":\"Python\",\"minutes\":15}]\n                source.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")\n                import_report(source, target, args.workers)\n                print(json.dumps(summary(load_report(target)), sort_keys=True))\n        else:\n            report = import_report(args.input, args.output, args.workers)\n            print(json.dumps(report[\"totals\"], sort_keys=True))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Import failed: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
+      }
+    }
+  ],
+  "downloads": [
+    {
+      "title": "Foundation project reference",
+      "href": "paths/python/practice/foundation_project.py"
+    },
+    {
+      "title": "Intermediate CLI reference",
+      "href": "paths/python/practice/intermediate_project.py"
+    },
+    {
+      "title": "Advanced import pipeline reference",
+      "href": "paths/python/practice/advanced_project.py"
+    },
+    {
+      "title": "Staged project tests",
+      "href": "paths/python/practice/test_projects.py"
+    },
+    {
+      "title": "Practice instructions and limitations",
+      "href": "paths/python/practice/README.md"
+    }
   ]
 }

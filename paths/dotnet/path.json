@@ -3,8 +3,8 @@
   "title": "C# & .NET",
   "category": "Programming",
   "status": "ready",
-  "description": "Learn C# fundamentals, test reusable logic, and build a small ASP.NET Core task API with safe SQLite persistence.",
-  "level": "Beginner",
+  "description": "Progress from C# fundamentals to tested APIs, then practice cancellation, concurrency, secure resource access, schema evolution, observability and deployment decisions.",
+  "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "Comfort using a terminal and editing a text file.",
     "No prior C# experience required; basic HTTP and SQL help with the final lessons."
@@ -13,20 +13,26 @@
     "Run and debug C# console projects.",
     "Use types, null checks, collections, methods, objects, LINQ and exceptions.",
     "Await asynchronous operations and write focused unit tests.",
-    "Build validated HTTP endpoints with dependency injection and parameterized persistence."
+    "Build validated HTTP endpoints with dependency injection and parameterized persistence.",
+    "Design typed contracts and explicit resource ownership.",
+    "Verify HTTP contracts, migrations, rollback and concurrency failures.",
+    "Practice identity and ownership checks, operational evidence, deployment recovery and measured performance."
   ],
   "setup": [
     "Install the current patched .NET 10 LTS SDK from Microsoft's download page using the installer for your OS; these instructions do not install software automatically.",
     "Use a text editor or IDE with C# support. Verify dotnet --info and dotnet --list-sdks in a new terminal.",
     "Create a separate console project for snippets with dotnet new console -n LearningConsole -f net10.0; replace Program.cs for each console lesson and run dotnet run.",
     "As of September 26, 2026, Microsoft's policy lists .NET 10 LTS through November 14, 2028. Recheck the policy at study time and keep patches current.",
-    "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson."
+    "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson.",
+    "The downloadable practice/*.cs files are complete Program.cs replacements; practice/README.md gives project-creation commands. They run without external packages on .NET 9 and are compatible in syntax with .NET 10; only the .NET 9 build was tested.",
+    "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. Those examples are labeled fragments and are not part of the package-free downloadable baseline.",
+    "Stages describe practical learning checkpoints, not a claim of mastery or production completeness. Pass their exit criteria with evidence before treating the next stage as complete."
   ],
   "nextSteps": [
-    "Study ASP.NET Core integration testing with WebApplicationFactory.",
-    "Learn EF Core migrations, relational constraints and transactions.",
-    "Add authentication, authorization, structured logging and deployment only after the local capstone works.",
-    "Study interfaces, generics and concurrency in greater depth."
+    "Use the advanced assessment to identify remaining gaps in a real project.",
+    "Study database isolation, distributed systems and reliable background processing after the single-service exercises.",
+    "Explore accessibility and frontend integration, then a reviewed production deployment with a real identity provider.",
+    "Revisit Microsoft support policy and package documentation when upgrading SDKs or dependencies."
   ],
   "sources": [
     {
@@ -56,6 +62,70 @@
     {
       "title": "EF Core SQL queries and parameterization",
       "url": "https://learn.microsoft.com/en-us/ef/core/querying/sql-queries"
+    },
+    {
+      "title": "Interfaces",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces"
+    },
+    {
+      "title": "Generic types and methods",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics"
+    },
+    {
+      "title": "Using and asynchronous disposal",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using"
+    },
+    {
+      "title": "ASP.NET Core error handling",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-10.0"
+    },
+    {
+      "title": "ASP.NET Core integration tests",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0"
+    },
+    {
+      "title": "EF Core migrations",
+      "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/"
+    },
+    {
+      "title": "EF Core transactions",
+      "url": "https://learn.microsoft.com/en-us/ef/core/saving/transactions"
+    },
+    {
+      "title": "Cooperative cancellation",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/cancel-an-async-task-or-a-list-of-tasks"
+    },
+    {
+      "title": "Bearer-token authentication",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0"
+    },
+    {
+      "title": "ASP.NET Core authorization",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-10.0"
+    },
+    {
+      "title": ".NET metrics instrumentation",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/diagnostics/metrics-instrumentation"
+    },
+    {
+      "title": "ASP.NET Core deployment",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-10.0"
+    },
+    {
+      "title": "Delegates",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/"
+    },
+    {
+      "title": "Pattern matching",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/patterns/pattern-matching"
+    },
+    {
+      "title": "Parallel.ForEachAsync",
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-10.0"
+    },
+    {
+      "title": "Efficient EF Core querying",
+      "url": "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying"
     }
   ],
   "lessons": [
@@ -99,7 +169,8 @@
         ],
         "correct": 0,
         "explanation": "The SDK contains the compiler and project tools."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "types-null",
@@ -142,7 +213,8 @@
         ],
         "correct": 1,
         "explanation": "var changes how a type is written, not how the type system works."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "control-collections",
@@ -185,7 +257,8 @@
         ],
         "correct": 1,
         "explanation": "A dictionary maps keys to values."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "methods",
@@ -228,7 +301,8 @@
         ],
         "correct": 0,
         "explanation": "Computation can be reused independently of its presentation."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "objects",
@@ -271,7 +345,8 @@
         ],
         "correct": 0,
         "explanation": "Access control constrains how state changes."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "exceptions",
@@ -314,7 +389,8 @@
         ],
         "correct": 1,
         "explanation": "using provides deterministic cleanup."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "linq",
@@ -357,7 +433,8 @@
         ],
         "correct": 1,
         "explanation": "Select projects each source item into a result."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "async",
@@ -400,6 +477,165 @@
         ],
         "correct": 1,
         "explanation": "Async models waiting; CPU parallelism is a separate decision."
+      },
+      "stage": "foundation"
+    },
+    {
+      "id": "contracts-generics",
+      "title": "Interfaces and generic contracts",
+      "stage": "intermediate",
+      "takeaway": "Program against the behavior you need and preserve type information.",
+      "sections": [
+        {
+          "title": "Separate callers from storage",
+          "paragraphs": [
+            "An interface specifies operations a caller can use. A service accepting that interface can work with a memory implementation in a focused test and a database implementation in the app. The implementations must preserve the same observable contract, including missing results and cancellation behavior.",
+            "Start with a small interface around an actual boundary. An interface for every class adds navigation without automatically improving design. Keep HTTP response types out of a storage contract so storage can be used outside a web endpoint."
+          ],
+          "example": "// Complete console Program.cs\nITitleSource source = new MemoryTitles();\nConsole.WriteLine(source.Find(1) ?? \"Missing\");\ninterface ITitleSource { string? Find(int id); }\nsealed class MemoryTitles : ITitleSource\n{\n    public string? Find(int id) => id == 1 ? \"Read\" : null;\n}\n// Expected: Read"
+        },
+        {
+          "title": "Reuse an algorithm safely",
+          "paragraphs": [
+            "A generic method carries a type parameter instead of converting everything to object. A constraint specifies the operations the algorithm needs. Here IComparable<T> allows comparison while returning the original type.",
+            "Use established generic collections before inventing containers. Do not cast T to a guessed concrete type: callers can supply a different type that meets the constraint. Choose string comparers explicitly when culture or case changes application meaning."
+          ],
+          "example": "// Complete console Program.cs\nConsole.WriteLine(Max(3, 7));\nstatic T Max<T>(T first, T second) where T : IComparable<T>\n    => first.CompareTo(second) >= 0 ? first : second;\n// Expected: 7"
+        },
+        {
+          "title": "Communicate mutability and absence",
+          "paragraphs": [
+            "Return an immutable record or a copied snapshot when callers should only inspect data. IReadOnlyList<T> restricts operations available through that interface; it does not freeze an underlying List<T> or make mutable elements immutable.",
+            "A result of null can mean missing when documented. Do not use default(T) as a universal failure signal: zero can be valid. A Try method or a result type can distinguish success from absence without an exception."
+          ],
+          "example": "// Complete console Program.cs\nvar items = new List<int> { 1, 2 };\nIReadOnlyList<int> view = items;\nitems.Add(3);\nConsole.WriteLine(view.Count);\nvar snapshot = items.ToArray();\nitems.Add(4);\nConsole.WriteLine(snapshot.Length);\n// Expected: 3 then 3"
+        }
+      ],
+      "exercise": {
+        "prompt": "Create a generic FindById method for records implementing IHasId. Return null for a missing reference-type entity.",
+        "starter": "interface IHasId { int Id { get; } }\n// Write FindById<T>(IEnumerable<T> items, int id).",
+        "solution": "// Complete console Program.cs\nvar items = new[] { new Item(1, \"Read\") };\nConsole.WriteLine(FindById(items, 1)?.Title ?? \"Missing\");\nConsole.WriteLine(FindById(items, 2)?.Title ?? \"Missing\");\nstatic T? FindById<T>(IEnumerable<T> items, int id) where T : class, IHasId\n    => items.FirstOrDefault(item => item.Id == id);\ninterface IHasId { int Id { get; } }\nrecord Item(int Id, string Title) : IHasId;",
+        "checks": [
+          "ID 1 returns Read.",
+          "ID 2 returns null.",
+          "The constraint prevents calling the algorithm with unrelated values.",
+          "The method does not mutate the source."
+        ]
+      },
+      "quiz": {
+        "question": "Does IReadOnlyList<T> freeze its underlying list?",
+        "options": [
+          "Yes",
+          "No; it restricts access through that interface",
+          "Only for strings"
+        ],
+        "correct": 1,
+        "explanation": "Another reference may mutate the underlying list; a separate snapshot provides stronger isolation."
+      }
+    },
+    {
+      "id": "resource-ownership",
+      "title": "Disposal and resource ownership",
+      "stage": "intermediate",
+      "takeaway": "Make ownership explicit so cleanup and lazy work do not conflict.",
+      "sections": [
+        {
+          "title": "Own what you create",
+          "paragraphs": [
+            "A method creating a disposable resource usually owns its cleanup. A method receiving a stream may instead borrow it: document whether it closes it. using translates scope exit into cleanup even after an exception.",
+            "Disposal is about resource lifetime, not forcing garbage collection. Do not add a finalizer to a class just because it owns managed IDisposable objects; standard disposal patterns handle those objects without introducing finalization complexity."
+          ],
+          "example": "// Complete console Program.cs\nusing (var tracker = new Tracker())\n{\n    Console.WriteLine(\"Work\");\n}\nsealed class Tracker : IDisposable\n{\n    public void Dispose() => Console.WriteLine(\"Disposed\");\n}\n// Expected: Work then Disposed"
+        },
+        {
+          "title": "Await asynchronous cleanup",
+          "paragraphs": [
+            "IAsyncDisposable supports cleanup that itself needs asynchronous work. await using awaits DisposeAsync when scope exits. The enclosing method therefore needs an asynchronous context.",
+            "Do not return a lazy sequence tied to a resource that has already been disposed. Materialize inside the scope or make the iterator own the scope so cleanup occurs when enumeration finishes or the enumerator is disposed."
+          ],
+          "example": "// Complete console Program.cs\nawait using (var resource = new AsyncResource())\n    Console.WriteLine(\"Work\");\nsealed class AsyncResource : IAsyncDisposable\n{\n    public async ValueTask DisposeAsync()\n    {\n        await Task.Delay(1);\n        Console.WriteLine(\"Cleaned\");\n    }\n}\n// Expected: Work then Cleaned"
+        },
+        {
+          "title": "Keep lifetimes compatible",
+          "paragraphs": [
+            "Dependency injection disposes services it creates when their scope ends. Borrowed services should not be disposed manually by their consumer. A singleton cannot retain a request-scoped context safely beyond that request.",
+            "Long-lived HttpClient ownership differs from creating and disposing one for every request. In ASP.NET Core, IHttpClientFactory can manage handlers while giving named or typed clients configuration. A client configured with a timeout still needs caller cancellation propagated."
+          ],
+          "example": "// ASP.NET Core registration and endpoint fragments, not a complete project.\nbuilder.Services.AddHttpClient(\"catalog\", client =>\n{\n    client.BaseAddress = new Uri(\"https://example.com/\");\n    client.Timeout = TimeSpan.FromSeconds(5);\n});\napp.MapGet(\"/catalog-status\", async (IHttpClientFactory factory, CancellationToken token) =>\n{\n    using var response = await factory.CreateClient(\"catalog\").GetAsync(\"status\", token);\n    return Results.StatusCode((int)response.StatusCode);\n});\n// Remote endpoint is illustrative; no specific status is guaranteed."
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement ReadLines as a materialized snapshot so callers can use the result after the reader is disposed.",
+        "starter": "// Use StringReader for a repeatable test instead of an external file.",
+        "solution": "// Complete console Program.cs\nConsole.WriteLine(string.Join(\",\", ReadLines(\"a\\nb\")));\nstatic string[] ReadLines(string text)\n{\n    using var reader = new StringReader(text);\n    var lines = new List<string>();\n    while (reader.ReadLine() is { } line) lines.Add(line);\n    return lines.ToArray();\n}\n// Expected: a,b",
+        "checks": [
+          "Enumeration after return works.",
+          "Empty text yields an empty array.",
+          "The reader is disposed inside the method.",
+          "The result is a snapshot, not an open stream."
+        ]
+      },
+      "quiz": {
+        "question": "Who disposes a scoped service created by the DI container?",
+        "options": [
+          "Every consumer",
+          "The DI scope that owns it",
+          "Only the garbage collector"
+        ],
+        "correct": 1,
+        "explanation": "Consumers borrow injected services; the owning scope handles cleanup."
+      }
+    },
+    {
+      "id": "delegates-patterns",
+      "title": "Delegates, pattern matching and small strategies",
+      "stage": "intermediate",
+      "takeaway": "Represent variable behavior explicitly without hiding side effects.",
+      "sections": [
+        {
+          "title": "Pass an operation",
+          "paragraphs": [
+            "Func<T, TResult> represents a callable operation producing a result. Action<T> represents an operation without a result. Passing a predicate makes filtering reusable without hard-coding each business rule.",
+            "A captured variable is shared with the lambda, not necessarily a snapshot at creation. Prefer pure delegates for transformations and use explicit dependencies for operations that perform I/O."
+          ],
+          "example": "// Complete console Program.cs\nFunc<int, bool> keep = score => score >= 60;\nConsole.WriteLine(string.Join(\",\", new[] { 59, 60, 90 }.Where(keep)));\nint threshold = 60;\nFunc<int, bool> captured = score => score >= threshold;\nthreshold = 80;\nConsole.WriteLine(captured(70));\n// Expected: 60,90 then False"
+        },
+        {
+          "title": "Describe data shapes with patterns",
+          "paragraphs": [
+            "Pattern matching combines a check with extraction. A property pattern can require nonnull data and inspect properties without a separate cast. A switch expression should cover expected values and an intentional fallback.",
+            "Patterns clarify a rule when the alternatives are visible. A long switch that mixes database writes and logging is still a complex method; separate classification from the operation it selects."
+          ],
+          "example": "// Complete console Program.cs\nConsole.WriteLine(Describe(new TaskView(\"Read\", true)));\nConsole.WriteLine(Describe(null));\nstatic string Describe(TaskView? item) => item switch\n{\n    { Done: true } => \"Complete\",\n    { Title.Length: > 0 } => \"Open\",\n    _ => \"Missing or blank\"\n};\nrecord TaskView(string Title, bool Done);\n// Expected: Complete then Missing or blank"
+        },
+        {
+          "title": "Select a strategy, constrain complexity",
+          "paragraphs": [
+            "A strategy is interchangeable behavior, often represented by a delegate or interface. Use it when a caller needs a genuine choice, such as sorting tasks by title or ID. Dependency injection can supply larger strategies with their own dependencies.",
+            "Events are notifications, not an implicit transaction. Unsubscribe long-lived publishers when a short-lived subscriber ends. Avoid async void event handlers for application workflows whose completion must be awaited."
+          ],
+          "example": "// Complete console Program.cs\nvar tasks = new[] { new Item(2, \"A\"), new Item(1, \"Z\") };\nFunc<Item, int> priority = task => task.Id;\nConsole.WriteLine(tasks.OrderBy(priority).First().Title);\nrecord Item(int Id, string Title);\n// Expected: Z"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a pure switch expression classifying a nullable task as missing, open or complete.",
+        "starter": "// Complete takes precedence over open.",
+        "solution": "// Complete console Program.cs\nConsole.WriteLine(Classify(null));\nConsole.WriteLine(Classify(new Item(false)));\nConsole.WriteLine(Classify(new Item(true)));\nstatic string Classify(Item? item) => item switch\n{\n    null => \"missing\",\n    { Done: true } => \"complete\",\n    _ => \"open\"\n};\nrecord Item(bool Done);",
+        "checks": [
+          "The three inputs produce missing, open and complete.",
+          "The classifier performs no I/O.",
+          "The null arm precedes member access."
+        ]
+      },
+      "quiz": {
+        "question": "What happens when a captured threshold variable later changes?",
+        "options": [
+          "A lambda using it can observe the new value",
+          "The lambda always holds the original value",
+          "The lambda no longer compiles"
+        ],
+        "correct": 0,
+        "explanation": "A closure captures the variable; use a separate local snapshot when that is the intended rule."
       }
     },
     {
@@ -443,7 +679,8 @@
         ],
         "correct": 1,
         "explanation": "Compilation and behavior verification answer different questions."
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "api-di",
@@ -487,6 +724,113 @@
         ],
         "correct": 0,
         "explanation": "Singleton services share application-wide state and require safe concurrency."
+      },
+      "stage": "intermediate"
+    },
+    {
+      "id": "api-contracts",
+      "title": "API validation and consistent errors",
+      "stage": "intermediate",
+      "takeaway": "Turn invalid requests and failures into a stable, testable HTTP contract.",
+      "sections": [
+        {
+          "title": "Validate the request boundary",
+          "paragraphs": [
+            "JSON binding and business validation are different. A valid JSON body can still contain a blank title or an unreasonable page size. Prefer request DTOs rather than binding database entities, so a caller cannot set protected fields such as owner or completion state.",
+            "The .NET 9 compatible practice app performs explicit validation. .NET 10 has additional Minimal API validation facilities; use version-specific documentation before adopting them. Endpoint validation does not replace constraints protecting database invariants."
+          ],
+          "example": "// Endpoint fragment; CreateTask is a request DTO.\napp.MapPost(\"/tasks\", (CreateTask request) =>\n{\n    if (string.IsNullOrWhiteSpace(request.Title) || request.Title.Trim().Length > 120)\n        return Results.ValidationProblem(new Dictionary<string, string[]>\n        {\n            [\"title\"] = new[] { \"Use 1–120 characters after trimming.\" }\n        });\n    return Results.Ok(new { title = request.Title.Trim() });\n});\nrecord CreateTask(string? Title);\n// Blank title => 400 with an errors.title entry."
+        },
+        {
+          "title": "Use problem details intentionally",
+          "paragraphs": [
+            "A structured problem response lets clients distinguish an invalid field from an unavailable resource or unexpected failure. Give expected errors explicit status codes. Unexpected exceptions should be logged on the server and represented by a generic response with a correlation identifier.",
+            "Register problem details and exception handling before endpoints. Avoid sending exception messages, SQL text or stack traces to public clients. Status-code pages can fill otherwise empty error bodies, but must not overwrite an existing meaningful response."
+          ],
+          "example": "// ASP.NET Core fragments:\nbuilder.Services.AddProblemDetails();\nvar app = builder.Build();\napp.UseExceptionHandler();\napp.UseStatusCodePages();\napp.MapGet(\"/tasks/{id:int}\", (int id) =>\n    Results.Problem(statusCode: 404, title: \"Task not found\"));\n// Missing task => 404 application/problem+json."
+        },
+        {
+          "title": "Choose status and retry semantics",
+          "paragraphs": [
+            "400 describes invalid input, 404 missing data, 409 a conflict with current state and 500 an unexpected server failure. A retry may be safe for a read, but retrying a create after a lost response can duplicate a write.",
+            "Define bounded paging and stable ordering before the collection grows. An optimistic version check allows a client to detect another writer's update. For production creation retries, use an idempotency key with durable uniqueness rather than a memory-only cache."
+          ],
+          "example": "// Practice contract:\nGET /tasks?after=0&limit=20 -> ordered page, limit must be 1..100\nPOST /tasks {\"title\":\" Read \"} -> 201, normalized title\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 200, version 2\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 409\n// See practice/task-api.cs for complete code."
+        }
+      ],
+      "exercise": {
+        "prompt": "Add and test a limit parameter accepting only 1 through 100. Keep an invalid request out of storage.",
+        "starter": "// Validate before running the query.",
+        "solution": "// Endpoint fragment with TaskStore from practice/task-api.cs:\napp.MapGet(\"/sample-page\", (int? limit, TaskStore store) =>\n{\n    int size = limit ?? 20;\n    if (size is < 1 or > 100)\n        return Results.ValidationProblem(new Dictionary<string, string[]>\n        { [\"limit\"] = new[] { \"Use a value from 1 to 100.\" } });\n    return Results.Ok(store.Page(0, size));\n});",
+        "checks": [
+          "Omitted limit uses 20.",
+          "1 and 100 succeed.",
+          "0 and 101 return 400 with errors.limit.",
+          "The query is ordered consistently."
+        ]
+      },
+      "quiz": {
+        "question": "Why bind a request DTO instead of the persistence entity?",
+        "options": [
+          "To define only fields a client may supply",
+          "To eliminate validation",
+          "To hide all response data"
+        ],
+        "correct": 0,
+        "explanation": "The request contract should not grant write access to protected entity fields."
+      }
+    },
+    {
+      "id": "integration-checks",
+      "title": "Integration checks and failure-oriented testing",
+      "stage": "intermediate",
+      "takeaway": "Verify the assembled request pipeline, not only helper methods.",
+      "sections": [
+        {
+          "title": "Use a repeatable HTTP acceptance check",
+          "paragraphs": [
+            "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only HttpClient and System.Text.Json, so it needs no test package. Run it against a fresh local practice server.",
+            "A console acceptance check is not a replacement for a test runner. It reports failure via an exception and nonzero exit code. Test data is uniquely named, and the check does not delete pre-existing records."
+          ],
+          "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net9.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net9.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
+        },
+        {
+          "title": "Use WebApplicationFactory for framework tests",
+          "paragraphs": [
+            "ASP.NET Core's testing package can start the app in a test host and give an HttpClient wired to it. The test project needs a compatible Microsoft.AspNetCore.Mvc.Testing package and a unit-test framework. Make Program accessible when using top-level statements.",
+            "Replace external services and configure a separate database per test run. In-memory hosting verifies middleware and endpoints, but does not validate a real reverse proxy, TLS termination or deployment networking."
+          ],
+          "example": "// xUnit integration-test fragment; requires packages and a project reference.\n// Add public partial class Program { } at the end of the API Program.cs.\nusing Microsoft.AspNetCore.Mvc.Testing;\nusing Xunit;\npublic class HealthTests : IClassFixture<WebApplicationFactory<Program>>\n{\n    private readonly WebApplicationFactory<Program> factory;\n    public HealthTests(WebApplicationFactory<Program> factory) => this.factory = factory;\n    [Fact]\n    public async Task Health_is_ok()\n    {\n        using var client = factory.CreateClient();\n        using var response = await client.GetAsync(\"/health\");\n        Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);\n    }\n}"
+        },
+        {
+          "title": "Test risk, not implementation details",
+          "paragraphs": [
+            "Include malformed JSON, missing resources, version conflicts and response locations. An assertion that repeats your helper's implementation can pass alongside the same defect. Prefer explicit observed outputs and status codes.",
+            "Use the same relational provider as deployment for provider-dependent constraints and transactions. EF Core's in-memory provider does not reproduce relational SQL behavior. Keep deterministic business rules in fast unit tests and reserve integration tests for important boundaries."
+          ],
+          "example": "// Acceptance sequence:\n// 1. POST blank title -> 400 and errors.title.\n// 2. POST valid title -> 201 and a working Location.\n// 3. Complete with current version -> 200 and Done true.\n// 4. Complete with old version -> 409.\n// 5. Concurrent creates -> distinct IDs.\n// See practice/acceptance.cs for executable assertions."
+        }
+      ],
+      "exercise": {
+        "prompt": "Extend the acceptance check with a missing-ID PATCH assertion and malformed JSON POST assertion.",
+        "starter": "// Send an HttpRequestMessage for each case and assert status.",
+        "solution": "// HttpClient fragments inside the acceptance console:\nusing var missing = await client.PatchAsJsonAsync(\"/tasks/2147483647/complete\", new { expectedVersion = 1 });\nCheck(missing.StatusCode == HttpStatusCode.NotFound, \"Missing completion is 404\");\nusing var malformedBody = new StringContent(\"{\", System.Text.Encoding.UTF8, \"application/json\");\nusing var malformed = await client.PostAsync(\"/tasks\", malformedBody);\nCheck(malformed.StatusCode == HttpStatusCode.BadRequest, \"Malformed JSON is 400\");",
+        "checks": [
+          "Both assertions fail if expected statuses are intentionally reversed.",
+          "A fresh server passes the acceptance baseline.",
+          "Test failures return a nonzero process exit code.",
+          "Checks do not depend on hard-coded generated task IDs."
+        ]
+      },
+      "quiz": {
+        "question": "What does an in-memory test server leave unverified?",
+        "options": [
+          "Route matching",
+          "A real proxy and TLS deployment",
+          "JSON response bodies"
+        ],
+        "correct": 1,
+        "explanation": "The test host exercises application code, not the external hosting infrastructure."
       }
     },
     {
@@ -539,6 +883,61 @@
         ],
         "correct": 1,
         "explanation": "The provider parameterizes the predicate's value."
+      },
+      "stage": "intermediate"
+    },
+    {
+      "id": "ef-evolution",
+      "title": "EF Core migrations, transactions and conflicts",
+      "stage": "intermediate",
+      "takeaway": "Evolve schemas and coordinate writes without sacrificing data integrity.",
+      "sections": [
+        {
+          "title": "Review schema changes",
+          "paragraphs": [
+            "A migration describes a transition from one model to another. Add a migration, inspect its generated operations and SQL, then apply it to a disposable database before touching shared data. Adding a required column may need a staged backfill instead of an arbitrary default.",
+            "Do not combine EnsureCreated with a migrations-managed database. Tool, provider and EF package major versions should align. The command examples use 10.0.0 as a reproducible baseline; select a supported patched 10.x version for real work."
+          ],
+          "example": "dotnet new tool-manifest\ndotnet tool install dotnet-ef --version 10.0.0\ndotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.0\ndotnet ef migrations add AddTaskCompletion\ndotnet ef migrations script 0 AddTaskCompletion --output migration.sql\n// Review SQL and generated migration; use the actual previous migration name instead of 0 for an incremental upgrade.\ndotnet ef database update\n// SQLite scripts are tied to the known starting migration. Providers supporting\n// idempotent scripts can use migrations script --idempotent instead.\n// Select compatible supported 10.x patches for real work."
+        },
+        {
+          "title": "Keep related writes atomic",
+          "paragraphs": [
+            "A single SaveChanges call is normally transactional when the provider supports transactions. An explicit transaction is useful when several SaveChanges operations must either all commit or all be undone. Keep its duration short and avoid slow network calls while holding database locks.",
+            "A database transaction cannot roll back an already sent email. Persist an outbox entry alongside the business write when reliable external delivery is required. If an execution strategy retries operations, coordinate user-managed transactions with that strategy rather than retrying pieces independently."
+          ],
+          "example": "// EF Core fragment; existing db, task and audit entity types required.\nawait using var tx = await db.Database.BeginTransactionAsync(token);\ndb.Tasks.Add(task);\nawait db.SaveChangesAsync(token);\ndb.AuditEntries.Add(new AuditEntry { TaskId = task.Id, Action = \"created\" });\nawait db.SaveChangesAsync(token);\nawait tx.CommitAsync(token);\n// An exception before commit leaves the transaction uncommitted; disposal rolls it back."
+        },
+        {
+          "title": "Detect competing updates",
+          "paragraphs": [
+            "Optimistic concurrency compares the version originally read with the database's current version when writing. Configure a concurrency token and change it on each update. Catch DbUpdateConcurrencyException at the application boundary and decide whether to reject or reload.",
+            "A process-local lock cannot coordinate multiple servers. SQLite and SQL Server have different token facilities, so choose a token strategy for your provider. Do not silently overwrite a newer edit merely because a stale request arrived later."
+          ],
+          "example": "// Application-managed Guid token, provider-portable EF Core fragments:\nmodelBuilder.Entity<SavedTask>().Property(t => t.Version).IsConcurrencyToken();\n// On SavedTask: public Guid Version { get; set; } = Guid.NewGuid();\n// After loading and verifying the client's original version:\nitem.Done = true;\nitem.Version = Guid.NewGuid();\ntry { await db.SaveChangesAsync(token); }\ncatch (DbUpdateConcurrencyException)\n{\n    return Results.Problem(statusCode: 409, title: \"Task changed; reload before retrying\");\n}"
+        }
+      ],
+      "exercise": {
+        "prompt": "On a disposable relational database, prove that a failed audit write rolls back the task creation and that two stale updates cannot both succeed.",
+        "starter": "// Add a constraint that makes the audit write fail; use separate contexts for competing writers.",
+        "solution": "// Relational test fragment; CreateDb() must create a NEW context connected\n// to the same isolated test database, with Task/Audit models and constraints.\n// Replace types/property names with those in your assessment implementation.\nint createdId;\nawait using (var db = CreateDb())\n{\n    await using var tx = await db.Database.BeginTransactionAsync();\n    var task = new SavedTask { Title = \"rollback-case\" };\n    db.Tasks.Add(task);\n    await db.SaveChangesAsync();\n    createdId = task.Id;\n    db.AuditEntries.Add(new AuditEntry { TaskId = task.Id, Action = null! }); // required column\n    await Assert.ThrowsAsync<DbUpdateException>(() => db.SaveChangesAsync());\n    // no Commit; transaction disposal rolls back both writes\n}\nawait using (var check = CreateDb())\n    Assert.False(await check.Tasks.AnyAsync(t => t.Id == createdId));\n// Concurrency test on a separately seeded task:\nawait using var a = CreateDb();\nawait using var b = CreateDb();\nvar first = await a.Tasks.SingleAsync(t => t.Title == \"seeded-conflict\");\nvar second = await b.Tasks.SingleAsync(t => t.Id == first.Id);\nfirst.Version = Guid.NewGuid(); first.Done = true;\nsecond.Version = Guid.NewGuid(); second.Done = true;\nawait a.SaveChangesAsync();\nawait Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => b.SaveChangesAsync());\n// Requires xUnit, EF packages, configured concurrency token and relational constraint.",
+        "checks": [
+          "Rollback is checked from a fresh context.",
+          "A and B use different DbContext instances.",
+          "Only one conflicting version update succeeds.",
+          "Migration SQL is reviewed for data-loss operations.",
+          "Tests use a relational provider, not EF's in-memory provider."
+        ]
+      },
+      "quiz": {
+        "question": "Can a database transaction undo an email already sent?",
+        "options": [
+          "Yes",
+          "No; coordinate external effects separately",
+          "Only on SQLite"
+        ],
+        "correct": 1,
+        "explanation": "External services are outside the database transaction; use a reliable delivery design."
       }
     },
     {
@@ -585,8 +984,450 @@
         ],
         "correct": 0,
         "explanation": "The boundary adds behavior that a pure helper test does not exercise."
+      },
+      "stage": "intermediate"
+    },
+    {
+      "id": "cancellation-budgets",
+      "title": "Cancellation, time budgets and async streams",
+      "stage": "advanced",
+      "takeaway": "Propagate cancellation through the whole operation and stop starting work when it is no longer useful.",
+      "sections": [
+        {
+          "title": "Link the caller and operation budget",
+          "paragraphs": [
+            "A request can be cancelled because the caller disconnected or because an operation exceeded its own budget. A linked token lets either source stop the work. Dispose token sources after all work using them has completed.",
+            "Cancellation is a request, not a forced thread abort. Code must observe the token, and dependencies must support it. A catch filter helps distinguish caller cancellation from an internal timeout; do not convert a dependency failure into cancellation."
+          ],
+          "example": "// Complete console Program.cs\nusing var caller = new CancellationTokenSource();\nusing var budget = CancellationTokenSource.CreateLinkedTokenSource(caller.Token);\nbudget.Cancel(); // deterministic illustration; use CancelAfter for a real time budget.\ntry { await Task.Delay(100, budget.Token); }\ncatch (OperationCanceledException) when (budget.IsCancellationRequested)\n{\n    Console.WriteLine(caller.IsCancellationRequested ? \"Caller cancelled\" : \"Budget cancelled\");\n}\n// Expected: Budget cancelled"
+        },
+        {
+          "title": "Observe all started work",
+          "paragraphs": [
+            "Task.WhenAll represents completion of all supplied tasks. Starting several tasks and awaiting only one can leave failures unobserved and resources active. When a group fails, decide whether sibling work should continue or share a cancellation source.",
+            "Do not add retries to every layer. Establish a total operation budget, retry only transient and safe operations, and delay with the same token. Retrying a non-idempotent write after a timeout can create duplicates."
+          ],
+          "example": "// Complete console Program.cs\nvar tasks = new[] { ReadAsync(1), ReadAsync(2) };\nvar values = await Task.WhenAll(tasks);\nConsole.WriteLine(string.Join(\",\", values));\nstatic async Task<int> ReadAsync(int value)\n{\n    await Task.Delay(1);\n    return value;\n}\n// Expected: 1,2; result ordering follows task ordering."
+        },
+        {
+          "title": "Stream without collecting everything",
+          "paragraphs": [
+            "IAsyncEnumerable<T> lets a consumer await each item as it becomes available. Pass cancellation into the iterator and propagate it to awaited operations. EnumeratorCancellation tells the compiler how the iterator's token participates in enumeration cancellation.",
+            "Streaming reduces the need to buffer all results, but it lengthens resource ownership while the consumer reads. A database stream may retain a connection; a partial HTTP response cannot later be replaced by a fresh problem response after headers are sent."
+          ],
+          "example": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nawait foreach (int value in Generate(CancellationToken.None)) Console.WriteLine(value);\nstatic async IAsyncEnumerable<int> Generate([EnumeratorCancellation] CancellationToken token = default)\n{\n    for (int i = 0; i < 2; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then 1"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write an async iterator that yields three values, but cancels after the consumer reads the first value.",
+        "starter": "// Ensure awaited work observes the token.",
+        "solution": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nusing var cts = new CancellationTokenSource();\ntry\n{\n    await foreach (int value in Values(cts.Token))\n    {\n        Console.WriteLine(value);\n        cts.Cancel();\n    }\n}\ncatch (OperationCanceledException) { Console.WriteLine(\"Stopped\"); }\nstatic async IAsyncEnumerable<int> Values([EnumeratorCancellation] CancellationToken token)\n{\n    for (int i = 0; i < 3; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then Stopped",
+        "checks": [
+          "Only the first value is printed.",
+          "Cancellation is propagated to Task.Delay.",
+          "The iterator's caller observes cancellation.",
+          "No .Result, .Wait or async void is used."
+        ]
+      },
+      "quiz": {
+        "question": "Does cancelling a token forcibly terminate a thread?",
+        "options": [
+          "Yes",
+          "No; operations must cooperate",
+          "Only in web apps"
+        ],
+        "correct": 1,
+        "explanation": "The token signals cancellation and the operation must observe it."
+      }
+    },
+    {
+      "id": "concurrency",
+      "title": "Bounded concurrency and shared state",
+      "stage": "advanced",
+      "takeaway": "Control how much work runs and protect the entire state transition.",
+      "sections": [
+        {
+          "title": "Bound work at the source",
+          "paragraphs": [
+            "Launching one task per input can overload a dependency and consume memory even when individual calls are asynchronous. Parallel.ForEachAsync can process a sequence with an explicit maximum degree of parallelism.",
+            "A concurrency limit is different from a rate limit: four fast workers can still issue many requests per second. Choose both based on dependency limits and measured behavior. Do not use Task.Run to wrap naturally asynchronous I/O."
+          ],
+          "example": "// Complete console Program.cs\nint active = 0, observed = 0;\nawait Parallel.ForEachAsync(Enumerable.Range(1, 8),\n    new ParallelOptions { MaxDegreeOfParallelism = 2 }, async (value, token) =>\n{\n    int current = Interlocked.Increment(ref active);\n    int previous;\n    do { previous = Volatile.Read(ref observed); }\n    while (current > previous && Interlocked.CompareExchange(ref observed, current, previous) != previous);\n    try { await Task.Delay(5, token); }\n    finally { Interlocked.Decrement(ref active); }\n});\nConsole.WriteLine(observed <= 2);\n// Expected: True; scheduling does not promise an exact peak."
+        },
+        {
+          "title": "Protect compound operations",
+          "paragraphs": [
+            "Interlocked handles specific atomic operations such as incrementing a counter. A lock protects a compound read-check-write transition. All accesses to the protected mutable state must use the same synchronization strategy.",
+            "A concurrent collection does not make a sequence of separate operations atomic. Check-then-add and read-then-increment can race. Keep lock scopes short, do not await inside a lock, and return immutable snapshots rather than live mutable state."
+          ],
+          "example": "// Complete console Program.cs\nint counter = 0;\nobject gate = new();\nawait Task.WhenAll(Enumerable.Range(0, 100).Select(_ => Task.Run(() =>\n{\n    lock (gate) counter++;\n})));\nConsole.WriteLine(counter);\n// Expected: 100"
+        },
+        {
+          "title": "Coordinate asynchronous exclusivity",
+          "paragraphs": [
+            "SemaphoreSlim can allow a limited number of asynchronous callers into a section. Await WaitAsync and release in finally after acquisition succeeds. For a process-wide limit, the semaphore must be shared rather than recreated in every call.",
+            "An in-process gate is not distributed coordination. Multiple replicas each have their own gate. Use database concurrency tokens, uniqueness constraints or a dedicated distributed design when the invariant spans processes."
+          ],
+          "example": "// Complete console Program.cs\nusing var gate = new SemaphoreSlim(1, 1);\nawait gate.WaitAsync();\ntry { Console.WriteLine(\"Exclusive section\"); }\nfinally { gate.Release(); }\n// Expected: Exclusive section; dispose only after all users finish."
+        }
+      ],
+      "exercise": {
+        "prompt": "Run 100 increments safely and demonstrate that the final result remains 100 over repeated runs. Explain why this does not coordinate two servers.",
+        "starter": "// Use Interlocked.Increment for this single counter operation.",
+        "solution": "// Complete console Program.cs\nint counter = 0;\nawait Task.WhenAll(Enumerable.Range(0, 100).Select(_ => Task.Run(() => Interlocked.Increment(ref counter))));\nConsole.WriteLine(counter);\n// Expected: 100.\n// Each process has its own counter; persistent shared state needs database coordination.",
+        "checks": [
+          "Repeated runs produce 100.",
+          "No unrelated variable is protected by the counter operation.",
+          "The explanation distinguishes a process from a deployment with replicas.",
+          "Cancellation and exceptions cannot leak an acquired semaphore permit."
+        ]
+      },
+      "quiz": {
+        "question": "Does ConcurrentDictionary make any multi-step workflow atomic?",
+        "options": [
+          "Yes",
+          "No; compose supported atomic operations or synchronize the whole transition",
+          "Only when it holds strings"
+        ],
+        "correct": 1,
+        "explanation": "Thread-safe individual operations do not automatically protect a larger invariant."
+      }
+    },
+    {
+      "id": "auth-boundaries",
+      "title": "Authentication, policies and resource ownership",
+      "stage": "advanced",
+      "takeaway": "Validate identity first, then authorize the requested operation on the specific resource.",
+      "sections": [
+        {
+          "title": "Delegate identity validation",
+          "paragraphs": [
+            "Authentication establishes a trusted principal. For bearer tokens, use a configured handler that validates issuer, audience, signature and lifetime; merely decoding a JWT is not authentication. A browser sign-in flow often uses an identity provider and cookies instead.",
+            "The following fragment requires a compatible Microsoft.AspNetCore.Authentication.JwtBearer package and a real configured authority. It is not a token-issuing server or a complete sign-in application. Store configuration through approved secrets and environment systems."
+          ],
+          "example": "// Registration fragment with the JwtBearer package:\nbuilder.Services.AddAuthentication(\"Bearer\").AddJwtBearer(options =>\n{\n    options.Authority = builder.Configuration[\"Identity:Authority\"];\n    options.Audience = builder.Configuration[\"Identity:Audience\"];\n});\nbuilder.Services.AddAuthorization(options =>\n    options.AddPolicy(\"task-write\", policy => policy.RequireAuthenticatedUser().RequireClaim(\"permission\", \"tasks.write\")));\n// Before endpoints:\napp.UseAuthentication();\napp.UseAuthorization();"
+        },
+        {
+          "title": "Authorize operations and resources",
+          "paragraphs": [
+            "A policy can require a permission or role. A valid identity still must be allowed to access the particular task. Set ownership from a validated stable subject claim when creating a task; never trust an OwnerId supplied by the request body.",
+            "A coarse write permission does not prevent one user from modifying another user's resource. Check ownership or a deliberate administrator policy on every read and write. Decide whether forbidden resources produce 403 or a consistent 404 to avoid revealing existence."
+          ],
+          "example": "// Endpoint fragment: existing entity has OwnerId; token handler must map a stable subject to sub.\napp.MapGet(\"/owned-tasks/{id:int}\", async (int id, TaskDb db, System.Security.Claims.ClaimsPrincipal user) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    var item = await db.Tasks.FindAsync(id);\n    if (item is null || item.OwnerId != owner) return Results.NotFound();\n    return Results.Ok(item);\n}).RequireAuthorization();\n// Configure claim mapping deliberately; test it against the real issuer."
+        },
+        {
+          "title": "Prove denial as well as success",
+          "paragraphs": [
+            "Typically 401 indicates no acceptable authenticated identity, while 403 indicates an authenticated principal that lacks permission. A resource policy may intentionally return 404. Tests must cover all these branches so a success-only test cannot mask unrestricted access.",
+            "Fake authentication is useful inside an isolated test host; never enable a header-based fake identity in a deployed app. Cookie-authenticated state-changing requests also require protection against cross-site request forgery. Restrictive CORS is not authorization."
+          ],
+          "example": "// Security acceptance matrix:\n// No token -> protected endpoint denies access.\n// Invalid issuer/audience/expired token -> 401.\n// Valid token without write permission -> 403 on policy-protected write.\n// User B requests user A's task -> chosen 403 or 404, no data.\n// User A completes own task -> succeeds.\n// The downloadable local baseline is deliberately unauthenticated; add this layer before deployment."
+        }
+      ],
+      "exercise": {
+        "prompt": "Add an authenticated write policy and ownership checks to every task endpoint, then write denial tests for anonymous users and another owner.",
+        "starter": "// Use a real configured handler in the app; fake only the isolated test host.",
+        "solution": "// Endpoint fragments; requires TaskDb, SavedTask.OwnerId, valid authentication,\n// TaskRequest, a mapped stable sub claim and the task-write policy from this lesson.\nvar tasks = app.MapGroup(\"/tasks\").RequireAuthorization();\ntasks.MapGet(\"/\", async (TaskDb db, System.Security.Claims.ClaimsPrincipal user, CancellationToken token) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    return Results.Ok(await db.Tasks.AsNoTracking().Where(t => t.OwnerId == owner)\n        .OrderBy(t => t.Id).Take(100).ToListAsync(token));\n});\ntasks.MapPost(\"/\", async (TaskRequest request, TaskDb db,\n    System.Security.Claims.ClaimsPrincipal user, CancellationToken token) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    if (string.IsNullOrWhiteSpace(request.Title)) return Results.BadRequest();\n    var item = new SavedTask { Title = request.Title.Trim(), OwnerId = owner };\n    db.Tasks.Add(item);\n    await db.SaveChangesAsync(token);\n    return Results.Created($\"/tasks/{item.Id}\", item);\n}).RequireAuthorization(\"task-write\");\n// Apply identical ownership filtering/checks to GET by ID and completion.\n// In tests: anonymous -> denial; reader-only POST -> 403;\n// A creates -> B list excludes item and B fetch/complete receives 404.\n// Real-token staging tests additionally verify issuer, audience and lifetime.",
+        "checks": [
+          "Anonymous and invalid tokens cannot read or write.",
+          "User B never receives user A's tasks.",
+          "A reader cannot write.",
+          "OwnerId is not accepted from JSON.",
+          "Real token validation is tested separately from the test fake."
+        ]
+      },
+      "quiz": {
+        "question": "Does a valid token authorize access to every task?",
+        "options": [
+          "Yes",
+          "No; resource and operation authorization are still required",
+          "Only when HTTPS is enabled"
+        ],
+        "correct": 1,
+        "explanation": "Trusted identity establishes who the caller is, not what they may do."
+      }
+    },
+    {
+      "id": "observability",
+      "title": "Logs, traces, metrics and health",
+      "stage": "advanced",
+      "takeaway": "Collect evidence that explains failures without exposing sensitive input.",
+      "sections": [
+        {
+          "title": "Log structured events",
+          "paragraphs": [
+            "A log message template names fields so operators can query them independently of rendered text. Include the operation, stable outcome and correlation context. Prefer a task ID over logging the entire submitted title.",
+            "Logs are not a place for passwords, bearer tokens or arbitrary personal data. Avoid using untrusted text as a message template. Choose levels by operational meaning and keep a repeated expected invalid request from flooding error logs."
+          ],
+          "example": "// Endpoint/service fragment with injected ILogger<TaskService> logger:\nlogger.LogInformation(\"Task {TaskId} completed at version {Version}\", item.Id, item.Version);\n// A exception boundary can log the exception while returning a generic problem response.\n// Avoid logger.LogInformation(request.Title) and logging Authorization headers."
+        },
+        {
+          "title": "Measure useful signals",
+          "paragraphs": [
+            "A Counter tracks accumulated events; a Histogram records distributions such as latency. A trace follows a request across operations, but custom activities need listeners or an exporter to be collected. Instrumentation alone does not create a dashboard.",
+            "Use low-cardinality metric tags such as operation and outcome. Task IDs and user IDs create an unbounded series count. Resource IDs can belong in carefully controlled traces or logs where policy allows them."
+          ],
+          "example": "// Complete console Program.cs; instruments require a listener/exporter to observe values.\nusing System.Diagnostics;\nusing System.Diagnostics.Metrics;\nusing var meter = new Meter(\"Learning.Tasks\", \"1.0\");\nvar completed = meter.CreateCounter<long>(\"tasks.completed\");\nusing var source = new ActivitySource(\"Learning.Tasks\");\nusing var activity = source.StartActivity(\"complete-task\");\ncompleted.Add(1, new KeyValuePair<string, object?>(\"outcome\", \"success\"));\nConsole.WriteLine(\"Instrumented one completion\");\n// Expected: Instrumented one completion; no exporter is configured."
+        },
+        {
+          "title": "Distinguish liveness and readiness",
+          "paragraphs": [
+            "Liveness asks whether the process should keep running. Readiness asks whether this instance can serve traffic, which may depend on a database or another critical dependency. A dependency outage should not automatically restart every healthy process.",
+            "Expose only the detail the caller needs. A public health endpoint should not publish credentials, connection strings or detailed internal exceptions. Test readiness failures and ensure alerts name an actionable symptom rather than every isolated transient error."
+          ],
+          "example": "// Framework health-check registration and mapping fragments:\nbuilder.Services.AddHealthChecks();\n// After building app:\napp.MapHealthChecks(\"/health/live\");\n// Add a separate tagged custom IHealthCheck for database connectivity,\n// then map readiness with HealthCheckOptions.Predicate selecting readiness tags.\n// Empty health registrations only establish process responsiveness, not database readiness."
+        }
+      ],
+      "exercise": {
+        "prompt": "Instrument completion success and conflict as low-cardinality metrics, and correlate an intentionally failed request with one structured log.",
+        "starter": "// Record outcome rather than task ID as a metric tag.",
+        "solution": "// Service fragment with a shared meter/counter:\ncompletionCounter.Add(1, new KeyValuePair<string, object?>(\"outcome\", conflict ? \"conflict\" : \"success\"));\nlogger.LogInformation(\"Complete task {TaskId} returned {Outcome}\", id, conflict ? \"conflict\" : \"success\");\n// Configure a local listener/exporter and generate both outcomes.\n// Explain why the counter is shared rather than created for each request.",
+        "checks": [
+          "Both outcome series are visible in the configured collector.",
+          "No title, token or user ID becomes a metric tag.",
+          "A failed request can be correlated with its server log.",
+          "Readiness and liveness are tested as different contracts."
+        ]
+      },
+      "quiz": {
+        "question": "Why avoid a task ID as a metric tag?",
+        "options": [
+          "It creates high-cardinality time series",
+          "It disables all logging",
+          "It changes HTTP status codes"
+        ],
+        "correct": 0,
+        "explanation": "Unique IDs can create a growing number of metric series and excessive collection cost."
+      }
+    },
+    {
+      "id": "deploy-operations",
+      "title": "Configuration, deployment and recovery",
+      "stage": "advanced",
+      "takeaway": "Package a tested application and make rollout and recovery explicit.",
+      "sections": [
+        {
+          "title": "Separate build from configuration",
+          "paragraphs": [
+            "dotnet publish produces deployment output. A framework-dependent build needs a supported installed runtime on the host; a self-contained build carries a runtime and must be republished for runtime fixes. Neither choice configures HTTPS or a reverse proxy by itself.",
+            "Use environment-specific configuration and fail startup when required configuration is absent. Keep secrets out of source and published JSON. Environment variables with double underscores map to nested configuration keys in ASP.NET Core."
+          ],
+          "example": "dotnet publish PracticeApi/PracticeApi.csproj -c Release -o ./publish --no-self-contained\n# For a .NET 10 target, deploy to a compatible patched .NET 10 runtime.\n# On a local shell, an example nested configuration key is:\n# Identity__Audience=task-api\n# Do not put a real secret in a copied command, repository or lesson."
+        },
+        {
+          "title": "Make a safe release sequence",
+          "paragraphs": [
+            "Before rollout, run tests, apply reviewed schema changes with a dedicated deployment process, and confirm readiness in the target environment. For multiple replicas, every replica needs access to shared durable data; the memory store in the practice app cannot provide that.",
+            "A rollback of code is not automatically a rollback of a destructive schema change. Favor compatible expand-and-contract migrations: add a new representation, migrate data, switch readers, then remove the old representation in a later release."
+          ],
+          "example": "// Release checklist as an executable workflow outline:\n// build -> tests -> publish -> reviewed migration -> start new instance\n// readiness succeeds -> direct limited traffic -> observe error rate/latency\n// unhealthy -> stop traffic to new instance and restore prior compatible build\n// Validate reverse proxy headers, HTTPS and authorization in staging."
+        },
+        {
+          "title": "Handle shutdown and durability",
+          "paragraphs": [
+            "Graceful shutdown gives active requests and hosted services time to finish or cancel. Pass the host stopping token into background work. Critical jobs should be durable and resumable rather than only stored in process memory.",
+            "Write a recovery runbook describing backup restoration, migration compatibility and how to stop an unsafe rollout. A successful startup is insufficient evidence that the deployed app is usable: exercise a real authenticated request and a persistence check."
+          ],
+          "example": "// BackgroundService fragment, not a complete worker:\nprotected override async Task ExecuteAsync(CancellationToken stoppingToken)\n{\n    using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));\n    while (await timer.WaitForNextTickAsync(stoppingToken))\n    {\n        // Claim a durable job; await its work with stoppingToken.\n        // Persist progress before acknowledging completion.\n    }\n}\n// Expected during shutdown: cancellation reaches the awaited timer/work."
+        }
+      ],
+      "exercise": {
+        "prompt": "Publish locally, start the published output, exercise health and one task request, then write a rollback plan for adding a required field.",
+        "starter": "// Use the target framework you actually have installed; do not deploy the memory baseline as a durable service.",
+        "solution": "dotnet publish PracticeApi/PracticeApi.csproj -c Release -o ./publish --no-self-contained\ndotnet ./publish/PracticeApi.dll --urls http://127.0.0.1:5086\n// Verify /health and the acceptance program against this process.\n// Rollback plan: add nullable field first, backfill with checks, deploy readers,\n// enforce requiredness only after old writers are retired; retain backup and reversal strategy.",
+        "checks": [
+          "Published output starts without source files.",
+          "The acceptance check succeeds against the published build.",
+          "Required configuration is validated at startup.",
+          "The rollback plan addresses schema and data, not only binaries.",
+          "Memory-only and unauthenticated baseline limitations are explicit."
+        ]
+      },
+      "quiz": {
+        "question": "Does rolling back an executable restore deleted database data?",
+        "options": [
+          "Yes",
+          "No; schema/data recovery requires a separate plan",
+          "Only for self-contained builds"
+        ],
+        "correct": 1,
+        "explanation": "The executable and persistent data have separate lifecycles."
+      }
+    },
+    {
+      "id": "performance",
+      "title": "Measure performance and constrain work",
+      "stage": "advanced",
+      "takeaway": "Change the bottleneck you can demonstrate and verify the behavior stays correct.",
+      "sections": [
+        {
+          "title": "Measure a representative workload",
+          "paragraphs": [
+            "Measure latency distributions, throughput, allocation and dependency time using representative data and concurrency. Warm up the application before comparing steady-state behavior, and record the environment so results can be repeated.",
+            "A stopwatch around one tiny operation is a teaching demonstration, not a reliable benchmark. Debug builds, startup JIT work, network variability and test data size can dominate results. Performance improvements must preserve validation and authorization."
+          ],
+          "example": "// Complete console Program.cs; illustrative timing, not a benchmark claim.\nusing System.Diagnostics;\nvar watch = Stopwatch.StartNew();\nlong total = 0;\nfor (int i = 0; i < 100_000; i++) total += i;\nwatch.Stop();\nConsole.WriteLine(total);\nConsole.WriteLine($\"Elapsed ticks: {watch.ElapsedTicks}\");\n// Expected total: 4999950000; elapsed ticks vary."
+        },
+        {
+          "title": "Reduce unnecessary database work",
+          "paragraphs": [
+            "Select only required columns, use no-tracking reads when entity mutation is unnecessary, and bound page size. Keyset paging uses a stable key to continue after the last seen row; it avoids scanning every prior page in a simple ID-ordered feed.",
+            "Inspect generated SQL and the query plan before assuming an index helps. Beware N+1 queries caused by per-row lazy loading. Define how deletes and concurrent inserts affect paging so client expectations match the implementation."
+          ],
+          "example": "// EF Core fragment; existing TaskDb and SavedTask with Done:\nvar page = await db.Tasks.AsNoTracking()\n    .Where(t => t.Id > after)\n    .OrderBy(t => t.Id)\n    .Select(t => new { t.Id, t.Title, t.Done })\n    .Take(limit)\n    .ToListAsync(token);\n// Validate after >= 0 and limit in 1..100 before this query.\n// Expected: at most limit rows in ascending ID order."
+        },
+        {
+          "title": "Trade caches and limits deliberately",
+          "paragraphs": [
+            "Caching can reduce repeated work but creates invalidation and isolation decisions. Include every input affecting a cached result, including tenant or identity when appropriate. Limit queue sizes and concurrency so overload fails predictably rather than growing memory indefinitely.",
+            "Do not cache private task data under a global key or cache a mutable entity tracked by a context. A fast unauthorized response is still a defect. Compare before and after with the same workload and rerun correctness and ownership tests."
+          ],
+          "example": "// Cache design exercise, not a complete implementation:\n// key = (tenant, owner, normalizedQuery, pageCursor, pageSize)\n// value = immutable response DTO plus explicit freshness lifetime\n// mutation -> invalidate affected owner's entries or use versioned keys\n// Never use only '/tasks' as the cache key for personalized results."
+        }
+      ],
+      "exercise": {
+        "prompt": "Measure a paged list endpoint with 100 and 10,000 seeded tasks, then replace an unbounded query with bounded projection and explain the observed change.",
+        "starter": "// Record data size, concurrency, build configuration and several latency samples.",
+        "solution": "// Experiment plan:\n// 1. Seed a disposable relational database reproducibly.\n// 2. Baseline an unbounded list at fixed concurrency after warmup.\n// 3. Apply validation, projection and Take(limit) with stable ordering.\n// 4. Repeat the same load; compare p50/p95 and bytes returned.\n// 5. Rerun paging and authorization correctness checks.\n// No speedup is claimed until measured.",
+        "checks": [
+          "Results include workload and environment.",
+          "Returned rows never exceed the validated limit.",
+          "A next page has stable ordering and no repeated previous IDs in the controlled fixture.",
+          "Unauthorized users remain denied after optimization.",
+          "The conclusion separates measured effects from guesses."
+        ]
+      },
+      "quiz": {
+        "question": "Which evidence best supports an optimization claim?",
+        "options": [
+          "One fast debug run",
+          "Comparable measurements with the same representative workload and correctness checks",
+          "A shorter source file"
+        ],
+        "correct": 1,
+        "explanation": "A controlled comparison establishes whether a change improves the relevant workload."
       }
     }
   ],
-  "publicFiles": []
+  "publicFiles": [
+    "practice/README.md",
+    "practice/foundation.cs",
+    "practice/task-api.cs",
+    "practice/acceptance.cs"
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations",
+      "description": "Write and explain small C# programs with deliberate types, validation, methods, objects and asynchronous control flow.",
+      "exitCriteria": [
+        "Run the console reference and explain each output.",
+        "Reject blank task titles and handle missing IDs without a null-reference failure.",
+        "Use a method and LINQ query to list open tasks in stable order.",
+        "Demonstrate an observed cancellation and explain resource cleanup."
+      ],
+      "project": {
+        "title": "Console task notebook",
+        "brief": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+        "requirements": [
+          "Task IDs are positive and titles are trimmed and nonblank.",
+          "Completion changes only the intended task.",
+          "An empty list and unknown ID have explicit behavior.",
+          "Four or more assertions cover a normal case and boundary failures.",
+          "Explain one nullable value and one disposable resource from your implementation."
+        ],
+        "rubric": [
+          "Correctness: expected output and assertions pass.",
+          "Boundaries: blank title, invalid ID and missing lookup are handled deliberately.",
+          "Design: presentation is separate from reusable task behavior.",
+          "Explanation: learner can trace state changes and describe why validation lives at the boundary."
+        ],
+        "solution": "Reference: practice/foundation.cs; run it using practice/README.md. It prints two open tasks and passes four assertions. Extend it with Find(id) returning a nullable LearningTask, assert a missing lookup, and keep immutable identity/title with controlled Complete behavior. An independent async exercise must demonstrate token cancellation; the notebook reference does not contain a background worker."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate application practice",
+      "description": "Assemble a predictable HTTP API, verify its boundary, and evolve a persistent relational implementation safely.",
+      "exitCriteria": [
+        "Run the package-free API and all 11 HTTP acceptance assertions.",
+        "Add unit tests for title normalization and boundary rules.",
+        "Replace memory storage with scoped relational persistence and prove restart durability.",
+        "Apply a reviewed migration on a disposable database and demonstrate transaction rollback.",
+        "Show a stale update becoming 409 rather than silently overwriting data."
+      ],
+      "project": {
+        "title": "Versioned task API with persistent storage",
+        "brief": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+        "requirements": [
+          "Create, page, fetch and complete tasks with validated DTOs.",
+          "Return 400, 404 and 409 consistently; the POST Location is retrievable.",
+          "Use scoped DbContext and parameterized queries.",
+          "Review migration code/SQL and test upgrade from a previous schema.",
+          "Persist task state across restart and protect competing updates.",
+          "Make task plus audit creation atomic and test rollback from a new context."
+        ],
+        "rubric": [
+          "HTTP behavior: executable acceptance checks verify successful and rejected requests.",
+          "Persistence: restart and fresh-context tests establish stored state.",
+          "Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.",
+          "Maintainability: typed storage boundary, scope ownership and package versions are explained.",
+          "Migration evidence: generated operations are reviewed, tested and retained with a recovery note."
+        ],
+        "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an assessed extension, not a claim made by the memory baseline."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced service practice",
+      "description": "Work through cancellation, overload, identity, operations and recovery using measured evidence. Completion establishes experience with these scenarios, not comprehensive .NET expertise.",
+      "exitCriteria": [
+        "Prove cancellation reaches downstream I/O and permits are released after failure.",
+        "Demonstrate bounded work and a database-backed concurrency conflict across separate contexts.",
+        "Deny anonymous, reader-only and other-owner access with explicit tests.",
+        "Collect an actionable structured log and a low-cardinality metric from real requests.",
+        "Run acceptance checks against a published release build and explain health/readiness behavior.",
+        "Measure one representative query change and write a rollback plan covering schema and data."
+      ],
+      "project": {
+        "title": "Operational and secure task service",
+        "brief": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+        "requirements": [
+          "Use a real authentication handler with issuer/audience/lifetime validation.",
+          "Set ownership from trusted identity and authorize every task read/write.",
+          "Propagate request cancellation, bound dependency work and avoid unobserved tasks.",
+          "Add structured problem responses, logs, traces/metrics collection and readiness checks.",
+          "Test migrations, transaction failures, stale versions and authorization denials.",
+          "Publish a release build, measure bounded queries and document backup/rollback and limitations."
+        ],
+        "rubric": [
+          "Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.",
+          "Resilience: controlled cancellation/failure scenarios terminate work and release resources.",
+          "Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.",
+          "Performance: before/after measurements use the same workload and preserve correctness.",
+          "Delivery: published build checks succeed and the rollback plan handles persistent data.",
+          "Judgment: learner states what remains unverified and which changes would be needed for multiple replicas."
+        ],
+        "solution": "Reference architecture: authenticated /tasks route group -> DTO validation -> scoped task service -> EF Core context with owner filtering and concurrency token. Mutations commit task/audit/outbox state atomically; caller token reaches database work; distributed invariants remain in the database. Tests use an isolated relational fixture and test-only fake identities, followed by real-token staging checks. Shared Meter/ActivitySource and structured logs feed a configured collector. Deployment runs reviewed migrations, gates traffic on readiness, retains the prior compatible build and proves backup recovery. Use lessons auth-boundaries through performance as implementation/verification guides. This is a reviewable solution blueprint; the download is intentionally only the runnable local baseline, not a finished secure production service."
+      }
+    }
+  ],
+  "downloads": [
+    {
+      "title": "Practice setup and assessment guide",
+      "href": "paths/dotnet/practice/README.md"
+    },
+    {
+      "title": "Foundation console notebook",
+      "href": "paths/dotnet/practice/foundation.cs"
+    },
+    {
+      "title": "Versioned task API baseline",
+      "href": "paths/dotnet/practice/task-api.cs"
+    },
+    {
+      "title": "HTTP acceptance checks",
+      "href": "paths/dotnet/practice/acceptance.cs"
+    }
+  ]
 }

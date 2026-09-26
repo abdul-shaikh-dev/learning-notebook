@@ -5,8 +5,8 @@ const LEARNING_PATHS = [
     "title": "C# & .NET",
     "category": "Programming",
     "status": "ready",
-    "description": "Learn C# fundamentals, test reusable logic, and build a small ASP.NET Core task API with safe SQLite persistence.",
-    "level": "Beginner",
+    "description": "Progress from C# fundamentals to tested APIs, then practice cancellation, concurrency, secure resource access, schema evolution, observability and deployment decisions.",
+    "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Comfort using a terminal and editing a text file.",
       "No prior C# experience required; basic HTTP and SQL help with the final lessons."
@@ -15,20 +15,26 @@ const LEARNING_PATHS = [
       "Run and debug C# console projects.",
       "Use types, null checks, collections, methods, objects, LINQ and exceptions.",
       "Await asynchronous operations and write focused unit tests.",
-      "Build validated HTTP endpoints with dependency injection and parameterized persistence."
+      "Build validated HTTP endpoints with dependency injection and parameterized persistence.",
+      "Design typed contracts and explicit resource ownership.",
+      "Verify HTTP contracts, migrations, rollback and concurrency failures.",
+      "Practice identity and ownership checks, operational evidence, deployment recovery and measured performance."
     ],
     "setup": [
       "Install the current patched .NET 10 LTS SDK from Microsoft's download page using the installer for your OS; these instructions do not install software automatically.",
       "Use a text editor or IDE with C# support. Verify dotnet --info and dotnet --list-sdks in a new terminal.",
       "Create a separate console project for snippets with dotnet new console -n LearningConsole -f net10.0; replace Program.cs for each console lesson and run dotnet run.",
       "As of September 26, 2026, Microsoft's policy lists .NET 10 LTS through November 14, 2028. Recheck the policy at study time and keep patches current.",
-      "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson."
+      "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson.",
+      "The downloadable practice/*.cs files are complete Program.cs replacements; practice/README.md gives project-creation commands. They run without external packages on .NET 9 and are compatible in syntax with .NET 10; only the .NET 9 build was tested.",
+      "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. Those examples are labeled fragments and are not part of the package-free downloadable baseline.",
+      "Stages describe practical learning checkpoints, not a claim of mastery or production completeness. Pass their exit criteria with evidence before treating the next stage as complete."
     ],
     "nextSteps": [
-      "Study ASP.NET Core integration testing with WebApplicationFactory.",
-      "Learn EF Core migrations, relational constraints and transactions.",
-      "Add authentication, authorization, structured logging and deployment only after the local capstone works.",
-      "Study interfaces, generics and concurrency in greater depth."
+      "Use the advanced assessment to identify remaining gaps in a real project.",
+      "Study database isolation, distributed systems and reliable background processing after the single-service exercises.",
+      "Explore accessibility and frontend integration, then a reviewed production deployment with a real identity provider.",
+      "Revisit Microsoft support policy and package documentation when upgrading SDKs or dependencies."
     ],
     "sources": [
       {
@@ -58,6 +64,70 @@ const LEARNING_PATHS = [
       {
         "title": "EF Core SQL queries and parameterization",
         "url": "https://learn.microsoft.com/en-us/ef/core/querying/sql-queries"
+      },
+      {
+        "title": "Interfaces",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces"
+      },
+      {
+        "title": "Generic types and methods",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics"
+      },
+      {
+        "title": "Using and asynchronous disposal",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using"
+      },
+      {
+        "title": "ASP.NET Core error handling",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-10.0"
+      },
+      {
+        "title": "ASP.NET Core integration tests",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0"
+      },
+      {
+        "title": "EF Core migrations",
+        "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/"
+      },
+      {
+        "title": "EF Core transactions",
+        "url": "https://learn.microsoft.com/en-us/ef/core/saving/transactions"
+      },
+      {
+        "title": "Cooperative cancellation",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/cancel-an-async-task-or-a-list-of-tasks"
+      },
+      {
+        "title": "Bearer-token authentication",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authentication/configure-jwt-bearer-authentication?view=aspnetcore-10.0"
+      },
+      {
+        "title": "ASP.NET Core authorization",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/introduction?view=aspnetcore-10.0"
+      },
+      {
+        "title": ".NET metrics instrumentation",
+        "url": "https://learn.microsoft.com/en-us/dotnet/core/diagnostics/metrics-instrumentation"
+      },
+      {
+        "title": "ASP.NET Core deployment",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-10.0"
+      },
+      {
+        "title": "Delegates",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/"
+      },
+      {
+        "title": "Pattern matching",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/patterns/pattern-matching"
+      },
+      {
+        "title": "Parallel.ForEachAsync",
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.parallel.foreachasync?view=net-10.0"
+      },
+      {
+        "title": "Efficient EF Core querying",
+        "url": "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying"
       }
     ],
     "lessons": [
@@ -101,7 +171,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The SDK contains the compiler and project tools."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "types-null",
@@ -144,7 +215,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "var changes how a type is written, not how the type system works."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "control-collections",
@@ -187,7 +259,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A dictionary maps keys to values."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "methods",
@@ -230,7 +303,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Computation can be reused independently of its presentation."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "objects",
@@ -273,7 +347,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Access control constrains how state changes."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "exceptions",
@@ -316,7 +391,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "using provides deterministic cleanup."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "linq",
@@ -359,7 +435,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Select projects each source item into a result."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "async",
@@ -402,6 +479,165 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Async models waiting; CPU parallelism is a separate decision."
+        },
+        "stage": "foundation"
+      },
+      {
+        "id": "contracts-generics",
+        "title": "Interfaces and generic contracts",
+        "stage": "intermediate",
+        "takeaway": "Program against the behavior you need and preserve type information.",
+        "sections": [
+          {
+            "title": "Separate callers from storage",
+            "paragraphs": [
+              "An interface specifies operations a caller can use. A service accepting that interface can work with a memory implementation in a focused test and a database implementation in the app. The implementations must preserve the same observable contract, including missing results and cancellation behavior.",
+              "Start with a small interface around an actual boundary. An interface for every class adds navigation without automatically improving design. Keep HTTP response types out of a storage contract so storage can be used outside a web endpoint."
+            ],
+            "example": "// Complete console Program.cs\nITitleSource source = new MemoryTitles();\nConsole.WriteLine(source.Find(1) ?? \"Missing\");\ninterface ITitleSource { string? Find(int id); }\nsealed class MemoryTitles : ITitleSource\n{\n    public string? Find(int id) => id == 1 ? \"Read\" : null;\n}\n// Expected: Read"
+          },
+          {
+            "title": "Reuse an algorithm safely",
+            "paragraphs": [
+              "A generic method carries a type parameter instead of converting everything to object. A constraint specifies the operations the algorithm needs. Here IComparable<T> allows comparison while returning the original type.",
+              "Use established generic collections before inventing containers. Do not cast T to a guessed concrete type: callers can supply a different type that meets the constraint. Choose string comparers explicitly when culture or case changes application meaning."
+            ],
+            "example": "// Complete console Program.cs\nConsole.WriteLine(Max(3, 7));\nstatic T Max<T>(T first, T second) where T : IComparable<T>\n    => first.CompareTo(second) >= 0 ? first : second;\n// Expected: 7"
+          },
+          {
+            "title": "Communicate mutability and absence",
+            "paragraphs": [
+              "Return an immutable record or a copied snapshot when callers should only inspect data. IReadOnlyList<T> restricts operations available through that interface; it does not freeze an underlying List<T> or make mutable elements immutable.",
+              "A result of null can mean missing when documented. Do not use default(T) as a universal failure signal: zero can be valid. A Try method or a result type can distinguish success from absence without an exception."
+            ],
+            "example": "// Complete console Program.cs\nvar items = new List<int> { 1, 2 };\nIReadOnlyList<int> view = items;\nitems.Add(3);\nConsole.WriteLine(view.Count);\nvar snapshot = items.ToArray();\nitems.Add(4);\nConsole.WriteLine(snapshot.Length);\n// Expected: 3 then 3"
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a generic FindById method for records implementing IHasId. Return null for a missing reference-type entity.",
+          "starter": "interface IHasId { int Id { get; } }\n// Write FindById<T>(IEnumerable<T> items, int id).",
+          "solution": "// Complete console Program.cs\nvar items = new[] { new Item(1, \"Read\") };\nConsole.WriteLine(FindById(items, 1)?.Title ?? \"Missing\");\nConsole.WriteLine(FindById(items, 2)?.Title ?? \"Missing\");\nstatic T? FindById<T>(IEnumerable<T> items, int id) where T : class, IHasId\n    => items.FirstOrDefault(item => item.Id == id);\ninterface IHasId { int Id { get; } }\nrecord Item(int Id, string Title) : IHasId;",
+          "checks": [
+            "ID 1 returns Read.",
+            "ID 2 returns null.",
+            "The constraint prevents calling the algorithm with unrelated values.",
+            "The method does not mutate the source."
+          ]
+        },
+        "quiz": {
+          "question": "Does IReadOnlyList<T> freeze its underlying list?",
+          "options": [
+            "Yes",
+            "No; it restricts access through that interface",
+            "Only for strings"
+          ],
+          "correct": 1,
+          "explanation": "Another reference may mutate the underlying list; a separate snapshot provides stronger isolation."
+        }
+      },
+      {
+        "id": "resource-ownership",
+        "title": "Disposal and resource ownership",
+        "stage": "intermediate",
+        "takeaway": "Make ownership explicit so cleanup and lazy work do not conflict.",
+        "sections": [
+          {
+            "title": "Own what you create",
+            "paragraphs": [
+              "A method creating a disposable resource usually owns its cleanup. A method receiving a stream may instead borrow it: document whether it closes it. using translates scope exit into cleanup even after an exception.",
+              "Disposal is about resource lifetime, not forcing garbage collection. Do not add a finalizer to a class just because it owns managed IDisposable objects; standard disposal patterns handle those objects without introducing finalization complexity."
+            ],
+            "example": "// Complete console Program.cs\nusing (var tracker = new Tracker())\n{\n    Console.WriteLine(\"Work\");\n}\nsealed class Tracker : IDisposable\n{\n    public void Dispose() => Console.WriteLine(\"Disposed\");\n}\n// Expected: Work then Disposed"
+          },
+          {
+            "title": "Await asynchronous cleanup",
+            "paragraphs": [
+              "IAsyncDisposable supports cleanup that itself needs asynchronous work. await using awaits DisposeAsync when scope exits. The enclosing method therefore needs an asynchronous context.",
+              "Do not return a lazy sequence tied to a resource that has already been disposed. Materialize inside the scope or make the iterator own the scope so cleanup occurs when enumeration finishes or the enumerator is disposed."
+            ],
+            "example": "// Complete console Program.cs\nawait using (var resource = new AsyncResource())\n    Console.WriteLine(\"Work\");\nsealed class AsyncResource : IAsyncDisposable\n{\n    public async ValueTask DisposeAsync()\n    {\n        await Task.Delay(1);\n        Console.WriteLine(\"Cleaned\");\n    }\n}\n// Expected: Work then Cleaned"
+          },
+          {
+            "title": "Keep lifetimes compatible",
+            "paragraphs": [
+              "Dependency injection disposes services it creates when their scope ends. Borrowed services should not be disposed manually by their consumer. A singleton cannot retain a request-scoped context safely beyond that request.",
+              "Long-lived HttpClient ownership differs from creating and disposing one for every request. In ASP.NET Core, IHttpClientFactory can manage handlers while giving named or typed clients configuration. A client configured with a timeout still needs caller cancellation propagated."
+            ],
+            "example": "// ASP.NET Core registration and endpoint fragments, not a complete project.\nbuilder.Services.AddHttpClient(\"catalog\", client =>\n{\n    client.BaseAddress = new Uri(\"https://example.com/\");\n    client.Timeout = TimeSpan.FromSeconds(5);\n});\napp.MapGet(\"/catalog-status\", async (IHttpClientFactory factory, CancellationToken token) =>\n{\n    using var response = await factory.CreateClient(\"catalog\").GetAsync(\"status\", token);\n    return Results.StatusCode((int)response.StatusCode);\n});\n// Remote endpoint is illustrative; no specific status is guaranteed."
+          }
+        ],
+        "exercise": {
+          "prompt": "Implement ReadLines as a materialized snapshot so callers can use the result after the reader is disposed.",
+          "starter": "// Use StringReader for a repeatable test instead of an external file.",
+          "solution": "// Complete console Program.cs\nConsole.WriteLine(string.Join(\",\", ReadLines(\"a\\nb\")));\nstatic string[] ReadLines(string text)\n{\n    using var reader = new StringReader(text);\n    var lines = new List<string>();\n    while (reader.ReadLine() is { } line) lines.Add(line);\n    return lines.ToArray();\n}\n// Expected: a,b",
+          "checks": [
+            "Enumeration after return works.",
+            "Empty text yields an empty array.",
+            "The reader is disposed inside the method.",
+            "The result is a snapshot, not an open stream."
+          ]
+        },
+        "quiz": {
+          "question": "Who disposes a scoped service created by the DI container?",
+          "options": [
+            "Every consumer",
+            "The DI scope that owns it",
+            "Only the garbage collector"
+          ],
+          "correct": 1,
+          "explanation": "Consumers borrow injected services; the owning scope handles cleanup."
+        }
+      },
+      {
+        "id": "delegates-patterns",
+        "title": "Delegates, pattern matching and small strategies",
+        "stage": "intermediate",
+        "takeaway": "Represent variable behavior explicitly without hiding side effects.",
+        "sections": [
+          {
+            "title": "Pass an operation",
+            "paragraphs": [
+              "Func<T, TResult> represents a callable operation producing a result. Action<T> represents an operation without a result. Passing a predicate makes filtering reusable without hard-coding each business rule.",
+              "A captured variable is shared with the lambda, not necessarily a snapshot at creation. Prefer pure delegates for transformations and use explicit dependencies for operations that perform I/O."
+            ],
+            "example": "// Complete console Program.cs\nFunc<int, bool> keep = score => score >= 60;\nConsole.WriteLine(string.Join(\",\", new[] { 59, 60, 90 }.Where(keep)));\nint threshold = 60;\nFunc<int, bool> captured = score => score >= threshold;\nthreshold = 80;\nConsole.WriteLine(captured(70));\n// Expected: 60,90 then False"
+          },
+          {
+            "title": "Describe data shapes with patterns",
+            "paragraphs": [
+              "Pattern matching combines a check with extraction. A property pattern can require nonnull data and inspect properties without a separate cast. A switch expression should cover expected values and an intentional fallback.",
+              "Patterns clarify a rule when the alternatives are visible. A long switch that mixes database writes and logging is still a complex method; separate classification from the operation it selects."
+            ],
+            "example": "// Complete console Program.cs\nConsole.WriteLine(Describe(new TaskView(\"Read\", true)));\nConsole.WriteLine(Describe(null));\nstatic string Describe(TaskView? item) => item switch\n{\n    { Done: true } => \"Complete\",\n    { Title.Length: > 0 } => \"Open\",\n    _ => \"Missing or blank\"\n};\nrecord TaskView(string Title, bool Done);\n// Expected: Complete then Missing or blank"
+          },
+          {
+            "title": "Select a strategy, constrain complexity",
+            "paragraphs": [
+              "A strategy is interchangeable behavior, often represented by a delegate or interface. Use it when a caller needs a genuine choice, such as sorting tasks by title or ID. Dependency injection can supply larger strategies with their own dependencies.",
+              "Events are notifications, not an implicit transaction. Unsubscribe long-lived publishers when a short-lived subscriber ends. Avoid async void event handlers for application workflows whose completion must be awaited."
+            ],
+            "example": "// Complete console Program.cs\nvar tasks = new[] { new Item(2, \"A\"), new Item(1, \"Z\") };\nFunc<Item, int> priority = task => task.Id;\nConsole.WriteLine(tasks.OrderBy(priority).First().Title);\nrecord Item(int Id, string Title);\n// Expected: Z"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a pure switch expression classifying a nullable task as missing, open or complete.",
+          "starter": "// Complete takes precedence over open.",
+          "solution": "// Complete console Program.cs\nConsole.WriteLine(Classify(null));\nConsole.WriteLine(Classify(new Item(false)));\nConsole.WriteLine(Classify(new Item(true)));\nstatic string Classify(Item? item) => item switch\n{\n    null => \"missing\",\n    { Done: true } => \"complete\",\n    _ => \"open\"\n};\nrecord Item(bool Done);",
+          "checks": [
+            "The three inputs produce missing, open and complete.",
+            "The classifier performs no I/O.",
+            "The null arm precedes member access."
+          ]
+        },
+        "quiz": {
+          "question": "What happens when a captured threshold variable later changes?",
+          "options": [
+            "A lambda using it can observe the new value",
+            "The lambda always holds the original value",
+            "The lambda no longer compiles"
+          ],
+          "correct": 0,
+          "explanation": "A closure captures the variable; use a separate local snapshot when that is the intended rule."
         }
       },
       {
@@ -445,7 +681,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Compilation and behavior verification answer different questions."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "api-di",
@@ -489,6 +726,113 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Singleton services share application-wide state and require safe concurrency."
+        },
+        "stage": "intermediate"
+      },
+      {
+        "id": "api-contracts",
+        "title": "API validation and consistent errors",
+        "stage": "intermediate",
+        "takeaway": "Turn invalid requests and failures into a stable, testable HTTP contract.",
+        "sections": [
+          {
+            "title": "Validate the request boundary",
+            "paragraphs": [
+              "JSON binding and business validation are different. A valid JSON body can still contain a blank title or an unreasonable page size. Prefer request DTOs rather than binding database entities, so a caller cannot set protected fields such as owner or completion state.",
+              "The .NET 9 compatible practice app performs explicit validation. .NET 10 has additional Minimal API validation facilities; use version-specific documentation before adopting them. Endpoint validation does not replace constraints protecting database invariants."
+            ],
+            "example": "// Endpoint fragment; CreateTask is a request DTO.\napp.MapPost(\"/tasks\", (CreateTask request) =>\n{\n    if (string.IsNullOrWhiteSpace(request.Title) || request.Title.Trim().Length > 120)\n        return Results.ValidationProblem(new Dictionary<string, string[]>\n        {\n            [\"title\"] = new[] { \"Use 1–120 characters after trimming.\" }\n        });\n    return Results.Ok(new { title = request.Title.Trim() });\n});\nrecord CreateTask(string? Title);\n// Blank title => 400 with an errors.title entry."
+          },
+          {
+            "title": "Use problem details intentionally",
+            "paragraphs": [
+              "A structured problem response lets clients distinguish an invalid field from an unavailable resource or unexpected failure. Give expected errors explicit status codes. Unexpected exceptions should be logged on the server and represented by a generic response with a correlation identifier.",
+              "Register problem details and exception handling before endpoints. Avoid sending exception messages, SQL text or stack traces to public clients. Status-code pages can fill otherwise empty error bodies, but must not overwrite an existing meaningful response."
+            ],
+            "example": "// ASP.NET Core fragments:\nbuilder.Services.AddProblemDetails();\nvar app = builder.Build();\napp.UseExceptionHandler();\napp.UseStatusCodePages();\napp.MapGet(\"/tasks/{id:int}\", (int id) =>\n    Results.Problem(statusCode: 404, title: \"Task not found\"));\n// Missing task => 404 application/problem+json."
+          },
+          {
+            "title": "Choose status and retry semantics",
+            "paragraphs": [
+              "400 describes invalid input, 404 missing data, 409 a conflict with current state and 500 an unexpected server failure. A retry may be safe for a read, but retrying a create after a lost response can duplicate a write.",
+              "Define bounded paging and stable ordering before the collection grows. An optimistic version check allows a client to detect another writer's update. For production creation retries, use an idempotency key with durable uniqueness rather than a memory-only cache."
+            ],
+            "example": "// Practice contract:\nGET /tasks?after=0&limit=20 -> ordered page, limit must be 1..100\nPOST /tasks {\"title\":\" Read \"} -> 201, normalized title\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 200, version 2\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 409\n// See practice/task-api.cs for complete code."
+          }
+        ],
+        "exercise": {
+          "prompt": "Add and test a limit parameter accepting only 1 through 100. Keep an invalid request out of storage.",
+          "starter": "// Validate before running the query.",
+          "solution": "// Endpoint fragment with TaskStore from practice/task-api.cs:\napp.MapGet(\"/sample-page\", (int? limit, TaskStore store) =>\n{\n    int size = limit ?? 20;\n    if (size is < 1 or > 100)\n        return Results.ValidationProblem(new Dictionary<string, string[]>\n        { [\"limit\"] = new[] { \"Use a value from 1 to 100.\" } });\n    return Results.Ok(store.Page(0, size));\n});",
+          "checks": [
+            "Omitted limit uses 20.",
+            "1 and 100 succeed.",
+            "0 and 101 return 400 with errors.limit.",
+            "The query is ordered consistently."
+          ]
+        },
+        "quiz": {
+          "question": "Why bind a request DTO instead of the persistence entity?",
+          "options": [
+            "To define only fields a client may supply",
+            "To eliminate validation",
+            "To hide all response data"
+          ],
+          "correct": 0,
+          "explanation": "The request contract should not grant write access to protected entity fields."
+        }
+      },
+      {
+        "id": "integration-checks",
+        "title": "Integration checks and failure-oriented testing",
+        "stage": "intermediate",
+        "takeaway": "Verify the assembled request pipeline, not only helper methods.",
+        "sections": [
+          {
+            "title": "Use a repeatable HTTP acceptance check",
+            "paragraphs": [
+              "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only HttpClient and System.Text.Json, so it needs no test package. Run it against a fresh local practice server.",
+              "A console acceptance check is not a replacement for a test runner. It reports failure via an exception and nonzero exit code. Test data is uniquely named, and the check does not delete pre-existing records."
+            ],
+            "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net9.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net9.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
+          },
+          {
+            "title": "Use WebApplicationFactory for framework tests",
+            "paragraphs": [
+              "ASP.NET Core's testing package can start the app in a test host and give an HttpClient wired to it. The test project needs a compatible Microsoft.AspNetCore.Mvc.Testing package and a unit-test framework. Make Program accessible when using top-level statements.",
+              "Replace external services and configure a separate database per test run. In-memory hosting verifies middleware and endpoints, but does not validate a real reverse proxy, TLS termination or deployment networking."
+            ],
+            "example": "// xUnit integration-test fragment; requires packages and a project reference.\n// Add public partial class Program { } at the end of the API Program.cs.\nusing Microsoft.AspNetCore.Mvc.Testing;\nusing Xunit;\npublic class HealthTests : IClassFixture<WebApplicationFactory<Program>>\n{\n    private readonly WebApplicationFactory<Program> factory;\n    public HealthTests(WebApplicationFactory<Program> factory) => this.factory = factory;\n    [Fact]\n    public async Task Health_is_ok()\n    {\n        using var client = factory.CreateClient();\n        using var response = await client.GetAsync(\"/health\");\n        Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);\n    }\n}"
+          },
+          {
+            "title": "Test risk, not implementation details",
+            "paragraphs": [
+              "Include malformed JSON, missing resources, version conflicts and response locations. An assertion that repeats your helper's implementation can pass alongside the same defect. Prefer explicit observed outputs and status codes.",
+              "Use the same relational provider as deployment for provider-dependent constraints and transactions. EF Core's in-memory provider does not reproduce relational SQL behavior. Keep deterministic business rules in fast unit tests and reserve integration tests for important boundaries."
+            ],
+            "example": "// Acceptance sequence:\n// 1. POST blank title -> 400 and errors.title.\n// 2. POST valid title -> 201 and a working Location.\n// 3. Complete with current version -> 200 and Done true.\n// 4. Complete with old version -> 409.\n// 5. Concurrent creates -> distinct IDs.\n// See practice/acceptance.cs for executable assertions."
+          }
+        ],
+        "exercise": {
+          "prompt": "Extend the acceptance check with a missing-ID PATCH assertion and malformed JSON POST assertion.",
+          "starter": "// Send an HttpRequestMessage for each case and assert status.",
+          "solution": "// HttpClient fragments inside the acceptance console:\nusing var missing = await client.PatchAsJsonAsync(\"/tasks/2147483647/complete\", new { expectedVersion = 1 });\nCheck(missing.StatusCode == HttpStatusCode.NotFound, \"Missing completion is 404\");\nusing var malformedBody = new StringContent(\"{\", System.Text.Encoding.UTF8, \"application/json\");\nusing var malformed = await client.PostAsync(\"/tasks\", malformedBody);\nCheck(malformed.StatusCode == HttpStatusCode.BadRequest, \"Malformed JSON is 400\");",
+          "checks": [
+            "Both assertions fail if expected statuses are intentionally reversed.",
+            "A fresh server passes the acceptance baseline.",
+            "Test failures return a nonzero process exit code.",
+            "Checks do not depend on hard-coded generated task IDs."
+          ]
+        },
+        "quiz": {
+          "question": "What does an in-memory test server leave unverified?",
+          "options": [
+            "Route matching",
+            "A real proxy and TLS deployment",
+            "JSON response bodies"
+          ],
+          "correct": 1,
+          "explanation": "The test host exercises application code, not the external hosting infrastructure."
         }
       },
       {
@@ -541,6 +885,61 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The provider parameterizes the predicate's value."
+        },
+        "stage": "intermediate"
+      },
+      {
+        "id": "ef-evolution",
+        "title": "EF Core migrations, transactions and conflicts",
+        "stage": "intermediate",
+        "takeaway": "Evolve schemas and coordinate writes without sacrificing data integrity.",
+        "sections": [
+          {
+            "title": "Review schema changes",
+            "paragraphs": [
+              "A migration describes a transition from one model to another. Add a migration, inspect its generated operations and SQL, then apply it to a disposable database before touching shared data. Adding a required column may need a staged backfill instead of an arbitrary default.",
+              "Do not combine EnsureCreated with a migrations-managed database. Tool, provider and EF package major versions should align. The command examples use 10.0.0 as a reproducible baseline; select a supported patched 10.x version for real work."
+            ],
+            "example": "dotnet new tool-manifest\ndotnet tool install dotnet-ef --version 10.0.0\ndotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.0\ndotnet ef migrations add AddTaskCompletion\ndotnet ef migrations script 0 AddTaskCompletion --output migration.sql\n// Review SQL and generated migration; use the actual previous migration name instead of 0 for an incremental upgrade.\ndotnet ef database update\n// SQLite scripts are tied to the known starting migration. Providers supporting\n// idempotent scripts can use migrations script --idempotent instead.\n// Select compatible supported 10.x patches for real work."
+          },
+          {
+            "title": "Keep related writes atomic",
+            "paragraphs": [
+              "A single SaveChanges call is normally transactional when the provider supports transactions. An explicit transaction is useful when several SaveChanges operations must either all commit or all be undone. Keep its duration short and avoid slow network calls while holding database locks.",
+              "A database transaction cannot roll back an already sent email. Persist an outbox entry alongside the business write when reliable external delivery is required. If an execution strategy retries operations, coordinate user-managed transactions with that strategy rather than retrying pieces independently."
+            ],
+            "example": "// EF Core fragment; existing db, task and audit entity types required.\nawait using var tx = await db.Database.BeginTransactionAsync(token);\ndb.Tasks.Add(task);\nawait db.SaveChangesAsync(token);\ndb.AuditEntries.Add(new AuditEntry { TaskId = task.Id, Action = \"created\" });\nawait db.SaveChangesAsync(token);\nawait tx.CommitAsync(token);\n// An exception before commit leaves the transaction uncommitted; disposal rolls it back."
+          },
+          {
+            "title": "Detect competing updates",
+            "paragraphs": [
+              "Optimistic concurrency compares the version originally read with the database's current version when writing. Configure a concurrency token and change it on each update. Catch DbUpdateConcurrencyException at the application boundary and decide whether to reject or reload.",
+              "A process-local lock cannot coordinate multiple servers. SQLite and SQL Server have different token facilities, so choose a token strategy for your provider. Do not silently overwrite a newer edit merely because a stale request arrived later."
+            ],
+            "example": "// Application-managed Guid token, provider-portable EF Core fragments:\nmodelBuilder.Entity<SavedTask>().Property(t => t.Version).IsConcurrencyToken();\n// On SavedTask: public Guid Version { get; set; } = Guid.NewGuid();\n// After loading and verifying the client's original version:\nitem.Done = true;\nitem.Version = Guid.NewGuid();\ntry { await db.SaveChangesAsync(token); }\ncatch (DbUpdateConcurrencyException)\n{\n    return Results.Problem(statusCode: 409, title: \"Task changed; reload before retrying\");\n}"
+          }
+        ],
+        "exercise": {
+          "prompt": "On a disposable relational database, prove that a failed audit write rolls back the task creation and that two stale updates cannot both succeed.",
+          "starter": "// Add a constraint that makes the audit write fail; use separate contexts for competing writers.",
+          "solution": "// Relational test fragment; CreateDb() must create a NEW context connected\n// to the same isolated test database, with Task/Audit models and constraints.\n// Replace types/property names with those in your assessment implementation.\nint createdId;\nawait using (var db = CreateDb())\n{\n    await using var tx = await db.Database.BeginTransactionAsync();\n    var task = new SavedTask { Title = \"rollback-case\" };\n    db.Tasks.Add(task);\n    await db.SaveChangesAsync();\n    createdId = task.Id;\n    db.AuditEntries.Add(new AuditEntry { TaskId = task.Id, Action = null! }); // required column\n    await Assert.ThrowsAsync<DbUpdateException>(() => db.SaveChangesAsync());\n    // no Commit; transaction disposal rolls back both writes\n}\nawait using (var check = CreateDb())\n    Assert.False(await check.Tasks.AnyAsync(t => t.Id == createdId));\n// Concurrency test on a separately seeded task:\nawait using var a = CreateDb();\nawait using var b = CreateDb();\nvar first = await a.Tasks.SingleAsync(t => t.Title == \"seeded-conflict\");\nvar second = await b.Tasks.SingleAsync(t => t.Id == first.Id);\nfirst.Version = Guid.NewGuid(); first.Done = true;\nsecond.Version = Guid.NewGuid(); second.Done = true;\nawait a.SaveChangesAsync();\nawait Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => b.SaveChangesAsync());\n// Requires xUnit, EF packages, configured concurrency token and relational constraint.",
+          "checks": [
+            "Rollback is checked from a fresh context.",
+            "A and B use different DbContext instances.",
+            "Only one conflicting version update succeeds.",
+            "Migration SQL is reviewed for data-loss operations.",
+            "Tests use a relational provider, not EF's in-memory provider."
+          ]
+        },
+        "quiz": {
+          "question": "Can a database transaction undo an email already sent?",
+          "options": [
+            "Yes",
+            "No; coordinate external effects separately",
+            "Only on SQLite"
+          ],
+          "correct": 1,
+          "explanation": "External services are outside the database transaction; use a reliable delivery design."
         }
       },
       {
@@ -587,7 +986,444 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The boundary adds behavior that a pure helper test does not exercise."
+        },
+        "stage": "intermediate"
+      },
+      {
+        "id": "cancellation-budgets",
+        "title": "Cancellation, time budgets and async streams",
+        "stage": "advanced",
+        "takeaway": "Propagate cancellation through the whole operation and stop starting work when it is no longer useful.",
+        "sections": [
+          {
+            "title": "Link the caller and operation budget",
+            "paragraphs": [
+              "A request can be cancelled because the caller disconnected or because an operation exceeded its own budget. A linked token lets either source stop the work. Dispose token sources after all work using them has completed.",
+              "Cancellation is a request, not a forced thread abort. Code must observe the token, and dependencies must support it. A catch filter helps distinguish caller cancellation from an internal timeout; do not convert a dependency failure into cancellation."
+            ],
+            "example": "// Complete console Program.cs\nusing var caller = new CancellationTokenSource();\nusing var budget = CancellationTokenSource.CreateLinkedTokenSource(caller.Token);\nbudget.Cancel(); // deterministic illustration; use CancelAfter for a real time budget.\ntry { await Task.Delay(100, budget.Token); }\ncatch (OperationCanceledException) when (budget.IsCancellationRequested)\n{\n    Console.WriteLine(caller.IsCancellationRequested ? \"Caller cancelled\" : \"Budget cancelled\");\n}\n// Expected: Budget cancelled"
+          },
+          {
+            "title": "Observe all started work",
+            "paragraphs": [
+              "Task.WhenAll represents completion of all supplied tasks. Starting several tasks and awaiting only one can leave failures unobserved and resources active. When a group fails, decide whether sibling work should continue or share a cancellation source.",
+              "Do not add retries to every layer. Establish a total operation budget, retry only transient and safe operations, and delay with the same token. Retrying a non-idempotent write after a timeout can create duplicates."
+            ],
+            "example": "// Complete console Program.cs\nvar tasks = new[] { ReadAsync(1), ReadAsync(2) };\nvar values = await Task.WhenAll(tasks);\nConsole.WriteLine(string.Join(\",\", values));\nstatic async Task<int> ReadAsync(int value)\n{\n    await Task.Delay(1);\n    return value;\n}\n// Expected: 1,2; result ordering follows task ordering."
+          },
+          {
+            "title": "Stream without collecting everything",
+            "paragraphs": [
+              "IAsyncEnumerable<T> lets a consumer await each item as it becomes available. Pass cancellation into the iterator and propagate it to awaited operations. EnumeratorCancellation tells the compiler how the iterator's token participates in enumeration cancellation.",
+              "Streaming reduces the need to buffer all results, but it lengthens resource ownership while the consumer reads. A database stream may retain a connection; a partial HTTP response cannot later be replaced by a fresh problem response after headers are sent."
+            ],
+            "example": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nawait foreach (int value in Generate(CancellationToken.None)) Console.WriteLine(value);\nstatic async IAsyncEnumerable<int> Generate([EnumeratorCancellation] CancellationToken token = default)\n{\n    for (int i = 0; i < 2; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then 1"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an async iterator that yields three values, but cancels after the consumer reads the first value.",
+          "starter": "// Ensure awaited work observes the token.",
+          "solution": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nusing var cts = new CancellationTokenSource();\ntry\n{\n    await foreach (int value in Values(cts.Token))\n    {\n        Console.WriteLine(value);\n        cts.Cancel();\n    }\n}\ncatch (OperationCanceledException) { Console.WriteLine(\"Stopped\"); }\nstatic async IAsyncEnumerable<int> Values([EnumeratorCancellation] CancellationToken token)\n{\n    for (int i = 0; i < 3; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then Stopped",
+          "checks": [
+            "Only the first value is printed.",
+            "Cancellation is propagated to Task.Delay.",
+            "The iterator's caller observes cancellation.",
+            "No .Result, .Wait or async void is used."
+          ]
+        },
+        "quiz": {
+          "question": "Does cancelling a token forcibly terminate a thread?",
+          "options": [
+            "Yes",
+            "No; operations must cooperate",
+            "Only in web apps"
+          ],
+          "correct": 1,
+          "explanation": "The token signals cancellation and the operation must observe it."
         }
+      },
+      {
+        "id": "concurrency",
+        "title": "Bounded concurrency and shared state",
+        "stage": "advanced",
+        "takeaway": "Control how much work runs and protect the entire state transition.",
+        "sections": [
+          {
+            "title": "Bound work at the source",
+            "paragraphs": [
+              "Launching one task per input can overload a dependency and consume memory even when individual calls are asynchronous. Parallel.ForEachAsync can process a sequence with an explicit maximum degree of parallelism.",
+              "A concurrency limit is different from a rate limit: four fast workers can still issue many requests per second. Choose both based on dependency limits and measured behavior. Do not use Task.Run to wrap naturally asynchronous I/O."
+            ],
+            "example": "// Complete console Program.cs\nint active = 0, observed = 0;\nawait Parallel.ForEachAsync(Enumerable.Range(1, 8),\n    new ParallelOptions { MaxDegreeOfParallelism = 2 }, async (value, token) =>\n{\n    int current = Interlocked.Increment(ref active);\n    int previous;\n    do { previous = Volatile.Read(ref observed); }\n    while (current > previous && Interlocked.CompareExchange(ref observed, current, previous) != previous);\n    try { await Task.Delay(5, token); }\n    finally { Interlocked.Decrement(ref active); }\n});\nConsole.WriteLine(observed <= 2);\n// Expected: True; scheduling does not promise an exact peak."
+          },
+          {
+            "title": "Protect compound operations",
+            "paragraphs": [
+              "Interlocked handles specific atomic operations such as incrementing a counter. A lock protects a compound read-check-write transition. All accesses to the protected mutable state must use the same synchronization strategy.",
+              "A concurrent collection does not make a sequence of separate operations atomic. Check-then-add and read-then-increment can race. Keep lock scopes short, do not await inside a lock, and return immutable snapshots rather than live mutable state."
+            ],
+            "example": "// Complete console Program.cs\nint counter = 0;\nobject gate = new();\nawait Task.WhenAll(Enumerable.Range(0, 100).Select(_ => Task.Run(() =>\n{\n    lock (gate) counter++;\n})));\nConsole.WriteLine(counter);\n// Expected: 100"
+          },
+          {
+            "title": "Coordinate asynchronous exclusivity",
+            "paragraphs": [
+              "SemaphoreSlim can allow a limited number of asynchronous callers into a section. Await WaitAsync and release in finally after acquisition succeeds. For a process-wide limit, the semaphore must be shared rather than recreated in every call.",
+              "An in-process gate is not distributed coordination. Multiple replicas each have their own gate. Use database concurrency tokens, uniqueness constraints or a dedicated distributed design when the invariant spans processes."
+            ],
+            "example": "// Complete console Program.cs\nusing var gate = new SemaphoreSlim(1, 1);\nawait gate.WaitAsync();\ntry { Console.WriteLine(\"Exclusive section\"); }\nfinally { gate.Release(); }\n// Expected: Exclusive section; dispose only after all users finish."
+          }
+        ],
+        "exercise": {
+          "prompt": "Run 100 increments safely and demonstrate that the final result remains 100 over repeated runs. Explain why this does not coordinate two servers.",
+          "starter": "// Use Interlocked.Increment for this single counter operation.",
+          "solution": "// Complete console Program.cs\nint counter = 0;\nawait Task.WhenAll(Enumerable.Range(0, 100).Select(_ => Task.Run(() => Interlocked.Increment(ref counter))));\nConsole.WriteLine(counter);\n// Expected: 100.\n// Each process has its own counter; persistent shared state needs database coordination.",
+          "checks": [
+            "Repeated runs produce 100.",
+            "No unrelated variable is protected by the counter operation.",
+            "The explanation distinguishes a process from a deployment with replicas.",
+            "Cancellation and exceptions cannot leak an acquired semaphore permit."
+          ]
+        },
+        "quiz": {
+          "question": "Does ConcurrentDictionary make any multi-step workflow atomic?",
+          "options": [
+            "Yes",
+            "No; compose supported atomic operations or synchronize the whole transition",
+            "Only when it holds strings"
+          ],
+          "correct": 1,
+          "explanation": "Thread-safe individual operations do not automatically protect a larger invariant."
+        }
+      },
+      {
+        "id": "auth-boundaries",
+        "title": "Authentication, policies and resource ownership",
+        "stage": "advanced",
+        "takeaway": "Validate identity first, then authorize the requested operation on the specific resource.",
+        "sections": [
+          {
+            "title": "Delegate identity validation",
+            "paragraphs": [
+              "Authentication establishes a trusted principal. For bearer tokens, use a configured handler that validates issuer, audience, signature and lifetime; merely decoding a JWT is not authentication. A browser sign-in flow often uses an identity provider and cookies instead.",
+              "The following fragment requires a compatible Microsoft.AspNetCore.Authentication.JwtBearer package and a real configured authority. It is not a token-issuing server or a complete sign-in application. Store configuration through approved secrets and environment systems."
+            ],
+            "example": "// Registration fragment with the JwtBearer package:\nbuilder.Services.AddAuthentication(\"Bearer\").AddJwtBearer(options =>\n{\n    options.Authority = builder.Configuration[\"Identity:Authority\"];\n    options.Audience = builder.Configuration[\"Identity:Audience\"];\n});\nbuilder.Services.AddAuthorization(options =>\n    options.AddPolicy(\"task-write\", policy => policy.RequireAuthenticatedUser().RequireClaim(\"permission\", \"tasks.write\")));\n// Before endpoints:\napp.UseAuthentication();\napp.UseAuthorization();"
+          },
+          {
+            "title": "Authorize operations and resources",
+            "paragraphs": [
+              "A policy can require a permission or role. A valid identity still must be allowed to access the particular task. Set ownership from a validated stable subject claim when creating a task; never trust an OwnerId supplied by the request body.",
+              "A coarse write permission does not prevent one user from modifying another user's resource. Check ownership or a deliberate administrator policy on every read and write. Decide whether forbidden resources produce 403 or a consistent 404 to avoid revealing existence."
+            ],
+            "example": "// Endpoint fragment: existing entity has OwnerId; token handler must map a stable subject to sub.\napp.MapGet(\"/owned-tasks/{id:int}\", async (int id, TaskDb db, System.Security.Claims.ClaimsPrincipal user) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    var item = await db.Tasks.FindAsync(id);\n    if (item is null || item.OwnerId != owner) return Results.NotFound();\n    return Results.Ok(item);\n}).RequireAuthorization();\n// Configure claim mapping deliberately; test it against the real issuer."
+          },
+          {
+            "title": "Prove denial as well as success",
+            "paragraphs": [
+              "Typically 401 indicates no acceptable authenticated identity, while 403 indicates an authenticated principal that lacks permission. A resource policy may intentionally return 404. Tests must cover all these branches so a success-only test cannot mask unrestricted access.",
+              "Fake authentication is useful inside an isolated test host; never enable a header-based fake identity in a deployed app. Cookie-authenticated state-changing requests also require protection against cross-site request forgery. Restrictive CORS is not authorization."
+            ],
+            "example": "// Security acceptance matrix:\n// No token -> protected endpoint denies access.\n// Invalid issuer/audience/expired token -> 401.\n// Valid token without write permission -> 403 on policy-protected write.\n// User B requests user A's task -> chosen 403 or 404, no data.\n// User A completes own task -> succeeds.\n// The downloadable local baseline is deliberately unauthenticated; add this layer before deployment."
+          }
+        ],
+        "exercise": {
+          "prompt": "Add an authenticated write policy and ownership checks to every task endpoint, then write denial tests for anonymous users and another owner.",
+          "starter": "// Use a real configured handler in the app; fake only the isolated test host.",
+          "solution": "// Endpoint fragments; requires TaskDb, SavedTask.OwnerId, valid authentication,\n// TaskRequest, a mapped stable sub claim and the task-write policy from this lesson.\nvar tasks = app.MapGroup(\"/tasks\").RequireAuthorization();\ntasks.MapGet(\"/\", async (TaskDb db, System.Security.Claims.ClaimsPrincipal user, CancellationToken token) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    return Results.Ok(await db.Tasks.AsNoTracking().Where(t => t.OwnerId == owner)\n        .OrderBy(t => t.Id).Take(100).ToListAsync(token));\n});\ntasks.MapPost(\"/\", async (TaskRequest request, TaskDb db,\n    System.Security.Claims.ClaimsPrincipal user, CancellationToken token) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    if (string.IsNullOrWhiteSpace(request.Title)) return Results.BadRequest();\n    var item = new SavedTask { Title = request.Title.Trim(), OwnerId = owner };\n    db.Tasks.Add(item);\n    await db.SaveChangesAsync(token);\n    return Results.Created($\"/tasks/{item.Id}\", item);\n}).RequireAuthorization(\"task-write\");\n// Apply identical ownership filtering/checks to GET by ID and completion.\n// In tests: anonymous -> denial; reader-only POST -> 403;\n// A creates -> B list excludes item and B fetch/complete receives 404.\n// Real-token staging tests additionally verify issuer, audience and lifetime.",
+          "checks": [
+            "Anonymous and invalid tokens cannot read or write.",
+            "User B never receives user A's tasks.",
+            "A reader cannot write.",
+            "OwnerId is not accepted from JSON.",
+            "Real token validation is tested separately from the test fake."
+          ]
+        },
+        "quiz": {
+          "question": "Does a valid token authorize access to every task?",
+          "options": [
+            "Yes",
+            "No; resource and operation authorization are still required",
+            "Only when HTTPS is enabled"
+          ],
+          "correct": 1,
+          "explanation": "Trusted identity establishes who the caller is, not what they may do."
+        }
+      },
+      {
+        "id": "observability",
+        "title": "Logs, traces, metrics and health",
+        "stage": "advanced",
+        "takeaway": "Collect evidence that explains failures without exposing sensitive input.",
+        "sections": [
+          {
+            "title": "Log structured events",
+            "paragraphs": [
+              "A log message template names fields so operators can query them independently of rendered text. Include the operation, stable outcome and correlation context. Prefer a task ID over logging the entire submitted title.",
+              "Logs are not a place for passwords, bearer tokens or arbitrary personal data. Avoid using untrusted text as a message template. Choose levels by operational meaning and keep a repeated expected invalid request from flooding error logs."
+            ],
+            "example": "// Endpoint/service fragment with injected ILogger<TaskService> logger:\nlogger.LogInformation(\"Task {TaskId} completed at version {Version}\", item.Id, item.Version);\n// A exception boundary can log the exception while returning a generic problem response.\n// Avoid logger.LogInformation(request.Title) and logging Authorization headers."
+          },
+          {
+            "title": "Measure useful signals",
+            "paragraphs": [
+              "A Counter tracks accumulated events; a Histogram records distributions such as latency. A trace follows a request across operations, but custom activities need listeners or an exporter to be collected. Instrumentation alone does not create a dashboard.",
+              "Use low-cardinality metric tags such as operation and outcome. Task IDs and user IDs create an unbounded series count. Resource IDs can belong in carefully controlled traces or logs where policy allows them."
+            ],
+            "example": "// Complete console Program.cs; instruments require a listener/exporter to observe values.\nusing System.Diagnostics;\nusing System.Diagnostics.Metrics;\nusing var meter = new Meter(\"Learning.Tasks\", \"1.0\");\nvar completed = meter.CreateCounter<long>(\"tasks.completed\");\nusing var source = new ActivitySource(\"Learning.Tasks\");\nusing var activity = source.StartActivity(\"complete-task\");\ncompleted.Add(1, new KeyValuePair<string, object?>(\"outcome\", \"success\"));\nConsole.WriteLine(\"Instrumented one completion\");\n// Expected: Instrumented one completion; no exporter is configured."
+          },
+          {
+            "title": "Distinguish liveness and readiness",
+            "paragraphs": [
+              "Liveness asks whether the process should keep running. Readiness asks whether this instance can serve traffic, which may depend on a database or another critical dependency. A dependency outage should not automatically restart every healthy process.",
+              "Expose only the detail the caller needs. A public health endpoint should not publish credentials, connection strings or detailed internal exceptions. Test readiness failures and ensure alerts name an actionable symptom rather than every isolated transient error."
+            ],
+            "example": "// Framework health-check registration and mapping fragments:\nbuilder.Services.AddHealthChecks();\n// After building app:\napp.MapHealthChecks(\"/health/live\");\n// Add a separate tagged custom IHealthCheck for database connectivity,\n// then map readiness with HealthCheckOptions.Predicate selecting readiness tags.\n// Empty health registrations only establish process responsiveness, not database readiness."
+          }
+        ],
+        "exercise": {
+          "prompt": "Instrument completion success and conflict as low-cardinality metrics, and correlate an intentionally failed request with one structured log.",
+          "starter": "// Record outcome rather than task ID as a metric tag.",
+          "solution": "// Service fragment with a shared meter/counter:\ncompletionCounter.Add(1, new KeyValuePair<string, object?>(\"outcome\", conflict ? \"conflict\" : \"success\"));\nlogger.LogInformation(\"Complete task {TaskId} returned {Outcome}\", id, conflict ? \"conflict\" : \"success\");\n// Configure a local listener/exporter and generate both outcomes.\n// Explain why the counter is shared rather than created for each request.",
+          "checks": [
+            "Both outcome series are visible in the configured collector.",
+            "No title, token or user ID becomes a metric tag.",
+            "A failed request can be correlated with its server log.",
+            "Readiness and liveness are tested as different contracts."
+          ]
+        },
+        "quiz": {
+          "question": "Why avoid a task ID as a metric tag?",
+          "options": [
+            "It creates high-cardinality time series",
+            "It disables all logging",
+            "It changes HTTP status codes"
+          ],
+          "correct": 0,
+          "explanation": "Unique IDs can create a growing number of metric series and excessive collection cost."
+        }
+      },
+      {
+        "id": "deploy-operations",
+        "title": "Configuration, deployment and recovery",
+        "stage": "advanced",
+        "takeaway": "Package a tested application and make rollout and recovery explicit.",
+        "sections": [
+          {
+            "title": "Separate build from configuration",
+            "paragraphs": [
+              "dotnet publish produces deployment output. A framework-dependent build needs a supported installed runtime on the host; a self-contained build carries a runtime and must be republished for runtime fixes. Neither choice configures HTTPS or a reverse proxy by itself.",
+              "Use environment-specific configuration and fail startup when required configuration is absent. Keep secrets out of source and published JSON. Environment variables with double underscores map to nested configuration keys in ASP.NET Core."
+            ],
+            "example": "dotnet publish PracticeApi/PracticeApi.csproj -c Release -o ./publish --no-self-contained\n# For a .NET 10 target, deploy to a compatible patched .NET 10 runtime.\n# On a local shell, an example nested configuration key is:\n# Identity__Audience=task-api\n# Do not put a real secret in a copied command, repository or lesson."
+          },
+          {
+            "title": "Make a safe release sequence",
+            "paragraphs": [
+              "Before rollout, run tests, apply reviewed schema changes with a dedicated deployment process, and confirm readiness in the target environment. For multiple replicas, every replica needs access to shared durable data; the memory store in the practice app cannot provide that.",
+              "A rollback of code is not automatically a rollback of a destructive schema change. Favor compatible expand-and-contract migrations: add a new representation, migrate data, switch readers, then remove the old representation in a later release."
+            ],
+            "example": "// Release checklist as an executable workflow outline:\n// build -> tests -> publish -> reviewed migration -> start new instance\n// readiness succeeds -> direct limited traffic -> observe error rate/latency\n// unhealthy -> stop traffic to new instance and restore prior compatible build\n// Validate reverse proxy headers, HTTPS and authorization in staging."
+          },
+          {
+            "title": "Handle shutdown and durability",
+            "paragraphs": [
+              "Graceful shutdown gives active requests and hosted services time to finish or cancel. Pass the host stopping token into background work. Critical jobs should be durable and resumable rather than only stored in process memory.",
+              "Write a recovery runbook describing backup restoration, migration compatibility and how to stop an unsafe rollout. A successful startup is insufficient evidence that the deployed app is usable: exercise a real authenticated request and a persistence check."
+            ],
+            "example": "// BackgroundService fragment, not a complete worker:\nprotected override async Task ExecuteAsync(CancellationToken stoppingToken)\n{\n    using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));\n    while (await timer.WaitForNextTickAsync(stoppingToken))\n    {\n        // Claim a durable job; await its work with stoppingToken.\n        // Persist progress before acknowledging completion.\n    }\n}\n// Expected during shutdown: cancellation reaches the awaited timer/work."
+          }
+        ],
+        "exercise": {
+          "prompt": "Publish locally, start the published output, exercise health and one task request, then write a rollback plan for adding a required field.",
+          "starter": "// Use the target framework you actually have installed; do not deploy the memory baseline as a durable service.",
+          "solution": "dotnet publish PracticeApi/PracticeApi.csproj -c Release -o ./publish --no-self-contained\ndotnet ./publish/PracticeApi.dll --urls http://127.0.0.1:5086\n// Verify /health and the acceptance program against this process.\n// Rollback plan: add nullable field first, backfill with checks, deploy readers,\n// enforce requiredness only after old writers are retired; retain backup and reversal strategy.",
+          "checks": [
+            "Published output starts without source files.",
+            "The acceptance check succeeds against the published build.",
+            "Required configuration is validated at startup.",
+            "The rollback plan addresses schema and data, not only binaries.",
+            "Memory-only and unauthenticated baseline limitations are explicit."
+          ]
+        },
+        "quiz": {
+          "question": "Does rolling back an executable restore deleted database data?",
+          "options": [
+            "Yes",
+            "No; schema/data recovery requires a separate plan",
+            "Only for self-contained builds"
+          ],
+          "correct": 1,
+          "explanation": "The executable and persistent data have separate lifecycles."
+        }
+      },
+      {
+        "id": "performance",
+        "title": "Measure performance and constrain work",
+        "stage": "advanced",
+        "takeaway": "Change the bottleneck you can demonstrate and verify the behavior stays correct.",
+        "sections": [
+          {
+            "title": "Measure a representative workload",
+            "paragraphs": [
+              "Measure latency distributions, throughput, allocation and dependency time using representative data and concurrency. Warm up the application before comparing steady-state behavior, and record the environment so results can be repeated.",
+              "A stopwatch around one tiny operation is a teaching demonstration, not a reliable benchmark. Debug builds, startup JIT work, network variability and test data size can dominate results. Performance improvements must preserve validation and authorization."
+            ],
+            "example": "// Complete console Program.cs; illustrative timing, not a benchmark claim.\nusing System.Diagnostics;\nvar watch = Stopwatch.StartNew();\nlong total = 0;\nfor (int i = 0; i < 100_000; i++) total += i;\nwatch.Stop();\nConsole.WriteLine(total);\nConsole.WriteLine($\"Elapsed ticks: {watch.ElapsedTicks}\");\n// Expected total: 4999950000; elapsed ticks vary."
+          },
+          {
+            "title": "Reduce unnecessary database work",
+            "paragraphs": [
+              "Select only required columns, use no-tracking reads when entity mutation is unnecessary, and bound page size. Keyset paging uses a stable key to continue after the last seen row; it avoids scanning every prior page in a simple ID-ordered feed.",
+              "Inspect generated SQL and the query plan before assuming an index helps. Beware N+1 queries caused by per-row lazy loading. Define how deletes and concurrent inserts affect paging so client expectations match the implementation."
+            ],
+            "example": "// EF Core fragment; existing TaskDb and SavedTask with Done:\nvar page = await db.Tasks.AsNoTracking()\n    .Where(t => t.Id > after)\n    .OrderBy(t => t.Id)\n    .Select(t => new { t.Id, t.Title, t.Done })\n    .Take(limit)\n    .ToListAsync(token);\n// Validate after >= 0 and limit in 1..100 before this query.\n// Expected: at most limit rows in ascending ID order."
+          },
+          {
+            "title": "Trade caches and limits deliberately",
+            "paragraphs": [
+              "Caching can reduce repeated work but creates invalidation and isolation decisions. Include every input affecting a cached result, including tenant or identity when appropriate. Limit queue sizes and concurrency so overload fails predictably rather than growing memory indefinitely.",
+              "Do not cache private task data under a global key or cache a mutable entity tracked by a context. A fast unauthorized response is still a defect. Compare before and after with the same workload and rerun correctness and ownership tests."
+            ],
+            "example": "// Cache design exercise, not a complete implementation:\n// key = (tenant, owner, normalizedQuery, pageCursor, pageSize)\n// value = immutable response DTO plus explicit freshness lifetime\n// mutation -> invalidate affected owner's entries or use versioned keys\n// Never use only '/tasks' as the cache key for personalized results."
+          }
+        ],
+        "exercise": {
+          "prompt": "Measure a paged list endpoint with 100 and 10,000 seeded tasks, then replace an unbounded query with bounded projection and explain the observed change.",
+          "starter": "// Record data size, concurrency, build configuration and several latency samples.",
+          "solution": "// Experiment plan:\n// 1. Seed a disposable relational database reproducibly.\n// 2. Baseline an unbounded list at fixed concurrency after warmup.\n// 3. Apply validation, projection and Take(limit) with stable ordering.\n// 4. Repeat the same load; compare p50/p95 and bytes returned.\n// 5. Rerun paging and authorization correctness checks.\n// No speedup is claimed until measured.",
+          "checks": [
+            "Results include workload and environment.",
+            "Returned rows never exceed the validated limit.",
+            "A next page has stable ordering and no repeated previous IDs in the controlled fixture.",
+            "Unauthorized users remain denied after optimization.",
+            "The conclusion separates measured effects from guesses."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence best supports an optimization claim?",
+          "options": [
+            "One fast debug run",
+            "Comparable measurements with the same representative workload and correctness checks",
+            "A shorter source file"
+          ],
+          "correct": 1,
+          "explanation": "A controlled comparison establishes whether a change improves the relevant workload."
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations",
+        "description": "Write and explain small C# programs with deliberate types, validation, methods, objects and asynchronous control flow.",
+        "exitCriteria": [
+          "Run the console reference and explain each output.",
+          "Reject blank task titles and handle missing IDs without a null-reference failure.",
+          "Use a method and LINQ query to list open tasks in stable order.",
+          "Demonstrate an observed cancellation and explain resource cleanup."
+        ],
+        "project": {
+          "title": "Console task notebook",
+          "brief": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+          "requirements": [
+            "Task IDs are positive and titles are trimmed and nonblank.",
+            "Completion changes only the intended task.",
+            "An empty list and unknown ID have explicit behavior.",
+            "Four or more assertions cover a normal case and boundary failures.",
+            "Explain one nullable value and one disposable resource from your implementation."
+          ],
+          "rubric": [
+            "Correctness: expected output and assertions pass.",
+            "Boundaries: blank title, invalid ID and missing lookup are handled deliberately.",
+            "Design: presentation is separate from reusable task behavior.",
+            "Explanation: learner can trace state changes and describe why validation lives at the boundary."
+          ],
+          "solution": "Reference: practice/foundation.cs; run it using practice/README.md. It prints two open tasks and passes four assertions. Extend it with Find(id) returning a nullable LearningTask, assert a missing lookup, and keep immutable identity/title with controlled Complete behavior. An independent async exercise must demonstrate token cancellation; the notebook reference does not contain a background worker."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate application practice",
+        "description": "Assemble a predictable HTTP API, verify its boundary, and evolve a persistent relational implementation safely.",
+        "exitCriteria": [
+          "Run the package-free API and all 11 HTTP acceptance assertions.",
+          "Add unit tests for title normalization and boundary rules.",
+          "Replace memory storage with scoped relational persistence and prove restart durability.",
+          "Apply a reviewed migration on a disposable database and demonstrate transaction rollback.",
+          "Show a stale update becoming 409 rather than silently overwriting data."
+        ],
+        "project": {
+          "title": "Versioned task API with persistent storage",
+          "brief": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+          "requirements": [
+            "Create, page, fetch and complete tasks with validated DTOs.",
+            "Return 400, 404 and 409 consistently; the POST Location is retrievable.",
+            "Use scoped DbContext and parameterized queries.",
+            "Review migration code/SQL and test upgrade from a previous schema.",
+            "Persist task state across restart and protect competing updates.",
+            "Make task plus audit creation atomic and test rollback from a new context."
+          ],
+          "rubric": [
+            "HTTP behavior: executable acceptance checks verify successful and rejected requests.",
+            "Persistence: restart and fresh-context tests establish stored state.",
+            "Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.",
+            "Maintainability: typed storage boundary, scope ownership and package versions are explained.",
+            "Migration evidence: generated operations are reviewed, tested and retained with a recovery note."
+          ],
+          "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an assessed extension, not a claim made by the memory baseline."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced service practice",
+        "description": "Work through cancellation, overload, identity, operations and recovery using measured evidence. Completion establishes experience with these scenarios, not comprehensive .NET expertise.",
+        "exitCriteria": [
+          "Prove cancellation reaches downstream I/O and permits are released after failure.",
+          "Demonstrate bounded work and a database-backed concurrency conflict across separate contexts.",
+          "Deny anonymous, reader-only and other-owner access with explicit tests.",
+          "Collect an actionable structured log and a low-cardinality metric from real requests.",
+          "Run acceptance checks against a published release build and explain health/readiness behavior.",
+          "Measure one representative query change and write a rollback plan covering schema and data."
+        ],
+        "project": {
+          "title": "Operational and secure task service",
+          "brief": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+          "requirements": [
+            "Use a real authentication handler with issuer/audience/lifetime validation.",
+            "Set ownership from trusted identity and authorize every task read/write.",
+            "Propagate request cancellation, bound dependency work and avoid unobserved tasks.",
+            "Add structured problem responses, logs, traces/metrics collection and readiness checks.",
+            "Test migrations, transaction failures, stale versions and authorization denials.",
+            "Publish a release build, measure bounded queries and document backup/rollback and limitations."
+          ],
+          "rubric": [
+            "Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.",
+            "Resilience: controlled cancellation/failure scenarios terminate work and release resources.",
+            "Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.",
+            "Performance: before/after measurements use the same workload and preserve correctness.",
+            "Delivery: published build checks succeed and the rollback plan handles persistent data.",
+            "Judgment: learner states what remains unverified and which changes would be needed for multiple replicas."
+          ],
+          "solution": "Reference architecture: authenticated /tasks route group -> DTO validation -> scoped task service -> EF Core context with owner filtering and concurrency token. Mutations commit task/audit/outbox state atomically; caller token reaches database work; distributed invariants remain in the database. Tests use an isolated relational fixture and test-only fake identities, followed by real-token staging checks. Shared Meter/ActivitySource and structured logs feed a configured collector. Deployment runs reviewed migrations, gates traffic on readiness, retains the prior compatible build and proves backup recovery. Use lessons auth-boundaries through performance as implementation/verification guides. This is a reviewable solution blueprint; the download is intentionally only the runnable local baseline, not a finished secure production service."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Practice setup and assessment guide",
+        "href": "paths/dotnet/practice/README.md"
+      },
+      {
+        "title": "Foundation console notebook",
+        "href": "paths/dotnet/practice/foundation.cs"
+      },
+      {
+        "title": "Versioned task API baseline",
+        "href": "paths/dotnet/practice/task-api.cs"
+      },
+      {
+        "title": "HTTP acceptance checks",
+        "href": "paths/dotnet/practice/acceptance.cs"
       }
     ]
   },
@@ -596,8 +1432,8 @@ const LEARNING_PATHS = [
     "title": "Data Structures & Algorithms",
     "category": "Computer science",
     "status": "ready",
-    "description": "Choose structures, trace algorithms and reason about correctness and cost using small Python examples.",
-    "level": "Beginner · first edition",
+    "description": "From collections to algorithm design: invariants, graph traversal, greedy proofs, dynamic programming and tested projects.",
+    "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
       "You only need arithmetic and a willingness to trace a few steps on paper."
@@ -614,10 +1450,9 @@ const LEARNING_PATHS = [
       "Build and test a small shortest-hop learning-prerequisite explorer."
     ],
     "nextSteps": [
-      "Implement linked-list insertion/deletion and compare with array-based collections.",
-      "Study balanced search trees, merge sort, quicksort and stable sorting in more depth.",
-      "Add weighted shortest paths, topological sorting and cycle detection.",
-      "Practise backtracking, greedy proofs, dynamic-programming state design and amortized analysis."
+      "Study balanced trees, union-find and string algorithms.",
+      "Explore Bellman–Ford, all-pairs paths and network flow.",
+      "Deepen amortized analysis, randomized algorithms and formal proofs."
     ],
     "sources": [
       {
@@ -639,12 +1474,24 @@ const LEARNING_PATHS = [
       {
         "title": "Python: sorting guide",
         "url": "https://docs.python.org/3/howto/sorting.html"
+      },
+      {
+        "title": "Princeton weighted shortest paths",
+        "url": "https://algs4.cs.princeton.edu/44sp/"
+      },
+      {
+        "title": "Princeton directed graphs",
+        "url": "https://algs4.cs.princeton.edu/42digraph/"
       }
     ],
     "downloads": [
       {
         "title": "Algorithms and executable checks",
         "href": "paths/data-structures-algorithms/practice/algorithms.py"
+      },
+      {
+        "title": "Advanced algorithms and executable checks",
+        "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py"
       }
     ],
     "lessons": [
@@ -686,7 +1533,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Each element is inspected once, assuming constant-cost comparisons."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "arrays",
@@ -725,7 +1573,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Front insertion moves references across the array, so its cost grows with n."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "maps",
@@ -765,7 +1614,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A set directly models whether an item has been seen."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "stacks-queues",
@@ -804,7 +1654,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "FIFO preserves insertion order when serving queued items."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "binary-search",
@@ -875,7 +1726,8 @@ const LEARNING_PATHS = [
               "explanation": "Two comparisons found the target. This does not imply every search takes two comparisons."
             }
           ]
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "sorting",
@@ -915,7 +1767,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Stability specifies tie behavior, not that the entire order stays unchanged."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "recursion",
@@ -955,7 +1808,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Without a base case and progress toward it, recursion does not terminate."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "graphs",
@@ -994,7 +1848,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Queue layers correspond to increasing numbers of edges, not arbitrary weights."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "heaps",
@@ -1033,7 +1888,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The smallest is at the root; siblings and subtrees are not globally sorted."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "dynamic-programming",
@@ -1074,6 +1930,557 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "State meaning and base cases make the recurrence assessable; recursion is optional."
+        },
+        "stage": "intermediate"
+      },
+      {
+        "id": "linked-nodes",
+        "title": "Linked nodes and ownership",
+        "stage": "intermediate",
+        "takeaway": "Changing a link changes reachability; finding the link is often the expensive part.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Model a chain as a node with a value and a next reference. To insert after a known node, first point the new node at the old successor, then point the known node at the new node. Reversing that order can lose the remainder of the chain. Empty lists need an explicit head policy."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Changing a link changes reachability; finding the link is often the expensive part.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Insertion after an already-known node takes O(1) time. Searching by value takes O(n). The traversal assumes an acyclic chain; a cycle needs a detection policy. A Python list is usually simpler when indexed access and locality matter."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Implement removal of the node immediately after a known node, returning its value or None.",
+          "solution": "def remove_after(node):\n    victim = node.next\n    if victim is None:\n        return None\n    node.next = victim.next\n    return victim.value\n\nassert remove_after(a) == 2\nassert values(a) == [1, 3]",
+          "checks": [
+            "Removing a successor preserves the tail.",
+            "Removing after the last node returns None.",
+            "The sentinel None is ambiguous if None is a valid stored value; document the contract."
+          ]
+        },
+        "quiz": {
+          "question": "Why is insertion by position not necessarily O(1)?",
+          "options": [
+            "The position may need a traversal",
+            "Every link update is O(n)"
+          ],
+          "correct": 0,
+          "explanation": "Only the pointer update is constant-time; locating the node can dominate."
+        }
+      },
+      {
+        "id": "merge-sort",
+        "title": "Merge sort and a correctness argument",
+        "stage": "intermediate",
+        "takeaway": "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Divide the input until runs have size zero or one. During merging, the smallest unconsumed value must be at the front of one of the runs. Select that value, advance its pointer, and repeat. Taking from the left on equal keys preserves stability."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def merge_sort(items):\n    if len(items) < 2:\n        return list(items)\n    mid = len(items) // 2\n    left, right = merge_sort(items[:mid]), merge_sort(items[mid:])\n    out, i, j = [], 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return out + left[i:] + right[j:]\n\nassert merge_sort([3, 1, 2, 1]) == [1, 1, 2, 3]"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Each recursion level merges O(n) values, and there are O(log n) levels. Time is O(n log n) under constant-cost comparisons. This copying implementation uses O(n) peak auxiliary storage plus recursion bookkeeping; cumulative allocation is larger. Built-in sorting is preferable in most Python applications."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Test sorting against Python’s sorted for all permutations of four distinct values.",
+          "solution": "from itertools import permutations\nfor row in permutations([0, 1, 2, 3]):\n    assert merge_sort(row) == sorted(row)\nassert merge_sort([]) == []\nassert merge_sort([2, 2]) == [2, 2]",
+          "checks": [
+            "All permutations match the oracle.",
+            "Input is not modified.",
+            "Explain why <= rather than < preserves left-before-right ties."
+          ]
+        },
+        "quiz": {
+          "question": "Why is each merge linear?",
+          "options": [
+            "Each step consumes one remaining value",
+            "Both runs are rescanned from zero"
+          ],
+          "correct": 0,
+          "explanation": "Each pointer moves forward at most the length of its run."
+        }
+      },
+      {
+        "id": "two-pointers",
+        "title": "Two pointers on ordered data",
+        "stage": "intermediate",
+        "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Given sorted numbers and a target sum, place pointers at opposite ends. If the sum is too small, increasing the left value is the only useful move; decreasing the right would make it smaller. The symmetric argument applies when the sum is too large."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Monotonic structure lets you discard candidates without checking every pair.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def pair_sum(values, target):\n    left, right = 0, len(values) - 1\n    while left < right:\n        total = values[left] + values[right]\n        if total == target:\n            return left, right\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return None\n\nassert pair_sum([1, 2, 4, 7], 6) == (1, 2)"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "The sorted-input precondition is essential. Each move shortens the interval, so time is O(n) and extra space O(1). Sorting first costs O(n log n) and changes index meanings unless original indices are carried alongside values."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Find a pair summing to 8 and test impossible and duplicate cases.",
+          "solution": "assert pair_sum([1, 2, 4, 7], 8) == (0, 3)\nassert pair_sum([3, 3], 6) == (0, 1)\nassert pair_sum([3], 6) is None\nassert pair_sum([], 6) is None",
+          "checks": [
+            "Two different positions are used.",
+            "Duplicate values are allowed.",
+            "Report indices in the supplied sorted sequence."
+          ]
+        },
+        "quiz": {
+          "question": "Why stop when left equals right?",
+          "options": [
+            "A single element cannot fill both positions under this contract",
+            "The remaining value is always zero"
+          ],
+          "correct": 0,
+          "explanation": "The contract requires two different elements."
+        }
+      },
+      {
+        "id": "sliding-window",
+        "title": "Sliding windows and maintained state",
+        "stage": "intermediate",
+        "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Find the longest substring with no repeated characters. Keep the last position of each character and the left edge of the current valid window. On repetition, move left past the prior occurrence only if that occurrence is within the current window."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Maintain the property of a contiguous interval instead of rebuilding every interval.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def longest_unique(text):\n    last, left, best = {}, 0, 0\n    for right, char in enumerate(text):\n        left = max(left, last.get(char, -1) + 1)\n        last[char] = right\n        best = max(best, right - left + 1)\n    return best\n\nassert longest_unique(\"abba\") == 2"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "The max prevents the left edge moving backward. Expected time O(n) uses hashing assumptions; extra space depends on distinct characters. Python iterates Unicode code points, not user-perceived grapheme clusters. Define the character model for human-language applications."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare the algorithm with a brute-force oracle for every a/b string up to length five.",
+          "solution": "from itertools import product\nfor size in range(6):\n    for letters in product(\"ab\", repeat=size):\n        text = \"\".join(letters)\n        brute = max([0] + [j-i for i in range(len(text)) for j in range(i+1,len(text)+1) if len(set(text[i:j])) == j-i])\n        assert longest_unique(text) == brute",
+          "checks": [
+            "Empty string returns zero.",
+            "abba catches backward-moving-left mistakes.",
+            "State the hashing and character assumptions."
+          ]
+        },
+        "quiz": {
+          "question": "Why use max when moving left?",
+          "options": [
+            "To avoid expanding into a previously excluded prefix",
+            "To sort characters"
+          ],
+          "correct": 0,
+          "explanation": "An older occurrence before the window must not move the boundary backward."
+        }
+      },
+      {
+        "id": "topological",
+        "title": "Dependencies, DFS and topological ordering",
+        "stage": "intermediate",
+        "takeaway": "A dependency order exists only when the directed graph has no cycle.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "An edge A→B means A must precede B. Kahn’s algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "A dependency order exists only when the directed graph has no cycle.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "from collections import deque\n\ndef topological(graph):\n    indegree = {v: 0 for v in graph}\n    for neighbors in graph.values():\n        for v in neighbors:\n            indegree[v] = indegree.get(v, 0) + 1\n    queue = deque(v for v, degree in indegree.items() if degree == 0)\n    order = []\n    while queue:\n        node = queue.popleft(); order.append(node)\n        for neighbor in graph.get(node, []):\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                queue.append(neighbor)\n    if len(order) != len(indegree):\n        raise ValueError(\"dependency cycle\")\n    return order\n\nassert topological({\"A\":[\"B\"],\"B\":[\"C\"]}) == [\"A\",\"B\",\"C\"]"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Time and space are O(V+E) and O(V) beyond the input adjacency lists respectively. Multiple valid orders can exist. A DFS alternative uses unseen/active/finished states; encountering an active vertex detects a cycle. Reachability alone does not prove every prerequisite is complete."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A.",
+          "solution": "graph = {\"A\":[\"C\"], \"B\":[\"C\"], \"C\":[]}\norder = topological(graph)\npositions = {node:i for i,node in enumerate(order)}\nassert all(positions[u] < positions[v] for u,vs in graph.items() for v in vs)\ntry:\n    topological({\"A\":[\"B\"],\"B\":[\"A\"]})\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"cycle accepted\")",
+          "checks": [
+            "Validate constraints rather than one arbitrary order.",
+            "Include disconnected nodes.",
+            "Cycle detection must fail explicitly."
+          ]
+        },
+        "quiz": {
+          "question": "What does an incomplete Kahn traversal indicate?",
+          "options": [
+            "A cycle in the supplied directed graph",
+            "An always-valid partial final order"
+          ],
+          "correct": 0,
+          "explanation": "Remaining vertices cannot be freed because cyclic prerequisites persist."
+        }
+      },
+      {
+        "id": "dijkstra",
+        "title": "Weighted shortest paths with Dijkstra",
+        "stage": "advanced",
+        "takeaway": "A shortest-hop path may not be the minimum-cost path.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Maintain the best known cost to each vertex. Pop the cheapest candidate from a min-heap; if it is stale, skip it. Relax outgoing edges by proposing a cheaper cost. Nonnegative weights ensure a later detour cannot improve an already settled smallest distance."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "A shortest-hop path may not be the minimum-cost path.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "import heapq\nfrom itertools import count\n\ndef dijkstra(graph, start):\n    if any(weight < 0 for edges in graph.values() for _, weight in edges):\n        raise ValueError(\"negative weight\")\n    ticket = count()\n    distance = {start: 0}\n    heap = [(0, next(ticket), start)]\n    while heap:\n        cost, _, node = heapq.heappop(heap)\n        if cost != distance[node]:\n            continue\n        for neighbor, weight in graph.get(node, []):\n            proposed = cost + weight\n            if proposed < distance.get(neighbor, float(\"inf\")):\n                distance[neighbor] = proposed\n                heapq.heappush(heap, (proposed, next(ticket), neighbor))\n    return distance\n\nassert dijkstra({\"A\":[(\"B\",8),(\"C\",2)],\"C\":[(\"B\",1)]},\"A\")[\"B\"] == 3"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Add zero-cost edges, disconnected vertices and a negative-weight rejection test.",
+          "solution": "assert dijkstra({\"A\":[(\"B\",0)], \"D\":[]}, \"A\") == {\"A\":0,\"B\":0}\ntry:\n    dijkstra({\"A\":[(\"B\",-1)]}, \"A\")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"negative accepted\")",
+          "checks": [
+            "An expensive direct route can lose to a cheaper two-edge route.",
+            "Unreachable nodes remain absent.",
+            "Explain when BFS is sufficient and when negative weights require another algorithm."
+          ]
+        },
+        "quiz": {
+          "question": "Why not use this algorithm for negative weights?",
+          "options": [
+            "Its greedy settlement argument depends on nonnegative edges",
+            "Heaps cannot store negative numbers"
+          ],
+          "correct": 0,
+          "explanation": "The limitation is in correctness assumptions, not numeric storage."
+        }
+      },
+      {
+        "id": "greedy",
+        "title": "Greedy algorithms and counterexamples",
+        "stage": "advanced",
+        "takeaway": "A locally attractive choice needs a proof, not intuition.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution’s first interval with this one without reducing the count."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "A locally attractive choice needs a proof, not intuition.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish < start:\n            raise ValueError(\"invalid interval\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Intervals use half-open boundaries, so end==start is compatible. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set.",
+          "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))",
+          "checks": [
+            "Long interval blocks three short compatible intervals.",
+            "Touching intervals are allowed.",
+            "A weighted objective needs a different analysis."
+          ]
+        },
+        "quiz": {
+          "question": "Does a greedy solution for maximum count also maximize profit?",
+          "options": [
+            "Not necessarily",
+            "Always"
+          ],
+          "correct": 0,
+          "explanation": "Changing the objective invalidates the exchange argument."
+        }
+      },
+      {
+        "id": "backtracking",
+        "title": "Backtracking with reversible choices",
+        "stage": "advanced",
+        "takeaway": "Explore a search tree while restoring state after each choice.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Generate subsets by deciding whether each input position is included. The recursion state consists of an index and the currently selected values. When returning from the include branch, remove the appended value before exploring another branch."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Explore a search tree while restoring state after each choice.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def subsets(items):\n    output, selected = [], []\n    def visit(index):\n        if index == len(items):\n            output.append(selected.copy())\n            return\n        visit(index + 1)\n        selected.append(items[index])\n        visit(index + 1)\n        selected.pop()\n    visit(0)\n    return output\n\nassert len(subsets([1,2,3])) == 8"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "There are 2^n subsets; copying each output costs up to n. Output construction therefore costs O(n·2^n), with O(n) recursion state excluding the output. Pruning helps only when a valid condition rules out an entire branch. Duplicate input values may yield duplicate value-subsets."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Demonstrate why output.append(selected) is wrong and verify output independence.",
+          "solution": "result = subsets([1, 2])\nassert {tuple(x) for x in result} == {(), (1,), (2,), (1,2)}\nresult[0].append(99)\nassert all(99 not in row for row in result[1:])",
+          "checks": [
+            "Each result owns an independent list.",
+            "Empty input returns one empty subset.",
+            "Explain exponential output size rather than promising a polynomial implementation."
+          ]
+        },
+        "quiz": {
+          "question": "Why copy selected at a leaf?",
+          "options": [
+            "Later backtracking mutates selected",
+            "Copies make an exponential problem linear"
+          ],
+          "correct": 0,
+          "explanation": "All outputs would otherwise refer to the same mutable list."
+        }
+      },
+      {
+        "id": "knapsack",
+        "title": "Designing DP states: 0/1 knapsack",
+        "stage": "advanced",
+        "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Choose a subset of items to maximize total value under an integer capacity. Each item is available once. dp[c] is the best value achievable using processed items at capacity c. Processing capacities downward keeps the current item from using an already-updated state from the same pass."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "Iteration order can determine whether an item is used once or repeatedly.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "def knapsack(items, capacity):\n    if capacity < 0:\n        raise ValueError(\"negative capacity\")\n    dp = [0] * (capacity + 1)\n    for weight, value in items:\n        if weight <= 0:\n            raise ValueError(\"positive integer weights required\")\n        for c in range(capacity, weight - 1, -1):\n            dp[c] = max(dp[c], dp[c-weight] + value)\n    return dp[capacity]\n\nassert knapsack([(2,3),(3,4),(4,5)],5) == 7"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare one item of weight 2/value 3 at capacity 4 against the unbounded variant.",
+          "solution": "assert knapsack([(2,3)],4) == 3\nassert knapsack([],4) == 0\nassert knapsack([(2,3)],0) == 0\n# Ascending capacities would reuse the single item and incorrectly return 6.",
+          "checks": [
+            "Single item is used at most once.",
+            "Negative-value items can be skipped.",
+            "Distinguish state definition, recurrence, order and reconstruction."
+          ]
+        },
+        "quiz": {
+          "question": "Why iterate capacities downward?",
+          "options": [
+            "To avoid reusing the current item",
+            "To sort the items"
+          ],
+          "correct": 0,
+          "explanation": "dp[c-weight] must still represent only previously processed items."
+        }
+      },
+      {
+        "id": "algorithm-review",
+        "title": "Testing and reviewing an algorithm",
+        "stage": "advanced",
+        "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a deliberately simple oracle for small instances and compare the optimized algorithm across generated cases. This finds edge cases without assuming that random success proves correctness."
+            ]
+          },
+          {
+            "title": "Work through the implementation",
+            "paragraphs": [
+              "A result, a correctness argument and a complexity claim need separate evidence.",
+              "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            ],
+            "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits"
+          },
+          {
+            "title": "Correctness, cost and failure cases",
+            "paragraphs": [
+              "Benchmarks measure a particular workload and environment. They cannot establish asymptotic complexity by themselves. Separate setup, sorting and parsing from the operation being measured; report input sizes and distributions. Avoid recursive depth claims based on balanced-tree examples alone."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Build a prerequisite planner that detects cycles, returns an order and finds minimum-cost routes on a separate nonnegative weighted graph.",
+          "solution": "Reference architecture:\n1. Parse/validate IDs, edges and weights; preserve isolated vertices.\n2. Use topological() for dependency ordering; fail on cycles.\n3. Use dijkstra() only for the separate cost graph.\n4. Validate every returned dependency order against all edges.\n5. Test cycles, disconnected vertices, equal-cost routes and zero-cost edges.\n6. Record representation-specific cost bounds and reject unsupported inputs.",
+          "checks": [
+            "Keep prerequisite semantics separate from route-cost semantics.",
+            "Compare small shortest-path cases with hand calculations or a reference algorithm.",
+            "Describe unsupported negative weights and malformed records.",
+            "Include an operational size limit and an explanatory error."
+          ]
+        },
+        "quiz": {
+          "question": "Does a fast benchmark prove an O(n) bound?",
+          "options": [
+            "No",
+            "Yes"
+          ],
+          "correct": 0,
+          "explanation": "A finite set of timings is empirical evidence, not an asymptotic proof."
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations · Represent and reason",
+        "description": "Choose basic structures and state what correctness and cost mean.",
+        "exitCriteria": [
+          "Distinguish a structure’s operations from a problem’s contract.",
+          "Trace arrays, hash tables, stacks and queues by hand.",
+          "Explain expected versus worst-case time and auxiliary space."
+        ],
+        "project": {
+          "title": "Study-event summarizer",
+          "brief": "Process a list of events and generate counts, repeated IDs and an undo history.",
+          "requirements": [
+            "Use a dictionary for counts and a set for seen IDs.",
+            "Define what an undo operation reverses.",
+            "Handle empty input and duplicate events explicitly.",
+            "Explain operation costs and memory growth."
+          ],
+          "rubric": [
+            "Counts match a hand-calculated fixture.",
+            "Undo respects last-in-first-out order.",
+            "No duplicate is silently counted as a new unique event.",
+            "Complexity claims name their assumptions."
+          ],
+          "solution": "Use a dictionary keyed by topic for totals, a set of event IDs to identify duplicates and a list as an undo stack. Record enough information to reverse each accepted event. Test empty input and two events with the same ID. Distinguish duplicate detection policy from arbitrary removal of equal monetary or time values."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate · Search, traversal and invariants",
+        "description": "Implement algorithms with explicit preconditions, loop invariants and small reference oracles.",
+        "exitCriteria": [
+          "Explain binary-search and two-pointer invariants.",
+          "Traverse cyclic graphs safely and detect impossible dependency orders.",
+          "Compare optimized results with brute-force results on small inputs.",
+          "Account for sorting and copying costs."
+        ],
+        "project": {
+          "title": "Prerequisite planner",
+          "brief": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+          "requirements": [
+            "Preserve isolated topics and neighbor-only vertices.",
+            "Return an order satisfying every dependency or an explicit cycle error.",
+            "Use BFS separately to explain reachability, not prerequisite completion.",
+            "Test multiple valid orders without asserting one arbitrary sequence.",
+            "Document complexity for your chosen representation."
+          ],
+          "rubric": [
+            "Every edge is checked against the output order.",
+            "Cycles fail reliably.",
+            "Disconnected topics are not lost.",
+            "Tests cover empty input, one vertex and shared prerequisites."
+          ],
+          "solution": "Use Kahn’s topological order implementation. Build indegrees for every vertex, enqueue zero-indegree vertices, decrement neighbors and compare output count to vertex count. Validate every returned order by mapping vertices to positions. Keep completion eligibility as a separate check of all prerequisites."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice · Proofs and constrained optimization",
+        "description": "Choose algorithms by assumptions, prove or challenge greedy choices and design dynamic-programming states.",
+        "exitCriteria": [
+          "Explain why Dijkstra requires nonnegative weights.",
+          "Construct a counterexample to an invalid greedy rule.",
+          "Define DP state, recurrence, base cases and update order.",
+          "Distinguish algorithmic complexity from measured performance."
+        ],
+        "project": {
+          "title": "Algorithm decision portfolio",
+          "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+          "requirements": [
+            "Find routes on a nonnegative weighted graph and reject unsupported weights.",
+            "Schedule the maximum number of compatible unweighted intervals.",
+            "Choose items under an integer budget with each item used at most once.",
+            "Compare small cases against independent brute-force oracles.",
+            "Write invariants, termination arguments and representation-specific complexity.",
+            "Define input size limits and document remaining limitations."
+          ],
+          "rubric": [
+            "Each task uses the correct objective and preconditions.",
+            "Counterexamples explain why plausible alternatives fail.",
+            "Tests include ties, duplicates, zero/empty cases and disconnected inputs.",
+            "Pseudo-polynomial and exponential costs are described honestly.",
+            "Results remain correct without performance optimizations."
+          ],
+          "solution": "Use lazy-heap Dijkstra for nonnegative costs, earliest-finish greedy for unweighted interval count, and descending-capacity 0/1 knapsack for the budget problem. The advanced_algorithms.py download contains reference functions and checks. Extend it with independent small-input oracles and document why each algorithm applies."
         }
       }
     ]
@@ -1093,8 +2500,8 @@ const LEARNING_PATHS = [
     "title": "JavaScript → TypeScript → React",
     "category": "Web development",
     "status": "ready",
-    "description": "Start with browser and JavaScript fundamentals, then build a typed, accessible learning tracker with React.",
-    "level": "Beginner · first edition",
+    "description": "Build typed web features, then practise state architecture, async correctness, testing and resilient delivery.",
+    "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "No React experience required. Be comfortable creating folders and editing text files.",
       "Work through JavaScript lessons before the React sections. Familiarity with HTML is useful but introduced here."
@@ -1112,10 +2519,9 @@ const LEARNING_PATHS = [
       "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build."
     ],
     "nextSteps": [
-      "Add routing with a maintained router and study URL/history behavior.",
-      "Add server persistence, authentication and API validation; browser storage is not an access-control boundary.",
-      "Learn a framework’s data loading, server rendering and deployment before building production applications.",
-      "Practise automated component tests, browser tests, performance profiling and accessibility audits."
+      "Study your chosen production framework’s server rendering, caching and deployment model.",
+      "Implement and test the advanced project against a real authenticated API.",
+      "Continue with design systems, internationalization and production observability."
     ],
     "sources": [
       {
@@ -1145,12 +2551,56 @@ const LEARNING_PATHS = [
       {
         "title": "React: build from scratch",
         "url": "https://react.dev/learn/build-a-react-app-from-scratch"
+      },
+      {
+        "title": "React reducers",
+        "url": "https://react.dev/learn/extracting-state-logic-into-a-reducer"
+      },
+      {
+        "title": "React custom Hooks",
+        "url": "https://react.dev/learn/reusing-logic-with-custom-hooks"
+      },
+      {
+        "title": "React state identity",
+        "url": "https://react.dev/learn/preserving-and-resetting-state"
+      },
+      {
+        "title": "React memoization",
+        "url": "https://react.dev/reference/react/useMemo"
+      },
+      {
+        "title": "Testing Library principles",
+        "url": "https://testing-library.com/docs/guiding-principles"
+      },
+      {
+        "title": "MDN History API",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/History_API"
+      },
+      {
+        "title": "OWASP XSS prevention",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
       }
     ],
     "downloads": [
       {
         "title": "Runnable React tracker — App.tsx",
         "href": "paths/react/practice/App.tsx"
+      },
+      {
+        "title": "Reducer workshop UI",
+        "href": "paths/react/practice/AdvancedApp.tsx"
+      },
+      {
+        "title": "Validated tracker domain core",
+        "href": "paths/react/practice/tracker-core.ts"
+      },
+      {
+        "title": "Executable domain tests",
+        "href": "paths/react/practice/tracker-core.test.ts"
+      },
+      {
+        "title": "Workshop run instructions",
+        "href": "paths/react/practice/README.md"
       }
     ],
     "lessons": [
@@ -1192,7 +2642,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Native controls provide useful behavior and semantics. Styling a generic element does not add them."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "values",
@@ -1232,7 +2683,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An empty string converts to zero; validate blank input before converting."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "collections",
@@ -1272,7 +2724,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "filter keeps matching elements. map transforms elements without changing the count."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "functions",
@@ -1312,7 +2765,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Passing a function defers work until the event occurs."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "async",
@@ -1351,7 +2805,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Check response.ok or status; an HTTP response can resolve the promise even when its status is an error."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "typescript",
@@ -1390,7 +2845,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Types are not runtime validators; a server can return data that violates your declared type."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "components",
@@ -1430,7 +2886,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A stable identity lets React match the same record through list changes."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "state",
@@ -1498,7 +2955,8 @@ const LEARNING_PATHS = [
               "explanation": "React renders using the next state and updates the visible result."
             }
           ]
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "forms",
@@ -1537,7 +2995,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A derived value avoids synchronizing duplicate state."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "effects",
@@ -1576,7 +3035,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Pure calculations can run during rendering."
-        }
+        },
+        "stage": "intermediate"
       },
       {
         "id": "capstone",
@@ -1615,6 +3075,603 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Memory state is local to a running page. Cross-device data needs storage, identity and synchronization decisions."
+        },
+        "stage": "intermediate"
+      },
+      {
+        "id": "modules-closures",
+        "title": "Modules, closures and the event loop",
+        "stage": "intermediate",
+        "takeaway": "A closure retains access to its lexical environment; scheduling decides when a callback observes it.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Split a growing program by responsibility. A named export gives an explicit module interface. A closure can hide mutable state, but hidden state can also make tests depend on call order. Promise callbacks run after the current synchronous work completes; a zero-delay timer is not an instruction to run immediately."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "A closure retains access to its lexical environment; scheduling decides when a callback observes it.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "function makeCounter() {\n  let value = 0;\n  return () => ++value;\n}\nconst first = makeCounter();\nconst second = makeCounter();\nconsole.log(first(), first(), second()); // 1 2 1\nconsole.log(\"A\");\nPromise.resolve().then(() => console.log(\"B\"));\nconsole.log(\"C\"); // A, C, then B\n// A module could export makeCounter with: export { makeCounter };"
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users’ data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a multiplier factory and show that two instances do not interfere.",
+          "solution": "function multiplier(factor) { return value => value * factor; }\nconst double = multiplier(2), triple = multiplier(3);\nconsole.assert(double(4) === 8);\nconsole.assert(triple(4) === 12);",
+          "checks": [
+            "Explain lexical capture rather than saying values are copied automatically.",
+            "Synchronous logs precede Promise callbacks.",
+            "Separate module exports from per-instance state."
+          ]
+        },
+        "quiz": {
+          "question": "Which log order does the example produce?",
+          "options": [
+            "A B C",
+            "A C B"
+          ],
+          "correct": 1,
+          "explanation": "Promise reactions wait until the current synchronous work has finished."
+        }
+      },
+      {
+        "id": "type-design",
+        "title": "Discriminated unions and validated boundaries",
+        "stage": "intermediate",
+        "takeaway": "Represent valid states so that impossible combinations are difficult to express.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Two booleans loading and failed can produce confusing combinations. A discriminated union uses one tag to distinguish loading, success and failure. Render by the tag, and TypeScript narrows the remaining fields. Runtime data must still be checked before constructing the success state."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Represent valid states so that impossible combinations are difficult to express.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "type Remote<T> =\n  | { status: \"loading\" }\n  | { status: \"success\"; data: T }\n  | { status: \"error\"; message: string };\nfunction describe(value: Remote<string[]>): string {\n  switch (value.status) {\n    case \"loading\": return \"Loading\";\n    case \"success\": return value.data.length + \" lessons\";\n    case \"error\": return value.message;\n  }\n}\n// TypeScript snippet: describe({status:\"success\",data:[]}) gives \"0 lessons\"."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "A cast merely changes what the checker assumes. Prefer decoding unknown into a validated domain object. Decide how to handle extra fields, invalid IDs, duplicates and payload size. Do not log entire sensitive responses just to debug a validation failure."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define a save-state union that distinguishes idle, saving and failed with a message.",
+          "solution": "type SaveState = {kind:\"idle\"} | {kind:\"saving\"} | {kind:\"failed\"; message:string};\nfunction isBusy(state: SaveState) { return state.kind === \"saving\"; }",
+          "checks": [
+            "Only failed has a message.",
+            "A success state never silently contains invalid external data.",
+            "Explain a runtime test the compiler cannot perform."
+          ]
+        },
+        "quiz": {
+          "question": "Does a type assertion validate a server response?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correct": 1,
+          "explanation": "Type assertions are erased; validation must execute at runtime."
+        }
+      },
+      {
+        "id": "reducers",
+        "title": "Reducers, actions and domain invariants",
+        "stage": "intermediate",
+        "takeaway": "Centralize state transitions when related updates must remain consistent.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A reducer receives previous state and an action and returns next state. Keep it pure: no network calls, random IDs or storage writes inside it. Generate an ID in the event handler and pass it in an action. The reducer can reject duplicate IDs or invalid titles according to a documented contract."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Centralize state transitions when related updates must remain consistent.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "type Row = {id:string; title:string; done:boolean};\ntype Action = {type:\"toggle\"; id:string} | {type:\"remove\"; id:string};\nfunction reducer(state: Row[], action: Action): Row[] {\n  switch (action.type) {\n    case \"toggle\": return state.map(row => row.id === action.id ? {...row, done:!row.done} : row);\n    case \"remove\": return state.filter(row => row.id !== action.id);\n  }\n}\n// Component fragment: const [rows, dispatch] = useReducer(reducer, []);"
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; choose that behavior deliberately."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Test that toggling twice restores values without modifying the original input.",
+          "solution": "const before: Row[] = [{id:\"a\",title:\"Types\",done:false}];\nconst once = reducer(before,{type:\"toggle\",id:\"a\"});\nconst twice = reducer(once,{type:\"toggle\",id:\"a\"});\nconsole.assert(before[0].done === false);\nconsole.assert(once[0].done === true && twice[0].done === false);",
+          "checks": [
+            "Original objects remain unchanged.",
+            "Unknown ID behavior is specified.",
+            "IDs are generated outside the reducer."
+          ]
+        },
+        "quiz": {
+          "question": "Where should a network save happen?",
+          "options": [
+            "Inside the pure reducer",
+            "In an effect/event boundary outside the reducer"
+          ],
+          "correct": 1,
+          "explanation": "A reducer should remain deterministic and free of side effects."
+        }
+      },
+      {
+        "id": "context-hooks",
+        "title": "Context, custom Hooks and ownership",
+        "stage": "intermediate",
+        "takeaway": "Share state deliberately; sharing a Hook does not automatically share its state.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A custom Hook packages reusable stateful behavior. Two components calling the same Hook normally receive separate state. Context can distribute a shared value from an ancestor, but it is not a replacement for deciding who owns that value."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Share state deliberately; sharing a Hook does not automatically share its state.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Component/Hook fragment; import useState from React.\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  return {on, toggle: () => setOn(value => !value)};\n}\n// const first = useToggle(); const second = useToggle();\n// Toggling first does not toggle second."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "Put local form input near the component using it. Put shared records at the nearest suitable shared owner. A context value change updates consumers; splitting unrelated contexts may help, but measure before adding indirection. Hooks must obey the top-level calling rules."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe ownership for a search box, a selected lesson and shared lesson records.",
+          "solution": "Search draft: local to the search feature unless the URL must preserve it.\nSelected lesson: route/URL state when deep linking matters.\nLesson records: shared owner or data cache.\nDerived filtered records: calculate from records and search; do not store a duplicate.",
+          "checks": [
+            "Explain which values should survive navigation.",
+            "Avoid a global context for every keystroke.",
+            "Test two independent instances of the same Hook."
+          ]
+        },
+        "quiz": {
+          "question": "Do two calls to useToggle share one boolean?",
+          "options": [
+            "Yes",
+            "No, each call has its own state"
+          ],
+          "correct": 1,
+          "explanation": "Hooks reuse logic; state belongs to each mounted call location."
+        }
+      },
+      {
+        "id": "identity",
+        "title": "Component identity and form resets",
+        "stage": "intermediate",
+        "takeaway": "State belongs to a component’s position and identity in the rendered tree.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record’s draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "State belongs to a component’s position and identity in the rendered tree.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "A key reset is a product decision. Warn or preserve work where appropriate; do not use random keys to force refresh. Lifting state lets you preserve a draft across remounts but increases coordination. Test both switching records and re-rendering the same record."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write acceptance checks for switching between two editable lesson records.",
+          "solution": "1. Edit A without saving.\n2. Select B: B must not show A’s title.\n3. Return to A: either restored draft or explicit reset, matching the chosen policy.\n4. A normal rerender of A must not unexpectedly erase its draft.",
+          "checks": [
+            "The draft policy is stated.",
+            "Stable keys reflect record identity.",
+            "Validation errors reset or persist according to the same policy."
+          ]
+        },
+        "quiz": {
+          "question": "What does changing a component’s key generally do?",
+          "options": [
+            "Preserves the old component state by default",
+            "Gives it a new identity and resets local state"
+          ],
+          "correct": 1,
+          "explanation": "A different key changes the identity React uses to preserve state."
+        }
+      },
+      {
+        "id": "race-safe-loading",
+        "title": "Race-safe asynchronous screens",
+        "stage": "advanced",
+        "takeaway": "Cancellation and stale-result protection keep old requests from overwriting newer intent.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "If a user selects A and then B, A’s slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Cancellation and stale-result protection keep old requests from overwriting newer intent.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Effect fragment with itemId, setView and decode supplied by the component.\nuseEffect(() => {\n  const controller = new AbortController();\n  let active = true;\n  setView({status:\"loading\"});\n  fetch('/api/items/' + encodeURIComponent(itemId), {signal:controller.signal})\n    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })\n    .then(raw => { const data = decode(raw); if (active) setView({status:\"success\",data}); })\n    .catch(error => { if (active && error.name !== 'AbortError') setView({status:\"error\",message:'Unable to load'}); });\n  return () => { active = false; controller.abort(); };\n}, [itemId]);"
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "This fragment assumes decode and setView are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a deterministic test with controllable promises for A and B.",
+          "solution": "Start A, then switch to B.\nResolve B first with title B.\nResolve A afterward with title A.\nAssert the visible selected record remains B.\nAlso test a rejected B, unmount during load and a malformed successful response.",
+          "checks": [
+            "A stale success cannot overwrite B.",
+            "Cleanup does not show an error for intentional cancellation.",
+            "Loading, error, empty and success are distinct."
+          ]
+        },
+        "quiz": {
+          "question": "Does response arrival order always match request order?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correct": 1,
+          "explanation": "Network and server delays can reorder completion."
+        }
+      },
+      {
+        "id": "routing",
+        "title": "URLs, navigation and shareable state",
+        "stage": "advanced",
+        "takeaway": "Navigation state belongs in a URL when users need to bookmark or share it.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A selected lesson, search query or page number may need to survive refresh and Back. A local state variable alone does not provide that behavior. Production routers handle route matching and history integration; understand the browser model before choosing abstractions."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Navigation state belongs in a URL when users need to bookmark or share it.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "const params = new URLSearchParams('?q=react&page=2');\nconst query = params.get('q') ?? '';\nconst rawPage = Number(params.get('page') ?? '1');\nconst page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;\nconsole.log(query, page); // react 2\n// pushState changes history but does not itself emit popstate."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "Treat URL parameters as untrusted input. Decide which changes push a new history entry and which replace the current one. A deployed SPA also needs deep-link fallback handling unless it uses hash routes. Focus and document titles must update coherently after navigation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify expected Back-button behavior for filtering and selecting a lesson.",
+          "solution": "Use replace for rapidly edited search drafts if every keystroke should not become a history entry.\nUse push for selecting another lesson.\nOn Back, restore route state from the URL, update the screen and focus the main heading.\nTest a direct deep link and a refresh at that URL.",
+          "checks": [
+            "Bad page values fall back safely.",
+            "The URL and screen cannot disagree.",
+            "Test actual browser history rather than only a component mock."
+          ]
+        },
+        "quiz": {
+          "question": "Does pushState automatically fire popstate?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correct": 1,
+          "explanation": "A router normally updates its own state when pushing and listens for traversal events separately."
+        }
+      },
+      {
+        "id": "testing",
+        "title": "Tests that verify behavior",
+        "stage": "advanced",
+        "takeaway": "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Testing Library example fragment; requires a configured runner, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "Queries by role and accessible name tend to reflect real user interaction. Avoid tests coupled to internal state variable names or CSS selectors when a semantic query is possible. Use controllable asynchronous fixtures instead of arbitrary sleeps."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a test matrix for the tracker’s add/remove/filter behavior.",
+          "solution": "Unit: blank title, duplicate ID, unknown toggle, input immutability.\nComponent: labeled input, Enter submission, visible validation error, empty filter result.\nBrowser: refresh policy, keyboard-only operation, URL Back/Forward if routing is added.\nRegression: reproduce one real bug with the smallest meaningful test.",
+          "checks": [
+            "Each test has an observable expected result.",
+            "At least one negative case per boundary.",
+            "Do not mark a test passed merely because it did not throw during setup."
+          ]
+        },
+        "quiz": {
+          "question": "Which is the strongest test of an Add button?",
+          "options": [
+            "It has class add-button",
+            "Activating it creates the expected visible record"
+          ],
+          "correct": 1,
+          "explanation": "The second checks user-visible behavior."
+        }
+      },
+      {
+        "id": "resilience-security",
+        "title": "Error boundaries and security boundaries",
+        "stage": "advanced",
+        "takeaway": "Recoverable UI failures and access-control decisions are different responsibilities.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "An Error Boundary can show a fallback for rendering errors in its descendants. It does not automatically handle every event-handler or asynchronous error, so those paths still need explicit handling. Place boundaries around features that can fail independently."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "Recoverable UI failures and access-control decisions are different responsibilities.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Safe text rendering:\n<p>{externalTitle}</p>\n// Do not convert untrusted strings to HTML with dangerouslySetInnerHTML.\n// Authorization still belongs on the server, even if a button is hidden."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "React’s ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Threat-model a lesson editor with public read and owner-only write.",
+          "solution": "Server verifies identity and ownership on every write.\nClient validates for usability; server validates authoritatively.\nRender titles as text; sanitize only if explicitly supporting rich HTML.\nAvoid logging tokens or full sensitive payloads.\nHandle expired sessions without silently losing a local draft.",
+          "checks": [
+            "Describe what an attacker can bypass in the UI.",
+            "Distinguish rendering failures from rejected API calls.",
+            "Test unauthorized writes at the server boundary."
+          ]
+        },
+        "quiz": {
+          "question": "Is hiding a Delete button sufficient authorization?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correct": 1,
+          "explanation": "Requests can be sent without using the visible UI."
+        }
+      },
+      {
+        "id": "performance",
+        "title": "Measure before optimizing",
+        "stage": "advanced",
+        "takeaway": "An optimization should preserve behavior and improve a measured bottleneck.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A slow interaction may come from rendering, a long calculation, layout or a network waterfall. Record the slow interaction and inspect the appropriate profiler. Memoization trades bookkeeping and memory for potentially avoided work; it is not a correctness mechanism."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "An optimization should preserve behavior and improve a measured bottleneck.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "// Component fragment:\nconst visible = useMemo(\n  () => expensiveFilter(rows, query),\n  [rows, query]\n);\n// Use only when measurement shows this calculation is worth caching.\n// Changing rows identity every render can defeat the cache."
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "React memo compares props shallowly by default; new object/function identities may still trigger work. A custom comparator can be wrong when it ignores callbacks with captured state. Large lists may need virtualization; it introduces keyboard and accessibility considerations. Compiler-enabled projects can change how much manual memoization is useful."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Record a before/after experiment for a 10,000-record filter.",
+          "solution": "Use a fixed synthetic dataset and the same device/build.\nMeasure typing-to-update latency and render/calculate time.\nTry removing redundant state first.\nCompare a memoized filter or deferred presentation only if warranted.\nCheck result correctness and keyboard behavior after optimization.",
+          "checks": [
+            "Report workload and build mode.",
+            "Do not use console timings alone to prove a whole interaction improved.",
+            "Remove an optimization if it adds complexity without benefit."
+          ]
+        },
+        "quiz": {
+          "question": "Should useMemo be required for correctness?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "correct": 1,
+          "explanation": "The result must remain correct if React recomputes it."
+        }
+      },
+      {
+        "id": "delivery",
+        "title": "Persistence, releases and a production-readiness review",
+        "stage": "advanced",
+        "takeaway": "A working local screen still needs a reliable data and delivery contract.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Persistence introduces schema versions, invalid stored data, quota failures and multi-device conflict decisions. A browser-only tracker may use local storage for non-sensitive learning data, but it must handle read/write failures and cannot promise cross-device synchronization."
+            ]
+          },
+          {
+            "title": "Worked implementation",
+            "paragraphs": [
+              "A working local screen still needs a reliable data and delivery contract.",
+              "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            ],
+            "example": "Persistence envelope:\n{ \"version\": 1, \"lessons\": [{\"id\":\"types\",\"title\":\"Types\",\"done\":false}] }\n\nRelease checks:\nType-check → domain tests → UI tests → production build → preview\nDeep-link refresh → keyboard flow → error states → monitoring → rollback plan"
+          },
+          {
+            "title": "Debugging and design tradeoffs",
+            "paragraphs": [
+              "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record what was actually tested; a green build is not evidence that every user journey works."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Build the advanced tracker project and produce an evidence-based release note.",
+          "solution": "Reference architecture:\n- tracker-core.ts owns schema validation and pure transitions.\n- AdvancedApp.tsx owns form state and dispatches actions.\n- Persistence adapter handles versioned decoding and explicit failures.\n- Tests cover invalid input, duplicate IDs and immutable updates.\n- Add API synchronization only with documented conflict and authorization rules.\nReport exactly which checks ran and which deployment assumptions remain.",
+          "checks": [
+            "All required project cases pass.",
+            "No secrets in client code.",
+            "An incompatible saved version fails clearly.",
+            "A rollback preserves or deliberately migrates user data."
+          ]
+        },
+        "quiz": {
+          "question": "Does deploying a SPA make its data available across devices?",
+          "options": [
+            "Automatically",
+            "Only with a designed persistence/synchronization service"
+          ],
+          "correct": 1,
+          "explanation": "A hosted interface and shared persistent data are separate systems."
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations · JavaScript and typed data",
+        "description": "Build comfort with the language, browser semantics and runtime boundaries before adding React state.",
+        "exitCriteria": [
+          "Write small pure functions and test invalid as well as normal input.",
+          "Explain strings versus numbers, asynchronous completion and TypeScript’s runtime limits.",
+          "Use semantic labeled controls and distinguish data from its display."
+        ],
+        "project": {
+          "title": "Validated study-record importer",
+          "brief": "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
+          "requirements": [
+            "Accept a versioned object containing unique lesson IDs, titles and completion booleans.",
+            "Reject malformed JSON, duplicate IDs, blank titles and unsupported versions.",
+            "Return a completion summary without modifying caller-owned records.",
+            "Write repeatable valid and invalid-input tests."
+          ],
+          "rubric": [
+            "Every malformed case produces an explicit failure.",
+            "Zero and false are not treated as missing.",
+            "Original data is unchanged.",
+            "Explain where runtime validation ends and static typing begins."
+          ],
+          "solution": "Parse into unknown. Check the envelope version and array. Validate each record and use a Set for duplicate IDs. Construct new typed records. Derive counts with filter/reduce. See decodeSaved and tracker-core.test.ts for a reference implementation; attempt your own before opening it."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate · State and feature design",
+        "description": "Develop features with explicit state ownership, predictable transitions and accessible interactions.",
+        "exitCriteria": [
+          "Choose between local state, lifted state, reducers and context.",
+          "Implement forms with visible validation and stable list identity.",
+          "Test transitions and explain draft-reset policies."
+        ],
+        "project": {
+          "title": "Editable learning tracker",
+          "brief": "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+          "requirements": [
+            "Use stable IDs and immutable reducer transitions.",
+            "Show blank-title errors and an empty search result.",
+            "Keep completion counts derived from all records.",
+            "Decide whether changing selection preserves unsaved drafts.",
+            "Run domain tests and manually verify Enter, Tab and checkbox behavior."
+          ],
+          "rubric": [
+            "No duplicated records or mutation of old state.",
+            "Filtering does not lose completion changes.",
+            "Controls have accessible names.",
+            "A failed input cannot appear as a successful update.",
+            "Explain the ownership of each state value."
+          ],
+          "solution": "Separate tracker-core.ts from AdvancedApp.tsx. Generate IDs in event handlers, validate domain transitions in the reducer, derive filtered rows during rendering and use a labeled form. The downloadable workshop implements these interactions in memory; storage and API synchronization are separate extensions."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice · Resilience and delivery",
+        "description": "Reason about asynchronous races, persistence, security and measured performance in a bounded application.",
+        "exitCriteria": [
+          "Prevent stale requests from overwriting newer intent.",
+          "Distinguish render boundaries, async failures and server authorization.",
+          "Design versioned persistence and a realistic release test plan.",
+          "Measure a slow interaction before choosing an optimization."
+        ],
+        "project": {
+          "title": "Resilient tracker release",
+          "brief": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+          "requirements": [
+            "Add persistence with explicit save/read failure handling and schema version checks.",
+            "Implement a controllable API adapter with loading, error and stale-response tests.",
+            "Add URL-selected records and verify Back/Forward and direct-link refresh.",
+            "Prevent unsaved edits being silently overwritten.",
+            "Document server authorization assumptions and keep secrets out of the client.",
+            "Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified."
+          ],
+          "rubric": [
+            "Delayed response A cannot overwrite newer record B.",
+            "Malformed storage remains visible as an error rather than silently trusted data.",
+            "Keyboard and empty/error journeys pass.",
+            "Release notes distinguish executed tests from reviewed-only code.",
+            "Rollback/migration behavior is specified."
+          ],
+          "solution": "Start from the tested domain core. Add storage and API adapters around it, not inside the reducer. Use request cleanup and stale-result guards or a suitable framework data layer. Test adapter failures deterministically. The supplied app is a reference starting point, not a claim that these advanced extensions are already implemented."
         }
       }
     ]
@@ -1624,8 +3681,8 @@ const LEARNING_PATHS = [
     "title": "Python",
     "category": "Programming",
     "status": "ready",
-    "description": "Learn Python by running small programs, practicing each concept, and building a persistent study log. Twelve lessons form a practical beginner foundation, with offline examples and self-checks.",
-    "level": "Beginner",
+    "description": "Progress through 23 Python lessons from first scripts to typed domain models, reusable CLI tools, resource management, concurrency, profiling and a bounded import pipeline. Three staged projects provide practice and review criteria; completion does not certify professional mastery.",
+    "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Comfort creating files and opening a terminal; no programming experience required.",
       "A computer with a current supported Python 3 interpreter."
@@ -1636,20 +3693,27 @@ const LEARNING_PATHS = [
       "Validate inputs, read tracebacks, and persist records as UTF-8 JSON.",
       "Organize modules and understand project environments.",
       "Write small deterministic tests and distinguish API I/O from data processing.",
-      "Build and extend a local study log with explicit limitations."
+      "Build and extend a local study log with explicit limitations.",
+      "Model invariants with dataclasses; distinguish static contracts from runtime validation.",
+      "Build a reusable CLI with cleanup, logging and meaningful failure tests.",
+      "Explain threads, async task lifetimes and measurement-based optimization.",
+      "Bound external data and preserve prior output on batch or replacement failure."
     ],
     "setup": [
       "Install a supported Python 3 release from python.org if needed; this path uses only the standard library.",
       "Confirm python --version (Windows may use py; macOS/Linux may use python3).",
       "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
       "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
-      "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required."
+      "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required.",
+      "Intermediate and advanced practice require Python 3.11+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
     ],
     "nextSteps": [
-      "Add an argparse command interface and regression tests to your study log.",
-      "Study classes, iterators, generators, and type hints in the official tutorial.",
-      "Choose one real API, read its authentication and rate-limit documentation, and build a separate integration test.",
-      "Learn packaging and dependency management when your project needs external libraries."
+      "Rebuild each stage project from its brief before comparing the reference; explain its failure tests.",
+      "Run a separate static type checker and improve contracts; executing annotations does not certify checker coverage.",
+      "Package the intermediate tool with pyproject.toml, a build backend and an installed-artifact test in a clean environment.",
+      "Use transactional storage when multiple writers or durable service guarantees are required.",
+      "Study production API authentication, deadlines, retries, deployment and observability on a real project.",
+      "Explore process pools and advanced asyncio cancellation on measured workloads; this path offers advanced practice, not exhaustive mastery."
     ],
     "sources": [
       {
@@ -1675,6 +3739,46 @@ const LEARNING_PATHS = [
       {
         "title": "pathlib reference",
         "url": "https://docs.python.org/3/library/pathlib.html"
+      },
+      {
+        "title": "dataclasses",
+        "url": "https://docs.python.org/3/library/dataclasses.html"
+      },
+      {
+        "title": "typing and protocols",
+        "url": "https://docs.python.org/3/library/typing.html"
+      },
+      {
+        "title": "contextlib",
+        "url": "https://docs.python.org/3/library/contextlib.html"
+      },
+      {
+        "title": "argparse",
+        "url": "https://docs.python.org/3/library/argparse.html"
+      },
+      {
+        "title": "Logging HOWTO",
+        "url": "https://docs.python.org/3/howto/logging.html"
+      },
+      {
+        "title": "concurrent futures",
+        "url": "https://docs.python.org/3/library/concurrent.futures.html"
+      },
+      {
+        "title": "asyncio",
+        "url": "https://docs.python.org/3/library/asyncio.html"
+      },
+      {
+        "title": "Python profilers",
+        "url": "https://docs.python.org/3/library/profile.html"
+      },
+      {
+        "title": "Packaging Python projects",
+        "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/"
+      },
+      {
+        "title": "os.replace semantics",
+        "url": "https://docs.python.org/3/library/os.html#os.replace"
       }
     ],
     "lessons": [
@@ -1723,7 +3827,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The interpreter executes Python source. The terminal gives you a way to invoke it."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "values-and-names",
@@ -1770,7 +3875,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "text-and-input",
@@ -1817,7 +3923,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Input returns text. Your program decides whether and how to convert it."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "conditions",
@@ -1864,7 +3971,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An if/elif/else chain selects the first condition that is true and skips the remaining branches."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "collections",
@@ -1911,7 +4019,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A dictionary stores key/value associations and retrieves a duration using its task-name key."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "loops",
@@ -1958,7 +4067,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The start is included and the stop is excluded."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "functions",
@@ -2005,7 +4115,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Python returns None when execution reaches the end without an explicit return value."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "errors",
@@ -2052,7 +4163,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "ValueError describes a value unsuitable for the requested conversion. A narrow handler preserves unrelated failures."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "files-and-json",
@@ -2099,7 +4211,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "loads parses JSON text; load is the related function that reads from a file-like object."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "modules-and-environments",
@@ -2147,7 +4260,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The -m form runs pip as a module of that interpreter. Substitute your virtual environment interpreter path for python."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "testing-and-api-boundaries",
@@ -2195,7 +4309,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A fixed fixture isolates your parsing behavior. Separate integration checks are needed for a real service."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "study-log-capstone",
@@ -2245,7 +4360,654 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A parse failure does not mean the user has no data. Preserve the file and make the failure visible."
+        },
+        "stage": "foundation"
+      },
+      {
+        "id": "classes-and-dataclasses",
+        "stage": "intermediate",
+        "title": "13. Classes, invariants and dataclasses",
+        "takeaway": "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
+              "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. __post_init__ can enforce invariants after construction; frozen=True blocks ordinary assignment but is not deep immutability."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because bool subclasses int. hours is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
+            ],
+            "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not self.topic.strip():\n            raise ValueError(\"topic required\")\n        if type(self.minutes) is not int or self.minutes < 0:\n            raise ValueError(\"invalid minutes\")\n    def hours(self):\n        return self.minutes / 60\ns = Session(\"Python\", 90)\nprint(s.hours())\nprint(s == Session(\"Python\", 90))\n\n# Expected output:\n# 1.5\n# True"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Mutable defaults need field(default_factory=list) to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
+              "Equality compares fields; it is not persistent identity. Equal topic/duration records can still represent separate events."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Build a Playlist dataclass with an independent tracks list and add method rejecting blank titles. Prove two instances do not share state.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "from dataclasses import dataclass, field\n@dataclass\nclass Playlist:\n    tracks: list[str] = field(default_factory=list)\n    def add(self, title):\n        if not title.strip():\n            raise ValueError(\"title required\")\n        self.tracks.append(title.strip())\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"] and b.tracks == []\ntry:\n    a.add(\" \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
+          "checks": [
+            "Run the solution assertions; each checks a behavior, not only printed output.",
+            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+            "Explain the normal case, boundary and failure policy in your own words."
+          ]
+        },
+        "quiz": {
+          "question": "Does @dataclass enforce int annotations at runtime?",
+          "options": [
+            "Yes",
+            "No; explicit validation is separate",
+            "Only with frozen=True"
+          ],
+          "correct": 1,
+          "explanation": "The generated constructor stores values without validating annotated types."
         }
+      },
+      {
+        "id": "typing-and-protocols",
+        "stage": "intermediate",
+        "title": "14. Type contracts and protocols",
+        "takeaway": "Annotations express intended inputs and outputs to readers and static checkers. Python execution normally does not enforce them. A checker is a separate tool; this lesson runs without installing one.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Annotations express intended inputs and outputs to readers and static checkers. Python execution normally does not enforce them. A checker is a separate tool; this lesson runs without installing one.",
+              "A Protocol describes required operations structurally. An object can satisfy it without inheriting from it, letting consumers depend on a small interface instead of a specific disk or network client."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "summarize accepts anything with records(). MemorySource gives predictable data without I/O. The declared list[int] is a contract, not a JSON validator; external data needs runtime checks before use."
+            ],
+            "example": "from typing import Protocol\nclass MinuteSource(Protocol):\n    def records(self) -> list[int]: ...\nclass MemorySource:\n    def records(self) -> list[int]:\n        return [10, 20]\ndef summarize(source: MinuteSource) -> int:\n    return sum(source.records())\nprint(summarize(MemorySource()))\n\n# Expected output:\n# 30"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Casting JSON to a desired type does not validate it. Check container and value types before constructing domain records.",
+              "A runtime-checkable Protocol checks attribute presence rather than full signature/value validity. It is a design aid, not a security boundary."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write normalize_minutes(value: object) -> int accepting actual nonnegative integers. Test zero, True, a string and negative input.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+          "checks": [
+            "Run the solution assertions; each checks a behavior, not only printed output.",
+            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+            "Explain the normal case, boundary and failure policy in your own words."
+          ]
+        },
+        "quiz": {
+          "question": "Why use a Protocol?",
+          "options": [
+            "To force one inheritance tree",
+            "To describe minimal required operations",
+            "To validate every JSON field"
+          ],
+          "correct": 1,
+          "explanation": "A structural contract permits independent implementations and test doubles with compatible operations."
+        }
+      },
+      {
+        "id": "iterators-and-generators",
+        "stage": "intermediate",
+        "title": "15. Iterators and lazy pipelines",
+        "takeaway": "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+              "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but list(...) materializes all results."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "sum consumes the filtered stream, so a later list finds it exhausted. Call the generator function again for a fresh pass. This example makes consumption visible before introducing file streams."
+            ],
+            "example": "def valid_minutes(values):\n    for value in values:\n        if value >= 0:\n            yield value\nstream = valid_minutes([10, -1, 20])\nprint(sum(stream))\nprint(list(stream))\nprint(list(valid_minutes([0, 5])))\n\n# Expected output:\n# 30\n# []\n# [0, 5]"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Generators are not automatically faster; choose streaming for its memory/lifetime properties and measure relevant workloads.",
+              "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it deliberately on early exit."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Implement running_totals(values) yielding cumulative sums; check empty and partially consumed streams.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nprint(\"generator checks passed\")",
+          "checks": [
+            "Run the solution assertions; each checks a behavior, not only printed output.",
+            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+            "Explain the normal case, boundary and failure policy in your own words."
+          ]
+        },
+        "quiz": {
+          "question": "After sum consumes a generator, list on that same generator returns?",
+          "options": [
+            "The original items",
+            "An empty list",
+            "The total"
+          ],
+          "correct": 1,
+          "explanation": "An exhausted iterator has no remaining values; create a fresh one for another pass."
+        }
+      },
+      {
+        "id": "context-managers",
+        "stage": "intermediate",
+        "title": "16. Resource lifetimes and cleanup",
+        "takeaway": "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
+              "contextlib.contextmanager expresses acquisition before yield and cleanup in finally. Yield exactly once. An exception in the body is delivered at yield; do not accidentally suppress it."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "The trace records cleanup despite failure, then the outer handler sees the original exception. Prefer a native context manager when the resource already provides one."
+            ],
+            "example": "from contextlib import contextmanager\ntrace = []\n@contextmanager\ndef resource():\n    trace.append(\"open\")\n    try:\n        yield \"handle\"\n    finally:\n        trace.append(\"close\")\ntry:\n    with resource() as handle:\n        trace.append(handle)\n        raise ValueError(\"failed\")\nexcept ValueError:\n    trace.append(\"caught\")\nprint(trace)\n\n# Expected output:\n# ['open', 'handle', 'close', 'caught']"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Catching an exception inside a context manager without reraising can suppress it. Logging alone is not a reason to hide a failure.",
+              "Cleanup itself can fail. Prefer existing tested managers and write custom ones when you own a real lifetime rule."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Manage a StringIO buffer and prove it closes while preserving an exception raised by its body.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nassert stream.closed\nprint(\"cleanup checks passed\")",
+          "checks": [
+            "Run the solution assertions; each checks a behavior, not only printed output.",
+            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
+            "Explain the normal case, boundary and failure policy in your own words."
+          ]
+        },
+        "quiz": {
+          "question": "Where should unconditional cleanup go?",
+          "options": [
+            "Only before yield",
+            "In finally around yield",
+            "Only in except ValueError"
+          ],
+          "correct": 1,
+          "explanation": "finally runs after normal and exceptional exits and expresses the resource lifetime directly."
+        }
+      },
+      {
+        "id": "packaging-and-cli",
+        "stage": "intermediate",
+        "title": "17. Packages and command interfaces",
+        "takeaway": "Keep domain logic importable and argument parsing at a deliberate entry point.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Keep domain logic importable and argument parsing at a deliberate entry point.",
+              "A package groups modules under an import name; a distribution is an installable artifact. __init__.py makes a regular package; __main__.py supports python -m package. For distribution, pyproject.toml declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "argparse parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
+            ],
+            "example": "import argparse\ndef parser():\n    result = argparse.ArgumentParser(description=\"Summarize study time\")\n    result.add_argument(\"minutes\", type=int, nargs=\"+\")\n    return result\nargs = parser().parse_args([\"10\", \"20\"])\nprint(sum(args.minutes))\n\n# Expected output:\n# 30"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
+              "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Prove zero is accepted and a negative exits with status 2.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\np = argparse.ArgumentParser()\np.add_argument(\"--topic\", required=True)\np.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nwith redirect_stderr(StringIO()):\n    try:\n        p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"-1\"])\n    except SystemExit as error:\n        assert error.code == 2\n    else:\n        raise AssertionError(\"negative accepted\")\nprint(\"CLI checks passed\")",
+          "checks": [
+            "Run the solution assertions and explain the failure cases.",
+            "Introduce one deliberate defect, confirm its check fails, then restore it.",
+            "Compare with the relevant staged project; state what your checks do not prove."
+          ]
+        },
+        "quiz": {
+          "question": "Why keep parsing out of module scope?",
+          "options": [
+            "Imports remain reusable without triggering CLI work",
+            "It automatically builds a wheel",
+            "It requires inheritance"
+          ],
+          "correct": 0,
+          "explanation": "A caller can import functions without consuming its own arguments or starting a command."
+        }
+      },
+      {
+        "id": "logging-and-test-design",
+        "stage": "intermediate",
+        "title": "18. Logging and test design",
+        "takeaway": "Test contracts and failure behavior, then log useful operational facts.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Test contracts and failure behavior, then log useful operational facts.",
+              "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. unittest supports assertRaises, assertLogs and subTest for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "A dedicated logger and StringIO handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
+            ],
+            "example": "import logging\nfrom io import StringIO\nstream = StringIO()\nlogger = logging.getLogger(\"lesson.validation\")\nlogger.handlers.clear()\nlogger.propagate = False\nlogger.setLevel(logging.INFO)\nhandler = logging.StreamHandler(stream)\nhandler.setFormatter(logging.Formatter(\"%(levelname)s:%(message)s\"))\nlogger.addHandler(handler)\nlogger.warning(\"rejected record %s\", 2)\nprint(stream.getvalue().strip())\nlogger.removeHandler(handler)\nhandler.close()\n\n# Expected output:\n# WARNING:rejected record 2"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Avoid secrets and raw sensitive payloads in logs. Include safe identifiers/counts that explain which operation failed.",
+              "Tests that only print or mirror a private helper can miss a broken contract. Demonstrate a relevant deliberate defect fails. Patch dependencies where the consumer looks them up, and keep ordinary pure-function tests on real code."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Build a unittest validation suite using subTest for True, negatives, strings and fractional input; assert that its runner succeeds.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "import unittest\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        self.assertEqual(validate(0), 0)\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                with self.assertRaises(ValueError):\n                    validate(value)\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
+          "checks": [
+            "Run the solution assertions and explain the failure cases.",
+            "Introduce one deliberate defect, confirm its check fails, then restore it.",
+            "Compare with the relevant staged project; state what your checks do not prove."
+          ]
+        },
+        "quiz": {
+          "question": "Which test most directly checks rejection?",
+          "options": [
+            "Printing input",
+            "Asserting the exception and preserved state",
+            "Checking a private helper call"
+          ],
+          "correct": 1,
+          "explanation": "Invalid-input behavior and unchanged data are observable contracts worth protecting."
+        }
+      },
+      {
+        "id": "concurrency-models",
+        "stage": "advanced",
+        "title": "19. Threads, futures and async tasks",
+        "takeaway": "Choose concurrency by workload and keep shared state controlled.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Choose concurrency by workload and keep shared state controlled.",
+              "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. asyncio cooperatively schedules coroutines at await points, and TaskGroup provides bounded task lifetimes and failure propagation."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "Executor.map returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
+            ],
+            "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
+              "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
+          "checks": [
+            "Run the solution assertions and explain the failure cases.",
+            "Introduce one deliberate defect, confirm its check fails, then restore it.",
+            "Compare with the relevant staged project; state what your checks do not prove."
+          ]
+        },
+        "quiz": {
+          "question": "Does future.result(timeout=...) terminate a running worker?",
+          "options": [
+            "Yes",
+            "No; it only bounds that wait",
+            "Only when writing JSON"
+          ],
+          "correct": 1,
+          "explanation": "A timeout does not forcibly interrupt work; cancellation/deadlines must be supported by the actual operation."
+        }
+      },
+      {
+        "id": "profiling-and-complexity",
+        "stage": "advanced",
+        "title": "20. Profiling and complexity",
+        "takeaway": "Check correctness, then measure representative workloads before optimizing.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Check correctness, then measure representative workloads before optimizing.",
+              "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. cProfile helps locate cumulative time; timeit repeats focused measurements. Report workload size, environment and methodology. tracemalloc tracks Python allocations rather than every native allocation."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "The aggregation visits each row once. Its profile is inspected but only deterministic data and call-count presence are printed. Actual timings vary; the exercise compares equivalent algorithms without a brittle speed assertion."
+            ],
+            "example": "import cProfile, pstats\nfrom collections import defaultdict\ndef totals(rows):\n    result = defaultdict(int)\n    for topic, minutes in rows:\n        result[topic] += minutes\n    return dict(result)\nprofile = cProfile.Profile()\nanswer = profile.runcall(totals, [(\"Python\", 10), (\"Python\", 20), (\"Reading\", 5)])\nstats = pstats.Stats(profile)\nprint(answer)\nprint(stats.total_calls > 0)\n\n# Expected output:\n# {'Python': 30, 'Reading': 5}\n# True"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Compare equivalent behavior before timing; a fast incorrect shortcut is not an optimization. Include empty and edge cases.",
+              "Decide whether data setup belongs in timed work. Warm caches, build configuration and input distribution matter. Never turn a particular speedup into a universal unit-test expectation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Implement repeated-scan and one-pass totals; assert equivalent results, then repeat timings on 2,000 rows. Inspect times locally without asserting a winner.",
+          "starter": "# Implement the contract and edge-case checks.",
+          "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nassert rescans([]) == one_pass([]) == {}\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nassert len(scan_times) == len(pass_times) == 3\nprint(\"equivalence and timing checks passed\")",
+          "checks": [
+            "Run the solution assertions and explain the failure cases.",
+            "Introduce one deliberate defect, confirm its check fails, then restore it.",
+            "Compare with the relevant staged project; state what your checks do not prove."
+          ]
+        },
+        "quiz": {
+          "question": "Before accepting a faster calculation, do what?",
+          "options": [
+            "Check representative and edge result equivalence",
+            "Remove tests",
+            "Require under one millisecond"
+          ],
+          "correct": 0,
+          "explanation": "Timing is useful only when the promised behavior remains correct."
+        }
+      },
+      {
+        "id": "security-and-input-boundaries",
+        "stage": "advanced",
+        "title": "21. External input and security boundaries",
+        "takeaway": "Parsing, schema validation and authorization are separate steps.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Parsing, schema validation and authorization are separate steps.",
+              "JSON decoding establishes syntax, not expected shape. Check exact fields, types, sizes and ranges before constructing domain objects. Bound bytes before parsing, plus record count and field lengths. Never eval user input or deserialize untrusted pickle."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "The parser limits encoded bytes, requires exact fields and rejects booleans as minutes. Normalization is an explicit policy; a schema-valid record still does not prove its sender has permission. The full project also rejects duplicate JSON keys."
+            ],
+            "example": "import json\ndef parse_record(text):\n    if len(text.encode(\"utf-8\")) > 1024:\n        raise ValueError(\"record too large\")\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"topic\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    topic, minutes = value[\"topic\"], value[\"minutes\"]\n    if not isinstance(topic, str) or not 1 <= len(topic.strip()) <= 80:\n        raise ValueError(\"invalid topic\")\n    if type(minutes) is not int or not 0 <= minutes <= 1440:\n        raise ValueError(\"invalid minutes\")\n    return {\"topic\": topic.strip(), \"minutes\": minutes}\nprint(parse_record('{\"topic\":\"  Python \",\"minutes\":0}'))\n\n# Expected output:\n# {'topic': 'Python', 'minutes': 0}"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "A size check after reading an entire file does not prevent the allocation. Read at most limit+1 bytes at the real boundary and reject excess.",
+              "This local project assumes trusted directories. Path containment alone cannot defeat hostile symlink races; production isolation and authentication require a separate deployment design. Bounded JSON still needs care with deeply nested hostile documents."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Parse a JSON object containing only limit, an integer 1 through 100; reject oversized text, bool, extra fields and zero.",
+          "starter": "# Implement the contract and failure checks.",
+          "solution": "import json\ndef parse_limit(text):\n    if len(text.encode(\"utf-8\")) > 128:\n        raise ValueError(\"too large\")\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"limit\"}:\n        raise ValueError(\"invalid fields\")\n    count = value[\"limit\"]\n    if type(count) is not int or not 1 <= count <= 100:\n        raise ValueError(\"invalid limit\")\n    return count\nassert parse_limit('{\"limit\":1}') == 1\nassert parse_limit('{\"limit\":100}') == 100\nfor text in ['{\"limit\":true}', '{\"limit\":0}', '{\"limit\":2,\"extra\":1}', ' ' * 129]:\n    try:\n        parse_limit(text)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"bad input accepted\")\nprint(\"input boundary checks passed\")",
+          "checks": [
+            "Run each assertion and explain why a failure would matter.",
+            "Run test_projects.py in the downloaded project folder.",
+            "Explain the input bounds and unsupported deployment guarantees."
+          ]
+        },
+        "quiz": {
+          "question": "Successful json.loads establishes what?",
+          "options": [
+            "The application schema is valid",
+            "The text can be decoded as JSON",
+            "The sender is authorized"
+          ],
+          "correct": 1,
+          "explanation": "Decoding must be followed by domain validation and independent authorization where applicable."
+        }
+      },
+      {
+        "id": "robust-storage",
+        "stage": "advanced",
+        "title": "22. Safe replacement and failure recovery",
+        "takeaway": "Prepare a complete new file before replacing previous output.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Prepare a complete new file before replacing previous output.",
+              "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, flush and fsync its contents, close it, then replace the target with os.replace. Atomic visibility differs from power-loss durability and concurrency control."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "Closing before replacement matters on Windows. finally removes abandoned temporary files after preparation or replacement failure. Validate data before entering the write path. Tests inject a failure at the I/O boundary rather than relying on a real disk fault."
+            ],
+            "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\nimport json, os\ndef replace_json(path, value):\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            json.dump(value, stream)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"log.json\"\n    replace_json(path, [1])\n    replace_json(path, [1, 2])\n    print(json.loads(path.read_text(encoding=\"utf-8\")))\n    print(len(list(Path(folder).iterdir())))\n\n# Expected output:\n# [1, 2]\n# 1"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Atomic replacement does not prevent two read-modify-write operations losing updates. Use coordinated ownership, a lock or transactional storage before accepting multiple writers.",
+              "Power-loss durability can require directory syncing and platform-specific guarantees. Do not hide malformed files or permission failures by pretending the log is empty."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write save_text and inject os.replace failure. Prove the old bytes survive and the temporary file is cleaned.",
+          "starter": "# Implement the contract and failure checks.",
+          "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\nfrom unittest.mock import patch\nimport os\ndef save_text(path, text):\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            stream.write(text)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"data.txt\"\n    path.write_text(\"old\", encoding=\"utf-8\")\n    with patch(\"os.replace\", side_effect=OSError(\"injected\")):\n        try:\n            save_text(path, \"new\")\n        except OSError:\n            pass\n        else:\n            raise AssertionError(\"failure hidden\")\n    assert path.read_text(encoding=\"utf-8\") == \"old\"\n    assert list(Path(folder).iterdir()) == [path]\nprint(\"replacement failure checks passed\")",
+          "checks": [
+            "Run each assertion and explain why a failure would matter.",
+            "Run test_projects.py in the downloaded project folder.",
+            "Explain the input bounds and unsupported deployment guarantees."
+          ]
+        },
+        "quiz": {
+          "question": "Does atomic replacement prevent two writers losing updates?",
+          "options": [
+            "Yes",
+            "No; coordinate ownership or use transactions",
+            "Only with indent=2"
+          ],
+          "correct": 1,
+          "explanation": "Whole-file visibility does not stop a later writer overwriting another writer's valid update."
+        }
+      },
+      {
+        "id": "robust-import-capstone",
+        "stage": "advanced",
+        "title": "23. Capstone: a bounded import pipeline",
+        "takeaway": "Validate a complete batch before one deliberate commit.",
+        "sections": [
+          {
+            "title": "Reason about the design",
+            "paragraphs": [
+              "Validate a complete batch before one deliberate commit.",
+              "Build an importer for newline-delimited records with id, topic and minutes. IDs must be unique. Bound input, validate all rows and save a versioned report only when all pass. This policy keeps partial success from looking like a complete import."
+            ]
+          },
+          {
+            "title": "Trace and run",
+            "paragraphs": [
+              "The mini example shows ordered workers and batch validation. advanced_project.py adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run --demo with temporary files, then run test_projects.py before extending it. Threads demonstrate composition, not a promised speed advantage."
+            ],
+            "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30"
+          },
+          {
+            "title": "Pitfalls and tradeoffs",
+            "paragraphs": [
+              "Do not publish each worker's output as it finishes. Collect and validate the batch, then commit once. A failing worker does not forcefully terminate remaining threads.",
+              "The full project assumes one writer and a trusted local directory. It has no account system, network retries, sandbox, database transaction or power-loss certification. State those limits in your project review."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Inject a publish callback and prove valid rows publish once while duplicate IDs publish zero times; repeat with the full file importer.",
+          "starter": "# Implement the contract and failure checks.",
+          "solution": "def import_and_publish(rows, publish):\n    ids = [row[\"id\"] for row in rows]\n    if len(set(ids)) != len(ids):\n        raise ValueError(\"duplicate id\")\n    publish(rows)\ncalls = []\nimport_and_publish([{\"id\": \"a\"}, {\"id\": \"b\"}], calls.append)\nassert len(calls) == 1\ncalls.clear()\ntry:\n    import_and_publish([{\"id\": \"a\"}, {\"id\": \"a\"}], calls.append)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"duplicate accepted\")\nassert calls == []\nprint(\"commit policy checks passed\")",
+          "checks": [
+            "Run each assertion and explain why a failure would matter.",
+            "Run test_projects.py in the downloaded project folder.",
+            "Explain the input bounds and unsupported deployment guarantees."
+          ]
+        },
+        "quiz": {
+          "question": "When should an import publish?",
+          "options": [
+            "After each worker",
+            "Only after all records and batch invariants pass",
+            "Before parsing"
+          ],
+          "correct": 1,
+          "explanation": "One commit follows complete validation, preserving the old report on any rejected record."
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations",
+        "description": "First scripts through a persistent study log; learn to explain basic behavior.",
+        "exitCriteria": [
+          "Explain names, conditions, loops and function return values.",
+          "Reject invalid minutes without changing the log.",
+          "Save/load the sample and compute the same topic totals."
+        ],
+        "project": {
+          "title": "Personal study log",
+          "brief": "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+          "requirements": [
+            "Accept nonblank topics and actual nonnegative whole minutes.",
+            "Preserve existing records when validation fails.",
+            "Round-trip sample data through UTF-8 JSON and summarize repeated topics."
+          ],
+          "rubric": [
+            "Correct repeated-topic and empty totals.",
+            "Explicit validation and unchanged state on errors.",
+            "Explains that simple JSON persistence assumes one process."
+          ],
+          "solution": "\"\"\"Foundation reference: validated study records and topic totals.\"\"\"\nimport json\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\ndef totals_by_topic(log):\n    totals = {}\n    for row in log:\n        totals[row[\"topic\"]] = totals.get(row[\"topic\"], 0) + row[\"minutes\"]\n    return totals\n\ndef demo():\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Reading\", 10)\n    add_session(log, \"Python\", 15)\n    with TemporaryDirectory() as folder:\n        path = Path(folder) / \"study.json\"\n        path.write_text(json.dumps(log), encoding=\"utf-8\")\n        restored = json.loads(path.read_text(encoding=\"utf-8\"))\n        print(totals_by_topic(restored))\n\nif __name__ == \"__main__\":\n    demo()\n"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate",
+        "description": "Reusable domain models, resource lifetimes and a tested command tool.",
+        "exitCriteria": [
+          "Explain dataclass invariants and static versus runtime contracts.",
+          "Trace a one-pass generator and cleanup after failure.",
+          "Run a reusable CLI and meaningful normal/boundary/failure tests."
+        ],
+        "project": {
+          "title": "Validated study-summary CLI",
+          "brief": "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+          "requirements": [
+            "Use a frozen Session dataclass with explicit range/shape rules.",
+            "Bound file reads and close handles on errors.",
+            "Separate main argument parsing from importable calculation functions.",
+            "Return 0 on success and 1 on expected read/validation failure.",
+            "Document how to split into a package and add pyproject.toml; no package publication is required."
+          ],
+          "rubric": [
+            "Valid zero and trimmed topics work.",
+            "Invalid shapes and minutes fail without rewriting input.",
+            "Tests use temporary files and verify output/status.",
+            "Explains why a type hint is not schema validation."
+          ],
+          "solution": "\"\"\"Intermediate reference: typed value objects, JSON file summary CLI.\nRun: python intermediate_project.py --demo\nOr: python intermediate_project.py sessions.json\nReads existing input; it never rewrites that file.\n\"\"\"\nimport argparse\nfrom dataclasses import dataclass\nimport json\nimport logging\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef parse_sessions(value: object) -> list[Session]:\n    if type(value) is not list or len(value) > 1000:\n        raise ValueError(\"expected at most 1000 records\")\n    result = []\n    for row in value:\n        if type(row) is not dict or set(row) != {\"topic\", \"minutes\"}:\n            raise ValueError(\"expected topic and minutes fields\")\n        result.append(Session(row[\"topic\"], row[\"minutes\"]))\n    return result\n\ndef load_sessions(path: Path) -> list[Session]:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(262145)\n    if len(raw) > 262144:\n        raise ValueError(\"input exceeds 256 KiB\")\n    return parse_sessions(json.loads(raw.decode(\"utf-8\")))\n\ndef totals_by_topic(sessions: list[Session]) -> dict[str, int]:\n    result: dict[str, int] = {}\n    for session in sessions:\n        result[session.topic] = result.get(session.topic, 0) + session.minutes\n    return result\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Summarize a validated study-log JSON array\")\n    parser.add_argument(\"input\", type=Path, nargs=\"?\")\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and args.input is not None:\n        parser.error(\"choose --demo or input, not both\")\n    if not args.demo and args.input is None:\n        parser.error(\"provide input or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                path = Path(folder) / \"sessions.json\"\n                path.write_text(json.dumps([{\"topic\":\"Python\",\"minutes\":25},{\"topic\":\"Python\",\"minutes\":15}]), encoding=\"utf-8\")\n                sessions = load_sessions(path)\n        else:\n            sessions = load_sessions(args.input)\n        print(json.dumps(totals_by_topic(sessions), sort_keys=True))\n        logger.info(\"summarized %d sessions\", len(sessions))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Cannot summarize: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Measured concurrency, bounded inputs and failure-aware batch publishing. This is applied practice rather than professional certification.",
+        "exitCriteria": [
+          "Explain worker ordering, cancellation limits and when concurrency may hurt.",
+          "Compare equivalent algorithms before interpreting timing results.",
+          "Demonstrate input limits and preserve output on validation/replacement failure.",
+          "State single-writer and durability limitations."
+        ],
+        "project": {
+          "title": "Bounded study import pipeline",
+          "brief": "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+          "requirements": [
+            "Bound bytes, records, fields and worker count.",
+            "Reject duplicate keys, duplicate IDs and invalid minutes.",
+            "Keep worker output order deterministic and commit only after batch validation.",
+            "Write a same-directory temporary file, fsync contents, replace once and clean on failure.",
+            "Validate loaded report version and recomputed totals.",
+            "Profile sequential versus threaded validation; do not promise a speedup."
+          ],
+          "rubric": [
+            "Round-trip, empty, boundary and corruption tests pass.",
+            "Injected replacement failure preserves exact prior bytes and leaves no temporary files.",
+            "CLI error status and safe logging are explained.",
+            "Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+          ],
+          "solution": "\"\"\"Advanced practice: bounded JSONL import, ordered workers and one replacement.\nOne writer, trusted local directory. No power-loss durability certification.\nRun python advanced_project.py --demo, or input.jsonl output.json --workers 2.\n\"\"\"\nimport argparse\nfrom concurrent.futures import ThreadPoolExecutor\nfrom dataclasses import dataclass, asdict\nimport json\nimport logging\nimport os\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\n\nMAX_BYTES = 262144\nMAX_RECORDS = 1000\nMAX_LINE_BYTES = 2048\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    id: str\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.id, str) or not 1 <= len(self.id) <= 64 or self.id != self.id.strip():\n            raise ValueError(\"id must be 1 through 64 characters without edge spaces\")\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef unique_object(pairs):\n    result = {}\n    for key, value in pairs:\n        if key in result:\n            raise ValueError(\"duplicate JSON key\")\n        result[key] = value\n    return result\n\ndef decode(text):\n    try:\n        return json.loads(text, object_pairs_hook=unique_object)\n    except RecursionError as error:\n        raise ValueError(\"JSON nesting too deep\") from error\n\ndef make_session(value):\n    if type(value) is not dict or set(value) != {\"id\", \"topic\", \"minutes\"}:\n        raise ValueError(\"record needs exactly id, topic and minutes\")\n    return Session(value[\"id\"], value[\"topic\"], value[\"minutes\"])\n\ndef bounded_read(path: Path, limit: int = MAX_BYTES) -> str:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(limit + 1)\n    if len(raw) > limit:\n        raise ValueError(\"input exceeds byte limit\")\n    return raw.decode(\"utf-8\")\n\ndef parse_line(line: str) -> Session:\n    if len(line.encode(\"utf-8\")) > MAX_LINE_BYTES:\n        raise ValueError(\"record exceeds byte limit\")\n    return make_session(decode(line))\n\ndef validate_batch(records):\n    if len(records) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if len({record.id for record in records}) != len(records):\n        raise ValueError(\"duplicate session id\")\n\ndef read_batch(path: Path, workers: int = 1) -> list[Session]:\n    if type(workers) is not int or not 1 <= workers <= 8:\n        raise ValueError(\"workers must be 1 through 8\")\n    lines = bounded_read(path).splitlines()\n    if len(lines) > MAX_RECORDS:\n        raise ValueError(\"too many records\")\n    if any(not line.strip() for line in lines):\n        raise ValueError(\"blank records are not allowed\")\n    if workers == 1:\n        records = [parse_line(line) for line in lines]\n    else:\n        with ThreadPoolExecutor(max_workers=workers) as pool:\n            records = list(pool.map(parse_line, lines))\n    validate_batch(records)\n    return records\n\ndef summary(records):\n    totals = {}\n    for record in records:\n        totals[record.topic] = totals.get(record.topic, 0) + record.minutes\n    return totals\n\ndef atomic_write(path: Path, value) -> None:\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            json.dump(value, stream, indent=2, sort_keys=True, allow_nan=False)\n            stream.write(\"\\n\")\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\n\ndef import_report(source: Path, target: Path, workers: int = 1):\n    if source.resolve() == target.resolve():\n        raise ValueError(\"input and report must be different files\")\n    records = read_batch(source, workers)\n    report = {\"version\": 1, \"sessions\": [asdict(r) for r in records], \"totals\": summary(records)}\n    atomic_write(target, report)\n    logger.info(\"imported %d records\", len(records))\n    return report\n\ndef load_report(path: Path):\n    value = decode(bounded_read(path, 1048576))\n    if type(value) is not dict or set(value) != {\"version\", \"sessions\", \"totals\"}:\n        raise ValueError(\"invalid report fields\")\n    if type(value[\"version\"]) is not int or value[\"version\"] != 1:\n        raise ValueError(\"unsupported report version\")\n    if type(value[\"sessions\"]) is not list or len(value[\"sessions\"]) > MAX_RECORDS:\n        raise ValueError(\"invalid report records\")\n    records = [make_session(row) for row in value[\"sessions\"]]\n    validate_batch(records)\n    totals = value[\"totals\"]\n    if type(totals) is not dict or any(type(k) is not str or type(v) is not int for k, v in totals.items()):\n        raise ValueError(\"invalid totals\")\n    if totals != summary(records):\n        raise ValueError(\"totals do not match records\")\n    return records\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Validate JSONL and publish one study report\")\n    parser.add_argument(\"input\", nargs=\"?\", type=Path)\n    parser.add_argument(\"output\", nargs=\"?\", type=Path)\n    parser.add_argument(\"--workers\", type=int, default=1)\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and (args.input or args.output):\n        parser.error(\"choose --demo or two file paths\")\n    if not args.demo and (args.input is None or args.output is None):\n        parser.error(\"provide input and output, or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                source, target = Path(folder)/\"input.jsonl\", Path(folder)/\"report.json\"\n                rows = [{\"id\":\"a\",\"topic\":\"Python\",\"minutes\":25},{\"id\":\"b\",\"topic\":\"Python\",\"minutes\":15}]\n                source.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")\n                import_report(source, target, args.workers)\n                print(json.dumps(summary(load_report(target)), sort_keys=True))\n        else:\n            report = import_report(args.input, args.output, args.workers)\n            print(json.dumps(report[\"totals\"], sort_keys=True))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Import failed: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Foundation project reference",
+        "href": "paths/python/practice/foundation_project.py"
+      },
+      {
+        "title": "Intermediate CLI reference",
+        "href": "paths/python/practice/intermediate_project.py"
+      },
+      {
+        "title": "Advanced import pipeline reference",
+        "href": "paths/python/practice/advanced_project.py"
+      },
+      {
+        "title": "Staged project tests",
+        "href": "paths/python/practice/test_projects.py"
+      },
+      {
+        "title": "Practice instructions and limitations",
+        "href": "paths/python/practice/README.md"
       }
     ]
   },
@@ -2254,8 +5016,8 @@ const LEARNING_PATHS = [
     "title": "SQL Server & T-SQL",
     "category": "Data",
     "status": "ready",
-    "description": "Learn to query, join and reconcile data safely, then reason about transactions and query plans through a complete order-and-payment case.",
-    "level": "Beginner to practical foundations",
+    "description": "Progress from first SQL queries to robust data models, replayable imports, transaction contracts, query-plan diagnosis and an assessed reconciliation pipeline.",
+    "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "No SQL knowledge required. Comfort with files, rows and columns is helpful.",
       "Access to a local or training SQL Server instance and a query client is needed to execute exercises; reading and quizzes work without one."
@@ -2265,7 +5027,11 @@ const LEARNING_PATHS = [
       "Write joins, aggregates, CTEs and window calculations with checked results.",
       "Use typed parameters, temporary staging and rollback-based practice.",
       "Reason about isolation and execution plans without misleading shortcuts.",
-      "Build an order/payment reconciliation that preserves unmatched records."
+      "Build an order/payment reconciliation that preserves unmatched records.",
+      "Specify decimal/time and migration contracts, not only query syntax.",
+      "Diagnose parameter-sensitive workloads and reason about Query Store evidence.",
+      "Design optimistic updates, bounded deadlock retries and least-privilege access.",
+      "Deliver a three-stage assessed import/reconciliation project with explicit validation limits."
     ],
     "setup": [
       "Use a supported SQL Server training instance with SSMS or sqlcmd. No server is installed or started by this website.",
@@ -2273,7 +5039,9 @@ const LEARNING_PATHS = [
       "Run setup.sql in SSMS and keep that query window open. All #LN fixture tables are session-local. In another window run setup.sql again to create a separate fixture.",
       "Examples assume the setup fixture is unchanged. Start a new query window and run setup.sql to reset without modifying another session.",
       "Run snippets or solutions.sql in the same session. GO is a client batch separator. Do not paste GO into an application driver call.",
-      "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed."
+      "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed.",
+      "Advanced practice uses advanced-lab.sql and advanced-solutions.sql in the same session after setup.sql. It has a different payment-event dataset from the foundation fixture.",
+      "Stage exit projects require explained evidence. No SQL Server engine, concurrent-session or durability tests have been executed by this website authoring pass."
     ],
     "nextSteps": [
       "Implement the capstone with permanent tables in a separately approved training database, adding foreign keys and source-batch uniqueness rules.",
@@ -2345,6 +5113,54 @@ const LEARNING_PATHS = [
       {
         "title": "Window frames: OVER",
         "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql"
+      },
+      {
+        "title": "Query Store performance history",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store"
+      },
+      {
+        "title": "Deadlocks guide",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide"
+      },
+      {
+        "title": "Database Engine permissions",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/permissions-database-engine"
+      },
+      {
+        "title": "FROM and APPLY",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql"
+      },
+      {
+        "title": "Statistics and cardinality",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics"
+      },
+      {
+        "title": "datetimeoffset",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql"
+      },
+      {
+        "title": "EXCEPT and INTERSECT",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/set-operators-except-and-intersect-transact-sql"
+      },
+      {
+        "title": "LAG",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/lag-transact-sql"
+      },
+      {
+        "title": "TRY CATCH",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql"
+      },
+      {
+        "title": "TRY_CONVERT",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql"
+      },
+      {
+        "title": "Decimal precision and scale",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17"
+      },
+      {
+        "title": "rowversion concurrency tokens",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/rowversion-transact-sql?view=sql-server-ver17"
       }
     ],
     "lessons": [
@@ -2395,7 +5211,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Local temporary tables belong to a SQL session. Use the same connection/window after setup."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "types-keys-null",
@@ -2444,7 +5261,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The comparison is UNKNOWN, not TRUE. WHERE retains TRUE rows; use IS NULL to select the two missing emails."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "select-filter-sort",
@@ -2493,7 +5311,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "TOP chooses from the requested order; a unique tie-breaker makes ties predictable."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "joins-and-grain",
@@ -2542,7 +5361,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Joining attaches matching rows; it does not allocate the order amount across them. Summing it now double counts."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "group-and-reconcile",
@@ -2591,7 +5411,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "HAVING filters grouped results. WHERE is for the rows supplied to the grouping operation."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "cte-and-subquery",
@@ -2640,7 +5461,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A CTE names a query expression for one statement. Use a temporary table when a later statement needs stored intermediate rows."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "window-functions",
@@ -2689,7 +5511,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A unique tie-breaker prevents equal dates from leaving the selected latest row ambiguous."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "parameters-procedures",
@@ -2738,7 +5561,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Typed parameters separate values from executable SQL text. Validate business limits and use least-privilege permissions as well."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "temporary-staging",
@@ -2787,7 +5611,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "@@ROWCOUNT describes the previous relevant statement and can be reset by subsequent statements."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "transactions-isolation",
@@ -2836,7 +5661,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Avoiding dirty reads is different from holding a stable view across multiple statements."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "indexes-and-plans",
@@ -2885,7 +5711,8 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Plan quality depends on the cost of the whole operation and the data; operator names alone do not establish performance."
-        }
+        },
+        "stage": "foundation"
       },
       {
         "id": "reconciliation-capstone",
@@ -2937,6 +5764,629 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Only 265 is matched to known orders. Preserve the remaining 20 as an orphan exception instead of using it to reduce known balances."
+        },
+        "stage": "foundation"
+      },
+      {
+        "id": "schema-contracts",
+        "title": "13. Model constraints, decimal amounts and time",
+        "stage": "intermediate",
+        "takeaway": "A schema is a business contract; precision, identity and time are part of correctness.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "A surrogate key identifies a database row; a business key identifies the event or entity outside the database. A payment identity column does not stop the same source payment being imported twice. Keep a stable source-system/event key and enforce its uniqueness in a permanent target. Decide whether corrections replace an event or create a new revision before choosing that key.",
+              "Separate an order header from its lines: customer and order date belong to the order; product, quantity and unit price belong to a line. Storing a customer address repeatedly in order rows may be appropriate as a historical shipping snapshot, but inappropriate if meant to be a current customer lookup. Normalization and historical snapshots solve different requirements.",
+              "decimal(p,s) has p total digits and s fractional digits. Arithmetic can widen the intermediate precision and scale, with SQL Server rules and maximum precision limiting the result. Explicitly choose the posting scale and test overflow and half-cent cases. A CHECK on amount alone does not reject NULL; combine NOT NULL with the check when an amount is required."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "Three units at 12.35 total 37.05. The timestamp is a different problem: a local January 1 observation corresponds to December 31 in UTC. A date bucket therefore requires a stated reporting zone, not simply stripping the offset.",
+              "datetimeoffset preserves an offset, not a named time-zone rule set. Store an event’s observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
+            ],
+            "example": "DECLARE @Price decimal(12,2)=12.35, @Quantity int=3;\nSELECT @Price*@Quantity AS Gross, CAST(@Price*@Quantity AS decimal(12,2)) AS Posted;\nDECLARE @Observed datetimeoffset(0)='2026-01-01T00:30:00+05:30';\nSELECT @Observed AS SourceTime, SWITCHOFFSET(@Observed,'+00:00') AS UtcTime;\n--37.05; UTC is 2025-12-31 19:00:00 +00:00"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Keep a rate at sufficient precision until the prescribed rounding boundary; rounding each line and rounding an invoice total can differ. Test both and choose the business rule explicitly. Do not silently turn malformed input into zero.",
+              "Our temporary fixtures cannot enforce foreign keys. Describe the permanent foreign-key design, then validate parent references with queries in this lab. A migration to permanent tables needs a real constraint test in SQL Server before deployment."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate three items priced at 0.335: compare rounding each item to two decimals before summing with rounding the total. Explain which rule a contract must specify.",
+          "starter": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT /* rounded line total */, /* rounded invoice total */;",
+          "solution": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT CAST(@Unit AS decimal(12,2))*3 AS RoundedLines,\n CAST(@Unit*3 AS decimal(12,2)) AS RoundedInvoice;\n--1.02 and1.01",
+          "checks": [
+            "RoundedLines=1.02; RoundedInvoice=1.01.",
+            "Explain that decimal precision does not decide the contractual rounding boundary."
+          ]
+        },
+        "quiz": {
+          "question": "Does a primary-key identity column alone prevent duplicate imports of one external event?",
+          "options": [
+            "Yes, every inserted row has a different identity",
+            "No, enforce the external business key as well",
+            "Only if the amount is decimal"
+          ],
+          "correct": 1,
+          "explanation": "Two insertions can receive different identity values while representing the same source event."
+        }
+      },
+      {
+        "id": "sets-and-apply",
+        "title": "14. Compare sets and use correlated APPLY",
+        "stage": "intermediate",
+        "takeaway": "Set comparison, existence and per-row selection express different questions.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "UNION ALL concatenates input rows and preserves duplicates; UNION removes duplicates across all selected columns. EXCEPT returns distinct left-side rows absent from the right; INTERSECT returns distinct shared rows. These compare selected values, not hidden record identity. Matching keys alone can miss changed amounts.",
+              "EXISTS is a good fit for “does this customer have any order?” because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary TOP without deterministic ordering.",
+              "APPLY evaluates a right-side table expression in relation to each left row. CROSS APPLY retains rows with a right result; OUTER APPLY also preserves left rows without one. This is useful for a latest order per customer, but does not guarantee a particular physical execution strategy."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "OUTER APPLY returns four customer rows including Dia. Changing it to CROSS APPLY removes Dia. The OrderId tie-breaker makes the TOP selection deliberate.",
+              "Set comparison treats NULLs as equal for distinctness in these operators. That differs from ordinary equality predicates and matters when checking snapshots containing nullable columns. The comparable columns also need compatible types and intended collation."
+            ],
+            "example": "SELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "EXCEPT is excellent for finding differences, but it does not report how many duplicate copies existed. Validate uniqueness separately. Likewise, UNION can hide a replayed payment if the selected values happen to match; replay handling belongs to business keys, not accidental row equality."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Find known order identifiers that do not appear in the incoming payment identifiers using EXCEPT, then explain why reversing the operands finds a different exception.",
+          "starter": "SELECT OrderId FROM #LNOrders\nEXCEPT\nSELECT OrderId FROM #LNPayments;",
+          "solution": "SELECT OrderId FROM #LNOrders EXCEPT SELECT OrderId FROM #LNPayments;\n--104\nSELECT OrderId FROM #LNPayments EXCEPT SELECT OrderId FROM #LNOrders;\n--999",
+          "checks": [
+            "First result 104: an order with no payment.",
+            "Reverse result 999: payment evidence with no known order.",
+            "Neither result diagnoses duplicate payment events."
+          ]
+        },
+        "quiz": {
+          "question": "You need all customers, including those without a latest order. Which operator fits?",
+          "options": [
+            "CROSS APPLY only",
+            "INNER JOIN only",
+            "OUTER APPLY"
+          ],
+          "correct": 2,
+          "explanation": "OUTER APPLY retains the outer customer even if its correlated query produces no row."
+        }
+      },
+      {
+        "id": "window-frames-and-gaps",
+        "title": "15. Specify window frames and compare consecutive observations",
+        "stage": "intermediate",
+        "takeaway": "A moving window is defined by rows or values; it is not automatically a time interval.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "LAG accesses a preceding row in a specified order; LEAD accesses a following row. The first LAG result is NULL unless a default is supplied. Replacing this with zero changes the meaning from “no previous observation” to a numerical baseline, so choose deliberately.",
+              "ROWS BETWEEN 1 PRECEDING AND CURRENT ROW means at most two rows, even if they are minutes or months apart. A seven-row mean is not a seven-day mean when dates are missing or several observations share a date. For calendar windows, define a calendar or explicit time-range join.",
+              "With an ORDER BY, an aggregate window’s implicit frame can include peers under RANGE semantics. Explicit ROWS plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The sample has five rows ordered by date then identifier. Its two-row sums are 100, 150, 130, 200 and 160. These are adjacent-order amounts across all customers; adding PARTITION BY CustomerId changes the question.",
+              "A gaps-and-islands problem first defines adjacency, such as consecutive calendar days or consecutive event sequence numbers. Deduplicate to the intended grain before labelling islands. Otherwise repeated dates can create misleading sequence differences."
+            ],
+            "example": "SELECT OrderId,OrderDate,Amount,\n LAG(Amount) OVER(ORDER BY OrderDate,OrderId) AS PreviousAmount,\n SUM(Amount) OVER(ORDER BY OrderDate,OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS TwoRows\nFROM #LNOrders ORDER BY OrderDate,OrderId;\n--TwoRows:100,150,130,200,160"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Window functions do not repair an ambiguous event order. If ingestion time differs from business time, include the chosen time and tie-breaker in the output so reviewers can reconstruct the sequence. Late arrivals may legitimately change historical running values."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "For each customer’s orders, return previous order amount and difference from it. Preserve NULL for a first order.",
+          "starter": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount, /* LAG */ AS PreviousAmount FROM #LNOrders)\nSELECT *,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
+          "solution": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount,LAG(Amount) OVER(PARTITION BY CustomerId ORDER BY OrderDate,OrderId) AS PreviousAmount FROM #LNOrders)\nSELECT CustomerId,OrderId,Amount,PreviousAmount,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
+          "checks": [
+            "Customer 1:NULL then -50; customer 2:NULL then 40; customer 3:NULL.",
+            "Explain why the first difference stays NULL."
+          ]
+        },
+        "quiz": {
+          "question": "A seven-row window contains two records from one day and misses another day. Is it a seven-day metric?",
+          "options": [
+            "No, row count and elapsed days differ",
+            "Yes, SQL always fills missing dates",
+            "Yes, when you sort by date"
+          ],
+          "correct": 0,
+          "explanation": "A row frame follows positions in the ordered rows; it does not synthesize a calendar."
+        }
+      },
+      {
+        "id": "index-selectivity-statistics",
+        "title": "16. Design an index for a query and inspect estimates",
+        "stage": "intermediate",
+        "takeaway": "An index proposal needs a workload, a predicate contract and measured evidence.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Sargability describes whether a predicate can support useful search arguments on an access structure. Avoid unnecessary functions or implicit conversions on indexed columns. Match parameter types to column types so the engine does not have to convert the column for comparison. This helps possibilities; it does not force an index seek.",
+              "For the query “one customer during a date range,” an index beginning with CustomerId then OrderDate is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
+              "Statistics help estimate cardinality, meaning how many rows flow through an operator. A histogram describes the leading statistics key and has limited steps; skew and correlation can still make estimates inaccurate. An index existing does not imply its estimates represent today’s data."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "This repeats the small index lab with explicit parameter types and a half-open date range. It is suitable for reading a plan, not proving speed. Record actual versus estimated rows and logical reads with the same parameters and fixture.",
+              "On a large representative training dataset, compare a common customer with a rare one. A plan that works well for one distribution may be expensive for the other. Capture query, parameters, indexes, statistics state and compatibility level before drawing a conclusion."
+            ],
+            "example": "IF OBJECT_ID('tempdb..#LNIndexLab') IS NOT NULL DROP TABLE #LNIndexLab;\nSELECT OrderId,CustomerId,OrderDate,Amount INTO #LNIndexLab FROM #LNOrders;\nCREATE INDEX IX_LNIndex_CustomerDate ON #LNIndexLab(CustomerId,OrderDate) INCLUDE(Amount);\nDECLARE @Customer int=2,@Start date='20260101',@End date='20260201';\nSET STATISTICS IO ON;\nSELECT OrderDate,Amount FROM #LNIndexLab\nWHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<@End;\nSET STATISTICS IO OFF;\n--80 and120; record actual reads and plan on your instance, do not invent them."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Every extra index costs space and write work. A covering index that adds many wide columns may be a poor trade. Update statistics or change an index only under a controlled experiment; repeatedly clearing a shared plan cache is not an acceptable benchmark method."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite the predicate YEAR(OrderDate)=@Year for a typed integer parameter, and propose an index for a customer-plus-year query. State what you would measure.",
+          "starter": "DECLARE @Year int=2026,@Customer int=2;\n-- Use DATEFROMPARTS and DATEADD, then an inclusive/exclusive range.",
+          "solution": "DECLARE @Year int=2026,@Customer int=2;\nDECLARE @Start date=DATEFROMPARTS(@Year,1,1);\nSELECT OrderId,Amount FROM #LNOrders WHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<DATEADD(year,1,@Start) ORDER BY OrderId;\n--Candidate(CustomerId,OrderDate) INCLUDE(OrderId,Amount). Validate reads, estimates and write cost on representative data.",
+          "checks": [
+            "Orders 103 and 104.",
+            "State valid @Year bounds if input is external; DATEFROMPARTS rejects invalid years.",
+            "Do not claim a performance win on five rows."
+          ]
+        },
+        "quiz": {
+          "question": "A query estimates ten rows and reads a million. What is a useful next step?",
+          "options": [
+            "Add NOLOCK",
+            "Inspect statistics, predicates, parameters and data skew",
+            "Assume every scan is wrong"
+          ],
+          "correct": 1,
+          "explanation": "Cardinality errors can come from several causes. Preserve the evidence before selecting a remedy."
+        }
+      },
+      {
+        "id": "procedure-transaction-contracts",
+        "title": "17. Give procedures explicit transaction and error contracts",
+        "stage": "intermediate",
+        "takeaway": "A reusable procedure must specify inputs, outputs, transaction ownership and failures.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. “It returned no SQL exception” is insufficient if an update silently matched zero rows. Check @@ROWCOUNT immediately after the modification.",
+              "Choose whether a procedure owns the transaction or participates in its caller’s transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested BEGIN TRAN statements do not provide independent inner transactions: an unqualified ROLLBACK can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
+              "TRY/CATCH handles many execution errors, but not every failure at the same execution level. Compile errors and client disconnections need application handling too. In CATCH, inspect transaction state, roll back owned work as appropriate, and THROW so the caller does not mistake failure for success."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The temporary procedure changes only #LNProcedureWork. A valid call changes order 103 from 80 to 81. An unknown order raises 51102 and leaves the work copy unchanged. Invalid amounts fail before any transaction starts.",
+              "The sample does not write an audit record or return a version token. Those are additional contract requirements when a caller must prove which update succeeded. Rerun the setup of this snippet to recreate the work copy; permanent fixture tables are not changed."
+            ],
+            "example": "IF OBJECT_ID('tempdb..#LNSafeAmount') IS NOT NULL DROP PROCEDURE #LNSafeAmount;\nGO\nCREATE PROCEDURE #LNSafeAmount @OrderId int,@NewAmount decimal(12,2)\nAS\nBEGIN\n SET NOCOUNT ON;\n SET XACT_ABORT ON;\n IF @@TRANCOUNT<>0 THROW 51100,'This lab procedure requires no outer transaction.',1;\n IF @NewAmount IS NULL OR @NewAmount<0 THROW 51101,'Amount must be nonnegative.',1;\n BEGIN TRY\n  BEGIN TRAN;\n  UPDATE #LNProcedureWork SET Amount=@NewAmount WHERE OrderId=@OrderId;\n  IF @@ROWCOUNT<>1 THROW 51102,'Expected exactly one order.',1;\n  COMMIT;\n END TRY\n BEGIN CATCH\n  IF XACT_STATE()<>0 ROLLBACK;\n  THROW;\n END CATCH;\nEND;\nGO\nIF OBJECT_ID('tempdb..#LNProcedureWork') IS NOT NULL DROP TABLE #LNProcedureWork;\nSELECT OrderId,Amount INTO #LNProcedureWork FROM #LNOrders;\nEXEC #LNSafeAmount @OrderId=103,@NewAmount=81;\nSELECT Amount FROM #LNProcedureWork WHERE OrderId=103; --81"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Avoid catching every error and returning a success-shaped empty table. Preserve useful error context while not exposing credentials or sensitive values. A rollback may also roll back an audit table insert in the same transaction; decide how operational failure logs are captured outside that unit."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "After the worked example, call the procedure with nonexistent order 999 inside TRY/CATCH. Prove the work copy still has five rows and totals 391 after the earlier successful 81 update.",
+          "starter": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\n--Inspect population and total.",
+          "solution": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNProcedureWork;\n--51102;5 rows;391.00",
+          "checks": [
+            "Run the worked example first.",
+            "Error 51102; five rows; total 391; @@TRANCOUNT is zero after failure."
+          ]
+        },
+        "quiz": {
+          "question": "Why does this procedure reject an outer transaction?",
+          "options": [
+            "Because SQL never supports nested BEGIN TRAN",
+            "Because a SELECT needs no transaction",
+            "To make its transaction ownership and rollback scope explicit"
+          ],
+          "correct": 2,
+          "explanation": "Nested transaction counters are not independent rollback boundaries. This lab adopts the simplest explicit ownership contract."
+        }
+      },
+      {
+        "id": "incremental-load-contracts",
+        "title": "18. Make an incremental load replayable",
+        "stage": "intermediate",
+        "takeaway": "Idempotency means a repeated logical input does not create a second business effect.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "A watermark such as “latest ingestion timestamp” helps select work but does not identify an event. Events can arrive late, clocks can differ, and a retry can replay an earlier batch. Keep stable source/event identifiers and a defined revision policy.",
+              "Distinguish identical duplicates from conflicting reuse of the same identifier. Two copies of E1 with amount 10 are a replay; E1 with 10 and 11 is a conflict requiring investigation or an explicit correction event. Choosing MAX(amount) would invent a business decision.",
+              "A target unique key is a last line of defence. NOT EXISTS avoids known rows in this single-session demonstration, but two simultaneous sessions can both observe absence. A production loader needs transaction/isolation design and duplicate-conflict handling; merely adding WHERE NOT EXISTS is not a concurrency proof."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "Run this snippet twice without replacing #LNReplayTarget. The first inserts two events; the second inserts none; the total stays 30. If you change E1 to 11, this simple loader skips it without detecting the conflict, demonstrating an intentional limitation.",
+              "The advanced capstone adds explicit validation, conflict and replay checks. Keep source observations long enough to explain why a row was accepted, rejected, quarantined or already processed."
+            ],
+            "example": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers are more robust than relying on perfect timing. A schema migration must preserve those identifiers too."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Extend the replay check to find an incoming E1=11 that disagrees with stored E1=10 without updating the target.",
+          "starter": "--Run the worked example first, then join incoming business keys to the target and compare payloads.",
+          "solution": "SELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00",
+          "checks": [
+            "One conflict row; stored total remains 30.",
+            "Explain how an authorized correction could use a revision or compensating event rather than silently overwriting."
+          ]
+        },
+        "quiz": {
+          "question": "Does NOT EXISTS by itself make a concurrent import race-free?",
+          "options": [
+            "No; overlapping transactions can both observe absence",
+            "Yes; SELECT reserves every absent key",
+            "Yes; timestamps eliminate every duplicate"
+          ],
+          "correct": 0,
+          "explanation": "A concurrency-safe design also needs enforced uniqueness and a deliberate transaction/error policy."
+        }
+      },
+      {
+        "id": "plan-regressions-query-store",
+        "title": "19. Investigate regressions with plans and Query Store",
+        "stage": "advanced",
+        "takeaway": "Compare like-for-like workload evidence before deciding that a plan change caused a slowdown.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "An actual plan reports operator runtime observations for an execution; Query Store retains historical query/plan/runtime information when enabled and capturing the workload. These answer different time scales. Availability, permissions and settings depend on the server version and database; do not assume the feature is enabled.",
+              "Start with a symptom: which query, time interval, parameters, row counts and workload changed? CPU, duration, logical reads, waits and execution count describe different costs. A rise in total duration might be more executions rather than slower individual calls.",
+              "Query Store runtime statistics are aggregated by intervals and execution types. If combining records, weight averages by execution count rather than averaging averages. Active intervals can have multiple entries for a plan; use the documented aggregation grain."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The diagnostic queries read options and known plans. An empty plan result can reflect capture settings, a new database or lack of applicable workload; it does not prove there were no queries. Do not enable or reconfigure Query Store on a shared system for this lesson.",
+              "Synthetic incident: planA averages 5 ms for 100 executions and planB averages 50 ms for 2. Combined mean is(500+100)/102, about 5.882 ms, not 27.5 ms. This arithmetic lesson is independent of whether your training database has captured plans."
+            ],
+            "example": "--Read-only diagnostics in the selected training database; permission may be required.\nSELECT DB_NAME() AS DatabaseName,actual_state_desc,desired_state_desc,\n current_storage_size_mb,max_storage_size_mb\nFROM sys.database_query_store_options;\nSELECT TOP(10) q.query_id,p.plan_id,p.is_forced_plan,qt.query_sql_text\nFROM sys.query_store_query q\nJOIN sys.query_store_query_text qt ON qt.query_text_id=q.query_text_id\nJOIN sys.query_store_plan p ON p.query_id=q.query_id\nORDER BY q.query_id DESC,p.plan_id DESC;\n--State, row count and contents depend on the instance; no fixed result is promised."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Plan forcing can be an operational mitigation, not proof of a permanent fix. Record why a prior plan is appropriate, its failure modes, how to unforce it, and what metric will trigger rollback. Parameter skew, statistics changes and blocking may require different remedies. This course does not force any plan."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate the weighted mean for the synthetic plan records and write a three-step investigation that separates workload volume from per-execution regression.",
+          "starter": "SELECT /* sum duration*count divided by total count */ FROM (VALUES(5.0,100),(50.0,2)) v(MeanMs,Executions);",
+          "solution": "SELECT SUM(MeanMs*Executions)/SUM(Executions) AS WeightedMeanMs\nFROM (VALUES(CAST(5 AS decimal(12,3)),100),(CAST(50 AS decimal(12,3)),2)) v(MeanMs,Executions);\n--approximately5.882353. Compare same intervals/parameters, row counts and waits before mitigation.",
+          "checks": [
+            "Approximately 5.882 ms, allowing output-scale rounding.",
+            "Investigation identifies query/parameters, interval counts and reads/waits.",
+            "No actual Query Store result or speedup is invented."
+          ]
+        },
+        "quiz": {
+          "question": "PlanA has 100 executions and planB has 2. Can their mean durations be averaged equally?",
+          "options": [
+            "Yes, both are plans",
+            "No, weight by execution counts",
+            "Only if Query Store is enabled"
+          ],
+          "correct": 1,
+          "explanation": "Equal averaging gives each plan equal weight rather than each execution equal weight."
+        }
+      },
+      {
+        "id": "concurrency-lost-updates",
+        "title": "20. Detect stale writes and reason about isolation",
+        "stage": "advanced",
+        "takeaway": "Reading a value and later writing a replacement creates a concurrency contract.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Imagine two users read amount 100. One saves 110; the other saves 120 based on the earlier 100. Blind last-writer-wins may erase the first decision. Decide whether overwriting is allowed, whether updates are additive, or whether stale writes must be rejected.",
+              "Optimistic concurrency checks a version captured with the original read. This lab uses an integer Revision column; production SQL Server often uses rowversion, which is a database-generated binary version token, not a date or wall-clock timestamp. The update includes both key and expected version; zero affected rows signals missing or changed data.",
+              "Pessimistic locking can instead protect the read-modify-write unit, with blocking and deadlock trade-offs. Snapshot reads reduce some reader/writer interference but do not remove the need to decide conflicting write behavior. Avoid presenting any isolation setting as a universal race fix."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The sequential script simulates two requests holding revision 1. The first succeeds and advances to 2; the second affects zero rows. This validates the predicate’s intention but is not a live two-session test.",
+              "In a real concurrency test, coordinate two sessions on a dedicated shared fixture, record start/commit ordering and expected results, and test retry/cancel paths. Our session-local tables intentionally cannot demonstrate cross-session contention."
+            ],
+            "example": "IF OBJECT_ID('tempdb..#LNVersionWork') IS NOT NULL DROP TABLE #LNVersionWork;\nCREATE TABLE #LNVersionWork(Id int NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL,Revision int NOT NULL);\nINSERT #LNVersionWork VALUES(1,100,1);\nDECLARE @OriginalRevision int=1;\nUPDATE #LNVersionWork SET Amount=110,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS FirstUpdate; --1\nUPDATE #LNVersionWork SET Amount=120,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS StaleUpdate; --0\nSELECT * FROM #LNVersionWork; --1,110,2"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "A version conflict is not an instruction to retry the same business decision blindly. Reload the current record and either merge, ask the user or reject according to policy. If a network error makes commit outcome uncertain, look up an operation identifier before repeating a non-idempotent effect."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "After the worked example, update from revision 2 to amount 115. Then demonstrate that reusing revision 2 cannot overwrite the result.",
+          "starter": "--Use UPDATE WHERE Id=1 AND Revision=2, capture each @@ROWCOUNT immediately.",
+          "solution": "UPDATE #LNVersionWork SET Amount=115,Revision=Revision+1 WHERE Id=1 AND Revision=2;\nSELECT @@ROWCOUNT AS Updated;\nUPDATE #LNVersionWork SET Amount=999,Revision=Revision+1 WHERE Id=1 AND Revision=2;\nSELECT @@ROWCOUNT AS Stale;\nSELECT Amount,Revision FROM #LNVersionWork;\n--1;0;115.00/3",
+          "checks": [
+            "First update 1, stale update 0, final 115/revision 3.",
+            "Do not label this a simultaneous-session or rowversion engine test."
+          ]
+        },
+        "quiz": {
+          "question": "What does a SQL Server rowversion represent?",
+          "options": [
+            "The local time of the update",
+            "A globally unique payment identifier",
+            "A database-generated binary version token"
+          ],
+          "correct": 2,
+          "explanation": "It supports detecting changes, but is not a datetime and does not replace a business event key."
+        }
+      },
+      {
+        "id": "deadlocks-retries",
+        "title": "21. Diagnose deadlocks and bound retries",
+        "stage": "advanced",
+        "takeaway": "A deadlock is a wait cycle; recovery needs both database and application reasoning.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Blocking means one operation waits for another; a deadlock is a cycle in which participants cannot progress. SQL Server selects a victim and rolls back its transaction; error 1205 identifies a deadlock victim. A command timeout is a different event and can have a different transaction outcome.",
+              "Use the deadlock graph to identify resources, owners, waiters, statements and transaction boundaries. Do not assume the shortest displayed statement caused the whole problem. Access paths, lock escalation, isolation and triggers can affect the locks acquired.",
+              "A common mitigation is consistent access order and shorter transactions, plus appropriate access paths. It is a risk reduction, not an absolute guarantee. Retrying should be bounded, include backoff/jitter and repeat the complete safe unit after rollback, not only the last statement of a multi-step operation."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The two-session schedule shows a simple cycle. It is deliberately written as a reasoning artifact instead of a script that could leave sessions waiting. Draw the dependency edges and propose a consistent access order.",
+              "If the operation also sends an email or calls a payment API, database rollback cannot undo that external side effect. Use a durable outbox or another explicit delivery/idempotency contract; a generic retry loop around all application code can duplicate effects."
+            ],
+            "example": "--Reasoning exercise, NOT executable SQL and not an induced deadlock.\nSession A: BEGIN; lock order101; request order102.\nSession B: BEGIN; lock order102; request order101.\nA waits for B; B waits for A -> cycle.\nCandidate change: both sessions access101 then102 in a short transaction.\nStill test actual plans/lock resources: consistent logical ordering reduces risk,\nbut does not prove all deadlocks impossible."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "Collect evidence before adding hints. Lowering isolation can change correctness and may not resolve writer conflicts. Distinguish a known rolled-back deadlock victim from an unknown outcome after connection loss; the latter needs operation-status reconciliation."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Write retry pseudocode for an idempotent payment import with at most three attempts. Handle 1205 separately from validation errors and unknown commit outcomes.",
+          "starter": "for attempt in1..3:\n  try: import complete operation\n  catch error: /* classify, retry or reconcile */",
+          "solution": "For each of at most3 attempts, open a clean transaction and execute the whole import using a stable operation/event key. On1205, verify transaction cleanup, wait with bounded jitter, then retry; on the third failure report exhaustion. On validation errors, fail immediately. On connection loss near commit, query durable operation status before retrying. Send external effects through an idempotent outbox after the transaction.",
+          "checks": [
+            "Bounded three attempts, whole-unit retry, cleanup and backoff.",
+            "Validation failures are not retried.",
+            "Unknown commit outcomes are reconciled by stable operation key."
+          ]
+        },
+        "quiz": {
+          "question": "What distinguishes a deadlock from ordinary blocking?",
+          "options": [
+            "A dependency cycle prevents the participants from progressing",
+            "Any slow SELECT is a deadlock",
+            "Blocking always raises 1205"
+          ],
+          "correct": 0,
+          "explanation": "A wait can resolve when another transaction finishes. A cycle requires a participant to be broken out of it."
+        }
+      },
+      {
+        "id": "least-privilege-dynamic-sql",
+        "title": "22. Separate query values, identifiers and permissions",
+        "stage": "advanced",
+        "takeaway": "Parameterization prevents one class of injection; authorization limits what a caller may do.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Use parameters for values such as customer identifiers and amounts. A parameter cannot stand in for a table name or ORDER BY column identifier. If dynamic structure is required, select it from a fixed allowlist and quote the identifier; keep values parameterized.",
+              "A login authenticates at server scope and a database user represents access in a database, subject to the platform’s authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of db_owner or sysadmin for convenience.",
+              "Execution through a procedure can involve ownership chaining or other execution-context rules. Dynamic SQL can behave differently from static statements in that permission model. Test with the intended low-privilege identity, not only an administrator account."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The example allows only Amount or OrderId as a sort column and passes @Minimum independently. QUOTENAME handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist’s purpose.",
+              "The exercise changes no users or grants. For a real training permissions lab, have an administrator provision a dedicated user/role and test allowed/denied actions against a disposable schema. Do not create a powerful account as a shortcut."
+            ],
+            "example": "DECLARE @RequestedSort sysname=N'Amount',@Minimum decimal(12,2)=80;\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\nDECLARE @Sql nvarchar(max)=N'SELECT OrderId,Amount FROM #LNOrders WHERE Amount>=@Min ORDER BY '\n +QUOTENAME(@RequestedSort)+CASE WHEN @RequestedSort=N'Amount' THEN N',OrderId;' ELSE N';' END;\nEXEC sys.sp_executesql @Sql,N'@Min decimal(12,2)',@Min=@Minimum;\n--103/80,101/100,104/120. Values are parameters; identifier is allowlisted then quoted."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "SQL text and parameter values in diagnostics may contain sensitive business data. Use synthetic data here and define who can read query history. Passwords and connection tokens belong in an appropriate secret store, not inside a stored procedure, browser path or committed script."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Modify the example to reject a requested sort column of CustomerName. Explain why removing the allowlist and keeping QUOTENAME would weaken the contract.",
+          "starter": "DECLARE @RequestedSort sysname=N'CustomerName';\n--Apply the same validation before building any statement.",
+          "solution": "DECLARE @RequestedSort sysname=N'CustomerName';\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\n--Expected51200. Quoting avoids identifier syntax injection; it does not authorize arbitrary columns.",
+          "checks": [
+            "Expected error 51200 before executing dynamic SQL.",
+            "Distinguish value parameterization, identifier quoting and permission checks."
+          ]
+        },
+        "quiz": {
+          "question": "Does QUOTENAME authorize access to an arbitrary requested table?",
+          "options": [
+            "Yes, quoted identifiers are trusted",
+            "No, it quotes syntax; authorization and allowlists are separate",
+            "Only for sysname values"
+          ],
+          "correct": 1,
+          "explanation": "Syntax safety and permission policy solve different problems."
+        }
+      },
+      {
+        "id": "migrations-and-release",
+        "title": "23. Evolve a schema without breaking the running application",
+        "stage": "advanced",
+        "takeaway": "A migration is a data and compatibility change with evidence and a recovery plan.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "An expand-and-contract migration first adds compatible structure, deploys writers/readers that understand it, backfills existing rows, validates them, and only later removes obsolete structure. Renaming or dropping a column while older application instances still use it can break a rolling deployment.",
+              "A migration history needs stable identifiers and a record of what was applied. An existence check alone is insufficient: a column may exist with the wrong type, nullability or meaning. Check expected preconditions and fail visibly when the actual schema diverges.",
+              "Backfilling currency illustrates the danger of a convenient default. In this synthetic fixture we stipulate USD; real records require authoritative currency evidence. For a large table, plan bounded batches, log growth, locks and application compatibility instead of assuming one giant UPDATE is harmless."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "The lab changes only a temporary copy. It adds a nullable column, fills it under the fixture contract, verifies no NULL remains, then tightens nullability. Count and amount stay 5 and 390.",
+              "This is a shape-of-migration demonstration, not a production deployment script. Index rebuilds and schema modifications may require stronger locks and version-specific capabilities; verify on a representative training environment."
+            ],
+            "example": "IF OBJECT_ID('tempdb..#LNMigrationWork') IS NOT NULL DROP TABLE #LNMigrationWork;\nSELECT OrderId,Amount INTO #LNMigrationWork FROM #LNOrders;\nALTER TABLE #LNMigrationWork ADD CurrencyCode char(3) NULL;\n--Fixture contract explicitly says one synthetic currency; choose USD only for this lab.\nUPDATE #LNMigrationWork SET CurrencyCode='USD' WHERE CurrencyCode IS NULL;\nIF EXISTS(SELECT 1 FROM #LNMigrationWork WHERE CurrencyCode IS NULL)\n THROW 51210,'Backfill incomplete.',1;\nALTER TABLE #LNMigrationWork ALTER COLUMN CurrencyCode char(3) NOT NULL;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNMigrationWork; --5/390"
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "A down migration cannot always restore lost data or reverse a business transformation. Define recovery in terms of backups, compatible app rollback and forward repair. Keep historical migration files immutable after release; add a corrective migration rather than rewriting applied history."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Write preflight and postflight checks for introducing CurrencyCode. Explain what must happen before a real legacy column is removed.",
+          "starter": "--State compatibility, data-source, nullability, row-count and amount reconciliation checks.",
+          "solution": "Preflight: verify schema version, supported app versions, authoritative currency mapping and a recoverable backup/restore plan. Expand nullable CurrencyCode; deploy compatible code; backfill in monitored batches. Postflight: zero invalid/null codes, per-currency totals reconciled, unchanged business-key population, old and new reads equivalent for supported requests. Remove a legacy column only after all readers/writers have migrated and the rollback window has been considered.",
+          "checks": [
+            "No invented default currency for real records.",
+            "Both schema shape and business totals are checked.",
+            "Removal waits for application compatibility evidence."
+          ]
+        },
+        "quiz": {
+          "question": "A column already exists. Is that sufficient proof that a migration has been correctly applied?",
+          "options": [
+            "Yes, names fully define schemas",
+            "Yes, if queries compile",
+            "No, inspect type, nullability, semantics and migration history"
+          ],
+          "correct": 2,
+          "explanation": "An existence check cannot detect an incompatible or partially applied schema change."
+        }
+      },
+      {
+        "id": "advanced-import-capstone",
+        "title": "24. Deliver an auditable, replayable import and reconciliation",
+        "stage": "advanced",
+        "takeaway": "A production-shaped pipeline accounts for every input and proves its replay behavior.",
+        "sections": [
+          {
+            "title": "Model the problem",
+            "paragraphs": [
+              "Download advanced-lab.sql and advanced-solutions.sql. Run the foundation setup first, then the advanced fixture in the same SQL session. This second fixture is intentionally different from the foundation payments: six raw rows include an exact duplicate, an orphan and an invalid amount. Do not compare its 215 accepted amount with the earlier 265 matched total as if they were the same dataset.",
+              "Keep raw rows immutable for the run. Parse types while retaining original text, identify conflicting payloads per business key, distinguish duplicate copies, then classify invalid and orphan records before loading accepted events. A rejected row must remain traceable to its RawRowId and reason.",
+              "The downloadable solution uses a conservative payload conflict rule: different amount strings under the same event key are conflicts, even when they might parse to equal amounts. It permits decimal scale conversion during parsing. Those are explicit teaching policies, not universal financial-import rules. A stricter input format/scale rule should be added if the source contract requires it."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Work the example",
+            "paragraphs": [
+              "First pass: accepted 3, duplicate 1, orphan 1, invalid 1. The ledger receives E001=100, E002=70 and E003=45, totalling 215. Replay inserts zero and retains the same total. The report preserves all five orders; net outstanding is 175.",
+              "Add a contradictory E002=75 as a separate raw row only in a disposable copy/session. Both E002 observations are classified as conflict, not resolved by picking the largest amount. If the original 70 was already loaded, quarantine does not retract it automatically: an authorized correction/reversal policy must reconcile the ledger and new evidence."
+            ],
+            "example": "--In the same SSMS session:\n--1 Run setup.sql\n--2 Run advanced-lab.sql\n--3 Run advanced-solutions.sql twice\n--Verify first InsertedNow=3;second=0;ledger3/215;report5 rows/net175.\n--Read the downloadable solution for full classification and transaction SQL."
+          },
+          {
+            "title": "Trade-offs and failure cases",
+            "paragraphs": [
+              "The exercise demonstrates logical replay handling in one session. A real loader must add durable batches, enforced keys, concurrent-writer tests, transaction retry behavior, access controls and monitoring. Local temporary tables cannot establish durable crash recovery or cross-session locking correctness.",
+              "Submit evidence, not only a final query: disposition counts, ledger keys and totals, before/after replay checks, proposed concurrency policy, migration plan and least-privilege boundary. Mark tests requiring a real engine as unexecuted until you actually run them."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Implement the classification and loader from the starter fixture before viewing advanced-solutions.sql. Provide two runs and a conflict-case explanation, plus a production-readiness gap list.",
+          "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
+          "checks": [
+            "Raw counts 6=3 accepted+1 duplicate+1 invalid+1 orphan.",
+            "First inserts 3;replay 0;ledger 3 rows/215.",
+            "Report 5 rows;due 390;paid 215;net 175.",
+            "Conflict handling never silently picksMAX(amount).",
+            "Declare no live engine, concurrency or durability test unless performed."
+          ]
+        },
+        "quiz": {
+          "question": "An imported event key reappears with a different amount. What is the safe default in this contract?",
+          "options": [
+            "Quarantine or reject the conflict for a governed correction",
+            "Keep whichever amount is larger",
+            "Insert it with a fresh identity and ignore the event key"
+          ],
+          "correct": 0,
+          "explanation": "The same stable event identity cannot silently acquire a different economic meaning."
         }
       }
     ],
@@ -2952,6 +6402,97 @@ const LEARNING_PATHS = [
       {
         "title": "Practice instructions",
         "href": "paths/sql-server/README.md"
+      },
+      {
+        "title": "Advanced import fixture",
+        "href": "paths/sql-server/advanced-lab.sql"
+      },
+      {
+        "title": "Advanced import worked solution",
+        "href": "paths/sql-server/advanced-solutions.sql"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations",
+        "description": "Build correct read queries on a small, fully specified fixture before optimizing or automating them.",
+        "exitCriteria": [
+          "Explain table grain, keys, NULL and join multiplicity without relying on trial-and-error DISTINCT.",
+          "Produce all five order rows and the orphan payment with correct totals.",
+          "Explain every query result and pass the section checkpoints; completion buttons alone are not a skills assessment."
+        ],
+        "project": {
+          "title": "Order-to-payment control report",
+          "brief": "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
+          "requirements": [
+            "Preserve all five orders and report Dia as a customer with no order.",
+            "Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid.",
+            "Reconcile incoming payments and known-order totals; include deterministic ordering."
+          ],
+          "rubric": [
+            "Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125.",
+            "Reasoning:explain why direct payment joins can duplicate order values.",
+            "Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+          ],
+          "solution": ";WITH Paid AS (\n SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount\n FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing'\n      WHEN p.PaidAmount=o.Amount THEN 'paid'\n      WHEN p.PaidAmount<o.Amount THEN 'underpaid'\n      ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\nSELECT p.PaymentId,p.OrderId,p.Amount FROM #LNPayments p\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.OrderId=p.OrderId)\nORDER BY p.PaymentId;\n--Customer coverage: select all customers and use NOT EXISTS to identify Dia.\n--Accepted evidence:due390=paid265+net125;payments285=matched265+orphan20."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate engineering",
+        "description": "Make types, staging, parameterization and transaction behavior into explicit contracts.",
+        "exitCriteria": [
+          "Demonstrate exact versus conflicting replay handling using stable event keys.",
+          "Explain a decimal rounding boundary and an offset-crossing date example.",
+          "Show an update failure leaves the intended transaction and row state; propose an index with an evidence plan."
+        ],
+        "project": {
+          "title": "Replay-safe import design and procedure contract",
+          "brief": "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
+          "requirements": [
+            "Define business keys, allowed amounts, currency, timestamp and correction semantics.",
+            "Use typed parameters and an explicit transaction-ownership policy.",
+            "Run the replay example twice and detect a changed E1 payload.",
+            "Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern."
+          ],
+          "rubric": [
+            "Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict.",
+            "Error behavior:unknown order failure is visible and leaves no open owned transaction.",
+            "Design quality:does not claim NOT EXISTS alone prevents concurrent races.",
+            "Evidence:documents expected results separately from results actually executed."
+          ],
+          "solution": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only.\n\nSELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00\n\nSELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL\n--Contract:source/event unique key;immutable accepted payload;governed revision for changes.\n--Procedure:own transaction or documented caller participation,never an accidental mixture."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Investigate performance and concurrency failures, design safe releases, and deliver an auditable import capstone.",
+        "exitCriteria": [
+          "Account for every raw row, demonstrate replay invariance and explain post-load conflict handling.",
+          "Analyze a deadlock schedule and design bounded retries with unknown-outcome reconciliation.",
+          "Explain Query Store evidence limitations and a weighted performance comparison.",
+          "Present least-privilege and migration plans with validation,rollback/recovery and concurrency test gaps."
+        ],
+        "project": {
+          "title": "Auditable ingestion service review",
+          "brief": "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
+          "requirements": [
+            "Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.",
+            "Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.",
+            "Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.",
+            "Specify security role boundaries,backward-compatible migration steps and incident diagnostics.",
+            "Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path."
+          ],
+          "rubric": [
+            "Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.",
+            "Replay:zero new rows on the second identical input;no silent overwrite on conflict.",
+            "Operations:bounded retries,explicit side-effect delivery and recoverable deployment.",
+            "Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+          ],
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
+        }
       }
     ]
   },

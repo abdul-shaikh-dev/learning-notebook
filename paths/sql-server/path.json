@@ -3,8 +3,8 @@
   "title": "SQL Server & T-SQL",
   "category": "Data",
   "status": "ready",
-  "description": "Learn to query, join and reconcile data safely, then reason about transactions and query plans through a complete order-and-payment case.",
-  "level": "Beginner to practical foundations",
+  "description": "Progress from first SQL queries to robust data models, replayable imports, transaction contracts, query-plan diagnosis and an assessed reconciliation pipeline.",
+  "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "No SQL knowledge required. Comfort with files, rows and columns is helpful.",
     "Access to a local or training SQL Server instance and a query client is needed to execute exercises; reading and quizzes work without one."
@@ -14,7 +14,11 @@
     "Write joins, aggregates, CTEs and window calculations with checked results.",
     "Use typed parameters, temporary staging and rollback-based practice.",
     "Reason about isolation and execution plans without misleading shortcuts.",
-    "Build an order/payment reconciliation that preserves unmatched records."
+    "Build an order/payment reconciliation that preserves unmatched records.",
+    "Specify decimal/time and migration contracts, not only query syntax.",
+    "Diagnose parameter-sensitive workloads and reason about Query Store evidence.",
+    "Design optimistic updates, bounded deadlock retries and least-privilege access.",
+    "Deliver a three-stage assessed import/reconciliation project with explicit validation limits."
   ],
   "setup": [
     "Use a supported SQL Server training instance with SSMS or sqlcmd. No server is installed or started by this website.",
@@ -22,7 +26,9 @@
     "Run setup.sql in SSMS and keep that query window open. All #LN fixture tables are session-local. In another window run setup.sql again to create a separate fixture.",
     "Examples assume the setup fixture is unchanged. Start a new query window and run setup.sql to reset without modifying another session.",
     "Run snippets or solutions.sql in the same session. GO is a client batch separator. Do not paste GO into an application driver call.",
-    "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed."
+    "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed.",
+    "Advanced practice uses advanced-lab.sql and advanced-solutions.sql in the same session after setup.sql. It has a different payment-event dataset from the foundation fixture.",
+    "Stage exit projects require explained evidence. No SQL Server engine, concurrent-session or durability tests have been executed by this website authoring pass."
   ],
   "nextSteps": [
     "Implement the capstone with permanent tables in a separately approved training database, adding foreign keys and source-batch uniqueness rules.",
@@ -94,6 +100,54 @@
     {
       "title": "Window frames: OVER",
       "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql"
+    },
+    {
+      "title": "Query Store performance history",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store"
+    },
+    {
+      "title": "Deadlocks guide",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide"
+    },
+    {
+      "title": "Database Engine permissions",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/permissions-database-engine"
+    },
+    {
+      "title": "FROM and APPLY",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql"
+    },
+    {
+      "title": "Statistics and cardinality",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics"
+    },
+    {
+      "title": "datetimeoffset",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetimeoffset-transact-sql"
+    },
+    {
+      "title": "EXCEPT and INTERSECT",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/set-operators-except-and-intersect-transact-sql"
+    },
+    {
+      "title": "LAG",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/lag-transact-sql"
+    },
+    {
+      "title": "TRY CATCH",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql"
+    },
+    {
+      "title": "TRY_CONVERT",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql"
+    },
+    {
+      "title": "Decimal precision and scale",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17"
+    },
+    {
+      "title": "rowversion concurrency tokens",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/rowversion-transact-sql?view=sql-server-ver17"
     }
   ],
   "lessons": [
@@ -144,7 +198,8 @@
         ],
         "correct": 1,
         "explanation": "Local temporary tables belong to a SQL session. Use the same connection/window after setup."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "types-keys-null",
@@ -193,7 +248,8 @@
         ],
         "correct": 2,
         "explanation": "The comparison is UNKNOWN, not TRUE. WHERE retains TRUE rows; use IS NULL to select the two missing emails."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "select-filter-sort",
@@ -242,7 +298,8 @@
         ],
         "correct": 0,
         "explanation": "TOP chooses from the requested order; a unique tie-breaker makes ties predictable."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "joins-and-grain",
@@ -291,7 +348,8 @@
         ],
         "correct": 1,
         "explanation": "Joining attaches matching rows; it does not allocate the order amount across them. Summing it now double counts."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "group-and-reconcile",
@@ -340,7 +398,8 @@
         ],
         "correct": 2,
         "explanation": "HAVING filters grouped results. WHERE is for the rows supplied to the grouping operation."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "cte-and-subquery",
@@ -389,7 +448,8 @@
         ],
         "correct": 0,
         "explanation": "A CTE names a query expression for one statement. Use a temporary table when a later statement needs stored intermediate rows."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "window-functions",
@@ -438,7 +498,8 @@
         ],
         "correct": 1,
         "explanation": "A unique tie-breaker prevents equal dates from leaving the selected latest row ambiguous."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "parameters-procedures",
@@ -487,7 +548,8 @@
         ],
         "correct": 2,
         "explanation": "Typed parameters separate values from executable SQL text. Validate business limits and use least-privilege permissions as well."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "temporary-staging",
@@ -536,7 +598,8 @@
         ],
         "correct": 0,
         "explanation": "@@ROWCOUNT describes the previous relevant statement and can be reset by subsequent statements."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "transactions-isolation",
@@ -585,7 +648,8 @@
         ],
         "correct": 1,
         "explanation": "Avoiding dirty reads is different from holding a stable view across multiple statements."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "indexes-and-plans",
@@ -634,7 +698,8 @@
         ],
         "correct": 2,
         "explanation": "Plan quality depends on the cost of the whole operation and the data; operator names alone do not establish performance."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "reconciliation-capstone",
@@ -686,13 +751,638 @@
         ],
         "correct": 0,
         "explanation": "Only 265 is matched to known orders. Preserve the remaining 20 as an orphan exception instead of using it to reduce known balances."
+      },
+      "stage": "foundation"
+    },
+    {
+      "id": "schema-contracts",
+      "title": "13. Model constraints, decimal amounts and time",
+      "stage": "intermediate",
+      "takeaway": "A schema is a business contract; precision, identity and time are part of correctness.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "A surrogate key identifies a database row; a business key identifies the event or entity outside the database. A payment identity column does not stop the same source payment being imported twice. Keep a stable source-system/event key and enforce its uniqueness in a permanent target. Decide whether corrections replace an event or create a new revision before choosing that key.",
+            "Separate an order header from its lines: customer and order date belong to the order; product, quantity and unit price belong to a line. Storing a customer address repeatedly in order rows may be appropriate as a historical shipping snapshot, but inappropriate if meant to be a current customer lookup. Normalization and historical snapshots solve different requirements.",
+            "decimal(p,s) has p total digits and s fractional digits. Arithmetic can widen the intermediate precision and scale, with SQL Server rules and maximum precision limiting the result. Explicitly choose the posting scale and test overflow and half-cent cases. A CHECK on amount alone does not reject NULL; combine NOT NULL with the check when an amount is required."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "Three units at 12.35 total 37.05. The timestamp is a different problem: a local January 1 observation corresponds to December 31 in UTC. A date bucket therefore requires a stated reporting zone, not simply stripping the offset.",
+            "datetimeoffset preserves an offset, not a named time-zone rule set. Store an event’s observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
+          ],
+          "example": "DECLARE @Price decimal(12,2)=12.35, @Quantity int=3;\nSELECT @Price*@Quantity AS Gross, CAST(@Price*@Quantity AS decimal(12,2)) AS Posted;\nDECLARE @Observed datetimeoffset(0)='2026-01-01T00:30:00+05:30';\nSELECT @Observed AS SourceTime, SWITCHOFFSET(@Observed,'+00:00') AS UtcTime;\n--37.05; UTC is 2025-12-31 19:00:00 +00:00"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Keep a rate at sufficient precision until the prescribed rounding boundary; rounding each line and rounding an invoice total can differ. Test both and choose the business rule explicitly. Do not silently turn malformed input into zero.",
+            "Our temporary fixtures cannot enforce foreign keys. Describe the permanent foreign-key design, then validate parent references with queries in this lab. A migration to permanent tables needs a real constraint test in SQL Server before deployment."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Calculate three items priced at 0.335: compare rounding each item to two decimals before summing with rounding the total. Explain which rule a contract must specify.",
+        "starter": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT /* rounded line total */, /* rounded invoice total */;",
+        "solution": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT CAST(@Unit AS decimal(12,2))*3 AS RoundedLines,\n CAST(@Unit*3 AS decimal(12,2)) AS RoundedInvoice;\n--1.02 and1.01",
+        "checks": [
+          "RoundedLines=1.02; RoundedInvoice=1.01.",
+          "Explain that decimal precision does not decide the contractual rounding boundary."
+        ]
+      },
+      "quiz": {
+        "question": "Does a primary-key identity column alone prevent duplicate imports of one external event?",
+        "options": [
+          "Yes, every inserted row has a different identity",
+          "No, enforce the external business key as well",
+          "Only if the amount is decimal"
+        ],
+        "correct": 1,
+        "explanation": "Two insertions can receive different identity values while representing the same source event."
+      }
+    },
+    {
+      "id": "sets-and-apply",
+      "title": "14. Compare sets and use correlated APPLY",
+      "stage": "intermediate",
+      "takeaway": "Set comparison, existence and per-row selection express different questions.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "UNION ALL concatenates input rows and preserves duplicates; UNION removes duplicates across all selected columns. EXCEPT returns distinct left-side rows absent from the right; INTERSECT returns distinct shared rows. These compare selected values, not hidden record identity. Matching keys alone can miss changed amounts.",
+            "EXISTS is a good fit for “does this customer have any order?” because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary TOP without deterministic ordering.",
+            "APPLY evaluates a right-side table expression in relation to each left row. CROSS APPLY retains rows with a right result; OUTER APPLY also preserves left rows without one. This is useful for a latest order per customer, but does not guarantee a particular physical execution strategy."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "OUTER APPLY returns four customer rows including Dia. Changing it to CROSS APPLY removes Dia. The OrderId tie-breaker makes the TOP selection deliberate.",
+            "Set comparison treats NULLs as equal for distinctness in these operators. That differs from ordinary equality predicates and matters when checking snapshots containing nullable columns. The comparable columns also need compatible types and intended collation."
+          ],
+          "example": "SELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "EXCEPT is excellent for finding differences, but it does not report how many duplicate copies existed. Validate uniqueness separately. Likewise, UNION can hide a replayed payment if the selected values happen to match; replay handling belongs to business keys, not accidental row equality."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Find known order identifiers that do not appear in the incoming payment identifiers using EXCEPT, then explain why reversing the operands finds a different exception.",
+        "starter": "SELECT OrderId FROM #LNOrders\nEXCEPT\nSELECT OrderId FROM #LNPayments;",
+        "solution": "SELECT OrderId FROM #LNOrders EXCEPT SELECT OrderId FROM #LNPayments;\n--104\nSELECT OrderId FROM #LNPayments EXCEPT SELECT OrderId FROM #LNOrders;\n--999",
+        "checks": [
+          "First result 104: an order with no payment.",
+          "Reverse result 999: payment evidence with no known order.",
+          "Neither result diagnoses duplicate payment events."
+        ]
+      },
+      "quiz": {
+        "question": "You need all customers, including those without a latest order. Which operator fits?",
+        "options": [
+          "CROSS APPLY only",
+          "INNER JOIN only",
+          "OUTER APPLY"
+        ],
+        "correct": 2,
+        "explanation": "OUTER APPLY retains the outer customer even if its correlated query produces no row."
+      }
+    },
+    {
+      "id": "window-frames-and-gaps",
+      "title": "15. Specify window frames and compare consecutive observations",
+      "stage": "intermediate",
+      "takeaway": "A moving window is defined by rows or values; it is not automatically a time interval.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "LAG accesses a preceding row in a specified order; LEAD accesses a following row. The first LAG result is NULL unless a default is supplied. Replacing this with zero changes the meaning from “no previous observation” to a numerical baseline, so choose deliberately.",
+            "ROWS BETWEEN 1 PRECEDING AND CURRENT ROW means at most two rows, even if they are minutes or months apart. A seven-row mean is not a seven-day mean when dates are missing or several observations share a date. For calendar windows, define a calendar or explicit time-range join.",
+            "With an ORDER BY, an aggregate window’s implicit frame can include peers under RANGE semantics. Explicit ROWS plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The sample has five rows ordered by date then identifier. Its two-row sums are 100, 150, 130, 200 and 160. These are adjacent-order amounts across all customers; adding PARTITION BY CustomerId changes the question.",
+            "A gaps-and-islands problem first defines adjacency, such as consecutive calendar days or consecutive event sequence numbers. Deduplicate to the intended grain before labelling islands. Otherwise repeated dates can create misleading sequence differences."
+          ],
+          "example": "SELECT OrderId,OrderDate,Amount,\n LAG(Amount) OVER(ORDER BY OrderDate,OrderId) AS PreviousAmount,\n SUM(Amount) OVER(ORDER BY OrderDate,OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS TwoRows\nFROM #LNOrders ORDER BY OrderDate,OrderId;\n--TwoRows:100,150,130,200,160"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Window functions do not repair an ambiguous event order. If ingestion time differs from business time, include the chosen time and tie-breaker in the output so reviewers can reconstruct the sequence. Late arrivals may legitimately change historical running values."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "For each customer’s orders, return previous order amount and difference from it. Preserve NULL for a first order.",
+        "starter": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount, /* LAG */ AS PreviousAmount FROM #LNOrders)\nSELECT *,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
+        "solution": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount,LAG(Amount) OVER(PARTITION BY CustomerId ORDER BY OrderDate,OrderId) AS PreviousAmount FROM #LNOrders)\nSELECT CustomerId,OrderId,Amount,PreviousAmount,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
+        "checks": [
+          "Customer 1:NULL then -50; customer 2:NULL then 40; customer 3:NULL.",
+          "Explain why the first difference stays NULL."
+        ]
+      },
+      "quiz": {
+        "question": "A seven-row window contains two records from one day and misses another day. Is it a seven-day metric?",
+        "options": [
+          "No, row count and elapsed days differ",
+          "Yes, SQL always fills missing dates",
+          "Yes, when you sort by date"
+        ],
+        "correct": 0,
+        "explanation": "A row frame follows positions in the ordered rows; it does not synthesize a calendar."
+      }
+    },
+    {
+      "id": "index-selectivity-statistics",
+      "title": "16. Design an index for a query and inspect estimates",
+      "stage": "intermediate",
+      "takeaway": "An index proposal needs a workload, a predicate contract and measured evidence.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Sargability describes whether a predicate can support useful search arguments on an access structure. Avoid unnecessary functions or implicit conversions on indexed columns. Match parameter types to column types so the engine does not have to convert the column for comparison. This helps possibilities; it does not force an index seek.",
+            "For the query “one customer during a date range,” an index beginning with CustomerId then OrderDate is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
+            "Statistics help estimate cardinality, meaning how many rows flow through an operator. A histogram describes the leading statistics key and has limited steps; skew and correlation can still make estimates inaccurate. An index existing does not imply its estimates represent today’s data."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "This repeats the small index lab with explicit parameter types and a half-open date range. It is suitable for reading a plan, not proving speed. Record actual versus estimated rows and logical reads with the same parameters and fixture.",
+            "On a large representative training dataset, compare a common customer with a rare one. A plan that works well for one distribution may be expensive for the other. Capture query, parameters, indexes, statistics state and compatibility level before drawing a conclusion."
+          ],
+          "example": "IF OBJECT_ID('tempdb..#LNIndexLab') IS NOT NULL DROP TABLE #LNIndexLab;\nSELECT OrderId,CustomerId,OrderDate,Amount INTO #LNIndexLab FROM #LNOrders;\nCREATE INDEX IX_LNIndex_CustomerDate ON #LNIndexLab(CustomerId,OrderDate) INCLUDE(Amount);\nDECLARE @Customer int=2,@Start date='20260101',@End date='20260201';\nSET STATISTICS IO ON;\nSELECT OrderDate,Amount FROM #LNIndexLab\nWHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<@End;\nSET STATISTICS IO OFF;\n--80 and120; record actual reads and plan on your instance, do not invent them."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Every extra index costs space and write work. A covering index that adds many wide columns may be a poor trade. Update statistics or change an index only under a controlled experiment; repeatedly clearing a shared plan cache is not an acceptable benchmark method."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Rewrite the predicate YEAR(OrderDate)=@Year for a typed integer parameter, and propose an index for a customer-plus-year query. State what you would measure.",
+        "starter": "DECLARE @Year int=2026,@Customer int=2;\n-- Use DATEFROMPARTS and DATEADD, then an inclusive/exclusive range.",
+        "solution": "DECLARE @Year int=2026,@Customer int=2;\nDECLARE @Start date=DATEFROMPARTS(@Year,1,1);\nSELECT OrderId,Amount FROM #LNOrders WHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<DATEADD(year,1,@Start) ORDER BY OrderId;\n--Candidate(CustomerId,OrderDate) INCLUDE(OrderId,Amount). Validate reads, estimates and write cost on representative data.",
+        "checks": [
+          "Orders 103 and 104.",
+          "State valid @Year bounds if input is external; DATEFROMPARTS rejects invalid years.",
+          "Do not claim a performance win on five rows."
+        ]
+      },
+      "quiz": {
+        "question": "A query estimates ten rows and reads a million. What is a useful next step?",
+        "options": [
+          "Add NOLOCK",
+          "Inspect statistics, predicates, parameters and data skew",
+          "Assume every scan is wrong"
+        ],
+        "correct": 1,
+        "explanation": "Cardinality errors can come from several causes. Preserve the evidence before selecting a remedy."
+      }
+    },
+    {
+      "id": "procedure-transaction-contracts",
+      "title": "17. Give procedures explicit transaction and error contracts",
+      "stage": "intermediate",
+      "takeaway": "A reusable procedure must specify inputs, outputs, transaction ownership and failures.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. “It returned no SQL exception” is insufficient if an update silently matched zero rows. Check @@ROWCOUNT immediately after the modification.",
+            "Choose whether a procedure owns the transaction or participates in its caller’s transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested BEGIN TRAN statements do not provide independent inner transactions: an unqualified ROLLBACK can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
+            "TRY/CATCH handles many execution errors, but not every failure at the same execution level. Compile errors and client disconnections need application handling too. In CATCH, inspect transaction state, roll back owned work as appropriate, and THROW so the caller does not mistake failure for success."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The temporary procedure changes only #LNProcedureWork. A valid call changes order 103 from 80 to 81. An unknown order raises 51102 and leaves the work copy unchanged. Invalid amounts fail before any transaction starts.",
+            "The sample does not write an audit record or return a version token. Those are additional contract requirements when a caller must prove which update succeeded. Rerun the setup of this snippet to recreate the work copy; permanent fixture tables are not changed."
+          ],
+          "example": "IF OBJECT_ID('tempdb..#LNSafeAmount') IS NOT NULL DROP PROCEDURE #LNSafeAmount;\nGO\nCREATE PROCEDURE #LNSafeAmount @OrderId int,@NewAmount decimal(12,2)\nAS\nBEGIN\n SET NOCOUNT ON;\n SET XACT_ABORT ON;\n IF @@TRANCOUNT<>0 THROW 51100,'This lab procedure requires no outer transaction.',1;\n IF @NewAmount IS NULL OR @NewAmount<0 THROW 51101,'Amount must be nonnegative.',1;\n BEGIN TRY\n  BEGIN TRAN;\n  UPDATE #LNProcedureWork SET Amount=@NewAmount WHERE OrderId=@OrderId;\n  IF @@ROWCOUNT<>1 THROW 51102,'Expected exactly one order.',1;\n  COMMIT;\n END TRY\n BEGIN CATCH\n  IF XACT_STATE()<>0 ROLLBACK;\n  THROW;\n END CATCH;\nEND;\nGO\nIF OBJECT_ID('tempdb..#LNProcedureWork') IS NOT NULL DROP TABLE #LNProcedureWork;\nSELECT OrderId,Amount INTO #LNProcedureWork FROM #LNOrders;\nEXEC #LNSafeAmount @OrderId=103,@NewAmount=81;\nSELECT Amount FROM #LNProcedureWork WHERE OrderId=103; --81"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Avoid catching every error and returning a success-shaped empty table. Preserve useful error context while not exposing credentials or sensitive values. A rollback may also roll back an audit table insert in the same transaction; decide how operational failure logs are captured outside that unit."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "After the worked example, call the procedure with nonexistent order 999 inside TRY/CATCH. Prove the work copy still has five rows and totals 391 after the earlier successful 81 update.",
+        "starter": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\n--Inspect population and total.",
+        "solution": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNProcedureWork;\n--51102;5 rows;391.00",
+        "checks": [
+          "Run the worked example first.",
+          "Error 51102; five rows; total 391; @@TRANCOUNT is zero after failure."
+        ]
+      },
+      "quiz": {
+        "question": "Why does this procedure reject an outer transaction?",
+        "options": [
+          "Because SQL never supports nested BEGIN TRAN",
+          "Because a SELECT needs no transaction",
+          "To make its transaction ownership and rollback scope explicit"
+        ],
+        "correct": 2,
+        "explanation": "Nested transaction counters are not independent rollback boundaries. This lab adopts the simplest explicit ownership contract."
+      }
+    },
+    {
+      "id": "incremental-load-contracts",
+      "title": "18. Make an incremental load replayable",
+      "stage": "intermediate",
+      "takeaway": "Idempotency means a repeated logical input does not create a second business effect.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "A watermark such as “latest ingestion timestamp” helps select work but does not identify an event. Events can arrive late, clocks can differ, and a retry can replay an earlier batch. Keep stable source/event identifiers and a defined revision policy.",
+            "Distinguish identical duplicates from conflicting reuse of the same identifier. Two copies of E1 with amount 10 are a replay; E1 with 10 and 11 is a conflict requiring investigation or an explicit correction event. Choosing MAX(amount) would invent a business decision.",
+            "A target unique key is a last line of defence. NOT EXISTS avoids known rows in this single-session demonstration, but two simultaneous sessions can both observe absence. A production loader needs transaction/isolation design and duplicate-conflict handling; merely adding WHERE NOT EXISTS is not a concurrency proof."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "Run this snippet twice without replacing #LNReplayTarget. The first inserts two events; the second inserts none; the total stays 30. If you change E1 to 11, this simple loader skips it without detecting the conflict, demonstrating an intentional limitation.",
+            "The advanced capstone adds explicit validation, conflict and replay checks. Keep source observations long enough to explain why a row was accepted, rejected, quarantined or already processed."
+          ],
+          "example": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers are more robust than relying on perfect timing. A schema migration must preserve those identifiers too."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Extend the replay check to find an incoming E1=11 that disagrees with stored E1=10 without updating the target.",
+        "starter": "--Run the worked example first, then join incoming business keys to the target and compare payloads.",
+        "solution": "SELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00",
+        "checks": [
+          "One conflict row; stored total remains 30.",
+          "Explain how an authorized correction could use a revision or compensating event rather than silently overwriting."
+        ]
+      },
+      "quiz": {
+        "question": "Does NOT EXISTS by itself make a concurrent import race-free?",
+        "options": [
+          "No; overlapping transactions can both observe absence",
+          "Yes; SELECT reserves every absent key",
+          "Yes; timestamps eliminate every duplicate"
+        ],
+        "correct": 0,
+        "explanation": "A concurrency-safe design also needs enforced uniqueness and a deliberate transaction/error policy."
+      }
+    },
+    {
+      "id": "plan-regressions-query-store",
+      "title": "19. Investigate regressions with plans and Query Store",
+      "stage": "advanced",
+      "takeaway": "Compare like-for-like workload evidence before deciding that a plan change caused a slowdown.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "An actual plan reports operator runtime observations for an execution; Query Store retains historical query/plan/runtime information when enabled and capturing the workload. These answer different time scales. Availability, permissions and settings depend on the server version and database; do not assume the feature is enabled.",
+            "Start with a symptom: which query, time interval, parameters, row counts and workload changed? CPU, duration, logical reads, waits and execution count describe different costs. A rise in total duration might be more executions rather than slower individual calls.",
+            "Query Store runtime statistics are aggregated by intervals and execution types. If combining records, weight averages by execution count rather than averaging averages. Active intervals can have multiple entries for a plan; use the documented aggregation grain."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The diagnostic queries read options and known plans. An empty plan result can reflect capture settings, a new database or lack of applicable workload; it does not prove there were no queries. Do not enable or reconfigure Query Store on a shared system for this lesson.",
+            "Synthetic incident: planA averages 5 ms for 100 executions and planB averages 50 ms for 2. Combined mean is(500+100)/102, about 5.882 ms, not 27.5 ms. This arithmetic lesson is independent of whether your training database has captured plans."
+          ],
+          "example": "--Read-only diagnostics in the selected training database; permission may be required.\nSELECT DB_NAME() AS DatabaseName,actual_state_desc,desired_state_desc,\n current_storage_size_mb,max_storage_size_mb\nFROM sys.database_query_store_options;\nSELECT TOP(10) q.query_id,p.plan_id,p.is_forced_plan,qt.query_sql_text\nFROM sys.query_store_query q\nJOIN sys.query_store_query_text qt ON qt.query_text_id=q.query_text_id\nJOIN sys.query_store_plan p ON p.query_id=q.query_id\nORDER BY q.query_id DESC,p.plan_id DESC;\n--State, row count and contents depend on the instance; no fixed result is promised."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Plan forcing can be an operational mitigation, not proof of a permanent fix. Record why a prior plan is appropriate, its failure modes, how to unforce it, and what metric will trigger rollback. Parameter skew, statistics changes and blocking may require different remedies. This course does not force any plan."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Calculate the weighted mean for the synthetic plan records and write a three-step investigation that separates workload volume from per-execution regression.",
+        "starter": "SELECT /* sum duration*count divided by total count */ FROM (VALUES(5.0,100),(50.0,2)) v(MeanMs,Executions);",
+        "solution": "SELECT SUM(MeanMs*Executions)/SUM(Executions) AS WeightedMeanMs\nFROM (VALUES(CAST(5 AS decimal(12,3)),100),(CAST(50 AS decimal(12,3)),2)) v(MeanMs,Executions);\n--approximately5.882353. Compare same intervals/parameters, row counts and waits before mitigation.",
+        "checks": [
+          "Approximately 5.882 ms, allowing output-scale rounding.",
+          "Investigation identifies query/parameters, interval counts and reads/waits.",
+          "No actual Query Store result or speedup is invented."
+        ]
+      },
+      "quiz": {
+        "question": "PlanA has 100 executions and planB has 2. Can their mean durations be averaged equally?",
+        "options": [
+          "Yes, both are plans",
+          "No, weight by execution counts",
+          "Only if Query Store is enabled"
+        ],
+        "correct": 1,
+        "explanation": "Equal averaging gives each plan equal weight rather than each execution equal weight."
+      }
+    },
+    {
+      "id": "concurrency-lost-updates",
+      "title": "20. Detect stale writes and reason about isolation",
+      "stage": "advanced",
+      "takeaway": "Reading a value and later writing a replacement creates a concurrency contract.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Imagine two users read amount 100. One saves 110; the other saves 120 based on the earlier 100. Blind last-writer-wins may erase the first decision. Decide whether overwriting is allowed, whether updates are additive, or whether stale writes must be rejected.",
+            "Optimistic concurrency checks a version captured with the original read. This lab uses an integer Revision column; production SQL Server often uses rowversion, which is a database-generated binary version token, not a date or wall-clock timestamp. The update includes both key and expected version; zero affected rows signals missing or changed data.",
+            "Pessimistic locking can instead protect the read-modify-write unit, with blocking and deadlock trade-offs. Snapshot reads reduce some reader/writer interference but do not remove the need to decide conflicting write behavior. Avoid presenting any isolation setting as a universal race fix."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The sequential script simulates two requests holding revision 1. The first succeeds and advances to 2; the second affects zero rows. This validates the predicate’s intention but is not a live two-session test.",
+            "In a real concurrency test, coordinate two sessions on a dedicated shared fixture, record start/commit ordering and expected results, and test retry/cancel paths. Our session-local tables intentionally cannot demonstrate cross-session contention."
+          ],
+          "example": "IF OBJECT_ID('tempdb..#LNVersionWork') IS NOT NULL DROP TABLE #LNVersionWork;\nCREATE TABLE #LNVersionWork(Id int NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL,Revision int NOT NULL);\nINSERT #LNVersionWork VALUES(1,100,1);\nDECLARE @OriginalRevision int=1;\nUPDATE #LNVersionWork SET Amount=110,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS FirstUpdate; --1\nUPDATE #LNVersionWork SET Amount=120,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS StaleUpdate; --0\nSELECT * FROM #LNVersionWork; --1,110,2"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "A version conflict is not an instruction to retry the same business decision blindly. Reload the current record and either merge, ask the user or reject according to policy. If a network error makes commit outcome uncertain, look up an operation identifier before repeating a non-idempotent effect."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "After the worked example, update from revision 2 to amount 115. Then demonstrate that reusing revision 2 cannot overwrite the result.",
+        "starter": "--Use UPDATE WHERE Id=1 AND Revision=2, capture each @@ROWCOUNT immediately.",
+        "solution": "UPDATE #LNVersionWork SET Amount=115,Revision=Revision+1 WHERE Id=1 AND Revision=2;\nSELECT @@ROWCOUNT AS Updated;\nUPDATE #LNVersionWork SET Amount=999,Revision=Revision+1 WHERE Id=1 AND Revision=2;\nSELECT @@ROWCOUNT AS Stale;\nSELECT Amount,Revision FROM #LNVersionWork;\n--1;0;115.00/3",
+        "checks": [
+          "First update 1, stale update 0, final 115/revision 3.",
+          "Do not label this a simultaneous-session or rowversion engine test."
+        ]
+      },
+      "quiz": {
+        "question": "What does a SQL Server rowversion represent?",
+        "options": [
+          "The local time of the update",
+          "A globally unique payment identifier",
+          "A database-generated binary version token"
+        ],
+        "correct": 2,
+        "explanation": "It supports detecting changes, but is not a datetime and does not replace a business event key."
+      }
+    },
+    {
+      "id": "deadlocks-retries",
+      "title": "21. Diagnose deadlocks and bound retries",
+      "stage": "advanced",
+      "takeaway": "A deadlock is a wait cycle; recovery needs both database and application reasoning.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Blocking means one operation waits for another; a deadlock is a cycle in which participants cannot progress. SQL Server selects a victim and rolls back its transaction; error 1205 identifies a deadlock victim. A command timeout is a different event and can have a different transaction outcome.",
+            "Use the deadlock graph to identify resources, owners, waiters, statements and transaction boundaries. Do not assume the shortest displayed statement caused the whole problem. Access paths, lock escalation, isolation and triggers can affect the locks acquired.",
+            "A common mitigation is consistent access order and shorter transactions, plus appropriate access paths. It is a risk reduction, not an absolute guarantee. Retrying should be bounded, include backoff/jitter and repeat the complete safe unit after rollback, not only the last statement of a multi-step operation."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The two-session schedule shows a simple cycle. It is deliberately written as a reasoning artifact instead of a script that could leave sessions waiting. Draw the dependency edges and propose a consistent access order.",
+            "If the operation also sends an email or calls a payment API, database rollback cannot undo that external side effect. Use a durable outbox or another explicit delivery/idempotency contract; a generic retry loop around all application code can duplicate effects."
+          ],
+          "example": "--Reasoning exercise, NOT executable SQL and not an induced deadlock.\nSession A: BEGIN; lock order101; request order102.\nSession B: BEGIN; lock order102; request order101.\nA waits for B; B waits for A -> cycle.\nCandidate change: both sessions access101 then102 in a short transaction.\nStill test actual plans/lock resources: consistent logical ordering reduces risk,\nbut does not prove all deadlocks impossible."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "Collect evidence before adding hints. Lowering isolation can change correctness and may not resolve writer conflicts. Distinguish a known rolled-back deadlock victim from an unknown outcome after connection loss; the latter needs operation-status reconciliation."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Write retry pseudocode for an idempotent payment import with at most three attempts. Handle 1205 separately from validation errors and unknown commit outcomes.",
+        "starter": "for attempt in1..3:\n  try: import complete operation\n  catch error: /* classify, retry or reconcile */",
+        "solution": "For each of at most3 attempts, open a clean transaction and execute the whole import using a stable operation/event key. On1205, verify transaction cleanup, wait with bounded jitter, then retry; on the third failure report exhaustion. On validation errors, fail immediately. On connection loss near commit, query durable operation status before retrying. Send external effects through an idempotent outbox after the transaction.",
+        "checks": [
+          "Bounded three attempts, whole-unit retry, cleanup and backoff.",
+          "Validation failures are not retried.",
+          "Unknown commit outcomes are reconciled by stable operation key."
+        ]
+      },
+      "quiz": {
+        "question": "What distinguishes a deadlock from ordinary blocking?",
+        "options": [
+          "A dependency cycle prevents the participants from progressing",
+          "Any slow SELECT is a deadlock",
+          "Blocking always raises 1205"
+        ],
+        "correct": 0,
+        "explanation": "A wait can resolve when another transaction finishes. A cycle requires a participant to be broken out of it."
+      }
+    },
+    {
+      "id": "least-privilege-dynamic-sql",
+      "title": "22. Separate query values, identifiers and permissions",
+      "stage": "advanced",
+      "takeaway": "Parameterization prevents one class of injection; authorization limits what a caller may do.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Use parameters for values such as customer identifiers and amounts. A parameter cannot stand in for a table name or ORDER BY column identifier. If dynamic structure is required, select it from a fixed allowlist and quote the identifier; keep values parameterized.",
+            "A login authenticates at server scope and a database user represents access in a database, subject to the platform’s authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of db_owner or sysadmin for convenience.",
+            "Execution through a procedure can involve ownership chaining or other execution-context rules. Dynamic SQL can behave differently from static statements in that permission model. Test with the intended low-privilege identity, not only an administrator account."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The example allows only Amount or OrderId as a sort column and passes @Minimum independently. QUOTENAME handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist’s purpose.",
+            "The exercise changes no users or grants. For a real training permissions lab, have an administrator provision a dedicated user/role and test allowed/denied actions against a disposable schema. Do not create a powerful account as a shortcut."
+          ],
+          "example": "DECLARE @RequestedSort sysname=N'Amount',@Minimum decimal(12,2)=80;\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\nDECLARE @Sql nvarchar(max)=N'SELECT OrderId,Amount FROM #LNOrders WHERE Amount>=@Min ORDER BY '\n +QUOTENAME(@RequestedSort)+CASE WHEN @RequestedSort=N'Amount' THEN N',OrderId;' ELSE N';' END;\nEXEC sys.sp_executesql @Sql,N'@Min decimal(12,2)',@Min=@Minimum;\n--103/80,101/100,104/120. Values are parameters; identifier is allowlisted then quoted."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "SQL text and parameter values in diagnostics may contain sensitive business data. Use synthetic data here and define who can read query history. Passwords and connection tokens belong in an appropriate secret store, not inside a stored procedure, browser path or committed script."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Modify the example to reject a requested sort column of CustomerName. Explain why removing the allowlist and keeping QUOTENAME would weaken the contract.",
+        "starter": "DECLARE @RequestedSort sysname=N'CustomerName';\n--Apply the same validation before building any statement.",
+        "solution": "DECLARE @RequestedSort sysname=N'CustomerName';\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\n--Expected51200. Quoting avoids identifier syntax injection; it does not authorize arbitrary columns.",
+        "checks": [
+          "Expected error 51200 before executing dynamic SQL.",
+          "Distinguish value parameterization, identifier quoting and permission checks."
+        ]
+      },
+      "quiz": {
+        "question": "Does QUOTENAME authorize access to an arbitrary requested table?",
+        "options": [
+          "Yes, quoted identifiers are trusted",
+          "No, it quotes syntax; authorization and allowlists are separate",
+          "Only for sysname values"
+        ],
+        "correct": 1,
+        "explanation": "Syntax safety and permission policy solve different problems."
+      }
+    },
+    {
+      "id": "migrations-and-release",
+      "title": "23. Evolve a schema without breaking the running application",
+      "stage": "advanced",
+      "takeaway": "A migration is a data and compatibility change with evidence and a recovery plan.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "An expand-and-contract migration first adds compatible structure, deploys writers/readers that understand it, backfills existing rows, validates them, and only later removes obsolete structure. Renaming or dropping a column while older application instances still use it can break a rolling deployment.",
+            "A migration history needs stable identifiers and a record of what was applied. An existence check alone is insufficient: a column may exist with the wrong type, nullability or meaning. Check expected preconditions and fail visibly when the actual schema diverges.",
+            "Backfilling currency illustrates the danger of a convenient default. In this synthetic fixture we stipulate USD; real records require authoritative currency evidence. For a large table, plan bounded batches, log growth, locks and application compatibility instead of assuming one giant UPDATE is harmless."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "The lab changes only a temporary copy. It adds a nullable column, fills it under the fixture contract, verifies no NULL remains, then tightens nullability. Count and amount stay 5 and 390.",
+            "This is a shape-of-migration demonstration, not a production deployment script. Index rebuilds and schema modifications may require stronger locks and version-specific capabilities; verify on a representative training environment."
+          ],
+          "example": "IF OBJECT_ID('tempdb..#LNMigrationWork') IS NOT NULL DROP TABLE #LNMigrationWork;\nSELECT OrderId,Amount INTO #LNMigrationWork FROM #LNOrders;\nALTER TABLE #LNMigrationWork ADD CurrencyCode char(3) NULL;\n--Fixture contract explicitly says one synthetic currency; choose USD only for this lab.\nUPDATE #LNMigrationWork SET CurrencyCode='USD' WHERE CurrencyCode IS NULL;\nIF EXISTS(SELECT 1 FROM #LNMigrationWork WHERE CurrencyCode IS NULL)\n THROW 51210,'Backfill incomplete.',1;\nALTER TABLE #LNMigrationWork ALTER COLUMN CurrencyCode char(3) NOT NULL;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNMigrationWork; --5/390"
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "A down migration cannot always restore lost data or reverse a business transformation. Define recovery in terms of backups, compatible app rollback and forward repair. Keep historical migration files immutable after release; add a corrective migration rather than rewriting applied history."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Write preflight and postflight checks for introducing CurrencyCode. Explain what must happen before a real legacy column is removed.",
+        "starter": "--State compatibility, data-source, nullability, row-count and amount reconciliation checks.",
+        "solution": "Preflight: verify schema version, supported app versions, authoritative currency mapping and a recoverable backup/restore plan. Expand nullable CurrencyCode; deploy compatible code; backfill in monitored batches. Postflight: zero invalid/null codes, per-currency totals reconciled, unchanged business-key population, old and new reads equivalent for supported requests. Remove a legacy column only after all readers/writers have migrated and the rollback window has been considered.",
+        "checks": [
+          "No invented default currency for real records.",
+          "Both schema shape and business totals are checked.",
+          "Removal waits for application compatibility evidence."
+        ]
+      },
+      "quiz": {
+        "question": "A column already exists. Is that sufficient proof that a migration has been correctly applied?",
+        "options": [
+          "Yes, names fully define schemas",
+          "Yes, if queries compile",
+          "No, inspect type, nullability, semantics and migration history"
+        ],
+        "correct": 2,
+        "explanation": "An existence check cannot detect an incompatible or partially applied schema change."
+      }
+    },
+    {
+      "id": "advanced-import-capstone",
+      "title": "24. Deliver an auditable, replayable import and reconciliation",
+      "stage": "advanced",
+      "takeaway": "A production-shaped pipeline accounts for every input and proves its replay behavior.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Download advanced-lab.sql and advanced-solutions.sql. Run the foundation setup first, then the advanced fixture in the same SQL session. This second fixture is intentionally different from the foundation payments: six raw rows include an exact duplicate, an orphan and an invalid amount. Do not compare its 215 accepted amount with the earlier 265 matched total as if they were the same dataset.",
+            "Keep raw rows immutable for the run. Parse types while retaining original text, identify conflicting payloads per business key, distinguish duplicate copies, then classify invalid and orphan records before loading accepted events. A rejected row must remain traceable to its RawRowId and reason.",
+            "The downloadable solution uses a conservative payload conflict rule: different amount strings under the same event key are conflicts, even when they might parse to equal amounts. It permits decimal scale conversion during parsing. Those are explicit teaching policies, not universal financial-import rules. A stricter input format/scale rule should be added if the source contract requires it."
+          ],
+          "example": ""
+        },
+        {
+          "title": "Work the example",
+          "paragraphs": [
+            "First pass: accepted 3, duplicate 1, orphan 1, invalid 1. The ledger receives E001=100, E002=70 and E003=45, totalling 215. Replay inserts zero and retains the same total. The report preserves all five orders; net outstanding is 175.",
+            "Add a contradictory E002=75 as a separate raw row only in a disposable copy/session. Both E002 observations are classified as conflict, not resolved by picking the largest amount. If the original 70 was already loaded, quarantine does not retract it automatically: an authorized correction/reversal policy must reconcile the ledger and new evidence."
+          ],
+          "example": "--In the same SSMS session:\n--1 Run setup.sql\n--2 Run advanced-lab.sql\n--3 Run advanced-solutions.sql twice\n--Verify first InsertedNow=3;second=0;ledger3/215;report5 rows/net175.\n--Read the downloadable solution for full classification and transaction SQL."
+        },
+        {
+          "title": "Trade-offs and failure cases",
+          "paragraphs": [
+            "The exercise demonstrates logical replay handling in one session. A real loader must add durable batches, enforced keys, concurrent-writer tests, transaction retry behavior, access controls and monitoring. Local temporary tables cannot establish durable crash recovery or cross-session locking correctness.",
+            "Submit evidence, not only a final query: disposition counts, ledger keys and totals, before/after replay checks, proposed concurrency policy, migration plan and least-privilege boundary. Mark tests requiring a real engine as unexecuted until you actually run them."
+          ],
+          "example": ""
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement the classification and loader from the starter fixture before viewing advanced-solutions.sql. Provide two runs and a conflict-case explanation, plus a production-readiness gap list.",
+        "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
+        "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
+        "checks": [
+          "Raw counts 6=3 accepted+1 duplicate+1 invalid+1 orphan.",
+          "First inserts 3;replay 0;ledger 3 rows/215.",
+          "Report 5 rows;due 390;paid 215;net 175.",
+          "Conflict handling never silently picksMAX(amount).",
+          "Declare no live engine, concurrency or durability test unless performed."
+        ]
+      },
+      "quiz": {
+        "question": "An imported event key reappears with a different amount. What is the safe default in this contract?",
+        "options": [
+          "Quarantine or reject the conflict for a governed correction",
+          "Keep whichever amount is larger",
+          "Insert it with a fresh identity and ignore the event key"
+        ],
+        "correct": 0,
+        "explanation": "The same stable event identity cannot silently acquire a different economic meaning."
       }
     }
   ],
   "publicFiles": [
     "setup.sql",
     "solutions.sql",
-    "README.md"
+    "README.md",
+    "advanced-lab.sql",
+    "advanced-solutions.sql"
   ],
   "downloads": [
     {
@@ -706,6 +1396,97 @@
     {
       "title": "Practice instructions",
       "href": "paths/sql-server/README.md"
+    },
+    {
+      "title": "Advanced import fixture",
+      "href": "paths/sql-server/advanced-lab.sql"
+    },
+    {
+      "title": "Advanced import worked solution",
+      "href": "paths/sql-server/advanced-solutions.sql"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations",
+      "description": "Build correct read queries on a small, fully specified fixture before optimizing or automating them.",
+      "exitCriteria": [
+        "Explain table grain, keys, NULL and join multiplicity without relying on trial-and-error DISTINCT.",
+        "Produce all five order rows and the orphan payment with correct totals.",
+        "Explain every query result and pass the section checkpoints; completion buttons alone are not a skills assessment."
+      ],
+      "project": {
+        "title": "Order-to-payment control report",
+        "brief": "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
+        "requirements": [
+          "Preserve all five orders and report Dia as a customer with no order.",
+          "Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid.",
+          "Reconcile incoming payments and known-order totals; include deterministic ordering."
+        ],
+        "rubric": [
+          "Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125.",
+          "Reasoning:explain why direct payment joins can duplicate order values.",
+          "Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+        ],
+        "solution": ";WITH Paid AS (\n SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount\n FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing'\n      WHEN p.PaidAmount=o.Amount THEN 'paid'\n      WHEN p.PaidAmount<o.Amount THEN 'underpaid'\n      ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\nSELECT p.PaymentId,p.OrderId,p.Amount FROM #LNPayments p\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.OrderId=p.OrderId)\nORDER BY p.PaymentId;\n--Customer coverage: select all customers and use NOT EXISTS to identify Dia.\n--Accepted evidence:due390=paid265+net125;payments285=matched265+orphan20."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate engineering",
+      "description": "Make types, staging, parameterization and transaction behavior into explicit contracts.",
+      "exitCriteria": [
+        "Demonstrate exact versus conflicting replay handling using stable event keys.",
+        "Explain a decimal rounding boundary and an offset-crossing date example.",
+        "Show an update failure leaves the intended transaction and row state; propose an index with an evidence plan."
+      ],
+      "project": {
+        "title": "Replay-safe import design and procedure contract",
+        "brief": "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
+        "requirements": [
+          "Define business keys, allowed amounts, currency, timestamp and correction semantics.",
+          "Use typed parameters and an explicit transaction-ownership policy.",
+          "Run the replay example twice and detect a changed E1 payload.",
+          "Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern."
+        ],
+        "rubric": [
+          "Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict.",
+          "Error behavior:unknown order failure is visible and leaves no open owned transaction.",
+          "Design quality:does not claim NOT EXISTS alone prevents concurrent races.",
+          "Evidence:documents expected results separately from results actually executed."
+        ],
+        "solution": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only.\n\nSELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00\n\nSELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL\n--Contract:source/event unique key;immutable accepted payload;governed revision for changes.\n--Procedure:own transaction or documented caller participation,never an accidental mixture."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced practice",
+      "description": "Investigate performance and concurrency failures, design safe releases, and deliver an auditable import capstone.",
+      "exitCriteria": [
+        "Account for every raw row, demonstrate replay invariance and explain post-load conflict handling.",
+        "Analyze a deadlock schedule and design bounded retries with unknown-outcome reconciliation.",
+        "Explain Query Store evidence limitations and a weighted performance comparison.",
+        "Present least-privilege and migration plans with validation,rollback/recovery and concurrency test gaps."
+      ],
+      "project": {
+        "title": "Auditable ingestion service review",
+        "brief": "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
+        "requirements": [
+          "Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.",
+          "Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.",
+          "Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.",
+          "Specify security role boundaries,backward-compatible migration steps and incident diagnostics.",
+          "Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path."
+        ],
+        "rubric": [
+          "Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.",
+          "Replay:zero new rows on the second identical input;no silent overwrite on conflict.",
+          "Operations:bounded retries,explicit side-effect delivery and recoverable deployment.",
+          "Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+        ],
+        "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
+      }
     }
   ]
 }

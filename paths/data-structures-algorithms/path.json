@@ -3,8 +3,8 @@
   "title": "Data Structures & Algorithms",
   "category": "Computer science",
   "status": "ready",
-  "description": "Choose structures, trace algorithms and reason about correctness and cost using small Python examples.",
-  "level": "Beginner · first edition",
+  "description": "From collections to algorithm design: invariants, graph traversal, greedy proofs, dynamic programming and tested projects.",
+  "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
     "You only need arithmetic and a willingness to trace a few steps on paper."
@@ -21,10 +21,9 @@
     "Build and test a small shortest-hop learning-prerequisite explorer."
   ],
   "nextSteps": [
-    "Implement linked-list insertion/deletion and compare with array-based collections.",
-    "Study balanced search trees, merge sort, quicksort and stable sorting in more depth.",
-    "Add weighted shortest paths, topological sorting and cycle detection.",
-    "Practise backtracking, greedy proofs, dynamic-programming state design and amortized analysis."
+    "Study balanced trees, union-find and string algorithms.",
+    "Explore Bellman–Ford, all-pairs paths and network flow.",
+    "Deepen amortized analysis, randomized algorithms and formal proofs."
   ],
   "sources": [
     {
@@ -46,15 +45,28 @@
     {
       "title": "Python: sorting guide",
       "url": "https://docs.python.org/3/howto/sorting.html"
+    },
+    {
+      "title": "Princeton weighted shortest paths",
+      "url": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "title": "Princeton directed graphs",
+      "url": "https://algs4.cs.princeton.edu/42digraph/"
     }
   ],
   "publicFiles": [
-    "practice/algorithms.py"
+    "practice/algorithms.py",
+    "practice/advanced_algorithms.py"
   ],
   "downloads": [
     {
       "title": "Algorithms and executable checks",
       "href": "paths/data-structures-algorithms/practice/algorithms.py"
+    },
+    {
+      "title": "Advanced algorithms and executable checks",
+      "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py"
     }
   ],
   "lessons": [
@@ -96,7 +108,8 @@
         ],
         "correct": 1,
         "explanation": "Each element is inspected once, assuming constant-cost comparisons."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "arrays",
@@ -135,7 +148,8 @@
         ],
         "correct": 1,
         "explanation": "Front insertion moves references across the array, so its cost grows with n."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "maps",
@@ -175,7 +189,8 @@
         ],
         "correct": 0,
         "explanation": "A set directly models whether an item has been seen."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "stacks-queues",
@@ -214,7 +229,8 @@
         ],
         "correct": 1,
         "explanation": "FIFO preserves insertion order when serving queued items."
-      }
+      },
+      "stage": "foundation"
     },
     {
       "id": "binary-search",
@@ -285,7 +301,8 @@
             "explanation": "Two comparisons found the target. This does not imply every search takes two comparisons."
           }
         ]
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "sorting",
@@ -325,7 +342,8 @@
         ],
         "correct": 0,
         "explanation": "Stability specifies tie behavior, not that the entire order stays unchanged."
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "recursion",
@@ -365,7 +383,8 @@
         ],
         "correct": 0,
         "explanation": "Without a base case and progress toward it, recursion does not terminate."
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "graphs",
@@ -404,7 +423,8 @@
         ],
         "correct": 1,
         "explanation": "Queue layers correspond to increasing numbers of edges, not arbitrary weights."
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "heaps",
@@ -443,7 +463,8 @@
         ],
         "correct": 1,
         "explanation": "The smallest is at the root; siblings and subtrees are not globally sorted."
-      }
+      },
+      "stage": "intermediate"
     },
     {
       "id": "dynamic-programming",
@@ -484,6 +505,557 @@
         ],
         "correct": 0,
         "explanation": "State meaning and base cases make the recurrence assessable; recursion is optional."
+      },
+      "stage": "intermediate"
+    },
+    {
+      "id": "linked-nodes",
+      "title": "Linked nodes and ownership",
+      "stage": "intermediate",
+      "takeaway": "Changing a link changes reachability; finding the link is often the expensive part.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Model a chain as a node with a value and a next reference. To insert after a known node, first point the new node at the old successor, then point the known node at the new node. Reversing that order can lose the remainder of the chain. Empty lists need an explicit head policy."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Changing a link changes reachability; finding the link is often the expensive part.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Insertion after an already-known node takes O(1) time. Searching by value takes O(n). The traversal assumes an acyclic chain; a cycle needs a detection policy. A Python list is usually simpler when indexed access and locality matter."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Implement removal of the node immediately after a known node, returning its value or None.",
+        "solution": "def remove_after(node):\n    victim = node.next\n    if victim is None:\n        return None\n    node.next = victim.next\n    return victim.value\n\nassert remove_after(a) == 2\nassert values(a) == [1, 3]",
+        "checks": [
+          "Removing a successor preserves the tail.",
+          "Removing after the last node returns None.",
+          "The sentinel None is ambiguous if None is a valid stored value; document the contract."
+        ]
+      },
+      "quiz": {
+        "question": "Why is insertion by position not necessarily O(1)?",
+        "options": [
+          "The position may need a traversal",
+          "Every link update is O(n)"
+        ],
+        "correct": 0,
+        "explanation": "Only the pointer update is constant-time; locating the node can dominate."
+      }
+    },
+    {
+      "id": "merge-sort",
+      "title": "Merge sort and a correctness argument",
+      "stage": "intermediate",
+      "takeaway": "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Divide the input until runs have size zero or one. During merging, the smallest unconsumed value must be at the front of one of the runs. Select that value, advance its pointer, and repeat. Taking from the left on equal keys preserves stability."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def merge_sort(items):\n    if len(items) < 2:\n        return list(items)\n    mid = len(items) // 2\n    left, right = merge_sort(items[:mid]), merge_sort(items[mid:])\n    out, i, j = [], 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return out + left[i:] + right[j:]\n\nassert merge_sort([3, 1, 2, 1]) == [1, 1, 2, 3]"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Each recursion level merges O(n) values, and there are O(log n) levels. Time is O(n log n) under constant-cost comparisons. This copying implementation uses O(n) peak auxiliary storage plus recursion bookkeeping; cumulative allocation is larger. Built-in sorting is preferable in most Python applications."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Test sorting against Python’s sorted for all permutations of four distinct values.",
+        "solution": "from itertools import permutations\nfor row in permutations([0, 1, 2, 3]):\n    assert merge_sort(row) == sorted(row)\nassert merge_sort([]) == []\nassert merge_sort([2, 2]) == [2, 2]",
+        "checks": [
+          "All permutations match the oracle.",
+          "Input is not modified.",
+          "Explain why <= rather than < preserves left-before-right ties."
+        ]
+      },
+      "quiz": {
+        "question": "Why is each merge linear?",
+        "options": [
+          "Each step consumes one remaining value",
+          "Both runs are rescanned from zero"
+        ],
+        "correct": 0,
+        "explanation": "Each pointer moves forward at most the length of its run."
+      }
+    },
+    {
+      "id": "two-pointers",
+      "title": "Two pointers on ordered data",
+      "stage": "intermediate",
+      "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Given sorted numbers and a target sum, place pointers at opposite ends. If the sum is too small, increasing the left value is the only useful move; decreasing the right would make it smaller. The symmetric argument applies when the sum is too large."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Monotonic structure lets you discard candidates without checking every pair.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def pair_sum(values, target):\n    left, right = 0, len(values) - 1\n    while left < right:\n        total = values[left] + values[right]\n        if total == target:\n            return left, right\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return None\n\nassert pair_sum([1, 2, 4, 7], 6) == (1, 2)"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "The sorted-input precondition is essential. Each move shortens the interval, so time is O(n) and extra space O(1). Sorting first costs O(n log n) and changes index meanings unless original indices are carried alongside values."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Find a pair summing to 8 and test impossible and duplicate cases.",
+        "solution": "assert pair_sum([1, 2, 4, 7], 8) == (0, 3)\nassert pair_sum([3, 3], 6) == (0, 1)\nassert pair_sum([3], 6) is None\nassert pair_sum([], 6) is None",
+        "checks": [
+          "Two different positions are used.",
+          "Duplicate values are allowed.",
+          "Report indices in the supplied sorted sequence."
+        ]
+      },
+      "quiz": {
+        "question": "Why stop when left equals right?",
+        "options": [
+          "A single element cannot fill both positions under this contract",
+          "The remaining value is always zero"
+        ],
+        "correct": 0,
+        "explanation": "The contract requires two different elements."
+      }
+    },
+    {
+      "id": "sliding-window",
+      "title": "Sliding windows and maintained state",
+      "stage": "intermediate",
+      "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Find the longest substring with no repeated characters. Keep the last position of each character and the left edge of the current valid window. On repetition, move left past the prior occurrence only if that occurrence is within the current window."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Maintain the property of a contiguous interval instead of rebuilding every interval.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def longest_unique(text):\n    last, left, best = {}, 0, 0\n    for right, char in enumerate(text):\n        left = max(left, last.get(char, -1) + 1)\n        last[char] = right\n        best = max(best, right - left + 1)\n    return best\n\nassert longest_unique(\"abba\") == 2"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "The max prevents the left edge moving backward. Expected time O(n) uses hashing assumptions; extra space depends on distinct characters. Python iterates Unicode code points, not user-perceived grapheme clusters. Define the character model for human-language applications."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Compare the algorithm with a brute-force oracle for every a/b string up to length five.",
+        "solution": "from itertools import product\nfor size in range(6):\n    for letters in product(\"ab\", repeat=size):\n        text = \"\".join(letters)\n        brute = max([0] + [j-i for i in range(len(text)) for j in range(i+1,len(text)+1) if len(set(text[i:j])) == j-i])\n        assert longest_unique(text) == brute",
+        "checks": [
+          "Empty string returns zero.",
+          "abba catches backward-moving-left mistakes.",
+          "State the hashing and character assumptions."
+        ]
+      },
+      "quiz": {
+        "question": "Why use max when moving left?",
+        "options": [
+          "To avoid expanding into a previously excluded prefix",
+          "To sort characters"
+        ],
+        "correct": 0,
+        "explanation": "An older occurrence before the window must not move the boundary backward."
+      }
+    },
+    {
+      "id": "topological",
+      "title": "Dependencies, DFS and topological ordering",
+      "stage": "intermediate",
+      "takeaway": "A dependency order exists only when the directed graph has no cycle.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "An edge A→B means A must precede B. Kahn’s algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "A dependency order exists only when the directed graph has no cycle.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "from collections import deque\n\ndef topological(graph):\n    indegree = {v: 0 for v in graph}\n    for neighbors in graph.values():\n        for v in neighbors:\n            indegree[v] = indegree.get(v, 0) + 1\n    queue = deque(v for v, degree in indegree.items() if degree == 0)\n    order = []\n    while queue:\n        node = queue.popleft(); order.append(node)\n        for neighbor in graph.get(node, []):\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                queue.append(neighbor)\n    if len(order) != len(indegree):\n        raise ValueError(\"dependency cycle\")\n    return order\n\nassert topological({\"A\":[\"B\"],\"B\":[\"C\"]}) == [\"A\",\"B\",\"C\"]"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Time and space are O(V+E) and O(V) beyond the input adjacency lists respectively. Multiple valid orders can exist. A DFS alternative uses unseen/active/finished states; encountering an active vertex detects a cycle. Reachability alone does not prove every prerequisite is complete."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A.",
+        "solution": "graph = {\"A\":[\"C\"], \"B\":[\"C\"], \"C\":[]}\norder = topological(graph)\npositions = {node:i for i,node in enumerate(order)}\nassert all(positions[u] < positions[v] for u,vs in graph.items() for v in vs)\ntry:\n    topological({\"A\":[\"B\"],\"B\":[\"A\"]})\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"cycle accepted\")",
+        "checks": [
+          "Validate constraints rather than one arbitrary order.",
+          "Include disconnected nodes.",
+          "Cycle detection must fail explicitly."
+        ]
+      },
+      "quiz": {
+        "question": "What does an incomplete Kahn traversal indicate?",
+        "options": [
+          "A cycle in the supplied directed graph",
+          "An always-valid partial final order"
+        ],
+        "correct": 0,
+        "explanation": "Remaining vertices cannot be freed because cyclic prerequisites persist."
+      }
+    },
+    {
+      "id": "dijkstra",
+      "title": "Weighted shortest paths with Dijkstra",
+      "stage": "advanced",
+      "takeaway": "A shortest-hop path may not be the minimum-cost path.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Maintain the best known cost to each vertex. Pop the cheapest candidate from a min-heap; if it is stale, skip it. Relax outgoing edges by proposing a cheaper cost. Nonnegative weights ensure a later detour cannot improve an already settled smallest distance."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "A shortest-hop path may not be the minimum-cost path.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "import heapq\nfrom itertools import count\n\ndef dijkstra(graph, start):\n    if any(weight < 0 for edges in graph.values() for _, weight in edges):\n        raise ValueError(\"negative weight\")\n    ticket = count()\n    distance = {start: 0}\n    heap = [(0, next(ticket), start)]\n    while heap:\n        cost, _, node = heapq.heappop(heap)\n        if cost != distance[node]:\n            continue\n        for neighbor, weight in graph.get(node, []):\n            proposed = cost + weight\n            if proposed < distance.get(neighbor, float(\"inf\")):\n                distance[neighbor] = proposed\n                heapq.heappush(heap, (proposed, next(ticket), neighbor))\n    return distance\n\nassert dijkstra({\"A\":[(\"B\",8),(\"C\",2)],\"C\":[(\"B\",1)]},\"A\")[\"B\"] == 3"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add zero-cost edges, disconnected vertices and a negative-weight rejection test.",
+        "solution": "assert dijkstra({\"A\":[(\"B\",0)], \"D\":[]}, \"A\") == {\"A\":0,\"B\":0}\ntry:\n    dijkstra({\"A\":[(\"B\",-1)]}, \"A\")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"negative accepted\")",
+        "checks": [
+          "An expensive direct route can lose to a cheaper two-edge route.",
+          "Unreachable nodes remain absent.",
+          "Explain when BFS is sufficient and when negative weights require another algorithm."
+        ]
+      },
+      "quiz": {
+        "question": "Why not use this algorithm for negative weights?",
+        "options": [
+          "Its greedy settlement argument depends on nonnegative edges",
+          "Heaps cannot store negative numbers"
+        ],
+        "correct": 0,
+        "explanation": "The limitation is in correctness assumptions, not numeric storage."
+      }
+    },
+    {
+      "id": "greedy",
+      "title": "Greedy algorithms and counterexamples",
+      "stage": "advanced",
+      "takeaway": "A locally attractive choice needs a proof, not intuition.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution’s first interval with this one without reducing the count."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "A locally attractive choice needs a proof, not intuition.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish < start:\n            raise ValueError(\"invalid interval\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Intervals use half-open boundaries, so end==start is compatible. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Show why taking the longest interval first can fail, and test compatibility of the returned set.",
+        "solution": "result = schedule([(0,10),(0,2),(2,4),(4,6)])\nassert len(result) == 3\nassert all(result[i][1] <= result[i+1][0] for i in range(len(result)-1))",
+        "checks": [
+          "Long interval blocks three short compatible intervals.",
+          "Touching intervals are allowed.",
+          "A weighted objective needs a different analysis."
+        ]
+      },
+      "quiz": {
+        "question": "Does a greedy solution for maximum count also maximize profit?",
+        "options": [
+          "Not necessarily",
+          "Always"
+        ],
+        "correct": 0,
+        "explanation": "Changing the objective invalidates the exchange argument."
+      }
+    },
+    {
+      "id": "backtracking",
+      "title": "Backtracking with reversible choices",
+      "stage": "advanced",
+      "takeaway": "Explore a search tree while restoring state after each choice.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Generate subsets by deciding whether each input position is included. The recursion state consists of an index and the currently selected values. When returning from the include branch, remove the appended value before exploring another branch."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Explore a search tree while restoring state after each choice.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def subsets(items):\n    output, selected = [], []\n    def visit(index):\n        if index == len(items):\n            output.append(selected.copy())\n            return\n        visit(index + 1)\n        selected.append(items[index])\n        visit(index + 1)\n        selected.pop()\n    visit(0)\n    return output\n\nassert len(subsets([1,2,3])) == 8"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "There are 2^n subsets; copying each output costs up to n. Output construction therefore costs O(n·2^n), with O(n) recursion state excluding the output. Pruning helps only when a valid condition rules out an entire branch. Duplicate input values may yield duplicate value-subsets."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Demonstrate why output.append(selected) is wrong and verify output independence.",
+        "solution": "result = subsets([1, 2])\nassert {tuple(x) for x in result} == {(), (1,), (2,), (1,2)}\nresult[0].append(99)\nassert all(99 not in row for row in result[1:])",
+        "checks": [
+          "Each result owns an independent list.",
+          "Empty input returns one empty subset.",
+          "Explain exponential output size rather than promising a polynomial implementation."
+        ]
+      },
+      "quiz": {
+        "question": "Why copy selected at a leaf?",
+        "options": [
+          "Later backtracking mutates selected",
+          "Copies make an exponential problem linear"
+        ],
+        "correct": 0,
+        "explanation": "All outputs would otherwise refer to the same mutable list."
+      }
+    },
+    {
+      "id": "knapsack",
+      "title": "Designing DP states: 0/1 knapsack",
+      "stage": "advanced",
+      "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "Choose a subset of items to maximize total value under an integer capacity. Each item is available once. dp[c] is the best value achievable using processed items at capacity c. Processing capacities downward keeps the current item from using an already-updated state from the same pass."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "Iteration order can determine whether an item is used once or repeatedly.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "def knapsack(items, capacity):\n    if capacity < 0:\n        raise ValueError(\"negative capacity\")\n    dp = [0] * (capacity + 1)\n    for weight, value in items:\n        if weight <= 0:\n            raise ValueError(\"positive integer weights required\")\n        for c in range(capacity, weight - 1, -1):\n            dp[c] = max(dp[c], dp[c-weight] + value)\n    return dp[capacity]\n\nassert knapsack([(2,3),(3,4),(4,5)],5) == 7"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Compare one item of weight 2/value 3 at capacity 4 against the unbounded variant.",
+        "solution": "assert knapsack([(2,3)],4) == 3\nassert knapsack([],4) == 0\nassert knapsack([(2,3)],0) == 0\n# Ascending capacities would reuse the single item and incorrectly return 6.",
+        "checks": [
+          "Single item is used at most once.",
+          "Negative-value items can be skipped.",
+          "Distinguish state definition, recurrence, order and reconstruction."
+        ]
+      },
+      "quiz": {
+        "question": "Why iterate capacities downward?",
+        "options": [
+          "To avoid reusing the current item",
+          "To sort the items"
+        ],
+        "correct": 0,
+        "explanation": "dp[c-weight] must still represent only previously processed items."
+      }
+    },
+    {
+      "id": "algorithm-review",
+      "title": "Testing and reviewing an algorithm",
+      "stage": "advanced",
+      "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
+      "sections": [
+        {
+          "title": "Model the problem",
+          "paragraphs": [
+            "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a deliberately simple oracle for small instances and compare the optimized algorithm across generated cases. This finds edge cases without assuming that random success proves correctness."
+          ]
+        },
+        {
+          "title": "Work through the implementation",
+          "paragraphs": [
+            "A result, a correctness argument and a complexity claim need separate evidence.",
+            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+          ],
+          "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits"
+        },
+        {
+          "title": "Correctness, cost and failure cases",
+          "paragraphs": [
+            "Benchmarks measure a particular workload and environment. They cannot establish asymptotic complexity by themselves. Separate setup, sorting and parsing from the operation being measured; report input sizes and distributions. Avoid recursive depth claims based on balanced-tree examples alone."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Build a prerequisite planner that detects cycles, returns an order and finds minimum-cost routes on a separate nonnegative weighted graph.",
+        "solution": "Reference architecture:\n1. Parse/validate IDs, edges and weights; preserve isolated vertices.\n2. Use topological() for dependency ordering; fail on cycles.\n3. Use dijkstra() only for the separate cost graph.\n4. Validate every returned dependency order against all edges.\n5. Test cycles, disconnected vertices, equal-cost routes and zero-cost edges.\n6. Record representation-specific cost bounds and reject unsupported inputs.",
+        "checks": [
+          "Keep prerequisite semantics separate from route-cost semantics.",
+          "Compare small shortest-path cases with hand calculations or a reference algorithm.",
+          "Describe unsupported negative weights and malformed records.",
+          "Include an operational size limit and an explanatory error."
+        ]
+      },
+      "quiz": {
+        "question": "Does a fast benchmark prove an O(n) bound?",
+        "options": [
+          "No",
+          "Yes"
+        ],
+        "correct": 0,
+        "explanation": "A finite set of timings is empirical evidence, not an asymptotic proof."
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations · Represent and reason",
+      "description": "Choose basic structures and state what correctness and cost mean.",
+      "exitCriteria": [
+        "Distinguish a structure’s operations from a problem’s contract.",
+        "Trace arrays, hash tables, stacks and queues by hand.",
+        "Explain expected versus worst-case time and auxiliary space."
+      ],
+      "project": {
+        "title": "Study-event summarizer",
+        "brief": "Process a list of events and generate counts, repeated IDs and an undo history.",
+        "requirements": [
+          "Use a dictionary for counts and a set for seen IDs.",
+          "Define what an undo operation reverses.",
+          "Handle empty input and duplicate events explicitly.",
+          "Explain operation costs and memory growth."
+        ],
+        "rubric": [
+          "Counts match a hand-calculated fixture.",
+          "Undo respects last-in-first-out order.",
+          "No duplicate is silently counted as a new unique event.",
+          "Complexity claims name their assumptions."
+        ],
+        "solution": "Use a dictionary keyed by topic for totals, a set of event IDs to identify duplicates and a list as an undo stack. Record enough information to reverse each accepted event. Test empty input and two events with the same ID. Distinguish duplicate detection policy from arbitrary removal of equal monetary or time values."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate · Search, traversal and invariants",
+      "description": "Implement algorithms with explicit preconditions, loop invariants and small reference oracles.",
+      "exitCriteria": [
+        "Explain binary-search and two-pointer invariants.",
+        "Traverse cyclic graphs safely and detect impossible dependency orders.",
+        "Compare optimized results with brute-force results on small inputs.",
+        "Account for sorting and copying costs."
+      ],
+      "project": {
+        "title": "Prerequisite planner",
+        "brief": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+        "requirements": [
+          "Preserve isolated topics and neighbor-only vertices.",
+          "Return an order satisfying every dependency or an explicit cycle error.",
+          "Use BFS separately to explain reachability, not prerequisite completion.",
+          "Test multiple valid orders without asserting one arbitrary sequence.",
+          "Document complexity for your chosen representation."
+        ],
+        "rubric": [
+          "Every edge is checked against the output order.",
+          "Cycles fail reliably.",
+          "Disconnected topics are not lost.",
+          "Tests cover empty input, one vertex and shared prerequisites."
+        ],
+        "solution": "Use Kahn’s topological order implementation. Build indegrees for every vertex, enqueue zero-indegree vertices, decrement neighbors and compare output count to vertex count. Validate every returned order by mapping vertices to positions. Keep completion eligibility as a separate check of all prerequisites."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced practice · Proofs and constrained optimization",
+      "description": "Choose algorithms by assumptions, prove or challenge greedy choices and design dynamic-programming states.",
+      "exitCriteria": [
+        "Explain why Dijkstra requires nonnegative weights.",
+        "Construct a counterexample to an invalid greedy rule.",
+        "Define DP state, recurrence, base cases and update order.",
+        "Distinguish algorithmic complexity from measured performance."
+      ],
+      "project": {
+        "title": "Algorithm decision portfolio",
+        "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+        "requirements": [
+          "Find routes on a nonnegative weighted graph and reject unsupported weights.",
+          "Schedule the maximum number of compatible unweighted intervals.",
+          "Choose items under an integer budget with each item used at most once.",
+          "Compare small cases against independent brute-force oracles.",
+          "Write invariants, termination arguments and representation-specific complexity.",
+          "Define input size limits and document remaining limitations."
+        ],
+        "rubric": [
+          "Each task uses the correct objective and preconditions.",
+          "Counterexamples explain why plausible alternatives fail.",
+          "Tests include ties, duplicates, zero/empty cases and disconnected inputs.",
+          "Pseudo-polynomial and exponential costs are described honestly.",
+          "Results remain correct without performance optimizations."
+        ],
+        "solution": "Use lazy-heap Dijkstra for nonnegative costs, earliest-finish greedy for unweighted interval count, and descending-capacity 0/1 knapsack for the budget problem. The advanced_algorithms.py download contains reference functions and checks. Extend it with independent small-input oracles and document why each algorithm applies."
       }
     }
   ]
