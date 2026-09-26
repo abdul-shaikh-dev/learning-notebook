@@ -48,3 +48,9 @@ assert.equal(JSON.stringify(legacy.done),'[1,5]');
 assert.equal(legacy.last,5);
 assert.equal(JSON.stringify(validate({done:[],answers:{},starterDone:[1,1,6,7,-1]}).starterDone),'[1,6]');
 console.log('PASS: legacy progress compatibility and introduction completion validation.');
+const paths=vm.runInNewContext(fs.readFileSync('content/paths.js','utf8')+';LEARNING_PATHS');
+assert.equal(new Set(paths.map(p=>p.id)).size,paths.length);
+for(const p of paths){assert.match(p.id,/^[a-z0-9]+(?:-[a-z0-9]+)*$/);assert.ok(['ready','planned'].includes(p.status));if(p.status==='ready'&&p.href)assert.ok(fs.existsSync(p.href.split('#')[0]));if(p.status==='ready'&&!p.href){assert.ok(Array.isArray(p.lessons)&&p.lessons.length);assert.equal(new Set(p.lessons.map(l=>l.id)).size,p.lessons.length);for(const l of p.lessons){assert.ok(l.title&&l.takeaway&&l.sections.length);if(l.quiz)assert.ok(l.quiz.options[l.quiz.correct]&&l.quiz.explanation);}}}
+assert.ok(fs.readFileSync('assets/js/catalog.js','utf8').includes("'learning-notebook:path:'+id+':v1'"));
+for(const m of fs.readFileSync('course.html','utf8').matchAll(/(?:src|href)="([^"#]+)"/g)){if(!/^(https?:|data:)/.test(m[1]))assert.ok(fs.existsSync(m[1].split('#')[0]),m[1]);}
+console.log('PASS: catalog schema, unique path IDs, course assets and path-scoped storage.');

@@ -71,3 +71,7 @@ See [the hosting guide](docs/github-pages.md). Run `node scripts/build-pages.cjs
 The GitHub Actions workflow validates and packages the site on pushes. Publishing is a separate manual workflow action (`publish: true`) after Pages has been enabled. Your private repository can remain private, but a standard personal-account Pages website is public. GitHub Pro or another eligible plan is required to publish Pages from a private repository. A private website requires a different supported access-control arrangement.
 
 Progress is saved separately on each device/browser and origin. It does not automatically sync between your PC, local files and the hosted phone site. Back up progress on one and restore the JSON on the other if desired. Source links require internet; the hosted site needs connectivity to load initially. No offline caching or installable-app support is promised.
+
+## Multiple learning paths
+
+Open index.html for the subject catalog. The current course is in course.html. AI agents and agent harnesses are planned entries, not completed courses. See [Adding learning paths](docs/adding-learning-paths.md) for the reusable lesson schema, progress isolation and publishing steps.
