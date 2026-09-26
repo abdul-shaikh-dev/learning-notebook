@@ -8,3 +8,6 @@ node_modules/
 Thumbs.db
 # Personal learning progress exports
 valuation-lab-progress*.json
+
+# Generated GitHub Pages artifact
+_site/
