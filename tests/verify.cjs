@@ -7,3 +7,5 @@ const fs=require('node:fs'),assert=require('node:assert/strict');assert.equal(fs
 require('./authoring.cjs');
 
 require('./visual-stories.cjs');
+
+require('./journey.cjs');

@@ -26,6 +26,9 @@
     "content/source-register.js",
     "runtime/story-math.js",
     "runtime/visual-stories.js",
-    "styles/visuals.css"
+    "styles/visuals.css",
+    "content/journey.js",
+    "runtime/journey.js",
+    "styles/journey.css"
   ]
 }

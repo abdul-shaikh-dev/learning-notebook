@@ -43,3 +43,7 @@ The financial materials use synthetic positions and dated primary-source referen
 ### Visual stories
 
 The financial path opens with a topic map and three visual stories: trades → positions → realised/unrealised P&L, accounting versus prudent adjustments, and entity/desk/book relationships. The sliders and trade steps share tested arithmetic in runtime/story-math.js; course-specific UI lives in runtime/visual-stories.js and styles/visuals.css. Worked versions are included in the printable handbook. The course menu collapses on phones.
+
+### Trade lifecycle walkthrough
+
+Follow one trade through eight stages at course.html#journey/booking. Each stage includes inputs, outputs, illustrative owners, controls, data lineage and a self-check. Switch between usable and stale evidence to compare an approved correction with an unresolved exception. Content and arithmetic live in content/journey.js; runtime/journey.js and styles/journey.css provide the course UI. The same content is included in the printable study pack.

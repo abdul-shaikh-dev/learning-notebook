@@ -1,6 +1,6 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root='paths/financial-foundations/';
-const names=['curriculum','starter','foundations','advanced','exercises','activities','lab-guides','practice-data','source-register'];
+const names=['curriculum','starter','foundations','advanced','exercises','activities','lab-guides','practice-data','source-register','journey'];
 const source=names.map(n=>fs.readFileSync(root+'content/'+n+'.js','utf8')).join('\n');
 const data=vm.runInNewContext(source+';({LESSONS,FOUNDATIONS,ADVANCED,EXERCISES,LABS,LAB_GUIDES,CASE_STEPS,PRACTICE_ROWS,SOURCE_REGISTER})');
 assert.equal(data.FOUNDATIONS.length,6);assert.equal(data.EXERCISES.modules.length,5);assert.equal(data.EXERCISES.revision.length,6);
@@ -14,7 +14,7 @@ assert.equal(data.CASE_STEPS.length,6);assert.equal(data.PRACTICE_ROWS.length,6)
 for(const file of ['sample-positions.csv','answers.md'])assert.equal(fs.readFileSync('practice/'+file,'utf8'),fs.readFileSync(root+'practice/'+file,'utf8'));
 const nodes=new Map();const node=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',value:'',addEventListener(type,fn){this[type]=fn;}});return nodes.get(id);};
 vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/handbook.js','utf8'),{document:{getElementById:node},window:{print(){}}});
-const pack=node('book').innerHTML;for(const id of ['introductions','foundations','main-lessons','labs','case','population','practice','reference','answers','sources','visual-stories'])assert.ok(pack.includes('id="'+id+'"'),id);
+const pack=node('book').innerHTML;for(const id of ['introductions','foundations','main-lessons','labs','case','population','practice','reference','answers','sources','visual-stories','trade-journey'])assert.ok(pack.includes('id="'+id+'"'),id);
 for(const g of data.LAB_GUIDES)assert.ok(pack.includes(g.id==='pv'?'Discounting':data.LABS[g.id].name));
 for(const r of data.PRACTICE_ROWS)assert.ok(pack.includes(r.TradeId));
 assert.ok(pack.indexOf('id="answers"')>pack.indexOf('id="practice"'));
