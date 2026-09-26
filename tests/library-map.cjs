@@ -13,3 +13,11 @@ store.set('learning-notebook:path:python:v1',JSON.stringify(['run-a-program','ru
 store.set('valuation-lab-v1',JSON.stringify({done:[1,1,19],starterDone:[1,7]}));assert.equal(ctx.libraryProgress(paths.find(p=>p.id==='financial-foundations')).done,2);
 ctx.LEARNING_PATHS.push({id:'new-path',title:'New subject',status:'ready',category:'Other',description:'Future learning',lessons:[]});assert.ok(ctx.libraryMap().includes('#path/new-path'));
 console.log('PASS: visual map course coverage, filtering, progress integrity, map/list switching and session preference.');
+
+const roadmap=ctx.libraryMap();
+assert.equal((roadmap.match(/class="map-node"/g)||[]).length,11,'Each course including the new path appears once');
+assert.equal((roadmap.match(/marker-end=/g)||[]).length,7,'Both branching and converging relationships render');
+assert.ok(roadmap.includes('Suggested next: Data Structures &amp; Algorithms or AI Agents'),'Relationships have a text equivalent');
+assert.ok(!ctx.libraryMap('Python').includes('marker-end='),'Filtering never implies relationships between missing nodes');
+assert.equal((ctx.libraryMap('Python').match(/class="map-node"/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
+console.log('PASS: unique roadmap nodes, seven directed connections, accessible relationship text and filtered graph fallback.');
