@@ -53,3 +53,5 @@ main p a:hover,main li a:hover,.sources-inline a:hover{background:#dce8fa}
 @media print{.no-print,.course-tools,.task-tabs,.code-tools,.concept-diagram .trace-actions{display:none!important}.diagram-nodes{grid-template-columns:1fr 1fr}.diagram-explanation{background:white;color:black}.diagram-explanation h3,.diagram-explanation .eyebrow{color:black}.task-kit,.concept-diagram{padding:12px;break-inside:auto}.diagram-nodes li{break-inside:avoid}}
 
 .lesson-task-kit>.task-kit{border:0;padding:0;margin:18px 0}.lesson-task-kit{margin:28px 0}.catalog .text-action{min-height:44px;border:1px solid var(--line);padding:8px 12px;background:#edf3fc;border-radius:5px;text-align:left;color:var(--ink)}
+
+.catalog .task-tabs a[aria-current=page],.catalog .course-tools a[aria-current=page]{background:var(--mint);color:#00594f;border-color:var(--teal);box-shadow:inset 0 -3px var(--teal)}
