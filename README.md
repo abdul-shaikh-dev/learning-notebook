@@ -4,7 +4,7 @@ A static, extensible learning library. [Open the live site](https://abdul-shaikh
 
 ## Study
 
-Open `index.html` locally or use the website on a phone. The financial path contains six introductions, 18 main lessons, six foundation explainers, seven labs, five applied practice modules, six mixed revision tasks and a complete printable study pack. AI agents and agent harnesses are planned paths, not available courses.
+Open `index.html` locally or use the website on a phone. The financial path contains six introductions, 18 main lessons, six foundation explainers, seven labs, five applied practice modules, six mixed revision tasks and a complete printable study pack. AI Agents and Agent Harnesses have staged lessons and offline practice workshops.
 
 Reading, practising and self-checking are separate activities. Progress stays in the current browser and origin; it does not automatically sync between a PC and phone. The financial course offers JSON backup/import. Old lesson URLs and existing financial progress remain compatible. Save the full handbook as PDF through its Print button for a portable offline reference; the hosted site itself is not an offline-cached app.
 
@@ -62,3 +62,9 @@ Validation: all Python lesson examples/exercise solutions and the 18 project tes
 Design Patterns (22 lessons) focuses on responsibilities and collaboration inside code: when a pattern helps, how to refactor toward it, and when a plain function or simple class is better. System Design (24 lessons) focuses on service requirements, data flows, capacity, reliability, security and operational tradeoffs. Both use the same three-stage reader, exercises, visual traces, project rubrics and printable packs.
 
 A useful sequence is one programming-language path first, then Design Patterns. SQL Server and basic API experience help with System Design; its foundations introduce the architecture vocabulary before scaling and failure scenarios. You can study both design paths together: code structure and system architecture inform each other, but they solve different kinds of problems.
+
+### AI Agents and Agent Harnesses
+
+Start with AI Agents for model behavior, tool use, context, grounding, planning and evaluation. Continue with Agent Harnesses for the surrounding runtime: state transitions, permissions, approval pauses, execution budgets, retries, persistence boundaries, observability and release review. Python foundations help with the optional runnable workshops; conceptual lessons can be studied without credentials or infrastructure.
+
+The workshops use scripted decisions and synthetic local tools. They test the demonstrated application rules, not a language model's intelligence, real-provider behavior or a production security boundary. Optional live-integration guidance identifies the further evidence needed. Provider-specific references are dated; verify current official documentation before implementing them. No model pricing or availability is assumed.

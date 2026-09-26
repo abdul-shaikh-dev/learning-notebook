@@ -16,3 +16,13 @@ element('mark-done').click({target:element('mark-done')});assert.equal(stored.ge
 context.location.hash='#path/test-topic';vm.runInNewContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('0 of 1 read'));
 context.location.hash='#topic/test-topic/missing';vm.runInNewContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Path unavailable'));
 console.log('PASS: future-course rendering, text escaping, completion toggle and invalid routes.');
+
+context.location.hash='';vm.runInNewContext('renderCatalog()',context);
+assert.ok(element('main').innerHTML.includes('1 available'));
+assert.ok(!element('main').innerHTML.includes('0 planned'));
+assert.ok(!element('main').innerHTML.includes('Planned paths are ideas'));
+context.LEARNING_PATHS.push({id:'future',title:'Future',category:'Learning',description:'Later',level:'Beginner',status:'planned',lessons:[]});
+vm.runInNewContext('renderCatalog()',context);
+assert.ok(element('main').innerHTML.includes('1 planned'));
+assert.ok(element('main').innerHTML.includes('Planned paths are ideas'));
+console.log('PASS: completed catalog hides planned-only guidance; future drafts retain it.');
