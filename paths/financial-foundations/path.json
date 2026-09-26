@@ -1,0 +1,28 @@
+{
+  "id": "financial-foundations",
+  "title": "Financial foundations",
+  "category": "Finance",
+  "status": "ready",
+  "description": "From your first trade to independent checks, reserves and prudent valuation. Foundation explainers, applied practice and a complete study pack.",
+  "level": "Beginner to intermediate",
+  "lessons": 24,
+  "href": "course.html#start",
+  "publicFiles": [
+    "content/curriculum.js",
+    "content/starter.js",
+    "content/activities.js",
+    "content/foundations.js",
+    "content/advanced.js",
+    "content/exercises.js",
+    "content/lab-guides.js",
+    "content/practice-data.js",
+    "runtime/calculations.js",
+    "runtime/starter.js",
+    "runtime/study.js",
+    "runtime/handbook.js",
+    "runtime/app.js",
+    "practice/sample-positions.csv",
+    "practice/answers.md",
+    "content/source-register.js"
+  ]
+}

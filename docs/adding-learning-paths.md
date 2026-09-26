@@ -1,18 +1,27 @@
-# Adding a learning path
+# Adding and maintaining learning paths
 
-The root index is a subject-independent catalog. The existing finance course lives at course.html with its labs and unchanged progress key. Old root hash bookmarks redirect there.
+1. Run `node scripts/new-path.cjs topic-id "Topic title"` from the repository. IDs must be unique lowercase hyphenated words. A new path is planned and its lesson payload is excluded from the public catalog.
+2. Edit `paths/topic-id/path.json`. Standard paths omit `href` and use `lessons` as an array. Each lesson has a stable id, title, takeaway, sections with title/paragraphs/optional example, and an optional quiz with question/options/zero-based correct/explanation. The scaffold supplies a complete draft example.
+3. Add original explanations, explicit assumptions, worked examples, useful wrong-answer reasoning and source references where needed. Review calculations and source versions before marking status ready. The shared reader escapes lesson strings; it does not accept HTML markup.
+4. Run `node scripts/sync-catalog.cjs` to regenerate `content/paths.js`. Open index.html to review locally. Generic routes are `#path/topic-id` and `#topic/topic-id/lesson-id`.
+5. Run `node verify.cjs` and `node scripts/build-pages.cjs`, then test the built site under its project prefix on desktop and phone. Commit source and generated catalog together. Publishing is a separate authorized workflow dispatch.
 
-Add an entry to content/paths.js. Use a unique, stable lowercase hyphenated id. A planned entry has status planned and no working link. To publish a standard course, set status ready, omit href, and give lessons an array using the shape below. The shared catalog reader provides lesson navigation, checkpoints and completion saved separately by path ID. Text is escaped; HTML is not accepted in lesson strings.
+## Specialized courses
 
-```js
-{id:'example-topic',title:'Example topic',category:'Technology',status:'ready',
- description:'What you will learn',level:'Beginner',lessons:[
- {id:'first-steps',title:'First steps',takeaway:'One key idea',
- sections:[{title:'The idea',paragraphs:['Explain the concept.'],example:'Optional worked example'}],
- quiz:{question:'A useful question?',options:['A','B','C'],correct:0,explanation:'Why A is correct.'}}
-]}
-```
+A course needing its own simulations can set `href` to its HTML entry point and declare its course-owned assets in `publicFiles`, relative to its own path directory. The build reads these manifests; adding a course does not require adding finance-specific switches to the shared catalog. A specialized HTML entry inside its directory must reference shared assets using appropriate relative paths. Add the HTML itself to publicFiles. Finance retains root course.html/handbook.html as compatibility entry points.
 
-A specialized interactive course can instead set href to its own relative HTML entry point. Add its files explicitly to scripts/build-pages.cjs. Keep its storage key unique. Never rename published path or lesson IDs without a migration.
+Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial course retains `valuation-lab-v1` solely to preserve existing progress; this is an internal compatibility key, not website branding. Its `study` object stores practised/checked flags by module, while original `done` and `starterDone` arrays track reading. Old backup files remain accepted.
 
-Run node verify.cjs and node scripts/build-pages.cjs. Preview at the project subpath, check lessons and phone layout, then publish using the GitHub Actions workflow with publish enabled. Planned AI paths contain no teaching content yet. Generic courses currently save completion locally; the finance course also offers backup/import.
+## Content ownership
+
+Keep a path's lessons, quizzes, sources, labs and practice material inside its own directory. Share design/reader utilities only when they are truly subject-independent. Preserve historical review documents; publish a new response/verification record rather than rewriting them.
+
+The finance printable pack and interactive app consume the same content files. Edit canonical CSV/answer key under the finance practice directory, then run `node scripts/sync-finance.cjs` to regenerate the embedded printable data and old download aliases. Current sample CSV is unquoted; the synchronizer fails clearly if quoted fields are introduced, requiring a real CSV parser.
+
+## Source review
+
+A source record needs issuer/jurisdiction, edition or effective period, exact paragraph, check date, access status and change trigger. An access date is not proof that a legal rule remains current. Record proposals and future-effective text as such. If a source becomes gated, keep its official landing page and a clearly identified accessible primary-source companion.
+
+## Publication boundaries
+
+Manifests have an explicit publicFiles allowlist. Planned lesson payloads and nonlisted files are not bundled. This protects the website build from accidental extras; it does not make files secret in a public GitHub repository. Keep private material out of the repository entirely.

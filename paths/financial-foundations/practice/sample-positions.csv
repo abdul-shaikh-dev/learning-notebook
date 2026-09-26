@@ -1,0 +1,7 @@
+TradeId,Product,Currency,SignedFaceOrNotional,FOCleanPrice,IndependentCleanPrice,FOValue,IndependentValue,SignedAccruedInterest,PriceBasis,SourceQuality,SourceAgeDays,LearningTolerance,IllustrativeFVLevel,SignificantUnobservableInput,Notes
+BOND-001,CorporateBond,USD,20000000,99.80,99.65,,,40000,clean_mid,current,0,25000,2,false,Month-end case: approved price correction and separate 10000 bid-offer deduction
+BOND-002,CorporateBond,USD,5000000,98.00,97.50,,,12000,clean_mid,stale,42,25000,2,false,Numerical difference possible but evidence is unverified
+BOND-003,CorporateBond,USD,-10000000,101.00,100.80,,,-20000,clean_mid,current,0,15000,2,false,Short: lower independent price creates positive signed difference
+BOND-004,CorporateBond,USD,3000000,95.00,,,,6000,clean_mid,missing,,10000,,,Missing evidence and incomplete hierarchy assessment; do not replace with zero
+SWAP-001,InterestRateSwap,USD,100000000,,,450000,426000,0,supplied_value,current,0,20000,2,false,Use supplied independent minus FO value; not notional times price
+OPTION-001,StructuredOption,USD,50000000,,,2000000,1970000,0,supplied_value,approved_model_estimate,0,25000,3,true,Supplied model comparison; assess model evidence independently

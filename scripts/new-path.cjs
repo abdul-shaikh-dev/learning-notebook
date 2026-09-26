@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path');const {root}=require('./manifest.cjs');
+const id=process.argv[2],title=process.argv.slice(3).join(' ');
+if(!id||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)||!title)throw Error('Usage: node scripts/new-path.cjs topic-id "Topic title"');
+const dir=path.join(root,'paths',id);if(fs.existsSync(dir))throw Error('Path already exists');
+fs.mkdirSync(dir);fs.writeFileSync(path.join(dir,'path.json'),JSON.stringify({id,title,category:'Learning',status:'planned',description:'Describe the learning outcome.',level:'Beginner',lessons:[{id:'first-steps',title:'First steps',takeaway:'Replace this draft with a key idea.',sections:[{title:'The idea',paragraphs:['Write your explanation here.'],example:'Add a worked example.'}],quiz:{question:'Replace this checkpoint.',options:['A','B','C'],correct:0,explanation:'Explain the answer.'}}],publicFiles:[]},null,2)+'\n');require('./sync-catalog.cjs');console.log('Draft created at paths/'+id+'/path.json. Review before setting status ready.');
