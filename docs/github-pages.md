@@ -35,3 +35,7 @@ Prepared 26 September 2026. Actual hosting availability is determined by GitHub 
 ## Current publication status
 
 On 26 September 2026, GitHub rejected Pages setup for this private repository with: "Your current plan does not support GitHub Pages for this repository." The site is not live. The repository was renamed to `learning-notebook` and remains private. An eligible plan or a separately approved public site repository is needed.
+
+## Published site
+
+The owner authorized making the existing repository public on 26 September 2026. Pages is now configured for GitHub Actions at https://abdul-shaikh-dev.github.io/learning-notebook/. The earlier private-plan restriction no longer applies. The homepage is the learning-path catalog. Publication remains an explicit workflow run with publish=true.
