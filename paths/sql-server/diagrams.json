@@ -1,0 +1,219 @@
+{
+  "joins-and-grain": {
+    "title": "Why a joined order amount appears twice",
+    "summary": "Order 101 has Amount 100 and two payments, 60 and 40. This is a row-matching map: both payment rows are valid, but joined rows are no longer one row per order.",
+    "nodes": [
+      {
+        "id": "order",
+        "label": "Order 101 · Amount 100",
+        "description": "One order row at order grain."
+      },
+      {
+        "id": "p60",
+        "label": "Payment · Order 101 · 60",
+        "description": "First matching payment row."
+      },
+      {
+        "id": "p40",
+        "label": "Payment · Order 101 · 40",
+        "description": "Second matching payment row."
+      },
+      {
+        "id": "row60",
+        "label": "Joined row · 101 / 100 / 60",
+        "description": "The order fields are repeated alongside the first payment."
+      },
+      {
+        "id": "row40",
+        "label": "Joined row · 101 / 100 / 40",
+        "description": "The same order fields are repeated alongside the second payment."
+      },
+      {
+        "id": "sums",
+        "label": "SUM(order amount) = 200; SUM(payment) = 100",
+        "description": "The payment sum is meaningful here; the order sum double counts the original 100."
+      }
+    ],
+    "edges": [
+      {
+        "to": "row60",
+        "label": "matched order fields",
+        "from": "order"
+      },
+      {
+        "to": "row60",
+        "label": "matched payment fields",
+        "from": "p60"
+      },
+      {
+        "to": "row40",
+        "label": "matched order fields",
+        "from": "order"
+      },
+      {
+        "to": "row40",
+        "label": "matched payment fields",
+        "from": "p40"
+      },
+      {
+        "to": "sums",
+        "label": "contributes 100 and 60",
+        "from": "row60"
+      },
+      {
+        "to": "sums",
+        "label": "contributes 100 and 40",
+        "from": "row40"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect both grains",
+        "activeNodes": [
+          "order",
+          "p60",
+          "p40"
+        ],
+        "activeEdges": [],
+        "explanation": "One order matches two payments on OrderId. OrderId is not unique in the payment input."
+      },
+      {
+        "title": "Build the first match",
+        "activeNodes": [
+          "order",
+          "p60",
+          "row60"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "SQL attaches the complete order amount 100 to payment 60; it does not allocate the order amount."
+      },
+      {
+        "title": "Build the second match",
+        "activeNodes": [
+          "order",
+          "p40",
+          "row40"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Payment 40 produces another row carrying order amount 100. This is expected join expansion, not an accidental duplicate payment."
+      },
+      {
+        "title": "Check totals at the output grain",
+        "activeNodes": [
+          "row60",
+          "row40",
+          "sums"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "100 + 100 exaggerates sales. If the required output is one row per order, first aggregate payments by OrderId, then join that one-row-per-order result."
+      }
+    ]
+  },
+  "transactions-isolation": {
+    "title": "A deliberate failure rolls back the work copy",
+    "summary": "Follow the lesson’s single-session #LNAtomicWork example with @@TRANCOUNT = 0 at entry. It demonstrates rollback, not how other sessions observe concurrent changes.",
+    "nodes": [
+      {
+        "id": "before",
+        "label": "Before BEGIN TRAN · Amount 100",
+        "description": "The temporary work copy contains order 101 with Amount 100."
+      },
+      {
+        "id": "update",
+        "label": "Inside transaction · Amount 999",
+        "description": "UPDATE changes order 101 in the work copy, but the transaction has not committed."
+      },
+      {
+        "id": "failure",
+        "label": "THROW 51001",
+        "description": "The simulated failure transfers control to CATCH; the following COMMIT is not reached."
+      },
+      {
+        "id": "catch",
+        "label": "CATCH and transaction-state check",
+        "description": "If XACT_STATE() is nonzero, ROLLBACK undoes remaining transactional changes."
+      },
+      {
+        "id": "after",
+        "label": "Final SELECT · Amount 100",
+        "description": "The final verification sees the original amount. The demo reports the error instead of rethrowing so this SELECT can run."
+      }
+    ],
+    "edges": [
+      {
+        "to": "update",
+        "label": "BEGIN TRAN, then UPDATE",
+        "from": "before"
+      },
+      {
+        "to": "failure",
+        "label": "execute simulated failure",
+        "from": "update"
+      },
+      {
+        "to": "catch",
+        "label": "enter error handler",
+        "from": "failure"
+      },
+      {
+        "to": "after",
+        "label": "after rollback / error handling, verify",
+        "from": "catch"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Start from the work copy",
+        "activeNodes": [
+          "before"
+        ],
+        "activeEdges": [],
+        "explanation": "The precondition rejects an existing outer transaction. Order 101 starts at 100 in the copied temporary table."
+      },
+      {
+        "title": "Make an uncommitted change",
+        "activeNodes": [
+          "before",
+          "update"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The current transaction updates Amount to 999. This is not yet a successful committed unit of work."
+      },
+      {
+        "title": "Take the failure path",
+        "activeNodes": [
+          "update",
+          "failure",
+          "catch"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "THROW prevents execution from reaching COMMIT. CATCH inspects XACT_STATE and rolls back if a transaction remains."
+      },
+      {
+        "title": "Verify the original value",
+        "activeNodes": [
+          "catch",
+          "after"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The final SELECT returns 100, not 999. The demonstration catches the error for teaching; production code should usually propagate failure."
+      }
+    ]
+  }
+}

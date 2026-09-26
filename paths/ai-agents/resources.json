@@ -1,0 +1,186 @@
+{
+  "folder": "ai-agents-practice",
+  "files": [
+    {
+      "id": "workshop-py",
+      "href": "paths/ai-agents/workshop.py",
+      "role": "reference",
+      "description": "Offline agent workshop"
+    },
+    {
+      "id": "test_workshop-py",
+      "href": "paths/ai-agents/test_workshop.py",
+      "role": "test",
+      "description": "Workshop behavioral tests"
+    },
+    {
+      "id": "evaluation_cases-json",
+      "href": "paths/ai-agents/evaluation_cases.json",
+      "role": "data",
+      "description": "Evaluation case starter"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/ai-agents/README.md",
+      "role": "guide",
+      "description": "Practice guide and limits"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Trace a lesson assistant",
+      "goal": "Run the scripted search-and-answer example and explain every boundary.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "evaluation_cases-json",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Run the scripted search-and-answer example and explain every boundary.",
+        "Complete the assessment requirements in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source.; Identify which fields are trusted policy and which are evidence.; Run one successful answer and one missing-evidence case.",
+        "Compare your evidence with the stage rubric: No scripted behavior is called model intelligence.; Citations are tied to observed IDs.; Missing evidence is reported without invented support."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from ai-agents-practice folder root",
+          "command": "python workshop.py",
+          "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+        },
+        {
+          "label": "Run baseline tests from ai-agents-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Models, agents and the surrounding application",
+          "href": "#topic/ai-agents/vocabulary"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; no model credentials or external services.",
+        "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Adversarial boundary workshop",
+      "goal": "Extend the offline test suite with malformed and unauthorized proposals.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "evaluation_cases-json",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Extend the offline test suite with malformed and unauthorized proposals.",
+        "Complete the assessment requirements in the reader: Add unknown tool, extra argument, oversized query and malformed output cases.; Assert invalid requests produce no tool execution.; Use a failing source and check explicit failure status.; Write an approval design for a hypothetical send tool; do not implement external delivery.",
+        "Compare your evidence with the stage rubric: Tests include accepted and rejected values.; Authority remains outside model output.; Failure statuses are not mislabeled success.; Hypothetical delivery has concrete approval and unknown-outcome handling."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from ai-agents-practice folder root",
+          "command": "python workshop.py",
+          "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+        },
+        {
+          "label": "Run baseline tests from ai-agents-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Validate arguments before execution",
+          "href": "#topic/ai-agents/arguments"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; no model credentials or external services.",
+        "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Evaluation and release dossier",
+      "goal": "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "evaluation_cases-json",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+        "Complete the assessment requirements in the reader: Create at least six task cases including no-answer, ambiguity, injection and tool failure.; Define deterministic and semantic scoring separately.; Record expected terminal statuses and forbidden actions.; Write a held-out comparison, judge-calibration and rollback plan.; State all guarantees the offline suite cannot establish.",
+        "Compare your evidence with the stage rubric: Task criteria are defined before observing results.; Security failures cannot be hidden by average quality.; No claims of model accuracy are derived from scripted tests.; The release plan versions tools, policy, retrieval and model configuration.; Live integration uses current official protocol docs and no embedded credentials."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from ai-agents-practice folder root",
+          "command": "python workshop.py",
+          "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+        },
+        {
+          "label": "Run baseline tests from ai-agents-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "17. Stopping rules, latency and cost",
+          "href": "#topic/ai-agents/budgets"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; no model credentials or external services.",
+        "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "vocabulary": "foundation",
+    "workflow": "foundation",
+    "context": "foundation",
+    "instructions": "foundation",
+    "tools": "foundation",
+    "loop": "foundation",
+    "state": "foundation",
+    "grounding": "foundation",
+    "arguments": "intermediate",
+    "outputs": "intermediate",
+    "retrieval": "intermediate",
+    "memory": "intermediate",
+    "planning": "intermediate",
+    "clarification": "intermediate",
+    "approval": "intermediate",
+    "failures": "intermediate",
+    "budgets": "advanced",
+    "injection": "advanced",
+    "datasets": "advanced",
+    "traces": "advanced",
+    "judges": "advanced",
+    "multiagent": "advanced",
+    "deployment": "advanced",
+    "live-integration": "advanced"
+  },
+  "bundle": {
+    "href": "paths/ai-agents/practice-bundle.zip"
+  }
+}

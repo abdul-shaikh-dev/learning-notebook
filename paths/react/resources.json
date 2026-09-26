@@ -1,0 +1,188 @@
+{
+  "folder": "react-practice",
+  "files": [
+    {
+      "id": "App-tsx",
+      "href": "paths/react/practice/App.tsx",
+      "role": "reference",
+      "description": "Runnable React tracker — App.tsx"
+    },
+    {
+      "id": "AdvancedApp-tsx",
+      "href": "paths/react/practice/AdvancedApp.tsx",
+      "role": "reference",
+      "description": "Reducer workshop UI"
+    },
+    {
+      "id": "tracker-core-ts",
+      "href": "paths/react/practice/tracker-core.ts",
+      "role": "reference",
+      "description": "Validated tracker domain core"
+    },
+    {
+      "id": "tracker-core-test-ts",
+      "href": "paths/react/practice/tracker-core.test.ts",
+      "role": "test",
+      "description": "Executable domain tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/react/practice/README.md",
+      "role": "guide",
+      "description": "Workshop run instructions"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Validated study-record importer",
+      "goal": "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
+      "fileIds": [
+        "App-tsx",
+        "AdvancedApp-tsx",
+        "tracker-core-ts",
+        "tracker-core-test-ts",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
+        "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
+        "Complete the assessment requirements in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans.; Reject malformed JSON, duplicate IDs, blank titles and unsupported versions.; Return a completion summary without modifying caller-owned records.; Write repeatable valid and invalid-input tests.",
+        "Compare your evidence with the stage rubric: Every malformed case produces an explicit failure.; Zero and false are not treated as missing.; Original data is unchanged.; Explain where runtime validation ends and static typing begins."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from react-practice folder root",
+          "command": "node --experimental-strip-types tracker-core.test.ts",
+          "expected": "The domain regression checks finish successfully."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. The browser, HTML and JavaScript",
+          "href": "#topic/react/web-basics"
+        }
+      ],
+      "notes": [
+        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Editable learning tracker",
+      "goal": "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+      "fileIds": [
+        "App-tsx",
+        "AdvancedApp-tsx",
+        "tracker-core-ts",
+        "tracker-core-test-ts",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+        "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+        "Complete the assessment requirements in the reader: Use stable IDs and immutable reducer transitions.; Show blank-title errors and an empty search result.; Keep completion counts derived from all records.; Decide whether changing selection preserves unsaved drafts.; Run domain tests and manually verify Enter, Tab and checkbox behavior.",
+        "Compare your evidence with the stage rubric: No duplicated records or mutation of old state.; Filtering does not lose completion changes.; Controls have accessible names.; A failed input cannot appear as a successful update.; Explain the ownership of each state value."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from react-practice folder root",
+          "command": "node --experimental-strip-types tracker-core.test.ts",
+          "expected": "The domain regression checks finish successfully."
+        },
+        {
+          "label": "PowerShell · kit root · create UI project once",
+          "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
+          "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "7. Components, props and lists",
+          "href": "#topic/react/components"
+        }
+      ],
+      "notes": [
+        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Resilient tracker release",
+      "goal": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+      "fileIds": [
+        "App-tsx",
+        "AdvancedApp-tsx",
+        "tracker-core-ts",
+        "tracker-core-test-ts",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+        "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+        "Complete the assessment requirements in the reader: Add persistence with explicit save/read failure handling and schema version checks.; Implement a controllable API adapter with loading, error and stale-response tests.; Add URL-selected records and verify Back/Forward and direct-link refresh.; Prevent unsaved edits being silently overwritten.; Document server authorization assumptions and keep secrets out of the client.; Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
+        "Compare your evidence with the stage rubric: Delayed response A cannot overwrite newer record B.; Malformed storage remains visible as an error rather than silently trusted data.; Keyboard and empty/error journeys pass.; Release notes distinguish executed tests from reviewed-only code.; Rollback/migration behavior is specified."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from react-practice folder root",
+          "command": "node --experimental-strip-types tracker-core.test.ts",
+          "expected": "The domain regression checks finish successfully."
+        },
+        {
+          "label": "PowerShell · kit root · create UI project once",
+          "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
+          "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Race-safe asynchronous screens",
+          "href": "#topic/react/race-safe-loading"
+        }
+      ],
+      "notes": [
+        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "web-basics": "foundation",
+    "values": "foundation",
+    "collections": "foundation",
+    "functions": "foundation",
+    "async": "foundation",
+    "typescript": "foundation",
+    "components": "intermediate",
+    "state": "intermediate",
+    "forms": "intermediate",
+    "effects": "intermediate",
+    "capstone": "intermediate",
+    "modules-closures": "intermediate",
+    "type-design": "intermediate",
+    "reducers": "intermediate",
+    "context-hooks": "intermediate",
+    "identity": "intermediate",
+    "race-safe-loading": "advanced",
+    "routing": "advanced",
+    "testing": "advanced",
+    "resilience-security": "advanced",
+    "performance": "advanced",
+    "delivery": "advanced"
+  },
+  "bundle": {
+    "href": "paths/react/practice-bundle.zip"
+  }
+}

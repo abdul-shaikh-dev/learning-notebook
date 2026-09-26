@@ -27,6 +27,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Check complete practice bundles
+        run: |
+          python scripts/build-bundles.py --check
+          python tests/resource-bundles.py
       - name: Verify lessons and calculations
         run: node verify.cjs
       - name: Build portable static site

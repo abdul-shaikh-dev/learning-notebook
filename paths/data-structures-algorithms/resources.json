@@ -1,0 +1,149 @@
+{
+  "folder": "data-structures-algorithms-practice",
+  "files": [
+    {
+      "id": "algorithms-py",
+      "href": "paths/data-structures-algorithms/practice/algorithms.py",
+      "role": "reference",
+      "description": "Algorithms and executable checks"
+    },
+    {
+      "id": "advanced_algorithms-py",
+      "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py",
+      "role": "reference",
+      "description": "Advanced algorithms and executable checks"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Study-event summarizer",
+      "goal": "Process a list of events and generate counts, repeated IDs and an undo history.",
+      "fileIds": [
+        "algorithms-py",
+        "advanced_algorithms-py"
+      ],
+      "steps": [
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Read the reference source and its input contracts before running its checks.",
+        "Run the provided baseline and record its actual results.",
+        "Process a list of events and generate counts, repeated IDs and an undo history.",
+        "Complete the assessment requirements in the reader: Use a dictionary for counts and a set for seen IDs.; Define what an undo operation reverses.; Handle empty input and duplicate events explicitly.; Explain operation costs and memory growth.",
+        "Compare your evidence with the stage rubric: Counts match a hand-calculated fixture.; Undo respects last-in-first-out order.; No duplicate is silently counted as a new unique event.; Complexity claims name their assumptions."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from data-structures-algorithms-practice folder root",
+          "command": "python algorithms.py",
+          "expected": "All algorithm checks passed."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Correctness before speed",
+          "href": "#topic/data-structures-algorithms/cost"
+        }
+      ],
+      "notes": [
+        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Prerequisite planner",
+      "goal": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+      "fileIds": [
+        "algorithms-py",
+        "advanced_algorithms-py"
+      ],
+      "steps": [
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Read the reference source and its input contracts before running its checks.",
+        "Run the provided baseline and record its actual results.",
+        "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+        "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
+        "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from data-structures-algorithms-practice folder root",
+          "command": "python algorithms.py",
+          "expected": "All algorithm checks passed."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "5. Binary search and invariants",
+          "href": "#topic/data-structures-algorithms/binary-search"
+        }
+      ],
+      "notes": [
+        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Algorithm decision portfolio",
+      "goal": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+      "fileIds": [
+        "algorithms-py",
+        "advanced_algorithms-py"
+      ],
+      "steps": [
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Read the reference source and its input contracts before running its checks.",
+        "Run the provided baseline and record its actual results.",
+        "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+        "Complete the assessment requirements in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights.; Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.; Choose items under an integer budget with each item used at most once.; Compare small cases against independent brute-force oracles.; Write invariants, termination arguments and representation-specific complexity.; Define input size limits and document remaining limitations.",
+        "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from data-structures-algorithms-practice folder root",
+          "command": "python advanced_algorithms.py",
+          "expected": "All advanced algorithm reference checks passed."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Weighted shortest paths with Dijkstra",
+          "href": "#topic/data-structures-algorithms/dijkstra"
+        }
+      ],
+      "notes": [
+        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "cost": "foundation",
+    "arrays": "foundation",
+    "maps": "foundation",
+    "stacks-queues": "foundation",
+    "binary-search": "intermediate",
+    "sorting": "intermediate",
+    "recursion": "intermediate",
+    "graphs": "intermediate",
+    "heaps": "intermediate",
+    "dynamic-programming": "intermediate",
+    "linked-nodes": "intermediate",
+    "merge-sort": "intermediate",
+    "two-pointers": "intermediate",
+    "sliding-window": "intermediate",
+    "topological": "intermediate",
+    "dijkstra": "advanced",
+    "greedy": "advanced",
+    "backtracking": "advanced",
+    "knapsack": "advanced",
+    "algorithm-review": "advanced"
+  },
+  "bundle": {
+    "href": "paths/data-structures-algorithms/practice-bundle.zip"
+  }
+}

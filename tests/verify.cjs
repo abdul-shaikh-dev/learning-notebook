@@ -10,3 +10,5 @@ require('./visual-stories.cjs');
 
 require('./journey.cjs');
 require('./programming-paths.cjs');
+
+require('./resource-navigation.cjs');

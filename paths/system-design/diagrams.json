@@ -1,0 +1,136 @@
+{
+  "idempotency": {
+    "title": "The reply disappeared; booking B9 did not",
+    "summary": "One booking intent: learner-17 / reserve / request-abc with workshop=42. Assume durable coordination of the key/result and booking effect, and a retry within the documented retention window.",
+    "nodes": [
+      {
+        "id": "caller",
+        "label": "Caller · same key and payload",
+        "description": "Sends the scoped key and workshop 42; after a timeout it retries that same intent."
+      },
+      {
+        "id": "service",
+        "label": "Booking endpoint",
+        "description": "Authenticates and authorizes separately, checks request fingerprint, and coordinates concurrent use of the key."
+      },
+      {
+        "id": "commit",
+        "label": "Durable committed outcome · B9",
+        "description": "Booking B9 and the key → B9 result are stored in a consistent boundary."
+      },
+      {
+        "id": "lost",
+        "label": "First response lost",
+        "description": "The server committed, but the caller does not receive confirmation."
+      },
+      {
+        "id": "lookup",
+        "label": "Retry finds stored outcome",
+        "description": "The same scoped key and payload resolve to B9 without creating a second booking."
+      },
+      {
+        "id": "reply",
+        "label": "Return existing booking B9",
+        "description": "The caller receives the recorded result. A reused key with different meaningful payload must conflict."
+      }
+    ],
+    "edges": [
+      {
+        "to": "service",
+        "label": "first request",
+        "from": "caller"
+      },
+      {
+        "to": "commit",
+        "label": "coordinate and commit key + effect",
+        "from": "service"
+      },
+      {
+        "to": "lost",
+        "label": "first response fails to arrive",
+        "from": "commit"
+      },
+      {
+        "to": "lookup",
+        "label": "retry through endpoint with same intent",
+        "from": "caller"
+      },
+      {
+        "to": "lookup",
+        "label": "durable record supplies B9",
+        "from": "commit"
+      },
+      {
+        "to": "reply",
+        "label": "reuse stored outcome",
+        "from": "lookup"
+      },
+      {
+        "to": "caller",
+        "label": "return B9",
+        "from": "reply"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Submit one intent",
+        "activeNodes": [
+          "caller",
+          "service"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The key identifies this caller’s reserve operation for workshop 42, not every future booking by the learner."
+      },
+      {
+        "title": "Commit effect and result together",
+        "activeNodes": [
+          "service",
+          "commit"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The service coordinates concurrent duplicates and durably records booking B9 plus its key/result mapping."
+      },
+      {
+        "title": "Lose the response",
+        "activeNodes": [
+          "commit",
+          "lost"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The caller times out. Silence does not prove rollback; the booking and durable result already exist."
+      },
+      {
+        "title": "Retry the same intent",
+        "activeNodes": [
+          "caller",
+          "commit",
+          "lookup"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Within retention, the endpoint matches the same scoped key and payload to the committed B9. It does not create another booking."
+      },
+      {
+        "title": "Return the recorded result",
+        "activeNodes": [
+          "lookup",
+          "reply",
+          "caller"
+        ],
+        "activeEdges": [
+          5,
+          6
+        ],
+        "explanation": "The caller receives B9. Changed payloads must conflict; an expired key or an external side effect needs its own documented policy."
+      }
+    ]
+  }
+}

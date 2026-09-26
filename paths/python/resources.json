@@ -1,0 +1,194 @@
+{
+  "folder": "python-practice",
+  "files": [
+    {
+      "id": "foundation_project-py",
+      "href": "paths/python/practice/foundation_project.py",
+      "role": "reference",
+      "description": "Foundation project reference"
+    },
+    {
+      "id": "intermediate_project-py",
+      "href": "paths/python/practice/intermediate_project.py",
+      "role": "reference",
+      "description": "Intermediate CLI reference"
+    },
+    {
+      "id": "advanced_project-py",
+      "href": "paths/python/practice/advanced_project.py",
+      "role": "reference",
+      "description": "Advanced import pipeline reference"
+    },
+    {
+      "id": "test_projects-py",
+      "href": "paths/python/practice/test_projects.py",
+      "role": "test",
+      "description": "Staged project tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/python/practice/README.md",
+      "role": "guide",
+      "description": "Practice instructions and limitations"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Personal study log",
+      "goal": "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+        "Complete the assessment requirements in the reader: Accept nonblank topics and actual nonnegative whole minutes.; Preserve existing records when validation fails.; Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
+        "Compare your evidence with the stage rubric: Correct repeated-topic and empty totals.; Explicit validation and unchanged state on errors.; Explains that simple JSON persistence assumes one process."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from python-practice folder root",
+          "command": "python foundation_project.py",
+          "expected": "Topic totals: Python 40 and Reading 10."
+        },
+        {
+          "label": "Run baseline tests from python-practice folder root",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Run your first program",
+          "href": "#topic/python/run-a-program"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Validated study-summary CLI",
+      "goal": "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+        "Complete the assessment requirements in the reader: Use a frozen Session dataclass with explicit range/shape rules.; Bound file reads and close handles on errors.; Separate main argument parsing from importable calculation functions.; Return 0 on success and 1 on expected read/validation failure.; Document how to split into a package and add pyproject.toml; no package publication is required.",
+        "Compare your evidence with the stage rubric: Valid zero and trimmed topics work.; Invalid shapes and minutes fail without rewriting input.; Tests use temporary files and verify output/status.; Explains why a type hint is not schema validation."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from python-practice folder root",
+          "command": "python intermediate_project.py --demo",
+          "expected": "Demo summary: Python 40."
+        },
+        {
+          "label": "Run baseline tests from python-practice folder root",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "13. Classes, invariants and dataclasses",
+          "href": "#topic/python/classes-and-dataclasses"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Bounded study import pipeline",
+      "goal": "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+        "Complete the assessment requirements in the reader: Bound bytes, records, fields and worker count.; Reject duplicate keys, duplicate IDs and invalid minutes.; Keep worker output order deterministic and commit only after batch validation.; Write a same-directory temporary file, fsync contents, replace once and clean on failure.; Validate loaded report version and recomputed totals.; Profile sequential versus threaded validation; do not promise a speedup.",
+        "Compare your evidence with the stage rubric: Round-trip, empty, boundary and corruption tests pass.; Injected replacement failure preserves exact prior bytes and leaves no temporary files.; CLI error status and safe logging are explained.; Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from python-practice folder root",
+          "command": "python advanced_project.py --demo --workers 2",
+          "expected": "Demo summary: Python 40."
+        },
+        {
+          "label": "Run baseline tests from python-practice folder root",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "19. Threads, futures and async tasks",
+          "href": "#topic/python/concurrency-models"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "run-a-program": "foundation",
+    "values-and-names": "foundation",
+    "text-and-input": "foundation",
+    "conditions": "foundation",
+    "collections": "foundation",
+    "loops": "foundation",
+    "functions": "foundation",
+    "errors": "foundation",
+    "files-and-json": "foundation",
+    "modules-and-environments": "foundation",
+    "testing-and-api-boundaries": "foundation",
+    "study-log-capstone": "foundation",
+    "classes-and-dataclasses": "intermediate",
+    "typing-and-protocols": "intermediate",
+    "iterators-and-generators": "intermediate",
+    "context-managers": "intermediate",
+    "packaging-and-cli": "intermediate",
+    "logging-and-test-design": "intermediate",
+    "concurrency-models": "advanced",
+    "profiling-and-complexity": "advanced",
+    "security-and-input-boundaries": "advanced",
+    "robust-storage": "advanced",
+    "robust-import-capstone": "advanced"
+  },
+  "bundle": {
+    "href": "paths/python/practice-bundle.zip"
+  }
+}

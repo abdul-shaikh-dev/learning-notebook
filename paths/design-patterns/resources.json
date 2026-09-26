@@ -1,0 +1,175 @@
+{
+  "folder": "design-patterns-practice",
+  "files": [
+    {
+      "id": "workshop-py",
+      "href": "paths/design-patterns/workshop.py",
+      "role": "reference",
+      "description": "Pattern workshop reference"
+    },
+    {
+      "id": "test_workshop-py",
+      "href": "paths/design-patterns/test_workshop.py",
+      "role": "test",
+      "description": "Workshop behavioral tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/design-patterns/README.md",
+      "role": "guide",
+      "description": "Workshop setup and limitations"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Two-format study exporter",
+      "goal": "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+        "Complete the assessment requirements in the reader: Validate all titles before producing output.; Use two compatible formatting strategies selected at one entry point.; Reject unknown formats and preserve input order.; Include an empty-input test and a malformed-title test.",
+        "Compare your evidence with the stage rubric: Both output formats are correct for the same input.; No mutation of caller records occurs.; The design note explains why a simple factory/function is enough.; Tests assert observable behavior, including failures."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from design-patterns-practice folder root",
+          "command": "python workshop.py",
+          "expected": "Formatted output, successful-output measurements and a done workflow state."
+        },
+        {
+          "label": "Run baseline tests from design-patterns-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Patterns solve recurring design pressures",
+          "href": "#topic/design-patterns/intent"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Measured export preview",
+      "goal": "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+        "Complete the assessment requirements in the reader: Adapt a legacy seconds field with an explicit conversion policy.; Use a measurement decorator that delegates once and records only success.; Test wrapper failure and input immutability.; Write a note comparing facade, adapter, decorator and proxy intentions.",
+        "Compare your evidence with the stage rubric: Boundary conversion is correct at 59/60/61 seconds.; Failures are propagated and not counted as successful output.; Facade remains focused on the preview workflow.; The design note explains one case where each wrapper would be unnecessary."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from design-patterns-practice folder root",
+          "command": "python workshop.py",
+          "expected": "Formatted output, successful-output measurements and a done workflow state."
+        },
+        {
+          "label": "Run baseline tests from design-patterns-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "7. Builder: construct a valid configuration",
+          "href": "#topic/design-patterns/builder"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Local completion workflow with a design review",
+      "goal": "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+      "fileIds": [
+        "workshop-py",
+        "test_workshop-py",
+        "README-md"
+      ],
+      "steps": [
+        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Read README.md before running the references.",
+        "Run the provided baseline and record its actual results.",
+        "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+        "Complete the assessment requirements in the reader: Reject missing IDs and repeated completion according to a stated policy.; Commit a valid transition and keep the original store unchanged when validation fails.; Run the provided rollback tests and add a failing repository substitute.; Propose provider integration tests and a notification failure policy.; Write a decision record rejecting at least one unnecessary pattern.",
+        "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes."
+      ],
+      "commands": [
+        {
+          "label": "Run reference from design-patterns-practice folder root",
+          "command": "python workshop.py",
+          "expected": "Formatted output, successful-output measurements and a done workflow state."
+        },
+        {
+          "label": "Run baseline tests from design-patterns-practice folder root",
+          "command": "python -m unittest -v test_workshop.py",
+          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "14. Command: represent an action explicitly",
+          "href": "#topic/design-patterns/command"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "intent": "foundation",
+    "contracts": "foundation",
+    "composition": "foundation",
+    "solid": "foundation",
+    "strategy": "foundation",
+    "factories": "foundation",
+    "builder": "intermediate",
+    "adapter": "intermediate",
+    "facade": "intermediate",
+    "decorator": "intermediate",
+    "composite": "intermediate",
+    "proxy": "intermediate",
+    "observer": "intermediate",
+    "command": "advanced",
+    "state": "advanced",
+    "template-method": "advanced",
+    "iterator": "advanced",
+    "dependency-injection": "advanced",
+    "repository": "advanced",
+    "unit-of-work": "advanced",
+    "refactoring": "advanced",
+    "selection": "advanced"
+  },
+  "bundle": {
+    "href": "paths/design-patterns/practice-bundle.zip"
+  }
+}

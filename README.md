@@ -91,3 +91,38 @@ temporary API is bound to loopback and stopped after testing. React dependencies
 are pinned in validation/react/package-lock.json; they are not published to Pages.
 SQL engine/concurrency checks, real-model evaluations and the advanced-project
 extensions remain separate from these executable baseline checks.
+
+
+## Task kits and accessible diagrams
+
+Each ready path can add `resources.json` beside `path.json`. It defines named
+files (repository-relative href, role and description), task kits (file IDs,
+steps, commands with expected results, prerequisites and notes), lesson-to-task
+mappings and a course-specific ZIP folder. The shared reader places the matching
+stage project kit beside each lesson and exposes a Files & run instructions
+shortcut. Keep a task's complete dependency set in its file IDs.
+
+Practice ZIPs contain flat filenames inside the named course folder plus a
+generated START-HERE.txt. Commands must start from that extracted folder and
+identify their shell or application where relevant. Explain baseline limitations;
+do not imply an illustrative reference implements an advanced extension.
+
+Optional `diagrams.json` maps existing lesson IDs to a title, summary, named nodes,
+labelled edges and narrated steps. Steps identify active node IDs and zero-based
+edge indices. Preserve the full relationship map while highlighting a step; every
+diagram also supplies readable descriptions and all-step text for print.
+
+After changing course files, task metadata or diagrams, run:
+
+```text
+python scripts/build-bundles.py
+node scripts/sync-catalog.cjs
+python scripts/build-bundles.py --check
+python tests/resource-bundles.py
+node verify.cjs
+node scripts/build-pages.cjs
+```
+
+Commit the regenerated ZIPs and catalog together with their sources. The release
+workflow rejects stale bundles and the public build includes only the explicit
+course inventory. The reader and resource links also work when opened via file://.

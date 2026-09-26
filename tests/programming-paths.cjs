@@ -5,7 +5,7 @@ assert.ok(paths.length>=5);
 const nodes=new Map(),stored=new Map();
 function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',disabled:false,addEventListener(t,fn){this[t]=fn;},querySelectorAll(){return [];}});return nodes.get(id);}
 const context={LEARNING_PATHS:paths,document:{getElementById:node},location:{hash:''},window:{addEventListener(){},scrollTo(){},print(){}},localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)}};
-vm.createContext(context);vm.runInContext(fs.readFileSync('assets/js/catalog.js','utf8'),context);
+vm.createContext(context);vm.runInContext((fs.readFileSync('assets/js/learning-tools.js','utf8')+'\n'+fs.readFileSync('assets/js/catalog.js','utf8')),context);
 let count=0;
 for(const p of paths){
  assert.ok(p.prerequisites.length&&p.setup.length&&p.outcomes.length&&p.nextSteps.length&&p.sources.length);
@@ -25,7 +25,7 @@ for(const p of paths){
  node('main').querySelectorAll=()=>[];
  assert.ok(node('main').innerHTML.includes('Compare with a worked solution'));
  assert.ok(!node('main').innerHTML.includes('<script>'));
- if(l.trace){node('trace-next').click();assert.ok(node('trace-frame').innerHTML.includes('Step 2'));node('trace-prev').click();assert.ok(node('trace-frame').innerHTML.includes('Step 1'));assert.equal(node('trace-prev').disabled,true);}
+ if(l.trace&&!l.diagram){node('trace-next').click();assert.ok(node('trace-frame').innerHTML.includes('Step 2'));node('trace-prev').click();assert.ok(node('trace-frame').innerHTML.includes('Step 1'));assert.equal(node('trace-prev').disabled,true);}
  }
  context.location.hash='#pack/'+p.id;vm.runInContext('renderCatalog()',context);
  assert.ok(node('main').innerHTML.includes('Print / save PDF'));assert.ok(node('main').innerHTML.includes('Worked solution'));

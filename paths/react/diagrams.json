@@ -1,0 +1,98 @@
+{
+  "state": {
+    "title": "A click requests the next state snapshot",
+    "summary": "Follow the lesson’s Sessions button from 0 to 1. The connections show event and render dependencies, not an immediate mutation of count.",
+    "nodes": [
+      {
+        "id": "snapshot",
+        "label": "Render one · count = 0",
+        "description": "This render returns a button labelled Sessions: 0 and its event handler."
+      },
+      {
+        "id": "event",
+        "label": "Click event",
+        "description": "The handler calls setCount(c => c + 1)."
+      },
+      {
+        "id": "queue",
+        "label": "Pending functional update",
+        "description": "React queues the updater. The current render’s count binding remains 0."
+      },
+      {
+        "id": "next",
+        "label": "Next render · count = 1",
+        "description": "React applies the updater to pending state: 0 + 1 gives 1, then renders with that snapshot."
+      },
+      {
+        "id": "screen",
+        "label": "Committed UI · Sessions: 1",
+        "description": "React commits the necessary visible change to the button."
+      }
+    ],
+    "edges": [
+      {
+        "to": "event",
+        "label": "button provides the handler",
+        "from": "snapshot"
+      },
+      {
+        "to": "queue",
+        "label": "setter requests an update",
+        "from": "event"
+      },
+      {
+        "to": "next",
+        "label": "compute pending state and render",
+        "from": "queue"
+      },
+      {
+        "to": "screen",
+        "label": "commit the resulting UI",
+        "from": "next"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Read the initial snapshot",
+        "activeNodes": [
+          "snapshot"
+        ],
+        "activeEdges": [],
+        "explanation": "The displayed count and this render’s count are 0. The handler was created as part of this render."
+      },
+      {
+        "title": "Handle one click",
+        "activeNodes": [
+          "event",
+          "queue"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Calling the setter requests an update. It does not assign 1 to the existing local count variable."
+      },
+      {
+        "title": "Compute the next snapshot",
+        "activeNodes": [
+          "queue",
+          "next"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "For this single update, React supplies pending value 0 to c => c + 1, yielding 1. Updaters must remain pure because React may invoke them more than once in development checks."
+      },
+      {
+        "title": "Commit the visible result",
+        "activeNodes": [
+          "next",
+          "screen"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The button now shows Sessions: 1. The previous snapshot has not been rewritten; the UI reflects the newly rendered state."
+      }
+    ]
+  }
+}

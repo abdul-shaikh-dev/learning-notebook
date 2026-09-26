@@ -1474,7 +1474,202 @@ const LEARNING_PATHS = [
         "title": "Harness architecture decision template",
         "href": "paths/agent-harnesses/practice/architecture-decision.md"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "agent-harnesses-practice",
+      "files": [
+        {
+          "id": "harness_workshop-py",
+          "href": "paths/agent-harnesses/practice/harness_workshop.py",
+          "role": "reference",
+          "description": "Offline harness reference"
+        },
+        {
+          "id": "test_harness_workshop-py",
+          "href": "paths/agent-harnesses/practice/test_harness_workshop.py",
+          "role": "test",
+          "description": "Harness policy regression tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/agent-harnesses/practice/README.md",
+          "role": "guide",
+          "description": "Workshop instructions and evidence limits"
+        },
+        {
+          "id": "operations-runbook-md",
+          "href": "paths/agent-harnesses/practice/operations-runbook.md",
+          "role": "guide",
+          "description": "Operations runbook and incident exercise"
+        },
+        {
+          "id": "architecture-decision-md",
+          "href": "paths/agent-harnesses/practice/architecture-decision.md",
+          "role": "starter",
+          "description": "Harness architecture decision template"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "A read-only study assistant runtime",
+          "goal": "Build a scripted read-only loop for synthetic lessons. No model API or external execution is needed.",
+          "fileIds": [
+            "harness_workshop-py",
+            "test_harness_workshop-py",
+            "README-md",
+            "operations-runbook-md",
+            "architecture-decision-md"
+          ],
+          "steps": [
+            "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Build a scripted read-only loop for synthetic lessons. No model API or external execution is needed.",
+            "Complete the assessment requirements in the reader: Define trusted subject, readable lesson IDs and a proposal budget.; Create an explicit registry with read_lesson only.; Validate exact argument fields and bounded strings.; Return structured states and metadata events.; Test unknown tools, forbidden lessons and malformed proposals.",
+            "Compare your evidence with the stage rubric: No invalid or forbidden proposal changes the fake store.; The authenticated subject cannot be overridden by arguments.; Events distinguish proposal, denial and confirmation.; The final result does not claim a write occurred."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from agent-harnesses-practice folder root",
+              "command": "python harness_workshop.py",
+              "expected": "The scripted runtime waits for approval and then finishes with one fake note."
+            },
+            {
+              "label": "Run baseline tests from agent-harnesses-practice folder root",
+              "command": "python -m unittest -v test_harness_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. What an agent harness actually owns",
+              "href": "#topic/agent-harnesses/runtime-boundary"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer; standard library only.",
+            "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Reviewed note save with recovery",
+          "goal": "Extend the read-only runtime with an in-memory note effect that can lose its response after committing.",
+          "fileIds": [
+            "harness_workshop-py",
+            "test_harness_workshop-py",
+            "README-md",
+            "operations-runbook-md",
+            "architecture-decision-md"
+          ],
+          "steps": [
+            "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Extend the read-only runtime with an in-memory note effect that can lose its response after committing.",
+            "Complete the assessment requirements in the reader: Pause writes until the trusted host reviews exact arguments.; Reject a stale approval and a permission revoked while waiting.; Implement stable operation identity and fake receipt lookup.; Serialize a versioned checkpoint without approval authority.; Test budget exhaustion, cancellation, unknown checkpoint versions and response-loss recovery.",
+            "Compare your evidence with the stage rubric: A same-intent recovery leaves exactly one fake note.; Changed arguments cannot reuse approval.; Restoring does not reset step usage.; Uncertain state is visible until a receipt resolves it."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from agent-harnesses-practice folder root",
+              "command": "python harness_workshop.py",
+              "expected": "The scripted runtime waits for approval and then finishes with one fake note."
+            },
+            {
+              "label": "Run baseline tests from agent-harnesses-practice folder root",
+              "command": "python -m unittest -v test_harness_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Bound the loop with explicit budgets",
+              "href": "#topic/agent-harnesses/budgets"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer; standard library only.",
+            "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Harness assurance and operations packet",
+          "goal": "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+          "fileIds": [
+            "harness_workshop-py",
+            "test_harness_workshop-py",
+            "README-md",
+            "operations-runbook-md",
+            "architecture-decision-md"
+          ],
+          "steps": [
+            "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+            "Complete the assessment requirements in the reader: Run the provided suite and add two adversarial proposal fixtures.; Write an ADR for a durable checkpoint/receipt service with concurrency ownership.; Draw the trusted host, model, tool and optional compute boundaries.; Specify safe telemetry fields, retention and operator authority.; Write a response-loss incident timeline and controlled release/rollback plan.; Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
+            "Compare your evidence with the stage rubric: Claims match executed fixtures; no sandbox or intelligence certification is implied.; The ADR distinguishes CAS/fencing from external-effect idempotency.; Runbook actions preserve evidence and avoid blind retries.; Every new permission or external adapter has a verification plan."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from agent-harnesses-practice folder root",
+              "command": "python harness_workshop.py",
+              "expected": "The scripted runtime waits for approval and then finishes with one fake note."
+            },
+            {
+              "label": "Run baseline tests from agent-harnesses-practice folder root",
+              "command": "python -m unittest -v test_harness_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Separate the harness from untrusted execution",
+              "href": "#topic/agent-harnesses/isolation"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer; standard library only.",
+            "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "runtime-boundary": "foundation",
+        "task-contract": "foundation",
+        "state-machine": "foundation",
+        "state-context": "foundation",
+        "registry": "foundation",
+        "schema": "foundation",
+        "authorization": "foundation",
+        "events": "foundation",
+        "budgets": "intermediate",
+        "approval": "intermediate",
+        "deadlines": "intermediate",
+        "retries": "intermediate",
+        "idempotent-effects": "intermediate",
+        "checkpoints": "intermediate",
+        "context-lifecycle": "intermediate",
+        "injection": "intermediate",
+        "isolation": "advanced",
+        "concurrency": "advanced",
+        "replay": "advanced",
+        "audit": "advanced",
+        "evaluation": "advanced",
+        "release": "advanced",
+        "operations": "advanced",
+        "capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/agent-harnesses/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "ai-agents",
@@ -1935,6 +2130,140 @@ const LEARNING_PATHS = [
                 "Stop completed"
               ],
               "explanation": "The ID check proves evidence membership; semantic support still needs evaluation."
+            }
+          ]
+        },
+        "diagram": {
+          "title": "An action proposal is not tool execution",
+          "summary": "A learner asks about joins. Follow the bounded application loop around search_lessons and evidence SQL-07. The downloadable workshop uses scripted decisions, not a live model.",
+          "nodes": [
+            {
+              "id": "decision",
+              "label": "Decision proposal",
+              "description": "Propose search_lessons({\"query\":\"joins\"}) or a final answer. No proposed tool has run yet."
+            },
+            {
+              "id": "gate",
+              "label": "Application checks",
+              "description": "Check budget, action type, allowlisted tool, arguments and applicable policy. Retrieved text cannot grant permission."
+            },
+            {
+              "id": "tool",
+              "label": "Local search_lessons tool",
+              "description": "Runs the approved bounded search and returns title/excerpt for SQL-07."
+            },
+            {
+              "id": "observation",
+              "label": "Observed evidence · SQL-07",
+              "description": "Validate and bound the result, then record it as task data for the next decision."
+            },
+            {
+              "id": "final",
+              "label": "Validate final answer",
+              "description": "Check output contract and that cited IDs were observed. Citation membership alone does not prove the answer is supported."
+            },
+            {
+              "id": "stop",
+              "label": "Terminal status",
+              "description": "Complete only after final checks; rejected requests, failures and exhausted budgets are separate outcomes."
+            }
+          ],
+          "edges": [
+            {
+              "to": "gate",
+              "label": "submit proposal for checks",
+              "from": "decision"
+            },
+            {
+              "to": "tool",
+              "label": "allowed search within budget",
+              "from": "gate"
+            },
+            {
+              "to": "observation",
+              "label": "return data for validation",
+              "from": "tool"
+            },
+            {
+              "to": "decision",
+              "label": "supply evidence for next proposal",
+              "from": "observation"
+            },
+            {
+              "to": "final",
+              "label": "allowed finish proposal",
+              "from": "gate"
+            },
+            {
+              "to": "stop",
+              "label": "accepted final output",
+              "from": "final"
+            },
+            {
+              "to": "stop",
+              "label": "reject or budget exhausted",
+              "from": "gate"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Propose a search",
+              "activeNodes": [
+                "decision",
+                "gate"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The decision source requests search_lessons with query joins. The application checks it before granting execution."
+            },
+            {
+              "title": "Execute an allowed capability",
+              "activeNodes": [
+                "gate",
+                "tool",
+                "observation"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Only after checks does local search run. The application records a bounded observation containing SQL-07."
+            },
+            {
+              "title": "Use the observation as data",
+              "activeNodes": [
+                "observation",
+                "decision"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The next decision can cite SQL-07. Its excerpt remains untrusted task data, even though the application knows where it came from."
+            },
+            {
+              "title": "Validate a finish proposal",
+              "activeNodes": [
+                "decision",
+                "gate",
+                "final"
+              ],
+              "activeEdges": [
+                0,
+                4
+              ],
+              "explanation": "The next proposal requests completion. Output and evidence-ID checks run; assessing semantic support still requires evaluation."
+            },
+            {
+              "title": "Stop explicitly",
+              "activeNodes": [
+                "final",
+                "stop"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "If final checks accept, status is completed. If the budget is exhausted before a valid final answer, the separate exhausted status must not be reported as success."
             }
           ]
         }
@@ -2910,7 +3239,193 @@ const LEARNING_PATHS = [
         "title": "Practice guide and limits",
         "href": "paths/ai-agents/README.md"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "ai-agents-practice",
+      "files": [
+        {
+          "id": "workshop-py",
+          "href": "paths/ai-agents/workshop.py",
+          "role": "reference",
+          "description": "Offline agent workshop"
+        },
+        {
+          "id": "test_workshop-py",
+          "href": "paths/ai-agents/test_workshop.py",
+          "role": "test",
+          "description": "Workshop behavioral tests"
+        },
+        {
+          "id": "evaluation_cases-json",
+          "href": "paths/ai-agents/evaluation_cases.json",
+          "role": "data",
+          "description": "Evaluation case starter"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/ai-agents/README.md",
+          "role": "guide",
+          "description": "Practice guide and limits"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Trace a lesson assistant",
+          "goal": "Run the scripted search-and-answer example and explain every boundary.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "evaluation_cases-json",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Run the scripted search-and-answer example and explain every boundary.",
+            "Complete the assessment requirements in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source.; Identify which fields are trusted policy and which are evidence.; Run one successful answer and one missing-evidence case.",
+            "Compare your evidence with the stage rubric: No scripted behavior is called model intelligence.; Citations are tied to observed IDs.; Missing evidence is reported without invented support."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from ai-agents-practice folder root",
+              "command": "python workshop.py",
+              "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+            },
+            {
+              "label": "Run baseline tests from ai-agents-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Models, agents and the surrounding application",
+              "href": "#topic/ai-agents/vocabulary"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; no model credentials or external services.",
+            "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Adversarial boundary workshop",
+          "goal": "Extend the offline test suite with malformed and unauthorized proposals.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "evaluation_cases-json",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Extend the offline test suite with malformed and unauthorized proposals.",
+            "Complete the assessment requirements in the reader: Add unknown tool, extra argument, oversized query and malformed output cases.; Assert invalid requests produce no tool execution.; Use a failing source and check explicit failure status.; Write an approval design for a hypothetical send tool; do not implement external delivery.",
+            "Compare your evidence with the stage rubric: Tests include accepted and rejected values.; Authority remains outside model output.; Failure statuses are not mislabeled success.; Hypothetical delivery has concrete approval and unknown-outcome handling."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from ai-agents-practice folder root",
+              "command": "python workshop.py",
+              "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+            },
+            {
+              "label": "Run baseline tests from ai-agents-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Validate arguments before execution",
+              "href": "#topic/ai-agents/arguments"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; no model credentials or external services.",
+            "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Evaluation and release dossier",
+          "goal": "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "evaluation_cases-json",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+            "Complete the assessment requirements in the reader: Create at least six task cases including no-answer, ambiguity, injection and tool failure.; Define deterministic and semantic scoring separately.; Record expected terminal statuses and forbidden actions.; Write a held-out comparison, judge-calibration and rollback plan.; State all guarantees the offline suite cannot establish.",
+            "Compare your evidence with the stage rubric: Task criteria are defined before observing results.; Security failures cannot be hidden by average quality.; No claims of model accuracy are derived from scripted tests.; The release plan versions tools, policy, retrieval and model configuration.; Live integration uses current official protocol docs and no embedded credentials."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from ai-agents-practice folder root",
+              "command": "python workshop.py",
+              "expected": "An OFFLINE SCRIPTED DEMONSTRATION with a completed trace and a cited lesson."
+            },
+            {
+              "label": "Run baseline tests from ai-agents-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Stopping rules, latency and cost",
+              "href": "#topic/ai-agents/budgets"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; no model credentials or external services.",
+            "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "vocabulary": "foundation",
+        "workflow": "foundation",
+        "context": "foundation",
+        "instructions": "foundation",
+        "tools": "foundation",
+        "loop": "foundation",
+        "state": "foundation",
+        "grounding": "foundation",
+        "arguments": "intermediate",
+        "outputs": "intermediate",
+        "retrieval": "intermediate",
+        "memory": "intermediate",
+        "planning": "intermediate",
+        "clarification": "intermediate",
+        "approval": "intermediate",
+        "failures": "intermediate",
+        "budgets": "advanced",
+        "injection": "advanced",
+        "datasets": "advanced",
+        "traces": "advanced",
+        "judges": "advanced",
+        "multiagent": "advanced",
+        "deployment": "advanced",
+        "live-integration": "advanced"
+      },
+      "bundle": {
+        "href": "paths/ai-agents/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "dotnet",
@@ -3639,7 +4154,134 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Singleton services share application-wide state and require safe concurrency."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "A POST request through the small Task API",
+          "summary": "A successful first POST /tasks with {\"title\":\"Read\"}, starting from the empty in-memory store. This is the lesson’s minimal endpoint path, not every ASP.NET Core middleware stage.",
+          "nodes": [
+            {
+              "id": "client",
+              "label": "HTTP client",
+              "description": "Sends POST /tasks, Content-Type: application/json, and {\"title\":\"Read\"}."
+            },
+            {
+              "id": "binding",
+              "label": "Bind request and resolve service",
+              "description": "ASP.NET Core binds JSON to TaskRequest and supplies the registered singleton TaskStore."
+            },
+            {
+              "id": "endpoint",
+              "label": "Validate the title",
+              "description": "The endpoint rejects blank titles with 400; Read passes and is trimmed."
+            },
+            {
+              "id": "store",
+              "label": "TaskStore.Add(\"Read\")",
+              "description": "Inside the lock, allocate ID 1 and add TaskItem(1, \"Read\"). Memory is lost on restart."
+            },
+            {
+              "id": "response",
+              "label": "201 Created",
+              "description": "The HTTP response includes Location: /tasks/1 and the created item as JSON."
+            },
+            {
+              "id": "bad",
+              "label": "400 Bad Request",
+              "description": "The blank-title branch returns without calling Add."
+            }
+          ],
+          "edges": [
+            {
+              "to": "binding",
+              "label": "request arrives",
+              "from": "client"
+            },
+            {
+              "to": "endpoint",
+              "label": "supply request and store",
+              "from": "binding"
+            },
+            {
+              "to": "store",
+              "label": "valid title: call Add",
+              "from": "endpoint"
+            },
+            {
+              "to": "response",
+              "label": "return created item",
+              "from": "store"
+            },
+            {
+              "to": "bad",
+              "label": "blank title: reject",
+              "from": "endpoint"
+            },
+            {
+              "to": "client",
+              "label": "send status, headers and body",
+              "from": "response"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Receive and bind",
+              "activeNodes": [
+                "client",
+                "binding"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "For this well-formed JSON request, framework binding supplies TaskRequest. The registered store instance is shared across requests."
+            },
+            {
+              "title": "Check the business input",
+              "activeNodes": [
+                "binding",
+                "endpoint"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The endpoint checks whitespace before changing state. A blank title would take the 400 branch instead."
+            },
+            {
+              "title": "Create under the lock",
+              "activeNodes": [
+                "endpoint",
+                "store"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Read is valid. The initially empty store allocates ID 1 and appends the item while holding its lock."
+            },
+            {
+              "title": "Return the HTTP result",
+              "activeNodes": [
+                "store",
+                "response",
+                "client"
+              ],
+              "activeEdges": [
+                3,
+                5
+              ],
+              "explanation": "Results.Created produces 201, Location: /tasks/1 and the item. A later GET can retrieve it while this application instance retains its memory."
+            },
+            {
+              "title": "Compare the rejected branch",
+              "activeNodes": [
+                "endpoint",
+                "bad"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "For {\"title\":\"  \"}, the endpoint returns 400. There is no Add call, new item or consumed ID in that branch."
+            }
+          ]
+        }
       },
       {
         "id": "api-contracts",
@@ -4337,7 +4979,188 @@ const LEARNING_PATHS = [
         "title": "HTTP acceptance checks",
         "href": "paths/dotnet/practice/acceptance.cs"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "dotnet-practice",
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/dotnet/practice/README.md",
+          "role": "guide",
+          "description": "Practice setup and assessment guide"
+        },
+        {
+          "id": "foundation-cs",
+          "href": "paths/dotnet/practice/foundation.cs",
+          "role": "reference",
+          "description": "Foundation console notebook"
+        },
+        {
+          "id": "task-api-cs",
+          "href": "paths/dotnet/practice/task-api.cs",
+          "role": "reference",
+          "description": "Versioned task API baseline"
+        },
+        {
+          "id": "acceptance-cs",
+          "href": "paths/dotnet/practice/acceptance.cs",
+          "role": "reference",
+          "description": "HTTP acceptance checks"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Console task notebook",
+          "goal": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+          "fileIds": [
+            "README-md",
+            "foundation-cs",
+            "task-api-cs",
+            "acceptance-cs"
+          ],
+          "steps": [
+            "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
+            "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+            "Complete the assessment requirements in the reader: Task IDs are positive and titles are trimmed and nonblank.; Completion changes only the intended task.; An empty list and unknown ID have explicit behavior.; Four or more assertions cover a normal case and boundary failures.; Explain one nullable value and one disposable resource from your implementation.",
+            "Compare your evidence with the stage rubric: Correctness: expected output and assertions pass.; Boundaries: blank title, invalid ID and missing lookup are handled deliberately.; Design: presentation is separate from reusable task behavior.; Explanation: learner can trace state changes and describe why validation lives at the boundary."
+          ],
+          "commands": [
+            {
+              "label": "PowerShell · kit root · SDK 10",
+              "command": "dotnet new console -n Foundation -f net10.0\nCopy-Item ./foundation.cs ./Foundation/Program.cs\ndotnet run --project ./Foundation",
+              "expected": "2: Practice; 3: Review; PASS: 4 foundation assertions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Run a C# program",
+              "href": "#topic/dotnet/first-program"
+            }
+          ],
+          "notes": [
+            "Install the .NET 10 SDK. Commands below use PowerShell.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Versioned task API with persistent storage",
+          "goal": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+          "fileIds": [
+            "README-md",
+            "foundation-cs",
+            "task-api-cs",
+            "acceptance-cs"
+          ],
+          "steps": [
+            "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
+            "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+            "Complete the assessment requirements in the reader: Create, page, fetch and complete tasks with validated DTOs.; Return 400, 404 and 409 consistently; the POST Location is retrievable.; Use scoped DbContext and parameterized queries.; Review migration code/SQL and test upgrade from a previous schema.; Persist task state across restart and protect competing updates.; Make task plus audit creation atomic and test rollback from a new context.",
+            "Compare your evidence with the stage rubric: HTTP behavior: executable acceptance checks verify successful and rejected requests.; Persistence: restart and fresh-context tests establish stored state.; Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.; Maintainability: typed storage boundary, scope ownership and package versions are explained.; Migration evidence: generated operations are reviewed, tested and retained with a recovery note."
+          ],
+          "commands": [
+            {
+              "label": "PowerShell · kit root · SDK 10 · server terminal",
+              "command": "dotnet new web -n PracticeApi -f net10.0\nCopy-Item ./task-api.cs ./PracticeApi/Program.cs\ndotnet run --project ./PracticeApi --urls http://127.0.0.1:5086",
+              "expected": "The baseline API listens on loopback port 5086; keep this terminal running."
+            },
+            {
+              "label": "PowerShell · kit root · second terminal",
+              "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
+              "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Interfaces and generic contracts",
+              "href": "#topic/dotnet/contracts-generics"
+            }
+          ],
+          "notes": [
+            "Install the .NET 10 SDK. Commands below use PowerShell.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Operational and secure task service",
+          "goal": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+          "fileIds": [
+            "README-md",
+            "foundation-cs",
+            "task-api-cs",
+            "acceptance-cs"
+          ],
+          "steps": [
+            "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
+            "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+            "Complete the assessment requirements in the reader: Use a real authentication handler with issuer/audience/lifetime validation.; Set ownership from trusted identity and authorize every task read/write.; Propagate request cancellation, bound dependency work and avoid unobserved tasks.; Add structured problem responses, logs, traces/metrics collection and readiness checks.; Test migrations, transaction failures, stale versions and authorization denials.; Publish a release build, measure bounded queries and document backup/rollback and limitations.",
+            "Compare your evidence with the stage rubric: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.; Resilience: controlled cancellation/failure scenarios terminate work and release resources.; Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.; Performance: before/after measurements use the same workload and preserve correctness.; Delivery: published build checks succeed and the rollback plan handles persistent data.; Judgment: learner states what remains unverified and which changes would be needed for multiple replicas."
+          ],
+          "commands": [
+            {
+              "label": "PowerShell · kit root · SDK 10 · server terminal",
+              "command": "dotnet new web -n PracticeApi -f net10.0\nCopy-Item ./task-api.cs ./PracticeApi/Program.cs\ndotnet run --project ./PracticeApi --urls http://127.0.0.1:5086",
+              "expected": "The baseline API listens on loopback port 5086; keep this terminal running."
+            },
+            {
+              "label": "PowerShell · kit root · second terminal",
+              "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
+              "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Cancellation, time budgets and async streams",
+              "href": "#topic/dotnet/cancellation-budgets"
+            }
+          ],
+          "notes": [
+            "Install the .NET 10 SDK. Commands below use PowerShell.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "first-program": "foundation",
+        "types-null": "foundation",
+        "control-collections": "foundation",
+        "methods": "foundation",
+        "objects": "foundation",
+        "exceptions": "foundation",
+        "linq": "foundation",
+        "async": "foundation",
+        "contracts-generics": "intermediate",
+        "resource-ownership": "intermediate",
+        "delegates-patterns": "intermediate",
+        "testing": "intermediate",
+        "api-di": "intermediate",
+        "api-contracts": "intermediate",
+        "integration-checks": "intermediate",
+        "database": "intermediate",
+        "ef-evolution": "intermediate",
+        "capstone": "intermediate",
+        "cancellation-budgets": "advanced",
+        "concurrency": "advanced",
+        "auth-boundaries": "advanced",
+        "observability": "advanced",
+        "deploy-operations": "advanced",
+        "performance": "advanced"
+      },
+      "bundle": {
+        "href": "paths/dotnet/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "data-structures-algorithms",
@@ -5396,7 +6219,156 @@ const LEARNING_PATHS = [
           "solution": "Use lazy-heap Dijkstra for nonnegative costs, earliest-finish greedy for unweighted interval count, and descending-capacity 0/1 knapsack for the budget problem. The advanced_algorithms.py download contains reference functions and checks. Extend it with independent small-input oracles and document why each algorithm applies."
         }
       }
-    ]
+    ],
+    "resources": {
+      "folder": "data-structures-algorithms-practice",
+      "files": [
+        {
+          "id": "algorithms-py",
+          "href": "paths/data-structures-algorithms/practice/algorithms.py",
+          "role": "reference",
+          "description": "Algorithms and executable checks"
+        },
+        {
+          "id": "advanced_algorithms-py",
+          "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py",
+          "role": "reference",
+          "description": "Advanced algorithms and executable checks"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Study-event summarizer",
+          "goal": "Process a list of events and generate counts, repeated IDs and an undo history.",
+          "fileIds": [
+            "algorithms-py",
+            "advanced_algorithms-py"
+          ],
+          "steps": [
+            "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+            "Read the reference source and its input contracts before running its checks.",
+            "Run the provided baseline and record its actual results.",
+            "Process a list of events and generate counts, repeated IDs and an undo history.",
+            "Complete the assessment requirements in the reader: Use a dictionary for counts and a set for seen IDs.; Define what an undo operation reverses.; Handle empty input and duplicate events explicitly.; Explain operation costs and memory growth.",
+            "Compare your evidence with the stage rubric: Counts match a hand-calculated fixture.; Undo respects last-in-first-out order.; No duplicate is silently counted as a new unique event.; Complexity claims name their assumptions."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from data-structures-algorithms-practice folder root",
+              "command": "python algorithms.py",
+              "expected": "All algorithm checks passed."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Correctness before speed",
+              "href": "#topic/data-structures-algorithms/cost"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Prerequisite planner",
+          "goal": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+          "fileIds": [
+            "algorithms-py",
+            "advanced_algorithms-py"
+          ],
+          "steps": [
+            "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+            "Read the reference source and its input contracts before running its checks.",
+            "Run the provided baseline and record its actual results.",
+            "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
+            "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
+            "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from data-structures-algorithms-practice folder root",
+              "command": "python algorithms.py",
+              "expected": "All algorithm checks passed."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "5. Binary search and invariants",
+              "href": "#topic/data-structures-algorithms/binary-search"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Algorithm decision portfolio",
+          "goal": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+          "fileIds": [
+            "algorithms-py",
+            "advanced_algorithms-py"
+          ],
+          "steps": [
+            "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+            "Read the reference source and its input contracts before running its checks.",
+            "Run the provided baseline and record its actual results.",
+            "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+            "Complete the assessment requirements in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights.; Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.; Choose items under an integer budget with each item used at most once.; Compare small cases against independent brute-force oracles.; Write invariants, termination arguments and representation-specific complexity.; Define input size limits and document remaining limitations.",
+            "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from data-structures-algorithms-practice folder root",
+              "command": "python advanced_algorithms.py",
+              "expected": "All advanced algorithm reference checks passed."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Weighted shortest paths with Dijkstra",
+              "href": "#topic/data-structures-algorithms/dijkstra"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "cost": "foundation",
+        "arrays": "foundation",
+        "maps": "foundation",
+        "stacks-queues": "foundation",
+        "binary-search": "intermediate",
+        "sorting": "intermediate",
+        "recursion": "intermediate",
+        "graphs": "intermediate",
+        "heaps": "intermediate",
+        "dynamic-programming": "intermediate",
+        "linked-nodes": "intermediate",
+        "merge-sort": "intermediate",
+        "two-pointers": "intermediate",
+        "sliding-window": "intermediate",
+        "topological": "intermediate",
+        "dijkstra": "advanced",
+        "greedy": "advanced",
+        "backtracking": "advanced",
+        "knapsack": "advanced",
+        "algorithm-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/data-structures-algorithms/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "design-patterns",
@@ -6706,7 +7678,182 @@ const LEARNING_PATHS = [
         "title": "Workshop setup and limitations",
         "href": "paths/design-patterns/README.md"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "design-patterns-practice",
+      "files": [
+        {
+          "id": "workshop-py",
+          "href": "paths/design-patterns/workshop.py",
+          "role": "reference",
+          "description": "Pattern workshop reference"
+        },
+        {
+          "id": "test_workshop-py",
+          "href": "paths/design-patterns/test_workshop.py",
+          "role": "test",
+          "description": "Workshop behavioral tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/design-patterns/README.md",
+          "role": "guide",
+          "description": "Workshop setup and limitations"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Two-format study exporter",
+          "goal": "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
+            "Complete the assessment requirements in the reader: Validate all titles before producing output.; Use two compatible formatting strategies selected at one entry point.; Reject unknown formats and preserve input order.; Include an empty-input test and a malformed-title test.",
+            "Compare your evidence with the stage rubric: Both output formats are correct for the same input.; No mutation of caller records occurs.; The design note explains why a simple factory/function is enough.; Tests assert observable behavior, including failures."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from design-patterns-practice folder root",
+              "command": "python workshop.py",
+              "expected": "Formatted output, successful-output measurements and a done workflow state."
+            },
+            {
+              "label": "Run baseline tests from design-patterns-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Patterns solve recurring design pressures",
+              "href": "#topic/design-patterns/intent"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Measured export preview",
+          "goal": "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
+            "Complete the assessment requirements in the reader: Adapt a legacy seconds field with an explicit conversion policy.; Use a measurement decorator that delegates once and records only success.; Test wrapper failure and input immutability.; Write a note comparing facade, adapter, decorator and proxy intentions.",
+            "Compare your evidence with the stage rubric: Boundary conversion is correct at 59/60/61 seconds.; Failures are propagated and not counted as successful output.; Facade remains focused on the preview workflow.; The design note explains one case where each wrapper would be unnecessary."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from design-patterns-practice folder root",
+              "command": "python workshop.py",
+              "expected": "Formatted output, successful-output measurements and a done workflow state."
+            },
+            {
+              "label": "Run baseline tests from design-patterns-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "7. Builder: construct a valid configuration",
+              "href": "#topic/design-patterns/builder"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Local completion workflow with a design review",
+          "goal": "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+          "fileIds": [
+            "workshop-py",
+            "test_workshop-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
+            "Complete the assessment requirements in the reader: Reject missing IDs and repeated completion according to a stated policy.; Commit a valid transition and keep the original store unchanged when validation fails.; Run the provided rollback tests and add a failing repository substitute.; Propose provider integration tests and a notification failure policy.; Write a decision record rejecting at least one unnecessary pattern.",
+            "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from design-patterns-practice folder root",
+              "command": "python workshop.py",
+              "expected": "Formatted output, successful-output measurements and a done workflow state."
+            },
+            {
+              "label": "Run baseline tests from design-patterns-practice folder root",
+              "command": "python -m unittest -v test_workshop.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "14. Command: represent an action explicitly",
+              "href": "#topic/design-patterns/command"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "intent": "foundation",
+        "contracts": "foundation",
+        "composition": "foundation",
+        "solid": "foundation",
+        "strategy": "foundation",
+        "factories": "foundation",
+        "builder": "intermediate",
+        "adapter": "intermediate",
+        "facade": "intermediate",
+        "decorator": "intermediate",
+        "composite": "intermediate",
+        "proxy": "intermediate",
+        "observer": "intermediate",
+        "command": "advanced",
+        "state": "advanced",
+        "template-method": "advanced",
+        "iterator": "advanced",
+        "dependency-injection": "advanced",
+        "repository": "advanced",
+        "unit-of-work": "advanced",
+        "refactoring": "advanced",
+        "selection": "advanced"
+      },
+      "bundle": {
+        "href": "paths/design-patterns/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "financial-foundations",
@@ -6716,7 +7863,51 @@ const LEARNING_PATHS = [
     "description": "From your first trade to independent checks, reserves and prudent valuation. Foundation explainers, applied practice and a complete study pack.",
     "level": "Beginner to intermediate",
     "lessons": 24,
-    "href": "course.html#explore"
+    "href": "course.html#explore",
+    "resources": {
+      "folder": "financial-foundations-practice",
+      "files": [
+        {
+          "id": "sample-positions-csv",
+          "href": "paths/financial-foundations/practice/sample-positions.csv",
+          "role": "data",
+          "description": "Synthetic positions for the IPV exercise"
+        },
+        {
+          "id": "answers-md",
+          "href": "paths/financial-foundations/practice/answers.md",
+          "role": "guide",
+          "description": "Worked answers and interpretation"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "practice",
+          "title": "Review synthetic IPV positions",
+          "goal": "Calculate aligned signed valuation differences and explain which evidence requires review.",
+          "fileIds": [
+            "sample-positions-csv",
+            "answers-md"
+          ],
+          "steps": [
+            "Extract the bundle; sample-positions.csv and answers.md are at the financial-foundations-practice folder root.",
+            "Open the CSV in a spreadsheet. Preserve missing values as missing and keep short-position signs.",
+            "Compare like-for-like independent and front-office values; separate amount thresholds from evidence quality and stale-price review.",
+            "Write your decisions before opening answers.md; compare the bond, swap and option interpretations."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "Synthetic educational positions, not market prices or trading advice. The CSV and worked answers are the downloadable exercise. The printable study pack is available separately through the finance reader.",
+            "The amount trigger is strict greater-than: a difference equal to the threshold does not trigger it. Missing or stale evidence still needs review."
+          ]
+        }
+      ],
+      "lessonTasks": {},
+      "bundle": {
+        "href": "paths/financial-foundations/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "react",
@@ -7179,7 +8370,103 @@ const LEARNING_PATHS = [
             }
           ]
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "A click requests the next state snapshot",
+          "summary": "Follow the lesson’s Sessions button from 0 to 1. The connections show event and render dependencies, not an immediate mutation of count.",
+          "nodes": [
+            {
+              "id": "snapshot",
+              "label": "Render one · count = 0",
+              "description": "This render returns a button labelled Sessions: 0 and its event handler."
+            },
+            {
+              "id": "event",
+              "label": "Click event",
+              "description": "The handler calls setCount(c => c + 1)."
+            },
+            {
+              "id": "queue",
+              "label": "Pending functional update",
+              "description": "React queues the updater. The current render’s count binding remains 0."
+            },
+            {
+              "id": "next",
+              "label": "Next render · count = 1",
+              "description": "React applies the updater to pending state: 0 + 1 gives 1, then renders with that snapshot."
+            },
+            {
+              "id": "screen",
+              "label": "Committed UI · Sessions: 1",
+              "description": "React commits the necessary visible change to the button."
+            }
+          ],
+          "edges": [
+            {
+              "to": "event",
+              "label": "button provides the handler",
+              "from": "snapshot"
+            },
+            {
+              "to": "queue",
+              "label": "setter requests an update",
+              "from": "event"
+            },
+            {
+              "to": "next",
+              "label": "compute pending state and render",
+              "from": "queue"
+            },
+            {
+              "to": "screen",
+              "label": "commit the resulting UI",
+              "from": "next"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Read the initial snapshot",
+              "activeNodes": [
+                "snapshot"
+              ],
+              "activeEdges": [],
+              "explanation": "The displayed count and this render’s count are 0. The handler was created as part of this render."
+            },
+            {
+              "title": "Handle one click",
+              "activeNodes": [
+                "event",
+                "queue"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Calling the setter requests an update. It does not assign 1 to the existing local count variable."
+            },
+            {
+              "title": "Compute the next snapshot",
+              "activeNodes": [
+                "queue",
+                "next"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "For this single update, React supplies pending value 0 to c => c + 1, yielding 1. Updaters must remain pure because React may invoke them more than once in development checks."
+            },
+            {
+              "title": "Commit the visible result",
+              "activeNodes": [
+                "next",
+                "screen"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The button now shows Sessions: 1. The previous snapshot has not been rewritten; the UI reflects the newly rendered state."
+            }
+          ]
+        }
       },
       {
         "id": "forms",
@@ -7897,7 +9184,195 @@ const LEARNING_PATHS = [
           "solution": "Start from the tested domain core. Add storage and API adapters around it, not inside the reducer. Use request cleanup and stale-result guards or a suitable framework data layer. Test adapter failures deterministically. The supplied app is a reference starting point, not a claim that these advanced extensions are already implemented."
         }
       }
-    ]
+    ],
+    "resources": {
+      "folder": "react-practice",
+      "files": [
+        {
+          "id": "App-tsx",
+          "href": "paths/react/practice/App.tsx",
+          "role": "reference",
+          "description": "Runnable React tracker — App.tsx"
+        },
+        {
+          "id": "AdvancedApp-tsx",
+          "href": "paths/react/practice/AdvancedApp.tsx",
+          "role": "reference",
+          "description": "Reducer workshop UI"
+        },
+        {
+          "id": "tracker-core-ts",
+          "href": "paths/react/practice/tracker-core.ts",
+          "role": "reference",
+          "description": "Validated tracker domain core"
+        },
+        {
+          "id": "tracker-core-test-ts",
+          "href": "paths/react/practice/tracker-core.test.ts",
+          "role": "test",
+          "description": "Executable domain tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/react/practice/README.md",
+          "role": "guide",
+          "description": "Workshop run instructions"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Validated study-record importer",
+          "goal": "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
+          "fileIds": [
+            "App-tsx",
+            "AdvancedApp-tsx",
+            "tracker-core-ts",
+            "tracker-core-test-ts",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
+            "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
+            "Complete the assessment requirements in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans.; Reject malformed JSON, duplicate IDs, blank titles and unsupported versions.; Return a completion summary without modifying caller-owned records.; Write repeatable valid and invalid-input tests.",
+            "Compare your evidence with the stage rubric: Every malformed case produces an explicit failure.; Zero and false are not treated as missing.; Original data is unchanged.; Explain where runtime validation ends and static typing begins."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from react-practice folder root",
+              "command": "node --experimental-strip-types tracker-core.test.ts",
+              "expected": "The domain regression checks finish successfully."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. The browser, HTML and JavaScript",
+              "href": "#topic/react/web-basics"
+            }
+          ],
+          "notes": [
+            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Editable learning tracker",
+          "goal": "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+          "fileIds": [
+            "App-tsx",
+            "AdvancedApp-tsx",
+            "tracker-core-ts",
+            "tracker-core-test-ts",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+            "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+            "Complete the assessment requirements in the reader: Use stable IDs and immutable reducer transitions.; Show blank-title errors and an empty search result.; Keep completion counts derived from all records.; Decide whether changing selection preserves unsaved drafts.; Run domain tests and manually verify Enter, Tab and checkbox behavior.",
+            "Compare your evidence with the stage rubric: No duplicated records or mutation of old state.; Filtering does not lose completion changes.; Controls have accessible names.; A failed input cannot appear as a successful update.; Explain the ownership of each state value."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from react-practice folder root",
+              "command": "node --experimental-strip-types tracker-core.test.ts",
+              "expected": "The domain regression checks finish successfully."
+            },
+            {
+              "label": "PowerShell · kit root · create UI project once",
+              "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
+              "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "7. Components, props and lists",
+              "href": "#topic/react/components"
+            }
+          ],
+          "notes": [
+            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Resilient tracker release",
+          "goal": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+          "fileIds": [
+            "App-tsx",
+            "AdvancedApp-tsx",
+            "tracker-core-ts",
+            "tracker-core-test-ts",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+            "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+            "Complete the assessment requirements in the reader: Add persistence with explicit save/read failure handling and schema version checks.; Implement a controllable API adapter with loading, error and stale-response tests.; Add URL-selected records and verify Back/Forward and direct-link refresh.; Prevent unsaved edits being silently overwritten.; Document server authorization assumptions and keep secrets out of the client.; Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
+            "Compare your evidence with the stage rubric: Delayed response A cannot overwrite newer record B.; Malformed storage remains visible as an error rather than silently trusted data.; Keyboard and empty/error journeys pass.; Release notes distinguish executed tests from reviewed-only code.; Rollback/migration behavior is specified."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from react-practice folder root",
+              "command": "node --experimental-strip-types tracker-core.test.ts",
+              "expected": "The domain regression checks finish successfully."
+            },
+            {
+              "label": "PowerShell · kit root · create UI project once",
+              "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
+              "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Race-safe asynchronous screens",
+              "href": "#topic/react/race-safe-loading"
+            }
+          ],
+          "notes": [
+            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
+            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "web-basics": "foundation",
+        "values": "foundation",
+        "collections": "foundation",
+        "functions": "foundation",
+        "async": "foundation",
+        "typescript": "foundation",
+        "components": "intermediate",
+        "state": "intermediate",
+        "forms": "intermediate",
+        "effects": "intermediate",
+        "capstone": "intermediate",
+        "modules-closures": "intermediate",
+        "type-design": "intermediate",
+        "reducers": "intermediate",
+        "context-hooks": "intermediate",
+        "identity": "intermediate",
+        "race-safe-loading": "advanced",
+        "routing": "advanced",
+        "testing": "advanced",
+        "resilience-security": "advanced",
+        "performance": "advanced",
+        "delivery": "advanced"
+      },
+      "bundle": {
+        "href": "paths/react/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "python",
@@ -8099,7 +9574,106 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "From names to a computed value",
+          "summary": "A data-dependency map for the lesson’s study-time calculation. Arrows mean “supplies a value to”; they do not mean that a name stores another name.",
+          "nodes": [
+            {
+              "id": "minutes",
+              "label": "minutes_per_day = 25",
+              "description": "This name refers to the integer 25."
+            },
+            {
+              "id": "days",
+              "label": "days = 4",
+              "description": "This name refers to the integer 4."
+            },
+            {
+              "id": "multiply",
+              "label": "25 × 4",
+              "description": "Multiplication evaluates the two input values and produces 100."
+            },
+            {
+              "id": "total",
+              "label": "total = 100",
+              "description": "Assignment binds total to the result; the two input bindings remain unchanged."
+            },
+            {
+              "id": "display",
+              "label": "Total: 100 minutes",
+              "description": "The f-string reads total and print writes the formatted text."
+            }
+          ],
+          "edges": [
+            {
+              "to": "multiply",
+              "label": "supplies 25",
+              "from": "minutes"
+            },
+            {
+              "to": "multiply",
+              "label": "supplies 4",
+              "from": "days"
+            },
+            {
+              "to": "total",
+              "label": "result is bound to total",
+              "from": "multiply"
+            },
+            {
+              "to": "display",
+              "label": "read for formatting",
+              "from": "total"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Bind two input names",
+              "activeNodes": [
+                "minutes",
+                "days"
+              ],
+              "activeEdges": [],
+              "explanation": "The assignments establish two independent name-to-value bindings: 25 and 4."
+            },
+            {
+              "title": "Evaluate the right side",
+              "activeNodes": [
+                "minutes",
+                "days",
+                "multiply"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Reading both names supplies the integers to multiplication. Neither input is changed."
+            },
+            {
+              "title": "Bind the result",
+              "activeNodes": [
+                "multiply",
+                "total"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The product is 100. The assignment creates the total binding after evaluating the right side."
+            },
+            {
+              "title": "Format the output",
+              "activeNodes": [
+                "total",
+                "display"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The f-string produces Total: 100 minutes. Formatting does not turn the stored integer into a string."
+            }
+          ]
+        }
       },
       {
         "id": "text-and-input",
@@ -8339,7 +9913,106 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Python returns None when execution reaches the end without an explicit return value."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "One function call, from arguments to return value",
+          "summary": "Follow print(study_minutes(3)). The default length supplies 25 for this call; return and print have separate jobs.",
+          "nodes": [
+            {
+              "id": "call",
+              "label": "study_minutes(3)",
+              "description": "The caller supplies one positional argument: sessions is 3."
+            },
+            {
+              "id": "locals",
+              "label": "sessions = 3; length = 25",
+              "description": "Parameter bindings belong to this call. Omitting length selects its default."
+            },
+            {
+              "id": "product",
+              "label": "sessions × length = 75",
+              "description": "The function computes 3 × 25 without printing."
+            },
+            {
+              "id": "returned",
+              "label": "return 75",
+              "description": "The call finishes and yields the integer 75 to the caller."
+            },
+            {
+              "id": "print",
+              "label": "print(75)",
+              "description": "The caller prints 75. The output operation is outside study_minutes."
+            }
+          ],
+          "edges": [
+            {
+              "to": "locals",
+              "label": "bind supplied and default arguments",
+              "from": "call"
+            },
+            {
+              "to": "product",
+              "label": "read parameters",
+              "from": "locals"
+            },
+            {
+              "to": "returned",
+              "label": "return computed value",
+              "from": "product"
+            },
+            {
+              "to": "print",
+              "label": "caller receives the result",
+              "from": "returned"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Enter the call",
+              "activeNodes": [
+                "call",
+                "locals"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The definition already exists. Calling it creates this call’s parameter bindings; it does not run both example calls at once."
+            },
+            {
+              "title": "Compute locally",
+              "activeNodes": [
+                "locals",
+                "product"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "3 × 25 evaluates to 75. The function has produced a value but has not displayed it."
+            },
+            {
+              "title": "Return to the caller",
+              "activeNodes": [
+                "product",
+                "returned"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "return ends this call and supplies 75 wherever study_minutes(3) was used."
+            },
+            {
+              "title": "Use the returned value",
+              "activeNodes": [
+                "returned",
+                "print"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The outer print displays 75. The next example, study_minutes(2, length=15), is a separate call with result 30."
+            }
+          ]
+        }
       },
       {
         "id": "errors",
@@ -9232,7 +10905,201 @@ const LEARNING_PATHS = [
         "title": "Practice instructions and limitations",
         "href": "paths/python/practice/README.md"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "python-practice",
+      "files": [
+        {
+          "id": "foundation_project-py",
+          "href": "paths/python/practice/foundation_project.py",
+          "role": "reference",
+          "description": "Foundation project reference"
+        },
+        {
+          "id": "intermediate_project-py",
+          "href": "paths/python/practice/intermediate_project.py",
+          "role": "reference",
+          "description": "Intermediate CLI reference"
+        },
+        {
+          "id": "advanced_project-py",
+          "href": "paths/python/practice/advanced_project.py",
+          "role": "reference",
+          "description": "Advanced import pipeline reference"
+        },
+        {
+          "id": "test_projects-py",
+          "href": "paths/python/practice/test_projects.py",
+          "role": "test",
+          "description": "Staged project tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/python/practice/README.md",
+          "role": "guide",
+          "description": "Practice instructions and limitations"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Personal study log",
+          "goal": "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
+            "Complete the assessment requirements in the reader: Accept nonblank topics and actual nonnegative whole minutes.; Preserve existing records when validation fails.; Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
+            "Compare your evidence with the stage rubric: Correct repeated-topic and empty totals.; Explicit validation and unchanged state on errors.; Explains that simple JSON persistence assumes one process."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from python-practice folder root",
+              "command": "python foundation_project.py",
+              "expected": "Topic totals: Python 40 and Reading 10."
+            },
+            {
+              "label": "Run baseline tests from python-practice folder root",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Run your first program",
+              "href": "#topic/python/run-a-program"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Validated study-summary CLI",
+          "goal": "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
+            "Complete the assessment requirements in the reader: Use a frozen Session dataclass with explicit range/shape rules.; Bound file reads and close handles on errors.; Separate main argument parsing from importable calculation functions.; Return 0 on success and 1 on expected read/validation failure.; Document how to split into a package and add pyproject.toml; no package publication is required.",
+            "Compare your evidence with the stage rubric: Valid zero and trimmed topics work.; Invalid shapes and minutes fail without rewriting input.; Tests use temporary files and verify output/status.; Explains why a type hint is not schema validation."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from python-practice folder root",
+              "command": "python intermediate_project.py --demo",
+              "expected": "Demo summary: Python 40."
+            },
+            {
+              "label": "Run baseline tests from python-practice folder root",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "13. Classes, invariants and dataclasses",
+              "href": "#topic/python/classes-and-dataclasses"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Bounded study import pipeline",
+          "goal": "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
+            "Complete the assessment requirements in the reader: Bound bytes, records, fields and worker count.; Reject duplicate keys, duplicate IDs and invalid minutes.; Keep worker output order deterministic and commit only after batch validation.; Write a same-directory temporary file, fsync contents, replace once and clean on failure.; Validate loaded report version and recomputed totals.; Profile sequential versus threaded validation; do not promise a speedup.",
+            "Compare your evidence with the stage rubric: Round-trip, empty, boundary and corruption tests pass.; Injected replacement failure preserves exact prior bytes and leaves no temporary files.; CLI error status and safe logging are explained.; Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from python-practice folder root",
+              "command": "python advanced_project.py --demo --workers 2",
+              "expected": "Demo summary: Python 40."
+            },
+            {
+              "label": "Run baseline tests from python-practice folder root",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "19. Threads, futures and async tasks",
+              "href": "#topic/python/concurrency-models"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "run-a-program": "foundation",
+        "values-and-names": "foundation",
+        "text-and-input": "foundation",
+        "conditions": "foundation",
+        "collections": "foundation",
+        "loops": "foundation",
+        "functions": "foundation",
+        "errors": "foundation",
+        "files-and-json": "foundation",
+        "modules-and-environments": "foundation",
+        "testing-and-api-boundaries": "foundation",
+        "study-log-capstone": "foundation",
+        "classes-and-dataclasses": "intermediate",
+        "typing-and-protocols": "intermediate",
+        "iterators-and-generators": "intermediate",
+        "context-managers": "intermediate",
+        "packaging-and-cli": "intermediate",
+        "logging-and-test-design": "intermediate",
+        "concurrency-models": "advanced",
+        "profiling-and-complexity": "advanced",
+        "security-and-input-boundaries": "advanced",
+        "robust-storage": "advanced",
+        "robust-import-capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/python/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "sql-server",
@@ -9585,7 +11452,126 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Joining attaches matching rows; it does not allocate the order amount across them. Summing it now double counts."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "Why a joined order amount appears twice",
+          "summary": "Order 101 has Amount 100 and two payments, 60 and 40. This is a row-matching map: both payment rows are valid, but joined rows are no longer one row per order.",
+          "nodes": [
+            {
+              "id": "order",
+              "label": "Order 101 · Amount 100",
+              "description": "One order row at order grain."
+            },
+            {
+              "id": "p60",
+              "label": "Payment · Order 101 · 60",
+              "description": "First matching payment row."
+            },
+            {
+              "id": "p40",
+              "label": "Payment · Order 101 · 40",
+              "description": "Second matching payment row."
+            },
+            {
+              "id": "row60",
+              "label": "Joined row · 101 / 100 / 60",
+              "description": "The order fields are repeated alongside the first payment."
+            },
+            {
+              "id": "row40",
+              "label": "Joined row · 101 / 100 / 40",
+              "description": "The same order fields are repeated alongside the second payment."
+            },
+            {
+              "id": "sums",
+              "label": "SUM(order amount) = 200; SUM(payment) = 100",
+              "description": "The payment sum is meaningful here; the order sum double counts the original 100."
+            }
+          ],
+          "edges": [
+            {
+              "to": "row60",
+              "label": "matched order fields",
+              "from": "order"
+            },
+            {
+              "to": "row60",
+              "label": "matched payment fields",
+              "from": "p60"
+            },
+            {
+              "to": "row40",
+              "label": "matched order fields",
+              "from": "order"
+            },
+            {
+              "to": "row40",
+              "label": "matched payment fields",
+              "from": "p40"
+            },
+            {
+              "to": "sums",
+              "label": "contributes 100 and 60",
+              "from": "row60"
+            },
+            {
+              "to": "sums",
+              "label": "contributes 100 and 40",
+              "from": "row40"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect both grains",
+              "activeNodes": [
+                "order",
+                "p60",
+                "p40"
+              ],
+              "activeEdges": [],
+              "explanation": "One order matches two payments on OrderId. OrderId is not unique in the payment input."
+            },
+            {
+              "title": "Build the first match",
+              "activeNodes": [
+                "order",
+                "p60",
+                "row60"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "SQL attaches the complete order amount 100 to payment 60; it does not allocate the order amount."
+            },
+            {
+              "title": "Build the second match",
+              "activeNodes": [
+                "order",
+                "p40",
+                "row40"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Payment 40 produces another row carrying order amount 100. This is expected join expansion, not an accidental duplicate payment."
+            },
+            {
+              "title": "Check totals at the output grain",
+              "activeNodes": [
+                "row60",
+                "row40",
+                "sums"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "100 + 100 exaggerates sales. If the required output is one row per order, first aggregate payments by OrderId, then join that one-row-per-order result."
+            }
+          ]
+        }
       },
       {
         "id": "group-and-reconcile",
@@ -9885,7 +11871,105 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Avoiding dirty reads is different from holding a stable view across multiple statements."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "A deliberate failure rolls back the work copy",
+          "summary": "Follow the lesson’s single-session #LNAtomicWork example with @@TRANCOUNT = 0 at entry. It demonstrates rollback, not how other sessions observe concurrent changes.",
+          "nodes": [
+            {
+              "id": "before",
+              "label": "Before BEGIN TRAN · Amount 100",
+              "description": "The temporary work copy contains order 101 with Amount 100."
+            },
+            {
+              "id": "update",
+              "label": "Inside transaction · Amount 999",
+              "description": "UPDATE changes order 101 in the work copy, but the transaction has not committed."
+            },
+            {
+              "id": "failure",
+              "label": "THROW 51001",
+              "description": "The simulated failure transfers control to CATCH; the following COMMIT is not reached."
+            },
+            {
+              "id": "catch",
+              "label": "CATCH and transaction-state check",
+              "description": "If XACT_STATE() is nonzero, ROLLBACK undoes remaining transactional changes."
+            },
+            {
+              "id": "after",
+              "label": "Final SELECT · Amount 100",
+              "description": "The final verification sees the original amount. The demo reports the error instead of rethrowing so this SELECT can run."
+            }
+          ],
+          "edges": [
+            {
+              "to": "update",
+              "label": "BEGIN TRAN, then UPDATE",
+              "from": "before"
+            },
+            {
+              "to": "failure",
+              "label": "execute simulated failure",
+              "from": "update"
+            },
+            {
+              "to": "catch",
+              "label": "enter error handler",
+              "from": "failure"
+            },
+            {
+              "to": "after",
+              "label": "after rollback / error handling, verify",
+              "from": "catch"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Start from the work copy",
+              "activeNodes": [
+                "before"
+              ],
+              "activeEdges": [],
+              "explanation": "The precondition rejects an existing outer transaction. Order 101 starts at 100 in the copied temporary table."
+            },
+            {
+              "title": "Make an uncommitted change",
+              "activeNodes": [
+                "before",
+                "update"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The current transaction updates Amount to 999. This is not yet a successful committed unit of work."
+            },
+            {
+              "title": "Take the failure path",
+              "activeNodes": [
+                "update",
+                "failure",
+                "catch"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "THROW prevents execution from reaching COMMIT. CATCH inspects XACT_STATE and rolls back if a transaction remains."
+            },
+            {
+              "title": "Verify the original value",
+              "activeNodes": [
+                "catch",
+                "after"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The final SELECT returns 100, not 999. The demonstration catches the error for teaching; production code should usually propagate failure."
+            }
+          ]
+        }
       },
       {
         "id": "indexes-and-plans",
@@ -10717,7 +12801,169 @@ const LEARNING_PATHS = [
           "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
         }
       }
-    ]
+    ],
+    "resources": {
+      "folder": "sql-server-practice",
+      "files": [
+        {
+          "id": "setup-sql",
+          "href": "paths/sql-server/setup.sql",
+          "role": "reference",
+          "description": "SQL Server practice setup"
+        },
+        {
+          "id": "solutions-sql",
+          "href": "paths/sql-server/solutions.sql",
+          "role": "reference",
+          "description": "Worked SQL solutions"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/sql-server/README.md",
+          "role": "guide",
+          "description": "Practice instructions"
+        },
+        {
+          "id": "advanced-lab-sql",
+          "href": "paths/sql-server/advanced-lab.sql",
+          "role": "reference",
+          "description": "Advanced import fixture"
+        },
+        {
+          "id": "advanced-solutions-sql",
+          "href": "paths/sql-server/advanced-solutions.sql",
+          "role": "reference",
+          "description": "Advanced import worked solution"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Order-to-payment control report",
+          "goal": "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
+          "fileIds": [
+            "setup-sql",
+            "solutions-sql",
+            "README-md",
+            "advanced-lab-sql",
+            "advanced-solutions-sql"
+          ],
+          "steps": [
+            "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Open and execute setup.sql, then solutions.sql in the same SSMS query window. Expect five orders, due 390, matched payments 265, orphan payments 20 and net outstanding 125.",
+            "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
+            "Complete the assessment requirements in the reader: Preserve all five orders and report Dia as a customer with no order.; Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid.; Reconcile incoming payments and known-order totals; include deterministic ordering.",
+            "Compare your evidence with the stage rubric: Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125.; Reasoning:explain why direct payment joins can duplicate order values.; Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "1. Connect to a database and read a result",
+              "href": "#topic/sql-server/connect-and-read"
+            }
+          ],
+          "notes": [
+            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Replay-safe import design and procedure contract",
+          "goal": "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
+          "fileIds": [
+            "setup-sql",
+            "solutions-sql",
+            "README-md",
+            "advanced-lab-sql",
+            "advanced-solutions-sql"
+          ],
+          "steps": [
+            "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Execute setup.sql in SSMS, then copy the intermediate stage replay solution from the reader into that same query window. Run it twice: first two inserts, then zero; target remains two events totaling 30. E1 changed to 11 is a conflict.",
+            "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
+            "Complete the assessment requirements in the reader: Define business keys, allowed amounts, currency, timestamp and correction semantics.; Use typed parameters and an explicit transaction-ownership policy.; Run the replay example twice and detect a changed E1 payload.; Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern.",
+            "Compare your evidence with the stage rubric: Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict.; Error behavior:unknown order failure is visible and leaves no open owned transaction.; Design quality:does not claim NOT EXISTS alone prevents concurrent races.; Evidence:documents expected results separately from results actually executed."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "13. Model constraints, decimal amounts and time",
+              "href": "#topic/sql-server/schema-contracts"
+            }
+          ],
+          "notes": [
+            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Auditable ingestion service review",
+          "goal": "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
+          "fileIds": [
+            "setup-sql",
+            "solutions-sql",
+            "README-md",
+            "advanced-lab-sql",
+            "advanced-solutions-sql"
+          ],
+          "steps": [
+            "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "In the same SSMS query window execute setup.sql, advanced-lab.sql, then advanced-solutions.sql twice. Expect three inserts then zero, ledger total 215 and net outstanding 175; six raw rows split into 3 accepted, 1 duplicate, 1 invalid and 1 orphan.",
+            "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
+            "Complete the assessment requirements in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.; Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.; Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.; Specify security role boundaries,backward-compatible migration steps and incident diagnostics.; Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
+            "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "19. Investigate regressions with plans and Query Store",
+              "href": "#topic/sql-server/plan-regressions-query-store"
+            }
+          ],
+          "notes": [
+            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "connect-and-read": "foundation",
+        "types-keys-null": "foundation",
+        "select-filter-sort": "foundation",
+        "joins-and-grain": "foundation",
+        "group-and-reconcile": "foundation",
+        "cte-and-subquery": "foundation",
+        "window-functions": "foundation",
+        "parameters-procedures": "foundation",
+        "temporary-staging": "foundation",
+        "transactions-isolation": "foundation",
+        "indexes-and-plans": "foundation",
+        "reconciliation-capstone": "foundation",
+        "schema-contracts": "intermediate",
+        "sets-and-apply": "intermediate",
+        "window-frames-and-gaps": "intermediate",
+        "index-selectivity-statistics": "intermediate",
+        "procedure-transaction-contracts": "intermediate",
+        "incremental-load-contracts": "intermediate",
+        "plan-regressions-query-store": "advanced",
+        "concurrency-lost-updates": "advanced",
+        "deadlocks-retries": "advanced",
+        "least-privilege-dynamic-sql": "advanced",
+        "migrations-and-release": "advanced",
+        "advanced-import-capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/sql-server/practice-bundle.zip"
+      }
+    }
   },
   {
     "id": "system-design",
@@ -11713,6 +13959,140 @@ const LEARNING_PATHS = [
               "explanation": "No new business effect is needed. A different payload with K1 should conflict."
             }
           ]
+        },
+        "diagram": {
+          "title": "The reply disappeared; booking B9 did not",
+          "summary": "One booking intent: learner-17 / reserve / request-abc with workshop=42. Assume durable coordination of the key/result and booking effect, and a retry within the documented retention window.",
+          "nodes": [
+            {
+              "id": "caller",
+              "label": "Caller · same key and payload",
+              "description": "Sends the scoped key and workshop 42; after a timeout it retries that same intent."
+            },
+            {
+              "id": "service",
+              "label": "Booking endpoint",
+              "description": "Authenticates and authorizes separately, checks request fingerprint, and coordinates concurrent use of the key."
+            },
+            {
+              "id": "commit",
+              "label": "Durable committed outcome · B9",
+              "description": "Booking B9 and the key → B9 result are stored in a consistent boundary."
+            },
+            {
+              "id": "lost",
+              "label": "First response lost",
+              "description": "The server committed, but the caller does not receive confirmation."
+            },
+            {
+              "id": "lookup",
+              "label": "Retry finds stored outcome",
+              "description": "The same scoped key and payload resolve to B9 without creating a second booking."
+            },
+            {
+              "id": "reply",
+              "label": "Return existing booking B9",
+              "description": "The caller receives the recorded result. A reused key with different meaningful payload must conflict."
+            }
+          ],
+          "edges": [
+            {
+              "to": "service",
+              "label": "first request",
+              "from": "caller"
+            },
+            {
+              "to": "commit",
+              "label": "coordinate and commit key + effect",
+              "from": "service"
+            },
+            {
+              "to": "lost",
+              "label": "first response fails to arrive",
+              "from": "commit"
+            },
+            {
+              "to": "lookup",
+              "label": "retry through endpoint with same intent",
+              "from": "caller"
+            },
+            {
+              "to": "lookup",
+              "label": "durable record supplies B9",
+              "from": "commit"
+            },
+            {
+              "to": "reply",
+              "label": "reuse stored outcome",
+              "from": "lookup"
+            },
+            {
+              "to": "caller",
+              "label": "return B9",
+              "from": "reply"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Submit one intent",
+              "activeNodes": [
+                "caller",
+                "service"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The key identifies this caller’s reserve operation for workshop 42, not every future booking by the learner."
+            },
+            {
+              "title": "Commit effect and result together",
+              "activeNodes": [
+                "service",
+                "commit"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The service coordinates concurrent duplicates and durably records booking B9 plus its key/result mapping."
+            },
+            {
+              "title": "Lose the response",
+              "activeNodes": [
+                "commit",
+                "lost"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The caller times out. Silence does not prove rollback; the booking and durable result already exist."
+            },
+            {
+              "title": "Retry the same intent",
+              "activeNodes": [
+                "caller",
+                "commit",
+                "lookup"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Within retention, the endpoint matches the same scoped key and payload to the committed B9. It does not create another booking."
+            },
+            {
+              "title": "Return the recorded result",
+              "activeNodes": [
+                "lookup",
+                "reply",
+                "caller"
+              ],
+              "activeEdges": [
+                5,
+                6
+              ],
+              "explanation": "The caller receives B9. Changed payloads must conflict; an expired key or an external side effect needs its own documented policy."
+            }
+          ]
         }
       },
       {
@@ -12146,6 +14526,201 @@ const LEARNING_PATHS = [
         "title": "Practice run instructions",
         "href": "paths/system-design/practice/README.md"
       }
-    ]
+    ],
+    "resources": {
+      "folder": "system-design-practice",
+      "files": [
+        {
+          "id": "capacity_calculator-py",
+          "href": "paths/system-design/practice/capacity_calculator.py",
+          "role": "reference",
+          "description": "Capacity and backlog calculator"
+        },
+        {
+          "id": "test_capacity_calculator-py",
+          "href": "paths/system-design/practice/test_capacity_calculator.py",
+          "role": "test",
+          "description": "Calculator boundary and arithmetic tests"
+        },
+        {
+          "id": "design-workbook-md",
+          "href": "paths/system-design/practice/design-workbook.md",
+          "role": "guide",
+          "description": "Design workbook and reference reasoning"
+        },
+        {
+          "id": "adr-template-md",
+          "href": "paths/system-design/practice/adr-template.md",
+          "role": "starter",
+          "description": "Architecture decision record template"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/system-design/practice/README.md",
+          "role": "guide",
+          "description": "Practice run instructions"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Notebook sync design brief",
+          "goal": "Design a hypothetical signed-in progress-sync service for 10,000 daily learners. Produce a design another developer could challenge.",
+          "fileIds": [
+            "capacity_calculator-py",
+            "test_capacity_calculator-py",
+            "design-workbook-md",
+            "adr-template-md",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Design a hypothetical signed-in progress-sync service for 10,000 daily learners. Produce a design another developer could challenge.",
+            "Complete the assessment requirements in the reader: Write user flows, exclusions, ownership and two invariants.; Specify save/list API contracts, conflict behavior and a relational data model.; Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×.; Define availability and latency SLIs with windows and error classification.; Draw browser → API → database with trust boundaries.",
+            "Compare your evidence with the stage rubric: Every number includes units and assumptions.; A stale edit and timeout have documented user outcomes.; Data constraints match the stated invariants.; The simplest proposed architecture is justified and limitations are explicit."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from system-design-practice folder root",
+              "command": "python capacity_calculator.py",
+              "expected": "JSON capacity calculations, including about 4.63 average requests/s and 37.04 assumed peak requests/s."
+            },
+            {
+              "label": "Run baseline tests from system-design-practice folder root",
+              "command": "python -m unittest -v test_capacity_calculator.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Start with users, boundaries and invariants",
+              "href": "#topic/system-design/requirements"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Workshop booking and export architecture",
+          "goal": "Extend the notebook with 20-seat workshops and asynchronous study-pack exports. Preserve seat correctness while keeping slow export work separate.",
+          "fileIds": [
+            "capacity_calculator-py",
+            "test_capacity_calculator-py",
+            "design-workbook-md",
+            "adr-template-md",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Extend the notebook with 20-seat workshops and asynchronous study-pack exports. Preserve seat correctness while keeping slow export work separate.",
+            "Complete the assessment requirements in the reader: Specify atomic booking/cancellation and duplicate-operation handling.; Draw a sequence for response loss after commit and retry with the same key.; Define export job states, acknowledgment, retry exhaustion and replay.; Model cache outage and replica lag, including user-visible behavior.; Compare one database with sharding and record a trigger before adding shards.",
+            "Compare your evidence with the stage rubric: Final-seat safety comes from a database or proven coordination mechanism.; Same-key concurrent requests and mismatched payloads are addressed.; Public cached counts never authorize bookings.; Queue age, replay responsibility and private export authorization are specified."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from system-design-practice folder root",
+              "command": "python capacity_calculator.py",
+              "expected": "JSON capacity calculations, including about 4.63 average requests/s and 37.04 assumed peak requests/s."
+            },
+            {
+              "label": "Run baseline tests from system-design-practice folder root",
+              "command": "python -m unittest -v test_capacity_calculator.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Scale application workers and balance load",
+              "href": "#topic/system-design/scaling"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Failure-aware launch review",
+          "goal": "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
+          "fileIds": [
+            "capacity_calculator-py",
+            "test_capacity_calculator-py",
+            "design-workbook-md",
+            "adr-template-md",
+            "README-md"
+          ],
+          "steps": [
+            "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
+            "Read README.md before running the references.",
+            "Run the provided baseline and record its actual results.",
+            "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
+            "Complete the assessment requirements in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals.; Document retries at every layer and a bounded end-to-end deadline.; Specify outbox/consumer crash handling and unresolved external-effect risks.; Threat-model cross-user data access, upload abuse and credential exposure.; Define RPO/RTO, an isolated restore drill and an expand-and-contract migration.; Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
+            "Compare your evidence with the stage rubric: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.; Every important claim identifies a verification method and a remaining unknown.; Runbooks identify ownership, rollback limits and validation criteria.; No benchmark, availability or cost claim is invented from calculator output."
+          ],
+          "commands": [
+            {
+              "label": "Run reference from system-design-practice folder root",
+              "command": "python capacity_calculator.py",
+              "expected": "JSON capacity calculations, including about 4.63 average requests/s and 37.04 assumed peak requests/s."
+            },
+            {
+              "label": "Run baseline tests from system-design-practice folder root",
+              "command": "python -m unittest -v test_capacity_calculator.py",
+              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Deadlines, bounded retries and isolation",
+              "href": "#topic/system-design/resilience"
+            }
+          ],
+          "notes": [
+            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "requirements": "foundation",
+        "slos": "foundation",
+        "workload": "foundation",
+        "latency": "foundation",
+        "network": "foundation",
+        "api-contracts": "foundation",
+        "data-model": "foundation",
+        "indexes-storage": "foundation",
+        "scaling": "intermediate",
+        "cache": "intermediate",
+        "queues": "intermediate",
+        "replication": "intermediate",
+        "consistency-cap": "intermediate",
+        "partitioning": "intermediate",
+        "transactions": "intermediate",
+        "idempotency": "intermediate",
+        "resilience": "advanced",
+        "backpressure": "advanced",
+        "outbox": "advanced",
+        "observability": "advanced",
+        "security": "advanced",
+        "recovery": "advanced",
+        "evolution": "advanced",
+        "design-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/system-design/practice-bundle.zip"
+      }
+    }
   }
 ];

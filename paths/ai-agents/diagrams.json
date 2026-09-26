@@ -1,0 +1,136 @@
+{
+  "loop": {
+    "title": "An action proposal is not tool execution",
+    "summary": "A learner asks about joins. Follow the bounded application loop around search_lessons and evidence SQL-07. The downloadable workshop uses scripted decisions, not a live model.",
+    "nodes": [
+      {
+        "id": "decision",
+        "label": "Decision proposal",
+        "description": "Propose search_lessons({\"query\":\"joins\"}) or a final answer. No proposed tool has run yet."
+      },
+      {
+        "id": "gate",
+        "label": "Application checks",
+        "description": "Check budget, action type, allowlisted tool, arguments and applicable policy. Retrieved text cannot grant permission."
+      },
+      {
+        "id": "tool",
+        "label": "Local search_lessons tool",
+        "description": "Runs the approved bounded search and returns title/excerpt for SQL-07."
+      },
+      {
+        "id": "observation",
+        "label": "Observed evidence · SQL-07",
+        "description": "Validate and bound the result, then record it as task data for the next decision."
+      },
+      {
+        "id": "final",
+        "label": "Validate final answer",
+        "description": "Check output contract and that cited IDs were observed. Citation membership alone does not prove the answer is supported."
+      },
+      {
+        "id": "stop",
+        "label": "Terminal status",
+        "description": "Complete only after final checks; rejected requests, failures and exhausted budgets are separate outcomes."
+      }
+    ],
+    "edges": [
+      {
+        "to": "gate",
+        "label": "submit proposal for checks",
+        "from": "decision"
+      },
+      {
+        "to": "tool",
+        "label": "allowed search within budget",
+        "from": "gate"
+      },
+      {
+        "to": "observation",
+        "label": "return data for validation",
+        "from": "tool"
+      },
+      {
+        "to": "decision",
+        "label": "supply evidence for next proposal",
+        "from": "observation"
+      },
+      {
+        "to": "final",
+        "label": "allowed finish proposal",
+        "from": "gate"
+      },
+      {
+        "to": "stop",
+        "label": "accepted final output",
+        "from": "final"
+      },
+      {
+        "to": "stop",
+        "label": "reject or budget exhausted",
+        "from": "gate"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Propose a search",
+        "activeNodes": [
+          "decision",
+          "gate"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The decision source requests search_lessons with query joins. The application checks it before granting execution."
+      },
+      {
+        "title": "Execute an allowed capability",
+        "activeNodes": [
+          "gate",
+          "tool",
+          "observation"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Only after checks does local search run. The application records a bounded observation containing SQL-07."
+      },
+      {
+        "title": "Use the observation as data",
+        "activeNodes": [
+          "observation",
+          "decision"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The next decision can cite SQL-07. Its excerpt remains untrusted task data, even though the application knows where it came from."
+      },
+      {
+        "title": "Validate a finish proposal",
+        "activeNodes": [
+          "decision",
+          "gate",
+          "final"
+        ],
+        "activeEdges": [
+          0,
+          4
+        ],
+        "explanation": "The next proposal requests completion. Output and evidence-ID checks run; assessing semantic support still requires evaluation."
+      },
+      {
+        "title": "Stop explicitly",
+        "activeNodes": [
+          "final",
+          "stop"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "If final checks accept, status is completed. If the budget is exhausted before a valid final answer, the separate exhausted status must not be reported as success."
+      }
+    ]
+  }
+}

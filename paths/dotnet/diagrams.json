@@ -1,0 +1,129 @@
+{
+  "api-di": {
+    "title": "A POST request through the small Task API",
+    "summary": "A successful first POST /tasks with {\"title\":\"Read\"}, starting from the empty in-memory store. This is the lesson’s minimal endpoint path, not every ASP.NET Core middleware stage.",
+    "nodes": [
+      {
+        "id": "client",
+        "label": "HTTP client",
+        "description": "Sends POST /tasks, Content-Type: application/json, and {\"title\":\"Read\"}."
+      },
+      {
+        "id": "binding",
+        "label": "Bind request and resolve service",
+        "description": "ASP.NET Core binds JSON to TaskRequest and supplies the registered singleton TaskStore."
+      },
+      {
+        "id": "endpoint",
+        "label": "Validate the title",
+        "description": "The endpoint rejects blank titles with 400; Read passes and is trimmed."
+      },
+      {
+        "id": "store",
+        "label": "TaskStore.Add(\"Read\")",
+        "description": "Inside the lock, allocate ID 1 and add TaskItem(1, \"Read\"). Memory is lost on restart."
+      },
+      {
+        "id": "response",
+        "label": "201 Created",
+        "description": "The HTTP response includes Location: /tasks/1 and the created item as JSON."
+      },
+      {
+        "id": "bad",
+        "label": "400 Bad Request",
+        "description": "The blank-title branch returns without calling Add."
+      }
+    ],
+    "edges": [
+      {
+        "to": "binding",
+        "label": "request arrives",
+        "from": "client"
+      },
+      {
+        "to": "endpoint",
+        "label": "supply request and store",
+        "from": "binding"
+      },
+      {
+        "to": "store",
+        "label": "valid title: call Add",
+        "from": "endpoint"
+      },
+      {
+        "to": "response",
+        "label": "return created item",
+        "from": "store"
+      },
+      {
+        "to": "bad",
+        "label": "blank title: reject",
+        "from": "endpoint"
+      },
+      {
+        "to": "client",
+        "label": "send status, headers and body",
+        "from": "response"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Receive and bind",
+        "activeNodes": [
+          "client",
+          "binding"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "For this well-formed JSON request, framework binding supplies TaskRequest. The registered store instance is shared across requests."
+      },
+      {
+        "title": "Check the business input",
+        "activeNodes": [
+          "binding",
+          "endpoint"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The endpoint checks whitespace before changing state. A blank title would take the 400 branch instead."
+      },
+      {
+        "title": "Create under the lock",
+        "activeNodes": [
+          "endpoint",
+          "store"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Read is valid. The initially empty store allocates ID 1 and appends the item while holding its lock."
+      },
+      {
+        "title": "Return the HTTP result",
+        "activeNodes": [
+          "store",
+          "response",
+          "client"
+        ],
+        "activeEdges": [
+          3,
+          5
+        ],
+        "explanation": "Results.Created produces 201, Location: /tasks/1 and the item. A later GET can retrieve it while this application instance retains its memory."
+      },
+      {
+        "title": "Compare the rejected branch",
+        "activeNodes": [
+          "endpoint",
+          "bad"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "For {\"title\":\"  \"}, the endpoint returns 400. There is no Add call, new item or consumed ID in that branch."
+      }
+    ]
+  }
+}

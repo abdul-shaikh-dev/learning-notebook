@@ -1,0 +1,200 @@
+{
+  "values-and-names": {
+    "title": "From names to a computed value",
+    "summary": "A data-dependency map for the lesson’s study-time calculation. Arrows mean “supplies a value to”; they do not mean that a name stores another name.",
+    "nodes": [
+      {
+        "id": "minutes",
+        "label": "minutes_per_day = 25",
+        "description": "This name refers to the integer 25."
+      },
+      {
+        "id": "days",
+        "label": "days = 4",
+        "description": "This name refers to the integer 4."
+      },
+      {
+        "id": "multiply",
+        "label": "25 × 4",
+        "description": "Multiplication evaluates the two input values and produces 100."
+      },
+      {
+        "id": "total",
+        "label": "total = 100",
+        "description": "Assignment binds total to the result; the two input bindings remain unchanged."
+      },
+      {
+        "id": "display",
+        "label": "Total: 100 minutes",
+        "description": "The f-string reads total and print writes the formatted text."
+      }
+    ],
+    "edges": [
+      {
+        "to": "multiply",
+        "label": "supplies 25",
+        "from": "minutes"
+      },
+      {
+        "to": "multiply",
+        "label": "supplies 4",
+        "from": "days"
+      },
+      {
+        "to": "total",
+        "label": "result is bound to total",
+        "from": "multiply"
+      },
+      {
+        "to": "display",
+        "label": "read for formatting",
+        "from": "total"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Bind two input names",
+        "activeNodes": [
+          "minutes",
+          "days"
+        ],
+        "activeEdges": [],
+        "explanation": "The assignments establish two independent name-to-value bindings: 25 and 4."
+      },
+      {
+        "title": "Evaluate the right side",
+        "activeNodes": [
+          "minutes",
+          "days",
+          "multiply"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Reading both names supplies the integers to multiplication. Neither input is changed."
+      },
+      {
+        "title": "Bind the result",
+        "activeNodes": [
+          "multiply",
+          "total"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The product is 100. The assignment creates the total binding after evaluating the right side."
+      },
+      {
+        "title": "Format the output",
+        "activeNodes": [
+          "total",
+          "display"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The f-string produces Total: 100 minutes. Formatting does not turn the stored integer into a string."
+      }
+    ]
+  },
+  "functions": {
+    "title": "One function call, from arguments to return value",
+    "summary": "Follow print(study_minutes(3)). The default length supplies 25 for this call; return and print have separate jobs.",
+    "nodes": [
+      {
+        "id": "call",
+        "label": "study_minutes(3)",
+        "description": "The caller supplies one positional argument: sessions is 3."
+      },
+      {
+        "id": "locals",
+        "label": "sessions = 3; length = 25",
+        "description": "Parameter bindings belong to this call. Omitting length selects its default."
+      },
+      {
+        "id": "product",
+        "label": "sessions × length = 75",
+        "description": "The function computes 3 × 25 without printing."
+      },
+      {
+        "id": "returned",
+        "label": "return 75",
+        "description": "The call finishes and yields the integer 75 to the caller."
+      },
+      {
+        "id": "print",
+        "label": "print(75)",
+        "description": "The caller prints 75. The output operation is outside study_minutes."
+      }
+    ],
+    "edges": [
+      {
+        "to": "locals",
+        "label": "bind supplied and default arguments",
+        "from": "call"
+      },
+      {
+        "to": "product",
+        "label": "read parameters",
+        "from": "locals"
+      },
+      {
+        "to": "returned",
+        "label": "return computed value",
+        "from": "product"
+      },
+      {
+        "to": "print",
+        "label": "caller receives the result",
+        "from": "returned"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Enter the call",
+        "activeNodes": [
+          "call",
+          "locals"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The definition already exists. Calling it creates this call’s parameter bindings; it does not run both example calls at once."
+      },
+      {
+        "title": "Compute locally",
+        "activeNodes": [
+          "locals",
+          "product"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "3 × 25 evaluates to 75. The function has produced a value but has not displayed it."
+      },
+      {
+        "title": "Return to the caller",
+        "activeNodes": [
+          "product",
+          "returned"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "return ends this call and supplies 75 wherever study_minutes(3) was used."
+      },
+      {
+        "title": "Use the returned value",
+        "activeNodes": [
+          "returned",
+          "print"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The outer print displays 75. The next example, study_minutes(2, length=15), is a separate call with result 30."
+      }
+    ]
+  }
+}

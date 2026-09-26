@@ -1,0 +1,44 @@
+{
+  "folder": "financial-foundations-practice",
+  "files": [
+    {
+      "id": "sample-positions-csv",
+      "href": "paths/financial-foundations/practice/sample-positions.csv",
+      "role": "data",
+      "description": "Synthetic positions for the IPV exercise"
+    },
+    {
+      "id": "answers-md",
+      "href": "paths/financial-foundations/practice/answers.md",
+      "role": "guide",
+      "description": "Worked answers and interpretation"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "practice",
+      "title": "Review synthetic IPV positions",
+      "goal": "Calculate aligned signed valuation differences and explain which evidence requires review.",
+      "fileIds": [
+        "sample-positions-csv",
+        "answers-md"
+      ],
+      "steps": [
+        "Extract the bundle; sample-positions.csv and answers.md are at the financial-foundations-practice folder root.",
+        "Open the CSV in a spreadsheet. Preserve missing values as missing and keep short-position signs.",
+        "Compare like-for-like independent and front-office values; separate amount thresholds from evidence quality and stale-price review.",
+        "Write your decisions before opening answers.md; compare the bond, swap and option interpretations."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "Synthetic educational positions, not market prices or trading advice. The CSV and worked answers are the downloadable exercise. The printable study pack is available separately through the finance reader.",
+        "The amount trigger is strict greater-than: a difference equal to the threshold does not trigger it. Missing or stale evidence still needs review."
+      ]
+    }
+  ],
+  "lessonTasks": {},
+  "bundle": {
+    "href": "paths/financial-foundations/practice-bundle.zip"
+  }
+}
