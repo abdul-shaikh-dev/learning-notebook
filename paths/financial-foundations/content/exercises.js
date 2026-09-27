@@ -281,9 +281,9 @@ EXERCISES.modules.push({
       "numericAnswer": 765.2,
       "tolerance": 0.01,
       "answer": "USD +765.20.",
-      "reasoning": "Opening:(10, 000−20)×1.10=10, 978. Closing:(9, 360−35)×1.12=10, 444. Cash:(−2, 040+3, 150+50)×1.12=1, 299.20. Closing−opening+cash=765.20. This synthetic economic calculation does not determine financial-statement classification.",
+      "reasoning": "Opening:(10,000−20)×1.10=10,978. Closing:(9,360−35)×1.12=10,444. Cash:(−2,040+3,150+50)×1.12=1,299.20. Closing−opening+cash=765.20. This synthetic economic calculation does not determine financial-statement classification.",
       "rubric": [
-        "Reconcile quantity to 90 and cash to 1, 160 EUR.",
+        "Reconcile quantity to 90 and cash to 1,160 EUR.",
         "Use opening and closing FX at their own dates.",
         "Include the deduction movement and cash once."
       ]
@@ -291,7 +291,7 @@ EXERCISES.modules.push({
     {
       "id": "integrated-explain",
       "type": "explain",
-      "prompt": "Fixed cash flows are EUR 50 in one year and EUR 1, 050 in two years. FO discount factors are 0.95/0.90, independent factors 0.94/0.88. Derive the signed independent-minus-FO difference by payment. What evidence is still needed before correcting a mark?",
+      "prompt": "Fixed cash flows are EUR 50 in one year and EUR 1,050 in two years. FO discount factors are 0.95/0.90, independent factors 0.94/0.88. Derive the signed independent-minus-FO difference by payment. What evidence is still needed before correcting a mark?",
       "answer": "FO 992.50; independent 971.00; difference−21.50 EUR, split−0.50 and−21.00 by payment.",
       "reasoning": "Hold the contract fixed while changing inputs. Check date, currency, collateral basis, cash-flow conventions and source suitability before an approved conclusion. The independently supplied factors are not automatically the right ones.",
       "rubric": [
@@ -303,8 +303,8 @@ EXERCISES.modules.push({
     {
       "id": "integrated-diagnose",
       "type": "diagnose",
-      "prompt": "A P&L report translates both opening and closing carrying amounts at today's rate and says there is no FX effect. Opening carrying amount is EUR 9, 980, opening rate 1.10, closing rate 1.12. Diagnose the omitted component under the workbook's close-rate attribution convention.",
-      "answer": "It omits USD 199.60 of opening-value FX movement: 9, 980×(1.12−1.10).",
+      "prompt": "A P&L report translates both opening and closing carrying amounts at today's rate and says there is no FX effect. Opening carrying amount is EUR 9,980, opening rate 1.10, closing rate 1.12. Diagnose the omitted component under the workbook's close-rate attribution convention.",
+      "answer": "It omits USD 199.60 of opening-value FX movement: 9,980×(1.12−1.10).",
       "reasoning": "A comparison at constant FX can be a useful separately labeled analysis. It is not the full reporting-currency movement when the opening measurement used 1.10. Preserve the actual-rate total and reconcile explanatory components.",
       "rubric": [
         "Identify the distinct dates/rates.",
@@ -316,7 +316,7 @@ EXERCISES.modules.push({
       "id": "integrated-scenario",
       "type": "scenario",
       "prompt": "A two-for-one split turns 90 shares at EUR 104 into 180 at EUR 52. Another report shows 70 settled shares because a 20-share purchase has not settled. Are these losses or contradictory positions?",
-      "answer": "The split preserves 9, 360 EUR value and total cost under the supplied assumptions. The 70-share figure may be a settled-position view; 90 can be the trade-date quantity. Reconcile the unsettled obligation and timing before concluding.",
+      "answer": "The split preserves 9,360 EUR value and total cost under the supplied assumptions. The 70-share figure may be a settled-position view; 90 can be the trade-date quantity. Reconcile the unsettled obligation and timing before concluding.",
       "reasoning": "Events can change quantities or reporting views without creating a market loss. Treat the all-settled cash-flow workbook and unsettled example as different scenarios. Do not combine one scenario's quantity with another's cash.",
       "rubric": [
         "Demonstrate unchanged split value.",
