@@ -12,6 +12,36 @@
       "href": "paths/financial-foundations/practice/answers.md",
       "role": "guide",
       "description": "Worked answers and interpretation"
+    },
+    {
+      "id": "two-date-events-csv",
+      "href": "paths/financial-foundations/practice/two-date-events.csv",
+      "role": "data",
+      "description": "Opening/closing position, trade cash flows and event FX rates"
+    },
+    {
+      "id": "curve-inputs-csv",
+      "href": "paths/financial-foundations/practice/curve-inputs.csv",
+      "role": "data",
+      "description": "Same cash flows under two supplied discount curves"
+    },
+    {
+      "id": "daily-pnl-and-curves-md",
+      "href": "paths/financial-foundations/practice/daily-pnl-and-curves.md",
+      "role": "guide",
+      "description": "Tasks, fully reconciled answers, cost-allocation and split examples"
+    },
+    {
+      "id": "finance-workbook-py",
+      "href": "paths/financial-foundations/practice/finance_workbook.py",
+      "role": "reference",
+      "description": "Decimal arithmetic reference for both investigations"
+    },
+    {
+      "id": "test-finance-workbook-py",
+      "href": "paths/financial-foundations/practice/test_finance_workbook.py",
+      "role": "test",
+      "description": "Five checks including changed FX and broken position reconciliation"
     }
   ],
   "tasks": [
@@ -34,6 +64,46 @@
       "notes": [
         "Synthetic educational positions, not market prices or trading advice. The CSV and worked answers are the downloadable exercise. The printable study pack is available separately through the finance reader.",
         "The amount trigger is strict greater-than: a difference equal to the threshold does not trigger it. Missing or stale evidence still needs review."
+      ]
+    },
+    {
+      "id": "daily-pnl-and-curves",
+      "title": "Two-date P&L and curve investigation",
+      "goal": "Reconcile positions, cash, FX and deductions; derive independent value from a second curve.",
+      "fileIds": [
+        "two-date-events-csv",
+        "curve-inputs-csv",
+        "daily-pnl-and-curves-md",
+        "finance-workbook-py",
+        "test-finance-workbook-py"
+      ],
+      "steps": [
+        "Extract the complete finance ZIP; all files are together in financial-foundations-practice.",
+        "Open daily-pnl-and-curves.md and the two CSVs. Work the calculations before reading the worked answers.",
+        "Explain the local-return, opening-FX and cash-FX bridge. Compare FIFO and weighted-average allocation.",
+        "Calculate both curve values; compare an exact rate revaluation with a first-order approximation.",
+        "Optionally run the Python reference and five tests. Change one input and predict its effect first."
+      ],
+      "commands": [
+        {
+          "label": "Optional · Python 3.11+ · kit folder",
+          "command": "python finance_workbook.py\npython -m unittest -v test_finance_workbook.py",
+          "expected": "USD period result 765.20; curve difference EUR -21.50; five tests pass."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Day-one P&L and valuation movements",
+          "href": "course.html#lesson/16"
+        },
+        {
+          "label": "Market data and the model underneath",
+          "href": "course.html#lesson/3"
+        }
+      ],
+      "notes": [
+        "Python is optional: all tasks and worked answers also work on paper or in a spreadsheet.",
+        "All event rates, evidence and accounting deductions are supplied synthetic assumptions. This is not a production accounting or pricing engine."
       ]
     }
   ],

@@ -112,3 +112,7 @@ Write: context; current pain; simplest option; selected collaboration; rejected
 alternative; failure semantics; lifecycle owner; tests; remaining uncertainty.
 Name one future requirement that would justify revisiting the design. A good
 answer may deliberately use fewer patterns than the reference vocabulary.
+
+## Selected catalog and collaboration lab
+
+This Python-oriented catalog selects GoF patterns and adds DI/Repository/Unit of Work; it does not cover all 23 classic patterns. Canonical source: Gamma, Helm, Johnson, Vlissides, Design Patterns (1994), ISBN 9780201633610. Read the new Chain of Responsibility and Mediator lessons and collaboration.py. Run `python -m unittest -v test_collaboration.py`. First-handler short circuit differs from Observer broadcast; Mediator owns coordination rules; Command represents an action. Exercise: reverse overlapping handlers, add a new prerequisite and verify no notification is produced by failed validation. Local notification records provide no external delivery guarantee.

@@ -33,3 +33,7 @@ The conflict policy is deliberately conservative: different amount strings under
 The reader's Query Store queries are read-only and can require permissions. The deadlock schedule and retry solution are reasoning/pseudocode, not scripts to induce blocking. Cross-session concurrency needs a trainer-provisioned shared sandbox: local temporary tables do not test that behavior.
 
 Verification remains structural/content review and independent fixture arithmetic. No SQL Server engine was available for execution. Query plans, procedure errors, locking, crash recovery and permissions must be validated on an actual supported training instance before claiming those checks passed. No server was installed or started.
+
+## Opt-in advanced engine practice
+
+Read concurrency-lab.md before changing the setup opt-in flag. It provides an isolated disposable database, separate A/B schedules for isolation, lost updates and deadlocks, a Query Store before/after index lab, assertions and guarded cleanup. Run only one selected numbered session block at a time. No database workload was executed by the content editor; record your actual engine evidence. Run rounding-lab.sql separately to see raw 1.004/1.005 become 1.00/1.01 under the deliberate accepted rounding policy.

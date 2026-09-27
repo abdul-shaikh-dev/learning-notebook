@@ -24,8 +24,8 @@
     "Create a separate console project for snippets with dotnet new console -n LearningConsole -f net10.0; replace Program.cs for each console lesson and run dotnet run.",
     "As of September 26, 2026, Microsoft's policy lists .NET 10 LTS through November 14, 2028. Recheck the policy at study time and keep patches current.",
     "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson.",
-    "The downloadable practice/*.cs files are complete Program.cs replacements; practice/README.md gives project-creation commands. They run without external packages on .NET 9 and are compatible in syntax with .NET 10; only the .NET 9 build was tested.",
-    "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. Those examples are labeled fragments and are not part of the package-free downloadable baseline.",
+    "The package-free foundation.cs, task-api.cs and acceptance.cs downloads are complete Program.cs replacements; practice/README.md gives project-creation commands. They target .NET 10 in repository release verification; the original package-free checks used .NET 9.",
+    "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. The fragments remain separate from the package-free baseline; PersistenceChecks.csproj supplies a pinned SQLite/TestHost extension with fake test principals.",
     "Stages describe practical learning checkpoints, not a claim of mastery or production completeness. Pass their exit criteria with evidence before treating the next stage as complete."
   ],
   "nextSteps": [
@@ -170,7 +170,16 @@
         "correct": 0,
         "explanation": "The SDK contains the compiler and project tools."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Create a console application",
+          "url": "https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code",
+          "section": "Create the app",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "types-null",
@@ -214,7 +223,16 @@
         "correct": 1,
         "explanation": "var changes how a type is written, not how the type system works."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Nullable reference types",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/nullable-references",
+          "section": "Null-state analysis",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "control-collections",
@@ -258,7 +276,16 @@
         "correct": 1,
         "explanation": "A dictionary maps keys to values."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Iteration statements",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements",
+          "section": "The foreach statement",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "methods",
@@ -302,7 +329,16 @@
         "correct": 0,
         "explanation": "Computation can be reused independently of its presentation."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Methods",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods",
+          "section": "Method signatures",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "objects",
@@ -346,7 +382,16 @@
         "correct": 0,
         "explanation": "Access control constrains how state changes."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Classes",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes",
+          "section": "Constructors",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "exceptions",
@@ -390,7 +435,16 @@
         "correct": 1,
         "explanation": "using provides deterministic cleanup."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Exception handling",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/",
+          "section": "Overview",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "linq",
@@ -434,7 +488,16 @@
         "correct": 1,
         "explanation": "Select projects each source item into a result."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "LINQ",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/linq/",
+          "section": "Query execution",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "async",
@@ -478,7 +541,16 @@
         "correct": 1,
         "explanation": "Async models waiting; CPU parallelism is a separate decision."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Asynchronous programming",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/",
+          "section": "Task asynchronous programming model",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "contracts-generics",
@@ -531,7 +603,16 @@
         ],
         "correct": 1,
         "explanation": "Another reference may mutate the underlying list; a separate snapshot provides stronger isolation."
-      }
+      },
+      "references": [
+        {
+          "title": "Generics",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics",
+          "section": "Generic types and methods",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "resource-ownership",
@@ -584,7 +665,16 @@
         ],
         "correct": 1,
         "explanation": "Consumers borrow injected services; the owning scope handles cleanup."
-      }
+      },
+      "references": [
+        {
+          "title": "using statement",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using",
+          "section": "await using",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "delegates-patterns",
@@ -636,7 +726,16 @@
         ],
         "correct": 0,
         "explanation": "A closure captures the variable; use a separate local snapshot when that is the intended rule."
-      }
+      },
+      "references": [
+        {
+          "title": "Pattern matching",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching",
+          "section": "Overview",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "testing",
@@ -680,7 +779,16 @@
         "correct": 1,
         "explanation": "Compilation and behavior verification answer different questions."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Unit testing with dotnet test",
+          "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test",
+          "section": "Create the test project",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "api-di",
@@ -725,7 +833,16 @@
         "correct": 0,
         "explanation": "Singleton services share application-wide state and require safe concurrency."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "ASP.NET Core dependency injection",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0",
+          "section": "Service lifetimes",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "api-contracts",
@@ -778,7 +895,16 @@
         ],
         "correct": 0,
         "explanation": "The request contract should not grant write access to protected entity fields."
-      }
+      },
+      "references": [
+        {
+          "title": "Minimal API responses",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-10.0",
+          "section": "TypedResults vs Results",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "integration-checks",
@@ -792,7 +918,7 @@
             "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only HttpClient and System.Text.Json, so it needs no test package. Run it against a fresh local practice server.",
             "A console acceptance check is not a replacement for a test runner. It reports failure via an exception and nonzero exit code. Test data is uniquely named, and the check does not delete pre-existing records."
           ],
-          "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net9.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net9.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
+          "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net10.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net10.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
         },
         {
           "title": "Use WebApplicationFactory for framework tests",
@@ -819,7 +945,8 @@
           "Both assertions fail if expected statuses are intentionally reversed.",
           "A fresh server passes the acceptance baseline.",
           "Test failures return a nonzero process exit code.",
-          "Checks do not depend on hard-coded generated task IDs."
+          "Checks do not depend on hard-coded generated task IDs.",
+          "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
         ]
       },
       "quiz": {
@@ -831,7 +958,16 @@
         ],
         "correct": 1,
         "explanation": "The test host exercises application code, not the external hosting infrastructure."
-      }
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core integration tests",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+          "section": "Mock authentication",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "database",
@@ -884,7 +1020,16 @@
         "correct": 1,
         "explanation": "The provider parameterizes the predicate's value."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "EF Core SQL queries",
+          "url": "https://learn.microsoft.com/en-us/ef/core/querying/sql-queries",
+          "section": "Passing parameters",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "ef-evolution",
@@ -926,7 +1071,8 @@
           "A and B use different DbContext instances.",
           "Only one conflicting version update succeeds.",
           "Migration SQL is reviewed for data-loss operations.",
-          "Tests use a relational provider, not EF's in-memory provider."
+          "Tests use a relational provider, not EF's in-memory provider.",
+          "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
         ]
       },
       "quiz": {
@@ -938,7 +1084,16 @@
         ],
         "correct": 1,
         "explanation": "External services are outside the database transaction; use a reliable delivery design."
-      }
+      },
+      "references": [
+        {
+          "title": "EF Core transactions",
+          "url": "https://learn.microsoft.com/en-us/ef/core/saving/transactions",
+          "section": "Controlling transactions",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "capstone",
@@ -985,7 +1140,16 @@
         "correct": 0,
         "explanation": "The boundary adds behavior that a pure helper test does not exercise."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Minimal API tutorial",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-10.0",
+          "section": "Create API endpoints",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "cancellation-budgets",
@@ -1038,7 +1202,16 @@
         ],
         "correct": 1,
         "explanation": "The token signals cancellation and the operation must observe it."
-      }
+      },
+      "references": [
+        {
+          "title": "Cancellation in managed threads",
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
+          "section": "Operation cancellation versus object cancellation",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "concurrency",
@@ -1079,19 +1252,29 @@
           "Repeated runs produce 100.",
           "No unrelated variable is protected by the counter operation.",
           "The explanation distinguishes a process from a deployment with replicas.",
-          "Cancellation and exceptions cannot leak an acquired semaphore permit."
+          "Cancellation and exceptions cannot leak an acquired semaphore permit.",
+          "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
         ]
       },
       "quiz": {
-        "question": "Does ConcurrentDictionary make any multi-step workflow atomic?",
+        "question": "Two EF contexts read Version=2. Context A updates the row to Version=3. B tries to save using its original Version=2 concurrency token. What should B observe?",
         "options": [
-          "Yes",
-          "No; compose supported atomic operations or synchronize the whole transition",
-          "Only when it holds strings"
+          "Its update silently replaces A because SaveChanges is last-write-wins",
+          "DbUpdateConcurrencyException; handle the conflict and reload deliberately",
+          "EF merges both title values automatically"
         ],
         "correct": 1,
-        "explanation": "Thread-safe individual operations do not automatically protect a larger invariant."
-      }
+        "explanation": "A configured concurrency token participates in the UPDATE predicate. B matches no row after A advances it; EF reports the conflict."
+      },
+      "references": [
+        {
+          "title": "EF Core concurrency conflicts",
+          "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency",
+          "section": "Application-managed concurrency tokens",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "auth-boundaries",
@@ -1133,19 +1316,29 @@
           "User B never receives user A's tasks.",
           "A reader cannot write.",
           "OwnerId is not accepted from JSON.",
-          "Real token validation is tested separately from the test fake."
+          "Real token validation is tested separately from the test fake.",
+          "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
         ]
       },
       "quiz": {
-        "question": "Does a valid token authorize access to every task?",
+        "question": "A test-host fake principal passes owner and permission checks. What remains unproven before real deployment?",
         "options": [
-          "Yes",
-          "No; resource and operation authorization are still required",
-          "Only when HTTPS is enabled"
+          "Whether the known principal is authorized by those tested policies",
+          "Whether real tokens validate issuer, audience, signature and expiry",
+          "Whether denied test principals received the recorded HTTP result"
         ],
         "correct": 1,
-        "explanation": "Trusted identity establishes who the caller is, not what they may do."
-      }
+        "explanation": "Fake authentication supplies known claims to test authorization decisions. Real identity/token validation is a separate integration boundary and needs staging evidence."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core resource authorization",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-10.0",
+          "section": "Use imperative authorization",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "observability",
@@ -1198,7 +1391,16 @@
         ],
         "correct": 0,
         "explanation": "Unique IDs can create a growing number of metric series and excessive collection cost."
-      }
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core metrics",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/log-mon/metrics/metrics?view=aspnetcore-10.0",
+          "section": "ASP.NET Core metrics",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "deploy-operations",
@@ -1252,7 +1454,16 @@
         ],
         "correct": 1,
         "explanation": "The executable and persistent data have separate lifecycles."
-      }
+      },
+      "references": [
+        {
+          "title": "EF Core applying migrations",
+          "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying",
+          "section": "SQL scripts",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "performance",
@@ -1306,14 +1517,26 @@
         ],
         "correct": 1,
         "explanation": "A controlled comparison establishes whether a change improves the relevant workload."
-      }
+      },
+      "references": [
+        {
+          "title": "EF Core efficient querying",
+          "url": "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying",
+          "section": "Limit the resultset size",
+          "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     }
   ],
   "publicFiles": [
     "practice/README.md",
     "practice/foundation.cs",
     "practice/task-api.cs",
-    "practice/acceptance.cs"
+    "practice/acceptance.cs",
+    "practice/PersistenceChecks.csproj",
+    "practice/persistence-api.cs",
+    "practice/persistence-checks.cs"
   ],
   "stages": [
     {

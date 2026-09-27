@@ -66,6 +66,10 @@
     {
       "title": "Microsoft: persistence infrastructure and repository tradeoffs",
       "url": "https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core"
+    },
+    {
+      "title": "Gamma, Helm, Johnson, Vlissides: Design Patterns (1994)",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610"
     }
   ],
   "stages": [
@@ -187,6 +191,13 @@
           "paragraphs": [
             "A one-off function has fewer moving parts than a hierarchy. Add an abstraction when a real variation, testing boundary or lifecycle requires it. Pattern names alone do not establish correctness, speed or maintainability; compare the concrete cost of the current change."
           ]
+        },
+        {
+          "title": "Selected catalog and provenance",
+          "paragraphs": [
+            "This is a selected Python-oriented pattern catalog, not a complete treatment of the 23 GoF patterns. Gamma, Helm, Johnson and Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (1994; ISBN 9780201633610), supplies the canonical creational, structural and behavioral catalog. Dependency Injection, Repository and Unit of Work are additional architectural material, not entries in that GoF catalog.",
+            "The course includes Chain of Responsibility and Mediator contrasts in collaboration.py. Patterns omitted here remain optional later breadth; the goal is to justify a collaboration under specific pressure, not memorize all catalog entries."
+          ]
         }
       ],
       "exercise": {
@@ -207,7 +218,16 @@
         ],
         "correct": 0,
         "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Introduction and catalog organization",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Introduction and catalog organization",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "contracts",
@@ -254,7 +274,16 @@
         ],
         "correct": 1,
         "explanation": "Annotations support tools and readers. Runtime boundary checks enforce invariants on actual values."
-      }
+      },
+      "references": [
+        {
+          "title": "Liskov and Wing: A Behavioral Notion of Subtyping",
+          "url": "https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf",
+          "section": "Sections 1–2: subtype requirement and motivation",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 behavioral-subtyping paper; Python 3.11+ examples illustrate contracts without claiming formal proof."
+        }
+      ]
     },
     {
       "id": "composition",
@@ -309,7 +338,16 @@
         ],
         "correct": 2,
         "explanation": "Supplying a collaborator exposes the dependency and lets tests record delivery without constructing an external client."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Class versus object inheritance",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Class versus object inheritance",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "solid",
@@ -356,7 +394,16 @@
         ],
         "correct": 0,
         "explanation": "A consumer-facing contract should be small enough for its needs, without imposing unrelated operations or a rigid method-count rule."
-      }
+      },
+      "references": [
+        {
+          "title": "Robert C. Martin: Solid Relevance",
+          "url": "https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html",
+          "section": "S, O, L, I and D discussions",
+          "reviewed": "2026-09-27",
+          "scope": "Original author discussion (2020); principles are design review questions in this Python 3.11+ course."
+        }
+      ]
     },
     {
       "id": "strategy",
@@ -432,7 +479,16 @@
             "explanation": "The caller supplies another compatible policy without editing the workflow."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Strategy",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Strategy",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "factories",
@@ -479,7 +535,16 @@
         ],
         "correct": 2,
         "explanation": "A related family of products motivates Abstract Factory; selecting one product can remain a simple factory."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Factory Method and Abstract Factory",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Factory Method and Abstract Factory",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "builder",
@@ -526,7 +591,16 @@
         ],
         "correct": 0,
         "explanation": "The construction boundary validates the configuration and snapshots it; fluent syntax alone establishes neither property."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Builder",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Builder",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "adapter",
@@ -573,7 +647,16 @@
         ],
         "correct": 1,
         "explanation": "An adapter must preserve meaning across the boundary, including units, rounding and failures."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Adapter",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Adapter",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "facade",
@@ -620,7 +703,16 @@
         ],
         "correct": 2,
         "explanation": "A facade simplifies a use case entry point. Transaction or compensation guarantees require additional mechanisms."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Facade",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Facade",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "decorator",
@@ -667,7 +759,16 @@
         ],
         "correct": 0,
         "explanation": "Wrappers observe inputs, outputs and errors at different positions; moving authorization or caching changes the effective behavior."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Decorator",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Decorator",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "composite",
@@ -714,7 +815,16 @@
         ],
         "correct": 1,
         "explanation": "The recursion assumes finite acyclic containment. Empty groups are valid here and sum to zero."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Composite",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Composite",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "proxy",
@@ -761,7 +871,16 @@
         ],
         "correct": 2,
         "explanation": "A wrapper can provide a familiar interface, but network latency, failure and cache freshness remain part of the contract."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Proxy",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Proxy",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "observer",
@@ -838,7 +957,16 @@
             "explanation": "This policy stops on the first exception; it does not promise durable delivery."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Observer",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Observer",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "command",
@@ -885,7 +1013,16 @@
         ],
         "correct": 1,
         "explanation": "Storing inputs does not establish reversibility. Conflicts and external effects can invalidate an inverse or require fallible compensation."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Command",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Command",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "state",
@@ -932,7 +1069,16 @@
         ],
         "correct": 2,
         "explanation": "State describes a lifecycle and legal transitions; an independently chosen ranking policy is better described as Strategy."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: State",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "State",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "template-method",
@@ -979,7 +1125,16 @@
         ],
         "correct": 0,
         "explanation": "The base algorithm controls the sequence while selected steps are supplied by subclasses."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: Template Method",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Template Method",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "iterator",
@@ -1026,7 +1181,23 @@
         ],
         "correct": 1,
         "explanation": "Generator execution is deferred, so consuming the next item can trigger work and exceptions."
-      }
+      },
+      "references": [
+        {
+          "title": "Python data model",
+          "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
+          "section": "Iterator protocol",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ iterator semantics."
+        },
+        {
+          "title": "GoF: Iterator",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Behavioral patterns: Iterator",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher provenance, not free full chapter text."
+        }
+      ]
     },
     {
       "id": "dependency-injection",
@@ -1073,7 +1244,16 @@
         ],
         "correct": 2,
         "explanation": "Injection is external provision of collaborators. A container and explicit protocol declarations are optional implementation choices."
-      }
+      },
+      "references": [
+        {
+          "title": "Martin Fowler: Dependency Injection",
+          "url": "https://martinfowler.com/articles/injection.html",
+          "section": "Dependency Injection",
+          "reviewed": "2026-09-27",
+          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+        }
+      ]
     },
     {
       "id": "repository",
@@ -1120,7 +1300,16 @@
         ],
         "correct": 0,
         "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
-      }
+      },
+      "references": [
+        {
+          "title": "Martin Fowler: Repository",
+          "url": "https://martinfowler.com/eaaCatalog/repository.html",
+          "section": "Repository",
+          "reviewed": "2026-09-27",
+          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+        }
+      ]
     },
     {
       "id": "unit-of-work",
@@ -1196,7 +1385,16 @@
             "explanation": "This illustrates rollback of the body; real durability and concurrency need storage guarantees."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "Martin Fowler: Unit Of Work",
+          "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html",
+          "section": "Unit Of Work",
+          "reviewed": "2026-09-27",
+          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+        }
+      ]
     },
     {
       "id": "refactoring",
@@ -1243,7 +1441,16 @@
         ],
         "correct": 2,
         "explanation": "Refactoring preserves observable behavior while changing structure. Line count is not an equivalence criterion."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: How to use a design pattern",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "How to use a design pattern",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     },
     {
       "id": "selection",
@@ -1290,13 +1497,136 @@
         ],
         "correct": 0,
         "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
-      }
+      },
+      "references": [
+        {
+          "title": "GoF: How to select a design pattern",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "How to select a design pattern",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
+    },
+    {
+      "id": "chain-of-responsibility",
+      "title": "Chain of Responsibility: select the first handler",
+      "stage": "intermediate",
+      "takeaway": "Ordered delegation chooses one handler; broadcast has a different contract.",
+      "sections": [
+        {
+          "title": "Contract and collaboration",
+          "paragraphs": [
+            "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
+            "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
+          ]
+        },
+        {
+          "title": "Trace decline, acceptance and ordering",
+          "paragraphs": [
+            "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
+          ],
+          "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
+        },
+        {
+          "title": "Compare failure and fan-out contracts",
+          "paragraphs": [
+            "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Add a title and JSON handler. Test two overlapping handlers in both orders, a decline, a False result, an unhandled request and a failure that must not call fallback.",
+        "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
+        "checks": [
+          "The first accepting handler prevents later handlers from running.",
+          "Observer broadcasts to every subscriber.",
+          "Decline, valid falsey result and failure are distinct."
+        ]
+      },
+      "quiz": {
+        "question": "Which evidence demonstrates this contract?",
+        "options": [
+          "The first accepting handler prevents later handlers from running.",
+          "A pattern or algorithm name alone",
+          "A single successful sample without failures"
+        ],
+        "correct": 0,
+        "explanation": "The first accepting handler prevents later handlers from running."
+      },
+      "references": [
+        {
+          "title": "GoF: Chain Of Responsibility",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Chain Of Responsibility",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
+    },
+    {
+      "id": "mediator",
+      "title": "Mediator: coordinate a completion workflow",
+      "stage": "advanced",
+      "takeaway": "A coordinator centralizes interaction rules while collaborators avoid peer dependencies.",
+      "sections": [
+        {
+          "title": "Contract and collaboration",
+          "paragraphs": [
+            "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
+            "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
+          ]
+        },
+        {
+          "title": "Trace prerequisites before effects",
+          "paragraphs": [
+            "The next lesson depends on intro. Trying next first fails before any state change or notification. Completing intro then next changes both states and records one local notification per successful transition. Repeating next fails according to the explicit active-to-done contract."
+          ],
+          "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]"
+        },
+        {
+          "title": "Keep the coordinator boundary honest",
+          "paragraphs": [
+            "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Complete intro before next, then test repeated/missing completion and unfinished prerequisites. Propose a separate persistence and notification failure policy for external collaborators.",
+        "solution": "from collaboration import CompletionMediator\nm=CompletionMediator({'intro':'active','next':'active'},{'next':['intro']})\nm.complete('intro'); m.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]",
+        "checks": [
+          "Failed prerequisite validation leaves state and notification records unchanged.",
+          "Successful transitions notify once.",
+          "External delivery requires a separate failure contract."
+        ]
+      },
+      "quiz": {
+        "question": "Which evidence demonstrates this contract?",
+        "options": [
+          "Failed prerequisite validation leaves state and notification records unchanged.",
+          "A pattern or algorithm name alone",
+          "A single successful sample without failures"
+        ],
+        "correct": 0,
+        "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
+      },
+      "references": [
+        {
+          "title": "GoF: Mediator",
+          "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+          "section": "Mediator",
+          "reviewed": "2026-09-27",
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        }
+      ]
     }
   ],
   "publicFiles": [
     "workshop.py",
     "test_workshop.py",
-    "README.md"
+    "README.md",
+    "collaboration.py",
+    "test_collaboration.py"
   ],
   "downloads": [
     {

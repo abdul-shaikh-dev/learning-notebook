@@ -86,3 +86,8 @@ The test that puts hostile text in a lesson then scripts an unauthorized proposa
 - **No LLM-quality claim.** Passing these tests does not certify model accuracy, task usefulness, production security, cloud cost, external service behavior or a real deployment.
 
 Use the operations runbook and architecture-decision template to design those next boundaries before replacing the fakes.
+
+
+## Focused optional extension (2026-09-27)
+
+From this practice directory run `python -m unittest test_durable_state.py test_parser_properties.py`. Read the corresponding lesson for evidence limits and extension scope.

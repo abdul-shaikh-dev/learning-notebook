@@ -29,6 +29,11 @@
     "styles/visuals.css",
     "content/journey.js",
     "runtime/journey.js",
-    "styles/journey.css"
+    "styles/journey.css",
+    "practice/curve-inputs.csv",
+    "practice/daily-pnl-and-curves.md",
+    "practice/finance_workbook.py",
+    "practice/test_finance_workbook.py",
+    "practice/two-date-events.csv"
   ]
 }

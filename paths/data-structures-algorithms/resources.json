@@ -12,6 +12,18 @@
       "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py",
       "role": "reference",
       "description": "Advanced algorithms and executable checks"
+    },
+    {
+      "id": "trees_graphs-py",
+      "href": "paths/data-structures-algorithms/practice/trees_graphs.py",
+      "role": "reference",
+      "description": "Implemented BST and iterative DFS"
+    },
+    {
+      "id": "test_trees_graphs-py",
+      "href": "paths/data-structures-algorithms/practice/test_trees_graphs.py",
+      "role": "test",
+      "description": "Independent tree and graph oracle tests"
     }
   ],
   "tasks": [
@@ -21,7 +33,9 @@
       "goal": "Process a list of events and generate counts, repeated IDs and an undo history.",
       "fileIds": [
         "algorithms-py",
-        "advanced_algorithms-py"
+        "advanced_algorithms-py",
+        "trees_graphs-py",
+        "test_trees_graphs-py"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -46,7 +60,7 @@
       ],
       "notes": [
         "Python 3.10 or newer and basic functions, lists and dictionaries.",
-        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -56,7 +70,9 @@
       "goal": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
       "fileIds": [
         "algorithms-py",
-        "advanced_algorithms-py"
+        "advanced_algorithms-py",
+        "trees_graphs-py",
+        "test_trees_graphs-py"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -64,13 +80,19 @@
         "Run the provided baseline and record its actual results.",
         "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
         "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
-        "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites."
+        "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites.",
+        "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge."
       ],
       "commands": [
         {
           "label": "Run reference from data-structures-algorithms-practice folder root",
           "command": "python algorithms.py",
           "expected": "All algorithm checks passed."
+        },
+        {
+          "label": "Run tree and DFS oracle tests",
+          "command": "python -m unittest -v test_trees_graphs.py",
+          "expected": "All four independent tree/graph test methods pass, including exhaustive small cases."
         }
       ],
       "prerequisites": [
@@ -81,7 +103,7 @@
       ],
       "notes": [
         "Python 3.10 or newer and basic functions, lists and dictionaries.",
-        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -91,7 +113,9 @@
       "goal": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
       "fileIds": [
         "algorithms-py",
-        "advanced_algorithms-py"
+        "advanced_algorithms-py",
+        "trees_graphs-py",
+        "test_trees_graphs-py"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -116,7 +140,7 @@
       ],
       "notes": [
         "Python 3.10 or newer and basic functions, lists and dictionaries.",
-        "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+        "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     }
@@ -141,7 +165,8 @@
     "greedy": "advanced",
     "backtracking": "advanced",
     "knapsack": "advanced",
-    "algorithm-review": "advanced"
+    "algorithm-review": "advanced",
+    "binary-search-tree": "intermediate"
   },
   "bundle": {
     "href": "paths/data-structures-algorithms/practice-bundle.zip"

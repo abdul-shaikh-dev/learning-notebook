@@ -206,7 +206,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A tool-call output from a model is a proposal. Invocation, policy decisions and observed outcomes belong to the runtime and tool boundary."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: agent runtime choices",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "task-contract",
@@ -253,7 +262,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Identity is a control-plane fact. Model arguments and retrieved text are untrusted inputs and cannot establish who may act."
-        }
+        },
+        "references": [
+          {
+            "title": "OWASP: authorization principles",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "state-machine",
@@ -300,7 +318,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An uncertain outcome requires reconciliation with the authoritative tool system; retrying as a new operation can duplicate an effect."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: agent runtime choices",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "state-context",
@@ -347,7 +374,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Availability of a capability and a generated claim do not establish execution. A confirmed result tied to the operation is stronger evidence."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: JSON serialization",
+            "url": "https://docs.python.org/3/library/json.html",
+            "section": "Basic usage; JSONEncoder and JSONDecoder",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "registry",
@@ -394,7 +430,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "An explicit map limits execution to reviewed handlers. Dynamic code evaluation converts untrusted proposal text into arbitrary execution."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: function calling and application tool execution",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "schema",
@@ -420,6 +465,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Bounds have units: a character cap is not a token budget or memory sandbox. A payload may be too large before it reaches the validator, so a production transport must enforce input-size limits before parsing. Do not repair a dangerous proposal by silently changing its meaning. Surface a clear validation category and let a bounded correction path choose a new valid proposal if the product supports that."
             ]
+          },
+          {
+            "title": "Optional generated parser cases",
+            "paragraphs": [
+              "Run python -m unittest test_parser_properties.py. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
+            ]
           }
         ],
         "exercise": {
@@ -441,7 +492,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Shape validation establishes a contract match, not caller authority. Authorization depends on trusted identity, resource scope and policy."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: function calling and application tool execution",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "authorization",
@@ -488,7 +548,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Consent and entitlement are separate requirements. Both must hold at execution time, and a model cannot adjudicate an enforced access policy."
-        }
+        },
+        "references": [
+          {
+            "title": "OWASP: authorization principles",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "events",
@@ -535,7 +604,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The authoritative tool outcome may exist despite a missing local event. Investigate the operation ID rather than assuming rollback."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: JSON serialization",
+            "url": "https://docs.python.org/3/library/json.html",
+            "section": "Basic usage; JSONEncoder and JSONDecoder",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "budgets",
@@ -582,7 +660,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "One proposal can take varying time and resources. Step, elapsed-time, token/usage and tool-resource budgets require separate enforcement."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: monotonic time",
+            "url": "https://docs.python.org/3/library/time.html#time.monotonic",
+            "section": "time.monotonic",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "approval",
@@ -670,7 +757,16 @@ const LEARNING_PATHS = [
               "explanation": "Only the confirmed receipt supports reporting a saved note."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "OWASP: authorization principles",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "deadlines",
@@ -717,7 +813,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Boundary checks govern future dispatch. Preemption and effect rollback require different mechanisms and may not be possible for an external operation."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: monotonic time",
+            "url": "https://docs.python.org/3/library/time.html#time.monotonic",
+            "section": "time.monotonic",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "retries",
@@ -764,7 +869,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The retry decision depends on the adapter contract and effect uncertainty. A denial is policy, and an ambiguous write may already have committed."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: safe retries and idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "idempotent-effects",
@@ -852,7 +966,16 @@ const LEARNING_PATHS = [
               "explanation": "The fake store provides evidence; a real adapter needs an equivalent recovery contract."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: safe retries and idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "checkpoints",
@@ -878,6 +1001,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
               "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
+            ]
+          },
+          {
+            "title": "Optional durable adapter exercise",
+            "paragraphs": [
+              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
             ]
           }
         ],
@@ -941,7 +1070,23 @@ const LEARNING_PATHS = [
               "explanation": "Budget enforcement must survive the lifecycle transition."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "Python: JSON serialization",
+            "url": "https://docs.python.org/3/library/json.html",
+            "section": "Basic usage; JSONEncoder and JSONDecoder",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "SQLite transactions",
+            "url": "https://www.sqlite.org/lang_transaction.html",
+            "section": "Read versus write transactions; transaction control",
+            "reviewed": "2026-09-27",
+            "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          }
+        ]
       },
       {
         "id": "context-lifecycle",
@@ -988,7 +1133,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Critical control facts belong to trusted state. Compaction is an information-selection process, not an authorization mechanism."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: agent runtime choices",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "injection",
@@ -1074,7 +1228,16 @@ const LEARNING_PATHS = [
               "explanation": "The test proves the boundary response, not that a real model would resist all injections."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: agent safety concepts; product-specific lifecycle guidance must be checked",
+            "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+            "section": "Safety risks and mitigations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "isolation",
@@ -1121,7 +1284,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Application policy chooses allowed handlers; operating-system or service isolation constrains what executable code can actually access."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI: harness and compute responsibilities",
+            "url": "https://developers.openai.com/cookbook/examples/agents_sdk/migrate-from-claude-agent-sdk/readme",
+            "section": "Harness ownership and execution responsibilities",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -1147,6 +1319,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Leases depend on timing assumptions and renewal behavior; idempotency still matters for external effects that do not support fencing. A compare-and-swap version on a checkpoint can prevent lost state updates but may not prevent a duplicate tool effect already sent. Coordinate state ownership and effect identity together. Testing two Python calls sequentially does not validate distributed failover."
             ]
+          },
+          {
+            "title": "Optional durable adapter exercise",
+            "paragraphs": [
+              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+            ]
           }
         ],
         "exercise": {
@@ -1168,7 +1346,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A token prevents nothing unless the receiver rejects outdated authority. Logging or displaying it is insufficient."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: safe retries and idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "SQLite transactions",
+            "url": "https://www.sqlite.org/lang_transaction.html",
+            "section": "Read versus write transactions; transaction control",
+            "reviewed": "2026-09-27",
+            "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          }
+        ]
       },
       {
         "id": "replay",
@@ -1215,7 +1409,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Historical analysis should reconstruct evidence. Continuing real work requires current policy and an effect-recovery contract."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: safe retries and idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "audit",
@@ -1262,7 +1465,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Minimization reduces exposure at collection time. Remaining metadata and other stores still need their own privacy and security controls."
-        }
+        },
+        "references": [
+          {
+            "title": "OWASP: authorization principles",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "evaluation",
@@ -1309,7 +1521,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A deterministic fixture verifies the runtime response to one input. It does not establish the probability or quality of future model proposals."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Test cases; assertRaises",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "release",
@@ -1356,7 +1577,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Deployment state and business state are distinct. Reverting code cannot erase an external effect or repair it without an explicit operation."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Test cases; assertRaises",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "operations",
@@ -1403,7 +1633,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "An effect may already exist. Stable identity and authoritative evidence reduce the risk of duplicating or losing track of it."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: safe retries and idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -1429,6 +1668,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Do not simply rename FakeStore to ProductionStore. A strong capstone includes an ADR explaining the next boundary to add and a test that could falsify its correctness."
             ]
+          },
+          {
+            "title": "Optional durable adapter exercise",
+            "paragraphs": [
+              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+            ]
           }
         ],
         "exercise": {
@@ -1450,7 +1695,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Evidence must match the tested boundary. Mocks validate orchestration policies but do not certify external services, isolation or model behavior."
-        }
+        },
+        "references": [
+          {
+            "title": "Python: unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Test cases; assertRaises",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "SQLite transactions",
+            "url": "https://www.sqlite.org/lang_transaction.html",
+            "section": "Read versus write transactions; transaction control",
+            "reviewed": "2026-09-27",
+            "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -1507,6 +1768,24 @@ const LEARNING_PATHS = [
           "href": "paths/agent-harnesses/practice/architecture-decision.md",
           "role": "starter",
           "description": "Harness architecture decision template"
+        },
+        {
+          "id": "durable_state-py",
+          "href": "paths/agent-harnesses/practice/durable_state.py",
+          "role": "reference",
+          "description": "Optional focused practice: durable state"
+        },
+        {
+          "id": "test_durable_state-py",
+          "href": "paths/agent-harnesses/practice/test_durable_state.py",
+          "role": "test",
+          "description": "Optional focused practice: test durable state"
+        },
+        {
+          "id": "test_parser_properties-py",
+          "href": "paths/agent-harnesses/practice/test_parser_properties.py",
+          "role": "test",
+          "description": "Optional focused practice: test parser properties"
         }
       ],
       "tasks": [
@@ -1605,7 +1884,10 @@ const LEARNING_PATHS = [
             "test_harness_workshop-py",
             "README-md",
             "operations-runbook-md",
-            "architecture-decision-md"
+            "architecture-decision-md",
+            "durable_state-py",
+            "test_durable_state-py",
+            "test_parser_properties-py"
           ],
           "steps": [
             "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
@@ -1721,6 +2003,22 @@ const LEARNING_PATHS = [
       {
         "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
         "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices"
+      },
+      {
+        "title": "ReAct: optional original research",
+        "url": "https://arxiv.org/abs/2210.03629"
+      },
+      {
+        "title": "Toolformer: optional original research",
+        "url": "https://arxiv.org/abs/2302.04761"
+      },
+      {
+        "title": "Retrieval-Augmented Generation: optional original research",
+        "url": "https://arxiv.org/abs/2005.11401"
+      },
+      {
+        "title": "AgentBench: optional original research",
+        "url": "https://arxiv.org/abs/2308.03688"
       }
     ],
     "stages": [
@@ -1861,7 +2159,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Generated requests are proposals. Trusted application code decides whether and how a capability may execute."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "workflow",
@@ -1909,7 +2216,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "More autonomy is a design cost. A measured failure and a testable improvement provide a reason to incur it."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "context",
@@ -1957,7 +2273,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "A character cap bounds one payload property; accurate token accounting requires the relevant tokenizer or provider usage data."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "instructions",
@@ -2005,7 +2330,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Content cannot grant itself authority. Approval must come from an authenticated channel and be checked against the proposed action."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+            "section": "Safety risks and mitigations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "tools",
@@ -2053,7 +2387,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A correct shape can still identify a record the caller must not access. Authorization requires trusted identity and policy."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "Toolformer",
+            "url": "https://arxiv.org/abs/2302.04761",
+            "section": "Abstract, method and evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ]
       },
       {
         "id": "loop",
@@ -2133,6 +2483,15 @@ const LEARNING_PATHS = [
             }
           ]
         },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ],
         "diagram": {
           "title": "An action proposal is not tool execution",
           "summary": "A learner asks about joins. Follow the bounded application loop around search_lessons and evidence SQL-07. The downloadable workshop uses scripted decisions, not a live model.",
@@ -2314,7 +2673,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Operational progress is established by execution evidence, not by generated narration."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "grounding",
@@ -2362,7 +2730,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Membership is a useful mechanical check but does not establish relevance, entailment or source quality."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "arguments",
@@ -2411,7 +2788,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Pre-execution validation prevents malformed requests from reaching the capability. Documentation alone cannot enforce the contract."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "outputs",
@@ -2459,7 +2845,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Transport success does not establish the application contract or the trustworthiness of returned content."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "retrieval",
@@ -2507,7 +2902,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Similarity is about representation proximity. It does not encode truth, access rights or whether a passage supports a particular claim."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2005.11401",
+            "section": "Abstract, method and evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ]
       },
       {
         "id": "memory",
@@ -2555,7 +2966,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Storage changes accessibility, not authority. Memory needs explicit provenance and lifecycle controls."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+            "section": "Safety risks and mitigations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "planning",
@@ -2603,7 +3023,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Plans coordinate work; evidence determines whether their assumptions still hold."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "ReAct",
+            "url": "https://arxiv.org/abs/2210.03629",
+            "section": "Abstract, method and evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ]
       },
       {
         "id": "clarification",
@@ -2651,7 +3087,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Clarification should resolve meaningful uncertainty, not become a ritual that blocks already authorized work."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "approval",
@@ -2728,7 +3173,16 @@ const LEARNING_PATHS = [
               "explanation": "The executor stops because the action no longer matches."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+            "section": "Safety risks and mitigations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "failures",
@@ -2776,7 +3230,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Client observation and remote execution can diverge. Unknown outcomes need reconciliation or a documented idempotency mechanism."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Function calling; strict mode; executing functions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "budgets",
@@ -2824,7 +3287,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A turn counter cannot interrupt an operation already running. Time limits must be enforced where work executes."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "injection",
@@ -2900,7 +3372,16 @@ const LEARNING_PATHS = [
               "explanation": "The allowlist holds for this case; it does not prove every attack is defeated."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+            "section": "Safety risks and mitigations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "datasets",
@@ -2979,7 +3460,23 @@ const LEARNING_PATHS = [
               "explanation": "A fluent answer cannot offset a forbidden action."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "section": "Evaluation design and continuous evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "AgentBench",
+            "url": "https://arxiv.org/abs/2308.03688",
+            "section": "Abstract, method and evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ]
       },
       {
         "id": "traces",
@@ -3027,7 +3524,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An irreversible or privacy-sensitive action can violate the contract even when the final text is accurate."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "section": "Evaluation design and continuous evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "judges",
@@ -3075,7 +3581,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Without calibration and error analysis, the score reflects a fallible evaluator rather than validated task quality."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "section": "Evaluation design and continuous evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "multiagent",
@@ -3123,7 +3638,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A second role adds another fallible judgment. Independence and useful error detection must be demonstrated, not assumed."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "deployment",
@@ -3171,7 +3695,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Behavior depends on the full interacting configuration. Recording just one component cannot explain or reproduce many regressions."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "section": "Evaluation design and continuous evaluation",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "live-integration",
@@ -3196,7 +3729,7 @@ const LEARNING_PATHS = [
           {
             "title": "Failures and tradeoffs",
             "paragraphs": [
-              "The product surface changes. Do not copy model names, limits or SDK methods from an old lesson without checking official documentation. The fetched evaluation and Agent Builder guides contain deprecation notices, so this path teaches portable evaluation concepts rather than recommending those hosted products. No live API snippets or model-quality claims are included."
+              "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested."
             ]
           }
         ],
@@ -3219,7 +3752,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The deterministic harness is only one layer. A real provider adds protocol, variability, operational and data-handling obligations."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+            "url": "https://developers.openai.com/api/docs/guides/agents",
+            "section": "Agent runtime choices",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "OpenAI function calling",
+            "url": "https://developers.openai.com/api/docs/guides/function-calling",
+            "section": "Strict mode; function-call outputs",
+            "reviewed": "2026-09-27",
+            "scope": "Responses request builder inspected against official docs 2026-09-27; no live provider execution."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -3266,6 +3815,24 @@ const LEARNING_PATHS = [
           "href": "paths/ai-agents/README.md",
           "role": "guide",
           "description": "Practice guide and limits"
+        },
+        {
+          "id": "provider_scaffold-py",
+          "href": "paths/ai-agents/provider_scaffold.py",
+          "role": "reference",
+          "description": "Optional focused practice: provider scaffold"
+        },
+        {
+          "id": "test_provider_scaffold-py",
+          "href": "paths/ai-agents/test_provider_scaffold.py",
+          "role": "test",
+          "description": "Optional focused practice: test provider scaffold"
+        },
+        {
+          "id": "provider-integration-exercise-md",
+          "href": "paths/ai-agents/provider-integration-exercise.md",
+          "role": "guide",
+          "description": "Optional focused practice: provider-integration-exercise"
         }
       ],
       "tasks": [
@@ -3361,7 +3928,10 @@ const LEARNING_PATHS = [
             "workshop-py",
             "test_workshop-py",
             "evaluation_cases-json",
-            "README-md"
+            "README-md",
+            "provider_scaffold-py",
+            "test_provider_scaffold-py",
+            "provider-integration-exercise-md"
           ],
           "steps": [
             "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
@@ -3453,8 +4023,8 @@ const LEARNING_PATHS = [
       "Create a separate console project for snippets with dotnet new console -n LearningConsole -f net10.0; replace Program.cs for each console lesson and run dotnet run.",
       "As of September 26, 2026, Microsoft's policy lists .NET 10 LTS through November 14, 2028. Recheck the policy at study time and keep patches current.",
       "Package-based testing and database lessons require restore access. Examples labeled fragments need the enclosing project described in their lesson.",
-      "The downloadable practice/*.cs files are complete Program.cs replacements; practice/README.md gives project-creation commands. They run without external packages on .NET 9 and are compatible in syntax with .NET 10; only the .NET 9 build was tested.",
-      "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. Those examples are labeled fragments and are not part of the package-free downloadable baseline.",
+      "The package-free foundation.cs, task-api.cs and acceptance.cs downloads are complete Program.cs replacements; practice/README.md gives project-creation commands. They target .NET 10 in repository release verification; the original package-free checks used .NET 9.",
+      "EF Core, xUnit, WebApplicationFactory and bearer-token lessons require compatible packages and infrastructure. The fragments remain separate from the package-free baseline; PersistenceChecks.csproj supplies a pinned SQLite/TestHost extension with fake test principals.",
       "Stages describe practical learning checkpoints, not a claim of mastery or production completeness. Pass their exit criteria with evidence before treating the next stage as complete."
     ],
     "nextSteps": [
@@ -3599,7 +4169,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "The SDK contains the compiler and project tools."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Create a console application",
+            "url": "https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code",
+            "section": "Create the app",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "types-null",
@@ -3643,7 +4222,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "var changes how a type is written, not how the type system works."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Nullable reference types",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/nullable-references",
+            "section": "Null-state analysis",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "control-collections",
@@ -3687,7 +4275,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A dictionary maps keys to values."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Iteration statements",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements",
+            "section": "The foreach statement",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "methods",
@@ -3731,7 +4328,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Computation can be reused independently of its presentation."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Methods",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods",
+            "section": "Method signatures",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "objects",
@@ -3775,7 +4381,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Access control constrains how state changes."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Classes",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes",
+            "section": "Constructors",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "exceptions",
@@ -3819,7 +4434,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "using provides deterministic cleanup."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Exception handling",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/",
+            "section": "Overview",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "linq",
@@ -3863,7 +4487,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Select projects each source item into a result."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "LINQ",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/linq/",
+            "section": "Query execution",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "async",
@@ -3907,7 +4540,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Async models waiting; CPU parallelism is a separate decision."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Asynchronous programming",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/",
+            "section": "Task asynchronous programming model",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "contracts-generics",
@@ -3960,7 +4602,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Another reference may mutate the underlying list; a separate snapshot provides stronger isolation."
-        }
+        },
+        "references": [
+          {
+            "title": "Generics",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics",
+            "section": "Generic types and methods",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "resource-ownership",
@@ -4013,7 +4664,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Consumers borrow injected services; the owning scope handles cleanup."
-        }
+        },
+        "references": [
+          {
+            "title": "using statement",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using",
+            "section": "await using",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "delegates-patterns",
@@ -4065,7 +4725,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A closure captures the variable; use a separate local snapshot when that is the intended rule."
-        }
+        },
+        "references": [
+          {
+            "title": "Pattern matching",
+            "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching",
+            "section": "Overview",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "testing",
@@ -4109,7 +4778,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Compilation and behavior verification answer different questions."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Unit testing with dotnet test",
+            "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test",
+            "section": "Create the test project",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "api-di",
@@ -4155,6 +4833,15 @@ const LEARNING_PATHS = [
           "explanation": "Singleton services share application-wide state and require safe concurrency."
         },
         "stage": "intermediate",
+        "references": [
+          {
+            "title": "ASP.NET Core dependency injection",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0",
+            "section": "Service lifetimes",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
         "diagram": {
           "title": "A POST request through the small Task API",
           "summary": "A successful first POST /tasks with {\"title\":\"Read\"}, starting from the empty in-memory store. This is the lesson’s minimal endpoint path, not every ASP.NET Core middleware stage.",
@@ -4334,7 +5021,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The request contract should not grant write access to protected entity fields."
-        }
+        },
+        "references": [
+          {
+            "title": "Minimal API responses",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-10.0",
+            "section": "TypedResults vs Results",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "integration-checks",
@@ -4348,7 +5044,7 @@ const LEARNING_PATHS = [
               "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only HttpClient and System.Text.Json, so it needs no test package. Run it against a fresh local practice server.",
               "A console acceptance check is not a replacement for a test runner. It reports failure via an exception and nonzero exit code. Test data is uniquely named, and the check does not delete pre-existing records."
             ],
-            "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net9.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net9.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
+            "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net10.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net10.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
           },
           {
             "title": "Use WebApplicationFactory for framework tests",
@@ -4375,7 +5071,8 @@ const LEARNING_PATHS = [
             "Both assertions fail if expected statuses are intentionally reversed.",
             "A fresh server passes the acceptance baseline.",
             "Test failures return a nonzero process exit code.",
-            "Checks do not depend on hard-coded generated task IDs."
+            "Checks do not depend on hard-coded generated task IDs.",
+            "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
           ]
         },
         "quiz": {
@@ -4387,7 +5084,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The test host exercises application code, not the external hosting infrastructure."
-        }
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core integration tests",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+            "section": "Mock authentication",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "database",
@@ -4440,7 +5146,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "The provider parameterizes the predicate's value."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "EF Core SQL queries",
+            "url": "https://learn.microsoft.com/en-us/ef/core/querying/sql-queries",
+            "section": "Passing parameters",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "ef-evolution",
@@ -4482,7 +5197,8 @@ const LEARNING_PATHS = [
             "A and B use different DbContext instances.",
             "Only one conflicting version update succeeds.",
             "Migration SQL is reviewed for data-loss operations.",
-            "Tests use a relational provider, not EF's in-memory provider."
+            "Tests use a relational provider, not EF's in-memory provider.",
+            "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
           ]
         },
         "quiz": {
@@ -4494,7 +5210,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "External services are outside the database transaction; use a reliable delivery design."
-        }
+        },
+        "references": [
+          {
+            "title": "EF Core transactions",
+            "url": "https://learn.microsoft.com/en-us/ef/core/saving/transactions",
+            "section": "Controlling transactions",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -4541,7 +5266,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "The boundary adds behavior that a pure helper test does not exercise."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Minimal API tutorial",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-10.0",
+            "section": "Create API endpoints",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "cancellation-budgets",
@@ -4594,7 +5328,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The token signals cancellation and the operation must observe it."
-        }
+        },
+        "references": [
+          {
+            "title": "Cancellation in managed threads",
+            "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads",
+            "section": "Operation cancellation versus object cancellation",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -4635,19 +5378,29 @@ const LEARNING_PATHS = [
             "Repeated runs produce 100.",
             "No unrelated variable is protected by the counter operation.",
             "The explanation distinguishes a process from a deployment with replicas.",
-            "Cancellation and exceptions cannot leak an acquired semaphore permit."
+            "Cancellation and exceptions cannot leak an acquired semaphore permit.",
+            "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
           ]
         },
         "quiz": {
-          "question": "Does ConcurrentDictionary make any multi-step workflow atomic?",
+          "question": "Two EF contexts read Version=2. Context A updates the row to Version=3. B tries to save using its original Version=2 concurrency token. What should B observe?",
           "options": [
-            "Yes",
-            "No; compose supported atomic operations or synchronize the whole transition",
-            "Only when it holds strings"
+            "Its update silently replaces A because SaveChanges is last-write-wins",
+            "DbUpdateConcurrencyException; handle the conflict and reload deliberately",
+            "EF merges both title values automatically"
           ],
           "correct": 1,
-          "explanation": "Thread-safe individual operations do not automatically protect a larger invariant."
-        }
+          "explanation": "A configured concurrency token participates in the UPDATE predicate. B matches no row after A advances it; EF reports the conflict."
+        },
+        "references": [
+          {
+            "title": "EF Core concurrency conflicts",
+            "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency",
+            "section": "Application-managed concurrency tokens",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "auth-boundaries",
@@ -4689,19 +5442,29 @@ const LEARNING_PATHS = [
             "User B never receives user A's tasks.",
             "A reader cannot write.",
             "OwnerId is not accepted from JSON.",
-            "Real token validation is tested separately from the test fake."
+            "Real token validation is tested separately from the test fake.",
+            "Run PersistenceChecks.csproj and explain the matching assertion. Distinguish SQLite/test principal evidence from migrations and real bearer validation."
           ]
         },
         "quiz": {
-          "question": "Does a valid token authorize access to every task?",
+          "question": "A test-host fake principal passes owner and permission checks. What remains unproven before real deployment?",
           "options": [
-            "Yes",
-            "No; resource and operation authorization are still required",
-            "Only when HTTPS is enabled"
+            "Whether the known principal is authorized by those tested policies",
+            "Whether real tokens validate issuer, audience, signature and expiry",
+            "Whether denied test principals received the recorded HTTP result"
           ],
           "correct": 1,
-          "explanation": "Trusted identity establishes who the caller is, not what they may do."
-        }
+          "explanation": "Fake authentication supplies known claims to test authorization decisions. Real identity/token validation is a separate integration boundary and needs staging evidence."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core resource authorization",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resourcebased?view=aspnetcore-10.0",
+            "section": "Use imperative authorization",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -4754,7 +5517,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Unique IDs can create a growing number of metric series and excessive collection cost."
-        }
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core metrics",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/log-mon/metrics/metrics?view=aspnetcore-10.0",
+            "section": "ASP.NET Core metrics",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "deploy-operations",
@@ -4808,7 +5580,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The executable and persistent data have separate lifecycles."
-        }
+        },
+        "references": [
+          {
+            "title": "EF Core applying migrations",
+            "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying",
+            "section": "SQL scripts",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "performance",
@@ -4862,7 +5643,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A controlled comparison establishes whether a change improves the relevant workload."
-        }
+        },
+        "references": [
+          {
+            "title": "EF Core efficient querying",
+            "url": "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying",
+            "section": "Limit the resultset size",
+            "reviewed": "2026-09-27",
+            "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       }
     ],
     "stages": [
@@ -5006,6 +5796,24 @@ const LEARNING_PATHS = [
           "href": "paths/dotnet/practice/acceptance.cs",
           "role": "reference",
           "description": "HTTP acceptance checks"
+        },
+        {
+          "id": "PersistenceChecks-csproj",
+          "href": "paths/dotnet/practice/PersistenceChecks.csproj",
+          "role": "test",
+          "description": "PersistenceChecks.csproj — guided executable scaffold"
+        },
+        {
+          "id": "persistence-api-cs",
+          "href": "paths/dotnet/practice/persistence-api.cs",
+          "role": "reference",
+          "description": "persistence-api.cs — guided executable scaffold"
+        },
+        {
+          "id": "persistence-checks-cs",
+          "href": "paths/dotnet/practice/persistence-checks.cs",
+          "role": "test",
+          "description": "persistence-checks.cs — guided executable scaffold"
         }
       ],
       "tasks": [
@@ -5042,7 +5850,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
-            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -5054,7 +5862,10 @@ const LEARNING_PATHS = [
             "README-md",
             "foundation-cs",
             "task-api-cs",
-            "acceptance-cs"
+            "acceptance-cs",
+            "PersistenceChecks-csproj",
+            "persistence-api-cs",
+            "persistence-checks-cs"
           ],
           "steps": [
             "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -5074,6 +5885,11 @@ const LEARNING_PATHS = [
               "label": "PowerShell · kit root · second terminal",
               "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
               "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+            },
+            {
+              "label": "PowerShell · guided SQLite/test-principal extension",
+              "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
+              "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
             }
           ],
           "prerequisites": [
@@ -5084,7 +5900,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
-            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -5096,7 +5912,10 @@ const LEARNING_PATHS = [
             "README-md",
             "foundation-cs",
             "task-api-cs",
-            "acceptance-cs"
+            "acceptance-cs",
+            "PersistenceChecks-csproj",
+            "persistence-api-cs",
+            "persistence-checks-cs"
           ],
           "steps": [
             "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -5116,6 +5935,11 @@ const LEARNING_PATHS = [
               "label": "PowerShell · kit root · second terminal",
               "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
               "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+            },
+            {
+              "label": "PowerShell · guided SQLite/test-principal extension",
+              "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
+              "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
             }
           ],
           "prerequisites": [
@@ -5126,7 +5950,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
-            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+            "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         }
@@ -5269,7 +6093,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Each element is inspected once, assuming constant-cost comparisons."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Primary reference: Analysis of Algorithms",
+            "url": "https://algs4.cs.princeton.edu/14analysis/",
+            "section": "Analysis of Algorithms",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "arrays",
@@ -5309,7 +6142,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Front insertion moves references across the array, so its cost grows with n."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Primary reference: Resizing arrays and linked lists",
+            "url": "https://algs4.cs.princeton.edu/13stacks/",
+            "section": "Resizing arrays and linked lists",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "maps",
@@ -5350,7 +6192,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "A set directly models whether an item has been seen."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Primary reference: Hash tables",
+            "url": "https://algs4.cs.princeton.edu/34hash/",
+            "section": "Hash tables",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "stacks-queues",
@@ -5390,7 +6241,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "FIFO preserves insertion order when serving queued items."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Primary reference: Stacks and queues",
+            "url": "https://algs4.cs.princeton.edu/13stacks/",
+            "section": "Stacks and queues",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "binary-search",
@@ -5462,7 +6322,16 @@ const LEARNING_PATHS = [
             }
           ]
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Binary search",
+            "url": "https://algs4.cs.princeton.edu/11model/",
+            "section": "Binary search",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "sorting",
@@ -5503,7 +6372,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Stability specifies tie behavior, not that the entire order stays unchanged."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Sorting stability and comparison model",
+            "url": "https://algs4.cs.princeton.edu/21elementary/",
+            "section": "Sorting stability and comparison model",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "recursion",
@@ -5522,6 +6400,12 @@ const LEARNING_PATHS = [
             "title": "Reason about the tradeoff",
             "paragraphs": [
               "This example assumes a real acyclic tree and well-formed records. A cycle would never reach a base case. Counting calls and maximum depth are different measurements."
+            ]
+          },
+          {
+            "title": "Implemented tree practice",
+            "paragraphs": [
+              "The new binary-search-tree lesson and trees_graphs.py supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
             ]
           }
         ],
@@ -5544,7 +6428,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Without a base case and progress toward it, recursion does not terminate."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Recursive tree search and inorder traversal",
+            "url": "https://algs4.cs.princeton.edu/32bst/",
+            "section": "Recursive tree search and inorder traversal",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "graphs",
@@ -5584,7 +6477,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Queue layers correspond to increasing numbers of edges, not arbitrary weights."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Breadth-first search",
+            "url": "https://algs4.cs.princeton.edu/41graph/",
+            "section": "Breadth-first search",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "heaps",
@@ -5624,7 +6526,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "The smallest is at the root; siblings and subtrees are not globally sorted."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Binary heaps",
+            "url": "https://algs4.cs.princeton.edu/24pq/",
+            "section": "Binary heaps",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "dynamic-programming",
@@ -5666,7 +6577,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "State meaning and base cases make the recurrence assessable; recursion is optional."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Primary reference: Dynamic programming lectures 19–22",
+            "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
+            "section": "Dynamic programming lectures 19–22",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "linked-nodes",
@@ -5712,7 +6632,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Only the pointer update is constant-time; locating the node can dominate."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Linked lists",
+            "url": "https://algs4.cs.princeton.edu/13stacks/",
+            "section": "Linked lists",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "merge-sort",
@@ -5758,7 +6687,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Each pointer moves forward at most the length of its run."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Top-down mergesort",
+            "url": "https://algs4.cs.princeton.edu/22mergesort/",
+            "section": "Top-down mergesort",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "two-pointers",
@@ -5804,7 +6742,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The contract requires two different elements."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Binary search and ordered data",
+            "url": "https://introcs.cs.princeton.edu/java/42sort/",
+            "section": "Binary search and ordered data",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "sliding-window",
@@ -5850,7 +6797,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "An older occurrence before the window must not move the boundary backward."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Dictionary operations supporting maintained state",
+            "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
+            "section": "Dictionary operations supporting maintained state",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "topological",
@@ -5877,10 +6833,18 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Time and space are O(V+E) and O(V) beyond the input adjacency lists respectively. Multiple valid orders can exist. A DFS alternative uses unseen/active/finished states; encountering an active vertex detects a cycle. Reachability alone does not prove every prerequisite is complete."
             ]
+          },
+          {
+            "title": "DFS with a directed cycle witness",
+            "paragraphs": [
+              "Run directed_dfs in trees_graphs.py. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness [v,...,v] or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
+              "An explicit stack retains each adjacency iterator and active-path index. Each vertex/edge is processed once: O(V+E) time and space including normalized adjacency. The tests compare all 512 directed three-vertex graphs with an independent transitive-closure oracle, check witness edges, and cover a 3,000-edge chain without recursion."
+            ],
+            "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []"
           }
         ],
         "exercise": {
-          "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A.",
+          "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A. Run the iterative DFS reference and verify each edge of its cycle witness; contrast a gray back edge with a black shared dependency.",
           "solution": "graph = {\"A\":[\"C\"], \"B\":[\"C\"], \"C\":[]}\norder = topological(graph)\npositions = {node:i for i,node in enumerate(order)}\nassert all(positions[u] < positions[v] for u,vs in graph.items() for v in vs)\ntry:\n    topological({\"A\":[\"B\"],\"B\":[\"A\"]})\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"cycle accepted\")",
           "checks": [
             "Validate constraints rather than one arbitrary order.",
@@ -5896,7 +6860,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Remaining vertices cannot be freed because cyclic prerequisites persist."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Directed cycles and topological sort",
+            "url": "https://algs4.cs.princeton.edu/42digraph/",
+            "section": "Directed cycles and topological sort",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "dijkstra",
@@ -5923,6 +6896,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
             ]
+          },
+          {
+            "title": "Preconditions versus boundary validation",
+            "paragraphs": [
+              "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Inputs outside that contract are unsupported; this is not a valid-input correctness bug. Add a validated boundary if accepting untrusted data."
+            ]
           }
         ],
         "exercise": {
@@ -5942,7 +6921,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The limitation is in correctness assumptions, not numeric storage."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Dijkstra algorithm and nonnegative weights",
+            "url": "https://algs4.cs.princeton.edu/44sp/",
+            "section": "Dijkstra algorithm and nonnegative weights",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "greedy",
@@ -5989,7 +6977,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Changing the objective invalidates the exchange argument."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Lecture 1: interval scheduling",
+            "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/pages/lecture-notes/",
+            "section": "Lecture 1: interval scheduling",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "backtracking",
@@ -6035,7 +7032,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "All outputs would otherwise refer to the same mutable list."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Recursive backtracking",
+            "url": "https://introcs.cs.princeton.edu/java/23recursion/",
+            "section": "Recursive backtracking",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "knapsack",
@@ -6062,6 +7068,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
             ]
+          },
+          {
+            "title": "Preconditions versus boundary validation",
+            "paragraphs": [
+              "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug."
+            ]
           }
         ],
         "exercise": {
@@ -6081,7 +7093,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "dp[c-weight] must still represent only previously processed items."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Dynamic programming and knapsack",
+            "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
+            "section": "Dynamic programming and knapsack",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       },
       {
         "id": "algorithm-review",
@@ -6128,7 +7149,72 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A finite set of timings is empirical evidence, not an asymptotic proof."
-        }
+        },
+        "references": [
+          {
+            "title": "Primary reference: Test cases and assertions",
+            "url": "https://docs.python.org/3.11/library/unittest.html",
+            "section": "Test cases and assertions",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
+      },
+      {
+        "id": "binary-search-tree",
+        "title": "Implemented binary search tree: ordering and deletion",
+        "stage": "intermediate",
+        "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+              "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
+            ]
+          },
+          {
+            "title": "Trace a two-child deletion",
+            "paragraphs": [
+              "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
+            ],
+            "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
+          },
+          {
+            "title": "Verify the invariant beyond a sample",
+            "paragraphs": [
+              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
+          "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
+          "checks": [
+            "All insert/delete orders preserve a set oracle and global ordering.",
+            "Duplicate and missing-key policies are tested.",
+            "Skewed input costs O(n), not guaranteed O(log n)."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "All insert/delete orders preserve a set oracle and global ordering.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+        },
+        "references": [
+          {
+            "title": "Primary reference: Order-based methods and deletion",
+            "url": "https://algs4.cs.princeton.edu/32bst/",
+            "section": "Order-based methods and deletion",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
       }
     ],
     "stages": [
@@ -6234,6 +7320,18 @@ const LEARNING_PATHS = [
           "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py",
           "role": "reference",
           "description": "Advanced algorithms and executable checks"
+        },
+        {
+          "id": "trees_graphs-py",
+          "href": "paths/data-structures-algorithms/practice/trees_graphs.py",
+          "role": "reference",
+          "description": "Implemented BST and iterative DFS"
+        },
+        {
+          "id": "test_trees_graphs-py",
+          "href": "paths/data-structures-algorithms/practice/test_trees_graphs.py",
+          "role": "test",
+          "description": "Independent tree and graph oracle tests"
         }
       ],
       "tasks": [
@@ -6243,7 +7341,9 @@ const LEARNING_PATHS = [
           "goal": "Process a list of events and generate counts, repeated IDs and an undo history.",
           "fileIds": [
             "algorithms-py",
-            "advanced_algorithms-py"
+            "advanced_algorithms-py",
+            "trees_graphs-py",
+            "test_trees_graphs-py"
           ],
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -6268,7 +7368,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
-            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -6278,7 +7378,9 @@ const LEARNING_PATHS = [
           "goal": "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
           "fileIds": [
             "algorithms-py",
-            "advanced_algorithms-py"
+            "advanced_algorithms-py",
+            "trees_graphs-py",
+            "test_trees_graphs-py"
           ],
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -6286,13 +7388,19 @@ const LEARNING_PATHS = [
             "Run the provided baseline and record its actual results.",
             "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
             "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
-            "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites."
+            "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites.",
+            "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge."
           ],
           "commands": [
             {
               "label": "Run reference from data-structures-algorithms-practice folder root",
               "command": "python algorithms.py",
               "expected": "All algorithm checks passed."
+            },
+            {
+              "label": "Run tree and DFS oracle tests",
+              "command": "python -m unittest -v test_trees_graphs.py",
+              "expected": "All four independent tree/graph test methods pass, including exhaustive small cases."
             }
           ],
           "prerequisites": [
@@ -6303,7 +7411,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
-            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -6313,7 +7421,9 @@ const LEARNING_PATHS = [
           "goal": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
           "fileIds": [
             "algorithms-py",
-            "advanced_algorithms-py"
+            "advanced_algorithms-py",
+            "trees_graphs-py",
+            "test_trees_graphs-py"
           ],
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -6338,7 +7448,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
-            "Both reference files include executable checks. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
+            "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         }
@@ -6363,7 +7473,8 @@ const LEARNING_PATHS = [
         "greedy": "advanced",
         "backtracking": "advanced",
         "knapsack": "advanced",
-        "algorithm-review": "advanced"
+        "algorithm-review": "advanced",
+        "binary-search-tree": "intermediate"
       },
       "bundle": {
         "href": "paths/data-structures-algorithms/practice-bundle.zip"
@@ -6438,6 +7549,10 @@ const LEARNING_PATHS = [
       {
         "title": "Microsoft: persistence infrastructure and repository tradeoffs",
         "url": "https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implementation-entity-framework-core"
+      },
+      {
+        "title": "Gamma, Helm, Johnson, Vlissides: Design Patterns (1994)",
+        "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610"
       }
     ],
     "stages": [
@@ -6559,6 +7674,13 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A one-off function has fewer moving parts than a hierarchy. Add an abstraction when a real variation, testing boundary or lifecycle requires it. Pattern names alone do not establish correctness, speed or maintainability; compare the concrete cost of the current change."
             ]
+          },
+          {
+            "title": "Selected catalog and provenance",
+            "paragraphs": [
+              "This is a selected Python-oriented pattern catalog, not a complete treatment of the 23 GoF patterns. Gamma, Helm, Johnson and Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (1994; ISBN 9780201633610), supplies the canonical creational, structural and behavioral catalog. Dependency Injection, Repository and Unit of Work are additional architectural material, not entries in that GoF catalog.",
+              "The course includes Chain of Responsibility and Mediator contrasts in collaboration.py. Patterns omitted here remain optional later breadth; the goal is to justify a collaboration under specific pressure, not memorize all catalog entries."
+            ]
           }
         ],
         "exercise": {
@@ -6579,7 +7701,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Introduction and catalog organization",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Introduction and catalog organization",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "contracts",
@@ -6626,7 +7757,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Annotations support tools and readers. Runtime boundary checks enforce invariants on actual values."
-        }
+        },
+        "references": [
+          {
+            "title": "Liskov and Wing: A Behavioral Notion of Subtyping",
+            "url": "https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf",
+            "section": "Sections 1–2: subtype requirement and motivation",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 behavioral-subtyping paper; Python 3.11+ examples illustrate contracts without claiming formal proof."
+          }
+        ]
       },
       {
         "id": "composition",
@@ -6681,7 +7821,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Supplying a collaborator exposes the dependency and lets tests record delivery without constructing an external client."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Class versus object inheritance",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Class versus object inheritance",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "solid",
@@ -6728,7 +7877,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A consumer-facing contract should be small enough for its needs, without imposing unrelated operations or a rigid method-count rule."
-        }
+        },
+        "references": [
+          {
+            "title": "Robert C. Martin: Solid Relevance",
+            "url": "https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html",
+            "section": "S, O, L, I and D discussions",
+            "reviewed": "2026-09-27",
+            "scope": "Original author discussion (2020); principles are design review questions in this Python 3.11+ course."
+          }
+        ]
       },
       {
         "id": "strategy",
@@ -6804,7 +7962,16 @@ const LEARNING_PATHS = [
               "explanation": "The caller supplies another compatible policy without editing the workflow."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Strategy",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Strategy",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "factories",
@@ -6851,7 +8018,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "A related family of products motivates Abstract Factory; selecting one product can remain a simple factory."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Factory Method and Abstract Factory",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Factory Method and Abstract Factory",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "builder",
@@ -6898,7 +8074,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The construction boundary validates the configuration and snapshots it; fluent syntax alone establishes neither property."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Builder",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Builder",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "adapter",
@@ -6945,7 +8130,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An adapter must preserve meaning across the boundary, including units, rounding and failures."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Adapter",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Adapter",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "facade",
@@ -6992,7 +8186,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "A facade simplifies a use case entry point. Transaction or compensation guarantees require additional mechanisms."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Facade",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Facade",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "decorator",
@@ -7039,7 +8242,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Wrappers observe inputs, outputs and errors at different positions; moving authorization or caching changes the effective behavior."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Decorator",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Decorator",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "composite",
@@ -7086,7 +8298,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The recursion assumes finite acyclic containment. Empty groups are valid here and sum to zero."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Composite",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Composite",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "proxy",
@@ -7133,7 +8354,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "A wrapper can provide a familiar interface, but network latency, failure and cache freshness remain part of the contract."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Proxy",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Proxy",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "observer",
@@ -7210,7 +8440,16 @@ const LEARNING_PATHS = [
               "explanation": "This policy stops on the first exception; it does not promise durable delivery."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Observer",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Observer",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "command",
@@ -7257,7 +8496,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Storing inputs does not establish reversibility. Conflicts and external effects can invalidate an inverse or require fallible compensation."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Command",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Command",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "state",
@@ -7304,7 +8552,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "State describes a lifecycle and legal transitions; an independently chosen ranking policy is better described as Strategy."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: State",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "State",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "template-method",
@@ -7351,7 +8608,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The base algorithm controls the sequence while selected steps are supplied by subclasses."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: Template Method",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Template Method",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "iterator",
@@ -7398,7 +8664,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Generator execution is deferred, so consuming the next item can trigger work and exceptions."
-        }
+        },
+        "references": [
+          {
+            "title": "Python data model",
+            "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
+            "section": "Iterator protocol",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ iterator semantics."
+          },
+          {
+            "title": "GoF: Iterator",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Behavioral patterns: Iterator",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher provenance, not free full chapter text."
+          }
+        ]
       },
       {
         "id": "dependency-injection",
@@ -7445,7 +8727,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Injection is external provision of collaborators. A container and explicit protocol declarations are optional implementation choices."
-        }
+        },
+        "references": [
+          {
+            "title": "Martin Fowler: Dependency Injection",
+            "url": "https://martinfowler.com/articles/injection.html",
+            "section": "Dependency Injection",
+            "reviewed": "2026-09-27",
+            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          }
+        ]
       },
       {
         "id": "repository",
@@ -7492,7 +8783,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
-        }
+        },
+        "references": [
+          {
+            "title": "Martin Fowler: Repository",
+            "url": "https://martinfowler.com/eaaCatalog/repository.html",
+            "section": "Repository",
+            "reviewed": "2026-09-27",
+            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          }
+        ]
       },
       {
         "id": "unit-of-work",
@@ -7568,7 +8868,16 @@ const LEARNING_PATHS = [
               "explanation": "This illustrates rollback of the body; real durability and concurrency need storage guarantees."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "Martin Fowler: Unit Of Work",
+            "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html",
+            "section": "Unit Of Work",
+            "reviewed": "2026-09-27",
+            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          }
+        ]
       },
       {
         "id": "refactoring",
@@ -7615,7 +8924,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Refactoring preserves observable behavior while changing structure. Line count is not an equivalence criterion."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: How to use a design pattern",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "How to use a design pattern",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       },
       {
         "id": "selection",
@@ -7662,7 +8980,128 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
-        }
+        },
+        "references": [
+          {
+            "title": "GoF: How to select a design pattern",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "How to select a design pattern",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
+      },
+      {
+        "id": "chain-of-responsibility",
+        "title": "Chain of Responsibility: select the first handler",
+        "stage": "intermediate",
+        "takeaway": "Ordered delegation chooses one handler; broadcast has a different contract.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
+              "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
+            ]
+          },
+          {
+            "title": "Trace decline, acceptance and ordering",
+            "paragraphs": [
+              "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
+            ],
+            "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
+          },
+          {
+            "title": "Compare failure and fan-out contracts",
+            "paragraphs": [
+              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a title and JSON handler. Test two overlapping handlers in both orders, a decline, a False result, an unhandled request and a failure that must not call fallback.",
+          "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
+          "checks": [
+            "The first accepting handler prevents later handlers from running.",
+            "Observer broadcasts to every subscriber.",
+            "Decline, valid falsey result and failure are distinct."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "The first accepting handler prevents later handlers from running.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "The first accepting handler prevents later handlers from running."
+        },
+        "references": [
+          {
+            "title": "GoF: Chain Of Responsibility",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Chain Of Responsibility",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
+      },
+      {
+        "id": "mediator",
+        "title": "Mediator: coordinate a completion workflow",
+        "stage": "advanced",
+        "takeaway": "A coordinator centralizes interaction rules while collaborators avoid peer dependencies.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
+              "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
+            ]
+          },
+          {
+            "title": "Trace prerequisites before effects",
+            "paragraphs": [
+              "The next lesson depends on intro. Trying next first fails before any state change or notification. Completing intro then next changes both states and records one local notification per successful transition. Repeating next fails according to the explicit active-to-done contract."
+            ],
+            "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]"
+          },
+          {
+            "title": "Keep the coordinator boundary honest",
+            "paragraphs": [
+              "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete intro before next, then test repeated/missing completion and unfinished prerequisites. Propose a separate persistence and notification failure policy for external collaborators.",
+          "solution": "from collaboration import CompletionMediator\nm=CompletionMediator({'intro':'active','next':'active'},{'next':['intro']})\nm.complete('intro'); m.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]",
+          "checks": [
+            "Failed prerequisite validation leaves state and notification records unchanged.",
+            "Successful transitions notify once.",
+            "External delivery requires a separate failure contract."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "Failed prerequisite validation leaves state and notification records unchanged.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
+        },
+        "references": [
+          {
+            "title": "GoF: Mediator",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Mediator",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -7699,6 +9138,18 @@ const LEARNING_PATHS = [
           "href": "paths/design-patterns/README.md",
           "role": "guide",
           "description": "Workshop setup and limitations"
+        },
+        {
+          "id": "collaboration-py",
+          "href": "paths/design-patterns/collaboration.py",
+          "role": "reference",
+          "description": "Chain, Mediator and Observer contrasts"
+        },
+        {
+          "id": "test_collaboration-py",
+          "href": "paths/design-patterns/test_collaboration.py",
+          "role": "test",
+          "description": "Behavioral collaboration contract tests"
         }
       ],
       "tasks": [
@@ -7709,7 +9160,9 @@ const LEARNING_PATHS = [
           "fileIds": [
             "workshop-py",
             "test_workshop-py",
-            "README-md"
+            "README-md",
+            "collaboration-py",
+            "test_collaboration-py"
           ],
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
@@ -7750,7 +9203,9 @@ const LEARNING_PATHS = [
           "fileIds": [
             "workshop-py",
             "test_workshop-py",
-            "README-md"
+            "README-md",
+            "collaboration-py",
+            "test_collaboration-py"
           ],
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
@@ -7758,7 +9213,8 @@ const LEARNING_PATHS = [
             "Run the provided baseline and record its actual results.",
             "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
             "Complete the assessment requirements in the reader: Adapt a legacy seconds field with an explicit conversion policy.; Use a measurement decorator that delegates once and records only success.; Test wrapper failure and input immutability.; Write a note comparing facade, adapter, decorator and proxy intentions.",
-            "Compare your evidence with the stage rubric: Boundary conversion is correct at 59/60/61 seconds.; Failures are propagated and not counted as successful output.; Facade remains focused on the preview workflow.; The design note explains one case where each wrapper would be unnecessary."
+            "Compare your evidence with the stage rubric: Boundary conversion is correct at 59/60/61 seconds.; Failures are propagated and not counted as successful output.; Facade remains focused on the preview workflow.; The design note explains one case where each wrapper would be unnecessary.",
+            "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation."
           ],
           "commands": [
             {
@@ -7770,6 +9226,11 @@ const LEARNING_PATHS = [
               "label": "Run baseline tests from design-patterns-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
               "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            },
+            {
+              "label": "Run behavioral collaboration contrasts",
+              "command": "python -m unittest -v test_collaboration.py",
+              "expected": "Five collaboration contract tests pass."
             }
           ],
           "prerequisites": [
@@ -7791,7 +9252,9 @@ const LEARNING_PATHS = [
           "fileIds": [
             "workshop-py",
             "test_workshop-py",
-            "README-md"
+            "README-md",
+            "collaboration-py",
+            "test_collaboration-py"
           ],
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
@@ -7799,7 +9262,8 @@ const LEARNING_PATHS = [
             "Run the provided baseline and record its actual results.",
             "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
             "Complete the assessment requirements in the reader: Reject missing IDs and repeated completion according to a stated policy.; Commit a valid transition and keep the original store unchanged when validation fails.; Run the provided rollback tests and add a failing repository substitute.; Propose provider integration tests and a notification failure policy.; Write a decision record rejecting at least one unnecessary pattern.",
-            "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes."
+            "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes.",
+            "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation."
           ],
           "commands": [
             {
@@ -7811,6 +9275,11 @@ const LEARNING_PATHS = [
               "label": "Run baseline tests from design-patterns-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
               "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+            },
+            {
+              "label": "Run behavioral collaboration contrasts",
+              "command": "python -m unittest -v test_collaboration.py",
+              "expected": "Five collaboration contract tests pass."
             }
           ],
           "prerequisites": [
@@ -7848,7 +9317,9 @@ const LEARNING_PATHS = [
         "repository": "advanced",
         "unit-of-work": "advanced",
         "refactoring": "advanced",
-        "selection": "advanced"
+        "selection": "advanced",
+        "chain-of-responsibility": "intermediate",
+        "mediator": "advanced"
       },
       "bundle": {
         "href": "paths/design-patterns/practice-bundle.zip"
@@ -7878,6 +9349,36 @@ const LEARNING_PATHS = [
           "href": "paths/financial-foundations/practice/answers.md",
           "role": "guide",
           "description": "Worked answers and interpretation"
+        },
+        {
+          "id": "two-date-events-csv",
+          "href": "paths/financial-foundations/practice/two-date-events.csv",
+          "role": "data",
+          "description": "Opening/closing position, trade cash flows and event FX rates"
+        },
+        {
+          "id": "curve-inputs-csv",
+          "href": "paths/financial-foundations/practice/curve-inputs.csv",
+          "role": "data",
+          "description": "Same cash flows under two supplied discount curves"
+        },
+        {
+          "id": "daily-pnl-and-curves-md",
+          "href": "paths/financial-foundations/practice/daily-pnl-and-curves.md",
+          "role": "guide",
+          "description": "Tasks, fully reconciled answers, cost-allocation and split examples"
+        },
+        {
+          "id": "finance-workbook-py",
+          "href": "paths/financial-foundations/practice/finance_workbook.py",
+          "role": "reference",
+          "description": "Decimal arithmetic reference for both investigations"
+        },
+        {
+          "id": "test-finance-workbook-py",
+          "href": "paths/financial-foundations/practice/test_finance_workbook.py",
+          "role": "test",
+          "description": "Five checks including changed FX and broken position reconciliation"
         }
       ],
       "tasks": [
@@ -7900,6 +9401,46 @@ const LEARNING_PATHS = [
           "notes": [
             "Synthetic educational positions, not market prices or trading advice. The CSV and worked answers are the downloadable exercise. The printable study pack is available separately through the finance reader.",
             "The amount trigger is strict greater-than: a difference equal to the threshold does not trigger it. Missing or stale evidence still needs review."
+          ]
+        },
+        {
+          "id": "daily-pnl-and-curves",
+          "title": "Two-date P&L and curve investigation",
+          "goal": "Reconcile positions, cash, FX and deductions; derive independent value from a second curve.",
+          "fileIds": [
+            "two-date-events-csv",
+            "curve-inputs-csv",
+            "daily-pnl-and-curves-md",
+            "finance-workbook-py",
+            "test-finance-workbook-py"
+          ],
+          "steps": [
+            "Extract the complete finance ZIP; all files are together in financial-foundations-practice.",
+            "Open daily-pnl-and-curves.md and the two CSVs. Work the calculations before reading the worked answers.",
+            "Explain the local-return, opening-FX and cash-FX bridge. Compare FIFO and weighted-average allocation.",
+            "Calculate both curve values; compare an exact rate revaluation with a first-order approximation.",
+            "Optionally run the Python reference and five tests. Change one input and predict its effect first."
+          ],
+          "commands": [
+            {
+              "label": "Optional · Python 3.11+ · kit folder",
+              "command": "python finance_workbook.py\npython -m unittest -v test_finance_workbook.py",
+              "expected": "USD period result 765.20; curve difference EUR -21.50; five tests pass."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "Day-one P&L and valuation movements",
+              "href": "course.html#lesson/16"
+            },
+            {
+              "label": "Market data and the model underneath",
+              "href": "course.html#lesson/3"
+            }
+          ],
+          "notes": [
+            "Python is optional: all tasks and worked answers also work on paper or in a spreadsheet.",
+            "All event rates, evidence and accounting deductions are supplied synthetic assumptions. This is not a production accounting or pricing engine."
           ]
         }
       ],
@@ -7930,7 +9471,8 @@ const LEARNING_PATHS = [
       "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website’s console.",
       "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool’s requirements.",
       "A learning-only Vite setup: npm create vite@latest notebook-practice -- --template react-ts; cd notebook-practice; npm install; npm run dev. These commands download tools; this notebook does not run them.",
-      "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build."
+      "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build.",
+      "The downloadable kit now includes a pinned runnable Vite/Vitest project: npm ci, npm test, npm run build, npm run dev from the extracted folder root."
     ],
     "nextSteps": [
       "Study your chosen production framework’s server rendering, caching and deployment model.",
@@ -8057,7 +9599,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Native controls provide useful behavior and semantics. Styling a generic element does not add them."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "HTML button",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button",
+            "section": "Accessibility",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "values",
@@ -8098,7 +9649,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "An empty string converts to zero; validate blank input before converting."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "JavaScript types",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+            "section": "Primitive values",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "collections",
@@ -8139,7 +9699,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "filter keeps matching elements. map transforms elements without changing the count."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Array methods",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+            "section": "Instance methods",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "functions",
@@ -8180,7 +9749,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Passing a function defers work until the event occurs."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Functions",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+            "section": "Function scope",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "async",
@@ -8220,7 +9798,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Check response.ok or status; an HTTP response can resolve the promise even when its status is an error."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Using promises",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+            "section": "Chaining",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "typescript",
@@ -8260,7 +9847,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Types are not runtime validators; a server can return data that violates your declared type."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "TypeScript everyday types",
+            "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+            "section": "Union types",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "components",
@@ -8301,7 +9897,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A stable identity lets React match the same record through list changes."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Rendering lists",
+            "url": "https://react.dev/learn/rendering-lists",
+            "section": "Keeping list items in order with key",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "state",
@@ -8371,6 +9976,15 @@ const LEARNING_PATHS = [
           ]
         },
         "stage": "intermediate",
+        "references": [
+          {
+            "title": "State as a snapshot",
+            "url": "https://react.dev/learn/state-as-a-snapshot",
+            "section": "Rendering takes a snapshot in time",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
         "diagram": {
           "title": "A click requests the next state snapshot",
           "summary": "Follow the lesson’s Sessions button from 0 to 1. The connections show event and render dependencies, not an immediate mutation of count.",
@@ -8494,7 +10108,8 @@ const LEARNING_PATHS = [
           "checks": [
             "Whitespace-only input fails.",
             "A valid title is trimmed.",
-            "Show a visible error; do not rely on an alert or red border alone."
+            "Show a visible error; do not rely on an alert or red border alone.",
+            "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
           ]
         },
         "quiz": {
@@ -8506,7 +10121,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A derived value avoids synchronizing duplicate state."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "React input",
+            "url": "https://react.dev/reference/react-dom/components/input",
+            "section": "Controlling an input with a state variable",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "effects",
@@ -8546,7 +10170,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Pure calculations can run during rendering."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Synchronizing with Effects",
+            "url": "https://react.dev/learn/synchronizing-with-effects",
+            "section": "Step 3: Add cleanup if needed",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -8586,7 +10219,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Memory state is local to a running page. Cross-device data needs storage, identity and synchronization decisions."
         },
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "references": [
+          {
+            "title": "Managing state",
+            "url": "https://react.dev/learn/managing-state",
+            "section": "Extracting state logic into a reducer",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "modules-closures",
@@ -8632,7 +10274,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Promise reactions wait until the current synchronous work has finished."
-        }
+        },
+        "references": [
+          {
+            "title": "Closures",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+            "section": "Lexical scoping",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "type-design",
@@ -8678,7 +10329,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Type assertions are erased; validation must execute at runtime."
-        }
+        },
+        "references": [
+          {
+            "title": "TypeScript narrowing",
+            "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+            "section": "Discriminated unions",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "reducers",
@@ -8724,7 +10384,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A reducer should remain deterministic and free of side effects."
-        }
+        },
+        "references": [
+          {
+            "title": "React useReducer",
+            "url": "https://react.dev/reference/react/useReducer",
+            "section": "Writing the reducer function",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "context-hooks",
@@ -8770,7 +10439,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Hooks reuse logic; state belongs to each mounted call location."
-        }
+        },
+        "references": [
+          {
+            "title": "Reusing logic with custom Hooks",
+            "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+            "section": "Custom Hooks share stateful logic, not state itself",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "identity",
@@ -8816,7 +10494,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A different key changes the identity React uses to preserve state."
-        }
+        },
+        "references": [
+          {
+            "title": "Preserving and resetting state",
+            "url": "https://react.dev/learn/preserving-and-resetting-state",
+            "section": "Resetting state with a key",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "race-safe-loading",
@@ -8851,18 +10538,29 @@ const LEARNING_PATHS = [
           "checks": [
             "A stale success cannot overwrite B.",
             "Cleanup does not show an error for intentional cancellation.",
-            "Loading, error, empty and success are distinct."
+            "Loading, error, empty and success are distinct.",
+            "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
           ]
         },
         "quiz": {
-          "question": "Does response arrival order always match request order?",
+          "question": "A starts, selection changes to B, B resolves, then A resolves. An adapter ignores AbortSignal. What preserves B?",
           "options": [
-            "Yes",
-            "No"
+            "AbortController alone guarantees no promise callback can run",
+            "A cleanup flag/request identity check ignores the superseded result",
+            "Calling setState for every response in arrival order"
           ],
           "correct": 1,
-          "explanation": "Network and server delays can reorder completion."
-        }
+          "explanation": "Cancellation is cooperative. Cleanup must also prevent an obsolete callback from committing state when the adapter ignores abort."
+        },
+        "references": [
+          {
+            "title": "Synchronizing with Effects",
+            "url": "https://react.dev/learn/synchronizing-with-effects",
+            "section": "Fetching data",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "routing",
@@ -8897,18 +10595,29 @@ const LEARNING_PATHS = [
           "checks": [
             "Bad page values fall back safely.",
             "The URL and screen cannot disagree.",
-            "Test actual browser history rather than only a component mock."
+            "Test actual browser history rather than only a component mock.",
+            "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
           ]
         },
         "quiz": {
-          "question": "Does pushState automatically fire popstate?",
+          "question": "A button calls history.pushState to select State. No popstate event arrives. What should the app do?",
           "options": [
-            "Yes",
-            "No"
+            "Wait for popstate because pushState always emits it synchronously",
+            "Update selection in the click handler and listen for popstate for history traversal",
+            "Reload the whole page after every selection"
           ],
           "correct": 1,
-          "explanation": "A router normally updates its own state when pushing and listens for traversal events separately."
-        }
+          "explanation": "pushState changes the URL/history without emitting popstate. Update local selection directly; Back/Forward use the popstate listener."
+        },
+        "references": [
+          {
+            "title": "Window popstate",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event",
+            "section": "When popstate is sent",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "testing",
@@ -8919,7 +10628,8 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the boundary",
             "paragraphs": [
-              "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works."
+              "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works.",
+              "The kit supplies ui.test.tsx, vite.config.ts and locked dependencies. npm test executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
             ]
           },
           {
@@ -8928,7 +10638,7 @@ const LEARNING_PATHS = [
               "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
               "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
             ],
-            "example": "// Testing Library example fragment; requires a configured runner, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
+            "example": "// Testing Library example fragment; the downloadable kit configures Vitest, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
           },
           {
             "title": "Debugging and design tradeoffs",
@@ -8943,7 +10653,8 @@ const LEARNING_PATHS = [
           "checks": [
             "Each test has an observable expected result.",
             "At least one negative case per boundary.",
-            "Do not mark a test passed merely because it did not throw during setup."
+            "Do not mark a test passed merely because it did not throw during setup.",
+            "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
           ]
         },
         "quiz": {
@@ -8954,7 +10665,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The second checks user-visible behavior."
-        }
+        },
+        "references": [
+          {
+            "title": "React Testing Library setup",
+            "url": "https://testing-library.com/docs/react-testing-library/setup/",
+            "section": "Setup",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "resilience-security",
@@ -9000,7 +10720,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Requests can be sent without using the visible UI."
-        }
+        },
+        "references": [
+          {
+            "title": "Web Storage",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API",
+            "section": "Testing for availability",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "performance",
@@ -9046,7 +10775,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The result must remain correct if React recomputes it."
-        }
+        },
+        "references": [
+          {
+            "title": "React memo",
+            "url": "https://react.dev/reference/react/memo",
+            "section": "Should you add memo everywhere?",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       },
       {
         "id": "delivery",
@@ -9093,7 +10831,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A hosted interface and shared persistent data are separate systems."
-        }
+        },
+        "references": [
+          {
+            "title": "Vite production build",
+            "url": "https://vite.dev/guide/build.html",
+            "section": "Building for Production",
+            "reviewed": "2026-09-27",
+            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ]
       }
     ],
     "stages": [
@@ -9217,6 +10964,54 @@ const LEARNING_PATHS = [
           "href": "paths/react/practice/README.md",
           "role": "guide",
           "description": "Workshop run instructions"
+        },
+        {
+          "id": "RemoteLesson-tsx",
+          "href": "paths/react/practice/RemoteLesson.tsx",
+          "role": "reference",
+          "description": "RemoteLesson.tsx — guided executable scaffold"
+        },
+        {
+          "id": "ui-test-tsx",
+          "href": "paths/react/practice/ui.test.tsx",
+          "role": "test",
+          "description": "ui.test.tsx — guided executable scaffold"
+        },
+        {
+          "id": "vite-config-ts",
+          "href": "paths/react/practice/vite.config.ts",
+          "role": "reference",
+          "description": "vite.config.ts — guided executable scaffold"
+        },
+        {
+          "id": "main-tsx",
+          "href": "paths/react/practice/main.tsx",
+          "role": "reference",
+          "description": "main.tsx — guided executable scaffold"
+        },
+        {
+          "id": "index-html",
+          "href": "paths/react/practice/index.html",
+          "role": "reference",
+          "description": "index.html — guided executable scaffold"
+        },
+        {
+          "id": "package-json",
+          "href": "paths/react/practice/package.json",
+          "role": "reference",
+          "description": "package.json — guided executable scaffold"
+        },
+        {
+          "id": "package-lock-json",
+          "href": "paths/react/practice/package-lock.json",
+          "role": "reference",
+          "description": "package-lock.json — guided executable scaffold"
+        },
+        {
+          "id": "tsconfig-json",
+          "href": "paths/react/practice/tsconfig.json",
+          "role": "reference",
+          "description": "tsconfig.json — guided executable scaffold"
         }
       ],
       "tasks": [
@@ -9253,8 +11048,8 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+            "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -9267,7 +11062,15 @@ const LEARNING_PATHS = [
             "AdvancedApp-tsx",
             "tracker-core-ts",
             "tracker-core-test-ts",
-            "README-md"
+            "README-md",
+            "RemoteLesson-tsx",
+            "ui-test-tsx",
+            "vite-config-ts",
+            "main-tsx",
+            "index-html",
+            "package-json",
+            "package-lock-json",
+            "tsconfig-json"
           ],
           "steps": [
             "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -9284,9 +11087,9 @@ const LEARNING_PATHS = [
               "expected": "The domain regression checks finish successfully."
             },
             {
-              "label": "PowerShell · kit root · create UI project once",
-              "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
-              "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+              "label": "PowerShell · extracted kit root · pinned UI harness",
+              "command": "npm ci\nnpm test\nnpm run build\nnpm run dev",
+              "expected": "Domain checks, five component regressions and production build pass; Vite serves the tracker."
             }
           ],
           "prerequisites": [
@@ -9296,8 +11099,8 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+            "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         },
@@ -9310,7 +11113,15 @@ const LEARNING_PATHS = [
             "AdvancedApp-tsx",
             "tracker-core-ts",
             "tracker-core-test-ts",
-            "README-md"
+            "README-md",
+            "RemoteLesson-tsx",
+            "ui-test-tsx",
+            "vite-config-ts",
+            "main-tsx",
+            "index-html",
+            "package-json",
+            "package-lock-json",
+            "tsconfig-json"
           ],
           "steps": [
             "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -9327,9 +11138,9 @@ const LEARNING_PATHS = [
               "expected": "The domain regression checks finish successfully."
             },
             {
-              "label": "PowerShell · kit root · create UI project once",
-              "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
-              "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+              "label": "PowerShell · extracted kit root · pinned UI harness",
+              "command": "npm ci\nnpm test\nnpm run build\nnpm run dev",
+              "expected": "Domain checks, five component regressions and production build pass; Vite serves the tracker."
             }
           ],
           "prerequisites": [
@@ -9339,8 +11150,8 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-            "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+            "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+            "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
         }
@@ -9526,7 +11337,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "The interpreter executes Python source. The terminal gives you a way to invoke it."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/interpreter.html",
+            "section": "Using the Python interpreter",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "values-and-names",
@@ -9565,16 +11385,25 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What does total = total + 1 do?",
+          "question": "After total = 4; total = total + 1, what does print(total) show?",
           "options": [
-            "Checks whether total is 1",
-            "Binds total to its previous value plus 1",
-            "Creates a second variable with the same name"
+            "4, because assignment cannot reuse the same name",
+            "5",
+            "True, because = compares the two values"
           ],
           "correct": 1,
-          "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
+          "explanation": "The expression reads the previous value 4, adds 1 and binds total to 5; = assigns rather than compares."
         },
         "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/introduction.html",
+            "section": "Numbers and strings",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
         "diagram": {
           "title": "From names to a computed value",
           "summary": "A data-dependency map for the lesson’s study-time calculation. Arrows mean “supplies a value to”; they do not mean that a name stores another name.",
@@ -9721,7 +11550,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Input returns text. Your program decides whether and how to convert it."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/introduction.html",
+            "section": "Strings",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "conditions",
@@ -9769,7 +11607,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "An if/elif/else chain selects the first condition that is true and skips the remaining branches."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html",
+            "section": "if statements",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "collections",
@@ -9817,7 +11664,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "A dictionary stores key/value associations and retrieves a duration using its task-name key."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/datastructures.html",
+            "section": "Lists, sets and dictionaries",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "loops",
@@ -9865,7 +11721,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "The start is included and the stop is excluded."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html",
+            "section": "for and range",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "functions",
@@ -9914,6 +11779,15 @@ const LEARNING_PATHS = [
           "explanation": "Python returns None when execution reaches the end without an explicit return value."
         },
         "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html",
+            "section": "Defining functions",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
         "diagram": {
           "title": "One function call, from arguments to return value",
           "summary": "Follow print(study_minutes(3)). The default length supplies 25 for this call; return and print have separate jobs.",
@@ -10051,16 +11925,25 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which exception should you catch around int(\"abc\")?",
+          "question": "Which exception does int(\"3.5\") raise?",
           "options": [
-            "KeyError",
-            "ValueError",
-            "Every exception with bare except"
+            "TypeError because strings cannot be passed to int",
+            "ValueError because this string is not an integer representation",
+            "No exception; int rounds the text to 4"
           ],
           "correct": 1,
-          "explanation": "ValueError describes a value unsuitable for the requested conversion. A narrow handler preserves unrelated failures."
+          "explanation": "int accepts an integer string, but \"3.5\" is not one. int(float(\"3.5\")) would explicitly truncate to 3."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/errors.html",
+            "section": "Exceptions and handling",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "files-and-json",
@@ -10108,7 +11991,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "loads parses JSON text; load is the related function that reads from a file-like object."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/json.html",
+            "section": "Basic usage and encoders/decoders",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "modules-and-environments",
@@ -10157,7 +12049,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "The -m form runs pip as a module of that interpreter. Substitute your virtual environment interpreter path for python."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/venv.html",
+            "section": "Creating virtual environments",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "testing-and-api-boundaries",
@@ -10206,7 +12107,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A fixed fixture isolates your parsing behavior. Separate integration checks are needed for a real service."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Test cases and assertions",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "study-log-capstone",
@@ -10257,7 +12167,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A parse failure does not mean the user has no data. Preserve the file and make the failure visible."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/pathlib.html",
+            "section": "Reading and writing files",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "classes-and-dataclasses",
@@ -10306,7 +12225,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The generated constructor stores values without validating annotated types."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/dataclasses.html",
+            "section": "Dataclass parameters and frozen instances",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "typing-and-protocols",
@@ -10355,7 +12283,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "A structural contract permits independent implementations and test doubles with compatible operations."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/typing.html",
+            "section": "Protocols",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "iterators-and-generators",
@@ -10404,7 +12341,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "An exhausted iterator has no remaining values; create a fresh one for another pass."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/classes.html",
+            "section": "Iterators and generators",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "context-managers",
@@ -10453,7 +12399,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "finally runs after normal and exceptional exits and expresses the resource lifetime directly."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/contextlib.html",
+            "section": "contextmanager and closing",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "packaging-and-cli",
@@ -10481,6 +12436,12 @@ const LEARNING_PATHS = [
               "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
               "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
             ]
+          },
+          {
+            "title": "Verify the installed artifact",
+            "paragraphs": [
+              "Use practice/python_package_starter.py to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow practice/installed-package-exercise.md and run test_installed_package.py: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
+            ]
           }
         ],
         "exercise": {
@@ -10502,7 +12463,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A caller can import functions without consuming its own arguments or starting a command."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/argparse.html",
+            "section": "ArgumentParser",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "PyPA packaging tutorial",
+            "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/",
+            "section": "Generating distribution archives",
+            "reviewed": "2026-09-27",
+            "scope": "Complete installed-wheel starter; local wheel build/install/CLI/resource test executed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27. Other runtime/backend combinations remain unverified."
+          }
+        ]
       },
       {
         "id": "logging-and-test-design",
@@ -10551,7 +12528,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Invalid-input behavior and unchanged data are observable contracts worth protecting."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/howto/logging.html",
+            "section": "Logging HOWTO",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "concurrency-models",
@@ -10579,6 +12565,12 @@ const LEARNING_PATHS = [
               "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
               "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
             ]
+          },
+          {
+            "title": "Fail and cancel a task group",
+            "paragraphs": [
+              "Run practice/async_failure_lab.py and python -m unittest test_async_failure_lab.py from practice with Python 3.11+. An Event ensures the sibling is waiting before the failing child raises. Observe an ExceptionGroup containing ValueError, sibling cancellation and finally cleanup before the group exits. The second test cancels the parent and asserts CancelledError propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+            ]
           }
         ],
         "exercise": {
@@ -10592,15 +12584,24 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Does future.result(timeout=...) terminate a running worker?",
+          "question": "A running worker exceeds future.result(timeout=...). What happens?",
           "options": [
-            "Yes",
-            "No; it only bounds that wait",
-            "Only when writing JSON"
+            "The worker is killed before any later effects can occur",
+            "The waiting caller gets TimeoutError; the worker can continue",
+            "The caller gets the worker’s partial return value"
           ],
           "correct": 1,
-          "explanation": "A timeout does not forcibly interrupt work; cancellation/deadlines must be supported by the actual operation."
-        }
+          "explanation": "The timeout bounds that wait. It does not preempt a running worker; operation-level cooperative cancellation is a separate contract."
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
+            "section": "Task cancellation and task groups",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "profiling-and-complexity",
@@ -10649,7 +12650,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Timing is useful only when the promised behavior remains correct."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/profile.html",
+            "section": "Profiling and statistics",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "security-and-input-boundaries",
@@ -10698,7 +12708,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Decoding must be followed by domain validation and independent authorization where applicable."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/json.html",
+            "section": "Warning: untrusted JSON resource consumption",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "robust-storage",
@@ -10747,7 +12766,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Whole-file visibility does not stop a later writer overwriting another writer's valid update."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/os.html#os.replace",
+            "section": "os.replace",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       },
       {
         "id": "robust-import-capstone",
@@ -10796,7 +12824,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "One commit follows complete validation, preserving the old report on any rejected record."
-        }
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/concurrent.futures.html",
+            "section": "Executor.map and shutdown",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ]
       }
     ],
     "stages": [
@@ -10938,6 +12975,36 @@ const LEARNING_PATHS = [
           "href": "paths/python/practice/README.md",
           "role": "guide",
           "description": "Practice instructions and limitations"
+        },
+        {
+          "id": "async_failure_lab-py",
+          "href": "paths/python/practice/async_failure_lab.py",
+          "role": "reference",
+          "description": "Optional focused practice: async failure lab"
+        },
+        {
+          "id": "test_async_failure_lab-py",
+          "href": "paths/python/practice/test_async_failure_lab.py",
+          "role": "test",
+          "description": "Optional focused practice: test async failure lab"
+        },
+        {
+          "id": "installed-package-exercise-md",
+          "href": "paths/python/practice/installed-package-exercise.md",
+          "role": "guide",
+          "description": "Optional focused practice: installed-package-exercise"
+        },
+        {
+          "id": "python_package_starter-py",
+          "href": "paths/python/practice/python_package_starter.py",
+          "role": "reference",
+          "description": "Complete installed-wheel packaging exercise"
+        },
+        {
+          "id": "test_installed_package-py",
+          "href": "paths/python/practice/test_installed_package.py",
+          "role": "test",
+          "description": "Complete installed-wheel packaging exercise"
         }
       ],
       "tasks": [
@@ -11036,7 +13103,12 @@ const LEARNING_PATHS = [
             "intermediate_project-py",
             "advanced_project-py",
             "test_projects-py",
-            "README-md"
+            "README-md",
+            "async_failure_lab-py",
+            "test_async_failure_lab-py",
+            "installed-package-exercise-md",
+            "python_package_starter-py",
+            "test_installed_package-py"
           ],
           "steps": [
             "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
@@ -11302,7 +13374,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "Local temporary tables belong to a SQL session. Use the same connection/window after setup."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Connect and query",
+            "url": "https://learn.microsoft.com/en-us/ssms/quickstarts/ssms-connect-query-sql-server",
+            "section": "Connect and query",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "types-keys-null",
@@ -11352,7 +13433,16 @@ const LEARNING_PATHS = [
           "correct": 2,
           "explanation": "The comparison is UNKNOWN, not TRUE. WHERE retains TRUE rows; use IS NULL to select the two missing emails."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Remarks: NULL and UNKNOWN",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql?view=sql-server-ver17",
+            "section": "Remarks: NULL and UNKNOWN",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "select-filter-sort",
@@ -11402,7 +13492,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "TOP chooses from the requested order; a unique tie-breaker makes ties predictable."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Logical processing order",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17",
+            "section": "Logical processing order",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "joins-and-grain",
@@ -11453,6 +13552,15 @@ const LEARNING_PATHS = [
           "explanation": "Joining attaches matching rows; it does not allocate the order amount across them. Summing it now double counts."
         },
         "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Logical and physical joins",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17",
+            "section": "Logical and physical joins",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ],
         "diagram": {
           "title": "Why a joined order amount appears twice",
           "summary": "Order 101 has Amount 100 and two payments, 60 and 40. This is a row-matching map: both payment rows are valid, but joined rows are no longer one row per order.",
@@ -11621,7 +13729,16 @@ const LEARNING_PATHS = [
           "correct": 2,
           "explanation": "HAVING filters grouped results. WHERE is for the rows supplied to the grouping operation."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: GROUP BY arguments",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
+            "section": "GROUP BY arguments",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "cte-and-subquery",
@@ -11671,7 +13788,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "A CTE names a query expression for one statement. Use a temporary table when a later statement needs stored intermediate rows."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Guidelines for CTEs",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17",
+            "section": "Guidelines for CTEs",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "window-functions",
@@ -11721,7 +13847,16 @@ const LEARNING_PATHS = [
           "correct": 1,
           "explanation": "A unique tie-breaker prevents equal dates from leaving the selected latest row ambiguous."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: General remarks: determinism",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17",
+            "section": "General remarks: determinism",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "parameters-procedures",
@@ -11771,7 +13906,16 @@ const LEARNING_PATHS = [
           "correct": 2,
           "explanation": "Typed parameters separate values from executable SQL text. Validate business limits and use least-privilege permissions as well."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Parameters and examples",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-procedure-transact-sql?view=sql-server-ver17",
+            "section": "Parameters and examples",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "temporary-staging",
@@ -11821,7 +13965,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "@@ROWCOUNT describes the previous relevant statement and can be reset by subsequent statements."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Temporary tables",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+            "section": "Temporary tables",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "transactions-isolation",
@@ -11850,6 +14003,13 @@ const LEARNING_PATHS = [
               "Single-session temporary tables cannot demonstrate inter-session blocking because other sessions cannot access them. For a later concurrency lab, have a trainer supply a dedicated shared table and a two-session script. Do not change isolation database options on a shared database just to make an example run."
             ],
             "example": ""
+          },
+          {
+            "title": "Runnable opt-in engine experiment",
+            "paragraphs": [
+              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+            ]
           }
         ],
         "exercise": {
@@ -11872,6 +14032,15 @@ const LEARNING_PATHS = [
           "explanation": "Avoiding dirty reads is different from holding a stable view across multiple statements."
         },
         "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: READ COMMITTED and RCSI",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
+            "section": "READ COMMITTED and RCSI",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ],
         "diagram": {
           "title": "A deliberate failure rolls back the work copy",
           "summary": "Follow the lesson’s single-session #LNAtomicWork example with @@TRANCOUNT = 0 at entry. It demonstrates rollback, not how other sessions observe concurrent changes.",
@@ -12019,7 +14188,16 @@ const LEARNING_PATHS = [
           "correct": 2,
           "explanation": "Plan quality depends on the cost of the whole operation and the data; operator names alone do not establish performance."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: Index types and design",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-ver17",
+            "section": "Index types and design",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "reconciliation-capstone",
@@ -12072,7 +14250,16 @@ const LEARNING_PATHS = [
           "correct": 0,
           "explanation": "Only 265 is matched to known orders. Preserve the remaining 20 as an orphan exception instead of using it to reduce known balances."
         },
-        "stage": "foundation"
+        "stage": "foundation",
+        "references": [
+          {
+            "title": "Microsoft Learn: GROUP BY and aggregate expressions",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
+            "section": "GROUP BY and aggregate expressions",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "schema-contracts",
@@ -12104,6 +14291,12 @@ const LEARNING_PATHS = [
               "Our temporary fixtures cannot enforce foreign keys. Describe the permanent foreign-key design, then validate parent references with queries in this lab. A migration to permanent tables needs a real constraint test in SQL Server before deployment."
             ],
             "example": ""
+          },
+          {
+            "title": "Visible decimal normalization",
+            "paragraphs": [
+              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+            ]
           }
         ],
         "exercise": {
@@ -12124,7 +14317,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Two insertions can receive different identity values while representing the same source event."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Conversion and rounding",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17",
+            "section": "Conversion and rounding",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "sets-and-apply",
@@ -12176,7 +14378,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "OUTER APPLY retains the outer customer even if its correlated query produces no row."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Using APPLY",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17",
+            "section": "Using APPLY",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "window-frames-and-gaps",
@@ -12227,7 +14438,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A row frame follows positions in the ordered rows; it does not synthesize a calendar."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: ROWS and RANGE frames",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver17",
+            "section": "ROWS and RANGE frames",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "index-selectivity-statistics",
@@ -12279,7 +14499,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Cardinality errors can come from several causes. Preserve the evidence before selecting a remedy."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Histogram and cardinality estimates",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics?view=sql-server-ver17",
+            "section": "Histogram and cardinality estimates",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "procedure-transaction-contracts",
@@ -12330,7 +14559,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Nested transaction counters are not independent rollback boundaries. This lab adopts the simplest explicit ownership contract."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Uncommittable transactions and XACT_STATE",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql?view=sql-server-ver17",
+            "section": "Uncommittable transactions and XACT_STATE",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "incremental-load-contracts",
@@ -12361,6 +14599,12 @@ const LEARNING_PATHS = [
               "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers are more robust than relying on perfect timing. A schema migration must preserve those identifiers too."
             ],
             "example": ""
+          },
+          {
+            "title": "Visible decimal normalization",
+            "paragraphs": [
+              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+            ]
           }
         ],
         "exercise": {
@@ -12381,7 +14625,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A concurrency-safe design also needs enforced uniqueness and a deliberate transaction/error policy."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Return types and failed conversions",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql?view=sql-server-ver17",
+            "section": "Return types and failed conversions",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "plan-regressions-query-store",
@@ -12412,6 +14665,13 @@ const LEARNING_PATHS = [
               "Plan forcing can be an operational mitigation, not proof of a permanent fix. Record why a prior plan is appropriate, its failure modes, how to unforce it, and what metric will trigger rollback. Parameter skew, statistics changes and blocking may require different remedies. This course does not force any plan."
             ],
             "example": ""
+          },
+          {
+            "title": "Runnable opt-in engine experiment",
+            "paragraphs": [
+              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+            ]
           }
         ],
         "exercise": {
@@ -12433,7 +14693,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Equal averaging gives each plan equal weight rather than each execution equal weight."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Query Store collection and runtime statistics",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store?view=sql-server-ver17",
+            "section": "Query Store collection and runtime statistics",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          },
+          {
+            "title": "Microsoft Learn: sys.query_store_runtime_stats",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-query-store-runtime-stats-transact-sql?view=sql-server-ver17",
+            "section": "count_executions, avg_duration, avg_logical_io_reads and active interval aggregation",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ lab; SQL Server 17.x documentation view. Source inspected; engine measurements remain learner verification."
+          }
+        ]
       },
       {
         "id": "concurrency-lost-updates",
@@ -12464,6 +14740,13 @@ const LEARNING_PATHS = [
               "A version conflict is not an instruction to retry the same business decision blindly. Reload the current record and either merge, ask the user or reject according to policy. If a network error makes commit outcome uncertain, look up an operation identifier before repeating a non-idempotent effect."
             ],
             "example": ""
+          },
+          {
+            "title": "Runnable opt-in engine experiment",
+            "paragraphs": [
+              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+            ]
           }
         ],
         "exercise": {
@@ -12484,7 +14767,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "It supports detecting changes, but is not a datetime and does not replace a business event key."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Read protection versus modification locks",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
+            "section": "Read protection versus modification locks",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "deadlocks-retries",
@@ -12515,6 +14807,13 @@ const LEARNING_PATHS = [
               "Collect evidence before adding hints. Lowering isolation can change correctness and may not resolve writer conflicts. Distinguish a known rolled-back deadlock victim from an unknown outcome after connection loss; the latter needs operation-status reconciliation."
             ],
             "example": ""
+          },
+          {
+            "title": "Runnable opt-in engine experiment",
+            "paragraphs": [
+              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+            ]
           }
         ],
         "exercise": {
@@ -12536,7 +14835,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A wait can resolve when another transaction finishes. A cycle requires a participant to be broken out of it."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Deadlock detection, victim selection and error handling",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide?view=sql-server-ver17",
+            "section": "Deadlock detection, victim selection and error handling",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "least-privilege-dynamic-sql",
@@ -12587,7 +14895,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Syntax safety and permission policy solve different problems."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Parameters and SQL injection caution",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-executesql-transact-sql?view=sql-server-ver17",
+            "section": "Parameters and SQL injection caution",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "migrations-and-release",
@@ -12639,7 +14956,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "An existence check cannot detect an incompatible or partially applied schema change."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Locking and online operations",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-table-transact-sql?view=sql-server-ver17",
+            "section": "Locking and online operations",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       },
       {
         "id": "advanced-import-capstone",
@@ -12671,6 +14997,19 @@ const LEARNING_PATHS = [
               "Submit evidence, not only a final query: disposition counts, ledger keys and totals, before/after replay checks, proposed concurrency policy, migration plan and least-privilege boundary. Mark tests requiring a real engine as unexecuted until you actually run them."
             ],
             "example": ""
+          },
+          {
+            "title": "Runnable opt-in engine experiment",
+            "paragraphs": [
+              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+            ]
+          },
+          {
+            "title": "Visible decimal normalization",
+            "paragraphs": [
+              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+            ]
           }
         ],
         "exercise": {
@@ -12694,7 +15033,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "The same stable event identity cannot silently acquire a different economic meaning."
-        }
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Remarks and transaction error behavior",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-xact-abort-transact-sql?view=sql-server-ver17",
+            "section": "Remarks and transaction error behavior",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -12834,6 +15182,54 @@ const LEARNING_PATHS = [
           "href": "paths/sql-server/advanced-solutions.sql",
           "role": "reference",
           "description": "Advanced import worked solution"
+        },
+        {
+          "id": "concurrency-lab-md",
+          "href": "paths/sql-server/concurrency-lab.md",
+          "role": "guide",
+          "description": "Opt-in two-session schedules and cleanup guide"
+        },
+        {
+          "id": "concurrency-setup-sql",
+          "href": "paths/sql-server/concurrency-setup.sql",
+          "role": "reference",
+          "description": "Dedicated disposable database setup; opt-in required"
+        },
+        {
+          "id": "session-a-sql",
+          "href": "paths/sql-server/session-a.sql",
+          "role": "reference",
+          "description": "Guarded session A experiments"
+        },
+        {
+          "id": "session-b-sql",
+          "href": "paths/sql-server/session-b.sql",
+          "role": "reference",
+          "description": "Guarded session B experiments"
+        },
+        {
+          "id": "concurrency-reset-sql",
+          "href": "paths/sql-server/concurrency-reset.sql",
+          "role": "reference",
+          "description": "Reset only the disposable fixture"
+        },
+        {
+          "id": "query-store-lab-sql",
+          "href": "paths/sql-server/query-store-lab.sql",
+          "role": "reference",
+          "description": "Query Store before/after index experiment"
+        },
+        {
+          "id": "concurrency-cleanup-sql",
+          "href": "paths/sql-server/concurrency-cleanup.sql",
+          "role": "reference",
+          "description": "Ownership-scoped opt-in database removal"
+        },
+        {
+          "id": "rounding-lab-sql",
+          "href": "paths/sql-server/rounding-lab.sql",
+          "role": "reference",
+          "description": "Raw versus normalized decimal fixture"
         }
       ],
       "tasks": [
@@ -12846,7 +15242,15 @@ const LEARNING_PATHS = [
             "solutions-sql",
             "README-md",
             "advanced-lab-sql",
-            "advanced-solutions-sql"
+            "advanced-solutions-sql",
+            "concurrency-lab-md",
+            "concurrency-setup-sql",
+            "session-a-sql",
+            "session-b-sql",
+            "concurrency-reset-sql",
+            "query-store-lab-sql",
+            "concurrency-cleanup-sql",
+            "rounding-lab-sql"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -12864,7 +15268,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
@@ -12878,7 +15282,15 @@ const LEARNING_PATHS = [
             "solutions-sql",
             "README-md",
             "advanced-lab-sql",
-            "advanced-solutions-sql"
+            "advanced-solutions-sql",
+            "concurrency-lab-md",
+            "concurrency-setup-sql",
+            "session-a-sql",
+            "session-b-sql",
+            "concurrency-reset-sql",
+            "query-store-lab-sql",
+            "concurrency-cleanup-sql",
+            "rounding-lab-sql"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -12896,7 +15308,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
             "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
           ]
@@ -12910,7 +15322,15 @@ const LEARNING_PATHS = [
             "solutions-sql",
             "README-md",
             "advanced-lab-sql",
-            "advanced-solutions-sql"
+            "advanced-solutions-sql",
+            "concurrency-lab-md",
+            "concurrency-setup-sql",
+            "session-a-sql",
+            "session-b-sql",
+            "concurrency-reset-sql",
+            "query-store-lab-sql",
+            "concurrency-cleanup-sql",
+            "rounding-lab-sql"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -12918,7 +15338,8 @@ const LEARNING_PATHS = [
             "In the same SSMS query window execute setup.sql, advanced-lab.sql, then advanced-solutions.sql twice. Expect three inserts then zero, ledger total 215 and net outstanding 175; six raw rows split into 3 accepted, 1 duplicate, 1 invalid and 1 orphan.",
             "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
             "Complete the assessment requirements in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.; Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.; Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.; Specify security role boundaries,backward-compatible migration steps and incident diagnostics.; Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
-            "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+            "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation.",
+            "Read concurrency-lab.md; explicitly opt in only on an authorized training instance, follow two-session isolation/lost-update/deadlock schedules, capture Query Store evidence, and perform guarded cleanup. Run rounding-lab.sql to show accepted normalization separately from rejection."
           ],
           "commands": [],
           "prerequisites": [
@@ -12928,9 +15349,10 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+            "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results.",
+            "Dedicated lab targets SQL Server 2019+ with Query Store permission. These scripts were source-inspected, not engine-executed by the content editor; submit your actual outputs and failed schedule attempts."
           ]
         }
       ],
@@ -13052,6 +15474,10 @@ const LEARNING_PATHS = [
       {
         "title": "Azure Architecture: microservice data considerations",
         "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations"
+      },
+      {
+        "title": "Little: A Proof for the Queuing Formula L = lambda W",
+        "url": "https://doi.org/10.1287/opre.9.3.383"
       }
     ],
     "stages": [
@@ -13187,7 +15613,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "An invariant must remain true across valid operations, including concurrent ones; component choices are implementation decisions."
-        }
+        },
+        "references": [
+          {
+            "title": "Google SRE: implementing SLOs",
+            "url": "https://sre.google/workbook/implementing-slos/",
+            "section": "Choosing an initial SLO; implementing SLOs",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "slos",
@@ -13233,7 +15668,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The denominator is eligible requests in the stated window. Traffic variation prevents converting this directly into downtime minutes."
-        }
+        },
+        "references": [
+          {
+            "title": "Google SRE: implementing SLOs",
+            "url": "https://sre.google/workbook/implementing-slos/",
+            "section": "Choosing an initial SLO; implementing SLOs",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "workload",
@@ -13279,7 +15723,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "The peak multiplier estimates how concentrated arrivals are relative to the daily average; scheduled bursts require separate evidence."
-        }
+        },
+        "references": [
+          {
+            "title": "Google SRE: implementing SLOs",
+            "url": "https://sre.google/workbook/implementing-slos/",
+            "section": "Choosing an initial SLO; implementing SLOs",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "latency",
@@ -13325,7 +15778,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "Percentiles are positions in a distribution, so averages of subgroup percentiles do not reconstruct the combined distribution."
-        }
+        },
+        "references": [
+          {
+            "title": "Little: A Proof for the Queuing Formula L = lambda W",
+            "url": "https://doi.org/10.1287/opre.9.3.383",
+            "section": "Operations Research 9(3), 383–387 (1961)",
+            "reviewed": "2026-09-27",
+            "scope": "Long-run averages for a stable consistently bounded system; not a per-request prediction or an overload sizing guarantee."
+          }
+        ]
       },
       {
         "id": "network",
@@ -13371,7 +15833,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The operation may have committed before its response was lost. Silence establishes uncertainty, not rollback."
-        }
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 3–9: HTTP architecture, messages and methods",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "api-contracts",
@@ -13417,7 +15888,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Setting a specified value repeats the same intended state. Toggling or incrementing can produce a new effect on every attempt."
-        }
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 3–9: HTTP architecture, messages and methods",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "data-model",
@@ -13463,7 +15943,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A useful model preserves business identity and supports required queries. Storage products follow those needs."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: microservice data considerations",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+            "section": "Data sovereignty; consistency and transactions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "indexes-storage",
@@ -13509,7 +15998,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "An index is another structure to maintain when rows change, which consumes work and space even when it accelerates reads."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: microservice data considerations",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+            "section": "Data sovereignty; consistency and transactions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "scaling",
@@ -13555,7 +16053,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "API capacity cannot bypass a saturated shared dependency. Identify the actual bottleneck before adding workers."
-        }
+        },
+        "references": [
+          {
+            "title": "Google SRE: monitoring distributed systems",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "The four golden signals",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "cache",
@@ -13642,7 +16149,16 @@ const LEARNING_PATHS = [
               "explanation": "Versioning avoids silently treating v3 as v4; discovery and publication still need their own freshness policy."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: cache-aside",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "queues",
@@ -13688,7 +16204,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "A consumer may perform an effect then crash before acknowledgment. End-to-end effects need their own duplicate handling."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "replication",
@@ -13734,7 +16259,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Replication maintains copies of current state; an unwanted deletion may reach all of them, so recoverable history is separate."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: microservice data considerations",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+            "section": "Data sovereignty; consistency and transactions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "consistency-cap",
@@ -13780,7 +16314,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "CAP analyzes whether its consistency and availability properties can both hold when communication partitions occur."
-        }
+        },
+        "references": [
+          {
+            "title": "Gilbert and Lynch: CAP impossibility result",
+            "url": "https://www.cs.princeton.edu/courses/archive/spr22/cos418/papers/cap.pdf",
+            "section": "Definitions and impossibility theorem",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "partitioning",
@@ -13826,7 +16369,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "One popular record can receive most requests even if partitions contain the same number of records."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: sharding",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "transactions",
@@ -13872,7 +16424,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Separate read and write steps allow interleaving. The decision and dependent changes need a correct concurrency boundary."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: microservice data considerations",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+            "section": "Data sovereignty; consistency and transactions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "idempotency",
@@ -13960,6 +16521,15 @@ const LEARNING_PATHS = [
             }
           ]
         },
+        "references": [
+          {
+            "title": "AWS Builders Library: idempotent APIs",
+            "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+            "section": "Reducing client complexity with idempotent API design",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ],
         "diagram": {
           "title": "The reply disappeared; booking B9 did not",
           "summary": "One booking intent: learner-17 / reserve / request-abc with workshop=42. Assume durable coordination of the key/result and booking effect, and a retry within the documented retention window.",
@@ -14139,7 +16709,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Jitter spreads retries in time. It cannot create capacity, guarantee success or prevent duplicated business effects."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS Builders Library: timeouts, retries and jitter",
+            "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+            "section": "Timeouts; retries and backoff; jitter",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "backpressure",
@@ -14226,7 +16805,16 @@ const LEARNING_PATHS = [
               "explanation": "If arrivals remained 100/s, there would be no spare capacity to drain the existing queue."
             }
           ]
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "outbox",
@@ -14272,7 +16860,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "An outbox transaction couples the local domain change with its event record; publishing and external effects happen later."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS: transactional outbox",
+            "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+            "section": "Intent; issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -14318,7 +16915,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "The synchronous request may only accept a job. Measure asynchronous completion and age to detect the actual user failure."
-        }
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry: signals",
+            "url": "https://opentelemetry.io/docs/concepts/signals/",
+            "section": "Traces, metrics and logs",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "security",
@@ -14344,6 +16950,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Encryption in transit and at rest protects different threats but does not stop a legitimately authenticated user exploiting broken object authorization. Bound upload sizes and parsing work, validate input, use parameterized queries and isolate secrets from source code. Define session revocation and secret rotation behavior. Threat modeling asks what can go wrong at each trust boundary and how a control can be verified."
             ]
+          },
+          {
+            "title": "Repeat the threat-model pass",
+            "paragraphs": [
+              "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+            ]
           }
         ],
         "exercise": {
@@ -14364,7 +16976,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Unpredictable identifiers are useful defense in depth, but they do not decide whether a caller is allowed to access a resource."
-        }
+        },
+        "references": [
+          {
+            "title": "OWASP: authorization",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "OWASP Threat Modeling Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+            "section": "Four questions; system decomposition and validation",
+            "reviewed": "2026-09-27",
+            "scope": "Repeatable design worksheet; not security certification."
+          }
+        ]
       },
       {
         "id": "recovery",
@@ -14410,7 +17038,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 0,
           "explanation": "A restore with correctness checks exercises data, credentials, configuration and procedure; a scheduled backup alone does not."
-        }
+        },
+        "references": [
+          {
+            "title": "AWS Well-Architected: disaster recovery",
+            "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html",
+            "section": "Plan for disaster recovery",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "evolution",
@@ -14456,7 +17093,16 @@ const LEARNING_PATHS = [
           ],
           "correct": 2,
           "explanation": "Rolling deployments temporarily run different versions, so readers, writers and schema must remain compatible during transition."
-        }
+        },
+        "references": [
+          {
+            "title": "Azure Architecture: microservice data considerations",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+            "section": "Data sovereignty; consistency and transactions",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          }
+        ]
       },
       {
         "id": "design-review",
@@ -14482,6 +17128,12 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A benchmark must report concurrency, arrival model, payloads, dataset, duration, warmup and failures. Closed-loop clients that wait before sending again can hide overload behavior; an arrival-rate model asks a different question. Track tail latency and correctness, not only requests per second. A paper design and calculator cannot certify production reliability, security or cost."
             ]
+          },
+          {
+            "title": "Repeat the threat-model pass",
+            "paragraphs": [
+              "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+            ]
           }
         ],
         "exercise": {
@@ -14502,7 +17154,23 @@ const LEARNING_PATHS = [
           ],
           "correct": 1,
           "explanation": "Explicit assumptions and a test that can fail make the claim inspectable; a diagram alone supplies no capacity evidence."
-        }
+        },
+        "references": [
+          {
+            "title": "Google SRE: monitoring distributed systems",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "The four golden signals",
+            "reviewed": "2026-09-27",
+            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          },
+          {
+            "title": "OWASP Threat Modeling Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+            "section": "Four questions; system decomposition and validation",
+            "reviewed": "2026-09-27",
+            "scope": "Repeatable design worksheet; not security certification."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -14559,6 +17227,12 @@ const LEARNING_PATHS = [
           "href": "paths/system-design/practice/README.md",
           "role": "guide",
           "description": "Practice run instructions"
+        },
+        {
+          "id": "threat-model-worksheet-md",
+          "href": "paths/system-design/practice/threat-model-worksheet.md",
+          "role": "guide",
+          "description": "Optional focused practice: threat-model-worksheet"
         }
       ],
       "tasks": [
@@ -14657,7 +17331,8 @@ const LEARNING_PATHS = [
             "test_capacity_calculator-py",
             "design-workbook-md",
             "adr-template-md",
-            "README-md"
+            "README-md",
+            "threat-model-worksheet-md"
           ],
           "steps": [
             "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",

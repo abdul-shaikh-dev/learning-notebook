@@ -121,6 +121,11 @@ import heapq
 from itertools import count
 
 def dijkstra(graph, start):
+    """Caller preconditions: finite graph, hashable vertices and finite numeric
+    nonnegative weights. Only negativity is checked here, not full boundary
+    validation of NaN/infinity/malformed edges. Unsupported input is outside
+    the teaching algorithm contract, not a valid-input correctness defect.
+    """
     if any(weight < 0 for edges in graph.values() for _, weight in edges):
         raise ValueError("negative weight")
     ticket = count()
@@ -213,6 +218,10 @@ result[0].append(99)
 assert all(99 not in row for row in result[1:])
 
 def knapsack(items, capacity):
+    """Caller preconditions: nonnegative integer capacity, positive integer
+    weights, and finite numeric values. Only sign checks are enforced here;
+    validate types/shape/finiteness at an untrusted public input boundary.
+    """
     if capacity < 0:
         raise ValueError("negative capacity")
     dp = [0] * (capacity + 1)

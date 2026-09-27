@@ -30,6 +30,24 @@
       "href": "paths/agent-harnesses/practice/architecture-decision.md",
       "role": "starter",
       "description": "Harness architecture decision template"
+    },
+    {
+      "id": "durable_state-py",
+      "href": "paths/agent-harnesses/practice/durable_state.py",
+      "role": "reference",
+      "description": "Optional focused practice: durable state"
+    },
+    {
+      "id": "test_durable_state-py",
+      "href": "paths/agent-harnesses/practice/test_durable_state.py",
+      "role": "test",
+      "description": "Optional focused practice: test durable state"
+    },
+    {
+      "id": "test_parser_properties-py",
+      "href": "paths/agent-harnesses/practice/test_parser_properties.py",
+      "role": "test",
+      "description": "Optional focused practice: test parser properties"
     }
   ],
   "tasks": [
@@ -128,7 +146,10 @@
         "test_harness_workshop-py",
         "README-md",
         "operations-runbook-md",
-        "architecture-decision-md"
+        "architecture-decision-md",
+        "durable_state-py",
+        "test_durable_state-py",
+        "test_parser_properties-py"
       ],
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",

@@ -1,10 +1,13 @@
-import {useReducer, useState} from "react";
+import {useReducer, useState, useRef} from "react";
+import RemoteLesson from "./RemoteLesson";
 import type {FormEvent} from "react";
 import {reducer, decodeSaved, encodeSaved, MAX_LESSONS} from "./tracker-core";
 import type {Lesson} from "./tracker-core";
 const initial: Lesson[] = [{id:"types",title:"Types",done:false},{id:"state",title:"State",done:false}];
 export default function AdvancedApp() {
   const [rows, dispatch] = useReducer(reducer, initial);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const [titleError, setTitleError] = useState("");
   const [title, setTitle] = useState("");
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
@@ -16,8 +19,9 @@ export default function AdvancedApp() {
       setMessage(`The tracker holds at most ${MAX_LESSONS} lessons. Remove a lesson before adding another.`); return;
     }
     if(title.trim().length < 2 || title.trim().length > 100) {
-      setMessage("Use a title between 2 and 100 characters."); return;
+      setMessage(""); setTitleError("Use a title between 2 and 100 characters."); titleRef.current?.focus(); return;
     }
+    setTitleError("");
     dispatch({type:"add",id:crypto.randomUUID(),title});
     setTitle(""); setMessage("Lesson added.");
   }
@@ -30,9 +34,11 @@ export default function AdvancedApp() {
   const visible = rows.filter(row => row.title.toLowerCase().includes(query.toLowerCase()));
   return <main>
     <h1>Learning tracker workshop</h1>
+    <RemoteLesson />
     <form onSubmit={add}>
       <label htmlFor="title">New lesson title</label>
-      <input id="title" value={title} onChange={e=>setTitle(e.target.value)} maxLength={100} />
+      <input ref={titleRef} aria-invalid={Boolean(titleError)} aria-describedby={titleError ? "title-error" : undefined} id="title" value={title} onChange={e=>setTitle(e.target.value)} maxLength={100} />
+      {titleError && <p id="title-error" role="alert">{titleError}</p>}
       <button type="submit">Add lesson</button>
     </form>
     <p role="status">{message}</p>
@@ -52,4 +58,3 @@ export default function AdvancedApp() {
     <p>Changes remain in memory. Copy the generated JSON to a file before refreshing. Import here validates only; replacement and persistence are project extensions.</p>
   </main>;
 }
-

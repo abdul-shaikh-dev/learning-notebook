@@ -7,6 +7,14 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = (
+    ("python/practice", "test_installed_package.py"),
+    ("data-structures-algorithms/practice", "test_trees_graphs.py"),
+    ("design-patterns", "test_collaboration.py"),
+    ("python/practice", "test_async_failure_lab.py"),
+    ("ai-agents", "test_provider_scaffold.py"),
+    ("agent-harnesses/practice", "test_durable_state.py"),
+    ("agent-harnesses/practice", "test_parser_properties.py"),
+    ("financial-foundations/practice", "test_finance_workbook.py"),
     ("python/practice", "test_projects.py"),
     ("ai-agents", "test_workshop.py"),
     ("agent-harnesses/practice", "test_harness_workshop.py"),
@@ -17,7 +25,7 @@ SUITES = (
 with tempfile.TemporaryDirectory(prefix="notebook-python-") as scratch:
     for folder, suite in SUITES:
         target = Path(scratch) / folder
-        shutil.copytree(ROOT / "paths" / folder, target)
+        shutil.copytree(ROOT / "paths" / folder, target, dirs_exist_ok=True)
         print(f"Checking {folder}", flush=True)
         subprocess.run([sys.executable, "-m", "unittest", "-v", suite], cwd=target, check=True)
     target = Path(scratch) / "algorithms"

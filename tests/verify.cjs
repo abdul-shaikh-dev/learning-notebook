@@ -19,3 +19,5 @@ require('./notebook-backup.cjs');
 require('./navigation-links.cjs');
 
 require('./library-map.cjs');
+
+require('./assessment-sources.cjs');

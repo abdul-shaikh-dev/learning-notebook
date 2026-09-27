@@ -20,6 +20,12 @@ with tempfile.TemporaryDirectory(prefix="notebook-dotnet-") as scratch:
         shutil.copyfile(root / "paths/dotnet/practice" / source, work / name / "Program.cs")
         subprocess.run(["dotnet", "build", name, "-c", "Release", "--nologo"], cwd=work, check=True)
     subprocess.run(["dotnet", str(work / "Foundation/bin/Release" / args.framework / "Foundation.dll")], check=True)
+    # Copy only the package-based guided scaffold; it executes an isolated TestServer and disk SQLite checks.
+    persistence = work / "Persistence"
+    persistence.mkdir()
+    for filename in ("PersistenceChecks.csproj", "persistence-api.cs", "persistence-checks.cs"):
+        shutil.copyfile(root / "paths/dotnet/practice" / filename, persistence / filename)
+    subprocess.run(["dotnet", "run", "--project", str(persistence / "PersistenceChecks.csproj"), "-c", "Release"], check=True, timeout=180)
     # The host is test-only and loopback-bound. It is always stopped, including on failure.
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", 0))

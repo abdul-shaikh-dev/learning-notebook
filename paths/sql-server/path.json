@@ -199,7 +199,16 @@
         "correct": 1,
         "explanation": "Local temporary tables belong to a SQL session. Use the same connection/window after setup."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Connect and query",
+          "url": "https://learn.microsoft.com/en-us/ssms/quickstarts/ssms-connect-query-sql-server",
+          "section": "Connect and query",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "types-keys-null",
@@ -249,7 +258,16 @@
         "correct": 2,
         "explanation": "The comparison is UNKNOWN, not TRUE. WHERE retains TRUE rows; use IS NULL to select the two missing emails."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Remarks: NULL and UNKNOWN",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql?view=sql-server-ver17",
+          "section": "Remarks: NULL and UNKNOWN",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "select-filter-sort",
@@ -299,7 +317,16 @@
         "correct": 0,
         "explanation": "TOP chooses from the requested order; a unique tie-breaker makes ties predictable."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Logical processing order",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17",
+          "section": "Logical processing order",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "joins-and-grain",
@@ -349,7 +376,16 @@
         "correct": 1,
         "explanation": "Joining attaches matching rows; it does not allocate the order amount across them. Summing it now double counts."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Logical and physical joins",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17",
+          "section": "Logical and physical joins",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "group-and-reconcile",
@@ -399,7 +435,16 @@
         "correct": 2,
         "explanation": "HAVING filters grouped results. WHERE is for the rows supplied to the grouping operation."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: GROUP BY arguments",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
+          "section": "GROUP BY arguments",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "cte-and-subquery",
@@ -449,7 +494,16 @@
         "correct": 0,
         "explanation": "A CTE names a query expression for one statement. Use a temporary table when a later statement needs stored intermediate rows."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Guidelines for CTEs",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17",
+          "section": "Guidelines for CTEs",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "window-functions",
@@ -499,7 +553,16 @@
         "correct": 1,
         "explanation": "A unique tie-breaker prevents equal dates from leaving the selected latest row ambiguous."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: General remarks: determinism",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17",
+          "section": "General remarks: determinism",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "parameters-procedures",
@@ -549,7 +612,16 @@
         "correct": 2,
         "explanation": "Typed parameters separate values from executable SQL text. Validate business limits and use least-privilege permissions as well."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Parameters and examples",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-procedure-transact-sql?view=sql-server-ver17",
+          "section": "Parameters and examples",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "temporary-staging",
@@ -599,7 +671,16 @@
         "correct": 0,
         "explanation": "@@ROWCOUNT describes the previous relevant statement and can be reset by subsequent statements."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Temporary tables",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+          "section": "Temporary tables",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "transactions-isolation",
@@ -628,6 +709,13 @@
             "Single-session temporary tables cannot demonstrate inter-session blocking because other sessions cannot access them. For a later concurrency lab, have a trainer supply a dedicated shared table and a two-session script. Do not change isolation database options on a shared database just to make an example run."
           ],
           "example": ""
+        },
+        {
+          "title": "Runnable opt-in engine experiment",
+          "paragraphs": [
+            "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+            "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+          ]
         }
       ],
       "exercise": {
@@ -649,7 +737,16 @@
         "correct": 1,
         "explanation": "Avoiding dirty reads is different from holding a stable view across multiple statements."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: READ COMMITTED and RCSI",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
+          "section": "READ COMMITTED and RCSI",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "indexes-and-plans",
@@ -699,7 +796,16 @@
         "correct": 2,
         "explanation": "Plan quality depends on the cost of the whole operation and the data; operator names alone do not establish performance."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: Index types and design",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-ver17",
+          "section": "Index types and design",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "reconciliation-capstone",
@@ -752,7 +858,16 @@
         "correct": 0,
         "explanation": "Only 265 is matched to known orders. Preserve the remaining 20 as an orphan exception instead of using it to reduce known balances."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Microsoft Learn: GROUP BY and aggregate expressions",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
+          "section": "GROUP BY and aggregate expressions",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "schema-contracts",
@@ -784,6 +899,12 @@
             "Our temporary fixtures cannot enforce foreign keys. Describe the permanent foreign-key design, then validate parent references with queries in this lab. A migration to permanent tables needs a real constraint test in SQL Server before deployment."
           ],
           "example": ""
+        },
+        {
+          "title": "Visible decimal normalization",
+          "paragraphs": [
+            "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+          ]
         }
       ],
       "exercise": {
@@ -804,7 +925,16 @@
         ],
         "correct": 1,
         "explanation": "Two insertions can receive different identity values while representing the same source event."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Conversion and rounding",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17",
+          "section": "Conversion and rounding",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "sets-and-apply",
@@ -856,7 +986,16 @@
         ],
         "correct": 2,
         "explanation": "OUTER APPLY retains the outer customer even if its correlated query produces no row."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Using APPLY",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17",
+          "section": "Using APPLY",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "window-frames-and-gaps",
@@ -907,7 +1046,16 @@
         ],
         "correct": 0,
         "explanation": "A row frame follows positions in the ordered rows; it does not synthesize a calendar."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: ROWS and RANGE frames",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver17",
+          "section": "ROWS and RANGE frames",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "index-selectivity-statistics",
@@ -959,7 +1107,16 @@
         ],
         "correct": 1,
         "explanation": "Cardinality errors can come from several causes. Preserve the evidence before selecting a remedy."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Histogram and cardinality estimates",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics?view=sql-server-ver17",
+          "section": "Histogram and cardinality estimates",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "procedure-transaction-contracts",
@@ -1010,7 +1167,16 @@
         ],
         "correct": 2,
         "explanation": "Nested transaction counters are not independent rollback boundaries. This lab adopts the simplest explicit ownership contract."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Uncommittable transactions and XACT_STATE",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql?view=sql-server-ver17",
+          "section": "Uncommittable transactions and XACT_STATE",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "incremental-load-contracts",
@@ -1041,6 +1207,12 @@
             "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers are more robust than relying on perfect timing. A schema migration must preserve those identifiers too."
           ],
           "example": ""
+        },
+        {
+          "title": "Visible decimal normalization",
+          "paragraphs": [
+            "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+          ]
         }
       ],
       "exercise": {
@@ -1061,7 +1233,16 @@
         ],
         "correct": 0,
         "explanation": "A concurrency-safe design also needs enforced uniqueness and a deliberate transaction/error policy."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Return types and failed conversions",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql?view=sql-server-ver17",
+          "section": "Return types and failed conversions",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "plan-regressions-query-store",
@@ -1092,6 +1273,13 @@
             "Plan forcing can be an operational mitigation, not proof of a permanent fix. Record why a prior plan is appropriate, its failure modes, how to unforce it, and what metric will trigger rollback. Parameter skew, statistics changes and blocking may require different remedies. This course does not force any plan."
           ],
           "example": ""
+        },
+        {
+          "title": "Runnable opt-in engine experiment",
+          "paragraphs": [
+            "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+            "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+          ]
         }
       ],
       "exercise": {
@@ -1113,7 +1301,23 @@
         ],
         "correct": 1,
         "explanation": "Equal averaging gives each plan equal weight rather than each execution equal weight."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Query Store collection and runtime statistics",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store?view=sql-server-ver17",
+          "section": "Query Store collection and runtime statistics",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        },
+        {
+          "title": "Microsoft Learn: sys.query_store_runtime_stats",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-query-store-runtime-stats-transact-sql?view=sql-server-ver17",
+          "section": "count_executions, avg_duration, avg_logical_io_reads and active interval aggregation",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ lab; SQL Server 17.x documentation view. Source inspected; engine measurements remain learner verification."
+        }
+      ]
     },
     {
       "id": "concurrency-lost-updates",
@@ -1144,6 +1348,13 @@
             "A version conflict is not an instruction to retry the same business decision blindly. Reload the current record and either merge, ask the user or reject according to policy. If a network error makes commit outcome uncertain, look up an operation identifier before repeating a non-idempotent effect."
           ],
           "example": ""
+        },
+        {
+          "title": "Runnable opt-in engine experiment",
+          "paragraphs": [
+            "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+            "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+          ]
         }
       ],
       "exercise": {
@@ -1164,7 +1375,16 @@
         ],
         "correct": 2,
         "explanation": "It supports detecting changes, but is not a datetime and does not replace a business event key."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Read protection versus modification locks",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
+          "section": "Read protection versus modification locks",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "deadlocks-retries",
@@ -1195,6 +1415,13 @@
             "Collect evidence before adding hints. Lowering isolation can change correctness and may not resolve writer conflicts. Distinguish a known rolled-back deadlock victim from an unknown outcome after connection loss; the latter needs operation-status reconciliation."
           ],
           "example": ""
+        },
+        {
+          "title": "Runnable opt-in engine experiment",
+          "paragraphs": [
+            "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+            "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+          ]
         }
       ],
       "exercise": {
@@ -1216,7 +1443,16 @@
         ],
         "correct": 0,
         "explanation": "A wait can resolve when another transaction finishes. A cycle requires a participant to be broken out of it."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Deadlock detection, victim selection and error handling",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide?view=sql-server-ver17",
+          "section": "Deadlock detection, victim selection and error handling",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "least-privilege-dynamic-sql",
@@ -1267,7 +1503,16 @@
         ],
         "correct": 1,
         "explanation": "Syntax safety and permission policy solve different problems."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Parameters and SQL injection caution",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-executesql-transact-sql?view=sql-server-ver17",
+          "section": "Parameters and SQL injection caution",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "migrations-and-release",
@@ -1319,7 +1564,16 @@
         ],
         "correct": 2,
         "explanation": "An existence check cannot detect an incompatible or partially applied schema change."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Locking and online operations",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-table-transact-sql?view=sql-server-ver17",
+          "section": "Locking and online operations",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     },
     {
       "id": "advanced-import-capstone",
@@ -1351,6 +1605,19 @@
             "Submit evidence, not only a final query: disposition counts, ledger keys and totals, before/after replay checks, proposed concurrency policy, migration plan and least-privilege boundary. Mark tests requiring a real engine as unexecuted until you actually run them."
           ],
           "example": ""
+        },
+        {
+          "title": "Runnable opt-in engine experiment",
+          "paragraphs": [
+            "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+            "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
+          ]
+        },
+        {
+          "title": "Visible decimal normalization",
+          "paragraphs": [
+            "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+          ]
         }
       ],
       "exercise": {
@@ -1374,7 +1641,16 @@
         ],
         "correct": 0,
         "explanation": "The same stable event identity cannot silently acquire a different economic meaning."
-      }
+      },
+      "references": [
+        {
+          "title": "Microsoft Learn: Remarks and transaction error behavior",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-xact-abort-transact-sql?view=sql-server-ver17",
+          "section": "Remarks and transaction error behavior",
+          "reviewed": "2026-09-27",
+          "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+        }
+      ]
     }
   ],
   "publicFiles": [
@@ -1382,7 +1658,15 @@
     "solutions.sql",
     "README.md",
     "advanced-lab.sql",
-    "advanced-solutions.sql"
+    "advanced-solutions.sql",
+    "concurrency-lab.md",
+    "concurrency-setup.sql",
+    "session-a.sql",
+    "session-b.sql",
+    "concurrency-reset.sql",
+    "query-store-lab.sql",
+    "concurrency-cleanup.sql",
+    "rounding-lab.sql"
   ],
   "downloads": [
     {

@@ -24,6 +24,24 @@
       "href": "paths/ai-agents/README.md",
       "role": "guide",
       "description": "Practice guide and limits"
+    },
+    {
+      "id": "provider_scaffold-py",
+      "href": "paths/ai-agents/provider_scaffold.py",
+      "role": "reference",
+      "description": "Optional focused practice: provider scaffold"
+    },
+    {
+      "id": "test_provider_scaffold-py",
+      "href": "paths/ai-agents/test_provider_scaffold.py",
+      "role": "test",
+      "description": "Optional focused practice: test provider scaffold"
+    },
+    {
+      "id": "provider-integration-exercise-md",
+      "href": "paths/ai-agents/provider-integration-exercise.md",
+      "role": "guide",
+      "description": "Optional focused practice: provider-integration-exercise"
     }
   ],
   "tasks": [
@@ -119,7 +137,10 @@
         "workshop-py",
         "test_workshop-py",
         "evaluation_cases-json",
-        "README-md"
+        "README-md",
+        "provider_scaffold-py",
+        "test_provider_scaffold-py",
+        "provider-integration-exercise-md"
       ],
       "steps": [
         "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",

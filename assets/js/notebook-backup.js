@@ -3,7 +3,7 @@ const NotebookBackup = (() => {
   'use strict';
   const APP = 'learning-notebook', VERSION = 1, LIMIT = 1024 * 1024;
   const FINANCE = 'valuation-lab-v1', LAST = 'learning-notebook:last-lesson:v1';
-  const STUDY = ['foundations','valuation-control','fair-value-hierarchy','prudent-valuation','working-knowledge','revision'];
+  const STUDY = ['foundations','valuation-control','fair-value-hierarchy','prudent-valuation','working-knowledge','integrated-investigations','revision'];
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   const key = id => 'learning-notebook:path:' + id + ':v1';

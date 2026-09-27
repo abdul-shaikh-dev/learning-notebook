@@ -32,3 +32,24 @@ Standard paths can supply `stages`, ordered as foundation, intermediate and adva
 The shared reader groups lessons, shows project self-check controls, and includes reference approaches in the printable pack. Reading uses the existing v1 key; project self-assessment uses `learning-notebook:path:<id>:assessments:v1`. Neither is a certification. Paths without stages retain the basic reader.
 
 For downloadable exercises, list files in `publicFiles` relative to the path directory and supply `downloads` entries with a `title` and repo-relative `href`. Document runtime requirements and distinguish executable reference code from illustrative fragments and learner extensions.
+
+## Per-lesson references and exercise verification
+
+Every ready standard lesson requires a `references` array. Each entry contains
+`title`, an HTTPS `url`, a specific `section`, `reviewed` in YYYY-MM-DD format,
+and `scope` explaining the version, applicability and limits. These appear beside
+the lesson and in its printable pack. A review date records an editorial check;
+it does not establish continued regulatory or API validity. Prefer primary sources.
+
+Quiz answers retain their original zero-based `correct` index. The reader places
+options in a stable, balanced display order; do not change source answer indices
+to match the screen. Quizzes should test plausible misconceptions, with explanations.
+
+Register practice files in both `publicFiles` and `resources.json`, attach their
+task to relevant lesson IDs, and include runnable commands and expected results.
+Regenerate with `node scripts/sync-catalog.cjs` and
+`python scripts/build-bundles.py`; verify with `node verify.cjs` and
+`python tests/resource-bundles.py`. Add executable Python suites to
+`scripts/verify-python.py`; framework suites live in `validation/react` and
+`scripts/verify-dotnet.py`. Clearly distinguish locally verified tests, CI checks,
+opt-in external services and learner extensions.

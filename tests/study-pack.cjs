@@ -3,8 +3,8 @@ const root='paths/financial-foundations/';
 const names=['curriculum','starter','foundations','advanced','exercises','activities','lab-guides','practice-data','source-register','journey'];
 const source=names.map(n=>fs.readFileSync(root+'content/'+n+'.js','utf8')).join('\n');
 const data=vm.runInNewContext(source+';({LESSONS,FOUNDATIONS,ADVANCED,EXERCISES,LABS,LAB_GUIDES,CASE_STEPS,PRACTICE_ROWS,SOURCE_REGISTER})');
-assert.equal(data.FOUNDATIONS.length,6);assert.equal(data.EXERCISES.modules.length,5);assert.equal(data.EXERCISES.revision.length,6);
-const expected={'foundations-numeric':2000000*97.4/100+12000,'control-numeric':-4000000*(101.05-101.2)/100,'hierarchy-numeric':12+3-2+.8-.2+1.5-.6,'prudence-numeric':Math.max(0,998-.5*996-.5*990),'working-numeric':-5000+8000,'revision-price-units':6000000*(99.65-99.8)/100,'revision-bridge':2500000-12000-7000+9000};
+assert.equal(data.FOUNDATIONS.length,8);assert.equal(data.EXERCISES.modules.length,6);assert.equal(data.EXERCISES.revision.length,6);
+const expected={'integrated-numeric':765.2,'foundations-numeric':2000000*97.4/100+12000,'control-numeric':-4000000*(101.05-101.2)/100,'hierarchy-numeric':12+3-2+.8-.2+1.5-.6,'prudence-numeric':Math.max(0,998-.5*996-.5*990),'working-numeric':-5000+8000,'revision-price-units':6000000*(99.65-99.8)/100,'revision-bridge':2500000-12000-7000+9000};
 for(const m of data.EXERCISES.modules){assert.equal(m.tasks.length,4);assert.equal(new Set(m.tasks.map(t=>t.type)).size,4);for(const id of m.lessonIds)assert.ok(data.LESSONS.some(l=>l.id===id));}
 for(const t of data.EXERCISES.modules.flatMap(m=>m.tasks).concat(data.EXERCISES.revision)){assert.ok(t.prompt&&t.answer&&t.reasoning&&t.rubric.length>=2);if(t.numericAnswer!==undefined)assert.ok(Math.abs(t.numericAnswer-expected[t.id])<0.001,t.id);}
 for(const a of data.ADVANCED){assert.ok(data.LESSONS.some(l=>l.id===a.lessonId));assert.ok(a.citations.length);for(const c of a.citations)assert.ok(c.url.startsWith('https://')&&c.paragraph&&c.checkedDate&&c.status);}

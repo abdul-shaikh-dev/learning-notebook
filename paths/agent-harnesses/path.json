@@ -204,7 +204,16 @@
         ],
         "correct": 0,
         "explanation": "A tool-call output from a model is a proposal. Invocation, policy decisions and observed outcomes belong to the runtime and tool boundary."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: agent runtime choices",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "task-contract",
@@ -251,7 +260,16 @@
         ],
         "correct": 2,
         "explanation": "Identity is a control-plane fact. Model arguments and retrieved text are untrusted inputs and cannot establish who may act."
-      }
+      },
+      "references": [
+        {
+          "title": "OWASP: authorization principles",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "section": "Deny by default; validate permissions on every request",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "state-machine",
@@ -298,7 +316,16 @@
         ],
         "correct": 1,
         "explanation": "An uncertain outcome requires reconciliation with the authoritative tool system; retrying as a new operation can duplicate an effect."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: agent runtime choices",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "state-context",
@@ -345,7 +372,16 @@
         ],
         "correct": 0,
         "explanation": "Availability of a capability and a generated claim do not establish execution. A confirmed result tied to the operation is stronger evidence."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: JSON serialization",
+          "url": "https://docs.python.org/3/library/json.html",
+          "section": "Basic usage; JSONEncoder and JSONDecoder",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "registry",
@@ -392,7 +428,16 @@
         ],
         "correct": 2,
         "explanation": "An explicit map limits execution to reviewed handlers. Dynamic code evaluation converts untrusted proposal text into arbitrary execution."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: function calling and application tool execution",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "schema",
@@ -418,6 +463,12 @@
           "paragraphs": [
             "Bounds have units: a character cap is not a token budget or memory sandbox. A payload may be too large before it reaches the validator, so a production transport must enforce input-size limits before parsing. Do not repair a dangerous proposal by silently changing its meaning. Surface a clear validation category and let a bounded correction path choose a new valid proposal if the product supports that."
           ]
+        },
+        {
+          "title": "Optional generated parser cases",
+          "paragraphs": [
+            "Run python -m unittest test_parser_properties.py. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
+          ]
         }
       ],
       "exercise": {
@@ -439,7 +490,16 @@
         ],
         "correct": 1,
         "explanation": "Shape validation establishes a contract match, not caller authority. Authorization depends on trusted identity, resource scope and policy."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: function calling and application tool execution",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "authorization",
@@ -486,7 +546,16 @@
         ],
         "correct": 0,
         "explanation": "Consent and entitlement are separate requirements. Both must hold at execution time, and a model cannot adjudicate an enforced access policy."
-      }
+      },
+      "references": [
+        {
+          "title": "OWASP: authorization principles",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "section": "Deny by default; validate permissions on every request",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "events",
@@ -533,7 +602,16 @@
         ],
         "correct": 2,
         "explanation": "The authoritative tool outcome may exist despite a missing local event. Investigate the operation ID rather than assuming rollback."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: JSON serialization",
+          "url": "https://docs.python.org/3/library/json.html",
+          "section": "Basic usage; JSONEncoder and JSONDecoder",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "budgets",
@@ -580,7 +658,16 @@
         ],
         "correct": 1,
         "explanation": "One proposal can take varying time and resources. Step, elapsed-time, token/usage and tool-resource budgets require separate enforcement."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: monotonic time",
+          "url": "https://docs.python.org/3/library/time.html#time.monotonic",
+          "section": "time.monotonic",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "approval",
@@ -668,7 +755,16 @@
             "explanation": "Only the confirmed receipt supports reporting a saved note."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OWASP: authorization principles",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "section": "Deny by default; validate permissions on every request",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "deadlines",
@@ -715,7 +811,16 @@
         ],
         "correct": 2,
         "explanation": "Boundary checks govern future dispatch. Preemption and effect rollback require different mechanisms and may not be possible for an external operation."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: monotonic time",
+          "url": "https://docs.python.org/3/library/time.html#time.monotonic",
+          "section": "time.monotonic",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "retries",
@@ -762,7 +867,16 @@
         ],
         "correct": 1,
         "explanation": "The retry decision depends on the adapter contract and effect uncertainty. A denial is policy, and an ambiguous write may already have committed."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: safe retries and idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "idempotent-effects",
@@ -850,7 +964,16 @@
             "explanation": "The fake store provides evidence; a real adapter needs an equivalent recovery contract."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: safe retries and idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "checkpoints",
@@ -876,6 +999,12 @@
           "paragraphs": [
             "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
             "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
+          ]
+        },
+        {
+          "title": "Optional durable adapter exercise",
+          "paragraphs": [
+            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
         }
       ],
@@ -939,7 +1068,23 @@
             "explanation": "Budget enforcement must survive the lifecycle transition."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "Python: JSON serialization",
+          "url": "https://docs.python.org/3/library/json.html",
+          "section": "Basic usage; JSONEncoder and JSONDecoder",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "SQLite transactions",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "section": "Read versus write transactions; transaction control",
+          "reviewed": "2026-09-27",
+          "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+        }
+      ]
     },
     {
       "id": "context-lifecycle",
@@ -986,7 +1131,16 @@
         ],
         "correct": 1,
         "explanation": "Critical control facts belong to trusted state. Compaction is an information-selection process, not an authorization mechanism."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: agent runtime choices",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "injection",
@@ -1072,7 +1226,16 @@
             "explanation": "The test proves the boundary response, not that a real model would resist all injections."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: agent safety concepts; product-specific lifecycle guidance must be checked",
+          "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "section": "Safety risks and mitigations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "isolation",
@@ -1119,7 +1282,16 @@
         ],
         "correct": 2,
         "explanation": "Application policy chooses allowed handlers; operating-system or service isolation constrains what executable code can actually access."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI: harness and compute responsibilities",
+          "url": "https://developers.openai.com/cookbook/examples/agents_sdk/migrate-from-claude-agent-sdk/readme",
+          "section": "Harness ownership and execution responsibilities",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "concurrency",
@@ -1145,6 +1317,12 @@
           "paragraphs": [
             "Leases depend on timing assumptions and renewal behavior; idempotency still matters for external effects that do not support fencing. A compare-and-swap version on a checkpoint can prevent lost state updates but may not prevent a duplicate tool effect already sent. Coordinate state ownership and effect identity together. Testing two Python calls sequentially does not validate distributed failover."
           ]
+        },
+        {
+          "title": "Optional durable adapter exercise",
+          "paragraphs": [
+            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+          ]
         }
       ],
       "exercise": {
@@ -1166,7 +1344,23 @@
         ],
         "correct": 1,
         "explanation": "A token prevents nothing unless the receiver rejects outdated authority. Logging or displaying it is insufficient."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: safe retries and idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "SQLite transactions",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "section": "Read versus write transactions; transaction control",
+          "reviewed": "2026-09-27",
+          "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+        }
+      ]
     },
     {
       "id": "replay",
@@ -1213,7 +1407,16 @@
         ],
         "correct": 0,
         "explanation": "Historical analysis should reconstruct evidence. Continuing real work requires current policy and an effect-recovery contract."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: safe retries and idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "audit",
@@ -1260,7 +1463,16 @@
         ],
         "correct": 2,
         "explanation": "Minimization reduces exposure at collection time. Remaining metadata and other stores still need their own privacy and security controls."
-      }
+      },
+      "references": [
+        {
+          "title": "OWASP: authorization principles",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "section": "Deny by default; validate permissions on every request",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "evaluation",
@@ -1307,7 +1519,16 @@
         ],
         "correct": 1,
         "explanation": "A deterministic fixture verifies the runtime response to one input. It does not establish the probability or quality of future model proposals."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: unittest",
+          "url": "https://docs.python.org/3/library/unittest.html",
+          "section": "Test cases; assertRaises",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "release",
@@ -1354,7 +1575,16 @@
         ],
         "correct": 0,
         "explanation": "Deployment state and business state are distinct. Reverting code cannot erase an external effect or repair it without an explicit operation."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: unittest",
+          "url": "https://docs.python.org/3/library/unittest.html",
+          "section": "Test cases; assertRaises",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "operations",
@@ -1401,7 +1631,16 @@
         ],
         "correct": 2,
         "explanation": "An effect may already exist. Stable identity and authoritative evidence reduce the risk of duplicating or losing track of it."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: safe retries and idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "capstone",
@@ -1427,6 +1666,12 @@
           "paragraphs": [
             "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Do not simply rename FakeStore to ProductionStore. A strong capstone includes an ADR explaining the next boundary to add and a test that could falsify its correctness."
           ]
+        },
+        {
+          "title": "Optional durable adapter exercise",
+          "paragraphs": [
+            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+          ]
         }
       ],
       "exercise": {
@@ -1448,7 +1693,23 @@
         ],
         "correct": 1,
         "explanation": "Evidence must match the tested boundary. Mocks validate orchestration policies but do not certify external services, isolation or model behavior."
-      }
+      },
+      "references": [
+        {
+          "title": "Python: unittest",
+          "url": "https://docs.python.org/3/library/unittest.html",
+          "section": "Test cases; assertRaises",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "SQLite transactions",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "section": "Read versus write transactions; transaction control",
+          "reviewed": "2026-09-27",
+          "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+        }
+      ]
     }
   ],
   "publicFiles": [
@@ -1456,7 +1717,10 @@
     "practice/test_harness_workshop.py",
     "practice/README.md",
     "practice/operations-runbook.md",
-    "practice/architecture-decision.md"
+    "practice/architecture-decision.md",
+    "practice/durable_state.py",
+    "practice/test_durable_state.py",
+    "practice/test_parser_properties.py"
   ],
   "downloads": [
     {

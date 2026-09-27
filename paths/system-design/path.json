@@ -85,6 +85,10 @@
     {
       "title": "Azure Architecture: microservice data considerations",
       "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations"
+    },
+    {
+      "title": "Little: A Proof for the Queuing Formula L = lambda W",
+      "url": "https://doi.org/10.1287/opre.9.3.383"
     }
   ],
   "stages": [
@@ -220,7 +224,16 @@
         ],
         "correct": 0,
         "explanation": "An invariant must remain true across valid operations, including concurrent ones; component choices are implementation decisions."
-      }
+      },
+      "references": [
+        {
+          "title": "Google SRE: implementing SLOs",
+          "url": "https://sre.google/workbook/implementing-slos/",
+          "section": "Choosing an initial SLO; implementing SLOs",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "slos",
@@ -266,7 +279,16 @@
         ],
         "correct": 2,
         "explanation": "The denominator is eligible requests in the stated window. Traffic variation prevents converting this directly into downtime minutes."
-      }
+      },
+      "references": [
+        {
+          "title": "Google SRE: implementing SLOs",
+          "url": "https://sre.google/workbook/implementing-slos/",
+          "section": "Choosing an initial SLO; implementing SLOs",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "workload",
@@ -312,7 +334,16 @@
         ],
         "correct": 1,
         "explanation": "The peak multiplier estimates how concentrated arrivals are relative to the daily average; scheduled bursts require separate evidence."
-      }
+      },
+      "references": [
+        {
+          "title": "Google SRE: implementing SLOs",
+          "url": "https://sre.google/workbook/implementing-slos/",
+          "section": "Choosing an initial SLO; implementing SLOs",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "latency",
@@ -358,7 +389,16 @@
         ],
         "correct": 0,
         "explanation": "Percentiles are positions in a distribution, so averages of subgroup percentiles do not reconstruct the combined distribution."
-      }
+      },
+      "references": [
+        {
+          "title": "Little: A Proof for the Queuing Formula L = lambda W",
+          "url": "https://doi.org/10.1287/opre.9.3.383",
+          "section": "Operations Research 9(3), 383–387 (1961)",
+          "reviewed": "2026-09-27",
+          "scope": "Long-run averages for a stable consistently bounded system; not a per-request prediction or an overload sizing guarantee."
+        }
+      ]
     },
     {
       "id": "network",
@@ -404,7 +444,16 @@
         ],
         "correct": 2,
         "explanation": "The operation may have committed before its response was lost. Silence establishes uncertainty, not rollback."
-      }
+      },
+      "references": [
+        {
+          "title": "IETF RFC 9110: HTTP semantics",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+          "section": "Sections 3–9: HTTP architecture, messages and methods",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "api-contracts",
@@ -450,7 +499,16 @@
         ],
         "correct": 1,
         "explanation": "Setting a specified value repeats the same intended state. Toggling or incrementing can produce a new effect on every attempt."
-      }
+      },
+      "references": [
+        {
+          "title": "IETF RFC 9110: HTTP semantics",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+          "section": "Sections 3–9: HTTP architecture, messages and methods",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "data-model",
@@ -496,7 +554,16 @@
         ],
         "correct": 0,
         "explanation": "A useful model preserves business identity and supports required queries. Storage products follow those needs."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: microservice data considerations",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+          "section": "Data sovereignty; consistency and transactions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "indexes-storage",
@@ -542,7 +609,16 @@
         ],
         "correct": 2,
         "explanation": "An index is another structure to maintain when rows change, which consumes work and space even when it accelerates reads."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: microservice data considerations",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+          "section": "Data sovereignty; consistency and transactions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "scaling",
@@ -588,7 +664,16 @@
         ],
         "correct": 1,
         "explanation": "API capacity cannot bypass a saturated shared dependency. Identify the actual bottleneck before adding workers."
-      }
+      },
+      "references": [
+        {
+          "title": "Google SRE: monitoring distributed systems",
+          "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+          "section": "The four golden signals",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "cache",
@@ -675,7 +760,16 @@
             "explanation": "Versioning avoids silently treating v3 as v4; discovery and publication still need their own freshness policy."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: cache-aside",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside",
+          "section": "Solution; issues and considerations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "queues",
@@ -721,7 +815,16 @@
         ],
         "correct": 2,
         "explanation": "A consumer may perform an effect then crash before acknowledgment. End-to-end effects need their own duplicate handling."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: competing consumers",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+          "section": "Solution; issues and considerations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "replication",
@@ -767,7 +870,16 @@
         ],
         "correct": 1,
         "explanation": "Replication maintains copies of current state; an unwanted deletion may reach all of them, so recoverable history is separate."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: microservice data considerations",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+          "section": "Data sovereignty; consistency and transactions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "consistency-cap",
@@ -813,7 +925,16 @@
         ],
         "correct": 0,
         "explanation": "CAP analyzes whether its consistency and availability properties can both hold when communication partitions occur."
-      }
+      },
+      "references": [
+        {
+          "title": "Gilbert and Lynch: CAP impossibility result",
+          "url": "https://www.cs.princeton.edu/courses/archive/spr22/cos418/papers/cap.pdf",
+          "section": "Definitions and impossibility theorem",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "partitioning",
@@ -859,7 +980,16 @@
         ],
         "correct": 2,
         "explanation": "One popular record can receive most requests even if partitions contain the same number of records."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: sharding",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
+          "section": "Solution; issues and considerations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "transactions",
@@ -905,7 +1035,16 @@
         ],
         "correct": 1,
         "explanation": "Separate read and write steps allow interleaving. The decision and dependent changes need a correct concurrency boundary."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: microservice data considerations",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+          "section": "Data sovereignty; consistency and transactions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "idempotency",
@@ -992,7 +1131,16 @@
             "explanation": "No new business effect is needed. A different payload with K1 should conflict."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "AWS Builders Library: idempotent APIs",
+          "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+          "section": "Reducing client complexity with idempotent API design",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "resilience",
@@ -1038,7 +1186,16 @@
         ],
         "correct": 2,
         "explanation": "Jitter spreads retries in time. It cannot create capacity, guarantee success or prevent duplicated business effects."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS Builders Library: timeouts, retries and jitter",
+          "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+          "section": "Timeouts; retries and backoff; jitter",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "backpressure",
@@ -1125,7 +1282,16 @@
             "explanation": "If arrivals remained 100/s, there would be no spare capacity to drain the existing queue."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: competing consumers",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+          "section": "Solution; issues and considerations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "outbox",
@@ -1171,7 +1337,16 @@
         ],
         "correct": 0,
         "explanation": "An outbox transaction couples the local domain change with its event record; publishing and external effects happen later."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS: transactional outbox",
+          "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+          "section": "Intent; issues and considerations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "observability",
@@ -1217,7 +1392,16 @@
         ],
         "correct": 2,
         "explanation": "The synchronous request may only accept a job. Measure asynchronous completion and age to detect the actual user failure."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry: signals",
+          "url": "https://opentelemetry.io/docs/concepts/signals/",
+          "section": "Traces, metrics and logs",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "security",
@@ -1243,6 +1427,12 @@
           "paragraphs": [
             "Encryption in transit and at rest protects different threats but does not stop a legitimately authenticated user exploiting broken object authorization. Bound upload sizes and parsing work, validate input, use parameterized queries and isolate secrets from source code. Define session revocation and secret rotation behavior. Threat modeling asks what can go wrong at each trust boundary and how a control can be verified."
           ]
+        },
+        {
+          "title": "Repeat the threat-model pass",
+          "paragraphs": [
+            "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+          ]
         }
       ],
       "exercise": {
@@ -1263,7 +1453,23 @@
         ],
         "correct": 1,
         "explanation": "Unpredictable identifiers are useful defense in depth, but they do not decide whether a caller is allowed to access a resource."
-      }
+      },
+      "references": [
+        {
+          "title": "OWASP: authorization",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "section": "Deny by default; validate permissions on every request",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "OWASP Threat Modeling Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+          "section": "Four questions; system decomposition and validation",
+          "reviewed": "2026-09-27",
+          "scope": "Repeatable design worksheet; not security certification."
+        }
+      ]
     },
     {
       "id": "recovery",
@@ -1309,7 +1515,16 @@
         ],
         "correct": 0,
         "explanation": "A restore with correctness checks exercises data, credentials, configuration and procedure; a scheduled backup alone does not."
-      }
+      },
+      "references": [
+        {
+          "title": "AWS Well-Architected: disaster recovery",
+          "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html",
+          "section": "Plan for disaster recovery",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "evolution",
@@ -1355,7 +1570,16 @@
         ],
         "correct": 2,
         "explanation": "Rolling deployments temporarily run different versions, so readers, writers and schema must remain compatible during transition."
-      }
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: microservice data considerations",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
+          "section": "Data sovereignty; consistency and transactions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "design-review",
@@ -1381,6 +1605,12 @@
           "paragraphs": [
             "A benchmark must report concurrency, arrival model, payloads, dataset, duration, warmup and failures. Closed-loop clients that wait before sending again can hide overload behavior; an arrival-rate model asks a different question. Track tail latency and correctness, not only requests per second. A paper design and calculator cannot certify production reliability, security or cost."
           ]
+        },
+        {
+          "title": "Repeat the threat-model pass",
+          "paragraphs": [
+            "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+          ]
         }
       ],
       "exercise": {
@@ -1401,7 +1631,23 @@
         ],
         "correct": 1,
         "explanation": "Explicit assumptions and a test that can fail make the claim inspectable; a diagram alone supplies no capacity evidence."
-      }
+      },
+      "references": [
+        {
+          "title": "Google SRE: monitoring distributed systems",
+          "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+          "section": "The four golden signals",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "OWASP Threat Modeling Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+          "section": "Four questions; system decomposition and validation",
+          "reviewed": "2026-09-27",
+          "scope": "Repeatable design worksheet; not security certification."
+        }
+      ]
     }
   ],
   "publicFiles": [
@@ -1409,7 +1655,8 @@
     "practice/test_capacity_calculator.py",
     "practice/design-workbook.md",
     "practice/adr-template.md",
-    "practice/README.md"
+    "practice/README.md",
+    "practice/threat-model-worksheet.md"
   ],
   "downloads": [
     {

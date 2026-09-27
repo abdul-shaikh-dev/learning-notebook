@@ -30,6 +30,36 @@
       "href": "paths/python/practice/README.md",
       "role": "guide",
       "description": "Practice instructions and limitations"
+    },
+    {
+      "id": "async_failure_lab-py",
+      "href": "paths/python/practice/async_failure_lab.py",
+      "role": "reference",
+      "description": "Optional focused practice: async failure lab"
+    },
+    {
+      "id": "test_async_failure_lab-py",
+      "href": "paths/python/practice/test_async_failure_lab.py",
+      "role": "test",
+      "description": "Optional focused practice: test async failure lab"
+    },
+    {
+      "id": "installed-package-exercise-md",
+      "href": "paths/python/practice/installed-package-exercise.md",
+      "role": "guide",
+      "description": "Optional focused practice: installed-package-exercise"
+    },
+    {
+      "id": "python_package_starter-py",
+      "href": "paths/python/practice/python_package_starter.py",
+      "role": "reference",
+      "description": "Complete installed-wheel packaging exercise"
+    },
+    {
+      "id": "test_installed_package-py",
+      "href": "paths/python/practice/test_installed_package.py",
+      "role": "test",
+      "description": "Complete installed-wheel packaging exercise"
     }
   ],
   "tasks": [
@@ -128,7 +158,12 @@
         "intermediate_project-py",
         "advanced_project-py",
         "test_projects-py",
-        "README-md"
+        "README-md",
+        "async_failure_lab-py",
+        "test_async_failure_lab-py",
+        "installed-package-exercise-md",
+        "python_package_starter-py",
+        "test_installed_package-py"
       ],
       "steps": [
         "Extract the bundle and open python-practice. All listed files are flat at this folder root.",

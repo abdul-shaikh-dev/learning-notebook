@@ -24,7 +24,7 @@ SELECT r.*,
       ELSE 'accepted' END AS Disposition
 INTO #LNClassifiedEvents
 FROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;
-SELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;
+SELECT RawRowId,EventId,OrderId,AmountText,ParsedAmount AS NormalizedAmount,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;
 --Conservative conflict policy: differently formatted payload strings also require review.
 --TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.
 --A strict source-scale contract would require a separate precision check before acceptance.

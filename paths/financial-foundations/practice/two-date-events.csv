@@ -1,0 +1,6 @@
+event,quantity,price_eur,cash_eur,eurusd,note
+opening,100,100,0,1.10,Opening cost EUR90 per share; opening deduction EUR20
+buy,20,102,-2040,1.12,Settled purchase
+sell,-30,105,3150,1.12,Settled sale; FIFO for cost allocation
+dividend,0,0,50,1.12,EUR0.50 on the opening 100 shares; entitlement assumed
+closing,90,104,0,1.12,Closing deduction EUR35; no other events

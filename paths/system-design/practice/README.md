@@ -22,3 +22,8 @@ Important boundaries:
 - Storage excludes backups, transaction logs, compression and temporary space unless modeled separately.
 - Error budget counts eligible requests, not downtime minutes.
 - Tests verify calculation examples, boundary cases and validation. They do not run a database, distributed system, network load test or security assessment.
+
+
+## Threat-model extension
+
+Complete `threat-model-worksheet.md` for the booking design. Record planned versus executed tests and repeat after trust-boundary changes.

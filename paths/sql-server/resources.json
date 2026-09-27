@@ -30,6 +30,54 @@
       "href": "paths/sql-server/advanced-solutions.sql",
       "role": "reference",
       "description": "Advanced import worked solution"
+    },
+    {
+      "id": "concurrency-lab-md",
+      "href": "paths/sql-server/concurrency-lab.md",
+      "role": "guide",
+      "description": "Opt-in two-session schedules and cleanup guide"
+    },
+    {
+      "id": "concurrency-setup-sql",
+      "href": "paths/sql-server/concurrency-setup.sql",
+      "role": "reference",
+      "description": "Dedicated disposable database setup; opt-in required"
+    },
+    {
+      "id": "session-a-sql",
+      "href": "paths/sql-server/session-a.sql",
+      "role": "reference",
+      "description": "Guarded session A experiments"
+    },
+    {
+      "id": "session-b-sql",
+      "href": "paths/sql-server/session-b.sql",
+      "role": "reference",
+      "description": "Guarded session B experiments"
+    },
+    {
+      "id": "concurrency-reset-sql",
+      "href": "paths/sql-server/concurrency-reset.sql",
+      "role": "reference",
+      "description": "Reset only the disposable fixture"
+    },
+    {
+      "id": "query-store-lab-sql",
+      "href": "paths/sql-server/query-store-lab.sql",
+      "role": "reference",
+      "description": "Query Store before/after index experiment"
+    },
+    {
+      "id": "concurrency-cleanup-sql",
+      "href": "paths/sql-server/concurrency-cleanup.sql",
+      "role": "reference",
+      "description": "Ownership-scoped opt-in database removal"
+    },
+    {
+      "id": "rounding-lab-sql",
+      "href": "paths/sql-server/rounding-lab.sql",
+      "role": "reference",
+      "description": "Raw versus normalized decimal fixture"
     }
   ],
   "tasks": [
@@ -42,7 +90,15 @@
         "solutions-sql",
         "README-md",
         "advanced-lab-sql",
-        "advanced-solutions-sql"
+        "advanced-solutions-sql",
+        "concurrency-lab-md",
+        "concurrency-setup-sql",
+        "session-a-sql",
+        "session-b-sql",
+        "concurrency-reset-sql",
+        "query-store-lab-sql",
+        "concurrency-cleanup-sql",
+        "rounding-lab-sql"
       ],
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -60,7 +116,7 @@
         }
       ],
       "notes": [
-        "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+        "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
         "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
@@ -74,7 +130,15 @@
         "solutions-sql",
         "README-md",
         "advanced-lab-sql",
-        "advanced-solutions-sql"
+        "advanced-solutions-sql",
+        "concurrency-lab-md",
+        "concurrency-setup-sql",
+        "session-a-sql",
+        "session-b-sql",
+        "concurrency-reset-sql",
+        "query-store-lab-sql",
+        "concurrency-cleanup-sql",
+        "rounding-lab-sql"
       ],
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -92,7 +156,7 @@
         }
       ],
       "notes": [
-        "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+        "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
         "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
@@ -106,7 +170,15 @@
         "solutions-sql",
         "README-md",
         "advanced-lab-sql",
-        "advanced-solutions-sql"
+        "advanced-solutions-sql",
+        "concurrency-lab-md",
+        "concurrency-setup-sql",
+        "session-a-sql",
+        "session-b-sql",
+        "concurrency-reset-sql",
+        "query-store-lab-sql",
+        "concurrency-cleanup-sql",
+        "rounding-lab-sql"
       ],
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -114,7 +186,8 @@
         "In the same SSMS query window execute setup.sql, advanced-lab.sql, then advanced-solutions.sql twice. Expect three inserts then zero, ledger total 215 and net outstanding 175; six raw rows split into 3 accepted, 1 duplicate, 1 invalid and 1 orphan.",
         "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
         "Complete the assessment requirements in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.; Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.; Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.; Specify security role boundaries,backward-compatible migration steps and incident diagnostics.; Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
-        "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+        "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation.",
+        "Read concurrency-lab.md; explicitly opt in only on an authorized training instance, follow two-session isolation/lost-update/deadlock schedules, capture Query Store evidence, and perform guarded cleanup. Run rounding-lab.sql to show accepted normalization separately from rejection."
       ],
       "commands": [],
       "prerequisites": [
@@ -124,9 +197,10 @@
         }
       ],
       "notes": [
-        "A training SQL Server instance and SSMS; permission to create the LearningNotebook training database.",
+        "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
         "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results.",
+        "Dedicated lab targets SQL Server 2019+ with Query Store permission. These scripts were source-inspected, not engine-executed by the content editor; submit your actual outputs and failed schedule attempts."
       ]
     }
   ],

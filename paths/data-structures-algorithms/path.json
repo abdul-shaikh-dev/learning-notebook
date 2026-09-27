@@ -57,7 +57,9 @@
   ],
   "publicFiles": [
     "practice/algorithms.py",
-    "practice/advanced_algorithms.py"
+    "practice/advanced_algorithms.py",
+    "practice/trees_graphs.py",
+    "practice/test_trees_graphs.py"
   ],
   "downloads": [
     {
@@ -109,7 +111,16 @@
         "correct": 1,
         "explanation": "Each element is inspected once, assuming constant-cost comparisons."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Primary reference: Analysis of Algorithms",
+          "url": "https://algs4.cs.princeton.edu/14analysis/",
+          "section": "Analysis of Algorithms",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "arrays",
@@ -149,7 +160,16 @@
         "correct": 1,
         "explanation": "Front insertion moves references across the array, so its cost grows with n."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Primary reference: Resizing arrays and linked lists",
+          "url": "https://algs4.cs.princeton.edu/13stacks/",
+          "section": "Resizing arrays and linked lists",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "maps",
@@ -190,7 +210,16 @@
         "correct": 0,
         "explanation": "A set directly models whether an item has been seen."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Primary reference: Hash tables",
+          "url": "https://algs4.cs.princeton.edu/34hash/",
+          "section": "Hash tables",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "stacks-queues",
@@ -230,7 +259,16 @@
         "correct": 1,
         "explanation": "FIFO preserves insertion order when serving queued items."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Primary reference: Stacks and queues",
+          "url": "https://algs4.cs.princeton.edu/13stacks/",
+          "section": "Stacks and queues",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "binary-search",
@@ -302,7 +340,16 @@
           }
         ]
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Binary search",
+          "url": "https://algs4.cs.princeton.edu/11model/",
+          "section": "Binary search",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "sorting",
@@ -343,7 +390,16 @@
         "correct": 0,
         "explanation": "Stability specifies tie behavior, not that the entire order stays unchanged."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Sorting stability and comparison model",
+          "url": "https://algs4.cs.princeton.edu/21elementary/",
+          "section": "Sorting stability and comparison model",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "recursion",
@@ -362,6 +418,12 @@
           "title": "Reason about the tradeoff",
           "paragraphs": [
             "This example assumes a real acyclic tree and well-formed records. A cycle would never reach a base case. Counting calls and maximum depth are different measurements."
+          ]
+        },
+        {
+          "title": "Implemented tree practice",
+          "paragraphs": [
+            "The new binary-search-tree lesson and trees_graphs.py supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
           ]
         }
       ],
@@ -384,7 +446,16 @@
         "correct": 0,
         "explanation": "Without a base case and progress toward it, recursion does not terminate."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Recursive tree search and inorder traversal",
+          "url": "https://algs4.cs.princeton.edu/32bst/",
+          "section": "Recursive tree search and inorder traversal",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "graphs",
@@ -424,7 +495,16 @@
         "correct": 1,
         "explanation": "Queue layers correspond to increasing numbers of edges, not arbitrary weights."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Breadth-first search",
+          "url": "https://algs4.cs.princeton.edu/41graph/",
+          "section": "Breadth-first search",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "heaps",
@@ -464,7 +544,16 @@
         "correct": 1,
         "explanation": "The smallest is at the root; siblings and subtrees are not globally sorted."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Binary heaps",
+          "url": "https://algs4.cs.princeton.edu/24pq/",
+          "section": "Binary heaps",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "dynamic-programming",
@@ -506,7 +595,16 @@
         "correct": 0,
         "explanation": "State meaning and base cases make the recurrence assessable; recursion is optional."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Primary reference: Dynamic programming lectures 19–22",
+          "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
+          "section": "Dynamic programming lectures 19–22",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "linked-nodes",
@@ -552,7 +650,16 @@
         ],
         "correct": 0,
         "explanation": "Only the pointer update is constant-time; locating the node can dominate."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Linked lists",
+          "url": "https://algs4.cs.princeton.edu/13stacks/",
+          "section": "Linked lists",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "merge-sort",
@@ -598,7 +705,16 @@
         ],
         "correct": 0,
         "explanation": "Each pointer moves forward at most the length of its run."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Top-down mergesort",
+          "url": "https://algs4.cs.princeton.edu/22mergesort/",
+          "section": "Top-down mergesort",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "two-pointers",
@@ -644,7 +760,16 @@
         ],
         "correct": 0,
         "explanation": "The contract requires two different elements."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Binary search and ordered data",
+          "url": "https://introcs.cs.princeton.edu/java/42sort/",
+          "section": "Binary search and ordered data",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "sliding-window",
@@ -690,7 +815,16 @@
         ],
         "correct": 0,
         "explanation": "An older occurrence before the window must not move the boundary backward."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Dictionary operations supporting maintained state",
+          "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
+          "section": "Dictionary operations supporting maintained state",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "topological",
@@ -717,10 +851,18 @@
           "paragraphs": [
             "Time and space are O(V+E) and O(V) beyond the input adjacency lists respectively. Multiple valid orders can exist. A DFS alternative uses unseen/active/finished states; encountering an active vertex detects a cycle. Reachability alone does not prove every prerequisite is complete."
           ]
+        },
+        {
+          "title": "DFS with a directed cycle witness",
+          "paragraphs": [
+            "Run directed_dfs in trees_graphs.py. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness [v,...,v] or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
+            "An explicit stack retains each adjacency iterator and active-path index. Each vertex/edge is processed once: O(V+E) time and space including normalized adjacency. The tests compare all 512 directed three-vertex graphs with an independent transitive-closure oracle, check witness edges, and cover a 3,000-edge chain without recursion."
+          ],
+          "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []"
         }
       ],
       "exercise": {
-        "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A.",
+        "prompt": "Write a validator checking that every dependency precedes its target, and reject A→B→A. Run the iterative DFS reference and verify each edge of its cycle witness; contrast a gray back edge with a black shared dependency.",
         "solution": "graph = {\"A\":[\"C\"], \"B\":[\"C\"], \"C\":[]}\norder = topological(graph)\npositions = {node:i for i,node in enumerate(order)}\nassert all(positions[u] < positions[v] for u,vs in graph.items() for v in vs)\ntry:\n    topological({\"A\":[\"B\"],\"B\":[\"A\"]})\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"cycle accepted\")",
         "checks": [
           "Validate constraints rather than one arbitrary order.",
@@ -736,7 +878,16 @@
         ],
         "correct": 0,
         "explanation": "Remaining vertices cannot be freed because cyclic prerequisites persist."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Directed cycles and topological sort",
+          "url": "https://algs4.cs.princeton.edu/42digraph/",
+          "section": "Directed cycles and topological sort",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "dijkstra",
@@ -763,6 +914,12 @@
           "paragraphs": [
             "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
           ]
+        },
+        {
+          "title": "Preconditions versus boundary validation",
+          "paragraphs": [
+            "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Inputs outside that contract are unsupported; this is not a valid-input correctness bug. Add a validated boundary if accepting untrusted data."
+          ]
         }
       ],
       "exercise": {
@@ -782,7 +939,16 @@
         ],
         "correct": 0,
         "explanation": "The limitation is in correctness assumptions, not numeric storage."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Dijkstra algorithm and nonnegative weights",
+          "url": "https://algs4.cs.princeton.edu/44sp/",
+          "section": "Dijkstra algorithm and nonnegative weights",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "greedy",
@@ -829,7 +995,16 @@
         ],
         "correct": 0,
         "explanation": "Changing the objective invalidates the exchange argument."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Lecture 1: interval scheduling",
+          "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/pages/lecture-notes/",
+          "section": "Lecture 1: interval scheduling",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "backtracking",
@@ -875,7 +1050,16 @@
         ],
         "correct": 0,
         "explanation": "All outputs would otherwise refer to the same mutable list."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Recursive backtracking",
+          "url": "https://introcs.cs.princeton.edu/java/23recursion/",
+          "section": "Recursive backtracking",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "knapsack",
@@ -902,6 +1086,12 @@
           "paragraphs": [
             "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
           ]
+        },
+        {
+          "title": "Preconditions versus boundary validation",
+          "paragraphs": [
+            "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug."
+          ]
         }
       ],
       "exercise": {
@@ -921,7 +1111,16 @@
         ],
         "correct": 0,
         "explanation": "dp[c-weight] must still represent only previously processed items."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Dynamic programming and knapsack",
+          "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
+          "section": "Dynamic programming and knapsack",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     },
     {
       "id": "algorithm-review",
@@ -968,7 +1167,72 @@
         ],
         "correct": 0,
         "explanation": "A finite set of timings is empirical evidence, not an asymptotic proof."
-      }
+      },
+      "references": [
+        {
+          "title": "Primary reference: Test cases and assertions",
+          "url": "https://docs.python.org/3.11/library/unittest.html",
+          "section": "Test cases and assertions",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
+      "id": "binary-search-tree",
+      "title": "Implemented binary search tree: ordering and deletion",
+      "stage": "intermediate",
+      "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
+      "sections": [
+        {
+          "title": "Contract and collaboration",
+          "paragraphs": [
+            "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+            "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
+          ]
+        },
+        {
+          "title": "Trace a two-child deletion",
+          "paragraphs": [
+            "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
+          ],
+          "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
+        },
+        {
+          "title": "Verify the invariant beyond a sample",
+          "paragraphs": [
+            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
+        "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
+        "checks": [
+          "All insert/delete orders preserve a set oracle and global ordering.",
+          "Duplicate and missing-key policies are tested.",
+          "Skewed input costs O(n), not guaranteed O(log n)."
+        ]
+      },
+      "quiz": {
+        "question": "Which evidence demonstrates this contract?",
+        "options": [
+          "All insert/delete orders preserve a set oracle and global ordering.",
+          "A pattern or algorithm name alone",
+          "A single successful sample without failures"
+        ],
+        "correct": 0,
+        "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Order-based methods and deletion",
+          "url": "https://algs4.cs.princeton.edu/32bst/",
+          "section": "Order-based methods and deletion",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
     }
   ],
   "stages": [

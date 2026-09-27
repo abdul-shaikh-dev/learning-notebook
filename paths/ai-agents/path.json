@@ -48,6 +48,22 @@
     {
       "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
       "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices"
+    },
+    {
+      "title": "ReAct: optional original research",
+      "url": "https://arxiv.org/abs/2210.03629"
+    },
+    {
+      "title": "Toolformer: optional original research",
+      "url": "https://arxiv.org/abs/2302.04761"
+    },
+    {
+      "title": "Retrieval-Augmented Generation: optional original research",
+      "url": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "title": "AgentBench: optional original research",
+      "url": "https://arxiv.org/abs/2308.03688"
     }
   ],
   "stages": [
@@ -188,7 +204,16 @@
         ],
         "correct": 0,
         "explanation": "Generated requests are proposals. Trusted application code decides whether and how a capability may execute."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "workflow",
@@ -236,7 +261,16 @@
         ],
         "correct": 1,
         "explanation": "More autonomy is a design cost. A measured failure and a testable improvement provide a reason to incur it."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "context",
@@ -284,7 +318,16 @@
         ],
         "correct": 2,
         "explanation": "A character cap bounds one payload property; accurate token accounting requires the relevant tokenizer or provider usage data."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "instructions",
@@ -332,7 +375,16 @@
         ],
         "correct": 0,
         "explanation": "Content cannot grant itself authority. Approval must come from an authenticated channel and be checked against the proposed action."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "section": "Safety risks and mitigations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "tools",
@@ -380,7 +432,23 @@
         ],
         "correct": 1,
         "explanation": "A correct shape can still identify a record the caller must not access. Authorization requires trusted identity and policy."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "Toolformer",
+          "url": "https://arxiv.org/abs/2302.04761",
+          "section": "Abstract, method and evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+        }
+      ]
     },
     {
       "id": "loop",
@@ -459,7 +527,16 @@
             "explanation": "The ID check proves evidence membership; semantic support still needs evaluation."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "state",
@@ -507,7 +584,16 @@
         ],
         "correct": 0,
         "explanation": "Operational progress is established by execution evidence, not by generated narration."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "grounding",
@@ -555,7 +641,16 @@
         ],
         "correct": 1,
         "explanation": "Membership is a useful mechanical check but does not establish relevance, entailment or source quality."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "arguments",
@@ -604,7 +699,16 @@
         ],
         "correct": 2,
         "explanation": "Pre-execution validation prevents malformed requests from reaching the capability. Documentation alone cannot enforce the contract."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "outputs",
@@ -652,7 +756,16 @@
         ],
         "correct": 0,
         "explanation": "Transport success does not establish the application contract or the trustworthiness of returned content."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "retrieval",
@@ -700,7 +813,23 @@
         ],
         "correct": 1,
         "explanation": "Similarity is about representation proximity. It does not encode truth, access rights or whether a passage supports a particular claim."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "Retrieval-Augmented Generation",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "section": "Abstract, method and evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+        }
+      ]
     },
     {
       "id": "memory",
@@ -748,7 +877,16 @@
         ],
         "correct": 2,
         "explanation": "Storage changes accessibility, not authority. Memory needs explicit provenance and lifecycle controls."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "section": "Safety risks and mitigations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "planning",
@@ -796,7 +934,23 @@
         ],
         "correct": 0,
         "explanation": "Plans coordinate work; evidence determines whether their assumptions still hold."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "ReAct",
+          "url": "https://arxiv.org/abs/2210.03629",
+          "section": "Abstract, method and evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+        }
+      ]
     },
     {
       "id": "clarification",
@@ -844,7 +998,16 @@
         ],
         "correct": 1,
         "explanation": "Clarification should resolve meaningful uncertainty, not become a ritual that blocks already authorized work."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "approval",
@@ -921,7 +1084,16 @@
             "explanation": "The executor stops because the action no longer matches."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "section": "Safety risks and mitigations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "failures",
@@ -969,7 +1141,16 @@
         ],
         "correct": 0,
         "explanation": "Client observation and remote execution can diverge. Unknown outcomes need reconciliation or a documented idempotency mechanism."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI function calling: proposals and outputs — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Function calling; strict mode; executing functions",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "budgets",
@@ -1017,7 +1198,16 @@
         ],
         "correct": 1,
         "explanation": "A turn counter cannot interrupt an operation already running. Time limits must be enforced where work executes."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "injection",
@@ -1093,7 +1283,16 @@
             "explanation": "The allowlist holds for this case; it does not prove every attack is defeated."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI safety guidance: untrusted data and layered controls — checked 26 September 2026; product deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "section": "Safety risks and mitigations",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "datasets",
@@ -1172,7 +1371,23 @@
             "explanation": "A fluent answer cannot offset a forbidden action."
           }
         ]
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "section": "Evaluation design and continuous evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "AgentBench",
+          "url": "https://arxiv.org/abs/2308.03688",
+          "section": "Abstract, method and evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+        }
+      ]
     },
     {
       "id": "traces",
@@ -1220,7 +1435,16 @@
         ],
         "correct": 1,
         "explanation": "An irreversible or privacy-sensitive action can violate the contract even when the final text is accurate."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "section": "Evaluation design and continuous evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "judges",
@@ -1268,7 +1492,16 @@
         ],
         "correct": 2,
         "explanation": "Without calibration and error analysis, the score reflects a fallible evaluator rather than validated task quality."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "section": "Evaluation design and continuous evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "multiagent",
@@ -1316,7 +1549,16 @@
         ],
         "correct": 0,
         "explanation": "A second role adds another fallible judgment. Independence and useful error detection must be demonstrated, not assumed."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "deployment",
@@ -1364,7 +1606,16 @@
         ],
         "correct": 1,
         "explanation": "Behavior depends on the full interacting configuration. Recording just one component cannot explain or reproduce many regressions."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI evaluation principles — checked 26 September 2026; hosted Evals deprecation notice applies",
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "section": "Evaluation design and continuous evaluation",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        }
+      ]
     },
     {
       "id": "live-integration",
@@ -1389,7 +1640,7 @@
         {
           "title": "Failures and tradeoffs",
           "paragraphs": [
-            "The product surface changes. Do not copy model names, limits or SDK methods from an old lesson without checking official documentation. The fetched evaluation and Agent Builder guides contain deprecation notices, so this path teaches portable evaluation concepts rather than recommending those hosted products. No live API snippets or model-quality claims are included."
+            "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested."
           ]
         }
       ],
@@ -1412,14 +1663,33 @@
         ],
         "correct": 2,
         "explanation": "The deterministic harness is only one layer. A real provider adds protocol, variability, operational and data-handling obligations."
-      }
+      },
+      "references": [
+        {
+          "title": "OpenAI agents: runtime comparison — checked 26 September 2026",
+          "url": "https://developers.openai.com/api/docs/guides/agents",
+          "section": "Agent runtime choices",
+          "reviewed": "2026-09-27",
+          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+        },
+        {
+          "title": "OpenAI function calling",
+          "url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "section": "Strict mode; function-call outputs",
+          "reviewed": "2026-09-27",
+          "scope": "Responses request builder inspected against official docs 2026-09-27; no live provider execution."
+        }
+      ]
     }
   ],
   "publicFiles": [
     "workshop.py",
     "test_workshop.py",
     "evaluation_cases.json",
-    "README.md"
+    "README.md",
+    "provider_scaffold.py",
+    "test_provider_scaffold.py",
+    "provider-integration-exercise.md"
   ],
   "downloads": [
     {

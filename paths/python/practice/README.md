@@ -21,3 +21,10 @@ Limits: 256 KiB input, 1000 records, 2048 bytes per JSONL record, 64-character I
 The advanced reference assumes one writer and a trusted local directory. It is not a sandbox, authenticated service or database. Same-directory replacement improves whole-file visibility, but does not certify power-loss durability or prevent lost updates between concurrent writers. Threads are demonstrated for composition; benchmark before using them for CPU-bound validation.
 
 Packaging extension: split the intermediate tool into a package with __init__.py, domain.py and __main__.py; then add pyproject.toml with metadata and a chosen build backend following the official PyPA guide. Test the installed artifact separately. These downloads run as scripts and do not claim a built/published distribution.
+
+
+## Focused optional extension (2026-09-27)
+
+From this practice directory run `python -m unittest test_async_failure_lab.py`. Read the corresponding lesson for evidence limits and extension scope.
+
+Run `python -m unittest -v test_installed_package.py` for the complete generated wheel exercise. This local build/install test passed on 2026-09-27 with Python 3.14, build 1.4.0 and setuptools 82.0.1; it reports missing pinned tooling as a skip.

@@ -30,6 +30,12 @@
       "href": "paths/system-design/practice/README.md",
       "role": "guide",
       "description": "Practice run instructions"
+    },
+    {
+      "id": "threat-model-worksheet-md",
+      "href": "paths/system-design/practice/threat-model-worksheet.md",
+      "role": "guide",
+      "description": "Optional focused practice: threat-model-worksheet"
     }
   ],
   "tasks": [
@@ -128,7 +134,8 @@
         "test_capacity_calculator-py",
         "design-workbook-md",
         "adr-template-md",
-        "README-md"
+        "README-md",
+        "threat-model-worksheet-md"
       ],
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",

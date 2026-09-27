@@ -30,6 +30,54 @@
       "href": "paths/react/practice/README.md",
       "role": "guide",
       "description": "Workshop run instructions"
+    },
+    {
+      "id": "RemoteLesson-tsx",
+      "href": "paths/react/practice/RemoteLesson.tsx",
+      "role": "reference",
+      "description": "RemoteLesson.tsx — guided executable scaffold"
+    },
+    {
+      "id": "ui-test-tsx",
+      "href": "paths/react/practice/ui.test.tsx",
+      "role": "test",
+      "description": "ui.test.tsx — guided executable scaffold"
+    },
+    {
+      "id": "vite-config-ts",
+      "href": "paths/react/practice/vite.config.ts",
+      "role": "reference",
+      "description": "vite.config.ts — guided executable scaffold"
+    },
+    {
+      "id": "main-tsx",
+      "href": "paths/react/practice/main.tsx",
+      "role": "reference",
+      "description": "main.tsx — guided executable scaffold"
+    },
+    {
+      "id": "index-html",
+      "href": "paths/react/practice/index.html",
+      "role": "reference",
+      "description": "index.html — guided executable scaffold"
+    },
+    {
+      "id": "package-json",
+      "href": "paths/react/practice/package.json",
+      "role": "reference",
+      "description": "package.json — guided executable scaffold"
+    },
+    {
+      "id": "package-lock-json",
+      "href": "paths/react/practice/package-lock.json",
+      "role": "reference",
+      "description": "package-lock.json — guided executable scaffold"
+    },
+    {
+      "id": "tsconfig-json",
+      "href": "paths/react/practice/tsconfig.json",
+      "role": "reference",
+      "description": "tsconfig.json — guided executable scaffold"
     }
   ],
   "tasks": [
@@ -66,8 +114,8 @@
         }
       ],
       "notes": [
-        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+        "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -80,7 +128,15 @@
         "AdvancedApp-tsx",
         "tracker-core-ts",
         "tracker-core-test-ts",
-        "README-md"
+        "README-md",
+        "RemoteLesson-tsx",
+        "ui-test-tsx",
+        "vite-config-ts",
+        "main-tsx",
+        "index-html",
+        "package-json",
+        "package-lock-json",
+        "tsconfig-json"
       ],
       "steps": [
         "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -97,9 +153,9 @@
           "expected": "The domain regression checks finish successfully."
         },
         {
-          "label": "PowerShell · kit root · create UI project once",
-          "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
-          "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+          "label": "PowerShell · extracted kit root · pinned UI harness",
+          "command": "npm ci\nnpm test\nnpm run build\nnpm run dev",
+          "expected": "Domain checks, five component regressions and production build pass; Vite serves the tracker."
         }
       ],
       "prerequisites": [
@@ -109,8 +165,8 @@
         }
       ],
       "notes": [
-        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+        "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -123,7 +179,15 @@
         "AdvancedApp-tsx",
         "tracker-core-ts",
         "tracker-core-test-ts",
-        "README-md"
+        "README-md",
+        "RemoteLesson-tsx",
+        "ui-test-tsx",
+        "vite-config-ts",
+        "main-tsx",
+        "index-html",
+        "package-json",
+        "package-lock-json",
+        "tsconfig-json"
       ],
       "steps": [
         "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -140,9 +204,9 @@
           "expected": "The domain regression checks finish successfully."
         },
         {
-          "label": "PowerShell · kit root · create UI project once",
-          "command": "npm create vite@latest notebook-practice -- --template react-ts\nCopy-Item ./AdvancedApp.tsx ./notebook-practice/src/App.tsx\nCopy-Item ./tracker-core.ts ./notebook-practice/src/tracker-core.ts\ncd notebook-practice\nnpm install\nnpm run build\nnpm run dev",
-          "expected": "The TypeScript production build passes and the Vite development server opens the editable tracker. Return to the kit root for domain checks."
+          "label": "PowerShell · extracted kit root · pinned UI harness",
+          "command": "npm ci\nnpm test\nnpm run build\nnpm run dev",
+          "expected": "Domain checks, five component regressions and production build pass; Vite serves the tracker."
         }
       ],
       "prerequisites": [
@@ -152,8 +216,8 @@
         }
       ],
       "notes": [
-        "Node.js 24 and npm for the reference checks; a React TypeScript Vite project for the UI.",
-        "The supplied UI supports in-memory edits and backup validation. Persistence, API loading, routing and release evidence are extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
+        "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
+        "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     }

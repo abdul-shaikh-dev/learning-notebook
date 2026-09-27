@@ -100,3 +100,43 @@ const FOUNDATIONS = [
     "answer": "No. The percentage describes probability under a specified assessment, not the size of a price haircut."
   }
 ];
+
+FOUNDATIONS.push(...[
+  {
+    "id": "daily-pnl",
+    "title": "Reconcile a whole day, including cash and FX",
+    "lessons": [
+      1,
+      6,
+      16,
+      17
+    ],
+    "paragraphs": [
+      "Opening quantity 100 plus 20 bought minus 30 sold leaves 90 shares. In the downloadable EUR case, raw carrying value falls from 10, 000 to 9, 360, but net cash received is 1, 160. Raw period economic return is therefore 520, not a loss of 640.",
+      "A deduction rising from 20 to 35 reduces the local result by 15 to 505 EUR. Translate each carrying value and cash flow at its supplied rate: opening EURUSD 1.10, closing and event rates 1.12. The reporting-currency result is 765.20 USD.",
+      "One explicit attribution convention translates local return at closing FX and separates FX on the opening carrying amount and on cash flows. The bridge is 565.60 + 199.60 + 0 = 765.20 USD. Different attribution order can allocate interactions differently; the total must still reconcile.",
+      "The workbook also compares FIFO with weighted-average cost and a two-for-one split. Cost allocation changes the realised/unrealised split, while the stated total economic result is unchanged. A split changes units and per-share price without creating a gain by itself."
+    ],
+    "example": "Opening adjusted value EUR 9, 980 ×1.10 = USD 10, 978\nClosing adjusted value EUR 9, 325 ×1.12 = USD 10, 444\nSigned cash EUR 1, 160 ×1.12 = USD 1, 299.20\nReturn: 10, 444 −10, 978 +1, 299.20 = USD 765.20",
+    "check": "If the dividend alone translates at 1.11 instead of 1.12, where does the change appear?",
+    "answer": "The EUR 50 dividend contributes USD 0.50 less cash. Add a −0.50 cash-FX term; USD return becomes 764.70. Local EUR return stays 505."
+  },
+  {
+    "id": "curve-repricing",
+    "title": "Reprice the same cash flows with different inputs",
+    "lessons": [
+      3,
+      4,
+      9
+    ],
+    "paragraphs": [
+      "A fixed two-payment instrument pays EUR 50 in year one and EUR 1, 050 in year two. FO discount factors are 0.95 and 0.90; independent factors are 0.94 and 0.88. Multiply each payment by its factor and sum.",
+      "FO value is 992.50; independent value 971.00. The −21.50 difference decomposes into −0.50 for year one and−21.00 for year two. This exact input bridge is linear in discount factors. It is not a full swap pricer because the cash flows are fixed.",
+      "In a separate flat annual-rate example, changing 5% to 6% gives exact value change−18.333927. A derivative-based first-order estimate gives−18.594104: the 0.260178 residual reflects curvature. Rates and discount factors are different input coordinates.",
+      "Before selecting a curve, check valuation date, currency, collateral/discounting basis, contractual conventions and source independence. Matching arithmetic is not evidence that the chosen curve is suitable."
+    ],
+    "example": "FO: 50×0.95 +1, 050×0.90 =992.50\nIndependent: 50×0.94 +1, 050×0.88 =971.00\nDifference:−21.50 =50×(−0.01)+1, 050×(−0.02)",
+    "check": "Why does exact discount-factor attribution reconcile while the rate sensitivity has a residual?",
+    "answer": "PV is linear in fixed cash flows times supplied discount factors. Discount factors are nonlinear functions of rates, so a first-order rate approximation omits curvature. Both need aligned units and evidence."
+  }
+]);

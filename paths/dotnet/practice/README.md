@@ -1,13 +1,13 @@
 # C# and .NET practice projects
 
-These three source files are complete replacements for generated Program.cs files. The project files are generated with the SDK, so no additional package is needed. They were tested with .NET SDK 9.0.318. Use a currently supported patched SDK; the learning path recommends .NET 10 LTS. To target .NET 10, change `-f net9.0` to `-f net10.0` in the commands. No .NET 10-only feature is used in these files, but the .NET 10 build was not verified here.
+These three source files are complete replacements for generated Program.cs files. The project files are generated with the SDK, so no additional package is needed. .NET 10 is the target used by the repository verification script and release workflow. Use a currently supported patched .NET 10 SDK. The package-free sources were originally checked with SDK 9.0.318; release verification now targets net10.0.
 
 Download foundation.cs, task-api.cs, acceptance.cs and this README into one directory. Run the following commands from that directory. `Copy-Item` replaces only the freshly generated Program.cs files; choose new project names if those directories already contain your work.
 
 ## Foundation project
 
 ```powershell
-dotnet new console -n Foundation -f net9.0
+dotnet new console -n Foundation -f net10.0
 Copy-Item ./foundation.cs ./Foundation/Program.cs
 dotnet run --project ./Foundation
 ```
@@ -25,7 +25,7 @@ Extend it with a lookup method and an explicit missing-task result. Keep title v
 ## Intermediate API baseline
 
 ```powershell
-dotnet new web -n PracticeApi -f net9.0
+dotnet new web -n PracticeApi -f net10.0
 Copy-Item ./task-api.cs ./PracticeApi/Program.cs
 dotnet run --project ./PracticeApi --urls http://127.0.0.1:5086
 ```
@@ -33,7 +33,7 @@ dotnet run --project ./PracticeApi --urls http://127.0.0.1:5086
 In another terminal in the download directory:
 
 ```powershell
-dotnet new console -n Acceptance -f net9.0
+dotnet new console -n Acceptance -f net10.0
 Copy-Item ./acceptance.cs ./Acceptance/Program.cs
 dotnet run --project ./Acceptance -- http://127.0.0.1:5086
 ```
@@ -46,10 +46,24 @@ This is a local, unauthenticated, memory-only learning baseline. Keep it bound t
 
 ## Intermediate assessment extension
 
-Replace the store with an EF Core SQLite implementation and a scoped context. Use compatible provider/tool versions for your target framework, add reviewed migrations, and retain the HTTP behavior. Add a real persistent concurrency token. Test restart persistence and a rollback from a new context. EF Core needs package restore; this extension is not included in the package-free baseline and was not run here.
+Replace the store with an EF Core SQLite implementation and a scoped context. Use compatible provider/tool versions for your target framework, add reviewed migrations, and retain the HTTP behavior. Add a real persistent concurrency token. Test restart persistence and a rollback from a new context. EF Core needs package restore; the guided executable below supplies a separate package-based scaffold. Migration generation and review remain learner work.
 
 ## Advanced assessment extension
 
 Configure real authentication and task ownership, enforce read/write policies, propagate request cancellation through database work, separate readiness from liveness, collect logs and metrics, and publish a release build. Add denial tests with a fake principal only inside a test host, then verify real token validation in staging. Measure a bounded list query under repeatable load and write a migration/rollback runbook. These extensions are assessed in the path; the baseline is a reference starting point, not their finished solution.
 
 No installation, deployment, identity-provider setup or migration is performed by opening these files.
+
+## Guided SQLite and authorization test host
+
+Download PersistenceChecks.csproj, persistence-api.cs and persistence-checks.cs beside this guide. Run:
+
+```powershell
+dotnet run --project ./PersistenceChecks.csproj -c Release
+```
+
+The project pins EF Core SQLite and ASP.NET Core TestHost 10.0.9 for .NET 10. The native SQLite dependency is explicitly pinned to SQLitePCLRaw.lib.e_sqlite3 3.53.3 to avoid the older transitive native-library vulnerability flagged by NuGet restore. It runs 13 assertions against a temporary disk SQLite database and in-process HTTP server: blank input; anonymous 401; authenticated permission denial 403; owner creation/read/write; cross-owner read/write denial; stale HTTP version; host restart persistence; fresh-context rollback; competing-context version conflict; and pre-canceled database query. The printed count is the executed evidence. It deletes its own temporary database after the host closes. Package restore requires NuGet access. Recheck patched package versions together when upgrading.
+
+The fake header identity exists only in persistence-checks.cs, which creates a Testing host. It does not validate tokens, signatures, issuer, audience, expiration or identity-provider integration. This proves policy/ownership decisions for known principals, not real authentication security. No secrets or remote service are required. Replace that host setup with real bearer authentication in a separately configured staging application, then test expired/wrong issuer/wrong audience tokens before production.
+
+This is a focused guided extension, not a drop-in replacement preserving every endpoint in task-api.cs. It uses EnsureCreated solely for a fresh disposable test database, not migrations or production startup. Next: generate/review migrations in a separate project; add bounded owner-filtered lists; preserve the baseline HTTP contract; test malformed inputs, rollback after a multi-step failure and overlapping HTTP writes; add readiness, logging, load evidence and a migration/rollback runbook. The pre-canceled query checks token propagation, not timing or interruption of an already running database operation. SQLite evidence applies to SQLite and does not establish behavior of another production provider.

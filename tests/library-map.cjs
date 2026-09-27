@@ -4,7 +4,7 @@ const nodes=new Map(),store=new Map(),preferences=new Map();
 function node(id){if(!nodes.has(id))nodes.set(id,{value:'',innerHTML:'',textContent:'',hidden:false,addEventListener(type,fn){this[type]=fn;},querySelectorAll(){return [];}});return nodes.get(id);}
 const ctx={LEARNING_PATHS:paths,document:{getElementById:node},window:{addEventListener(){},scrollTo(){}},location:{hash:''},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},sessionStorage:{getItem:k=>preferences.get(k)||null,setItem:(k,v)=>preferences.set(k,v)}};
 vm.createContext(ctx);vm.runInContext(['library-map','learning-tools','catalog'].map(f=>fs.readFileSync('assets/js/'+f+'.js','utf8')).join('\n'),ctx);
-const html=node('main').innerHTML;assert.ok(html.includes('Your learning map'));assert.ok(html.includes('231 lessons'));
+const html=node('main').innerHTML;assert.ok(html.includes('Your learning map'));assert.ok(html.includes(paths.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0)+' lessons'));
 for(const p of paths.filter(p=>p.status==='ready'))assert.ok(html.includes(p.href||'#path/'+p.id),p.id);
 const buttons=['map','list'].map(view=>({dataset:{libraryView:view},setAttribute(k,v){this[k]=v;},addEventListener(k,v){this[k]=v;}}));
 ctx.bindLibraryMap({querySelectorAll:()=>buttons});buttons[1].click();assert.equal(node('learning-map').hidden,true);assert.equal(node('path-list').hidden,false);assert.equal(buttons[1]['aria-pressed'],'true');ctx.bindLibraryMap({querySelectorAll:()=>buttons});assert.equal(node('learning-map').hidden,true,'View preference survives returning');buttons[0].click();assert.equal(node('path-list').hidden,true);

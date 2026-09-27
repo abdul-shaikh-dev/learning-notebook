@@ -24,6 +24,24 @@
       "href": "paths/dotnet/practice/acceptance.cs",
       "role": "reference",
       "description": "HTTP acceptance checks"
+    },
+    {
+      "id": "PersistenceChecks-csproj",
+      "href": "paths/dotnet/practice/PersistenceChecks.csproj",
+      "role": "test",
+      "description": "PersistenceChecks.csproj — guided executable scaffold"
+    },
+    {
+      "id": "persistence-api-cs",
+      "href": "paths/dotnet/practice/persistence-api.cs",
+      "role": "reference",
+      "description": "persistence-api.cs — guided executable scaffold"
+    },
+    {
+      "id": "persistence-checks-cs",
+      "href": "paths/dotnet/practice/persistence-checks.cs",
+      "role": "test",
+      "description": "persistence-checks.cs — guided executable scaffold"
     }
   ],
   "tasks": [
@@ -60,7 +78,7 @@
       ],
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
-        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -72,7 +90,10 @@
         "README-md",
         "foundation-cs",
         "task-api-cs",
-        "acceptance-cs"
+        "acceptance-cs",
+        "PersistenceChecks-csproj",
+        "persistence-api-cs",
+        "persistence-checks-cs"
       ],
       "steps": [
         "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -92,6 +113,11 @@
           "label": "PowerShell · kit root · second terminal",
           "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
           "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+        },
+        {
+          "label": "PowerShell · guided SQLite/test-principal extension",
+          "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
+          "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
         }
       ],
       "prerequisites": [
@@ -102,7 +128,7 @@
       ],
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
-        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     },
@@ -114,7 +140,10 @@
         "README-md",
         "foundation-cs",
         "task-api-cs",
-        "acceptance-cs"
+        "acceptance-cs",
+        "PersistenceChecks-csproj",
+        "persistence-api-cs",
+        "persistence-checks-cs"
       ],
       "steps": [
         "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -134,6 +163,11 @@
           "label": "PowerShell · kit root · second terminal",
           "command": "dotnet new console -n Acceptance -f net10.0\nCopy-Item ./acceptance.cs ./Acceptance/Program.cs\ndotnet run --project ./Acceptance -- http://127.0.0.1:5086",
           "expected": "PASS: 11 HTTP acceptance checks against the baseline API."
+        },
+        {
+          "label": "PowerShell · guided SQLite/test-principal extension",
+          "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
+          "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
         }
       ],
       "prerequisites": [
@@ -144,7 +178,7 @@
       ],
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
-        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Local reference verification used .NET 9; these setup commands target net10.0.",
+        "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
         "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
       ]
     }

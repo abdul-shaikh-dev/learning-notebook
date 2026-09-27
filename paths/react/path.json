@@ -19,7 +19,8 @@
     "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website’s console.",
     "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool’s requirements.",
     "A learning-only Vite setup: npm create vite@latest notebook-practice -- --template react-ts; cd notebook-practice; npm install; npm run dev. These commands download tools; this notebook does not run them.",
-    "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build."
+    "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build.",
+    "The downloadable kit now includes a pinned runnable Vite/Vitest project: npm ci, npm test, npm run build, npm run dev from the extracted folder root."
   ],
   "nextSteps": [
     "Study your chosen production framework’s server rendering, caching and deployment model.",
@@ -89,7 +90,15 @@
     "practice/AdvancedApp.tsx",
     "practice/tracker-core.ts",
     "practice/tracker-core.test.ts",
-    "practice/README.md"
+    "practice/README.md",
+    "practice/RemoteLesson.tsx",
+    "practice/ui.test.tsx",
+    "practice/vite.config.ts",
+    "practice/main.tsx",
+    "practice/index.html",
+    "practice/package.json",
+    "practice/package-lock.json",
+    "practice/tsconfig.json"
   ],
   "downloads": [
     {
@@ -153,7 +162,16 @@
         "correct": 0,
         "explanation": "Native controls provide useful behavior and semantics. Styling a generic element does not add them."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "HTML button",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button",
+          "section": "Accessibility",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "values",
@@ -194,7 +212,16 @@
         "correct": 1,
         "explanation": "An empty string converts to zero; validate blank input before converting."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "JavaScript types",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+          "section": "Primitive values",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "collections",
@@ -235,7 +262,16 @@
         "correct": 1,
         "explanation": "filter keeps matching elements. map transforms elements without changing the count."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Array methods",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+          "section": "Instance methods",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "functions",
@@ -276,7 +312,16 @@
         "correct": 0,
         "explanation": "Passing a function defers work until the event occurs."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Functions",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+          "section": "Function scope",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "async",
@@ -316,7 +361,16 @@
         "correct": 1,
         "explanation": "Check response.ok or status; an HTTP response can resolve the promise even when its status is an error."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Using promises",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+          "section": "Chaining",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "typescript",
@@ -356,7 +410,16 @@
         "correct": 1,
         "explanation": "Types are not runtime validators; a server can return data that violates your declared type."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "TypeScript everyday types",
+          "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+          "section": "Union types",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "components",
@@ -397,7 +460,16 @@
         "correct": 1,
         "explanation": "A stable identity lets React match the same record through list changes."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Rendering lists",
+          "url": "https://react.dev/learn/rendering-lists",
+          "section": "Keeping list items in order with key",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "state",
@@ -466,7 +538,16 @@
           }
         ]
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "State as a snapshot",
+          "url": "https://react.dev/learn/state-as-a-snapshot",
+          "section": "Rendering takes a snapshot in time",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "forms",
@@ -494,7 +575,8 @@
         "checks": [
           "Whitespace-only input fails.",
           "A valid title is trimmed.",
-          "Show a visible error; do not rely on an alert or red border alone."
+          "Show a visible error; do not rely on an alert or red border alone.",
+          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
         ]
       },
       "quiz": {
@@ -506,7 +588,16 @@
         "correct": 1,
         "explanation": "A derived value avoids synchronizing duplicate state."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "React input",
+          "url": "https://react.dev/reference/react-dom/components/input",
+          "section": "Controlling an input with a state variable",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "effects",
@@ -546,7 +637,16 @@
         "correct": 1,
         "explanation": "Pure calculations can run during rendering."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Synchronizing with Effects",
+          "url": "https://react.dev/learn/synchronizing-with-effects",
+          "section": "Step 3: Add cleanup if needed",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "capstone",
@@ -586,7 +686,16 @@
         "correct": 1,
         "explanation": "Memory state is local to a running page. Cross-device data needs storage, identity and synchronization decisions."
       },
-      "stage": "intermediate"
+      "stage": "intermediate",
+      "references": [
+        {
+          "title": "Managing state",
+          "url": "https://react.dev/learn/managing-state",
+          "section": "Extracting state logic into a reducer",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "modules-closures",
@@ -632,7 +741,16 @@
         ],
         "correct": 1,
         "explanation": "Promise reactions wait until the current synchronous work has finished."
-      }
+      },
+      "references": [
+        {
+          "title": "Closures",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+          "section": "Lexical scoping",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "type-design",
@@ -678,7 +796,16 @@
         ],
         "correct": 1,
         "explanation": "Type assertions are erased; validation must execute at runtime."
-      }
+      },
+      "references": [
+        {
+          "title": "TypeScript narrowing",
+          "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+          "section": "Discriminated unions",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "reducers",
@@ -724,7 +851,16 @@
         ],
         "correct": 1,
         "explanation": "A reducer should remain deterministic and free of side effects."
-      }
+      },
+      "references": [
+        {
+          "title": "React useReducer",
+          "url": "https://react.dev/reference/react/useReducer",
+          "section": "Writing the reducer function",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "context-hooks",
@@ -770,7 +906,16 @@
         ],
         "correct": 1,
         "explanation": "Hooks reuse logic; state belongs to each mounted call location."
-      }
+      },
+      "references": [
+        {
+          "title": "Reusing logic with custom Hooks",
+          "url": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+          "section": "Custom Hooks share stateful logic, not state itself",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "identity",
@@ -816,7 +961,16 @@
         ],
         "correct": 1,
         "explanation": "A different key changes the identity React uses to preserve state."
-      }
+      },
+      "references": [
+        {
+          "title": "Preserving and resetting state",
+          "url": "https://react.dev/learn/preserving-and-resetting-state",
+          "section": "Resetting state with a key",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "race-safe-loading",
@@ -851,18 +1005,29 @@
         "checks": [
           "A stale success cannot overwrite B.",
           "Cleanup does not show an error for intentional cancellation.",
-          "Loading, error, empty and success are distinct."
+          "Loading, error, empty and success are distinct.",
+          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
         ]
       },
       "quiz": {
-        "question": "Does response arrival order always match request order?",
+        "question": "A starts, selection changes to B, B resolves, then A resolves. An adapter ignores AbortSignal. What preserves B?",
         "options": [
-          "Yes",
-          "No"
+          "AbortController alone guarantees no promise callback can run",
+          "A cleanup flag/request identity check ignores the superseded result",
+          "Calling setState for every response in arrival order"
         ],
         "correct": 1,
-        "explanation": "Network and server delays can reorder completion."
-      }
+        "explanation": "Cancellation is cooperative. Cleanup must also prevent an obsolete callback from committing state when the adapter ignores abort."
+      },
+      "references": [
+        {
+          "title": "Synchronizing with Effects",
+          "url": "https://react.dev/learn/synchronizing-with-effects",
+          "section": "Fetching data",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "routing",
@@ -897,18 +1062,29 @@
         "checks": [
           "Bad page values fall back safely.",
           "The URL and screen cannot disagree.",
-          "Test actual browser history rather than only a component mock."
+          "Test actual browser history rather than only a component mock.",
+          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
         ]
       },
       "quiz": {
-        "question": "Does pushState automatically fire popstate?",
+        "question": "A button calls history.pushState to select State. No popstate event arrives. What should the app do?",
         "options": [
-          "Yes",
-          "No"
+          "Wait for popstate because pushState always emits it synchronously",
+          "Update selection in the click handler and listen for popstate for history traversal",
+          "Reload the whole page after every selection"
         ],
         "correct": 1,
-        "explanation": "A router normally updates its own state when pushing and listens for traversal events separately."
-      }
+        "explanation": "pushState changes the URL/history without emitting popstate. Update local selection directly; Back/Forward use the popstate listener."
+      },
+      "references": [
+        {
+          "title": "Window popstate",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event",
+          "section": "When popstate is sent",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "testing",
@@ -919,7 +1095,8 @@
         {
           "title": "Understand the boundary",
           "paragraphs": [
-            "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works."
+            "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works.",
+            "The kit supplies ui.test.tsx, vite.config.ts and locked dependencies. npm test executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
           ]
         },
         {
@@ -928,7 +1105,7 @@
             "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
             "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
           ],
-          "example": "// Testing Library example fragment; requires a configured runner, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
+          "example": "// Testing Library example fragment; the downloadable kit configures Vitest, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
         },
         {
           "title": "Debugging and design tradeoffs",
@@ -943,7 +1120,8 @@
         "checks": [
           "Each test has an observable expected result.",
           "At least one negative case per boundary.",
-          "Do not mark a test passed merely because it did not throw during setup."
+          "Do not mark a test passed merely because it did not throw during setup.",
+          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
         ]
       },
       "quiz": {
@@ -954,7 +1132,16 @@
         ],
         "correct": 1,
         "explanation": "The second checks user-visible behavior."
-      }
+      },
+      "references": [
+        {
+          "title": "React Testing Library setup",
+          "url": "https://testing-library.com/docs/react-testing-library/setup/",
+          "section": "Setup",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "resilience-security",
@@ -1000,7 +1187,16 @@
         ],
         "correct": 1,
         "explanation": "Requests can be sent without using the visible UI."
-      }
+      },
+      "references": [
+        {
+          "title": "Web Storage",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API",
+          "section": "Testing for availability",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "performance",
@@ -1046,7 +1242,16 @@
         ],
         "correct": 1,
         "explanation": "The result must remain correct if React recomputes it."
-      }
+      },
+      "references": [
+        {
+          "title": "React memo",
+          "url": "https://react.dev/reference/react/memo",
+          "section": "Should you add memo everywhere?",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     },
     {
       "id": "delivery",
@@ -1093,7 +1298,16 @@
         ],
         "correct": 1,
         "explanation": "A hosted interface and shared persistent data are separate systems."
-      }
+      },
+      "references": [
+        {
+          "title": "Vite production build",
+          "url": "https://vite.dev/guide/build.html",
+          "section": "Building for Production",
+          "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
     }
   ],
   "stages": [

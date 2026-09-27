@@ -150,7 +150,16 @@
         "correct": 0,
         "explanation": "The interpreter executes Python source. The terminal gives you a way to invoke it."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/interpreter.html",
+          "section": "Using the Python interpreter",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "values-and-names",
@@ -189,16 +198,25 @@
         ]
       },
       "quiz": {
-        "question": "What does total = total + 1 do?",
+        "question": "After total = 4; total = total + 1, what does print(total) show?",
         "options": [
-          "Checks whether total is 1",
-          "Binds total to its previous value plus 1",
-          "Creates a second variable with the same name"
+          "4, because assignment cannot reuse the same name",
+          "5",
+          "True, because = compares the two values"
         ],
         "correct": 1,
-        "explanation": "The right side is evaluated first, then the name on the left is assigned the resulting value."
+        "explanation": "The expression reads the previous value 4, adds 1 and binds total to 5; = assigns rather than compares."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/introduction.html",
+          "section": "Numbers and strings",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "text-and-input",
@@ -246,7 +264,16 @@
         "correct": 1,
         "explanation": "Input returns text. Your program decides whether and how to convert it."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/introduction.html",
+          "section": "Strings",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "conditions",
@@ -294,7 +321,16 @@
         "correct": 1,
         "explanation": "An if/elif/else chain selects the first condition that is true and skips the remaining branches."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/controlflow.html",
+          "section": "if statements",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "collections",
@@ -342,7 +378,16 @@
         "correct": 0,
         "explanation": "A dictionary stores key/value associations and retrieves a duration using its task-name key."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/datastructures.html",
+          "section": "Lists, sets and dictionaries",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "loops",
@@ -390,7 +435,16 @@
         "correct": 1,
         "explanation": "The start is included and the stop is excluded."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/controlflow.html",
+          "section": "for and range",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "functions",
@@ -438,7 +492,16 @@
         "correct": 1,
         "explanation": "Python returns None when execution reaches the end without an explicit return value."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/controlflow.html",
+          "section": "Defining functions",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "errors",
@@ -477,16 +540,25 @@
         ]
       },
       "quiz": {
-        "question": "Which exception should you catch around int(\"abc\")?",
+        "question": "Which exception does int(\"3.5\") raise?",
         "options": [
-          "KeyError",
-          "ValueError",
-          "Every exception with bare except"
+          "TypeError because strings cannot be passed to int",
+          "ValueError because this string is not an integer representation",
+          "No exception; int rounds the text to 4"
         ],
         "correct": 1,
-        "explanation": "ValueError describes a value unsuitable for the requested conversion. A narrow handler preserves unrelated failures."
+        "explanation": "int accepts an integer string, but \"3.5\" is not one. int(float(\"3.5\")) would explicitly truncate to 3."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/errors.html",
+          "section": "Exceptions and handling",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "files-and-json",
@@ -534,7 +606,16 @@
         "correct": 0,
         "explanation": "loads parses JSON text; load is the related function that reads from a file-like object."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/json.html",
+          "section": "Basic usage and encoders/decoders",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "modules-and-environments",
@@ -583,7 +664,16 @@
         "correct": 0,
         "explanation": "The -m form runs pip as a module of that interpreter. Substitute your virtual environment interpreter path for python."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/venv.html",
+          "section": "Creating virtual environments",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "testing-and-api-boundaries",
@@ -632,7 +722,16 @@
         "correct": 1,
         "explanation": "A fixed fixture isolates your parsing behavior. Separate integration checks are needed for a real service."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/unittest.html",
+          "section": "Test cases and assertions",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "study-log-capstone",
@@ -683,7 +782,16 @@
         "correct": 1,
         "explanation": "A parse failure does not mean the user has no data. Preserve the file and make the failure visible."
       },
-      "stage": "foundation"
+      "stage": "foundation",
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/pathlib.html",
+          "section": "Reading and writing files",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "classes-and-dataclasses",
@@ -732,7 +840,16 @@
         ],
         "correct": 1,
         "explanation": "The generated constructor stores values without validating annotated types."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/dataclasses.html",
+          "section": "Dataclass parameters and frozen instances",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "typing-and-protocols",
@@ -781,7 +898,16 @@
         ],
         "correct": 1,
         "explanation": "A structural contract permits independent implementations and test doubles with compatible operations."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/typing.html",
+          "section": "Protocols",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "iterators-and-generators",
@@ -830,7 +956,16 @@
         ],
         "correct": 1,
         "explanation": "An exhausted iterator has no remaining values; create a fresh one for another pass."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/tutorial/classes.html",
+          "section": "Iterators and generators",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "context-managers",
@@ -879,7 +1014,16 @@
         ],
         "correct": 1,
         "explanation": "finally runs after normal and exceptional exits and expresses the resource lifetime directly."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/contextlib.html",
+          "section": "contextmanager and closing",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "packaging-and-cli",
@@ -907,6 +1051,12 @@
             "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
             "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
           ]
+        },
+        {
+          "title": "Verify the installed artifact",
+          "paragraphs": [
+            "Use practice/python_package_starter.py to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow practice/installed-package-exercise.md and run test_installed_package.py: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
+          ]
         }
       ],
       "exercise": {
@@ -928,7 +1078,23 @@
         ],
         "correct": 0,
         "explanation": "A caller can import functions without consuming its own arguments or starting a command."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/argparse.html",
+          "section": "ArgumentParser",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        },
+        {
+          "title": "PyPA packaging tutorial",
+          "url": "https://packaging.python.org/en/latest/tutorials/packaging-projects/",
+          "section": "Generating distribution archives",
+          "reviewed": "2026-09-27",
+          "scope": "Complete installed-wheel starter; local wheel build/install/CLI/resource test executed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27. Other runtime/backend combinations remain unverified."
+        }
+      ]
     },
     {
       "id": "logging-and-test-design",
@@ -977,7 +1143,16 @@
         ],
         "correct": 1,
         "explanation": "Invalid-input behavior and unchanged data are observable contracts worth protecting."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/howto/logging.html",
+          "section": "Logging HOWTO",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "concurrency-models",
@@ -1005,6 +1180,12 @@
             "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
             "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
           ]
+        },
+        {
+          "title": "Fail and cancel a task group",
+          "paragraphs": [
+            "Run practice/async_failure_lab.py and python -m unittest test_async_failure_lab.py from practice with Python 3.11+. An Event ensures the sibling is waiting before the failing child raises. Observe an ExceptionGroup containing ValueError, sibling cancellation and finally cleanup before the group exits. The second test cancels the parent and asserts CancelledError propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+          ]
         }
       ],
       "exercise": {
@@ -1018,15 +1199,24 @@
         ]
       },
       "quiz": {
-        "question": "Does future.result(timeout=...) terminate a running worker?",
+        "question": "A running worker exceeds future.result(timeout=...). What happens?",
         "options": [
-          "Yes",
-          "No; it only bounds that wait",
-          "Only when writing JSON"
+          "The worker is killed before any later effects can occur",
+          "The waiting caller gets TimeoutError; the worker can continue",
+          "The caller gets the worker’s partial return value"
         ],
         "correct": 1,
-        "explanation": "A timeout does not forcibly interrupt work; cancellation/deadlines must be supported by the actual operation."
-      }
+        "explanation": "The timeout bounds that wait. It does not preempt a running worker; operation-level cooperative cancellation is a separate contract."
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
+          "section": "Task cancellation and task groups",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "profiling-and-complexity",
@@ -1075,7 +1265,16 @@
         ],
         "correct": 0,
         "explanation": "Timing is useful only when the promised behavior remains correct."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/profile.html",
+          "section": "Profiling and statistics",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "security-and-input-boundaries",
@@ -1124,7 +1323,16 @@
         ],
         "correct": 1,
         "explanation": "Decoding must be followed by domain validation and independent authorization where applicable."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/json.html",
+          "section": "Warning: untrusted JSON resource consumption",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "robust-storage",
@@ -1173,7 +1381,16 @@
         ],
         "correct": 1,
         "explanation": "Whole-file visibility does not stop a later writer overwriting another writer's valid update."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/os.html#os.replace",
+          "section": "os.replace",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     },
     {
       "id": "robust-import-capstone",
@@ -1222,7 +1439,16 @@
         ],
         "correct": 1,
         "explanation": "One commit follows complete validation, preserving the old report on any rejected record."
-      }
+      },
+      "references": [
+        {
+          "title": "Python documentation",
+          "url": "https://docs.python.org/3/library/concurrent.futures.html",
+          "section": "Executor.map and shutdown",
+          "reviewed": "2026-09-27",
+          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+        }
+      ]
     }
   ],
   "publicFiles": [
@@ -1231,7 +1457,12 @@
     "practice/intermediate_project.py",
     "practice/advanced_project.py",
     "practice/test_projects.py",
-    "practice/README.md"
+    "practice/README.md",
+    "practice/async_failure_lab.py",
+    "practice/test_async_failure_lab.py",
+    "practice/installed-package-exercise.md",
+    "practice/python_package_starter.py",
+    "practice/test_installed_package.py"
   ],
   "stages": [
     {

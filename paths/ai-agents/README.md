@@ -138,3 +138,8 @@ research course, professional certification or production security assessment.
 
 Text limits apply to raw supplied strings before trimming. They do not bound a
 network request before parsing; a live transport needs its own byte-size limit.
+
+
+## Focused optional extension (2026-09-27)
+
+From this practice directory run `python -m unittest test_provider_scaffold.py`. Read the corresponding lesson for evidence limits and extension scope.
