@@ -17,3 +17,13 @@ for(const p of paths.filter(p=>p.status==='ready'))for(const t of p.resources.ta
 context.location.hash='#topic/python/values-and-names';vm.runInContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Stage project:'));assert.ok(element('main').innerHTML.includes('Read all diagram steps'));assert.ok(element('diagram-prev').disabled);element('diagram-next').click();assert.ok(element('diagram-step').innerHTML.includes('Step 2 of'));assert.equal(element('diagram-prev').disabled,false);
 context.location.hash='';vm.runInContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Continue 2. Values'));element('path-search').input({target:{value:'Python'}});const count=paths.filter(p=>[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).length;assert.equal(element('path-count').textContent,`${count} matching paths · ${paths.length} total`);
 console.log(`PASS: ${tasks} task routes, ${diagrams} diagram relationships, step controls, resume and live search counts.`);
+
+for(const p of paths.filter(p=>p.status==='ready'&&Array.isArray(p.lessons)&&!p.href)){
+ context.location.hash='#path/'+p.id;context.renderCatalog();
+ assert.ok(element('main').innerHTML.includes('class="course-current" aria-current="page">Course overview'),p.id+' overview marks current page');
+ assert.ok(!element('main').innerHTML.includes('<a href="#path/'+p.id+'">Course overview</a>'),p.id+' overview avoids a misleading self-link');
+ context.location.hash='#topic/'+p.id+'/'+p.lessons[0].id;context.renderCatalog();
+ assert.ok(element('main').innerHTML.includes('<a href="#path/'+p.id+'">Course overview</a>'),p.id+' lesson retains working overview link');
+ assert.ok(!element('main').innerHTML.includes('class="course-current"'),p.id+' lesson is not the overview');
+}
+console.log('PASS: course overviews identify the current page; lessons link back to their overview.');
