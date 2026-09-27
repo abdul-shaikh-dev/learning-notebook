@@ -3,7 +3,7 @@
   "title": "Git & Team Workflows",
   "category": "Engineering practice",
   "status": "ready",
-  "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three temporary-only executable projects.",
+  "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three executable projects with retained learner workspaces.",
   "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
@@ -129,7 +129,7 @@
           "title": "Understand the boundary",
           "paragraphs": [
             "Git records snapshots and their relationships. A hosting website is optional: you can learn every core operation in a local directory. A repository usually has a working directory plus a .git directory containing objects, references and configuration. A nested terminal can point at a different repository than the editor you are looking at.",
-            "Run the provided sandbox instead of experimenting in an existing checkout. It creates repositories beneath a new temporary root, isolates Git configuration and hooks, uses a synthetic identity per command, and deletes only its own temporary directories. It never pushes or contacts a hosting service."
+            "Run the provided sandbox instead of experimenting in an existing checkout. With --workspace-parent . it creates a fresh owned child and retains repositories plus evidence.json for inspection. It isolates Git configuration and hooks and uses a synthetic identity per command. Omitting --workspace-parent runs the temporary automated verifier, which deletes only its own generated root. It never pushes or contacts a hosting service."
           ]
         },
         {
@@ -138,16 +138,16 @@
             "Check the repository root and status before any mutation. Git configuration has scopes: system, global and repository local; command-line -c values apply to that invocation. Changing global identity is not necessary for these exercises.",
             "The sandbox supports --stage foundation, intermediate, advanced or all. Its output is actual assertion evidence. This does not prove remote permissions, branch protection or team policy."
           ],
-          "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation"
+          "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation --workspace-parent ."
         }
       ],
       "exercise": {
         "prompt": "Run the foundation fixture. Record the Git version and explain why a command in the wrong working directory could affect another project.",
-        "solution": "The JSON report records git_version and foundation results. Every fixture subprocess checks that its resolved working directory remains beneath the newly created temporary root. User/global config and existing repository contents are outside that root.",
+        "solution": "The JSON report records git_version and foundation results. Every fixture subprocess checks that its resolved working directory remains beneath the newly created owned root. User/global config and existing repository contents are outside that root.",
         "solutionFormat": "prose",
         "checks": [
           "Report includes an installed Git version.",
-          "Only generated temporary repositories are changed.",
+          "Only fresh generated owned repositories are changed; retained learner workspaces remain inspectable.",
           "Configuration scope is distinguished from repository state."
         ]
       },
@@ -1175,7 +1175,7 @@
         "title": "Three-state snapshot investigation",
         "brief": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
         "requirements": [
-          "Run the complete foundation fixture in its own temporary root.",
+          "Run the complete foundation fixture in its fresh retained owned child.",
           "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
           "Verify committed contents independently with git show.",
           "Show that an untracked synthetic config file is ignored without claiming history erasure."
@@ -1186,7 +1186,7 @@
           "Ignore evidence uses check-ignore and ls-files.",
           "Report separates mechanical checks from release verification."
         ],
-        "solution": "Use sandbox.py --stage foundation. The fixture commits one, stages two, edits three and commits the index; HEAD contains two and the working file three. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
+        "solution": "Use `python -B sandbox.py --stage foundation --workspace-parent .`. The fixture commits one, stages two, edits three and commits the index. At the staged commit HEAD contains two and the working file three; evidence.json preserves both diffs. The completed repository has restored the working file to two and retains all commits for independent git show. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
       }
     },
     {
@@ -1215,7 +1215,7 @@
           "Fetch and integration are distinguished.",
           "Review evidence names the candidate and no hosted approval is invented."
         ],
-        "solution": "Use sandbox.py --stage intermediate. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
+        "solution": "Use `python -B sandbox.py --stage intermediate --workspace-parent .`. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
       }
     },
     {
@@ -1244,7 +1244,7 @@
           "History operations are justified by ownership and purpose.",
           "Release records do not equate a tag with trusted deployment evidence."
         ],
-        "solution": "Use sandbox.py --stage advanced. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
+        "solution": "Use `python -B sandbox.py --stage advanced --workspace-parent .`. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
       }
     }
   ]

@@ -5,7 +5,7 @@ Resolve a synthetic conflict and update a local reviewer clone without contactin
 ## Run from the extracted folder
 
 ```
-python -B sandbox.py --stage intermediate
+python -B sandbox.py --stage intermediate --workspace-parent .
 ```
 
 Expected: JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push.
@@ -20,7 +20,7 @@ Expected: JSON reports conflict_resolved and fetch_preserved_local_head true; no
 
 ## Reference approach
 
-Use sandbox.py --stage intermediate. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed.
+Use `python -B sandbox.py --stage intermediate --workspace-parent .`. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed.
 
 ## Evidence rubric
 

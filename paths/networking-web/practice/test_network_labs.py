@@ -1,4 +1,7 @@
 import json
+import http.client
+import time
+from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 import socket
 import ssl
 import threading
@@ -71,6 +74,40 @@ class LoopbackHttp(unittest.TestCase):
             with self.assertRaises(ProtocolError): decode_observation(*fetch(server,"/unavailable"))
             self.assertEqual(decode_observation(*fetch(server))["lesson"],"http")
 
+    def test_incomplete_and_oversized_response_framing(self):
+        class Broken(BaseHTTPRequestHandler):
+            def log_message(self,*args):pass
+            def do_GET(self):
+                self.send_response(200)
+                if self.path=="/chunked":self.send_header("Transfer-Encoding","chunked")
+                else:self.send_header("Content-Length","5000" if self.path=="/large" else "1000")
+                self.end_headers()
+                self.wfile.write(b"20\r\nshort" if self.path=="/chunked" else BODY)
+        server=ThreadingHTTPServer(("127.0.0.1",0),Broken)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        try:
+            for path in ("/short","/chunked"):
+                with self.assertRaises(http.client.IncompleteRead):fetch(server,path)
+            with self.assertRaises(ValueError):fetch(server,"/large")
+        finally:server.shutdown();server.server_close();thread.join(timeout=2)
+
+    def test_cleanup_closes_retained_keepalive_and_partial_request(self):
+        for partial in (False,True):
+            client=None
+            start=time.monotonic()
+            try:
+                with local_server() as server:
+                    client=socket.create_connection(("127.0.0.1",server.server_port),timeout=2)
+                    client.sendall(b"GET /lesson HTTP/1.1\r\nHost: localhost\r\n" + (b"" if partial else b"\r\n"))
+                    if not partial:self.assertIn(b"200",client.recv(4096))
+                    deadline=time.monotonic()+1
+                    while not server.active and time.monotonic()<deadline:time.sleep(.005)
+                    self.assertTrue(server.active)
+                self.assertLess(time.monotonic()-start,1.5)
+                self.assertFalse(server.active)
+            finally:
+                if client:client.close()
+
     def test_stalled_server_read_times_out(self):
         with local_server() as server:
             results=[]
@@ -106,6 +143,11 @@ class ResilienceTests(unittest.TestCase):
         self.assertEqual(len(calls),3)
         outcomes=iter([503,200])
         self.assertEqual(bounded_get(lambda:next(outcomes),lambda:0,1)[0],200)
+
+    def test_rejects_other_json_encodings(self):
+        for encoding in ("utf-16","utf-32","utf-16-le","utf-32-le"):
+            with self.subTest(encoding=encoding),self.assertRaises(ProtocolError):
+                decode_observation(200,{"Content-Type":"application/json"},BODY.decode().encode(encoding))
 
     def test_json_contract_errors(self):
         self.assertEqual(decode_observation(200,{"content-type":"application/json"},BODY)["version"],1)

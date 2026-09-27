@@ -11,7 +11,7 @@ def decode_observation(status,headers,body):
     if headers.get("content-type","").split(";",1)[0].strip().lower()!="application/json":
         raise ProtocolError("expected JSON content type")
     if len(body)>4096: raise ProtocolError("response too large")
-    try: value=json.loads(body)
+    try: value=json.loads(body.decode("utf-8",errors="strict"))
     except (ValueError,UnicodeError) as error: raise ProtocolError("invalid JSON") from error
     if type(value) is not dict or set(value)!={"lesson","version"} or type(value["lesson"]) is not str or type(value["version"]) is not int:
         raise ProtocolError("invalid lesson contract")

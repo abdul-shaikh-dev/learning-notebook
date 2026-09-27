@@ -1,7 +1,7 @@
 # Release evidence workbook
 
 ## Foundation: observable local service
-Record Python/tool versions and the exact 12 test outcomes. Draw source→tests→artifact→config→process→user request. List the loopback/data boundaries and one invariant. Capture /version, /live, /ready and a synthetic note create/read. Explain what the checksum does and does not prove.
+Record Python/tool versions and the exact 14 test outcomes. Draw source→tests→artifact→config→process→user request. List the loopback/data boundaries and one invariant. Capture /version, /live, /ready and a synthetic note create/read. Explain what the checksum does and does not prove.
 
 ## Intermediate: candidate and rollback
 Record Docker availability; if absent, mark commands reviewed only. If opted in, build the actual Dockerfile, inspect user/health, run v1 and a separately changed compatible v2 image, record image identity and smoke results. Classify application/config/schema changes and state rollback feasibility. Complete the React/.NET/SQL integration plan separately; never label the Python stand-in as the full stack.

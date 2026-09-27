@@ -39,6 +39,26 @@ class ReleaseChecks(unittest.TestCase):
         self.assertFalse((self.folder/"empty-backup.db").exists())
     def test_logs_and_metrics_have_no_title(self):
         self.request("/notes",{"title":"private-example"});self.gate.write_text("gate");self.request("/ready");status,metric=self.request("/metrics");self.assertEqual(status,200);self.assertEqual(metric,{"requests":2,"errors":1});self.assertNotIn("private-example",self.output.getvalue())
+    def test_uri_characters_select_exact_database(self):
+        self.stop()
+        folder=self.folder/"directory#literal%23"
+        folder.mkdir()
+        self.db=folder/"notes#candidate%23.db"
+        self.start("v1")
+        self.assertEqual(self.request("/notes",{"title":"candidate"})[0],201)
+        self.assertEqual(self.request("/ready")[0],200)
+        snapshot=self.folder/"escaped-snapshot.db"
+        backup(self.db,snapshot)
+        with closing(sqlite3.connect(snapshot)) as db:
+            self.assertEqual(db.execute("SELECT title FROM notes").fetchall(),[("candidate",)])
+        missing=folder/"missing#candidate%23.db"
+        with self.assertRaises(sqlite3.OperationalError):backup(missing,self.folder/"missing-snapshot.db")
+        self.assertFalse(missing.exists())
+        self.assertFalse((folder/"missing").exists())
+        self.db.unlink()
+        self.assertEqual(self.request("/ready")[0],503)
+        self.assertFalse(self.db.exists())
+
     def test_unknown_route(self):self.assertEqual(self.request("/missing")[0],404)
 
 if __name__=="__main__":unittest.main()

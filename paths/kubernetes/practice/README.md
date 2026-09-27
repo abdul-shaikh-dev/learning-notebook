@@ -6,7 +6,7 @@ Prerequisites: complete container/build/runtime boundaries in Delivery & Operati
 python -m unittest -v test_release_app.py check_manifests.py
 ```
 
-Seven service tests and four offline manifest-contract checks cover named local HTTP/storage and selected selector/port/security/namespace/optional-object properties. JSON files parse with standard Python; Kubernetes accepts JSON manifests directly. These checks are not API-schema admission, CNI enforcement, scheduling, storage or probe execution. The service test uses the same code with changed version labels; it does not prove differing-image rollback.
+Eight service tests and four offline manifest-contract checks cover named local HTTP/storage and selected selector/port/security/namespace/optional-object properties. JSON files parse with standard Python; Kubernetes accepts JSON manifests directly. These checks are not API-schema admission, CNI enforcement, scheduling, storage or probe execution. The service test uses the same code with changed version labels; it does not prove differing-image rollback.
 
 With PowerShell, `./test_lab_guard.ps1` separately executes seven guard behavior cases using a stub kubectl function. It rejects wrong contexts, remote endpoints and unmarked namespace cleanup, and verifies admitted command argument forwarding without starting kubectl or connecting to any cluster.
 

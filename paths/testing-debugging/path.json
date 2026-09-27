@@ -173,8 +173,8 @@
         "solution": "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy. State these separately so empty does not accidentally mean malformed.",
         "solutionFormat": "prose",
         "checks": [
-          "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy.",
-          "Explain the reasoning behind this answer: An invalid batch preserves the previous report."
+          "Specify accepted and rejected examples for both inputs.",
+          "State the observable outcome and unchanged state for each case."
         ]
       },
       "quiz": {
@@ -222,8 +222,8 @@
         "solution": "Arrange [], call total_minutes once, assertEqual(result, 0). Then intentionally change the expected value to confirm the runner reports the failure and restore it.",
         "solutionFormat": "prose",
         "checks": [
-          "Arrange [], call total_minutes once, assertEqual(result, 0).",
-          "Explain the reasoning behind this answer: Using a known expected value."
+          "Show the test setup, invocation and assertion as separate steps.",
+          "Explain how the expected result was determined independently of the function."
         ]
       },
       "quiz": {
@@ -271,8 +271,8 @@
         "solution": "Use -1, 0, 1, 1440, 1441, true and a string. Add fractional and null inputs to cover separate type classes. Explain why each row adds behavior evidence.",
         "solutionFormat": "prose",
         "checks": [
-          "Use -1, 0, 1, 1440, 1441, true and a string.",
-          "Explain the reasoning behind this answer: 1440 and 1441 together."
+          "Label the valid partitions and invalid partitions covered by the table.",
+          "Explain which neighboring cases detect each boundary error."
         ]
       },
       "quiz": {
@@ -320,8 +320,8 @@
         "solution": "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left. An exception alone would miss an early write.",
         "solutionFormat": "prose",
         "checks": [
-          "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left.",
-          "Explain the reasoning behind this answer: An unrelated implementation error."
+          "Record the rejection and compare destination state before and after the attempt.",
+          "Check operation calls and remaining filesystem entries after failure."
         ]
       },
       "quiz": {
@@ -369,8 +369,8 @@
         "solution": "Their order would determine initial content; a crash could leave data behind. Give each test a fresh temporary directory and assert its own starting state.",
         "solutionFormat": "prose",
         "checks": [
-          "Their order would determine initial content; a crash could leave data behind.",
-          "Explain the reasoning behind this answer: A fresh temporary directory per case."
+          "Demonstrate the cases in both execution orders.",
+          "Describe initial state and cleanup ownership for each case."
         ]
       },
       "quiz": {
@@ -418,8 +418,8 @@
         "solution": "Inspect whether the file contains valid JSON and whether framing expects a complete object per line. Do not blame disk permissions when the read already succeeded.",
         "solutionFormat": "prose",
         "checks": [
-          "Inspect whether the file contains valid JSON and whether framing expects a complete object per line.",
-          "Explain the reasoning behind this answer: The original lower-level failure."
+          "Identify the read and parsing frames in the traceback.",
+          "State one falsifiable hypothesis and the input observation needed to evaluate it."
         ]
       },
       "quiz": {
@@ -467,8 +467,8 @@
         "solution": "Include the command, Python version, text with two minutes keys, expected rejection and actual result. State whether keys differ only by case or are identical.",
         "solutionFormat": "prose",
         "checks": [
-          "Include the command, Python version, text with two minutes keys, expected rejection and actual result.",
-          "Explain the reasoning behind this answer: A smaller input that preserves the failure."
+          "Provide a command, runtime version and minimized input.",
+          "Record expected and actual outcomes so another learner can repeat the case."
         ]
       },
       "quiz": {
@@ -516,8 +516,8 @@
         "solution": "Pass true, a fractional number and a numeric string to the strict parser. Each is nonnegative in an informal sense but violates the exact integer contract.",
         "solutionFormat": "prose",
         "checks": [
-          "Pass true, a fractional number and a numeric string to the strict parser.",
-          "Explain the reasoning behind this answer: Choose a discriminating observation."
+          "Provide inputs that discriminate the proposed rule from the declared contract.",
+          "Record the observed outcome for each input and explain what it establishes."
         ]
       },
       "quiz": {
@@ -565,8 +565,8 @@
         "solution": "A domain unit test cannot observe browser effects. Use a component or browser test that controls two responses and asserts the later-selected result remains visible.",
         "solutionFormat": "prose",
         "checks": [
-          "A domain unit test cannot observe browser effects.",
-          "Explain the reasoning behind this answer: Filesystem integration."
+          "Name the components whose interaction the proposed test observes.",
+          "Identify a boundary that the chosen scope cannot exercise."
         ]
       },
       "quiz": {
@@ -614,8 +614,8 @@
         "solution": "Run the real replacement integration case and read the generated JSON. Mock behavior only establishes the injected-failure branch, not actual filesystem compatibility.",
         "solutionFormat": "prose",
         "checks": [
-          "Run the real replacement integration case and read the generated JSON.",
-          "Explain the reasoning behind this answer: The dependency was not invoked in this case."
+          "List the behavior observed by the double and the behavior left untested.",
+          "Propose an additional check with a named input and observable outcome."
         ]
       },
       "quiz": {
@@ -663,8 +663,8 @@
         "solution": "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes. Do not silently change an exact-field assertion while claiming compatibility.",
         "solutionFormat": "prose",
         "checks": [
-          "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes.",
-          "Explain the reasoning behind this answer: It violates the application contract."
+          "Provide a reader/writer compatibility table for both schema versions.",
+          "Specify the expected outcome of each fixture/version combination."
         ]
       },
       "quiz": {
@@ -712,8 +712,8 @@
         "solution": "Use distinct IDs and values, read the saved report and compare its full records array and total. Checking only the return value would miss a disk-output mismatch.",
         "solutionFormat": "prose",
         "checks": [
-          "Use distinct IDs and values, read the saved report and compare its full records array and total.",
-          "Explain the reasoning behind this answer: Reading and parsing the saved bytes."
+          "Create a fixture that makes omission or corruption observable.",
+          "Compare the persisted result against an independently specified expected report."
         ]
       },
       "quiz": {
@@ -761,8 +761,8 @@
         "solution": "An implementation returning zero for every input preserves order invariance while being wrong. Add a known nonzero example and other independent properties.",
         "solutionFormat": "prose",
         "checks": [
-          "An implementation returning zero for every input preserves order invariance while being wrong.",
-          "Explain the reasoning behind this answer: Properties can be too weak."
+          "Provide an incorrect implementation that satisfies the proposed property.",
+          "Supply a concrete case that distinguishes it from the contract."
         ]
       },
       "quiz": {
@@ -810,8 +810,8 @@
         "solution": "Temporarily point the specific assertion at the old implementation or run the included mutant comparison. Restore the corrected subject and record both outcomes.",
         "solutionFormat": "prose",
         "checks": [
-          "Temporarily point the specific assertion at the old implementation or run the included mutant comparison.",
-          "Explain the reasoning behind this answer: The old behavior fails the test and the fix passes."
+          "Run the same assertion against the original and corrected behaviors.",
+          "Record both outcomes and explain why the case isolates the defect."
         ]
       },
       "quiz": {
@@ -859,8 +859,8 @@
         "solution": "Assert a known nonzero total such as 7+2=9. Order invariance alone would not catch it.",
         "solutionFormat": "prose",
         "checks": [
-          "Assert a known nonzero total such as 7+2=9.",
-          "Explain the reasoning behind this answer: Measured lines executed under the chosen run."
+          "Supply a discriminating fixture and calculate its expected result independently.",
+          "Demonstrate the assertion outcome with the proposed mutation."
         ]
       },
       "quiz": {
@@ -908,8 +908,8 @@
         "solution": "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering. Record why the transformed fixture still reproduces.",
         "solutionFormat": "prose",
         "checks": [
-          "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering.",
-          "Explain the reasoning behind this answer: Live production records queried each run."
+          "Identify which fixture characteristics reproduce the incident.",
+          "Explain how sensitive data is removed while retaining those characteristics."
         ]
       },
       "quiz": {
@@ -957,8 +957,8 @@
         "solution": "Scheduling is outside the contract. The invariant is one commit and one conflict; either allowed winner demonstrates it without making timing a test oracle.",
         "solutionFormat": "prose",
         "checks": [
-          "Scheduling is outside the contract.",
-          "Explain the reasoning behind this answer: Exactly one commits."
+          "State the permitted outcomes without depending on a chosen thread identity.",
+          "Explain how the test makes concurrent attempts observable and terminates."
         ]
       },
       "quiz": {
@@ -1006,8 +1006,8 @@
         "solution": "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures. Do not increase every timeout first.",
         "solutionFormat": "prose",
         "checks": [
-          "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures.",
-          "Explain the reasoning behind this answer: Fresh owned fixtures."
+          "Record outcomes when the cases run alone and in different orders.",
+          "Identify shared state and show how a proposed correction changes the evidence."
         ]
       },
       "quiz": {
@@ -1055,8 +1055,8 @@
         "solution": "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation. Document any partial local work that can remain.",
         "solutionFormat": "prose",
         "checks": [
-          "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation.",
-          "Explain the reasoning behind this answer: Cleanup and effects."
+          "Define observable task, caller, resource and publication outcomes.",
+          "Explain how the test waits for completion without relying on an arbitrary sleep."
         ]
       },
       "quiz": {
@@ -1104,8 +1104,8 @@
         "solution": "Use synthetic case ID, operation stage, error category and elapsed duration. Keep raw content and credentials out; attach sanitized reproducible input separately when permitted.",
         "solutionFormat": "prose",
         "checks": [
-          "Use synthetic case ID, operation stage, error category and elapsed duration.",
-          "Explain the reasoning behind this answer: Outcome category plus synthetic case ID."
+          "Propose diagnostic fields and show a sample failure event.",
+          "Explain the diagnostic purpose and disclosure risk of each field."
         ]
       },
       "quiz": {
@@ -1153,8 +1153,8 @@
         "solution": "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread. A single stopwatch sample is insufficient.",
         "solutionFormat": "prose",
         "checks": [
-          "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread.",
-          "Explain the reasoning behind this answer: A repeated specified workload with measurements."
+          "Specify the comparison workload, environment and measurement procedure.",
+          "Provide correctness evidence and report variability with the performance result."
         ]
       },
       "quiz": {
@@ -1202,8 +1202,8 @@
         "solution": "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser. Update limits instead of reusing an old completion claim.",
         "solutionFormat": "prose",
         "checks": [
-          "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser.",
-          "Explain the reasoning behind this answer: Entry point, scope and actual outcome."
+          "Map changed entry points to new risks and observable checks.",
+          "Separate retained evidence from claims requiring additional execution."
         ]
       },
       "quiz": {
@@ -1251,8 +1251,8 @@
         "solution": "True was accepted because isinstance treats bool as int. The strict parser uses exact int typing. Boolean regression rejects it while 0 and 1440 still pass. The fixture is synthetic and no production data was used.",
         "solutionFormat": "prose",
         "checks": [
-          "True was accepted because isinstance treats bool as int.",
-          "Explain the reasoning behind this answer: The barrier test recorded one success and one conflict."
+          "Separate recorded behavior, suspected cause and confirmed cause.",
+          "Include a reproduction and a discriminating observation supporting the diagnosis."
         ]
       },
       "quiz": {
@@ -1300,8 +1300,8 @@
         "solution": "It observes main-entry execution, import paths, output and process exit behavior. It still does not establish packaged-install, GUI or production-service behavior unless those actual routes are exercised.",
         "solutionFormat": "prose",
         "checks": [
-          "It observes main-entry execution, import paths, output and process exit behavior.",
-          "Explain the reasoning behind this answer: The actual script process and its output."
+          "Specify process inputs and observable outputs for the command case.",
+          "Explain which entry-point failures this check can expose beyond a function test."
         ]
       },
       "quiz": {

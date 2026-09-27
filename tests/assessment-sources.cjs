@@ -25,3 +25,21 @@ for(const p of paths.filter(p=>Array.isArray(p.lessons)&&p.status==='ready')){
 const html=ctx.lessonReferences({references:[{title:'<script>',url:'javascript:alert(1)',section:'<unsafe>',scope:'<scope>',reviewed:'2026-09-27'}]});
 assert.ok(!html.includes('javascript:')&&!html.includes('<script>'));assert.ok(html.includes('&lt;script&gt;'));
 console.log(`PASS: ${lessons} lessons have scoped sources; balanced stable quiz choices retain answer identity; print and escaping checked.`);
+
+// Public self-check criteria must not reveal the quiz's answer before an attempt.
+for(const id of ['testing-debugging','networking-web']){
+ const p=paths.find(p=>p.id===id);
+ for(const l of p.lessons){
+  assert.ok(l.exercise.checks.length>=2,`${id}/${l.id}: useful self-check criteria`);
+  for(const check of l.exercise.checks){
+   assert.ok(!check.includes('Explain the reasoning behind this answer:'),`${id}/${l.id}: answer leakage`);
+   assert.ok(!check.includes(l.quiz.options[l.quiz.correct]),`${id}/${l.id}: rubric reveals quiz answer`);
+  }
+ }
+}
+for(const [id,capstone] of [['data-structures-algorithms','algorithm-review'],['design-patterns','selection']]){
+ const p=paths.find(p=>p.id===id), stages=p.stages.map(s=>s.id);
+ for(let i=1;i<p.lessons.length;i++)assert.ok(stages.indexOf(p.lessons[i-1].stage)<=stages.indexOf(p.lessons[i].stage),id+' linear reader must follow stage progression');
+ assert.equal(p.lessons.at(-1).id,capstone,id+' concludes with the review');
+}
+console.log('PASS: 48 answer-free rubrics and coherent DSA/Patterns progression.');

@@ -209,7 +209,7 @@
           "The application database"
         ],
         "correct": 0,
-        "explanation": "The scheduler. Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted."
+        "explanation": "The scheduler selects a node for an unscheduled Pod subject to placement and resource constraints. The kubelet and container runtime handle startup on the assigned node."
       },
       "references": [
         {
@@ -307,7 +307,7 @@
           "The Docker image tag alone"
         ],
         "correct": 1,
-        "explanation": "Matching Pod labels. The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill."
+        "explanation": "A selector-based Service discovers Pods whose labels match its selector in the namespace. Readiness and endpoint eligibility still determine usable backends; matching labels alone do not establish application success."
       },
       "references": [
         {
@@ -405,7 +405,7 @@
           "A database transaction"
         ],
         "correct": 0,
-        "explanation": "The Deployment/ReplicaSet reconciliation chain. Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly."
+        "explanation": "The Deployment manages ReplicaSets, whose controllers reconcile the desired Pod count after a managed Pod is deleted. Replacement creation does not guarantee image startup, readiness or correct application state."
       },
       "references": [
         {
@@ -454,7 +454,7 @@
           "The old Pod UID"
         ],
         "correct": 1,
-        "explanation": "The Service DNS name. Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results."
+        "explanation": "The Service name remains stable while backing Pods are replaced. Clients still need working resolution, eligible endpoints, connectivity and an application response."
       },
       "references": [
         {
@@ -650,7 +650,7 @@
           "100MiB memory"
         ],
         "correct": 1,
-        "explanation": "0.1 CPU core. The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values."
+        "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application’s measured CPU use."
       },
       "references": [
         {
@@ -699,7 +699,7 @@
           "It changes maxUnavailable to100%"
         ],
         "correct": 1,
-        "explanation": "No; it reports progress failure for a release controller/operator to handle. With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green."
+        "explanation": "progressDeadlineSeconds makes stalled progress visible through Deployment status. It does not automatically revert the release; a release controller or operator must decide and perform recovery."
       },
       "references": [
         {
@@ -748,7 +748,7 @@
           "Creates another node"
         ],
         "correct": 1,
-        "explanation": "Allows consideration despite a matching taint. No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences."
+        "explanation": "A matching toleration permits the scheduler to consider a tainted node. It neither requires placement there nor overrides resource, affinity and other scheduling constraints."
       },
       "references": [
         {
@@ -846,7 +846,7 @@
           "Whether application tokens are valid"
         ],
         "correct": 0,
-        "explanation": "Which subjects receive referenced rules in that namespace. Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations."
+        "explanation": "A namespaced RoleBinding grants its subjects the referenced Role or ClusterRole rules within that namespace. Effective access also depends on the actual rules and indirect privileges, such as creating workloads that use Secrets or service accounts."
       },
       "references": [
         {
@@ -895,7 +895,7 @@
           "Service typeClusterIP"
         ],
         "correct": 1,
-        "explanation": "capabilities.drop:[ALL]. Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root."
+        "explanation": "capabilities.drop: [ALL] removes ambient Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
       },
       "references": [
         {
@@ -944,7 +944,7 @@
           "Guaranteed multi-region replication"
         ],
         "correct": 1,
-        "explanation": "A single-node read-write access mode. No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state."
+        "explanation": "ReadWriteOnce describes read-write mounting from one node. It does not mean one Pod, guarantee durable retention, or establish backup and recovery."
       },
       "references": [
         {
@@ -1042,7 +1042,7 @@
           "A ConfigMap release label"
         ],
         "correct": 1,
-        "explanation": "CPU requests and an available resource metrics API. Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds."
+        "explanation": "A CPU percentage target needs container CPU requests as its baseline and an available resource metrics API for observations. Accepted HPA configuration alone does not demonstrate actual scaling."
       },
       "references": [
         {
@@ -1091,7 +1091,7 @@
           "All SQL transactions"
         ],
         "correct": 1,
-        "explanation": "Eligible voluntary eviction requests. No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures."
+        "explanation": "A PodDisruptionBudget constrains eligible voluntary evictions. It does not prevent node failure or guarantee availability when replicas share a failure domain."
       },
       "references": [
         {
@@ -1189,7 +1189,7 @@
           "The database password in a public commit"
         ],
         "correct": 1,
-        "explanation": "The reviewed desired state in its source of truth. The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately."
+        "explanation": "A durable rollback changes the reviewed desired state in the controller’s source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
       },
       "references": [
         {
@@ -1238,7 +1238,7 @@
           "Its YAML filename is too short"
         ],
         "correct": 0,
-        "explanation": "Readiness may fail even though its process runs. Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary."
+        "explanation": "A running process can fail its readiness probe, leaving its Pod ineligible for normal Service traffic. Inspect readiness and endpoints as well as process state; Running alone does not establish routability."
       },
       "references": [
         {

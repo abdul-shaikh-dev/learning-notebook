@@ -8193,8 +8193,64 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "binary-search-tree",
+        "title": "8. Implemented binary search tree: ordering and deletion",
+        "stage": "intermediate",
+        "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+              "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
+            ]
+          },
+          {
+            "title": "Trace a two-child deletion",
+            "paragraphs": [
+              "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
+            ],
+            "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
+          },
+          {
+            "title": "Verify the invariant beyond a sample",
+            "paragraphs": [
+              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
+          "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
+          "checks": [
+            "All insert/delete orders preserve a set oracle and global ordering.",
+            "Duplicate and missing-key policies are tested.",
+            "Skewed input costs O(n), not guaranteed O(log n)."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "All insert/delete orders preserve a set oracle and global ordering.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+        },
+        "references": [
+          {
+            "title": "Primary reference: Order-based methods and deletion",
+            "url": "https://algs4.cs.princeton.edu/32bst/",
+            "section": "Order-based methods and deletion",
+            "reviewed": "2026-09-27",
+            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ]
+      },
+      {
         "id": "graphs",
-        "title": "8. Graphs and breadth-first search",
+        "title": "9. Graphs and breadth-first search",
         "takeaway": "Use a queue to explore unweighted shortest paths by layers.",
         "sections": [
           {
@@ -8243,7 +8299,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "heaps",
-        "title": "9. Heaps and priority queues",
+        "title": "10. Heaps and priority queues",
         "takeaway": "A heap efficiently exposes an extreme, not a fully sorted sequence.",
         "sections": [
           {
@@ -8292,7 +8348,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dynamic-programming",
-        "title": "10. Dynamic programming and a capstone",
+        "title": "11. Dynamic programming and a capstone",
         "takeaway": "Reuse solutions to overlapping subproblems with a clearly defined state.",
         "sections": [
           {
@@ -8343,7 +8399,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "linked-nodes",
-        "title": "Linked nodes and ownership",
+        "title": "12. Linked nodes and ownership",
         "stage": "intermediate",
         "takeaway": "Changing a link changes reachability; finding the link is often the expensive part.",
         "sections": [
@@ -8398,7 +8454,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "merge-sort",
-        "title": "Merge sort and a correctness argument",
+        "title": "13. Merge sort and a correctness argument",
         "stage": "intermediate",
         "takeaway": "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
         "sections": [
@@ -8453,7 +8509,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "two-pointers",
-        "title": "Two pointers on ordered data",
+        "title": "14. Two pointers on ordered data",
         "stage": "intermediate",
         "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
         "sections": [
@@ -8508,7 +8564,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "sliding-window",
-        "title": "Sliding windows and maintained state",
+        "title": "15. Sliding windows and maintained state",
         "stage": "intermediate",
         "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
         "sections": [
@@ -8563,7 +8619,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "topological",
-        "title": "Dependencies, DFS and topological ordering",
+        "title": "16. Dependencies, DFS and topological ordering",
         "stage": "intermediate",
         "takeaway": "A dependency order exists only when the directed graph has no cycle.",
         "sections": [
@@ -8626,7 +8682,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dijkstra",
-        "title": "Weighted shortest paths with Dijkstra",
+        "title": "17. Weighted shortest paths with Dijkstra",
         "stage": "advanced",
         "takeaway": "A shortest-hop path may not be the minimum-cost path.",
         "sections": [
@@ -8687,7 +8743,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "greedy",
-        "title": "Greedy algorithms and counterexamples",
+        "title": "18. Greedy algorithms and counterexamples",
         "stage": "advanced",
         "takeaway": "A locally attractive choice needs a proof, not intuition.",
         "sections": [
@@ -8743,7 +8799,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "backtracking",
-        "title": "Backtracking with reversible choices",
+        "title": "19. Backtracking with reversible choices",
         "stage": "advanced",
         "takeaway": "Explore a search tree while restoring state after each choice.",
         "sections": [
@@ -8798,7 +8854,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "knapsack",
-        "title": "Designing DP states: 0/1 knapsack",
+        "title": "20. Designing DP states: 0/1 knapsack",
         "stage": "advanced",
         "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
         "sections": [
@@ -8859,7 +8915,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "algorithm-review",
-        "title": "Testing and reviewing an algorithm",
+        "title": "21. Testing and reviewing an algorithm",
         "stage": "advanced",
         "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
         "sections": [
@@ -8908,62 +8964,6 @@ const LEARNING_PATHS = [
             "title": "Primary reference: Test cases and assertions",
             "url": "https://docs.python.org/3.11/library/unittest.html",
             "section": "Test cases and assertions",
-            "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
-          }
-        ]
-      },
-      {
-        "id": "binary-search-tree",
-        "title": "Implemented binary search tree: ordering and deletion",
-        "stage": "intermediate",
-        "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
-        "sections": [
-          {
-            "title": "Contract and collaboration",
-            "paragraphs": [
-              "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
-              "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
-            ]
-          },
-          {
-            "title": "Trace a two-child deletion",
-            "paragraphs": [
-              "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
-            ],
-            "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
-          },
-          {
-            "title": "Verify the invariant beyond a sample",
-            "paragraphs": [
-              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
-            ]
-          }
-        ],
-        "exercise": {
-          "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
-          "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
-          "checks": [
-            "All insert/delete orders preserve a set oracle and global ordering.",
-            "Duplicate and missing-key policies are tested.",
-            "Skewed input costs O(n), not guaranteed O(log n)."
-          ]
-        },
-        "quiz": {
-          "question": "Which evidence demonstrates this contract?",
-          "options": [
-            "All insert/delete orders preserve a set oracle and global ordering.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
-          ],
-          "correct": 0,
-          "explanation": "All insert/delete orders preserve a set oracle and global ordering."
-        },
-        "references": [
-          {
-            "title": "Primary reference: Order-based methods and deletion",
-            "url": "https://algs4.cs.princeton.edu/32bst/",
-            "section": "Order-based methods and deletion",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
@@ -9625,7 +9625,7 @@ const LEARNING_PATHS = [
             "Creates a TLS certificate"
           ],
           "correct": 1,
-          "explanation": "Documents the listening port without publishing it. It returns to zero because each fresh container initializes a new SQLite file in its own writable /tmp. Preserve data only with an explicit volume strategy and prove it by replacing the container."
+          "explanation": "EXPOSE documents a container port. Publishing a host port requires a separate runtime mapping; this instruction creates neither a mapping nor TLS."
         },
         "references": [
           {
@@ -9870,7 +9870,7 @@ const LEARNING_PATHS = [
             "That every old query will work"
           ],
           "correct": 1,
-          "explanation": "Only behavior compatible with the remaining schema/data. No: old readers would fail during coexistence and binary rollback. Add a compatible representation, migrate readers/writers, measure old use, then contract in a later reviewed release with a tested recovery plan."
+          "explanation": "Binary rollback can work only if the old binary is compatible with the remaining schema and data. It cannot recreate dropped values or guarantee old queries still work after a destructive migration."
         },
         "references": [
           {
@@ -9919,7 +9919,7 @@ const LEARNING_PATHS = [
             "They skip authentication entirely"
           ],
           "correct": 1,
-          "explanation": "They reduce effects available if test code is malicious. Only the reviewed promotion/deployment job, after source and artifact approval, with least privilege. The pull-request test job should have none. Check trigger semantics and environment protection before enabling the template."
+          "explanation": "Read-only PR tokens restrict the changes malicious test code can make with that token. They do not prove source safety; credentials and deployment effects need separate protected boundaries."
         },
         "references": [
           {
@@ -9968,7 +9968,7 @@ const LEARNING_PATHS = [
             "Any image with the same friendly tag"
           ],
           "correct": 1,
-          "explanation": "The approved artifact with its recorded identity. Treat it as a new candidate and run the required checks; do not attach the old test result to new bytes. Promotion records should point to immutable identity and independent provenance checks where required."
+          "explanation": "Deploy the artifact whose immutable identity matches the approval and test evidence. A rebuild or a reused friendly tag can designate different bytes, so it needs its own verification."
         },
         "references": [
           {
@@ -10185,7 +10185,7 @@ const LEARNING_PATHS = [
             "Distributed failover without data loss"
           ],
           "correct": 1,
-          "explanation": "Simulated release-label/host replacement with the same compatible SQLite schema. No. v1 remains incompatible. A reviewed forward fix or separately tested data recovery is required. Restoring a backup changes the data timeline and needs an explicit RPO/user reconciliation decision."
+          "explanation": "The supplied test restarts v1, v2 and v1 release labels using the same application code and compatible SQLite schema, then reads the retained note. It supports that bounded host-replacement case; it does not test destructive migrations or distributed failover."
         },
         "references": [
           {
@@ -10283,7 +10283,7 @@ const LEARNING_PATHS = [
             "Ignore low-traffic instances"
           ],
           "correct": 1,
-          "explanation": "Sum bad and eligible counts before division. The combined error fraction is1 / 100=1%, not the average of10% and0%=5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate."
+          "explanation": "Combine the bad-event counts and eligible-event counts over the same window, then divide. Equal weighting of instance percentages misrepresents a fleet when instances serve different traffic volumes."
         },
         "references": [
           {
@@ -10430,7 +10430,7 @@ const LEARNING_PATHS = [
             "A checksum automatically fixes missing WAL data"
           ],
           "correct": 1,
-          "explanation": "Transactions/journal state can make the copied set inconsistent. Up to59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss."
+          "explanation": "A live database may depend on journal or WAL state while transactions change its files. A naive file copy can omit required state or capture inconsistent pieces; use the supported backup mechanism and test restoration."
         },
         "references": [
           {
@@ -10817,7 +10817,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Offline request-budget arithmetic",
@@ -10869,7 +10869,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Offline request-budget arithmetic",
@@ -10921,7 +10921,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Offline request-budget arithmetic",
@@ -10978,7 +10978,7 @@ const LEARNING_PATHS = [
     "title": "Design Patterns",
     "category": "Software design",
     "status": "ready",
-    "description": "Learn to choose and apply patterns through 22 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
+    "description": "Learn to choose and apply patterns through 24 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
     "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
@@ -11944,8 +11944,64 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "chain-of-responsibility",
+        "title": "14. Chain of Responsibility: select the first handler",
+        "stage": "intermediate",
+        "takeaway": "Ordered delegation chooses one handler; broadcast has a different contract.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
+              "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
+            ]
+          },
+          {
+            "title": "Trace decline, acceptance and ordering",
+            "paragraphs": [
+              "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
+            ],
+            "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
+          },
+          {
+            "title": "Compare failure and fan-out contracts",
+            "paragraphs": [
+              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a title and JSON handler. Test two overlapping handlers in both orders, a decline, a False result, an unhandled request and a failure that must not call fallback.",
+          "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
+          "checks": [
+            "The first accepting handler prevents later handlers from running.",
+            "Observer broadcasts to every subscriber.",
+            "Decline, valid falsey result and failure are distinct."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "The first accepting handler prevents later handlers from running.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "The first accepting handler prevents later handlers from running."
+        },
+        "references": [
+          {
+            "title": "GoF: Chain Of Responsibility",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Chain Of Responsibility",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
+      },
+      {
         "id": "command",
-        "title": "14. Command: represent an action explicitly",
+        "title": "15. Command: represent an action explicitly",
         "stage": "advanced",
         "takeaway": "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
         "sections": [
@@ -12001,7 +12057,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "state",
-        "title": "15. State: behavior depends on lifecycle",
+        "title": "16. State: behavior depends on lifecycle",
         "stage": "advanced",
         "takeaway": "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
         "sections": [
@@ -12056,8 +12112,64 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "mediator",
+        "title": "17. Mediator: coordinate a completion workflow",
+        "stage": "advanced",
+        "takeaway": "A coordinator centralizes interaction rules while collaborators avoid peer dependencies.",
+        "sections": [
+          {
+            "title": "Contract and collaboration",
+            "paragraphs": [
+              "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
+              "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
+            ]
+          },
+          {
+            "title": "Trace prerequisites before effects",
+            "paragraphs": [
+              "The next lesson depends on intro. Trying next first fails before any state change or notification. Completing intro then next changes both states and records one local notification per successful transition. Repeating next fails according to the explicit active-to-done contract."
+            ],
+            "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]"
+          },
+          {
+            "title": "Keep the coordinator boundary honest",
+            "paragraphs": [
+              "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete intro before next, then test repeated/missing completion and unfinished prerequisites. Propose a separate persistence and notification failure policy for external collaborators.",
+          "solution": "from collaboration import CompletionMediator\nm=CompletionMediator({'intro':'active','next':'active'},{'next':['intro']})\nm.complete('intro'); m.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]",
+          "checks": [
+            "Failed prerequisite validation leaves state and notification records unchanged.",
+            "Successful transitions notify once.",
+            "External delivery requires a separate failure contract."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence demonstrates this contract?",
+          "options": [
+            "Failed prerequisite validation leaves state and notification records unchanged.",
+            "A pattern or algorithm name alone",
+            "A single successful sample without failures"
+          ],
+          "correct": 0,
+          "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
+        },
+        "references": [
+          {
+            "title": "GoF: Mediator",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
+            "section": "Mediator",
+            "reviewed": "2026-09-27",
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ]
+      },
+      {
         "id": "template-method",
-        "title": "16. Template Method and pipeline alternatives",
+        "title": "18. Template Method and pipeline alternatives",
         "stage": "advanced",
         "takeaway": "Template Method fixes an algorithm skeleton in a base class while subclasses provide selected steps. Use it when the order and extension points form a stable contract.",
         "sections": [
@@ -12113,7 +12225,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "iterator",
-        "title": "17. Iterator: traverse without exposing storage",
+        "title": "19. Iterator: traverse without exposing storage",
         "stage": "advanced",
         "takeaway": "Iterator gives a traversal interface without requiring callers to know the underlying representation. Python generators provide a compact way to implement lazy traversal.",
         "sections": [
@@ -12176,7 +12288,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dependency-injection",
-        "title": "18. Dependency injection and the composition root",
+        "title": "20. Dependency injection and the composition root",
         "stage": "advanced",
         "takeaway": "Dependency injection supplies collaborators from outside a component. A composition root is the place that assembles concrete implementations and owns their lifetimes.",
         "sections": [
@@ -12232,7 +12344,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "repository",
-        "title": "19. Repository: a domain-facing collection boundary",
+        "title": "21. Repository: a domain-facing collection boundary",
         "stage": "advanced",
         "takeaway": "Repository provides a domain-facing way to retrieve and persist entities while isolating storage details. Its API should reflect useful domain operations rather than blindly duplicate every database operation.",
         "sections": [
@@ -12288,7 +12400,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "unit-of-work",
-        "title": "20. Unit of Work: coordinate changes and commit",
+        "title": "22. Unit of Work: coordinate changes and commit",
         "stage": "advanced",
         "takeaway": "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
         "sections": [
@@ -12373,7 +12485,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "refactoring",
-        "title": "21. Refactor toward a justified pattern",
+        "title": "23. Refactor toward a justified pattern",
         "stage": "advanced",
         "takeaway": "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
         "sections": [
@@ -12429,7 +12541,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "selection",
-        "title": "22. Pattern selection, anti-patterns and a design review",
+        "title": "24. Pattern selection, anti-patterns and a design review",
         "stage": "advanced",
         "takeaway": "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
         "sections": [
@@ -12478,118 +12590,6 @@ const LEARNING_PATHS = [
             "title": "GoF: How to select a design pattern",
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "How to select a design pattern",
-            "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
-          }
-        ]
-      },
-      {
-        "id": "chain-of-responsibility",
-        "title": "Chain of Responsibility: select the first handler",
-        "stage": "intermediate",
-        "takeaway": "Ordered delegation chooses one handler; broadcast has a different contract.",
-        "sections": [
-          {
-            "title": "Contract and collaboration",
-            "paragraphs": [
-              "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
-              "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
-            ]
-          },
-          {
-            "title": "Trace decline, acceptance and ordering",
-            "paragraphs": [
-              "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
-            ],
-            "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
-          },
-          {
-            "title": "Compare failure and fan-out contracts",
-            "paragraphs": [
-              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
-            ]
-          }
-        ],
-        "exercise": {
-          "prompt": "Add a title and JSON handler. Test two overlapping handlers in both orders, a decline, a False result, an unhandled request and a failure that must not call fallback.",
-          "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
-          "checks": [
-            "The first accepting handler prevents later handlers from running.",
-            "Observer broadcasts to every subscriber.",
-            "Decline, valid falsey result and failure are distinct."
-          ]
-        },
-        "quiz": {
-          "question": "Which evidence demonstrates this contract?",
-          "options": [
-            "The first accepting handler prevents later handlers from running.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
-          ],
-          "correct": 0,
-          "explanation": "The first accepting handler prevents later handlers from running."
-        },
-        "references": [
-          {
-            "title": "GoF: Chain Of Responsibility",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
-            "section": "Chain Of Responsibility",
-            "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
-          }
-        ]
-      },
-      {
-        "id": "mediator",
-        "title": "Mediator: coordinate a completion workflow",
-        "stage": "advanced",
-        "takeaway": "A coordinator centralizes interaction rules while collaborators avoid peer dependencies.",
-        "sections": [
-          {
-            "title": "Contract and collaboration",
-            "paragraphs": [
-              "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
-              "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
-            ]
-          },
-          {
-            "title": "Trace prerequisites before effects",
-            "paragraphs": [
-              "The next lesson depends on intro. Trying next first fails before any state change or notification. Completing intro then next changes both states and records one local notification per successful transition. Repeating next fails according to the explicit active-to-done contract."
-            ],
-            "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]"
-          },
-          {
-            "title": "Keep the coordinator boundary honest",
-            "paragraphs": [
-              "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
-            ]
-          }
-        ],
-        "exercise": {
-          "prompt": "Complete intro before next, then test repeated/missing completion and unfinished prerequisites. Propose a separate persistence and notification failure policy for external collaborators.",
-          "solution": "from collaboration import CompletionMediator\nm=CompletionMediator({'intro':'active','next':'active'},{'next':['intro']})\nm.complete('intro'); m.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]",
-          "checks": [
-            "Failed prerequisite validation leaves state and notification records unchanged.",
-            "Successful transitions notify once.",
-            "External delivery requires a separate failure contract."
-          ]
-        },
-        "quiz": {
-          "question": "Which evidence demonstrates this contract?",
-          "options": [
-            "Failed prerequisite validation leaves state and notification records unchanged.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
-          ],
-          "correct": 0,
-          "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
-        },
-        "references": [
-          {
-            "title": "GoF: Mediator",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
-            "section": "Mediator",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
@@ -12947,7 +12947,7 @@ const LEARNING_PATHS = [
     "title": "Git & Team Workflows",
     "category": "Engineering practice",
     "status": "ready",
-    "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three temporary-only executable projects.",
+    "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three executable projects with retained learner workspaces.",
     "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
@@ -13064,7 +13064,7 @@ const LEARNING_PATHS = [
             "title": "Understand the boundary",
             "paragraphs": [
               "Git records snapshots and their relationships. A hosting website is optional: you can learn every core operation in a local directory. A repository usually has a working directory plus a .git directory containing objects, references and configuration. A nested terminal can point at a different repository than the editor you are looking at.",
-              "Run the provided sandbox instead of experimenting in an existing checkout. It creates repositories beneath a new temporary root, isolates Git configuration and hooks, uses a synthetic identity per command, and deletes only its own temporary directories. It never pushes or contacts a hosting service."
+              "Run the provided sandbox instead of experimenting in an existing checkout. With --workspace-parent . it creates a fresh owned child and retains repositories plus evidence.json for inspection. It isolates Git configuration and hooks and uses a synthetic identity per command. Omitting --workspace-parent runs the temporary automated verifier, which deletes only its own generated root. It never pushes or contacts a hosting service."
             ]
           },
           {
@@ -13073,16 +13073,16 @@ const LEARNING_PATHS = [
               "Check the repository root and status before any mutation. Git configuration has scopes: system, global and repository local; command-line -c values apply to that invocation. Changing global identity is not necessary for these exercises.",
               "The sandbox supports --stage foundation, intermediate, advanced or all. Its output is actual assertion evidence. This does not prove remote permissions, branch protection or team policy."
             ],
-            "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation"
+            "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation --workspace-parent ."
           }
         ],
         "exercise": {
           "prompt": "Run the foundation fixture. Record the Git version and explain why a command in the wrong working directory could affect another project.",
-          "solution": "The JSON report records git_version and foundation results. Every fixture subprocess checks that its resolved working directory remains beneath the newly created temporary root. User/global config and existing repository contents are outside that root.",
+          "solution": "The JSON report records git_version and foundation results. Every fixture subprocess checks that its resolved working directory remains beneath the newly created owned root. User/global config and existing repository contents are outside that root.",
           "solutionFormat": "prose",
           "checks": [
             "Report includes an installed Git version.",
-            "Only generated temporary repositories are changed.",
+            "Only fresh generated owned repositories are changed; retained learner workspaces remain inspectable.",
             "Configuration scope is distinguished from repository state."
           ]
         },
@@ -14190,7 +14190,7 @@ const LEARNING_PATHS = [
           "title": "Three-state snapshot investigation",
           "brief": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
           "requirements": [
-            "Run the complete foundation fixture in its own temporary root.",
+            "Run the complete foundation fixture in its fresh retained owned child.",
             "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
             "Verify committed contents independently with git show.",
             "Show that an untracked synthetic config file is ignored without claiming history erasure."
@@ -14201,7 +14201,7 @@ const LEARNING_PATHS = [
             "Ignore evidence uses check-ignore and ls-files.",
             "Report separates mechanical checks from release verification."
           ],
-          "solution": "Use sandbox.py --stage foundation. The fixture commits one, stages two, edits three and commits the index; HEAD contains two and the working file three. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
+          "solution": "Use `python -B sandbox.py --stage foundation --workspace-parent .`. The fixture commits one, stages two, edits three and commits the index. At the staged commit HEAD contains two and the working file three; evidence.json preserves both diffs. The completed repository has restored the working file to two and retains all commits for independent git show. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
         }
       },
       {
@@ -14230,7 +14230,7 @@ const LEARNING_PATHS = [
             "Fetch and integration are distinguished.",
             "Review evidence names the candidate and no hosted approval is invented."
           ],
-          "solution": "Use sandbox.py --stage intermediate. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
+          "solution": "Use `python -B sandbox.py --stage intermediate --workspace-parent .`. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
         }
       },
       {
@@ -14259,7 +14259,7 @@ const LEARNING_PATHS = [
             "History operations are justified by ownership and purpose.",
             "Release records do not equate a tag with trusted deployment evidence."
           ],
-          "solution": "Use sandbox.py --stage advanced. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
+          "solution": "Use `python -B sandbox.py --stage advanced --workspace-parent .`. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
         }
       }
     ],
@@ -14327,7 +14327,7 @@ const LEARNING_PATHS = [
             "Extract the full bundle into an empty folder; all listed files are flat at its root.",
             "Read README.md and foundation-kit.md before running the references.",
             "Run the commands below and record actual results separately from expected results.",
-            "Run the complete foundation fixture in its own temporary root.",
+            "Run the complete foundation fixture in its fresh retained owned child.",
             "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
             "Verify committed contents independently with git show.",
             "Show that an untracked synthetic config file is ignored without claiming history erasure.",
@@ -14336,8 +14336,8 @@ const LEARNING_PATHS = [
           "commands": [
             {
               "label": "Run foundation snapshot fixture",
-              "command": "python -B sandbox.py --stage foundation",
-              "expected": "JSON reports staged_snapshot two and ignored_untracked true; owned temporary repositories removed."
+              "command": "python -B sandbox.py --stage foundation --workspace-parent .",
+              "expected": "JSON reports staged_snapshot two and ignored_untracked true; fresh owned child retained for inspection; JSON gives its absolute path."
             }
           ],
           "prerequisites": [
@@ -14348,7 +14348,8 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         },
         {
@@ -14378,7 +14379,7 @@ const LEARNING_PATHS = [
           "commands": [
             {
               "label": "Run local two-developer fixture",
-              "command": "python -B sandbox.py --stage intermediate",
+              "command": "python -B sandbox.py --stage intermediate --workspace-parent .",
               "expected": "JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push."
             }
           ],
@@ -14390,7 +14391,8 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         },
         {
@@ -14420,13 +14422,13 @@ const LEARNING_PATHS = [
           "commands": [
             {
               "label": "Run history/release fixture",
-              "command": "python -B sandbox.py --stage advanced",
+              "command": "python -B sandbox.py --stage advanced --workspace-parent .",
               "expected": "JSON identifies first bad/recovered commit, safe reverted content, changed rebase identity and annotated tag."
             },
             {
               "label": "Run sandbox boundary regression tests",
               "command": "python -B -m unittest -v test_sandbox.py",
-              "expected": "Four test methods pass, including repository-root escape and push rejection."
+              "expected": "Six test methods pass, including repository-root escape and push rejection."
             }
           ],
           "prerequisites": [
@@ -14437,7 +14439,8 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         }
       ],
@@ -16414,7 +16417,7 @@ const LEARNING_PATHS = [
             "The application database"
           ],
           "correct": 0,
-          "explanation": "The scheduler. Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted."
+          "explanation": "The scheduler selects a node for an unscheduled Pod subject to placement and resource constraints. The kubelet and container runtime handle startup on the assigned node."
         },
         "references": [
           {
@@ -16590,7 +16593,7 @@ const LEARNING_PATHS = [
             "The Docker image tag alone"
           ],
           "correct": 1,
-          "explanation": "Matching Pod labels. The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill."
+          "explanation": "A selector-based Service discovers Pods whose labels match its selector in the namespace. Readiness and endpoint eligibility still determine usable backends; matching labels alone do not establish application success."
         },
         "references": [
           {
@@ -16688,7 +16691,7 @@ const LEARNING_PATHS = [
             "A database transaction"
           ],
           "correct": 0,
-          "explanation": "The Deployment/ReplicaSet reconciliation chain. Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly."
+          "explanation": "The Deployment manages ReplicaSets, whose controllers reconcile the desired Pod count after a managed Pod is deleted. Replacement creation does not guarantee image startup, readiness or correct application state."
         },
         "references": [
           {
@@ -16737,7 +16740,7 @@ const LEARNING_PATHS = [
             "The old Pod UID"
           ],
           "correct": 1,
-          "explanation": "The Service DNS name. Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results."
+          "explanation": "The Service name remains stable while backing Pods are replaced. Clients still need working resolution, eligible endpoints, connectivity and an application response."
         },
         "references": [
           {
@@ -16933,7 +16936,7 @@ const LEARNING_PATHS = [
             "100MiB memory"
           ],
           "correct": 1,
-          "explanation": "0.1 CPU core. The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values."
+          "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application’s measured CPU use."
         },
         "references": [
           {
@@ -16982,7 +16985,7 @@ const LEARNING_PATHS = [
             "It changes maxUnavailable to100%"
           ],
           "correct": 1,
-          "explanation": "No; it reports progress failure for a release controller/operator to handle. With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green."
+          "explanation": "progressDeadlineSeconds makes stalled progress visible through Deployment status. It does not automatically revert the release; a release controller or operator must decide and perform recovery."
         },
         "references": [
           {
@@ -17031,7 +17034,7 @@ const LEARNING_PATHS = [
             "Creates another node"
           ],
           "correct": 1,
-          "explanation": "Allows consideration despite a matching taint. No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences."
+          "explanation": "A matching toleration permits the scheduler to consider a tainted node. It neither requires placement there nor overrides resource, affinity and other scheduling constraints."
         },
         "references": [
           {
@@ -17129,7 +17132,7 @@ const LEARNING_PATHS = [
             "Whether application tokens are valid"
           ],
           "correct": 0,
-          "explanation": "Which subjects receive referenced rules in that namespace. Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations."
+          "explanation": "A namespaced RoleBinding grants its subjects the referenced Role or ClusterRole rules within that namespace. Effective access also depends on the actual rules and indirect privileges, such as creating workloads that use Secrets or service accounts."
         },
         "references": [
           {
@@ -17178,7 +17181,7 @@ const LEARNING_PATHS = [
             "Service typeClusterIP"
           ],
           "correct": 1,
-          "explanation": "capabilities.drop:[ALL]. Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root."
+          "explanation": "capabilities.drop: [ALL] removes ambient Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
         },
         "references": [
           {
@@ -17227,7 +17230,7 @@ const LEARNING_PATHS = [
             "Guaranteed multi-region replication"
           ],
           "correct": 1,
-          "explanation": "A single-node read-write access mode. No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state."
+          "explanation": "ReadWriteOnce describes read-write mounting from one node. It does not mean one Pod, guarantee durable retention, or establish backup and recovery."
         },
         "references": [
           {
@@ -17325,7 +17328,7 @@ const LEARNING_PATHS = [
             "A ConfigMap release label"
           ],
           "correct": 1,
-          "explanation": "CPU requests and an available resource metrics API. Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds."
+          "explanation": "A CPU percentage target needs container CPU requests as its baseline and an available resource metrics API for observations. Accepted HPA configuration alone does not demonstrate actual scaling."
         },
         "references": [
           {
@@ -17374,7 +17377,7 @@ const LEARNING_PATHS = [
             "All SQL transactions"
           ],
           "correct": 1,
-          "explanation": "Eligible voluntary eviction requests. No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures."
+          "explanation": "A PodDisruptionBudget constrains eligible voluntary evictions. It does not prevent node failure or guarantee availability when replicas share a failure domain."
         },
         "references": [
           {
@@ -17472,7 +17475,7 @@ const LEARNING_PATHS = [
             "The database password in a public commit"
           ],
           "correct": 1,
-          "explanation": "The reviewed desired state in its source of truth. The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately."
+          "explanation": "A durable rollback changes the reviewed desired state in the controller’s source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
         },
         "references": [
           {
@@ -17521,7 +17524,7 @@ const LEARNING_PATHS = [
             "Its YAML filename is too short"
           ],
           "correct": 0,
-          "explanation": "Readiness may fail even though its process runs. Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary."
+          "explanation": "A running process can fail its readiness probe, leaving its Pod ineligible for normal Service traffic. Inspect readiness and endpoints as well as process state; Running alone does not establish routability."
         },
         "references": [
           {
@@ -17899,7 +17902,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py check_manifests.py",
-              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Optional local lab · after context review and namespace Bootstrap",
@@ -17959,7 +17962,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py check_manifests.py",
-              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Optional local lab · after context review and namespace Bootstrap",
@@ -18020,7 +18023,7 @@ const LEARNING_PATHS = [
             {
               "label": "Extracted kit root · offline Python checks",
               "command": "python -m unittest -v test_release_app.py check_manifests.py",
-              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
             },
             {
               "label": "Optional local lab · after context review and namespace Bootstrap",
@@ -18262,8 +18265,8 @@ const LEARNING_PATHS = [
           "solution": "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists. Check server/listener configuration for the former and response contract for the latter.",
           "solutionFormat": "prose",
           "checks": [
-            "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists.",
-            "Explain the reasoning behind this answer: Body satisfies the lesson contract."
+            "Identify the last successful layer for each failure.",
+            "Give an observable signal that supports each classification."
           ]
         },
         "quiz": {
@@ -18410,8 +18413,8 @@ const LEARNING_PATHS = [
           "solution": "Parallel tests or another app may occupy 8000. Port zero reserves an available endpoint and the client reads its actual assigned value.",
           "solutionFormat": "prose",
           "checks": [
-            "Parallel tests or another app may occupy 8000.",
-            "Explain the reasoning behind this answer: 127.0.0.1."
+            "Describe how the test discovers the listener endpoint.",
+            "Explain how concurrent runs and port conflicts affect the proposed setup."
           ]
         },
         "quiz": {
@@ -18459,8 +18462,8 @@ const LEARNING_PATHS = [
           "solution": "A resolver error happens before an HTTP response; 404 means a server responded to the request. Capture the stage and actual error category.",
           "solutionFormat": "prose",
           "checks": [
-            "A resolver error happens before an HTTP response; 404 means a server responded to the request.",
-            "Explain the reasoning behind this answer: No, it only provides an address mapping."
+            "Provide the resolver and HTTP evidence needed for the comparison.",
+            "State which layer each observation can and cannot establish."
           ]
         },
         "quiz": {
@@ -18508,8 +18511,8 @@ const LEARNING_PATHS = [
           "solution": "Remembering with zero TTL expires immediately in this model. At the same time lookup returns None; assert that without sleeping.",
           "solutionFormat": "prose",
           "checks": [
-            "Remembering with zero TTL expires immediately in this model.",
-            "Explain the reasoning behind this answer: No cached answer."
+            "Specify a clock, insertion time and lookup time.",
+            "Record the expected lookup outcome and justify it from the expiry rule."
           ]
         },
         "quiz": {
@@ -18557,8 +18560,8 @@ const LEARNING_PATHS = [
           "solution": "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix.",
           "solutionFormat": "prose",
           "checks": [
-            "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix..",
-            "Explain the reasoning behind this answer: Stream chunks need not match messages."
+            "Specify declared and received body sizes for the fixture.",
+            "Assert the client outcome and whether any application result is published."
           ]
         },
         "quiz": {
@@ -18606,8 +18609,8 @@ const LEARNING_PATHS = [
           "solution": "Their ports differ, so their origins differ. A path change on the same scheme, host and port keeps the origin unchanged.",
           "solutionFormat": "prose",
           "checks": [
-            "Their ports differ, so their origins differ.",
-            "Explain the reasoning behind this answer: Changing the port."
+            "List the parsed components used in each origin comparison.",
+            "Justify the comparison using the origin definition."
           ]
         },
         "quiz": {
@@ -18655,8 +18658,8 @@ const LEARNING_PATHS = [
           "solution": "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError. Also test a correctly UTF-8-encoded non-ASCII lesson to show valid input remains accepted.",
           "solutionFormat": "prose",
           "checks": [
-            "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError.",
-            "Explain the reasoning behind this answer: A protocol observation error."
+            "Provide byte fixtures with a named encoding policy and expected acceptance or rejection.",
+            "Include a valid non-ASCII case and malformed input; verify error and publication behavior."
           ]
         },
         "quiz": {
@@ -18711,8 +18714,8 @@ const LEARNING_PATHS = [
           "solution": "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')). A wrong length breaks framing.",
           "solutionFormat": "prose",
           "checks": [
-            "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')).",
-            "Explain the reasoning behind this answer: An empty body with metadata."
+            "Provide a non-ASCII message and measure its encoded payload.",
+            "Compare the declared length with the bytes actually sent."
           ]
         },
         "quiz": {
@@ -18760,8 +18763,8 @@ const LEARNING_PATHS = [
           "solution": "No. It is an HTTP response from a server. Check the requested target or route; DNS already resolved enough for the exchange to happen.",
           "solutionFormat": "prose",
           "checks": [
-            "No.",
-            "Explain the reasoning behind this answer: 200 body fails lesson schema."
+            "Identify the evidence supplied by the response and the layer that produced it.",
+            "Explain what additional observation would support a name-resolution diagnosis."
           ]
         },
         "quiz": {
@@ -18809,8 +18812,8 @@ const LEARNING_PATHS = [
           "solution": "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking. The local read-only retry helper is insufficient.",
           "solutionFormat": "prose",
           "checks": [
-            "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking.",
-            "Explain the reasoning behind this answer: A documented deduplication contract for that operation."
+            "List the possible server outcomes after the response is lost.",
+            "Specify how the client resolves uncertainty and bounds further effects."
           ]
         },
         "quiz": {
@@ -18858,8 +18861,8 @@ const LEARNING_PATHS = [
           "solution": "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport. Keep it separate from the current HTTP evidence.",
           "solutionFormat": "prose",
           "checks": [
-            "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport.",
-            "Explain the reasoning behind this answer: Required checks are configured."
+            "List setup and runtime observations required for a TLS experiment.",
+            "Separate certificate configuration from verified client behavior."
           ]
         },
         "quiz": {
@@ -18907,8 +18910,8 @@ const LEARNING_PATHS = [
           "solution": "The default context requires identity checks. No server certificate was presented and no encrypted session was established; a handshake test remains unexecuted.",
           "solutionFormat": "prose",
           "checks": [
-            "The default context requires identity checks.",
-            "Explain the reasoning behind this answer: The server-name identity check."
+            "Attach each proposed claim to a named executed assertion.",
+            "List TLS properties that remain unobserved by the local fixture."
           ]
         },
         "quiz": {
@@ -18956,8 +18959,8 @@ const LEARNING_PATHS = [
           "solution": "Its fixed value is known to every learner and the server has no real identity service. It demonstrates header flow, not authenticated accounts.",
           "solutionFormat": "prose",
           "checks": [
-            "Its fixed value is known to every learner and the server has no real identity service.",
-            "Explain the reasoning behind this answer: JavaScript access to that cookie."
+            "Describe who can supply or alter the lab cookie value.",
+            "State what evidence would be required for a security claim."
           ]
         },
         "quiz": {
@@ -19005,8 +19008,8 @@ const LEARNING_PATHS = [
           "solution": "No. It changes browser exposure policy; authentication and object-level authorization remain separate server checks. Specify them separately in tests.",
           "solutionFormat": "prose",
           "checks": [
-            "No.",
-            "Explain the reasoning behind this answer: It is not enforcing the browser CORS protocol."
+            "Identify the browser and server decisions involved in the request.",
+            "Propose independent allowed and denied cases with observable outcomes."
           ]
         },
         "quiz": {
@@ -19054,8 +19057,8 @@ const LEARNING_PATHS = [
           "solution": "Different accounts may request the same URL and receive different representations. Prefer no-store for this exercise; real caching needs explicit partition and variation policy.",
           "solutionFormat": "prose",
           "checks": [
-            "Different accounts may request the same URL and receive different representations.",
-            "Explain the reasoning behind this answer: no-store."
+            "Provide two requests whose outputs differ under the same URL.",
+            "Evaluate whether the proposed cache key keeps their results separate."
           ]
         },
         "quiz": {
@@ -19103,8 +19106,8 @@ const LEARNING_PATHS = [
           "solution": "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy. Do not publish an empty lesson.",
           "solutionFormat": "prose",
           "checks": [
-            "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy.",
-            "Explain the reasoning behind this answer: The cached representation."
+            "Specify the client state before receiving the response.",
+            "Define the next request and the conditions for publishing a result."
           ]
         },
         "quiz": {
@@ -19152,8 +19155,8 @@ const LEARNING_PATHS = [
           "solution": "Hop count, resolved destination origin, method rules and whether credentials may be forwarded. Stop loops and reject destinations outside its policy.",
           "solutionFormat": "prose",
           "checks": [
-            "Hop count, resolved destination origin, method rules and whether credentials may be forwarded.",
-            "Explain the reasoning behind this answer: Returns it to the caller."
+            "Provide a redirect chain and explicit stopping conditions.",
+            "Demonstrate behavior for a loop and a destination outside the allowed boundary."
           ]
         },
         "quiz": {
@@ -19201,8 +19204,8 @@ const LEARNING_PATHS = [
           "solution": "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored. Test spoofed fields and document the connection trust boundary.",
           "solutionFormat": "prose",
           "checks": [
-            "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored.",
-            "Explain the reasoning behind this answer: No, work may still be running."
+            "Describe the trusted proxy boundary and the source of each forwarded value.",
+            "Include a spoofed-header case and specify its observable policy outcome."
           ]
         },
         "quiz": {
@@ -19250,8 +19253,8 @@ const LEARNING_PATHS = [
           "solution": "It establishes the server received the request before the timeout observation. A refusal or thread-start failure would be a different behavior and should not satisfy the intended case.",
           "solutionFormat": "prose",
           "checks": [
-            "It establishes the server received the request before the timeout observation.",
-            "Explain the reasoning behind this answer: The caller stopped waiting at that boundary."
+            "Describe the synchronization point and the event it establishes.",
+            "Explain which timeout or startup failures remain possible afterward."
           ]
         },
         "quiz": {
@@ -19388,8 +19391,8 @@ const LEARNING_PATHS = [
           "solution": "If each layer attempts three times, one logical operation can reach up to 27 deepest calls. Coordinate ownership and use an end-to-end bound.",
           "solutionFormat": "prose",
           "checks": [
-            "If each layer attempts three times, one logical operation can reach up to 27 deepest calls.",
-            "Explain the reasoning behind this answer: A deadline check before dispatch."
+            "Calculate attempts from stated per-layer retry policies.",
+            "State a shared limit and demonstrate behavior when it is exhausted."
           ]
         },
         "quiz": {
@@ -19437,8 +19440,8 @@ const LEARNING_PATHS = [
           "solution": "Supply more than 4096 bytes to the decoder and assert ProtocolError. For streaming extensions, enforce the bound during reading before accumulating the whole body.",
           "solutionFormat": "prose",
           "checks": [
-            "Supply more than 4096 bytes to the decoder and assert ProtocolError.",
-            "Explain the reasoning behind this answer: Reject it at the body contract boundary."
+            "Specify an input at and beyond the configured size limit.",
+            "Verify both the reported failure and absence of a published result on rejection."
           ]
         },
         "quiz": {
@@ -19486,8 +19489,8 @@ const LEARNING_PATHS = [
           "solution": "Correlated proxy and origin logs with clocks and request identity, plus the response metadata. A single browser status cannot establish where processing failed.",
           "solutionFormat": "prose",
           "checks": [
-            "Correlated proxy and origin logs with clocks and request identity, plus the response metadata.",
-            "Explain the reasoning behind this answer: Session cookie value."
+            "Collect timestamped client, proxy and origin observations.",
+            "Explain which observations distinguish the two proposed failure sources."
           ]
         },
         "quiz": {
@@ -19535,8 +19538,8 @@ const LEARNING_PATHS = [
           "solution": "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests. Existing JSON-schema checks remain useful but do not establish them.",
           "solutionFormat": "prose",
           "checks": [
-            "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests.",
-            "Explain the reasoning behind this answer: HTTP/1.1 local response contracts."
+            "Map each proposed protocol claim to a separate observable experiment.",
+            "State which current fixture results transfer and which require new evidence."
           ]
         },
         "quiz": {
@@ -19584,8 +19587,8 @@ const LEARNING_PATHS = [
           "solution": "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts.",
           "solutionFormat": "prose",
           "checks": [
-            "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts..",
-            "Explain the reasoning behind this answer: Controlled loopback and offline model behaviors passed."
+            "Name the unresolved claim and the smallest discriminating experiment.",
+            "Specify expected observations, stopping conditions and remaining limitations."
           ]
         },
         "quiz": {
@@ -19704,7 +19707,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run meaningful regression suite",
               "command": "python -m unittest -v test_network_labs.py",
-              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+              "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
             }
           ],
           "prerequisites": [
@@ -19759,7 +19762,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run meaningful regression suite",
               "command": "python -m unittest -v test_network_labs.py",
-              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+              "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
             }
           ],
           "prerequisites": [
@@ -19814,7 +19817,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run meaningful regression suite",
               "command": "python -m unittest -v test_network_labs.py",
-              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+              "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
             }
           ],
           "prerequisites": [
@@ -23703,7 +23706,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Implement the classification and loader from the starter fixture before viewing advanced-solutions.sql. Provide two runs and a conflict-case explanation, plus a production-readiness gap list.",
           "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
-          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
           "checks": [
             "Raw counts 6=3 accepted+1 duplicate+1 invalid+1 orphan.",
             "First inserts 3;replay 0;ledger 3 rows/215.",
@@ -23834,7 +23837,7 @@ const LEARNING_PATHS = [
             "Operations:bounded retries,explicit side-effect delivery and recoverable deployment.",
             "Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
           ],
-          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), KeySummary AS (\n SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,\n MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText\n FROM #LNRawEvents GROUP BY EventId\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
         }
       }
     ],
@@ -26270,8 +26273,8 @@ const LEARNING_PATHS = [
           "solution": "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy. State these separately so empty does not accidentally mean malformed.",
           "solutionFormat": "prose",
           "checks": [
-            "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy.",
-            "Explain the reasoning behind this answer: An invalid batch preserves the previous report."
+            "Specify accepted and rejected examples for both inputs.",
+            "State the observable outcome and unchanged state for each case."
           ]
         },
         "quiz": {
@@ -26319,8 +26322,8 @@ const LEARNING_PATHS = [
           "solution": "Arrange [], call total_minutes once, assertEqual(result, 0). Then intentionally change the expected value to confirm the runner reports the failure and restore it.",
           "solutionFormat": "prose",
           "checks": [
-            "Arrange [], call total_minutes once, assertEqual(result, 0).",
-            "Explain the reasoning behind this answer: Using a known expected value."
+            "Show the test setup, invocation and assertion as separate steps.",
+            "Explain how the expected result was determined independently of the function."
           ]
         },
         "quiz": {
@@ -26368,8 +26371,8 @@ const LEARNING_PATHS = [
           "solution": "Use -1, 0, 1, 1440, 1441, true and a string. Add fractional and null inputs to cover separate type classes. Explain why each row adds behavior evidence.",
           "solutionFormat": "prose",
           "checks": [
-            "Use -1, 0, 1, 1440, 1441, true and a string.",
-            "Explain the reasoning behind this answer: 1440 and 1441 together."
+            "Label the valid partitions and invalid partitions covered by the table.",
+            "Explain which neighboring cases detect each boundary error."
           ]
         },
         "quiz": {
@@ -26417,8 +26420,8 @@ const LEARNING_PATHS = [
           "solution": "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left. An exception alone would miss an early write.",
           "solutionFormat": "prose",
           "checks": [
-            "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left.",
-            "Explain the reasoning behind this answer: An unrelated implementation error."
+            "Record the rejection and compare destination state before and after the attempt.",
+            "Check operation calls and remaining filesystem entries after failure."
           ]
         },
         "quiz": {
@@ -26466,8 +26469,8 @@ const LEARNING_PATHS = [
           "solution": "Their order would determine initial content; a crash could leave data behind. Give each test a fresh temporary directory and assert its own starting state.",
           "solutionFormat": "prose",
           "checks": [
-            "Their order would determine initial content; a crash could leave data behind.",
-            "Explain the reasoning behind this answer: A fresh temporary directory per case."
+            "Demonstrate the cases in both execution orders.",
+            "Describe initial state and cleanup ownership for each case."
           ]
         },
         "quiz": {
@@ -26515,8 +26518,8 @@ const LEARNING_PATHS = [
           "solution": "Inspect whether the file contains valid JSON and whether framing expects a complete object per line. Do not blame disk permissions when the read already succeeded.",
           "solutionFormat": "prose",
           "checks": [
-            "Inspect whether the file contains valid JSON and whether framing expects a complete object per line.",
-            "Explain the reasoning behind this answer: The original lower-level failure."
+            "Identify the read and parsing frames in the traceback.",
+            "State one falsifiable hypothesis and the input observation needed to evaluate it."
           ]
         },
         "quiz": {
@@ -26564,8 +26567,8 @@ const LEARNING_PATHS = [
           "solution": "Include the command, Python version, text with two minutes keys, expected rejection and actual result. State whether keys differ only by case or are identical.",
           "solutionFormat": "prose",
           "checks": [
-            "Include the command, Python version, text with two minutes keys, expected rejection and actual result.",
-            "Explain the reasoning behind this answer: A smaller input that preserves the failure."
+            "Provide a command, runtime version and minimized input.",
+            "Record expected and actual outcomes so another learner can repeat the case."
           ]
         },
         "quiz": {
@@ -26613,8 +26616,8 @@ const LEARNING_PATHS = [
           "solution": "Pass true, a fractional number and a numeric string to the strict parser. Each is nonnegative in an informal sense but violates the exact integer contract.",
           "solutionFormat": "prose",
           "checks": [
-            "Pass true, a fractional number and a numeric string to the strict parser.",
-            "Explain the reasoning behind this answer: Choose a discriminating observation."
+            "Provide inputs that discriminate the proposed rule from the declared contract.",
+            "Record the observed outcome for each input and explain what it establishes."
           ]
         },
         "quiz": {
@@ -26662,8 +26665,8 @@ const LEARNING_PATHS = [
           "solution": "A domain unit test cannot observe browser effects. Use a component or browser test that controls two responses and asserts the later-selected result remains visible.",
           "solutionFormat": "prose",
           "checks": [
-            "A domain unit test cannot observe browser effects.",
-            "Explain the reasoning behind this answer: Filesystem integration."
+            "Name the components whose interaction the proposed test observes.",
+            "Identify a boundary that the chosen scope cannot exercise."
           ]
         },
         "quiz": {
@@ -26711,8 +26714,8 @@ const LEARNING_PATHS = [
           "solution": "Run the real replacement integration case and read the generated JSON. Mock behavior only establishes the injected-failure branch, not actual filesystem compatibility.",
           "solutionFormat": "prose",
           "checks": [
-            "Run the real replacement integration case and read the generated JSON.",
-            "Explain the reasoning behind this answer: The dependency was not invoked in this case."
+            "List the behavior observed by the double and the behavior left untested.",
+            "Propose an additional check with a named input and observable outcome."
           ]
         },
         "quiz": {
@@ -26760,8 +26763,8 @@ const LEARNING_PATHS = [
           "solution": "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes. Do not silently change an exact-field assertion while claiming compatibility.",
           "solutionFormat": "prose",
           "checks": [
-            "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes.",
-            "Explain the reasoning behind this answer: It violates the application contract."
+            "Provide a reader/writer compatibility table for both schema versions.",
+            "Specify the expected outcome of each fixture/version combination."
           ]
         },
         "quiz": {
@@ -26809,8 +26812,8 @@ const LEARNING_PATHS = [
           "solution": "Use distinct IDs and values, read the saved report and compare its full records array and total. Checking only the return value would miss a disk-output mismatch.",
           "solutionFormat": "prose",
           "checks": [
-            "Use distinct IDs and values, read the saved report and compare its full records array and total.",
-            "Explain the reasoning behind this answer: Reading and parsing the saved bytes."
+            "Create a fixture that makes omission or corruption observable.",
+            "Compare the persisted result against an independently specified expected report."
           ]
         },
         "quiz": {
@@ -26955,8 +26958,8 @@ const LEARNING_PATHS = [
           "solution": "An implementation returning zero for every input preserves order invariance while being wrong. Add a known nonzero example and other independent properties.",
           "solutionFormat": "prose",
           "checks": [
-            "An implementation returning zero for every input preserves order invariance while being wrong.",
-            "Explain the reasoning behind this answer: Properties can be too weak."
+            "Provide an incorrect implementation that satisfies the proposed property.",
+            "Supply a concrete case that distinguishes it from the contract."
           ]
         },
         "quiz": {
@@ -27004,8 +27007,8 @@ const LEARNING_PATHS = [
           "solution": "Temporarily point the specific assertion at the old implementation or run the included mutant comparison. Restore the corrected subject and record both outcomes.",
           "solutionFormat": "prose",
           "checks": [
-            "Temporarily point the specific assertion at the old implementation or run the included mutant comparison.",
-            "Explain the reasoning behind this answer: The old behavior fails the test and the fix passes."
+            "Run the same assertion against the original and corrected behaviors.",
+            "Record both outcomes and explain why the case isolates the defect."
           ]
         },
         "quiz": {
@@ -27053,8 +27056,8 @@ const LEARNING_PATHS = [
           "solution": "Assert a known nonzero total such as 7+2=9. Order invariance alone would not catch it.",
           "solutionFormat": "prose",
           "checks": [
-            "Assert a known nonzero total such as 7+2=9.",
-            "Explain the reasoning behind this answer: Measured lines executed under the chosen run."
+            "Supply a discriminating fixture and calculate its expected result independently.",
+            "Demonstrate the assertion outcome with the proposed mutation."
           ]
         },
         "quiz": {
@@ -27102,8 +27105,8 @@ const LEARNING_PATHS = [
           "solution": "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering. Record why the transformed fixture still reproduces.",
           "solutionFormat": "prose",
           "checks": [
-            "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering.",
-            "Explain the reasoning behind this answer: Live production records queried each run."
+            "Identify which fixture characteristics reproduce the incident.",
+            "Explain how sensitive data is removed while retaining those characteristics."
           ]
         },
         "quiz": {
@@ -27151,8 +27154,8 @@ const LEARNING_PATHS = [
           "solution": "Scheduling is outside the contract. The invariant is one commit and one conflict; either allowed winner demonstrates it without making timing a test oracle.",
           "solutionFormat": "prose",
           "checks": [
-            "Scheduling is outside the contract.",
-            "Explain the reasoning behind this answer: Exactly one commits."
+            "State the permitted outcomes without depending on a chosen thread identity.",
+            "Explain how the test makes concurrent attempts observable and terminates."
           ]
         },
         "quiz": {
@@ -27289,8 +27292,8 @@ const LEARNING_PATHS = [
           "solution": "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures. Do not increase every timeout first.",
           "solutionFormat": "prose",
           "checks": [
-            "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures.",
-            "Explain the reasoning behind this answer: Fresh owned fixtures."
+            "Record outcomes when the cases run alone and in different orders.",
+            "Identify shared state and show how a proposed correction changes the evidence."
           ]
         },
         "quiz": {
@@ -27338,8 +27341,8 @@ const LEARNING_PATHS = [
           "solution": "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation. Document any partial local work that can remain.",
           "solutionFormat": "prose",
           "checks": [
-            "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation.",
-            "Explain the reasoning behind this answer: Cleanup and effects."
+            "Define observable task, caller, resource and publication outcomes.",
+            "Explain how the test waits for completion without relying on an arbitrary sleep."
           ]
         },
         "quiz": {
@@ -27387,8 +27390,8 @@ const LEARNING_PATHS = [
           "solution": "Use synthetic case ID, operation stage, error category and elapsed duration. Keep raw content and credentials out; attach sanitized reproducible input separately when permitted.",
           "solutionFormat": "prose",
           "checks": [
-            "Use synthetic case ID, operation stage, error category and elapsed duration.",
-            "Explain the reasoning behind this answer: Outcome category plus synthetic case ID."
+            "Propose diagnostic fields and show a sample failure event.",
+            "Explain the diagnostic purpose and disclosure risk of each field."
           ]
         },
         "quiz": {
@@ -27436,8 +27439,8 @@ const LEARNING_PATHS = [
           "solution": "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread. A single stopwatch sample is insufficient.",
           "solutionFormat": "prose",
           "checks": [
-            "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread.",
-            "Explain the reasoning behind this answer: A repeated specified workload with measurements."
+            "Specify the comparison workload, environment and measurement procedure.",
+            "Provide correctness evidence and report variability with the performance result."
           ]
         },
         "quiz": {
@@ -27485,8 +27488,8 @@ const LEARNING_PATHS = [
           "solution": "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser. Update limits instead of reusing an old completion claim.",
           "solutionFormat": "prose",
           "checks": [
-            "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser.",
-            "Explain the reasoning behind this answer: Entry point, scope and actual outcome."
+            "Map changed entry points to new risks and observable checks.",
+            "Separate retained evidence from claims requiring additional execution."
           ]
         },
         "quiz": {
@@ -27534,8 +27537,8 @@ const LEARNING_PATHS = [
           "solution": "True was accepted because isinstance treats bool as int. The strict parser uses exact int typing. Boolean regression rejects it while 0 and 1440 still pass. The fixture is synthetic and no production data was used.",
           "solutionFormat": "prose",
           "checks": [
-            "True was accepted because isinstance treats bool as int.",
-            "Explain the reasoning behind this answer: The barrier test recorded one success and one conflict."
+            "Separate recorded behavior, suspected cause and confirmed cause.",
+            "Include a reproduction and a discriminating observation supporting the diagnosis."
           ]
         },
         "quiz": {
@@ -27583,8 +27586,8 @@ const LEARNING_PATHS = [
           "solution": "It observes main-entry execution, import paths, output and process exit behavior. It still does not establish packaged-install, GUI or production-service behavior unless those actual routes are exercised.",
           "solutionFormat": "prose",
           "checks": [
-            "It observes main-entry execution, import paths, output and process exit behavior.",
-            "Explain the reasoning behind this answer: The actual script process and its output."
+            "Specify process inputs and observable outputs for the command case.",
+            "Explain which entry-point failures this check can expose beyond a function test."
           ]
         },
         "quiz": {

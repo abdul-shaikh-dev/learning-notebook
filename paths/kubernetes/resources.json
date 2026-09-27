@@ -150,7 +150,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py check_manifests.py",
-          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Optional local lab · after context review and namespace Bootstrap",
@@ -210,7 +210,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py check_manifests.py",
-          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Optional local lab · after context review and namespace Bootstrap",
@@ -271,7 +271,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py check_manifests.py",
-          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Optional local lab · after context review and namespace Bootstrap",

@@ -1,9 +1,20 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const paths=require('../scripts/manifest.cjs').readPaths();
 const nodes=new Map(),store=new Map(),preferences=new Map();
-function node(id){if(!nodes.has(id))nodes.set(id,{value:'',innerHTML:'',textContent:'',hidden:false,addEventListener(type,fn){this[type]=fn;},querySelectorAll(){return [];}});return nodes.get(id);}
+function node(id){if(!nodes.has(id))nodes.set(id,{value:'',innerHTML:'',textContent:'',hidden:false,listeners:{},addEventListener(type,fn){this[type]=fn;(this.listeners[type]??=[]).push(fn);},querySelectorAll(){return [];}});return nodes.get(id);}
 const ctx={LEARNING_PATHS:paths,document:{getElementById:node},window:{addEventListener(){},scrollTo(){}},location:{hash:''},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},sessionStorage:{getItem:k=>preferences.get(k)||null,setItem:(k,v)=>preferences.set(k,v)}};
 vm.createContext(ctx);vm.runInContext(['library-map','learning-tools','catalog'].map(f=>fs.readFileSync('assets/js/'+f+'.js','utf8')).join('\n'),ctx);
+// Exercise both real input listeners, including count/list and map updates.
+for(const query of [' Kubernetes ','\tKuBeRnEtEs\n']){
+ const input=node('path-search');input.value=query;
+ for(const listener of input.listeners.input)listener({target:input});
+ assert.ok(node('learning-map').innerHTML.includes('#path/kubernetes'));
+ assert.ok(node('path-list').innerHTML.includes('#path/kubernetes'));
+ assert.equal(node('path-count').textContent,'1 matching paths · '+paths.length+' total');
+}
+const input=node('path-search');input.value='   ';
+for(const listener of input.listeners.input)listener({target:input});
+assert.equal(node('path-count').textContent,paths.length+' matching paths · '+paths.length+' total');
 const html=node('main').innerHTML;assert.ok(html.includes('Your learning map'));assert.ok(html.includes(paths.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0)+' lessons'));
 for(const p of paths.filter(p=>p.status==='ready'))assert.ok(html.includes(p.href||'#path/'+p.id),p.id);
 const buttons=['map','list'].map(view=>({dataset:{libraryView:view},setAttribute(k,v){this[k]=v;},addEventListener(k,v){this[k]=v;}}));

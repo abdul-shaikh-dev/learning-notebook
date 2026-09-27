@@ -14,9 +14,12 @@ def initialize(file):
     with closing(sqlite3.connect(file)) as db, db:
         db.execute("CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, title TEXT NOT NULL)")
 
+def readonly_uri(file):
+    return Path(file).resolve().as_uri() + "?mode=ro"
+
 def backup(source, target):
     if Path(target).exists(): raise ValueError("Backup destination must be new")
-    with closing(sqlite3.connect(f"file:{Path(source).resolve().as_posix()}?mode=ro",uri=True)) as src, closing(sqlite3.connect(target)) as dst: src.backup(dst)
+    with closing(sqlite3.connect(readonly_uri(source),uri=True)) as src, closing(sqlite3.connect(target)) as dst: src.backup(dst)
 
 def make_server(host="127.0.0.1",port=8080,db_file="notes.db",version="v1",ready_file=None):
     initialize(db_file)
@@ -38,7 +41,7 @@ def make_server(host="127.0.0.1",port=8080,db_file="notes.db",version="v1",ready
             if route=="/ready":
                 try:
                     if ready_file and Path(ready_file).exists():return self.respond(503,{"ready":False})
-                    with closing(sqlite3.connect(f"file:{Path(db_file).resolve().as_posix()}?mode=ro",uri=True)) as db, db:db.execute("SELECT 1 FROM notes LIMIT 1").fetchall()
+                    with closing(sqlite3.connect(readonly_uri(db_file),uri=True)) as db, db:db.execute("SELECT 1 FROM notes LIMIT 1").fetchall()
                     return self.respond(200,{"ready":True})
                 except sqlite3.Error:return self.respond(503,{"ready":False})
             if route=="/version":return self.respond(200,{"release":version})

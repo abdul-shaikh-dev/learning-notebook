@@ -7,14 +7,15 @@ IF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassified
 ;WITH RawTyped AS (
  SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount
  FROM #LNRawEvents r
-), KeySummary AS (
- SELECT EventId,MIN(OrderId) AS MinOrder,MAX(OrderId) AS MaxOrder,
- MIN(AmountText) AS MinText,MAX(AmountText) AS MaxText
- FROM #LNRawEvents GROUP BY EventId
 ), Ranked AS (
  SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,
- CASE WHEN s.MinOrder<>s.MaxOrder OR s.MinText<>s.MaxText THEN 1 ELSE 0 END AS HasConflict
- FROM RawTyped t JOIN KeySummary s ON s.EventId=t.EventId
+ CASE WHEN EXISTS (
+  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId
+  AND (other.OrderId<>t.OrderId
+   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)
+   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))
+ ) THEN 1 ELSE 0 END AS HasConflict
+ FROM RawTyped t
 )
 SELECT r.*,
  CASE WHEN HasConflict=1 THEN 'conflict'
@@ -26,6 +27,8 @@ INTO #LNClassifiedEvents
 FROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;
 SELECT RawRowId,EventId,OrderId,AmountText,ParsedAmount AS NormalizedAmount,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;
 --Conservative conflict policy: differently formatted payload strings also require review.
+--Compare byte length and bytes: SQL string equality can ignore trailing spaces.
+--varbinary(60) covers the complete nvarchar(30) AmountText fixture column.
 --TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.
 --A strict source-scale contract would require a separate precision check before acceptance.
 SET XACT_ABORT ON;

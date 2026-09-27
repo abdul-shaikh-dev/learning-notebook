@@ -50,7 +50,7 @@ Follow one trade through eight stages at course.html#journey/booking. Each stage
 
 ### Programming learning paths
 
-Five paths offer foundations, intermediate development and advanced practice: Python (23 lessons), C# & .NET (24), JavaScript → TypeScript → React (22), SQL Server & T-SQL (24), and Data Structures & Algorithms (20). Each stage includes exit criteria and a practical project with requirements, a self-assessment rubric and a reference approach. These are bounded learning curricula, not exhaustive platform references or proof of professional mastery.
+Five paths offer foundations, intermediate development and advanced practice: Python (23 lessons), C# & .NET (24), JavaScript → TypeScript → React (22), SQL Server & T-SQL (24), and Data Structures & Algorithms (21). Each stage includes exit criteria and a practical project with requirements, a self-assessment rubric and a reference approach. These are bounded learning curricula, not exhaustive platform references or proof of professional mastery.
 
 Use index.html#path/<id> for the course overview and #pack/<id> for the complete printable pack, including project references. Practice code runs in the learner's tools; there is no browser code runner. Reading progress and project self-checks are separate, path-specific and local to the browser. Existing lesson IDs and reading progress keys remain compatible.
 
@@ -59,7 +59,7 @@ Validation is recorded by the executable release checks below and the course-spe
 
 ### Design and architecture learning paths
 
-Design Patterns (22 lessons) focuses on responsibilities and collaboration inside code: when a pattern helps, how to refactor toward it, and when a plain function or simple class is better. System Design (24 lessons) focuses on service requirements, data flows, capacity, reliability, security and operational tradeoffs. Both use the same three-stage reader, exercises, visual traces, project rubrics and printable packs.
+Design Patterns (24 lessons) focuses on responsibilities and collaboration inside code: when a pattern helps, how to refactor toward it, and when a plain function or simple class is better. System Design (24 lessons) focuses on service requirements, data flows, capacity, reliability, security and operational tradeoffs. Both use the same three-stage reader, exercises, visual traces, project rubrics and printable packs.
 
 A useful sequence is one programming-language path first, then Design Patterns. SQL Server and basic API experience help with System Design; its foundations introduce the architecture vocabulary before scaling and failure scenarios. You can study both design paths together: code structure and system architecture inform each other, but they solve different kinds of problems.
 

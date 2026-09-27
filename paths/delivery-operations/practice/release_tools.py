@@ -1,6 +1,7 @@
 """Offline helpers, not a deployment orchestrator."""
 import argparse
 import hashlib
+import http.client
 import json
 from pathlib import Path
 import statistics
@@ -31,10 +32,14 @@ def local_load(url,count=50):
         start=time.perf_counter()
         try:
             with opener.open(url,timeout=2) as response:
-                if len(response.read(65537))>65536:raise ValueError("Response exceeds 64KiB")
+                expected=response.length
+                if expected is not None and expected>65536:raise ValueError("Response exceeds 64KiB")
+                body=response.read(65537)
+                if len(body)>65536:raise ValueError("Response exceeds 64KiB")
+                if expected is not None and len(body)!=expected:raise http.client.IncompleteRead(body,expected-len(body))
         except urllib.error.HTTPError as error:
             error.close();errors+=1
-        except (urllib.error.URLError,TimeoutError,ValueError):errors+=1
+        except (urllib.error.URLError,OSError,ValueError,http.client.HTTPException):errors+=1
         samples.append((time.perf_counter()-start)*1000)
     return {"model":"sequential closed-loop","requests":count,"errors":errors,"p50_ms":percentile(samples,.5),"p95_ms":percentile(samples,.95)}
 

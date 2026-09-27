@@ -79,7 +79,7 @@
         {
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_network_labs.py",
-          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+          "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
         }
       ],
       "prerequisites": [
@@ -134,7 +134,7 @@
         {
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_network_labs.py",
-          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+          "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
         }
       ],
       "prerequisites": [
@@ -189,7 +189,7 @@
         {
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_network_labs.py",
-          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+          "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
         }
       ],
       "prerequisites": [

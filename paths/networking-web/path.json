@@ -188,8 +188,8 @@
         "solution": "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists. Check server/listener configuration for the former and response contract for the latter.",
         "solutionFormat": "prose",
         "checks": [
-          "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists.",
-          "Explain the reasoning behind this answer: Body satisfies the lesson contract."
+          "Identify the last successful layer for each failure.",
+          "Give an observable signal that supports each classification."
         ]
       },
       "quiz": {
@@ -237,8 +237,8 @@
         "solution": "Parallel tests or another app may occupy 8000. Port zero reserves an available endpoint and the client reads its actual assigned value.",
         "solutionFormat": "prose",
         "checks": [
-          "Parallel tests or another app may occupy 8000.",
-          "Explain the reasoning behind this answer: 127.0.0.1."
+          "Describe how the test discovers the listener endpoint.",
+          "Explain how concurrent runs and port conflicts affect the proposed setup."
         ]
       },
       "quiz": {
@@ -286,8 +286,8 @@
         "solution": "A resolver error happens before an HTTP response; 404 means a server responded to the request. Capture the stage and actual error category.",
         "solutionFormat": "prose",
         "checks": [
-          "A resolver error happens before an HTTP response; 404 means a server responded to the request.",
-          "Explain the reasoning behind this answer: No, it only provides an address mapping."
+          "Provide the resolver and HTTP evidence needed for the comparison.",
+          "State which layer each observation can and cannot establish."
         ]
       },
       "quiz": {
@@ -335,8 +335,8 @@
         "solution": "Remembering with zero TTL expires immediately in this model. At the same time lookup returns None; assert that without sleeping.",
         "solutionFormat": "prose",
         "checks": [
-          "Remembering with zero TTL expires immediately in this model.",
-          "Explain the reasoning behind this answer: No cached answer."
+          "Specify a clock, insertion time and lookup time.",
+          "Record the expected lookup outcome and justify it from the expiry rule."
         ]
       },
       "quiz": {
@@ -384,8 +384,8 @@
         "solution": "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix.",
         "solutionFormat": "prose",
         "checks": [
-          "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix..",
-          "Explain the reasoning behind this answer: Stream chunks need not match messages."
+          "Specify declared and received body sizes for the fixture.",
+          "Assert the client outcome and whether any application result is published."
         ]
       },
       "quiz": {
@@ -433,8 +433,8 @@
         "solution": "Their ports differ, so their origins differ. A path change on the same scheme, host and port keeps the origin unchanged.",
         "solutionFormat": "prose",
         "checks": [
-          "Their ports differ, so their origins differ.",
-          "Explain the reasoning behind this answer: Changing the port."
+          "List the parsed components used in each origin comparison.",
+          "Justify the comparison using the origin definition."
         ]
       },
       "quiz": {
@@ -482,8 +482,8 @@
         "solution": "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError. Also test a correctly UTF-8-encoded non-ASCII lesson to show valid input remains accepted.",
         "solutionFormat": "prose",
         "checks": [
-          "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError.",
-          "Explain the reasoning behind this answer: A protocol observation error."
+          "Provide byte fixtures with a named encoding policy and expected acceptance or rejection.",
+          "Include a valid non-ASCII case and malformed input; verify error and publication behavior."
         ]
       },
       "quiz": {
@@ -538,8 +538,8 @@
         "solution": "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')). A wrong length breaks framing.",
         "solutionFormat": "prose",
         "checks": [
-          "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')).",
-          "Explain the reasoning behind this answer: An empty body with metadata."
+          "Provide a non-ASCII message and measure its encoded payload.",
+          "Compare the declared length with the bytes actually sent."
         ]
       },
       "quiz": {
@@ -587,8 +587,8 @@
         "solution": "No. It is an HTTP response from a server. Check the requested target or route; DNS already resolved enough for the exchange to happen.",
         "solutionFormat": "prose",
         "checks": [
-          "No.",
-          "Explain the reasoning behind this answer: 200 body fails lesson schema."
+          "Identify the evidence supplied by the response and the layer that produced it.",
+          "Explain what additional observation would support a name-resolution diagnosis."
         ]
       },
       "quiz": {
@@ -636,8 +636,8 @@
         "solution": "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking. The local read-only retry helper is insufficient.",
         "solutionFormat": "prose",
         "checks": [
-          "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking.",
-          "Explain the reasoning behind this answer: A documented deduplication contract for that operation."
+          "List the possible server outcomes after the response is lost.",
+          "Specify how the client resolves uncertainty and bounds further effects."
         ]
       },
       "quiz": {
@@ -685,8 +685,8 @@
         "solution": "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport. Keep it separate from the current HTTP evidence.",
         "solutionFormat": "prose",
         "checks": [
-          "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport.",
-          "Explain the reasoning behind this answer: Required checks are configured."
+          "List setup and runtime observations required for a TLS experiment.",
+          "Separate certificate configuration from verified client behavior."
         ]
       },
       "quiz": {
@@ -734,8 +734,8 @@
         "solution": "The default context requires identity checks. No server certificate was presented and no encrypted session was established; a handshake test remains unexecuted.",
         "solutionFormat": "prose",
         "checks": [
-          "The default context requires identity checks.",
-          "Explain the reasoning behind this answer: The server-name identity check."
+          "Attach each proposed claim to a named executed assertion.",
+          "List TLS properties that remain unobserved by the local fixture."
         ]
       },
       "quiz": {
@@ -783,8 +783,8 @@
         "solution": "Its fixed value is known to every learner and the server has no real identity service. It demonstrates header flow, not authenticated accounts.",
         "solutionFormat": "prose",
         "checks": [
-          "Its fixed value is known to every learner and the server has no real identity service.",
-          "Explain the reasoning behind this answer: JavaScript access to that cookie."
+          "Describe who can supply or alter the lab cookie value.",
+          "State what evidence would be required for a security claim."
         ]
       },
       "quiz": {
@@ -832,8 +832,8 @@
         "solution": "No. It changes browser exposure policy; authentication and object-level authorization remain separate server checks. Specify them separately in tests.",
         "solutionFormat": "prose",
         "checks": [
-          "No.",
-          "Explain the reasoning behind this answer: It is not enforcing the browser CORS protocol."
+          "Identify the browser and server decisions involved in the request.",
+          "Propose independent allowed and denied cases with observable outcomes."
         ]
       },
       "quiz": {
@@ -881,8 +881,8 @@
         "solution": "Different accounts may request the same URL and receive different representations. Prefer no-store for this exercise; real caching needs explicit partition and variation policy.",
         "solutionFormat": "prose",
         "checks": [
-          "Different accounts may request the same URL and receive different representations.",
-          "Explain the reasoning behind this answer: no-store."
+          "Provide two requests whose outputs differ under the same URL.",
+          "Evaluate whether the proposed cache key keeps their results separate."
         ]
       },
       "quiz": {
@@ -930,8 +930,8 @@
         "solution": "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy. Do not publish an empty lesson.",
         "solutionFormat": "prose",
         "checks": [
-          "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy.",
-          "Explain the reasoning behind this answer: The cached representation."
+          "Specify the client state before receiving the response.",
+          "Define the next request and the conditions for publishing a result."
         ]
       },
       "quiz": {
@@ -979,8 +979,8 @@
         "solution": "Hop count, resolved destination origin, method rules and whether credentials may be forwarded. Stop loops and reject destinations outside its policy.",
         "solutionFormat": "prose",
         "checks": [
-          "Hop count, resolved destination origin, method rules and whether credentials may be forwarded.",
-          "Explain the reasoning behind this answer: Returns it to the caller."
+          "Provide a redirect chain and explicit stopping conditions.",
+          "Demonstrate behavior for a loop and a destination outside the allowed boundary."
         ]
       },
       "quiz": {
@@ -1028,8 +1028,8 @@
         "solution": "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored. Test spoofed fields and document the connection trust boundary.",
         "solutionFormat": "prose",
         "checks": [
-          "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored.",
-          "Explain the reasoning behind this answer: No, work may still be running."
+          "Describe the trusted proxy boundary and the source of each forwarded value.",
+          "Include a spoofed-header case and specify its observable policy outcome."
         ]
       },
       "quiz": {
@@ -1077,8 +1077,8 @@
         "solution": "It establishes the server received the request before the timeout observation. A refusal or thread-start failure would be a different behavior and should not satisfy the intended case.",
         "solutionFormat": "prose",
         "checks": [
-          "It establishes the server received the request before the timeout observation.",
-          "Explain the reasoning behind this answer: The caller stopped waiting at that boundary."
+          "Describe the synchronization point and the event it establishes.",
+          "Explain which timeout or startup failures remain possible afterward."
         ]
       },
       "quiz": {
@@ -1126,8 +1126,8 @@
         "solution": "If each layer attempts three times, one logical operation can reach up to 27 deepest calls. Coordinate ownership and use an end-to-end bound.",
         "solutionFormat": "prose",
         "checks": [
-          "If each layer attempts three times, one logical operation can reach up to 27 deepest calls.",
-          "Explain the reasoning behind this answer: A deadline check before dispatch."
+          "Calculate attempts from stated per-layer retry policies.",
+          "State a shared limit and demonstrate behavior when it is exhausted."
         ]
       },
       "quiz": {
@@ -1175,8 +1175,8 @@
         "solution": "Supply more than 4096 bytes to the decoder and assert ProtocolError. For streaming extensions, enforce the bound during reading before accumulating the whole body.",
         "solutionFormat": "prose",
         "checks": [
-          "Supply more than 4096 bytes to the decoder and assert ProtocolError.",
-          "Explain the reasoning behind this answer: Reject it at the body contract boundary."
+          "Specify an input at and beyond the configured size limit.",
+          "Verify both the reported failure and absence of a published result on rejection."
         ]
       },
       "quiz": {
@@ -1224,8 +1224,8 @@
         "solution": "Correlated proxy and origin logs with clocks and request identity, plus the response metadata. A single browser status cannot establish where processing failed.",
         "solutionFormat": "prose",
         "checks": [
-          "Correlated proxy and origin logs with clocks and request identity, plus the response metadata.",
-          "Explain the reasoning behind this answer: Session cookie value."
+          "Collect timestamped client, proxy and origin observations.",
+          "Explain which observations distinguish the two proposed failure sources."
         ]
       },
       "quiz": {
@@ -1273,8 +1273,8 @@
         "solution": "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests. Existing JSON-schema checks remain useful but do not establish them.",
         "solutionFormat": "prose",
         "checks": [
-          "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests.",
-          "Explain the reasoning behind this answer: HTTP/1.1 local response contracts."
+          "Map each proposed protocol claim to a separate observable experiment.",
+          "State which current fixture results transfer and which require new evidence."
         ]
       },
       "quiz": {
@@ -1322,8 +1322,8 @@
         "solution": "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts.",
         "solutionFormat": "prose",
         "checks": [
-          "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts..",
-          "Explain the reasoning behind this answer: Controlled loopback and offline model behaviors passed."
+          "Name the unresolved claim and the smallest discriminating experiment.",
+          "Specify expected observations, stopping conditions and remaining limitations."
         ]
       },
       "quiz": {

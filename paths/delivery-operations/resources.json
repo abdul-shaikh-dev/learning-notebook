@@ -94,7 +94,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Offline request-budget arithmetic",
@@ -146,7 +146,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Offline request-budget arithmetic",
@@ -198,7 +198,7 @@
         {
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py test_release_tools.py",
-          "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+          "expected": "14 named local tests pass; this does not execute a Docker daemon or cluster."
         },
         {
           "label": "Offline request-budget arithmetic",

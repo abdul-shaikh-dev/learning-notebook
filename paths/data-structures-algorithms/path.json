@@ -458,8 +458,64 @@
       ]
     },
     {
+      "id": "binary-search-tree",
+      "title": "8. Implemented binary search tree: ordering and deletion",
+      "stage": "intermediate",
+      "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
+      "sections": [
+        {
+          "title": "Contract and collaboration",
+          "paragraphs": [
+            "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+            "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
+          ]
+        },
+        {
+          "title": "Trace a two-child deletion",
+          "paragraphs": [
+            "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
+          ],
+          "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
+        },
+        {
+          "title": "Verify the invariant beyond a sample",
+          "paragraphs": [
+            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
+        "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
+        "checks": [
+          "All insert/delete orders preserve a set oracle and global ordering.",
+          "Duplicate and missing-key policies are tested.",
+          "Skewed input costs O(n), not guaranteed O(log n)."
+        ]
+      },
+      "quiz": {
+        "question": "Which evidence demonstrates this contract?",
+        "options": [
+          "All insert/delete orders preserve a set oracle and global ordering.",
+          "A pattern or algorithm name alone",
+          "A single successful sample without failures"
+        ],
+        "correct": 0,
+        "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Order-based methods and deletion",
+          "url": "https://algs4.cs.princeton.edu/32bst/",
+          "section": "Order-based methods and deletion",
+          "reviewed": "2026-09-27",
+          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
       "id": "graphs",
-      "title": "8. Graphs and breadth-first search",
+      "title": "9. Graphs and breadth-first search",
       "takeaway": "Use a queue to explore unweighted shortest paths by layers.",
       "sections": [
         {
@@ -508,7 +564,7 @@
     },
     {
       "id": "heaps",
-      "title": "9. Heaps and priority queues",
+      "title": "10. Heaps and priority queues",
       "takeaway": "A heap efficiently exposes an extreme, not a fully sorted sequence.",
       "sections": [
         {
@@ -557,7 +613,7 @@
     },
     {
       "id": "dynamic-programming",
-      "title": "10. Dynamic programming and a capstone",
+      "title": "11. Dynamic programming and a capstone",
       "takeaway": "Reuse solutions to overlapping subproblems with a clearly defined state.",
       "sections": [
         {
@@ -608,7 +664,7 @@
     },
     {
       "id": "linked-nodes",
-      "title": "Linked nodes and ownership",
+      "title": "12. Linked nodes and ownership",
       "stage": "intermediate",
       "takeaway": "Changing a link changes reachability; finding the link is often the expensive part.",
       "sections": [
@@ -663,7 +719,7 @@
     },
     {
       "id": "merge-sort",
-      "title": "Merge sort and a correctness argument",
+      "title": "13. Merge sort and a correctness argument",
       "stage": "intermediate",
       "takeaway": "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
       "sections": [
@@ -718,7 +774,7 @@
     },
     {
       "id": "two-pointers",
-      "title": "Two pointers on ordered data",
+      "title": "14. Two pointers on ordered data",
       "stage": "intermediate",
       "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
       "sections": [
@@ -773,7 +829,7 @@
     },
     {
       "id": "sliding-window",
-      "title": "Sliding windows and maintained state",
+      "title": "15. Sliding windows and maintained state",
       "stage": "intermediate",
       "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
       "sections": [
@@ -828,7 +884,7 @@
     },
     {
       "id": "topological",
-      "title": "Dependencies, DFS and topological ordering",
+      "title": "16. Dependencies, DFS and topological ordering",
       "stage": "intermediate",
       "takeaway": "A dependency order exists only when the directed graph has no cycle.",
       "sections": [
@@ -891,7 +947,7 @@
     },
     {
       "id": "dijkstra",
-      "title": "Weighted shortest paths with Dijkstra",
+      "title": "17. Weighted shortest paths with Dijkstra",
       "stage": "advanced",
       "takeaway": "A shortest-hop path may not be the minimum-cost path.",
       "sections": [
@@ -952,7 +1008,7 @@
     },
     {
       "id": "greedy",
-      "title": "Greedy algorithms and counterexamples",
+      "title": "18. Greedy algorithms and counterexamples",
       "stage": "advanced",
       "takeaway": "A locally attractive choice needs a proof, not intuition.",
       "sections": [
@@ -1008,7 +1064,7 @@
     },
     {
       "id": "backtracking",
-      "title": "Backtracking with reversible choices",
+      "title": "19. Backtracking with reversible choices",
       "stage": "advanced",
       "takeaway": "Explore a search tree while restoring state after each choice.",
       "sections": [
@@ -1063,7 +1119,7 @@
     },
     {
       "id": "knapsack",
-      "title": "Designing DP states: 0/1 knapsack",
+      "title": "20. Designing DP states: 0/1 knapsack",
       "stage": "advanced",
       "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
       "sections": [
@@ -1124,7 +1180,7 @@
     },
     {
       "id": "algorithm-review",
-      "title": "Testing and reviewing an algorithm",
+      "title": "21. Testing and reviewing an algorithm",
       "stage": "advanced",
       "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
       "sections": [
@@ -1173,62 +1229,6 @@
           "title": "Primary reference: Test cases and assertions",
           "url": "https://docs.python.org/3.11/library/unittest.html",
           "section": "Test cases and assertions",
-          "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
-        }
-      ]
-    },
-    {
-      "id": "binary-search-tree",
-      "title": "Implemented binary search tree: ordering and deletion",
-      "stage": "intermediate",
-      "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
-      "sections": [
-        {
-          "title": "Contract and collaboration",
-          "paragraphs": [
-            "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
-            "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
-          ]
-        },
-        {
-          "title": "Trace a two-child deletion",
-          "paragraphs": [
-            "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
-          ],
-          "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
-        },
-        {
-          "title": "Verify the invariant beyond a sample",
-          "paragraphs": [
-            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
-          ]
-        }
-      ],
-      "exercise": {
-        "prompt": "Predict the root deletion for [10,5,20,15,17,30]. Run tests, then explain how successor 15 keeps right child 17. Compare sorted insertion with a balanced insertion order.",
-        "solution": "Inorder after deleting 10 is [5,15,17,20,30]. The successor is detached from its old parent by replacing that link with its right child. Run python -m unittest -v test_trees_graphs.py.",
-        "checks": [
-          "All insert/delete orders preserve a set oracle and global ordering.",
-          "Duplicate and missing-key policies are tested.",
-          "Skewed input costs O(n), not guaranteed O(log n)."
-        ]
-      },
-      "quiz": {
-        "question": "Which evidence demonstrates this contract?",
-        "options": [
-          "All insert/delete orders preserve a set oracle and global ordering.",
-          "A pattern or algorithm name alone",
-          "A single successful sample without failures"
-        ],
-        "correct": 0,
-        "explanation": "All insert/delete orders preserve a set oracle and global ordering."
-      },
-      "references": [
-        {
-          "title": "Primary reference: Order-based methods and deletion",
-          "url": "https://algs4.cs.princeton.edu/32bst/",
-          "section": "Order-based methods and deletion",
           "reviewed": "2026-09-27",
           "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }

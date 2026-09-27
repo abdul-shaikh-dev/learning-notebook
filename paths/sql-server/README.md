@@ -37,3 +37,13 @@ The dedicated concurrency and Query Store labs were also executed on SQL Server 
 ## Opt-in advanced engine practice
 
 Read concurrency-lab.md before changing the setup opt-in flag. It provides an isolated disposable database, separate A/B schedules for isolation, lost updates and deadlocks, a Query Store before/after index lab, assertions and guarded cleanup. Run only one selected numbered session block at a time. Recorded execution evidence is in engine-verification.md; record your own engine/build/settings when repeating it. Run rounding-lab.sql separately to see raw 1.004/1.005 become 1.00/1.01 under the deliberate accepted rounding policy.
+
+## Maintainer regression check
+
+From the repository root, run `python -B tests/sql-conflicts.py --server .\SQLEXPRESS`
+against an authorized local training instance with Windows authentication and
+`sqlcmd` on PATH. This check uses connection-local temporary tables in `tempdb`;
+it does not create or change permanent databases/tables. It checks baseline import,
+idempotent replay, and raw amount text differences including trailing spaces.
+The amount comparison uses byte length and bytes, avoiding collation and padding
+rules that would make ordinary SQL string equality too permissive for this policy.

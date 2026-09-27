@@ -3,12 +3,14 @@ from contextlib import contextmanager
 import http.client
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import threading
+import socket
 
 BODY=b'{"lesson":"http","version":1}'
 ETAG='"lesson-v1"'
 
 class Handler(BaseHTTPRequestHandler):
     protocol_version="HTTP/1.1"
+    timeout=0.5
     def handle(self):
         try: super().handle()
         except ConnectionError:
@@ -50,9 +52,30 @@ class Handler(BaseHTTPRequestHandler):
             try: self.wfile.write(body)
             except (BrokenPipeError,ConnectionResetError,ConnectionAbortedError): pass
 
+class OwnedHTTPServer(ThreadingHTTPServer):
+    def __init__(self,*args):
+        self.active=set()
+        self.active_lock=threading.Lock()
+        super().__init__(*args)
+    def process_request(self,request,client_address):
+        with self.active_lock: self.active.add(request)
+        try: super().process_request(request,client_address)
+        except BaseException:
+            with self.active_lock: self.active.discard(request)
+            raise
+    def shutdown_request(self,request):
+        try: super().shutdown_request(request)
+        finally:
+            with self.active_lock: self.active.discard(request)
+    def close_connections(self):
+        with self.active_lock:
+            for request in list(self.active):
+                try: request.shutdown(socket.SHUT_RDWR)
+                except OSError: pass
+
 @contextmanager
 def local_server():
-    server=ThreadingHTTPServer(("127.0.0.1",0),Handler)
+    server=OwnedHTTPServer(("127.0.0.1",0),Handler)
     server.daemon_threads=False
     server.started,server.release=threading.Event(),threading.Event()
     thread=threading.Thread(target=server.serve_forever,kwargs={"poll_interval":0.02},daemon=True)
@@ -61,6 +84,7 @@ def local_server():
     finally:
         server.release.set()
         server.shutdown()
+        server.close_connections()
         server.server_close()
         thread.join(timeout=2)
 
@@ -69,7 +93,11 @@ def fetch(server,path="/lesson",method="GET",headers=None,timeout=2):
     try:
         connection.request(method,path,headers=headers or {})
         response=connection.getresponse()
+        expected=response.length
+        if expected is not None and expected>4096: raise ValueError("body limit exceeded")
         body=response.read(4097)
+        if expected is not None and len(body)!=expected:
+            raise http.client.IncompleteRead(body,expected-len(body))
         if len(body)>4096: raise ValueError("body limit exceeded")
         return response.status,dict(response.getheaders()),body
     finally: connection.close()

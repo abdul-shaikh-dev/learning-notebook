@@ -389,7 +389,7 @@
           "Creates a TLS certificate"
         ],
         "correct": 1,
-        "explanation": "Documents the listening port without publishing it. It returns to zero because each fresh container initializes a new SQLite file in its own writable /tmp. Preserve data only with an explicit volume strategy and prove it by replacing the container."
+        "explanation": "EXPOSE documents a container port. Publishing a host port requires a separate runtime mapping; this instruction creates neither a mapping nor TLS."
       },
       "references": [
         {
@@ -634,7 +634,7 @@
           "That every old query will work"
         ],
         "correct": 1,
-        "explanation": "Only behavior compatible with the remaining schema/data. No: old readers would fail during coexistence and binary rollback. Add a compatible representation, migrate readers/writers, measure old use, then contract in a later reviewed release with a tested recovery plan."
+        "explanation": "Binary rollback can work only if the old binary is compatible with the remaining schema and data. It cannot recreate dropped values or guarantee old queries still work after a destructive migration."
       },
       "references": [
         {
@@ -683,7 +683,7 @@
           "They skip authentication entirely"
         ],
         "correct": 1,
-        "explanation": "They reduce effects available if test code is malicious. Only the reviewed promotion/deployment job, after source and artifact approval, with least privilege. The pull-request test job should have none. Check trigger semantics and environment protection before enabling the template."
+        "explanation": "Read-only PR tokens restrict the changes malicious test code can make with that token. They do not prove source safety; credentials and deployment effects need separate protected boundaries."
       },
       "references": [
         {
@@ -732,7 +732,7 @@
           "Any image with the same friendly tag"
         ],
         "correct": 1,
-        "explanation": "The approved artifact with its recorded identity. Treat it as a new candidate and run the required checks; do not attach the old test result to new bytes. Promotion records should point to immutable identity and independent provenance checks where required."
+        "explanation": "Deploy the artifact whose immutable identity matches the approval and test evidence. A rebuild or a reused friendly tag can designate different bytes, so it needs its own verification."
       },
       "references": [
         {
@@ -880,7 +880,7 @@
           "Distributed failover without data loss"
         ],
         "correct": 1,
-        "explanation": "Simulated release-label/host replacement with the same compatible SQLite schema. No. v1 remains incompatible. A reviewed forward fix or separately tested data recovery is required. Restoring a backup changes the data timeline and needs an explicit RPO/user reconciliation decision."
+        "explanation": "The supplied test restarts v1, v2 and v1 release labels using the same application code and compatible SQLite schema, then reads the retained note. It supports that bounded host-replacement case; it does not test destructive migrations or distributed failover."
       },
       "references": [
         {
@@ -978,7 +978,7 @@
           "Ignore low-traffic instances"
         ],
         "correct": 1,
-        "explanation": "Sum bad and eligible counts before division. The combined error fraction is1 / 100=1%, not the average of10% and0%=5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate."
+        "explanation": "Combine the bad-event counts and eligible-event counts over the same window, then divide. Equal weighting of instance percentages misrepresents a fleet when instances serve different traffic volumes."
       },
       "references": [
         {
@@ -1125,7 +1125,7 @@
           "A checksum automatically fixes missing WAL data"
         ],
         "correct": 1,
-        "explanation": "Transactions/journal state can make the copied set inconsistent. Up to59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss."
+        "explanation": "A live database may depend on journal or WAL state while transactions change its files. A naive file copy can omit required state or capture inconsistent pieces; use the supported backup mechanism and test restoration."
       },
       "references": [
         {

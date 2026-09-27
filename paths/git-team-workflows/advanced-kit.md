@@ -5,7 +5,7 @@ Locate a regression, preserve recovered work, integrate a selected patch and ide
 ## Run from the extracted folder
 
 ```
-python -B sandbox.py --stage advanced
+python -B sandbox.py --stage advanced --workspace-parent .
 ```
 
 Expected: JSON identifies first bad/recovered commit, safe reverted content, changed rebase identity and annotated tag.
@@ -14,7 +14,7 @@ Expected: JSON identifies first bad/recovered commit, safe reverted content, cha
 python -B -m unittest -v test_sandbox.py
 ```
 
-Expected: Four test methods pass, including repository-root escape and push rejection.
+Expected: Six test methods pass, including repository-root escape and push rejection.
 
 ## Implement and submit
 
@@ -26,7 +26,7 @@ Expected: Four test methods pass, including repository-root escape and push reje
 
 ## Reference approach
 
-Use sandbox.py --stage advanced. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section.
+Use `python -B sandbox.py --stage advanced --workspace-parent .`. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section.
 
 ## Evidence rubric
 

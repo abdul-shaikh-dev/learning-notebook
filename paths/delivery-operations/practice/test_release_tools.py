@@ -15,6 +15,22 @@ class ToolsChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             p=Path(folder)/"file";p.write_bytes(b"one");first=digest(p);p.write_bytes(b"two");self.assertNotEqual(first,digest(p));self.assertEqual(len(first),64)
     def test_small_sample_percentile(self):self.assertEqual(percentile([30,10,20],.95),30)
+    def test_load_counts_incomplete_and_oversized_bodies(self):
+        class Broken(BaseHTTPRequestHandler):
+            def log_message(self,*args):pass
+            def do_GET(self):
+                self.send_response(200)
+                if self.path=="/chunked":self.send_header("Transfer-Encoding","chunked")
+                else:self.send_header("Content-Length","70000" if self.path=="/large" else "1000")
+                self.end_headers();self.wfile.write(b"20\r\nshort" if self.path=="/chunked" else b"{}")
+        server=ThreadingHTTPServer(("127.0.0.1",0),Broken)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        try:
+            for path in ("/short","/chunked","/large"):
+                with self.subTest(path=path):
+                    self.assertEqual(local_load(f"http://127.0.0.1:{server.server_port}{path}",1)["errors"],1)
+        finally:server.shutdown();server.server_close();thread.join(timeout=2)
+
     def test_load_refuses_redirects_credentials_and_fragments(self):
         visited=[]
         class Target(BaseHTTPRequestHandler):

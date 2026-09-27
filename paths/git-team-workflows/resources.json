@@ -62,7 +62,7 @@
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
         "Read README.md and foundation-kit.md before running the references.",
         "Run the commands below and record actual results separately from expected results.",
-        "Run the complete foundation fixture in its own temporary root.",
+        "Run the complete foundation fixture in its fresh retained owned child.",
         "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
         "Verify committed contents independently with git show.",
         "Show that an untracked synthetic config file is ignored without claiming history erasure.",
@@ -71,8 +71,8 @@
       "commands": [
         {
           "label": "Run foundation snapshot fixture",
-          "command": "python -B sandbox.py --stage foundation",
-          "expected": "JSON reports staged_snapshot two and ignored_untracked true; owned temporary repositories removed."
+          "command": "python -B sandbox.py --stage foundation --workspace-parent .",
+          "expected": "JSON reports staged_snapshot two and ignored_untracked true; fresh owned child retained for inspection; JSON gives its absolute path."
         }
       ],
       "prerequisites": [
@@ -83,7 +83,8 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     },
     {
@@ -113,7 +114,7 @@
       "commands": [
         {
           "label": "Run local two-developer fixture",
-          "command": "python -B sandbox.py --stage intermediate",
+          "command": "python -B sandbox.py --stage intermediate --workspace-parent .",
           "expected": "JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push."
         }
       ],
@@ -125,7 +126,8 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     },
     {
@@ -155,13 +157,13 @@
       "commands": [
         {
           "label": "Run history/release fixture",
-          "command": "python -B sandbox.py --stage advanced",
+          "command": "python -B sandbox.py --stage advanced --workspace-parent .",
           "expected": "JSON identifies first bad/recovered commit, safe reverted content, changed rebase identity and annotated tag."
         },
         {
           "label": "Run sandbox boundary regression tests",
           "command": "python -B -m unittest -v test_sandbox.py",
-          "expected": "Four test methods pass, including repository-root escape and push rejection."
+          "expected": "Six test methods pass, including repository-root escape and push rejection."
         }
       ],
       "prerequisites": [
@@ -172,7 +174,8 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     }
   ],
