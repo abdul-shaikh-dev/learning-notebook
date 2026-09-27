@@ -1,0 +1,831 @@
+{
+  "network": {
+    "title": "Trace one HTTPS request",
+    "intro": "Follow the request and distinguish transport success from a saved user operation.",
+    "scope": "Hypothetical progress API; timings are chosen examples, not measurements. Existing HTTPS connection, no DNS cache, 500 ms caller deadline.",
+    "scenarios": [
+      {
+        "id": "saved",
+        "label": "Response arrives",
+        "steps": [
+          {
+            "title": "Resolve and connect",
+            "explanation": "DNS supplies an address; certificate validation authenticates the HTTPS endpoint. Neither proves this learner may write a progress record.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "t=0 ms; deadline 500 ms",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "dns",
+                "label": "DNS resolver",
+                "detail": "api.example.test -> 192.0.2.10",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "edge",
+                "label": "HTTPS endpoint",
+                "detail": "Certificate valid; request pending",
+                "tone": "neutral",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "dns",
+                "label": "resolve name"
+              },
+              {
+                "from": "dns",
+                "to": "client",
+                "label": "address"
+              },
+              {
+                "from": "client",
+                "to": "edge",
+                "label": "HTTPS"
+              }
+            ]
+          },
+          {
+            "title": "Authorize and commit",
+            "explanation": "At 120 ms the API authenticates the learner and checks record ownership. At 180 ms a transaction commits version 8.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "Waiting; 320 ms remain",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API",
+                "detail": "Owner check passed",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "db",
+                "label": "Database",
+                "detail": "Lesson done=true; version 8",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "api",
+                "label": "PUT progress"
+              },
+              {
+                "from": "api",
+                "to": "db",
+                "label": "transaction"
+              }
+            ]
+          },
+          {
+            "title": "Return the outcome",
+            "explanation": "At 220 ms the browser receives 200 with version 8. A transport connection alone was never the completion criterion.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "200 received at 220 ms",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API",
+                "detail": "Committed result returned",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "db",
+                "label": "Database",
+                "detail": "Version 8 durable",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "db",
+                "to": "api",
+                "label": "committed"
+              },
+              {
+                "from": "api",
+                "to": "client",
+                "label": "200; version 8"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lost-response",
+        "label": "Commit, then response loss",
+        "steps": [
+          {
+            "title": "Request accepted",
+            "explanation": "The same write starts with a 500 ms deadline. The server has received it; the browser cannot yet infer a commit.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "Waiting for PUT outcome",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API",
+                "detail": "Authorized; write in progress",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "db",
+                "label": "Database",
+                "detail": "Version 7",
+                "tone": "neutral",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "api",
+                "label": "PUT progress"
+              },
+              {
+                "from": "api",
+                "to": "db",
+                "label": "transaction"
+              }
+            ]
+          },
+          {
+            "title": "Commit survives reply loss",
+            "explanation": "Version 8 commits at 180 ms, but a connection failure prevents delivery of the response. Timeout is an uncertain outcome, not evidence of rollback.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "No response received",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API",
+                "detail": "200 reply lost",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "db",
+                "label": "Database",
+                "detail": "Version 8 committed",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "api",
+                "to": "db",
+                "label": "commit version 8"
+              },
+              {
+                "from": "api",
+                "to": "client",
+                "label": "reply lost"
+              }
+            ]
+          },
+          {
+            "title": "Resolve uncertainty",
+            "explanation": "At 500 ms stop waiting. An authorized follow-up read returns version 8; conflicting edits still require version checks. No blind claim that the write failed.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Browser",
+                "detail": "Reads current state",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API",
+                "detail": "GET checks ownership",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "db",
+                "label": "Database",
+                "detail": "Version 8; done=true",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "api",
+                "label": "GET progress"
+              },
+              {
+                "from": "api",
+                "to": "db",
+                "label": "read current"
+              },
+              {
+                "from": "api",
+                "to": "client",
+                "label": "version 8"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "HTTP semantics",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
+      }
+    ]
+  },
+  "queues": {
+    "title": "Acknowledge only after durable work",
+    "intro": "Compare a completed export with a worker crash after its effect.",
+    "scope": "Hypothetical at-least-once queue; job J42 has a stable identity. Job status and output reference share one transaction; output generation must be safely repeatable.",
+    "scenarios": [
+      {
+        "id": "ack",
+        "label": "Normal completion",
+        "steps": [
+          {
+            "title": "Deliver J42",
+            "explanation": "A durable queue delivers J42; an unacknowledged delivery may be sent again after the visibility window.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 delivered; not acknowledged",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "Worker",
+                "detail": "Owns temporary delivery lease",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "J42 pending; outputs=0",
+                "tone": "neutral",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "queue",
+                "to": "worker",
+                "label": "deliver J42"
+              }
+            ]
+          },
+          {
+            "title": "Commit result",
+            "explanation": "The worker creates a deterministic output and atomically stores J42=complete with its reference. External email or payments would need their own duplicate protection.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 still unacknowledged",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "Worker",
+                "detail": "Export ready",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "J42 complete; outputs=1",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "worker",
+                "to": "store",
+                "label": "commit J42 result"
+              }
+            ]
+          },
+          {
+            "title": "Acknowledge",
+            "explanation": "Only after the durable result exists does the worker acknowledge. The queue can retire this delivery.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 acknowledged",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "Worker",
+                "detail": "No further effect needed",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "J42 complete; outputs=1",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "worker",
+                "to": "queue",
+                "label": "ack J42"
+              },
+              {
+                "from": "worker",
+                "to": "store",
+                "label": "result retained"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "duplicate",
+        "label": "Crash before acknowledgment",
+        "steps": [
+          {
+            "title": "Effect committed",
+            "explanation": "The first worker commits J42 with one output, then crashes before acknowledging. Queue delivery and application transaction are separate boundaries.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 not acknowledged",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "Worker",
+                "detail": "Crash after commit",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "J42 complete; outputs=1",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "worker",
+                "to": "store",
+                "label": "commit complete"
+              }
+            ]
+          },
+          {
+            "title": "Redelivery",
+            "explanation": "After the chosen 30-second visibility window, J42 is delivered again. The replacement worker checks durable identity before applying effects.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 delivered again",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "New worker",
+                "detail": "Check job J42 first",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "Existing J42 result",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "queue",
+                "to": "worker",
+                "label": "redeliver J42"
+              },
+              {
+                "from": "worker",
+                "to": "store",
+                "label": "lookup J42"
+              }
+            ]
+          },
+          {
+            "title": "Reuse and acknowledge",
+            "explanation": "The worker reuses the existing result and acknowledges. Unique identity plus atomic state prevents a second result in this model; it does not promise exactly-once external effects.",
+            "nodes": [
+              {
+                "id": "queue",
+                "label": "Queue",
+                "detail": "J42 acknowledged",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "worker",
+                "label": "New worker",
+                "detail": "Reuse recorded result",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "store",
+                "label": "Job store",
+                "detail": "outputs remains 1",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "store",
+                "to": "worker",
+                "label": "existing result"
+              },
+              {
+                "from": "worker",
+                "to": "queue",
+                "label": "ack J42"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Competing consumers",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
+      }
+    ]
+  },
+  "resilience": {
+    "title": "Spend a finite retry budget",
+    "intro": "A transient error can recover; persistent failure must stop consuming capacity.",
+    "scope": "Chosen model: 600 ms end-to-end deadline, at most 3 attempts, each capped at 150 ms, waits 50 ms then 100 ms. Retry only safe operations; connection/setup time must fit the same deadline.",
+    "scenarios": [
+      {
+        "id": "recovered",
+        "label": "Second attempt succeeds",
+        "steps": [
+          {
+            "title": "First attempt fails",
+            "explanation": "The API is the only retry owner. The dependency returns a retryable failure at 150 ms; the browser does not independently multiply attempts.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "Deadline 600 ms",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "Attempt 1/3; t=150 ms",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "Retryable transient error",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "api",
+                "label": "one logical call"
+              },
+              {
+                "from": "api",
+                "to": "dep",
+                "label": "attempt 1"
+              }
+            ]
+          },
+          {
+            "title": "Back off once",
+            "explanation": "Wait 50 ms. At t=200 ms the second attempt starts with 400 ms left. This illustrated wait is one sampled jitter value, not a global synchronized schedule.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "400 ms budget left",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "Attempt 2/3 starts",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "Recovering",
+                "tone": "active",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "api",
+                "to": "dep",
+                "label": "attempt 2"
+              }
+            ]
+          },
+          {
+            "title": "Return success",
+            "explanation": "Attempt 2 completes in 80 ms. Total modeled elapsed time is 280 ms; no third attempt is needed.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "Success at t=280 ms",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "Attempts used: 2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "Response delivered",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "dep",
+                "to": "api",
+                "label": "success in 80 ms"
+              },
+              {
+                "from": "api",
+                "to": "client",
+                "label": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "exhausted",
+        "label": "Persistent failure stops",
+        "steps": [
+          {
+            "title": "Two failures",
+            "explanation": "Attempt 1 uses 150 ms, then wait 50 ms; attempt 2 uses 150 ms. At t=350 ms there are 250 ms left.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "250 ms remaining",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "2 attempts failed",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "Still unavailable",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "api",
+                "to": "dep",
+                "label": "attempts 1 and 2"
+              }
+            ]
+          },
+          {
+            "title": "Final bounded attempt",
+            "explanation": "Wait 100 ms, then attempt 3 starts at t=450 ms. Its timeout is min(150 ms, remaining 150 ms). No nested retry layer is allowed in this model.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "150 ms remaining",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "Final attempt 3/3",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "150 ms timeout cap",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "api",
+                "to": "dep",
+                "label": "attempt 3"
+              }
+            ]
+          },
+          {
+            "title": "Stop at deadline",
+            "explanation": "At 600 ms the final attempt times out. Return a controlled failure and release the concurrency slot; cancellation cannot guarantee the dependency never applied an effect.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Caller",
+                "detail": "Controlled failure at 600 ms",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "api",
+                "label": "API retry owner",
+                "detail": "Retry budget exhausted",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "dep",
+                "label": "Dependency",
+                "detail": "Outcome may be uncertain",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              }
+            ],
+            "edges": [
+              {
+                "from": "api",
+                "to": "client",
+                "label": "failure; no retry"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Maximum modeled budget",
+                "columns": [
+                  "Work",
+                  "Time"
+                ],
+                "rows": [
+                  [
+                    "3 attempts × 150 ms",
+                    "450 ms"
+                  ],
+                  [
+                    "50 + 100 ms waits",
+                    "150 ms"
+                  ],
+                  [
+                    "Total",
+                    "600 ms"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Timeouts, retries and jitter",
+        "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+      }
+    ]
+  }
+}

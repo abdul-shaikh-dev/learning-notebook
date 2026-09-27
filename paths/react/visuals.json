@@ -1,0 +1,1192 @@
+{
+  "components": {
+    "title": "Props move down the tree",
+    "intro": "Trace how a parent supplies data to keyed rows and how a callback requests a parent update.",
+    "scope": "A small conceptual component tree. Edges show data or callback flow, not DOM ancestry. Props are read-only; key is React's identity hint, not an ordinary child prop.",
+    "scenarios": [
+      {
+        "id": "props",
+        "label": "Parent changes a title",
+        "steps": [
+          {
+            "title": "Render the parent data",
+            "explanation": "App owns two records and passes each title to LessonRow. Stable record IDs are used as keys.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "Records: Types, State",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "title prop = Types",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "title prop = State",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "app",
+                "to": "types",
+                "label": "title='Types'"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "title='State'"
+              }
+            ]
+          },
+          {
+            "title": "Replace one record",
+            "explanation": "App creates updated data with the types record renamed to Data types. The children do not mutate their received props.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "Updated record: Data types",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "Previous title = Types",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "title prop = State",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "app",
+                "to": "types",
+                "label": "next title pending"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "same title"
+              }
+            ]
+          },
+          {
+            "title": "Render the new props",
+            "explanation": "The next render supplies Data types to the row with key types. The state row still receives State; the key itself is not a title prop.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "Records: Data types, State",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "title prop = Data types",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "title prop = State",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "app",
+                "to": "types",
+                "label": "title='Data types'"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "title='State'"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "callback",
+        "label": "Child requests a change",
+        "steps": [
+          {
+            "title": "Supply data and behavior",
+            "explanation": "App owns completion data and supplies onComplete callbacks. The callback closes over each record ID.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "types.done = false",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "done=false; onComplete supplied",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "done=false; onComplete supplied",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "app",
+                "to": "types",
+                "label": "props + callback"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "props + callback"
+              }
+            ]
+          },
+          {
+            "title": "Invoke the callback",
+            "explanation": "Clicking the types row calls onComplete. App receives the intent for types; the row does not assign to props.done.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "Handles complete('types')",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "Click invokes onComplete",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "No click",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "types",
+                "to": "app",
+                "label": "complete('types')"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "unchanged props"
+              }
+            ]
+          },
+          {
+            "title": "Parent renders new data",
+            "explanation": "App replaces the changed record and requests a render. The types row now receives done=true; state stays incomplete.",
+            "nodes": [
+              {
+                "id": "app",
+                "label": "App",
+                "detail": "types.done = true",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "types",
+                "label": "LessonRow: types",
+                "detail": "done prop = true",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "state",
+                "label": "LessonRow: state",
+                "detail": "done prop = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "app",
+                "to": "types",
+                "label": "done=true"
+              },
+              {
+                "from": "app",
+                "to": "state",
+                "label": "done=false"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Passing props",
+        "url": "https://react.dev/learn/passing-props-to-a-component"
+      }
+    ]
+  },
+  "state": {
+    "title": "A handler sees one snapshot",
+    "intro": "Compare repeated replacement updates with queued updater functions.",
+    "scope": "A single click handler, count starts at zero, three updates batched in that event. Diagrams distinguish the current render snapshot from pending updates; they do not describe React internals or scheduling guarantees.",
+    "scenarios": [
+      {
+        "id": "replace",
+        "label": "Three count + 1 replacements",
+        "steps": [
+          {
+            "title": "Capture count = 0",
+            "explanation": "This render produces a handler that reads count as zero. That value stays fixed throughout this handler.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "count = 0",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Reads count from this render",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "Empty",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 0",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "snapshot",
+                "to": "handler",
+                "label": "count=0"
+              }
+            ]
+          },
+          {
+            "title": "Queue three replacements",
+            "explanation": "Each setCount(count + 1) evaluates to setCount(1). Calling the setter does not change count in the current handler.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "Still count = 0",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Three calls to setCount(1)",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "Replace 1; replace 1; replace 1",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 0",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "handler",
+                "to": "queue",
+                "label": "queue replacements"
+              }
+            ]
+          },
+          {
+            "title": "Next render shows one",
+            "explanation": "After the event, React processes the replacements and renders count=1. Three identical replacements did not add three.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "New render: count = 1",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Old handler read 0",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "Final result = 1",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 1",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "queue",
+                "to": "snapshot",
+                "label": "next state"
+              },
+              {
+                "from": "snapshot",
+                "to": "screen",
+                "label": "render"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "updater",
+        "label": "Three previous-state updaters",
+        "steps": [
+          {
+            "title": "Start from the same zero",
+            "explanation": "The initial snapshot and screen match the replacement scenario. Only the queued update form will differ.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "count = 0",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Reads count from this render",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "Empty",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 0",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "snapshot",
+                "to": "handler",
+                "label": "count=0"
+              }
+            ]
+          },
+          {
+            "title": "Queue three functions",
+            "explanation": "Each setCount(c => c + 1) queues a pure updater. Each updater receives the previous queued result rather than this handler's count.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "Still count = 0",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Three calls with c => c + 1",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "0 → 1 → 2 → 3",
+                "x": 750,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 0",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "handler",
+                "to": "queue",
+                "label": "queue updaters"
+              }
+            ]
+          },
+          {
+            "title": "Next render shows three",
+            "explanation": "The composed updater result is three. Updaters must remain pure because React may call them again during development checks.",
+            "nodes": [
+              {
+                "id": "snapshot",
+                "label": "Render snapshot",
+                "detail": "New render: count = 3",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "handler",
+                "label": "Click handler",
+                "detail": "Old handler read 0",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "queue",
+                "label": "Pending updates",
+                "detail": "Final result = 3",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Count: 3",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "queue",
+                "to": "snapshot",
+                "label": "next state"
+              },
+              {
+                "from": "snapshot",
+                "to": "screen",
+                "label": "render"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "State as a snapshot",
+        "url": "https://react.dev/learn/state-as-a-snapshot"
+      },
+      {
+        "title": "Queueing state updates",
+        "url": "https://react.dev/learn/queueing-a-series-of-state-updates"
+      }
+    ]
+  },
+  "effects": {
+    "title": "Cleanup owns the connection",
+    "intro": "Trace an Effect that subscribes to the selected room as its dependency changes.",
+    "scope": "Conceptual subscription API: setup creates one connection and cleanup disconnects it. React cleans up the old Effect before setup with changed dependencies. Development Strict Mode adds a setup/cleanup check; exact timing relative to paint is omitted.",
+    "scenarios": [
+      {
+        "id": "cleanup",
+        "label": "Return the cleanup function",
+        "steps": [
+          {
+            "title": "Set up room A",
+            "explanation": "The committed selection A runs setup and opens connection A1. The Effect returns a function that closes A1.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "Setup A; cleanup captures A1",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 open",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "Not connected",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "selection",
+                "to": "effect",
+                "label": "roomId=A"
+              },
+              {
+                "from": "effect",
+                "to": "roomA",
+                "label": "connect A1"
+              }
+            ]
+          },
+          {
+            "title": "Selection changes to B",
+            "explanation": "Before setting up B, React runs A's cleanup. A1 closes; the cleanup uses its captured connection, not the new room's connection.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "Cleanup A disconnects A1",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 closed",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "Not connected yet",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "effect",
+                "to": "roomA",
+                "label": "disconnect A1"
+              }
+            ]
+          },
+          {
+            "title": "Set up B and later unmount",
+            "explanation": "Setup opens B1. When the component unmounts its returned cleanup closes B1; neither room retains an active subscription.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "B; component unmounts",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "Setup B then cleanup B",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 closed",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "B1 opened then closed",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "effect",
+                "to": "roomB",
+                "label": "connect then close"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "missing",
+        "label": "Omit cleanup",
+        "steps": [
+          {
+            "title": "Set up A without cleanup",
+            "explanation": "The Effect opens A1 but returns no disconnect function. No owner will release this connection on dependency change.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "Setup A; no cleanup",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 open",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "Not connected",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "effect",
+                "to": "roomA",
+                "label": "connect A1"
+              }
+            ]
+          },
+          {
+            "title": "Switch to B",
+            "explanation": "React has no returned cleanup to call. Setup for B opens B1 while A1 remains subscribed, so old-room events can still arrive.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "Setup B; no cleanup",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 still open",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "B1 open",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "effect",
+                "to": "roomB",
+                "label": "connect B1"
+              }
+            ]
+          },
+          {
+            "title": "Unmount leaves resources",
+            "explanation": "Unmount alone cannot disconnect a resource the Effect never cleans up. Both connections remain in this faulty model. Strict Mode's extra setup cycle helps expose the defect.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selected room",
+                "detail": "Component unmounted",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "effect",
+                "label": "Effect [roomId]",
+                "detail": "No cleanup available",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "roomA",
+                "label": "Room A connection",
+                "detail": "A1 leaked",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "roomB",
+                "label": "Room B connection",
+                "detail": "B1 leaked",
+                "x": 30,
+                "y": 265,
+                "tone": "warning"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Synchronizing with Effects",
+        "url": "https://react.dev/learn/synchronizing-with-effects"
+      }
+    ]
+  },
+  "race-safe-loading": {
+    "title": "An old response must not win",
+    "intro": "Resolve request B before A to reveal why arrival order cannot decide what the screen shows.",
+    "scope": "Controlled promises model a fetch adapter that ignores AbortSignal. Cleanup marks A inactive and requests abort; the active flag guards state commits even if A still settles. This is a trace, not a network benchmark or a production test.",
+    "scenarios": [
+      {
+        "id": "unguarded",
+        "label": "Commit every arriving result",
+        "steps": [
+          {
+            "title": "Select A and start loading",
+            "explanation": "The screen selects A and request A starts. Its completion callback will always update the view.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "Pending",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Not started",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading A; loading",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "selection",
+                "to": "reqA",
+                "label": "start A"
+              }
+            ]
+          },
+          {
+            "title": "Select B; B resolves first",
+            "explanation": "Selection changes to B and B returns data first. The screen briefly shows the correct B data, while A is still pending.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "Still pending",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Resolved data B",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading B; data B",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "selection",
+                "to": "reqB",
+                "label": "start B"
+              },
+              {
+                "from": "reqB",
+                "to": "screen",
+                "label": "commit B"
+              }
+            ]
+          },
+          {
+            "title": "A arrives late",
+            "explanation": "A's obsolete callback overwrites the view. The heading still says B but the body shows A: a stale-result bug.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "Resolved data A",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Already resolved B",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading B; data A",
+                "x": 30,
+                "y": 265,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "reqA",
+                "to": "screen",
+                "label": "stale overwrite"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "guarded",
+        "label": "Cleanup guards the commit",
+        "steps": [
+          {
+            "title": "Select A with an active flag",
+            "explanation": "A's Effect instance starts with active=true. Its callbacks may commit only while that flag remains true.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "Pending; active=true",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Not started",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading A; loading",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "selection",
+                "to": "reqA",
+                "label": "start A"
+              }
+            ]
+          },
+          {
+            "title": "Cleanup A; resolve B",
+            "explanation": "Changing to B runs A's cleanup: active=false and abort requested. B has its own active flag, resolves, and commits B data.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "active=false; abort requested",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Resolved B; active=true",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading B; data B",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "selection",
+                "to": "reqA",
+                "label": "cleanup A"
+              },
+              {
+                "from": "reqB",
+                "to": "screen",
+                "label": "commit B"
+              }
+            ]
+          },
+          {
+            "title": "Late A is ignored",
+            "explanation": "The adapter ignores abort and A still resolves. Its callback sees active=false and skips setView, preserving B. A late failure is ignored by the same guard.",
+            "nodes": [
+              {
+                "id": "selection",
+                "label": "Selection",
+                "detail": "B",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "reqA",
+                "label": "Request A",
+                "detail": "Resolved A; commit skipped",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "reqB",
+                "label": "Request B",
+                "detail": "Resolved B; still current",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "screen",
+                "label": "Screen",
+                "detail": "Heading B; data B",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "reqA",
+                "to": "screen",
+                "label": "blocked by flag"
+              },
+              {
+                "from": "reqB",
+                "to": "screen",
+                "label": "B remains visible"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Effect fetching and cleanup",
+        "url": "https://react.dev/learn/synchronizing-with-effects"
+      }
+    ]
+  }
+}

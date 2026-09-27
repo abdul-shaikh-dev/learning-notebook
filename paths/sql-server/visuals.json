@@ -1,0 +1,1062 @@
+{
+  "joins-and-grain": {
+    "title": "Join rows and preserve grain",
+    "intro": "Compare INNER and LEFT on real rows, then see why summing repeated parent values is wrong.",
+    "scope": "Two-order subset of setup.sql; zero in the corrected report explicitly means no payment after COALESCE.",
+    "scenarios": [
+      {
+        "id": "inner",
+        "label": "INNER JOIN",
+        "steps": [
+          {
+            "title": "Choose the row grain",
+            "explanation": "This subset of the course fixture has two orders and two payments. The join predicate is Orders.OrderId = Payments.OrderId.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Orders",
+                "detail": "101: 100; 104: 120",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Payments",
+                "detail": "201: 60; 202: 40",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Join operator",
+                "detail": "INNER",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "left input"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "right input"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Orders input: one row per order",
+                "columns": [
+                  "OrderId",
+                  "Amount"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100"
+                  ],
+                  [
+                    "104",
+                    "120"
+                  ]
+                ]
+              },
+              {
+                "caption": "Payments input: one row per payment",
+                "columns": [
+                  "PaymentId",
+                  "OrderId",
+                  "Amount"
+                ],
+                "rows": [
+                  [
+                    "201",
+                    "101",
+                    "60"
+                  ],
+                  [
+                    "202",
+                    "101",
+                    "40"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Match each payment",
+            "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and is omitted.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Order 101",
+                "detail": "Two matching payment rows",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Order 104",
+                "detail": "No result row",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Joined rows",
+                "detail": "2 rows",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "two matches"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Joined result",
+                "columns": [
+                  "OrderId",
+                  "OrderAmount",
+                  "PaymentId",
+                  "PaymentAmount"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100",
+                    "201",
+                    "60"
+                  ],
+                  [
+                    "101",
+                    "100",
+                    "202",
+                    "40"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Audit the totals",
+            "explanation": "SUM(OrderAmount) is 200, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Joined order total",
+                "detail": "200 = 100 + 100",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "1",
+                "label": "Input order total",
+                "detail": "220 = 100 + 120",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Payment total",
+                "detail": "100 = 60 + 40",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [],
+            "tables": [
+              {
+                "caption": "Correct order-grain LEFT report",
+                "columns": [
+                  "OrderId",
+                  "OrderAmount",
+                  "Paid"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100",
+                    "100"
+                  ],
+                  [
+                    "104",
+                    "120",
+                    "0"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "left",
+        "label": "LEFT JOIN",
+        "steps": [
+          {
+            "title": "Choose the row grain",
+            "explanation": "This subset of the course fixture has two orders and two payments. The join predicate is Orders.OrderId = Payments.OrderId.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Orders",
+                "detail": "101: 100; 104: 120",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Payments",
+                "detail": "201: 60; 202: 40",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Join operator",
+                "detail": "LEFT",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "left input"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "right input"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Orders input: one row per order",
+                "columns": [
+                  "OrderId",
+                  "Amount"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100"
+                  ],
+                  [
+                    "104",
+                    "120"
+                  ]
+                ]
+              },
+              {
+                "caption": "Payments input: one row per payment",
+                "columns": [
+                  "PaymentId",
+                  "OrderId",
+                  "Amount"
+                ],
+                "rows": [
+                  [
+                    "201",
+                    "101",
+                    "60"
+                  ],
+                  [
+                    "202",
+                    "101",
+                    "40"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Match each payment",
+            "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and gains one NULL-extended row.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Order 101",
+                "detail": "Two matching payment rows",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Order 104",
+                "detail": "Preserved with NULLs",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Joined rows",
+                "detail": "3 rows",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "two matches"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "NULL extension"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Joined result",
+                "columns": [
+                  "OrderId",
+                  "OrderAmount",
+                  "PaymentId",
+                  "PaymentAmount"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100",
+                    "201",
+                    "60"
+                  ],
+                  [
+                    "101",
+                    "100",
+                    "202",
+                    "40"
+                  ],
+                  [
+                    "104",
+                    "120",
+                    "NULL",
+                    "NULL"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Audit the totals",
+            "explanation": "SUM(OrderAmount) is 320, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Joined order total",
+                "detail": "320 = 100 + 100 + 120",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "1",
+                "label": "Input order total",
+                "detail": "220 = 100 + 120",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Payment total",
+                "detail": "100 = 60 + 40",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [],
+            "tables": [
+              {
+                "caption": "Correct order-grain LEFT report",
+                "columns": [
+                  "OrderId",
+                  "OrderAmount",
+                  "Paid"
+                ],
+                "rows": [
+                  [
+                    "101",
+                    "100",
+                    "100"
+                  ],
+                  [
+                    "104",
+                    "120",
+                    "0"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: logical and physical joins",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17"
+      }
+    ]
+  },
+  "concurrency-lost-updates": {
+    "title": "Two sessions, one stale decision",
+    "intro": "Compare blind replacement with an expected-revision predicate.",
+    "scope": "Teaching schedule: separate READ COMMITTED statements, no lock held across the read/write gap; RCSI either OFF or ON yields these committed reads. Not SNAPSHOT transactions. Integer Revision is maintained by both writers; no engine execution claim.",
+    "scenarios": [
+      {
+        "id": "blind",
+        "label": "Blind replacement",
+        "steps": [
+          {
+            "title": "Both sessions read",
+            "explanation": "At t1 A reads 100/revision 1; at t2 B reads the same committed state. Reads finish before either UPDATE. A chooses 110 and B chooses 120.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "t1: read 100, revision 1",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 100; Revision 1",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "t2: read 100, revision 1",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "committed read"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "committed read"
+              }
+            ]
+          },
+          {
+            "title": "A updates and commits",
+            "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Id=1 matches one row.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "t3: UPDATE; COMMIT",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 110; Revision 2",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "Still holds 100, revision 1",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "one row changed"
+              }
+            ]
+          },
+          {
+            "title": "B attempts stale write",
+            "explanation": "At t4 B uses WHERE Id=1: one row changes and commits 120/revision 3. A's replacement 110 is overwritten.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "Committed 110",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 120; Revision 3",
+                "x": 390,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "1 row: overwrite",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "2",
+                "to": "1",
+                "label": "stale replacement"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Observed schedule",
+                "columns": [
+                  "Time",
+                  "A",
+                  "B",
+                  "Stored amount/rev"
+                ],
+                "rows": [
+                  [
+                    "t1",
+                    "Read 100/1",
+                    "Idle",
+                    "100/1"
+                  ],
+                  [
+                    "t2",
+                    "Idle",
+                    "Read 100/1",
+                    "100/1"
+                  ],
+                  [
+                    "t3",
+                    "Commit 110/2",
+                    "Idle",
+                    "110/2"
+                  ],
+                  [
+                    "t4",
+                    "Idle",
+                    "Commit 120/3",
+                    "120/3"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "guarded",
+        "label": "Check expected revision",
+        "steps": [
+          {
+            "title": "Both sessions read",
+            "explanation": "At t1 A reads 100/revision 1; at t2 B reads the same committed state. Reads finish before either UPDATE. A chooses 110 and B chooses 120.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "t1: read 100, revision 1",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 100; Revision 1",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "t2: read 100, revision 1",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "committed read"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "committed read"
+              }
+            ]
+          },
+          {
+            "title": "A updates and commits",
+            "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Revision=1 matches one row.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "t3: UPDATE; COMMIT",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 110; Revision 2",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "Still holds 100, revision 1",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "one row changed"
+              }
+            ]
+          },
+          {
+            "title": "B attempts stale write",
+            "explanation": "At t4 B uses WHERE Id=1 AND Revision=1: zero rows change. Reload and resolve the conflict; do not blindly repeat the stale decision.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Session A",
+                "detail": "Committed 110",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Shared row",
+                "detail": "Amount 110; Revision 2",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "2",
+                "label": "Session B",
+                "detail": "0 rows: conflict",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "2",
+                "to": "1",
+                "label": "rejected"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Observed schedule",
+                "columns": [
+                  "Time",
+                  "A",
+                  "B",
+                  "Stored amount/rev"
+                ],
+                "rows": [
+                  [
+                    "t1",
+                    "Read 100/1",
+                    "Idle",
+                    "100/1"
+                  ],
+                  [
+                    "t2",
+                    "Idle",
+                    "Read 100/1",
+                    "100/1"
+                  ],
+                  [
+                    "t3",
+                    "Commit 110/2",
+                    "Idle",
+                    "110/2"
+                  ],
+                  [
+                    "t4",
+                    "Idle",
+                    "0 rows",
+                    "110/2"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: isolation and modification locks",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17"
+      }
+    ]
+  },
+  "indexes-and-plans": {
+    "title": "Seek and scan are workload choices",
+    "intro": "Compare selective and broad predicates with the same covering index.",
+    "scope": "Invented page layout; leaf visits omit cache, read-ahead, CPU, tree details and writes. No elapsed-time prediction or guaranteed optimizer choice. The course five-row fixture cannot demonstrate a speedup.",
+    "scenarios": [
+      {
+        "id": "selective",
+        "label": "Selective covered query",
+        "steps": [
+          {
+            "title": "Set the workload",
+            "explanation": "This invented table has 100,000 orders. Its covering index has 1,000 leaf pages and stores CustomerId, OrderDate and Amount. Counts illustrate work, not measured SQL Server costs.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Predicate",
+                "detail": "CustomerId = 2",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Covering index",
+                "detail": "CustomerId, OrderDate; INCLUDE Amount",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Table",
+                "detail": "100,000 rows; index has 1,000 leaf pages",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "candidate access"
+              }
+            ]
+          },
+          {
+            "title": "Compare candidate work",
+            "explanation": "The selective customer has 20 rows on two index leaf pages. The model counts three internal navigation visits plus two leaf visits; a full index scan visits all 1,000 leaves.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Seek candidate",
+                "detail": "3 navigation + 2 leaf visits",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Scan candidate",
+                "detail": "1,000 leaf visits",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Qualifying rows",
+                "detail": "20 rows",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "retrieve matches"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "filter or return"
+              }
+            ]
+          },
+          {
+            "title": "Inspect an actual plan",
+            "explanation": "A covered selective seek can avoid scanning unrelated rows; this model favors that access path. Verify estimates, actual rows and logical reads on representative data.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Plan evidence",
+                "detail": "Actual vs estimated row counts",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Modeled access",
+                "detail": "Seek selective range",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Correctness",
+                "detail": "Same required rows and values",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "2",
+                "label": "preserve results"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Bounded model comparison",
+                "columns": [
+                  "Access",
+                  "Qualifying rows",
+                  "Leaf visits"
+                ],
+                "rows": [
+                  [
+                    "Seek",
+                    "20",
+                    "2"
+                  ],
+                  [
+                    "Scan",
+                    "20",
+                    "1000"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "broad",
+        "label": "Broad query",
+        "steps": [
+          {
+            "title": "Set the workload",
+            "explanation": "This invented table has 100,000 orders. Its covering index has 1,000 leaf pages and stores CustomerId, OrderDate and Amount. Counts illustrate work, not measured SQL Server costs.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Predicate",
+                "detail": "All customers",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Covering index",
+                "detail": "CustomerId, OrderDate; INCLUDE Amount",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Table",
+                "detail": "100,000 rows; index has 1,000 leaf pages",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "candidate access"
+              }
+            ]
+          },
+          {
+            "title": "Compare candidate work",
+            "explanation": "All 100,000 rows qualify. A scan reads 1,000 leaf pages sequentially; a seek with an unbounded range still visits all qualifying leaves.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Seek candidate",
+                "detail": "Navigation + all 1,000 leaves",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Scan candidate",
+                "detail": "1,000 leaf visits",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Qualifying rows",
+                "detail": "100,000 rows",
+                "x": 740,
+                "y": 50,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "retrieve matches"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "filter or return"
+              }
+            ]
+          },
+          {
+            "title": "Inspect an actual plan",
+            "explanation": "A broad scan can be sensible. Operator names alone do not establish quality: inspect total work, estimates, actual rows and logical reads before tuning.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Plan evidence",
+                "detail": "Actual vs estimated row counts",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Modeled access",
+                "detail": "Scan broad range",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Correctness",
+                "detail": "Same required rows and values",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "2",
+                "label": "preserve results"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Bounded model comparison",
+                "columns": [
+                  "Access",
+                  "Qualifying rows",
+                  "Leaf visits"
+                ],
+                "rows": [
+                  [
+                    "Seek",
+                    "100000",
+                    "1000"
+                  ],
+                  [
+                    "Scan",
+                    "100000",
+                    "1000"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft: index architecture and design",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide?view=sql-server-ver17"
+      }
+    ]
+  }
+}

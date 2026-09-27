@@ -1,0 +1,1127 @@
+{
+  "deployments": {
+    "title": "Reconcile two desired replicas",
+    "intro": "Observe how desired state survives the loss of a particular Pod.",
+    "scope": "Illustrated API/controller snapshots, not live cluster evidence. replicas=2; replacement requires capacity, image availability and passing readiness. Reconciliation has no fixed completion time.",
+    "scenarios": [
+      {
+        "id": "replacement",
+        "label": "Replacement becomes ready",
+        "steps": [
+          {
+            "title": "Two replicas ready",
+            "explanation": "The Deployment manages a ReplicaSet whose desired count is two. Pod identity is disposable; replicas does not replicate application data.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired replicas=2",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Current=2; ready=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready; identity A",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "Ready; identity B",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "rs",
+                "label": "desired count 2"
+              },
+              {
+                "from": "rs",
+                "to": "a",
+                "label": "owns"
+              },
+              {
+                "from": "rs",
+                "to": "b",
+                "label": "owns"
+              }
+            ]
+          },
+          {
+            "title": "Pod B is lost",
+            "explanation": "Once deletion/loss is observed, the ReplicaSet creates Pod C. Current count can return to two before availability does; C still needs scheduling, startup and readiness.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired still 2",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Current=2; ready=1",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "Deleted; no longer counted",
+                "tone": "warning",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "c",
+                "label": "Pod C",
+                "detail": "New identity; starting",
+                "tone": "active",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "rs",
+                "label": "desired count 2"
+              },
+              {
+                "from": "rs",
+                "to": "a",
+                "label": "owns"
+              },
+              {
+                "from": "rs",
+                "to": "c",
+                "label": "creates replacement"
+              }
+            ]
+          },
+          {
+            "title": "New identity serves",
+            "explanation": "Pod C passes readiness, returning the modeled ready count to two. It does not inherit B's in-memory or scratch files merely because the controller replaced B.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired=2; available=2",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Current=2; ready=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "Gone",
+                "tone": "neutral",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "c",
+                "label": "Pod C",
+                "detail": "Ready; new identity C",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "rs",
+                "to": "a",
+                "label": "owns"
+              },
+              {
+                "from": "rs",
+                "to": "c",
+                "label": "owns"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pending",
+        "label": "Replacement cannot schedule",
+        "steps": [
+          {
+            "title": "Loss creates a gap",
+            "explanation": "Pod B is deleted while A remains ready. The controller observes desired=2 and creates C.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired replicas=2",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Ready=1; replacement requested",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "c",
+                "label": "Pod C",
+                "detail": "Created",
+                "tone": "active",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "rs",
+                "label": "desired count 2"
+              },
+              {
+                "from": "rs",
+                "to": "a",
+                "label": "owns"
+              },
+              {
+                "from": "rs",
+                "to": "c",
+                "label": "creates"
+              }
+            ]
+          },
+          {
+            "title": "Insufficient capacity",
+            "explanation": "C requests 500m CPU, but eligible nodes have only 300m allocatable headroom for this request. The scheduler leaves C Pending in this simplified capacity example.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired=2; available=1",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Current=2; ready=1",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "c",
+                "label": "Pod C",
+                "detail": "Pending; requests 500m",
+                "tone": "warning",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "node",
+                "label": "Eligible node",
+                "detail": "Only 300m CPU headroom",
+                "tone": "warning",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "rs",
+                "to": "c",
+                "label": "owns pending Pod"
+              },
+              {
+                "from": "c",
+                "to": "node",
+                "label": "cannot fit request"
+              }
+            ]
+          },
+          {
+            "title": "Correct the constraint",
+            "explanation": "Add suitable capacity or review legitimate requests. A controller cannot manufacture resources. After capacity exists C can schedule, but readiness remains a separate check.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired remains 2",
+                "tone": "neutral",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "rs",
+                "label": "ReplicaSet",
+                "detail": "Ready still 1 until startup",
+                "tone": "active",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "c",
+                "label": "Pod C",
+                "detail": "Scheduled; readiness pending",
+                "tone": "active",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "node",
+                "label": "Eligible node",
+                "detail": "500m available",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "rs",
+                "to": "c",
+                "label": "owns"
+              },
+              {
+                "from": "c",
+                "to": "node",
+                "label": "scheduled"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Kubernetes Deployments",
+        "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+      }
+    ]
+  },
+  "services-dns": {
+    "title": "Select and route ready endpoints",
+    "intro": "Keep name resolution, selector matching and readiness separate.",
+    "scope": "Illustrated normal ClusterIP Service with publishNotReadyAddresses=false, selector app=release-demo, port 80 -> named targetPort http=8080. Existing connections and propagation are omitted; no live routing proof.",
+    "scenarios": [
+      {
+        "id": "ready",
+        "label": "Readiness changes routing",
+        "steps": [
+          {
+            "title": "Name resolves to Service",
+            "explanation": "A client in the namespace resolves release-demo to its ClusterIP. DNS identifies the Service, not a guarantee that a backend exists.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "GET release-demo:80",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "ClusterIP 10.96.0.20",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "A ready; B ready",
+                "tone": "neutral",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "app=release-demo; ready",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "app=release-demo; ready",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "svc",
+                "label": "DNS -> ClusterIP"
+              },
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "selected endpoints"
+              },
+              {
+                "from": "slice",
+                "to": "a",
+                "label": "eligible :8080"
+              },
+              {
+                "from": "slice",
+                "to": "b",
+                "label": "eligible :8080"
+              }
+            ]
+          },
+          {
+            "title": "B fails readiness",
+            "explanation": "B's process still runs, but readiness fails. After endpoint state propagates, normal new Service traffic uses A; readiness failure alone is not a liveness restart.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "New connection",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Same IP and name",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "A ready; B not ready",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "Running; not ready",
+                "tone": "warning",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "svc",
+                "label": "request :80"
+              },
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "consult endpoints"
+              },
+              {
+                "from": "slice",
+                "to": "a",
+                "label": "route to :8080"
+              }
+            ]
+          },
+          {
+            "title": "B returns ready",
+            "explanation": "After B passes readiness and the endpoint update propagates, both Pods are eligible again. The diagram does not assert an exact traffic split.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "New requests",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Same IP and name",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "2 ready endpoints",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "Ready",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "Ready again",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "svc",
+                "label": "request :80"
+              },
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "ready endpoints"
+              },
+              {
+                "from": "slice",
+                "to": "a",
+                "label": "eligible :8080"
+              },
+              {
+                "from": "slice",
+                "to": "b",
+                "label": "eligible :8080"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "selector",
+        "label": "Wrong selector yields no backend",
+        "steps": [
+          {
+            "title": "Healthy Pods, wrong label",
+            "explanation": "The Service selects app=release-demo, but both running Pods carry app=demo. Healthy processes do not satisfy the selector.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "Name resolves",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "selector app=release-demo",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "0 matching ready endpoints",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "app=demo; ready",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "app=demo; ready",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "svc",
+                "label": "DNS succeeds"
+              },
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "selector has no match"
+              }
+            ]
+          },
+          {
+            "title": "Diagnose boundary",
+            "explanation": "Compare Service selector with Pod labels and EndpointSlices. DNS success plus zero selected endpoints points to a backend-selection problem in this example.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "Connection cannot serve app",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "app=release-demo required",
+                "tone": "warning",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "Ready endpoints=0",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "app=demo mismatch",
+                "tone": "warning",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "app=demo mismatch",
+                "tone": "warning",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "inspect selected set"
+              }
+            ]
+          },
+          {
+            "title": "Align intended labels",
+            "explanation": "Correct the workload template labels while preserving its Deployment selector contract. Once matching ready Pods exist, endpoint updates make normal Service routing possible.",
+            "nodes": [
+              {
+                "id": "client",
+                "label": "Client",
+                "detail": "New request can route",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "selector app=release-demo",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "slice",
+                "label": "EndpointSlice",
+                "detail": "2 matching ready endpoints",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "a",
+                "label": "Pod A",
+                "detail": "app=release-demo; ready",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              },
+              {
+                "id": "b",
+                "label": "Pod B",
+                "detail": "app=release-demo; ready",
+                "tone": "success",
+                "x": 390,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "client",
+                "to": "svc",
+                "label": "request :80"
+              },
+              {
+                "from": "svc",
+                "to": "slice",
+                "label": "matching endpoints"
+              },
+              {
+                "from": "slice",
+                "to": "a",
+                "label": "eligible :8080"
+              },
+              {
+                "from": "slice",
+                "to": "b",
+                "label": "eligible :8080"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Kubernetes Services",
+        "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+      }
+    ]
+  },
+  "rolling-updates": {
+    "title": "Roll out without deleting healthy capacity",
+    "intro": "Compare a ready candidate with a rollout stalled by failed readiness.",
+    "scope": "Illustrated replicas=2, maxSurge=1, maxUnavailable=0, minReadySeconds=0, progressDeadlineSeconds=60. Count bound concerns non-terminating Pods; terminating Pods can temporarily add resource use. No real rollout is claimed.",
+    "scenarios": [
+      {
+        "id": "healthy",
+        "label": "Healthy v2 rollout",
+        "steps": [
+          {
+            "title": "Create one candidate",
+            "explanation": "Changing the image in the Pod template creates a new ReplicaSet. Two v1 Pods stay ready while one v2 candidate starts; capacity must fit the surge.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Desired 2; surge 1",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "v1 ready=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "v2 ready=0; total=1",
+                "tone": "active",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Routes to 2 ready v1 Pods",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "old",
+                "label": "retain availability"
+              },
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "scale to 1"
+              },
+              {
+                "from": "svc",
+                "to": "old",
+                "label": "ready traffic"
+              }
+            ]
+          },
+          {
+            "title": "Candidate ready",
+            "explanation": "Once v2 is available, the controller may reduce old replicas to one and grow new replicas to two. The second candidate still needs readiness.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Available at least 2",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "v1 ready=1",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "v2 ready=1; starting=1",
+                "tone": "active",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Routes to ready v1 and v2",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "old",
+                "label": "scale down to 1"
+              },
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "scale up to 2"
+              },
+              {
+                "from": "svc",
+                "to": "old",
+                "label": "ready traffic"
+              },
+              {
+                "from": "svc",
+                "to": "new",
+                "label": "ready traffic"
+              }
+            ]
+          },
+          {
+            "title": "Finish v2",
+            "explanation": "When both v2 Pods are available the old ReplicaSet scales to zero. Compatibility must hold while versions coexist; readiness alone does not verify business correctness.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Updated=2; available=2",
+                "tone": "success",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "v1 replicas=0",
+                "tone": "neutral",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "v2 ready=2",
+                "tone": "success",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Ready v2 endpoints=2",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "old",
+                "label": "scale to 0"
+              },
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "desired 2"
+              },
+              {
+                "from": "svc",
+                "to": "new",
+                "label": "ready traffic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stalled",
+        "label": "Candidate never becomes ready",
+        "steps": [
+          {
+            "title": "Candidate fails probe",
+            "explanation": "Two v1 Pods remain ready and one v2 Pod runs but fails readiness. With maxUnavailable=0, losing an available old replica would violate the rollout budget.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Available=2; updated=1",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "v1 ready=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "v2 running; not ready",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Only old Pods eligible",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "candidate exists"
+              },
+              {
+                "from": "svc",
+                "to": "old",
+                "label": "ready traffic"
+              }
+            ]
+          },
+          {
+            "title": "Deadline reports stall",
+            "explanation": "After the configured 60-second period without rollout progress, the Deployment reports ProgressDeadlineExceeded. Kubernetes does not automatically undo the template change.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "ProgressDeadlineExceeded",
+                "tone": "warning",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "v1 ready=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "v2 ready=0",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Still old ready endpoints",
+                "tone": "success",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "inspect events/probes"
+              },
+              {
+                "from": "svc",
+                "to": "old",
+                "label": "ready traffic"
+              }
+            ]
+          },
+          {
+            "title": "Choose recovery",
+            "explanation": "Inspect probe/config/image evidence, then apply a fix or explicitly restore a known template. Here the operator chooses v1; wait for rollout status and validate the actual application.",
+            "nodes": [
+              {
+                "id": "deploy",
+                "label": "Deployment",
+                "detail": "Operator restores v1 template",
+                "tone": "active",
+                "x": 30,
+                "y": 35
+              },
+              {
+                "id": "old",
+                "label": "Old ReplicaSet",
+                "detail": "Known v1 desired=2",
+                "tone": "success",
+                "x": 390,
+                "y": 35
+              },
+              {
+                "id": "new",
+                "label": "New ReplicaSet",
+                "detail": "Failed v2 scales down",
+                "tone": "warning",
+                "x": 750,
+                "y": 35
+              },
+              {
+                "id": "svc",
+                "label": "Service",
+                "detail": "Validate version and behavior",
+                "tone": "active",
+                "x": 30,
+                "y": 285
+              }
+            ],
+            "edges": [
+              {
+                "from": "deploy",
+                "to": "old",
+                "label": "explicit recovery"
+              },
+              {
+                "from": "deploy",
+                "to": "new",
+                "label": "reduce failed version"
+              },
+              {
+                "from": "svc",
+                "to": "old",
+                "label": "ready traffic"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Kubernetes Deployments",
+        "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1241 @@
+{
+  "objects": {
+    "title": "References or a new object?",
+    "intro": "Trace assignment, mutation and explicit copying without confusing a variable with the object it names.",
+    "scope": "Conceptual object identities, not a memory layout. TaskItem is a mutable class; the copy scenario explicitly constructs a new TaskItem. Record equality and shallow record copies are separate topics.",
+    "scenarios": [
+      {
+        "id": "alias",
+        "label": "Assign another reference",
+        "steps": [
+          {
+            "title": "Create one task",
+            "explanation": "new TaskItem creates object #1. The variable first holds a reference to it.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "Refers to object #1",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "Not assigned",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reference"
+              }
+            ]
+          },
+          {
+            "title": "Assign second = first",
+            "explanation": "Assignment copies the reference, so both variables name the same object. It does not clone TaskItem.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "Refers to object #1",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "Refers to object #1",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reference"
+              },
+              {
+                "from": "second",
+                "to": "one",
+                "label": "same object"
+              }
+            ]
+          },
+          {
+            "title": "Call second.Complete()",
+            "explanation": "Complete changes object #1. Reading first.Done now returns true because first still names that object.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "first.Done reads true",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "Calls Complete()",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = true",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reads state"
+              },
+              {
+                "from": "second",
+                "to": "one",
+                "label": "mutates state"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "copy",
+        "label": "Construct an independent copy",
+        "steps": [
+          {
+            "title": "Start with the original",
+            "explanation": "The same initial TaskItem #1 exists. We have not created a second object yet.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "Refers to object #1",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "Not assigned",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "two",
+                "label": "TaskItem #2",
+                "detail": "Not constructed",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reference"
+              }
+            ]
+          },
+          {
+            "title": "Copy selected data",
+            "explanation": "second = new TaskItem(first.Title) creates object #2 with its own Done property. Copy semantics must be chosen deliberately.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "Refers to object #1",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "Refers to object #2",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "two",
+                "label": "TaskItem #2",
+                "detail": "Read; Done = false",
+                "x": 30,
+                "y": 265,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reference"
+              },
+              {
+                "from": "second",
+                "to": "two",
+                "label": "new reference"
+              }
+            ]
+          },
+          {
+            "title": "Complete only the copy",
+            "explanation": "second.Complete() changes #2. #1 remains incomplete. Shared nested mutable references would require their own copying decision.",
+            "nodes": [
+              {
+                "id": "first",
+                "label": "first",
+                "detail": "first.Done reads false",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "second",
+                "label": "second",
+                "detail": "second.Done reads true",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "one",
+                "label": "TaskItem #1",
+                "detail": "Read; Done = false",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "two",
+                "label": "TaskItem #2",
+                "detail": "Read; Done = true",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "first",
+                "to": "one",
+                "label": "reads original"
+              },
+              {
+                "from": "second",
+                "to": "two",
+                "label": "mutates copy"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "C# classes",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes"
+      }
+    ]
+  },
+  "api-di": {
+    "title": "When does DI reuse an instance?",
+    "intro": "Compare service identities across resolutions and HTTP request scopes.",
+    "scope": "Built-in ASP.NET Core DI, two explicit request scopes, one root provider. IDs represent instance identity; disposal timing and factory registrations are omitted. Singleton state must support concurrent access.",
+    "scenarios": [
+      {
+        "id": "within",
+        "label": "Two resolutions in one request",
+        "steps": [
+          {
+            "title": "Open request A",
+            "explanation": "Request A creates one scope. No service has been resolved in this trace yet.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request A",
+                "detail": "Scope A opened",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "No instance yet",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "No instance yet",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "No instance yet",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "First resolution",
+            "explanation": "The container creates singleton S1, scoped C1 and transient T1 on their first resolutions.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request A",
+                "detail": "First resolution",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "S1",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "C1 in scope A",
+                "x": 750,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "T1",
+                "x": 30,
+                "y": 265,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "request",
+                "to": "singleton",
+                "label": "resolve"
+              },
+              {
+                "from": "request",
+                "to": "scoped",
+                "label": "resolve"
+              },
+              {
+                "from": "request",
+                "to": "transient",
+                "label": "resolve"
+              }
+            ]
+          },
+          {
+            "title": "Second resolution",
+            "explanation": "In scope A, singleton and scoped identities repeat. Transient resolution creates T2; it does not reuse T1.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request A",
+                "detail": "Second resolution",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "S1 reused",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "C1 reused",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "T2 replaces T1 here",
+                "x": 30,
+                "y": 265,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "request",
+                "to": "singleton",
+                "label": "reuse"
+              },
+              {
+                "from": "request",
+                "to": "scoped",
+                "label": "reuse"
+              },
+              {
+                "from": "request",
+                "to": "transient",
+                "label": "new instance"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "across",
+        "label": "Resolve in a later request",
+        "steps": [
+          {
+            "title": "Request A resolves",
+            "explanation": "One root provider serves request A. Its first resolution creates the three identities.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request A",
+                "detail": "Scope A active",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "S1",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "C1 in scope A",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "T1",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "request",
+                "to": "singleton",
+                "label": "resolve"
+              },
+              {
+                "from": "request",
+                "to": "scoped",
+                "label": "resolve"
+              },
+              {
+                "from": "request",
+                "to": "transient",
+                "label": "resolve"
+              }
+            ]
+          },
+          {
+            "title": "Request A ends",
+            "explanation": "Scope A ends; container-owned scoped services are disposed. The singleton stays with the root provider. This trace stops using T1.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request A",
+                "detail": "Scope A ended",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "S1 retained",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "C1 scope ended",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "T1 no longer used",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Request B resolves",
+            "explanation": "Scope B gets C2 and a new transient T2, but the root singleton remains S1. A singleton must not capture a scoped DbContext.",
+            "nodes": [
+              {
+                "id": "request",
+                "label": "Request B",
+                "detail": "Scope B active",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "singleton",
+                "label": "Singleton",
+                "detail": "S1 reused across requests",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "scoped",
+                "label": "Scoped",
+                "detail": "C2 in scope B",
+                "x": 750,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "transient",
+                "label": "Transient",
+                "detail": "T2",
+                "x": 30,
+                "y": 265,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "request",
+                "to": "singleton",
+                "label": "reuse S1"
+              },
+              {
+                "from": "request",
+                "to": "scoped",
+                "label": "new C2"
+              },
+              {
+                "from": "request",
+                "to": "transient",
+                "label": "new T2"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "ASP.NET Core service lifetimes",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0"
+      }
+    ]
+  },
+  "async": {
+    "title": "Cancellation must reach the wait",
+    "intro": "Follow a caller, an awaited method and a token-aware delay.",
+    "scope": "Deterministic teaching trace of LoadAsync and Task.Delay. Cancellation is cooperative, not forced termination; actual I/O APIs and timing vary. Await observes completion or cancellation.",
+    "scenarios": [
+      {
+        "id": "passed",
+        "label": "Token passed to the delay",
+        "steps": [
+          {
+            "title": "Start and await",
+            "explanation": "The caller awaits LoadAsync(token). LoadAsync forwards the token to Task.Delay, which is pending.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Awaiting LoadAsync",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Awaiting Task.Delay",
+                "x": 390,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Pending; token supplied",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Cancellation not requested",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "caller",
+                "to": "method",
+                "label": "await"
+              },
+              {
+                "from": "method",
+                "to": "wait",
+                "label": "await + token"
+              },
+              {
+                "from": "token",
+                "to": "wait",
+                "label": "observed token"
+              }
+            ]
+          },
+          {
+            "title": "Request cancellation",
+            "explanation": "Cancel marks the token as requested. The delay observes the request and completes as canceled rather than returning a value.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Still awaiting",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Await resumes by cancellation",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Canceled",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Cancel() requested",
+                "x": 30,
+                "y": 265,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "token",
+                "to": "wait",
+                "label": "request observed"
+              },
+              {
+                "from": "wait",
+                "to": "method",
+                "label": "cancellation"
+              }
+            ]
+          },
+          {
+            "title": "Observe at the boundary",
+            "explanation": "The caller catches OperationCanceledException for this canceled operation. LoadAsync never reaches return 42.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Cancellation handled",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Canceled; no 42 returned",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Canceled",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Cancellation requested",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "method",
+                "to": "caller",
+                "label": "await throws"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omitted",
+        "label": "Token omitted from the delay",
+        "steps": [
+          {
+            "title": "Start an uncancelable wait",
+            "explanation": "LoadAsync receives a token but calls Task.Delay without it and performs no cancellation checks.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Awaiting LoadAsync",
+                "x": 30,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Token unused",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Pending; no token",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Cancellation not requested",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "caller",
+                "to": "method",
+                "label": "await"
+              },
+              {
+                "from": "method",
+                "to": "wait",
+                "label": "await only"
+              }
+            ]
+          },
+          {
+            "title": "Request is ignored here",
+            "explanation": "Cancel sets the caller's token, but this delay has no connection to it. Requesting cancellation alone cannot stop arbitrary code.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Still awaiting",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Still awaiting delay",
+                "x": 390,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Still pending",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Cancel() requested",
+                "x": 30,
+                "y": 265,
+                "tone": "active"
+              }
+            ],
+            "edges": [
+              {
+                "from": "caller",
+                "to": "method",
+                "label": "await"
+              },
+              {
+                "from": "method",
+                "to": "wait",
+                "label": "no token forwarded"
+              }
+            ]
+          },
+          {
+            "title": "Wait finishes normally",
+            "explanation": "After the delay, this method returns 42. Passing a token parameter is insufficient unless downstream operations observe it.",
+            "nodes": [
+              {
+                "id": "caller",
+                "label": "Caller",
+                "detail": "Receives 42",
+                "x": 30,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "method",
+                "label": "LoadAsync(token)",
+                "detail": "Returns 42",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "wait",
+                "label": "Task.Delay",
+                "detail": "Completed normally",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "token",
+                "label": "Token source",
+                "detail": "Request was unobserved",
+                "x": 30,
+                "y": 265,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "wait",
+                "to": "method",
+                "label": "completed"
+              },
+              {
+                "from": "method",
+                "to": "caller",
+                "label": "result 42"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Cooperative cancellation",
+        "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads"
+      }
+    ]
+  },
+  "auth-boundaries": {
+    "title": "Identity, permission, ownership",
+    "intro": "Follow a protected write through separate authorization decisions.",
+    "scope": "Conceptual bearer-token write pipeline with task-write policy and an owner check. This API deliberately returns 404 for another owner's task. A valid token is not evidence of permission or ownership.",
+    "scenarios": [
+      {
+        "id": "owner",
+        "label": "Authorized owner writes",
+        "steps": [
+          {
+            "title": "Validate identity",
+            "explanation": "A configured authentication handler validates the bearer token and establishes subject A. Resource access has not yet been granted.",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Valid token; subject A",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "Not checked",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "Task owner = A",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "Pending",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "identity",
+                "to": "policy",
+                "label": "trusted principal"
+              }
+            ]
+          },
+          {
+            "title": "Require write permission",
+            "explanation": "Subject A has tasks.write, so the policy passes. That permission alone does not establish ownership of task 7.",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Subject A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "tasks.write present; pass",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "Task owner = A; check next",
+                "x": 750,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "Pending",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "identity",
+                "to": "policy",
+                "label": "claims"
+              },
+              {
+                "from": "policy",
+                "to": "owner",
+                "label": "check task 7"
+              }
+            ]
+          },
+          {
+            "title": "Check owner and mutate",
+            "explanation": "The trusted subject matches OwnerId. The endpoint applies the validated write and returns the chosen successful response.",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Subject A",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "Passed",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "A equals A; write allowed",
+                "x": 750,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "200; task updated",
+                "x": 30,
+                "y": 265,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "owner",
+                "to": "response",
+                "label": "authorized write"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "other-owner",
+        "label": "Permission but wrong owner",
+        "steps": [
+          {
+            "title": "Another valid identity",
+            "explanation": "Subject B has a valid token. Authentication succeeds exactly as it did for A; identity validation is not the owner check.",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Valid token; subject B",
+                "x": 30,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "Not checked",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "Task owner = A",
+                "x": 750,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "Pending",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "identity",
+                "to": "policy",
+                "label": "trusted principal"
+              }
+            ]
+          },
+          {
+            "title": "Coarse policy still passes",
+            "explanation": "B also has tasks.write. Letting the write proceed here would expose A's resource; the endpoint still checks the owner.",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Subject B",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "tasks.write present; pass",
+                "x": 390,
+                "y": 45,
+                "tone": "success"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "Task owner = A; check next",
+                "x": 750,
+                "y": 45,
+                "tone": "active"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "Pending",
+                "x": 30,
+                "y": 265,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "policy",
+                "to": "owner",
+                "label": "check task 7"
+              }
+            ]
+          },
+          {
+            "title": "Deny without modifying",
+            "explanation": "B does not match owner A. This API returns 404 consistently; the stored task stays unchanged. Invalid identity instead stops at authentication (401), and missing write permission stops at policy (403).",
+            "nodes": [
+              {
+                "id": "identity",
+                "label": "Authentication",
+                "detail": "Subject B",
+                "x": 30,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "policy",
+                "label": "Write policy",
+                "detail": "Passed",
+                "x": 390,
+                "y": 45,
+                "tone": "neutral"
+              },
+              {
+                "id": "owner",
+                "label": "Ownership",
+                "detail": "B differs from A; denied",
+                "x": 750,
+                "y": 45,
+                "tone": "warning"
+              },
+              {
+                "id": "response",
+                "label": "HTTP response",
+                "detail": "404; task unchanged",
+                "x": 30,
+                "y": 265,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "owner",
+                "to": "response",
+                "label": "deny resource access"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "title": "Resource-based authorization",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0"
+      }
+    ]
+  }
+}

@@ -6143,7 +6143,298 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "References or a new object?",
+          "intro": "Trace assignment, mutation and explicit copying without confusing a variable with the object it names.",
+          "scope": "Conceptual object identities, not a memory layout. TaskItem is a mutable class; the copy scenario explicitly constructs a new TaskItem. Record equality and shallow record copies are separate topics.",
+          "scenarios": [
+            {
+              "id": "alias",
+              "label": "Assign another reference",
+              "steps": [
+                {
+                  "title": "Create one task",
+                  "explanation": "new TaskItem creates object #1. The variable first holds a reference to it.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "Refers to object #1",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "Not assigned",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reference"
+                    }
+                  ]
+                },
+                {
+                  "title": "Assign second = first",
+                  "explanation": "Assignment copies the reference, so both variables name the same object. It does not clone TaskItem.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "Refers to object #1",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "Refers to object #1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reference"
+                    },
+                    {
+                      "from": "second",
+                      "to": "one",
+                      "label": "same object"
+                    }
+                  ]
+                },
+                {
+                  "title": "Call second.Complete()",
+                  "explanation": "Complete changes object #1. Reading first.Done now returns true because first still names that object.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "first.Done reads true",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "Calls Complete()",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = true",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reads state"
+                    },
+                    {
+                      "from": "second",
+                      "to": "one",
+                      "label": "mutates state"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "copy",
+              "label": "Construct an independent copy",
+              "steps": [
+                {
+                  "title": "Start with the original",
+                  "explanation": "The same initial TaskItem #1 exists. We have not created a second object yet.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "Refers to object #1",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "Not assigned",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "two",
+                      "label": "TaskItem #2",
+                      "detail": "Not constructed",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reference"
+                    }
+                  ]
+                },
+                {
+                  "title": "Copy selected data",
+                  "explanation": "second = new TaskItem(first.Title) creates object #2 with its own Done property. Copy semantics must be chosen deliberately.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "Refers to object #1",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "Refers to object #2",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "two",
+                      "label": "TaskItem #2",
+                      "detail": "Read; Done = false",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reference"
+                    },
+                    {
+                      "from": "second",
+                      "to": "two",
+                      "label": "new reference"
+                    }
+                  ]
+                },
+                {
+                  "title": "Complete only the copy",
+                  "explanation": "second.Complete() changes #2. #1 remains incomplete. Shared nested mutable references would require their own copying decision.",
+                  "nodes": [
+                    {
+                      "id": "first",
+                      "label": "first",
+                      "detail": "first.Done reads false",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "second",
+                      "label": "second",
+                      "detail": "second.Done reads true",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "one",
+                      "label": "TaskItem #1",
+                      "detail": "Read; Done = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "two",
+                      "label": "TaskItem #2",
+                      "detail": "Read; Done = true",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "first",
+                      "to": "one",
+                      "label": "reads original"
+                    },
+                    {
+                      "from": "second",
+                      "to": "two",
+                      "label": "mutates copy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "C# classes",
+              "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes"
+            }
+          ]
+        }
       },
       {
         "id": "exceptions",
@@ -6302,7 +6593,332 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Cancellation must reach the wait",
+          "intro": "Follow a caller, an awaited method and a token-aware delay.",
+          "scope": "Deterministic teaching trace of LoadAsync and Task.Delay. Cancellation is cooperative, not forced termination; actual I/O APIs and timing vary. Await observes completion or cancellation.",
+          "scenarios": [
+            {
+              "id": "passed",
+              "label": "Token passed to the delay",
+              "steps": [
+                {
+                  "title": "Start and await",
+                  "explanation": "The caller awaits LoadAsync(token). LoadAsync forwards the token to Task.Delay, which is pending.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Awaiting LoadAsync",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Awaiting Task.Delay",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Pending; token supplied",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Cancellation not requested",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "caller",
+                      "to": "method",
+                      "label": "await"
+                    },
+                    {
+                      "from": "method",
+                      "to": "wait",
+                      "label": "await + token"
+                    },
+                    {
+                      "from": "token",
+                      "to": "wait",
+                      "label": "observed token"
+                    }
+                  ]
+                },
+                {
+                  "title": "Request cancellation",
+                  "explanation": "Cancel marks the token as requested. The delay observes the request and completes as canceled rather than returning a value.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Still awaiting",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Await resumes by cancellation",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Canceled",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Cancel() requested",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "token",
+                      "to": "wait",
+                      "label": "request observed"
+                    },
+                    {
+                      "from": "wait",
+                      "to": "method",
+                      "label": "cancellation"
+                    }
+                  ]
+                },
+                {
+                  "title": "Observe at the boundary",
+                  "explanation": "The caller catches OperationCanceledException for this canceled operation. LoadAsync never reaches return 42.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Cancellation handled",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Canceled; no 42 returned",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Canceled",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Cancellation requested",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "method",
+                      "to": "caller",
+                      "label": "await throws"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "omitted",
+              "label": "Token omitted from the delay",
+              "steps": [
+                {
+                  "title": "Start an uncancelable wait",
+                  "explanation": "LoadAsync receives a token but calls Task.Delay without it and performs no cancellation checks.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Awaiting LoadAsync",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Token unused",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Pending; no token",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Cancellation not requested",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "caller",
+                      "to": "method",
+                      "label": "await"
+                    },
+                    {
+                      "from": "method",
+                      "to": "wait",
+                      "label": "await only"
+                    }
+                  ]
+                },
+                {
+                  "title": "Request is ignored here",
+                  "explanation": "Cancel sets the caller's token, but this delay has no connection to it. Requesting cancellation alone cannot stop arbitrary code.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Still awaiting",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Still awaiting delay",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Still pending",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Cancel() requested",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "caller",
+                      "to": "method",
+                      "label": "await"
+                    },
+                    {
+                      "from": "method",
+                      "to": "wait",
+                      "label": "no token forwarded"
+                    }
+                  ]
+                },
+                {
+                  "title": "Wait finishes normally",
+                  "explanation": "After the delay, this method returns 42. Passing a token parameter is insufficient unless downstream operations observe it.",
+                  "nodes": [
+                    {
+                      "id": "caller",
+                      "label": "Caller",
+                      "detail": "Receives 42",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "method",
+                      "label": "LoadAsync(token)",
+                      "detail": "Returns 42",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "wait",
+                      "label": "Task.Delay",
+                      "detail": "Completed normally",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "token",
+                      "label": "Token source",
+                      "detail": "Request was unobserved",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "wait",
+                      "to": "method",
+                      "label": "completed"
+                    },
+                    {
+                      "from": "method",
+                      "to": "caller",
+                      "label": "result 42"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Cooperative cancellation",
+              "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads"
+            }
+          ]
+        }
       },
       {
         "id": "contracts-generics",
@@ -6719,6 +7335,329 @@ const LEARNING_PATHS = [
                 4
               ],
               "explanation": "For {\"title\":\"  \"}, the endpoint returns 400. There is no Add call, new item or consumed ID in that branch."
+            }
+          ]
+        },
+        "visual": {
+          "title": "When does DI reuse an instance?",
+          "intro": "Compare service identities across resolutions and HTTP request scopes.",
+          "scope": "Built-in ASP.NET Core DI, two explicit request scopes, one root provider. IDs represent instance identity; disposal timing and factory registrations are omitted. Singleton state must support concurrent access.",
+          "scenarios": [
+            {
+              "id": "within",
+              "label": "Two resolutions in one request",
+              "steps": [
+                {
+                  "title": "Open request A",
+                  "explanation": "Request A creates one scope. No service has been resolved in this trace yet.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request A",
+                      "detail": "Scope A opened",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "No instance yet",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "No instance yet",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "No instance yet",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "First resolution",
+                  "explanation": "The container creates singleton S1, scoped C1 and transient T1 on their first resolutions.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request A",
+                      "detail": "First resolution",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "S1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "C1 in scope A",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "T1",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "singleton",
+                      "label": "resolve"
+                    },
+                    {
+                      "from": "request",
+                      "to": "scoped",
+                      "label": "resolve"
+                    },
+                    {
+                      "from": "request",
+                      "to": "transient",
+                      "label": "resolve"
+                    }
+                  ]
+                },
+                {
+                  "title": "Second resolution",
+                  "explanation": "In scope A, singleton and scoped identities repeat. Transient resolution creates T2; it does not reuse T1.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request A",
+                      "detail": "Second resolution",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "S1 reused",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "C1 reused",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "T2 replaces T1 here",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "singleton",
+                      "label": "reuse"
+                    },
+                    {
+                      "from": "request",
+                      "to": "scoped",
+                      "label": "reuse"
+                    },
+                    {
+                      "from": "request",
+                      "to": "transient",
+                      "label": "new instance"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "across",
+              "label": "Resolve in a later request",
+              "steps": [
+                {
+                  "title": "Request A resolves",
+                  "explanation": "One root provider serves request A. Its first resolution creates the three identities.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request A",
+                      "detail": "Scope A active",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "S1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "C1 in scope A",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "T1",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "singleton",
+                      "label": "resolve"
+                    },
+                    {
+                      "from": "request",
+                      "to": "scoped",
+                      "label": "resolve"
+                    },
+                    {
+                      "from": "request",
+                      "to": "transient",
+                      "label": "resolve"
+                    }
+                  ]
+                },
+                {
+                  "title": "Request A ends",
+                  "explanation": "Scope A ends; container-owned scoped services are disposed. The singleton stays with the root provider. This trace stops using T1.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request A",
+                      "detail": "Scope A ended",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "S1 retained",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "C1 scope ended",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "T1 no longer used",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Request B resolves",
+                  "explanation": "Scope B gets C2 and a new transient T2, but the root singleton remains S1. A singleton must not capture a scoped DbContext.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request B",
+                      "detail": "Scope B active",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "singleton",
+                      "label": "Singleton",
+                      "detail": "S1 reused across requests",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "scoped",
+                      "label": "Scoped",
+                      "detail": "C2 in scope B",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "transient",
+                      "label": "Transient",
+                      "detail": "T2",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "singleton",
+                      "label": "reuse S1"
+                    },
+                    {
+                      "from": "request",
+                      "to": "scoped",
+                      "label": "new C2"
+                    },
+                    {
+                      "from": "request",
+                      "to": "transient",
+                      "label": "new T2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "ASP.NET Core service lifetimes",
+              "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0"
             }
           ]
         }
@@ -7217,7 +8156,307 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Identity, permission, ownership",
+          "intro": "Follow a protected write through separate authorization decisions.",
+          "scope": "Conceptual bearer-token write pipeline with task-write policy and an owner check. This API deliberately returns 404 for another owner's task. A valid token is not evidence of permission or ownership.",
+          "scenarios": [
+            {
+              "id": "owner",
+              "label": "Authorized owner writes",
+              "steps": [
+                {
+                  "title": "Validate identity",
+                  "explanation": "A configured authentication handler validates the bearer token and establishes subject A. Resource access has not yet been granted.",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Valid token; subject A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "Not checked",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "Task owner = A",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "Pending",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "identity",
+                      "to": "policy",
+                      "label": "trusted principal"
+                    }
+                  ]
+                },
+                {
+                  "title": "Require write permission",
+                  "explanation": "Subject A has tasks.write, so the policy passes. That permission alone does not establish ownership of task 7.",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Subject A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "tasks.write present; pass",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "Task owner = A; check next",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "Pending",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "identity",
+                      "to": "policy",
+                      "label": "claims"
+                    },
+                    {
+                      "from": "policy",
+                      "to": "owner",
+                      "label": "check task 7"
+                    }
+                  ]
+                },
+                {
+                  "title": "Check owner and mutate",
+                  "explanation": "The trusted subject matches OwnerId. The endpoint applies the validated write and returns the chosen successful response.",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Subject A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "Passed",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "A equals A; write allowed",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "200; task updated",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "owner",
+                      "to": "response",
+                      "label": "authorized write"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "other-owner",
+              "label": "Permission but wrong owner",
+              "steps": [
+                {
+                  "title": "Another valid identity",
+                  "explanation": "Subject B has a valid token. Authentication succeeds exactly as it did for A; identity validation is not the owner check.",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Valid token; subject B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "Not checked",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "Task owner = A",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "Pending",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "identity",
+                      "to": "policy",
+                      "label": "trusted principal"
+                    }
+                  ]
+                },
+                {
+                  "title": "Coarse policy still passes",
+                  "explanation": "B also has tasks.write. Letting the write proceed here would expose A's resource; the endpoint still checks the owner.",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Subject B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "tasks.write present; pass",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "Task owner = A; check next",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "Pending",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "policy",
+                      "to": "owner",
+                      "label": "check task 7"
+                    }
+                  ]
+                },
+                {
+                  "title": "Deny without modifying",
+                  "explanation": "B does not match owner A. This API returns 404 consistently; the stored task stays unchanged. Invalid identity instead stops at authentication (401), and missing write permission stops at policy (403).",
+                  "nodes": [
+                    {
+                      "id": "identity",
+                      "label": "Authentication",
+                      "detail": "Subject B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "policy",
+                      "label": "Write policy",
+                      "detail": "Passed",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "owner",
+                      "label": "Ownership",
+                      "detail": "B differs from A; denied",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "response",
+                      "label": "HTTP response",
+                      "detail": "404; task unchanged",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "owner",
+                      "to": "response",
+                      "label": "deny resource access"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Resource-based authorization",
+              "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0"
+            }
+          ]
+        }
       },
       {
         "id": "observability",
@@ -8003,7 +9242,226 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Same arrivals, different departures",
+          "intro": "A, B and C arrive in that order. Predict which leaves first.",
+          "scope": "Abstract push/pop and enqueue/dequeue behavior; storage strategy and thread safety are separate choices.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Stack: last in, first out",
+              "steps": [
+                {
+                  "title": "Three arrivals",
+                  "explanation": "The stored items are A, B and C.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "arrived first",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "arrived second",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "arrived last",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Removal rule",
+                          "LIFO"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "First removal",
+                  "explanation": "C leaves first under LIFO.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "C",
+                      "detail": "removed",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "A",
+                      "detail": "still waiting",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "B",
+                      "detail": "still waiting",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Drain the collection",
+                  "explanation": "The complete departure order is C → B → A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Departure order",
+                      "detail": "C → B → A",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Empty",
+                      "detail": "no items remain",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Queue: first in, first out",
+              "steps": [
+                {
+                  "title": "Three arrivals",
+                  "explanation": "The stored items are A, B and C.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "arrived first",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "arrived second",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "arrived last",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Removal rule",
+                          "FIFO"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "First removal",
+                  "explanation": "A leaves first under FIFO.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "removed",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "still waiting",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "still waiting",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Drain the collection",
+                  "explanation": "The complete departure order is A → B → C.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Departure order",
+                      "detail": "A → B → C",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Empty",
+                      "detail": "no items remain",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "binary-search",
@@ -8134,7 +9592,338 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Watch insertion sort grow a sorted prefix",
+          "intro": "Compare how input order changes the amount of shifting.",
+          "scope": "Each step is one outer-loop insertion, not one comparison. Insertion sort is O(n²) in the worst case; sorted input takes O(n) comparisons with this implementation.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Reverse input",
+              "steps": [
+                {
+                  "title": "Initial array",
+                  "explanation": "Insertion sort grows a sorted prefix, beginning with the first item.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "4",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "unprocessed",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2",
+                      "detail": "unprocessed",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "1",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 2",
+                  "explanation": "Insert 3 into the sorted prefix, shifting 1 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "4",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2",
+                      "detail": "unprocessed",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "1",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 3",
+                  "explanation": "Insert 2 into the sorted prefix, shifting 2 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "2",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "4",
+                      "detail": "sorted prefix",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "1",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 4",
+                  "explanation": "Insert 1 into the sorted prefix, shifting 3 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "1",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "2",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "4",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Nearly sorted input",
+              "steps": [
+                {
+                  "title": "Initial array",
+                  "explanation": "Insertion sort grows a sorted prefix, beginning with the first item.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "1",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "unprocessed",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2",
+                      "detail": "unprocessed",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "4",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 2",
+                  "explanation": "Insert 3 into the sorted prefix, shifting 0 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "1",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2",
+                      "detail": "unprocessed",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "4",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 3",
+                  "explanation": "Insert 2 into the sorted prefix, shifting 1 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "1",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "2",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "4",
+                      "detail": "unprocessed",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                },
+                {
+                  "title": "Insert item 4",
+                  "explanation": "Insert 4 into the sorted prefix, shifting 0 larger item(s) right.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "1",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "2",
+                      "detail": "sorted prefix",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "3",
+                      "detail": "sorted prefix",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "4",
+                      "detail": "sorted prefix",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "recursion",
@@ -8190,7 +9979,368 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Walk a small tree",
+          "intro": "Compare preorder and postorder: the shape is unchanged, but when we emit each node changes.",
+          "scope": "Binary tree with three nodes. These snapshots group calls together; traversal time is O(n), and call-stack space depends on tree height.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Preorder: root before children",
+              "steps": [
+                {
+                  "title": "Begin at root",
+                  "explanation": "Emit A before recursing into B.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "root",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "left leaf",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "right leaf",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Emitted",
+                          "A"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Return from left leaf",
+                  "explanation": "B has no children, so its recursive call returns to A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "resume caller",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "left call complete",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "not visited",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Emitted",
+                          "A, B"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Finish the right subtree",
+                  "explanation": "C returns to A, then the root call finishes.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "complete",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "complete",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "complete",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Final order",
+                          "A, B, C"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Postorder: root after children",
+              "steps": [
+                {
+                  "title": "Begin at root",
+                  "explanation": "Do not emit A yet. Recurse into B first.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "root",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "left leaf",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "right leaf",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Emitted",
+                          "none"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Return from left leaf",
+                  "explanation": "B has no children, so its recursive call returns to A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "resume caller",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "left call complete",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "not visited",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Emitted",
+                          "B"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Finish the right subtree",
+                  "explanation": "C returns to A, then the root call finishes.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "complete",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "complete",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "complete",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Final order",
+                          "B, C, A"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "binary-search-tree",
@@ -8246,7 +10396,360 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Use ordering to choose a branch",
+          "intro": "At every node, compare the target with the stored key.",
+          "scope": "Distinct keys and a valid binary-search-tree ordering. Search is O(h); an unbalanced tree can have height n.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Find existing key 6",
+              "steps": [
+                {
+                  "title": "Compare with 8",
+                  "explanation": "Target 6 is smaller than 8: follow the left child.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "root",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "left child",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "10",
+                      "detail": "right child",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "6",
+                      "detail": "right child of 3",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    },
+                    {
+                      "from": "1",
+                      "to": "3",
+                      "label": "right"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare with 3",
+                  "explanation": "Target 6 is greater than 3: follow its right child.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "current comparison",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "10",
+                      "detail": "skipped subtree",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "6",
+                      "detail": "next comparison",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    },
+                    {
+                      "from": "1",
+                      "to": "3",
+                      "label": "right"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare with 6",
+                  "explanation": "The key matches. Return this node.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "visited",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "6",
+                      "detail": "matches target",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Result",
+                          "found"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Look for absent key 5",
+              "steps": [
+                {
+                  "title": "Compare with 8",
+                  "explanation": "Target 5 is smaller than 8: follow the left child.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "root",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "left child",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "10",
+                      "detail": "right child",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "6",
+                      "detail": "right child of 3",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    },
+                    {
+                      "from": "1",
+                      "to": "3",
+                      "label": "right"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare with 3",
+                  "explanation": "Target 5 is greater than 3: follow its right child.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "current comparison",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "10",
+                      "detail": "skipped subtree",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "3",
+                      "label": "6",
+                      "detail": "next comparison",
+                      "x": 40,
+                      "y": 270,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "right"
+                    },
+                    {
+                      "from": "1",
+                      "to": "3",
+                      "label": "right"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare with 6",
+                  "explanation": "5 is less than 6, but 6 has no left child. The search ends.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "8",
+                      "detail": "visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "3",
+                      "detail": "visited",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "6",
+                      "detail": "left child is null",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "left"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "right"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Result",
+                          "not found"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "graphs",
@@ -8295,7 +10798,369 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Breadth-first search keeps a frontier",
+          "intro": "Watch a FIFO queue find the shortest unweighted path, or exhaust the reachable component.",
+          "scope": "Directed, unweighted graph. Early exit occurs when the target is discovered; weighted shortest paths need different reasoning.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Reachable target",
+              "steps": [
+                {
+                  "title": "Enqueue A",
+                  "explanation": "Mark A discovered when enqueuing it. The queue starts with A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "start",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "undiscovered",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "target",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Queue",
+                          "A"
+                        ],
+                        [
+                          "Parents",
+                          "A: none"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Expand A",
+                  "explanation": "Remove A and discover B. Record B’s parent as A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "expanded",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "queued",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "undiscovered",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Queue",
+                          "B"
+                        ],
+                        [
+                          "Parents",
+                          "B: A"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Expand B",
+                  "explanation": "Discover C from B, record its parent, and reconstruct A → B → C.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "expanded",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "expanded",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "discovered; parent B",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Result",
+                          "2 edges: A → B → C"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Disconnected target",
+              "steps": [
+                {
+                  "title": "Enqueue A",
+                  "explanation": "Mark A discovered when enqueuing it. The queue starts with A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "start",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "undiscovered",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "target",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Queue",
+                          "A"
+                        ],
+                        [
+                          "Parents",
+                          "A: none"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Expand A",
+                  "explanation": "Remove A and discover B. Record B’s parent as A.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "expanded",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "queued",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "undiscovered",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Queue",
+                          "B"
+                        ],
+                        [
+                          "Parents",
+                          "B: A"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Expand B",
+                  "explanation": "B has no undiscovered neighbors. The queue empties without discovering C.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "expanded",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "expanded",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "unreachable from A",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "edge"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Current state",
+                      "columns": [
+                        "Item",
+                        "Value"
+                      ],
+                      "rows": [
+                        [
+                          "Result",
+                          "no path"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "heaps",
@@ -8450,7 +11315,273 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Follow the links",
+          "intro": "Compare traversal with insertion into a singly linked list.",
+          "scope": "Single-threaded singly linked list; allocation and ownership are omitted. Insertion is O(1) once the preceding node is known.",
+          "scenarios": [
+            {
+              "id": "0",
+              "label": "Traverse A → B → C",
+              "steps": [
+                {
+                  "title": "Start at head",
+                  "explanation": "Head identifies A. Each node stores a value and the next node reference.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "cursor here",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "next is C",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "next is null",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "next"
+                    }
+                  ]
+                },
+                {
+                  "title": "Follow one link",
+                  "explanation": "Read A.next to reach B; a linked list does not provide constant-time access by index.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "already visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "cursor here",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "next is null",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "next"
+                    }
+                  ]
+                },
+                {
+                  "title": "Reach the tail",
+                  "explanation": "Read B.next to reach C. C.next is null, so traversal finishes.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "visited",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "visited",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "C",
+                      "detail": "cursor; stop at null",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "next"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "label": "Insert X after A",
+              "steps": [
+                {
+                  "title": "Keep the old link",
+                  "explanation": "We already hold a reference to A. Finding A would itself require traversal.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "next is B",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "tail",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "X",
+                      "detail": "new node",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    }
+                  ]
+                },
+                {
+                  "title": "Link X first",
+                  "explanation": "Set X.next = A.next, preserving access to B.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "next is B",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "B",
+                      "detail": "tail",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "X",
+                      "detail": "next is B",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "next"
+                    }
+                  ]
+                },
+                {
+                  "title": "Reconnect A",
+                  "explanation": "Set A.next = X. The chain is now A → X → B, with no nodes lost.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "A",
+                      "detail": "next is X",
+                      "x": 40,
+                      "y": 40,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "X",
+                      "detail": "next is B",
+                      "x": 370,
+                      "y": 40,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "B",
+                      "detail": "tail",
+                      "x": 700,
+                      "y": 40,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "next"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "next"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "merge-sort",
@@ -11463,7 +14594,268 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Exchange the ranking policy",
+          "intro": "Compare two policies whose shared contract keeps the workflow stable.",
+          "scope": "Illustrative records chosen so the policies produce different orders. Pure callables; no class lifecycle.",
+          "scenarios": [
+            {
+              "id": "title",
+              "label": "Rank by title",
+              "steps": [
+                {
+                  "title": "Choose a policy",
+                  "explanation": "The caller supplies the ranking callable. Both policies accept one record and return a comparable key; input order stays API then SQL.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Select key = title",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "arrange(rows, key)",
+                      "detail": "Same workflow in both scenarios",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Input records",
+                      "detail": "API: 40 min; SQL: 10 min",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "inject callable"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "same records"
+                    }
+                  ]
+                },
+                {
+                  "title": "Evaluate keys",
+                  "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "arrange(rows, key)",
+                      "detail": "Call sorted with supplied key",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Policy callable",
+                      "detail": "API / SQL",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Input records",
+                      "detail": "API: 40 min; SQL: 10 min",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "evaluate each"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "record input"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return new ordering",
+                  "explanation": "The workflow returns a new list ordered API, SQL. The duration policy changes order; neither policy mutates the input.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "arrange(rows, key)",
+                      "detail": "Workflow code stays identical",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Result",
+                      "detail": "API, SQL",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Original records",
+                      "detail": "API then SQL: unchanged",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "return new list"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "minutes",
+              "label": "Rank by minutes",
+              "steps": [
+                {
+                  "title": "Choose a policy",
+                  "explanation": "The caller supplies the ranking callable. Both policies accept one record and return a comparable key; input order stays API then SQL.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Select key = minutes",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "arrange(rows, key)",
+                      "detail": "Same workflow in both scenarios",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Input records",
+                      "detail": "API: 40 min; SQL: 10 min",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "inject callable"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "same records"
+                    }
+                  ]
+                },
+                {
+                  "title": "Evaluate keys",
+                  "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "arrange(rows, key)",
+                      "detail": "Call sorted with supplied key",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Policy callable",
+                      "detail": "40 / 10",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Input records",
+                      "detail": "API: 40 min; SQL: 10 min",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "evaluate each"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "record input"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return new ordering",
+                  "explanation": "The workflow returns a new list ordered SQL, API. The duration policy changes order; neither policy mutates the input.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "arrange(rows, key)",
+                      "detail": "Workflow code stays identical",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Result",
+                      "detail": "SQL, API",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Original records",
+                      "detail": "API then SQL: unchanged",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "return new list"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "factories",
@@ -11631,7 +15023,258 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Translate units and failures",
+          "intro": "Follow one consumer contract across an incompatible legacy interface.",
+          "scope": "Matches the lesson floor conversion policy; not a billing precision rule.",
+          "scenarios": [
+            {
+              "id": "valid",
+              "label": "125 seconds",
+              "steps": [
+                {
+                  "title": "Consumer calls minutes",
+                  "explanation": "The notebook requests whole minutes. The adapter owns translation; the legacy interface still returns seconds.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Needs minutes()",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "Validate and floor seconds / 60",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "seconds_spent() returns 125",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "minutes()"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "seconds_spent()"
+                    }
+                  ]
+                },
+                {
+                  "title": "Check source meaning",
+                  "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. 125 passes validation.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Awaiting minutes",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "125 // 60 = 2",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "125 seconds received",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "source value"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return or propagate",
+                  "explanation": "Floor conversion intentionally discards 5 seconds.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Receives 2 minutes",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "Floor policy applied",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "Source remains 125 seconds",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "2 minutes"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "invalid",
+              "label": "Reject negative seconds",
+              "steps": [
+                {
+                  "title": "Consumer calls minutes",
+                  "explanation": "The notebook requests whole minutes. The adapter owns translation; the legacy interface still returns seconds.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Needs minutes()",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "Validate and floor seconds / 60",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "seconds_spent() returns -1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "minutes()"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "seconds_spent()"
+                    }
+                  ]
+                },
+                {
+                  "title": "Check source meaning",
+                  "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. -1 fails before any conversion.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Awaiting minutes",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "Raise ValueError",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "-1 seconds received",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "source value"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return or propagate",
+                  "explanation": "No fabricated minute value is returned. ValueError reaches the caller; upstream data must be corrected.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Notebook",
+                      "detail": "Receives ValueError",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "1",
+                      "label": "MinutesAdapter",
+                      "detail": "Invalid seconds rejected",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Legacy",
+                      "detail": "Source remains -1 seconds",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "ValueError"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "facade",
@@ -11743,7 +15386,258 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Wrap, delegate, unwind",
+          "intro": "Watch the wrapper add a success measurement without changing the formatter role.",
+          "scope": "The lesson wrapper records only successful output sizes; no retries or exception swallowing.",
+          "scenarios": [
+            {
+              "id": "success",
+              "label": "Successful formatter",
+              "steps": [
+                {
+                  "title": "Enter wrapper",
+                  "explanation": "The caller invokes measured(formatter). sizes starts empty. The wrapper has the same string-returning role as the formatter.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "titles = [A, BC]",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "sizes = []",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Join with comma",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "call"
+                    }
+                  ]
+                },
+                {
+                  "title": "Delegate once",
+                  "explanation": "The wrapper calls the formatter exactly once. It returns A,BC, four characters including the comma.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Waiting",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "Waiting for formatter",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Return A,BC",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "one delegation"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "text"
+                    }
+                  ]
+                },
+                {
+                  "title": "Unwind to caller",
+                  "explanation": "After successful return, append(4) runs and the same text returns.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Receives A,BC",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "sizes = [4]",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Completed once",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "failure",
+              "label": "Formatter raises",
+              "steps": [
+                {
+                  "title": "Enter wrapper",
+                  "explanation": "The caller invokes measured(formatter). sizes starts empty. The wrapper has the same string-returning role as the formatter.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "titles = [A, BC]",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "sizes = []",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Raises ValueError",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "call"
+                    }
+                  ]
+                },
+                {
+                  "title": "Delegate once",
+                  "explanation": "The wrapper calls the formatter exactly once. It raises before a text value exists; append has not run.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Waiting",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "Waiting for formatter",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Raise ValueError",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "one delegation"
+                    },
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "exception"
+                    }
+                  ]
+                },
+                {
+                  "title": "Unwind to caller",
+                  "explanation": "The exception unwinds through the wrapper unchanged. sizes remains empty because success recording is skipped.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Caller",
+                      "detail": "Receives ValueError",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Measured wrapper",
+                      "detail": "sizes = []",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Formatter",
+                      "detail": "Failed once",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "exception"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "composite",
@@ -11941,7 +15835,252 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Subscription and delivery order",
+          "intro": "Contrast successful synchronous publication with the lesson fail-fast policy.",
+          "scope": "Tuple snapshot fixes membership for this publication. Local callbacks provide no durable delivery guarantee.",
+          "scenarios": [
+            {
+              "id": "delivered",
+              "label": "Both subscribers run",
+              "steps": [
+                {
+                  "title": "Register subscribers",
+                  "explanation": "Badge registers before Counter. publish takes a tuple snapshot of these callbacks in registration order.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "Registered: Badge, Counter",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "First subscriber",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Second subscriber",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "subscribe first"
+                    },
+                    {
+                      "from": "2",
+                      "to": "0",
+                      "label": "subscribe second"
+                    }
+                  ]
+                },
+                {
+                  "title": "Deliver to Badge",
+                  "explanation": "A synchronous lesson-completed event calls Badge first. Badge succeeds; delivery may continue.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "lesson-completed",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "Success",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Not called yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "event"
+                    }
+                  ]
+                },
+                {
+                  "title": "Finish publication",
+                  "explanation": "Counter runs next and publication returns.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "Returns normally",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "Called once",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Called once",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "event"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "stopped",
+              "label": "First callback fails",
+              "steps": [
+                {
+                  "title": "Register subscribers",
+                  "explanation": "Badge registers before Counter. publish takes a tuple snapshot of these callbacks in registration order.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "Registered: Badge, Counter",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "First subscriber",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Second subscriber",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "subscribe first"
+                    },
+                    {
+                      "from": "2",
+                      "to": "0",
+                      "label": "subscribe second"
+                    }
+                  ]
+                },
+                {
+                  "title": "Deliver to Badge",
+                  "explanation": "A synchronous lesson-completed event calls Badge first. Badge raises ValueError; fail-fast policy stops iteration.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "lesson-completed",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "ValueError",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Not called yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "event"
+                    }
+                  ]
+                },
+                {
+                  "title": "Finish publication",
+                  "explanation": "Counter is skipped and the exception reaches the publisher caller. Registration does not guarantee delivery.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Publisher",
+                      "detail": "Propagates ValueError",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Badge",
+                      "detail": "Called once",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Counter",
+                      "detail": "Skipped",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "chain-of-responsibility",
@@ -14927,7 +19066,284 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Props move down the tree",
+          "intro": "Trace how a parent supplies data to keyed rows and how a callback requests a parent update.",
+          "scope": "A small conceptual component tree. Edges show data or callback flow, not DOM ancestry. Props are read-only; key is React's identity hint, not an ordinary child prop.",
+          "scenarios": [
+            {
+              "id": "props",
+              "label": "Parent changes a title",
+              "steps": [
+                {
+                  "title": "Render the parent data",
+                  "explanation": "App owns two records and passes each title to LessonRow. Stable record IDs are used as keys.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "Records: Types, State",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "title prop = Types",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "title prop = State",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "app",
+                      "to": "types",
+                      "label": "title='Types'"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "title='State'"
+                    }
+                  ]
+                },
+                {
+                  "title": "Replace one record",
+                  "explanation": "App creates updated data with the types record renamed to Data types. The children do not mutate their received props.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "Updated record: Data types",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "Previous title = Types",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "title prop = State",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "app",
+                      "to": "types",
+                      "label": "next title pending"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "same title"
+                    }
+                  ]
+                },
+                {
+                  "title": "Render the new props",
+                  "explanation": "The next render supplies Data types to the row with key types. The state row still receives State; the key itself is not a title prop.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "Records: Data types, State",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "title prop = Data types",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "title prop = State",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "app",
+                      "to": "types",
+                      "label": "title='Data types'"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "title='State'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "callback",
+              "label": "Child requests a change",
+              "steps": [
+                {
+                  "title": "Supply data and behavior",
+                  "explanation": "App owns completion data and supplies onComplete callbacks. The callback closes over each record ID.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "types.done = false",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "done=false; onComplete supplied",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "done=false; onComplete supplied",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "app",
+                      "to": "types",
+                      "label": "props + callback"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "props + callback"
+                    }
+                  ]
+                },
+                {
+                  "title": "Invoke the callback",
+                  "explanation": "Clicking the types row calls onComplete. App receives the intent for types; the row does not assign to props.done.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "Handles complete('types')",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "Click invokes onComplete",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "No click",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "types",
+                      "to": "app",
+                      "label": "complete('types')"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "unchanged props"
+                    }
+                  ]
+                },
+                {
+                  "title": "Parent renders new data",
+                  "explanation": "App replaces the changed record and requests a render. The types row now receives done=true; state stays incomplete.",
+                  "nodes": [
+                    {
+                      "id": "app",
+                      "label": "App",
+                      "detail": "types.done = true",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "types",
+                      "label": "LessonRow: types",
+                      "detail": "done prop = true",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "state",
+                      "label": "LessonRow: state",
+                      "detail": "done prop = false",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "app",
+                      "to": "types",
+                      "label": "done=true"
+                    },
+                    {
+                      "from": "app",
+                      "to": "state",
+                      "label": "done=false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Passing props",
+              "url": "https://react.dev/learn/passing-props-to-a-component"
+            }
+          ]
+        }
       },
       {
         "id": "state",
@@ -15101,6 +19517,315 @@ const LEARNING_PATHS = [
               "explanation": "The button now shows Sessions: 1. The previous snapshot has not been rewritten; the UI reflects the newly rendered state."
             }
           ]
+        },
+        "visual": {
+          "title": "A handler sees one snapshot",
+          "intro": "Compare repeated replacement updates with queued updater functions.",
+          "scope": "A single click handler, count starts at zero, three updates batched in that event. Diagrams distinguish the current render snapshot from pending updates; they do not describe React internals or scheduling guarantees.",
+          "scenarios": [
+            {
+              "id": "replace",
+              "label": "Three count + 1 replacements",
+              "steps": [
+                {
+                  "title": "Capture count = 0",
+                  "explanation": "This render produces a handler that reads count as zero. That value stays fixed throughout this handler.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "count = 0",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Reads count from this render",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "Empty",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 0",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "snapshot",
+                      "to": "handler",
+                      "label": "count=0"
+                    }
+                  ]
+                },
+                {
+                  "title": "Queue three replacements",
+                  "explanation": "Each setCount(count + 1) evaluates to setCount(1). Calling the setter does not change count in the current handler.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "Still count = 0",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Three calls to setCount(1)",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "Replace 1; replace 1; replace 1",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 0",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "handler",
+                      "to": "queue",
+                      "label": "queue replacements"
+                    }
+                  ]
+                },
+                {
+                  "title": "Next render shows one",
+                  "explanation": "After the event, React processes the replacements and renders count=1. Three identical replacements did not add three.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "New render: count = 1",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Old handler read 0",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "Final result = 1",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 1",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "queue",
+                      "to": "snapshot",
+                      "label": "next state"
+                    },
+                    {
+                      "from": "snapshot",
+                      "to": "screen",
+                      "label": "render"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "updater",
+              "label": "Three previous-state updaters",
+              "steps": [
+                {
+                  "title": "Start from the same zero",
+                  "explanation": "The initial snapshot and screen match the replacement scenario. Only the queued update form will differ.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "count = 0",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Reads count from this render",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "Empty",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 0",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "snapshot",
+                      "to": "handler",
+                      "label": "count=0"
+                    }
+                  ]
+                },
+                {
+                  "title": "Queue three functions",
+                  "explanation": "Each setCount(c => c + 1) queues a pure updater. Each updater receives the previous queued result rather than this handler's count.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "Still count = 0",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Three calls with c => c + 1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "0 → 1 → 2 → 3",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 0",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "handler",
+                      "to": "queue",
+                      "label": "queue updaters"
+                    }
+                  ]
+                },
+                {
+                  "title": "Next render shows three",
+                  "explanation": "The composed updater result is three. Updaters must remain pure because React may call them again during development checks.",
+                  "nodes": [
+                    {
+                      "id": "snapshot",
+                      "label": "Render snapshot",
+                      "detail": "New render: count = 3",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Click handler",
+                      "detail": "Old handler read 0",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "queue",
+                      "label": "Pending updates",
+                      "detail": "Final result = 3",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Count: 3",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "queue",
+                      "to": "snapshot",
+                      "label": "next state"
+                    },
+                    {
+                      "from": "snapshot",
+                      "to": "screen",
+                      "label": "render"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "State as a snapshot",
+              "url": "https://react.dev/learn/state-as-a-snapshot"
+            },
+            {
+              "title": "Queueing state updates",
+              "url": "https://react.dev/learn/queueing-a-series-of-state-updates"
+            }
+          ]
         }
       },
       {
@@ -15200,7 +19925,301 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Cleanup owns the connection",
+          "intro": "Trace an Effect that subscribes to the selected room as its dependency changes.",
+          "scope": "Conceptual subscription API: setup creates one connection and cleanup disconnects it. React cleans up the old Effect before setup with changed dependencies. Development Strict Mode adds a setup/cleanup check; exact timing relative to paint is omitted.",
+          "scenarios": [
+            {
+              "id": "cleanup",
+              "label": "Return the cleanup function",
+              "steps": [
+                {
+                  "title": "Set up room A",
+                  "explanation": "The committed selection A runs setup and opens connection A1. The Effect returns a function that closes A1.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "Setup A; cleanup captures A1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 open",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "Not connected",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "selection",
+                      "to": "effect",
+                      "label": "roomId=A"
+                    },
+                    {
+                      "from": "effect",
+                      "to": "roomA",
+                      "label": "connect A1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Selection changes to B",
+                  "explanation": "Before setting up B, React runs A's cleanup. A1 closes; the cleanup uses its captured connection, not the new room's connection.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "Cleanup A disconnects A1",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 closed",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "Not connected yet",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "effect",
+                      "to": "roomA",
+                      "label": "disconnect A1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Set up B and later unmount",
+                  "explanation": "Setup opens B1. When the component unmounts its returned cleanup closes B1; neither room retains an active subscription.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "B; component unmounts",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "Setup B then cleanup B",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 closed",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "B1 opened then closed",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "effect",
+                      "to": "roomB",
+                      "label": "connect then close"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "missing",
+              "label": "Omit cleanup",
+              "steps": [
+                {
+                  "title": "Set up A without cleanup",
+                  "explanation": "The Effect opens A1 but returns no disconnect function. No owner will release this connection on dependency change.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "Setup A; no cleanup",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 open",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "Not connected",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "effect",
+                      "to": "roomA",
+                      "label": "connect A1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Switch to B",
+                  "explanation": "React has no returned cleanup to call. Setup for B opens B1 while A1 remains subscribed, so old-room events can still arrive.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "Setup B; no cleanup",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 still open",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "B1 open",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "effect",
+                      "to": "roomB",
+                      "label": "connect B1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Unmount leaves resources",
+                  "explanation": "Unmount alone cannot disconnect a resource the Effect never cleans up. Both connections remain in this faulty model. Strict Mode's extra setup cycle helps expose the defect.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selected room",
+                      "detail": "Component unmounted",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "effect",
+                      "label": "Effect [roomId]",
+                      "detail": "No cleanup available",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "roomA",
+                      "label": "Room A connection",
+                      "detail": "A1 leaked",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "roomB",
+                      "label": "Room B connection",
+                      "detail": "B1 leaked",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": []
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Synchronizing with Effects",
+              "url": "https://react.dev/learn/synchronizing-with-effects"
+            }
+          ]
+        }
       },
       {
         "id": "capstone",
@@ -15581,7 +20600,317 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "visual": {
+          "title": "An old response must not win",
+          "intro": "Resolve request B before A to reveal why arrival order cannot decide what the screen shows.",
+          "scope": "Controlled promises model a fetch adapter that ignores AbortSignal. Cleanup marks A inactive and requests abort; the active flag guards state commits even if A still settles. This is a trace, not a network benchmark or a production test.",
+          "scenarios": [
+            {
+              "id": "unguarded",
+              "label": "Commit every arriving result",
+              "steps": [
+                {
+                  "title": "Select A and start loading",
+                  "explanation": "The screen selects A and request A starts. Its completion callback will always update the view.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "Pending",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Not started",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading A; loading",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "selection",
+                      "to": "reqA",
+                      "label": "start A"
+                    }
+                  ]
+                },
+                {
+                  "title": "Select B; B resolves first",
+                  "explanation": "Selection changes to B and B returns data first. The screen briefly shows the correct B data, while A is still pending.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "Still pending",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Resolved data B",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading B; data B",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "selection",
+                      "to": "reqB",
+                      "label": "start B"
+                    },
+                    {
+                      "from": "reqB",
+                      "to": "screen",
+                      "label": "commit B"
+                    }
+                  ]
+                },
+                {
+                  "title": "A arrives late",
+                  "explanation": "A's obsolete callback overwrites the view. The heading still says B but the body shows A: a stale-result bug.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "Resolved data A",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Already resolved B",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading B; data A",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "reqA",
+                      "to": "screen",
+                      "label": "stale overwrite"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "guarded",
+              "label": "Cleanup guards the commit",
+              "steps": [
+                {
+                  "title": "Select A with an active flag",
+                  "explanation": "A's Effect instance starts with active=true. Its callbacks may commit only while that flag remains true.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "A",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "Pending; active=true",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Not started",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading A; loading",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "selection",
+                      "to": "reqA",
+                      "label": "start A"
+                    }
+                  ]
+                },
+                {
+                  "title": "Cleanup A; resolve B",
+                  "explanation": "Changing to B runs A's cleanup: active=false and abort requested. B has its own active flag, resolves, and commits B data.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "active=false; abort requested",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Resolved B; active=true",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading B; data B",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "selection",
+                      "to": "reqA",
+                      "label": "cleanup A"
+                    },
+                    {
+                      "from": "reqB",
+                      "to": "screen",
+                      "label": "commit B"
+                    }
+                  ]
+                },
+                {
+                  "title": "Late A is ignored",
+                  "explanation": "The adapter ignores abort and A still resolves. Its callback sees active=false and skips setView, preserving B. A late failure is ignored by the same guard.",
+                  "nodes": [
+                    {
+                      "id": "selection",
+                      "label": "Selection",
+                      "detail": "B",
+                      "x": 30,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "reqA",
+                      "label": "Request A",
+                      "detail": "Resolved A; commit skipped",
+                      "x": 390,
+                      "y": 45,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "reqB",
+                      "label": "Request B",
+                      "detail": "Resolved B; still current",
+                      "x": 750,
+                      "y": 45,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "screen",
+                      "label": "Screen",
+                      "detail": "Heading B; data B",
+                      "x": 30,
+                      "y": 265,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "reqA",
+                      "to": "screen",
+                      "label": "blocked by flag"
+                    },
+                    {
+                      "from": "reqB",
+                      "to": "screen",
+                      "label": "B remains visible"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Effect fetching and cleanup",
+              "url": "https://react.dev/learn/synchronizing-with-effects"
+            }
+          ]
+        }
       },
       {
         "id": "routing",
@@ -16702,7 +22031,379 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "visual": {
+          "title": "Reconcile two desired replicas",
+          "intro": "Observe how desired state survives the loss of a particular Pod.",
+          "scope": "Illustrated API/controller snapshots, not live cluster evidence. replicas=2; replacement requires capacity, image availability and passing readiness. Reconciliation has no fixed completion time.",
+          "scenarios": [
+            {
+              "id": "replacement",
+              "label": "Replacement becomes ready",
+              "steps": [
+                {
+                  "title": "Two replicas ready",
+                  "explanation": "The Deployment manages a ReplicaSet whose desired count is two. Pod identity is disposable; replicas does not replicate application data.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired replicas=2",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Current=2; ready=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready; identity A",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "Ready; identity B",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "rs",
+                      "label": "desired count 2"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "a",
+                      "label": "owns"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "b",
+                      "label": "owns"
+                    }
+                  ]
+                },
+                {
+                  "title": "Pod B is lost",
+                  "explanation": "Once deletion/loss is observed, the ReplicaSet creates Pod C. Current count can return to two before availability does; C still needs scheduling, startup and readiness.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired still 2",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Current=2; ready=1",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "Deleted; no longer counted",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "c",
+                      "label": "Pod C",
+                      "detail": "New identity; starting",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "rs",
+                      "label": "desired count 2"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "a",
+                      "label": "owns"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "c",
+                      "label": "creates replacement"
+                    }
+                  ]
+                },
+                {
+                  "title": "New identity serves",
+                  "explanation": "Pod C passes readiness, returning the modeled ready count to two. It does not inherit B's in-memory or scratch files merely because the controller replaced B.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired=2; available=2",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Current=2; ready=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "Gone",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "c",
+                      "label": "Pod C",
+                      "detail": "Ready; new identity C",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "rs",
+                      "to": "a",
+                      "label": "owns"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "c",
+                      "label": "owns"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "pending",
+              "label": "Replacement cannot schedule",
+              "steps": [
+                {
+                  "title": "Loss creates a gap",
+                  "explanation": "Pod B is deleted while A remains ready. The controller observes desired=2 and creates C.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired replicas=2",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Ready=1; replacement requested",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "c",
+                      "label": "Pod C",
+                      "detail": "Created",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "rs",
+                      "label": "desired count 2"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "a",
+                      "label": "owns"
+                    },
+                    {
+                      "from": "rs",
+                      "to": "c",
+                      "label": "creates"
+                    }
+                  ]
+                },
+                {
+                  "title": "Insufficient capacity",
+                  "explanation": "C requests 500m CPU, but eligible nodes have only 300m allocatable headroom for this request. The scheduler leaves C Pending in this simplified capacity example.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired=2; available=1",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Current=2; ready=1",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "c",
+                      "label": "Pod C",
+                      "detail": "Pending; requests 500m",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "node",
+                      "label": "Eligible node",
+                      "detail": "Only 300m CPU headroom",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "rs",
+                      "to": "c",
+                      "label": "owns pending Pod"
+                    },
+                    {
+                      "from": "c",
+                      "to": "node",
+                      "label": "cannot fit request"
+                    }
+                  ]
+                },
+                {
+                  "title": "Correct the constraint",
+                  "explanation": "Add suitable capacity or review legitimate requests. A controller cannot manufacture resources. After capacity exists C can schedule, but readiness remains a separate check.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired remains 2",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "rs",
+                      "label": "ReplicaSet",
+                      "detail": "Ready still 1 until startup",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "c",
+                      "label": "Pod C",
+                      "detail": "Scheduled; readiness pending",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "node",
+                      "label": "Eligible node",
+                      "detail": "500m available",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "rs",
+                      "to": "c",
+                      "label": "owns"
+                    },
+                    {
+                      "from": "c",
+                      "to": "node",
+                      "label": "scheduled"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Kubernetes Deployments",
+              "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+            }
+          ]
+        }
       },
       {
         "id": "services-dns",
@@ -16751,7 +22452,410 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "visual": {
+          "title": "Select and route ready endpoints",
+          "intro": "Keep name resolution, selector matching and readiness separate.",
+          "scope": "Illustrated normal ClusterIP Service with publishNotReadyAddresses=false, selector app=release-demo, port 80 -> named targetPort http=8080. Existing connections and propagation are omitted; no live routing proof.",
+          "scenarios": [
+            {
+              "id": "ready",
+              "label": "Readiness changes routing",
+              "steps": [
+                {
+                  "title": "Name resolves to Service",
+                  "explanation": "A client in the namespace resolves release-demo to its ClusterIP. DNS identifies the Service, not a guarantee that a backend exists.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "GET release-demo:80",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "ClusterIP 10.96.0.20",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "A ready; B ready",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "app=release-demo; ready",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "app=release-demo; ready",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "svc",
+                      "label": "DNS -> ClusterIP"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "selected endpoints"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "a",
+                      "label": "eligible :8080"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "b",
+                      "label": "eligible :8080"
+                    }
+                  ]
+                },
+                {
+                  "title": "B fails readiness",
+                  "explanation": "B's process still runs, but readiness fails. After endpoint state propagates, normal new Service traffic uses A; readiness failure alone is not a liveness restart.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "New connection",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Same IP and name",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "A ready; B not ready",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "Running; not ready",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "svc",
+                      "label": "request :80"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "consult endpoints"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "a",
+                      "label": "route to :8080"
+                    }
+                  ]
+                },
+                {
+                  "title": "B returns ready",
+                  "explanation": "After B passes readiness and the endpoint update propagates, both Pods are eligible again. The diagram does not assert an exact traffic split.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "New requests",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Same IP and name",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "2 ready endpoints",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "Ready",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "Ready again",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "svc",
+                      "label": "request :80"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "ready endpoints"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "a",
+                      "label": "eligible :8080"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "b",
+                      "label": "eligible :8080"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "selector",
+              "label": "Wrong selector yields no backend",
+              "steps": [
+                {
+                  "title": "Healthy Pods, wrong label",
+                  "explanation": "The Service selects app=release-demo, but both running Pods carry app=demo. Healthy processes do not satisfy the selector.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "Name resolves",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "selector app=release-demo",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "0 matching ready endpoints",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "app=demo; ready",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "app=demo; ready",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "svc",
+                      "label": "DNS succeeds"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "selector has no match"
+                    }
+                  ]
+                },
+                {
+                  "title": "Diagnose boundary",
+                  "explanation": "Compare Service selector with Pod labels and EndpointSlices. DNS success plus zero selected endpoints points to a backend-selection problem in this example.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "Connection cannot serve app",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "app=release-demo required",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "Ready endpoints=0",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "app=demo mismatch",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "app=demo mismatch",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "inspect selected set"
+                    }
+                  ]
+                },
+                {
+                  "title": "Align intended labels",
+                  "explanation": "Correct the workload template labels while preserving its Deployment selector contract. Once matching ready Pods exist, endpoint updates make normal Service routing possible.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Client",
+                      "detail": "New request can route",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "selector app=release-demo",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "slice",
+                      "label": "EndpointSlice",
+                      "detail": "2 matching ready endpoints",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "a",
+                      "label": "Pod A",
+                      "detail": "app=release-demo; ready",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    },
+                    {
+                      "id": "b",
+                      "label": "Pod B",
+                      "detail": "app=release-demo; ready",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "svc",
+                      "label": "request :80"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "slice",
+                      "label": "matching endpoints"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "a",
+                      "label": "eligible :8080"
+                    },
+                    {
+                      "from": "slice",
+                      "to": "b",
+                      "label": "eligible :8080"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Kubernetes Services",
+              "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+            }
+          ]
+        }
       },
       {
         "id": "configmaps",
@@ -16996,7 +23100,357 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "visual": {
+          "title": "Roll out without deleting healthy capacity",
+          "intro": "Compare a ready candidate with a rollout stalled by failed readiness.",
+          "scope": "Illustrated replicas=2, maxSurge=1, maxUnavailable=0, minReadySeconds=0, progressDeadlineSeconds=60. Count bound concerns non-terminating Pods; terminating Pods can temporarily add resource use. No real rollout is claimed.",
+          "scenarios": [
+            {
+              "id": "healthy",
+              "label": "Healthy v2 rollout",
+              "steps": [
+                {
+                  "title": "Create one candidate",
+                  "explanation": "Changing the image in the Pod template creates a new ReplicaSet. Two v1 Pods stay ready while one v2 candidate starts; capacity must fit the surge.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Desired 2; surge 1",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "v1 ready=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "v2 ready=0; total=1",
+                      "tone": "active",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Routes to 2 ready v1 Pods",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "old",
+                      "label": "retain availability"
+                    },
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "scale to 1"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "old",
+                      "label": "ready traffic"
+                    }
+                  ]
+                },
+                {
+                  "title": "Candidate ready",
+                  "explanation": "Once v2 is available, the controller may reduce old replicas to one and grow new replicas to two. The second candidate still needs readiness.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Available at least 2",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "v1 ready=1",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "v2 ready=1; starting=1",
+                      "tone": "active",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Routes to ready v1 and v2",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "old",
+                      "label": "scale down to 1"
+                    },
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "scale up to 2"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "old",
+                      "label": "ready traffic"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "new",
+                      "label": "ready traffic"
+                    }
+                  ]
+                },
+                {
+                  "title": "Finish v2",
+                  "explanation": "When both v2 Pods are available the old ReplicaSet scales to zero. Compatibility must hold while versions coexist; readiness alone does not verify business correctness.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Updated=2; available=2",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "v1 replicas=0",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "v2 ready=2",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Ready v2 endpoints=2",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "old",
+                      "label": "scale to 0"
+                    },
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "desired 2"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "new",
+                      "label": "ready traffic"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "stalled",
+              "label": "Candidate never becomes ready",
+              "steps": [
+                {
+                  "title": "Candidate fails probe",
+                  "explanation": "Two v1 Pods remain ready and one v2 Pod runs but fails readiness. With maxUnavailable=0, losing an available old replica would violate the rollout budget.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Available=2; updated=1",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "v1 ready=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "v2 running; not ready",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Only old Pods eligible",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "candidate exists"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "old",
+                      "label": "ready traffic"
+                    }
+                  ]
+                },
+                {
+                  "title": "Deadline reports stall",
+                  "explanation": "After the configured 60-second period without rollout progress, the Deployment reports ProgressDeadlineExceeded. Kubernetes does not automatically undo the template change.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "ProgressDeadlineExceeded",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "v1 ready=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "v2 ready=0",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Still old ready endpoints",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "inspect events/probes"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "old",
+                      "label": "ready traffic"
+                    }
+                  ]
+                },
+                {
+                  "title": "Choose recovery",
+                  "explanation": "Inspect probe/config/image evidence, then apply a fix or explicitly restore a known template. Here the operator chooses v1; wait for rollout status and validate the actual application.",
+                  "nodes": [
+                    {
+                      "id": "deploy",
+                      "label": "Deployment",
+                      "detail": "Operator restores v1 template",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "old",
+                      "label": "Old ReplicaSet",
+                      "detail": "Known v1 desired=2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "new",
+                      "label": "New ReplicaSet",
+                      "detail": "Failed v2 scales down",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "svc",
+                      "label": "Service",
+                      "detail": "Validate version and behavior",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 285
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "deploy",
+                      "to": "old",
+                      "label": "explicit recovery"
+                    },
+                    {
+                      "from": "deploy",
+                      "to": "new",
+                      "label": "reduce failed version"
+                    },
+                    {
+                      "from": "svc",
+                      "to": "old",
+                      "label": "ready traffic"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Kubernetes Deployments",
+              "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+            }
+          ]
+        }
       },
       {
         "id": "scheduling",
@@ -22357,6 +28811,434 @@ const LEARNING_PATHS = [
               "explanation": "100 + 100 exaggerates sales. If the required output is one row per order, first aggregate payments by OrderId, then join that one-row-per-order result."
             }
           ]
+        },
+        "visual": {
+          "title": "Join rows and preserve grain",
+          "intro": "Compare INNER and LEFT on real rows, then see why summing repeated parent values is wrong.",
+          "scope": "Two-order subset of setup.sql; zero in the corrected report explicitly means no payment after COALESCE.",
+          "scenarios": [
+            {
+              "id": "inner",
+              "label": "INNER JOIN",
+              "steps": [
+                {
+                  "title": "Choose the row grain",
+                  "explanation": "This subset of the course fixture has two orders and two payments. The join predicate is Orders.OrderId = Payments.OrderId.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Orders",
+                      "detail": "101: 100; 104: 120",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Payments",
+                      "detail": "201: 60; 202: 40",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Join operator",
+                      "detail": "INNER",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "left input"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "right input"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Orders input: one row per order",
+                      "columns": [
+                        "OrderId",
+                        "Amount"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100"
+                        ],
+                        [
+                          "104",
+                          "120"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Payments input: one row per payment",
+                      "columns": [
+                        "PaymentId",
+                        "OrderId",
+                        "Amount"
+                      ],
+                      "rows": [
+                        [
+                          "201",
+                          "101",
+                          "60"
+                        ],
+                        [
+                          "202",
+                          "101",
+                          "40"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Match each payment",
+                  "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and is omitted.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Order 101",
+                      "detail": "Two matching payment rows",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Order 104",
+                      "detail": "No result row",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Joined rows",
+                      "detail": "2 rows",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "two matches"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Joined result",
+                      "columns": [
+                        "OrderId",
+                        "OrderAmount",
+                        "PaymentId",
+                        "PaymentAmount"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100",
+                          "201",
+                          "60"
+                        ],
+                        [
+                          "101",
+                          "100",
+                          "202",
+                          "40"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Audit the totals",
+                  "explanation": "SUM(OrderAmount) is 200, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Joined order total",
+                      "detail": "200 = 100 + 100",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Input order total",
+                      "detail": "220 = 100 + 120",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Payment total",
+                      "detail": "100 = 60 + 40",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Correct order-grain LEFT report",
+                      "columns": [
+                        "OrderId",
+                        "OrderAmount",
+                        "Paid"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100",
+                          "100"
+                        ],
+                        [
+                          "104",
+                          "120",
+                          "0"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "left",
+              "label": "LEFT JOIN",
+              "steps": [
+                {
+                  "title": "Choose the row grain",
+                  "explanation": "This subset of the course fixture has two orders and two payments. The join predicate is Orders.OrderId = Payments.OrderId.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Orders",
+                      "detail": "101: 100; 104: 120",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Payments",
+                      "detail": "201: 60; 202: 40",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Join operator",
+                      "detail": "LEFT",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "left input"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "right input"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Orders input: one row per order",
+                      "columns": [
+                        "OrderId",
+                        "Amount"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100"
+                        ],
+                        [
+                          "104",
+                          "120"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Payments input: one row per payment",
+                      "columns": [
+                        "PaymentId",
+                        "OrderId",
+                        "Amount"
+                      ],
+                      "rows": [
+                        [
+                          "201",
+                          "101",
+                          "60"
+                        ],
+                        [
+                          "202",
+                          "101",
+                          "40"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Match each payment",
+                  "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and gains one NULL-extended row.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Order 101",
+                      "detail": "Two matching payment rows",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Order 104",
+                      "detail": "Preserved with NULLs",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Joined rows",
+                      "detail": "3 rows",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "two matches"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "NULL extension"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Joined result",
+                      "columns": [
+                        "OrderId",
+                        "OrderAmount",
+                        "PaymentId",
+                        "PaymentAmount"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100",
+                          "201",
+                          "60"
+                        ],
+                        [
+                          "101",
+                          "100",
+                          "202",
+                          "40"
+                        ],
+                        [
+                          "104",
+                          "120",
+                          "NULL",
+                          "NULL"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Audit the totals",
+                  "explanation": "SUM(OrderAmount) is 320, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Joined order total",
+                      "detail": "320 = 100 + 100 + 120",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Input order total",
+                      "detail": "220 = 100 + 120",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Payment total",
+                      "detail": "100 = 60 + 40",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Correct order-grain LEFT report",
+                      "columns": [
+                        "OrderId",
+                        "OrderAmount",
+                        "Paid"
+                      ],
+                      "rows": [
+                        [
+                          "101",
+                          "100",
+                          "100"
+                        ],
+                        [
+                          "104",
+                          "120",
+                          "0"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Microsoft: logical and physical joins",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17"
+            }
+          ]
         }
       },
       {
@@ -22875,7 +29757,308 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Seek and scan are workload choices",
+          "intro": "Compare selective and broad predicates with the same covering index.",
+          "scope": "Invented page layout; leaf visits omit cache, read-ahead, CPU, tree details and writes. No elapsed-time prediction or guaranteed optimizer choice. The course five-row fixture cannot demonstrate a speedup.",
+          "scenarios": [
+            {
+              "id": "selective",
+              "label": "Selective covered query",
+              "steps": [
+                {
+                  "title": "Set the workload",
+                  "explanation": "This invented table has 100,000 orders. Its covering index has 1,000 leaf pages and stores CustomerId, OrderDate and Amount. Counts illustrate work, not measured SQL Server costs.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Predicate",
+                      "detail": "CustomerId = 2",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Covering index",
+                      "detail": "CustomerId, OrderDate; INCLUDE Amount",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Table",
+                      "detail": "100,000 rows; index has 1,000 leaf pages",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "candidate access"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare candidate work",
+                  "explanation": "The selective customer has 20 rows on two index leaf pages. The model counts three internal navigation visits plus two leaf visits; a full index scan visits all 1,000 leaves.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Seek candidate",
+                      "detail": "3 navigation + 2 leaf visits",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Scan candidate",
+                      "detail": "1,000 leaf visits",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Qualifying rows",
+                      "detail": "20 rows",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "retrieve matches"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "filter or return"
+                    }
+                  ]
+                },
+                {
+                  "title": "Inspect an actual plan",
+                  "explanation": "A covered selective seek can avoid scanning unrelated rows; this model favors that access path. Verify estimates, actual rows and logical reads on representative data.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Plan evidence",
+                      "detail": "Actual vs estimated row counts",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Modeled access",
+                      "detail": "Seek selective range",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Correctness",
+                      "detail": "Same required rows and values",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "preserve results"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Bounded model comparison",
+                      "columns": [
+                        "Access",
+                        "Qualifying rows",
+                        "Leaf visits"
+                      ],
+                      "rows": [
+                        [
+                          "Seek",
+                          "20",
+                          "2"
+                        ],
+                        [
+                          "Scan",
+                          "20",
+                          "1000"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "broad",
+              "label": "Broad query",
+              "steps": [
+                {
+                  "title": "Set the workload",
+                  "explanation": "This invented table has 100,000 orders. Its covering index has 1,000 leaf pages and stores CustomerId, OrderDate and Amount. Counts illustrate work, not measured SQL Server costs.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Predicate",
+                      "detail": "All customers",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Covering index",
+                      "detail": "CustomerId, OrderDate; INCLUDE Amount",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Table",
+                      "detail": "100,000 rows; index has 1,000 leaf pages",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "candidate access"
+                    }
+                  ]
+                },
+                {
+                  "title": "Compare candidate work",
+                  "explanation": "All 100,000 rows qualify. A scan reads 1,000 leaf pages sequentially; a seek with an unbounded range still visits all qualifying leaves.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Seek candidate",
+                      "detail": "Navigation + all 1,000 leaves",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Scan candidate",
+                      "detail": "1,000 leaf visits",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Qualifying rows",
+                      "detail": "100,000 rows",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "2",
+                      "label": "retrieve matches"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "filter or return"
+                    }
+                  ]
+                },
+                {
+                  "title": "Inspect an actual plan",
+                  "explanation": "A broad scan can be sensible. Operator names alone do not establish quality: inspect total work, estimates, actual rows and logical reads before tuning.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Plan evidence",
+                      "detail": "Actual vs estimated row counts",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Modeled access",
+                      "detail": "Scan broad range",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Correctness",
+                      "detail": "Same required rows and values",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "preserve results"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Bounded model comparison",
+                      "columns": [
+                        "Access",
+                        "Qualifying rows",
+                        "Leaf visits"
+                      ],
+                      "rows": [
+                        [
+                          "Seek",
+                          "100000",
+                          "1000"
+                        ],
+                        [
+                          "Scan",
+                          "100000",
+                          "1000"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Microsoft: index architecture and design",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide?view=sql-server-ver17"
+            }
+          ]
+        }
       },
       {
         "id": "reconciliation-capstone",
@@ -23467,7 +30650,338 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Two sessions, one stale decision",
+          "intro": "Compare blind replacement with an expected-revision predicate.",
+          "scope": "Teaching schedule: separate READ COMMITTED statements, no lock held across the read/write gap; RCSI either OFF or ON yields these committed reads. Not SNAPSHOT transactions. Integer Revision is maintained by both writers; no engine execution claim.",
+          "scenarios": [
+            {
+              "id": "blind",
+              "label": "Blind replacement",
+              "steps": [
+                {
+                  "title": "Both sessions read",
+                  "explanation": "At t1 A reads 100/revision 1; at t2 B reads the same committed state. Reads finish before either UPDATE. A chooses 110 and B chooses 120.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "t1: read 100, revision 1",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 100; Revision 1",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "t2: read 100, revision 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "committed read"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "committed read"
+                    }
+                  ]
+                },
+                {
+                  "title": "A updates and commits",
+                  "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Id=1 matches one row.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "t3: UPDATE; COMMIT",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 110; Revision 2",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "Still holds 100, revision 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "one row changed"
+                    }
+                  ]
+                },
+                {
+                  "title": "B attempts stale write",
+                  "explanation": "At t4 B uses WHERE Id=1: one row changes and commits 120/revision 3. A's replacement 110 is overwritten.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "Committed 110",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 120; Revision 3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "1 row: overwrite",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "stale replacement"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Observed schedule",
+                      "columns": [
+                        "Time",
+                        "A",
+                        "B",
+                        "Stored amount/rev"
+                      ],
+                      "rows": [
+                        [
+                          "t1",
+                          "Read 100/1",
+                          "Idle",
+                          "100/1"
+                        ],
+                        [
+                          "t2",
+                          "Idle",
+                          "Read 100/1",
+                          "100/1"
+                        ],
+                        [
+                          "t3",
+                          "Commit 110/2",
+                          "Idle",
+                          "110/2"
+                        ],
+                        [
+                          "t4",
+                          "Idle",
+                          "Commit 120/3",
+                          "120/3"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "guarded",
+              "label": "Check expected revision",
+              "steps": [
+                {
+                  "title": "Both sessions read",
+                  "explanation": "At t1 A reads 100/revision 1; at t2 B reads the same committed state. Reads finish before either UPDATE. A chooses 110 and B chooses 120.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "t1: read 100, revision 1",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 100; Revision 1",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "t2: read 100, revision 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "active"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "1",
+                      "to": "0",
+                      "label": "committed read"
+                    },
+                    {
+                      "from": "1",
+                      "to": "2",
+                      "label": "committed read"
+                    }
+                  ]
+                },
+                {
+                  "title": "A updates and commits",
+                  "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Revision=1 matches one row.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "t3: UPDATE; COMMIT",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 110; Revision 2",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "Still holds 100, revision 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "0",
+                      "to": "1",
+                      "label": "one row changed"
+                    }
+                  ]
+                },
+                {
+                  "title": "B attempts stale write",
+                  "explanation": "At t4 B uses WHERE Id=1 AND Revision=1: zero rows change. Reload and resolve the conflict; do not blindly repeat the stale decision.",
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "label": "Session A",
+                      "detail": "Committed 110",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "1",
+                      "label": "Shared row",
+                      "detail": "Amount 110; Revision 2",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "2",
+                      "label": "Session B",
+                      "detail": "0 rows: conflict",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "2",
+                      "to": "1",
+                      "label": "rejected"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Observed schedule",
+                      "columns": [
+                        "Time",
+                        "A",
+                        "B",
+                        "Stored amount/rev"
+                      ],
+                      "rows": [
+                        [
+                          "t1",
+                          "Read 100/1",
+                          "Idle",
+                          "100/1"
+                        ],
+                        [
+                          "t2",
+                          "Idle",
+                          "Read 100/1",
+                          "100/1"
+                        ],
+                        [
+                          "t3",
+                          "Commit 110/2",
+                          "Idle",
+                          "110/2"
+                        ],
+                        [
+                          "t4",
+                          "Idle",
+                          "0 rows",
+                          "110/2"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Microsoft: isolation and modification locks",
+              "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17"
+            }
+          ]
+        }
       },
       {
         "id": "deadlocks-retries",
@@ -24542,7 +32056,294 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Trace one HTTPS request",
+          "intro": "Follow the request and distinguish transport success from a saved user operation.",
+          "scope": "Hypothetical progress API; timings are chosen examples, not measurements. Existing HTTPS connection, no DNS cache, 500 ms caller deadline.",
+          "scenarios": [
+            {
+              "id": "saved",
+              "label": "Response arrives",
+              "steps": [
+                {
+                  "title": "Resolve and connect",
+                  "explanation": "DNS supplies an address; certificate validation authenticates the HTTPS endpoint. Neither proves this learner may write a progress record.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "t=0 ms; deadline 500 ms",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "dns",
+                      "label": "DNS resolver",
+                      "detail": "api.example.test -> 192.0.2.10",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "edge",
+                      "label": "HTTPS endpoint",
+                      "detail": "Certificate valid; request pending",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "dns",
+                      "label": "resolve name"
+                    },
+                    {
+                      "from": "dns",
+                      "to": "client",
+                      "label": "address"
+                    },
+                    {
+                      "from": "client",
+                      "to": "edge",
+                      "label": "HTTPS"
+                    }
+                  ]
+                },
+                {
+                  "title": "Authorize and commit",
+                  "explanation": "At 120 ms the API authenticates the learner and checks record ownership. At 180 ms a transaction commits version 8.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "Waiting; 320 ms remain",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API",
+                      "detail": "Owner check passed",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "db",
+                      "label": "Database",
+                      "detail": "Lesson done=true; version 8",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "api",
+                      "label": "PUT progress"
+                    },
+                    {
+                      "from": "api",
+                      "to": "db",
+                      "label": "transaction"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return the outcome",
+                  "explanation": "At 220 ms the browser receives 200 with version 8. A transport connection alone was never the completion criterion.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "200 received at 220 ms",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API",
+                      "detail": "Committed result returned",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "db",
+                      "label": "Database",
+                      "detail": "Version 8 durable",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "db",
+                      "to": "api",
+                      "label": "committed"
+                    },
+                    {
+                      "from": "api",
+                      "to": "client",
+                      "label": "200; version 8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "lost-response",
+              "label": "Commit, then response loss",
+              "steps": [
+                {
+                  "title": "Request accepted",
+                  "explanation": "The same write starts with a 500 ms deadline. The server has received it; the browser cannot yet infer a commit.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "Waiting for PUT outcome",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API",
+                      "detail": "Authorized; write in progress",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "db",
+                      "label": "Database",
+                      "detail": "Version 7",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "api",
+                      "label": "PUT progress"
+                    },
+                    {
+                      "from": "api",
+                      "to": "db",
+                      "label": "transaction"
+                    }
+                  ]
+                },
+                {
+                  "title": "Commit survives reply loss",
+                  "explanation": "Version 8 commits at 180 ms, but a connection failure prevents delivery of the response. Timeout is an uncertain outcome, not evidence of rollback.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "No response received",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API",
+                      "detail": "200 reply lost",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "db",
+                      "label": "Database",
+                      "detail": "Version 8 committed",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "api",
+                      "to": "db",
+                      "label": "commit version 8"
+                    },
+                    {
+                      "from": "api",
+                      "to": "client",
+                      "label": "reply lost"
+                    }
+                  ]
+                },
+                {
+                  "title": "Resolve uncertainty",
+                  "explanation": "At 500 ms stop waiting. An authorized follow-up read returns version 8; conflicting edits still require version checks. No blind claim that the write failed.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Browser",
+                      "detail": "Reads current state",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API",
+                      "detail": "GET checks ownership",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "db",
+                      "label": "Database",
+                      "detail": "Version 8; done=true",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "api",
+                      "label": "GET progress"
+                    },
+                    {
+                      "from": "api",
+                      "to": "db",
+                      "label": "read current"
+                    },
+                    {
+                      "from": "api",
+                      "to": "client",
+                      "label": "version 8"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "HTTP semantics",
+              "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
+            }
+          ]
+        }
       },
       {
         "id": "api-contracts",
@@ -24913,7 +32714,269 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Acknowledge only after durable work",
+          "intro": "Compare a completed export with a worker crash after its effect.",
+          "scope": "Hypothetical at-least-once queue; job J42 has a stable identity. Job status and output reference share one transaction; output generation must be safely repeatable.",
+          "scenarios": [
+            {
+              "id": "ack",
+              "label": "Normal completion",
+              "steps": [
+                {
+                  "title": "Deliver J42",
+                  "explanation": "A durable queue delivers J42; an unacknowledged delivery may be sent again after the visibility window.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 delivered; not acknowledged",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "Worker",
+                      "detail": "Owns temporary delivery lease",
+                      "tone": "neutral",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "J42 pending; outputs=0",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "queue",
+                      "to": "worker",
+                      "label": "deliver J42"
+                    }
+                  ]
+                },
+                {
+                  "title": "Commit result",
+                  "explanation": "The worker creates a deterministic output and atomically stores J42=complete with its reference. External email or payments would need their own duplicate protection.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 still unacknowledged",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "Worker",
+                      "detail": "Export ready",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "J42 complete; outputs=1",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "worker",
+                      "to": "store",
+                      "label": "commit J42 result"
+                    }
+                  ]
+                },
+                {
+                  "title": "Acknowledge",
+                  "explanation": "Only after the durable result exists does the worker acknowledge. The queue can retire this delivery.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 acknowledged",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "Worker",
+                      "detail": "No further effect needed",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "J42 complete; outputs=1",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "worker",
+                      "to": "queue",
+                      "label": "ack J42"
+                    },
+                    {
+                      "from": "worker",
+                      "to": "store",
+                      "label": "result retained"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "duplicate",
+              "label": "Crash before acknowledgment",
+              "steps": [
+                {
+                  "title": "Effect committed",
+                  "explanation": "The first worker commits J42 with one output, then crashes before acknowledging. Queue delivery and application transaction are separate boundaries.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 not acknowledged",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "Worker",
+                      "detail": "Crash after commit",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "J42 complete; outputs=1",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "worker",
+                      "to": "store",
+                      "label": "commit complete"
+                    }
+                  ]
+                },
+                {
+                  "title": "Redelivery",
+                  "explanation": "After the chosen 30-second visibility window, J42 is delivered again. The replacement worker checks durable identity before applying effects.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 delivered again",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "New worker",
+                      "detail": "Check job J42 first",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "Existing J42 result",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "queue",
+                      "to": "worker",
+                      "label": "redeliver J42"
+                    },
+                    {
+                      "from": "worker",
+                      "to": "store",
+                      "label": "lookup J42"
+                    }
+                  ]
+                },
+                {
+                  "title": "Reuse and acknowledge",
+                  "explanation": "The worker reuses the existing result and acknowledges. Unique identity plus atomic state prevents a second result in this model; it does not promise exactly-once external effects.",
+                  "nodes": [
+                    {
+                      "id": "queue",
+                      "label": "Queue",
+                      "detail": "J42 acknowledged",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "worker",
+                      "label": "New worker",
+                      "detail": "Reuse recorded result",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "store",
+                      "label": "Job store",
+                      "detail": "outputs remains 1",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "store",
+                      "to": "worker",
+                      "label": "existing result"
+                    },
+                    {
+                      "from": "worker",
+                      "to": "queue",
+                      "label": "ack J42"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Competing consumers",
+              "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
+            }
+          ]
+        }
       },
       {
         "id": "replication",
@@ -25418,7 +33481,287 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Spend a finite retry budget",
+          "intro": "A transient error can recover; persistent failure must stop consuming capacity.",
+          "scope": "Chosen model: 600 ms end-to-end deadline, at most 3 attempts, each capped at 150 ms, waits 50 ms then 100 ms. Retry only safe operations; connection/setup time must fit the same deadline.",
+          "scenarios": [
+            {
+              "id": "recovered",
+              "label": "Second attempt succeeds",
+              "steps": [
+                {
+                  "title": "First attempt fails",
+                  "explanation": "The API is the only retry owner. The dependency returns a retryable failure at 150 ms; the browser does not independently multiply attempts.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "Deadline 600 ms",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "Attempt 1/3; t=150 ms",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "Retryable transient error",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "client",
+                      "to": "api",
+                      "label": "one logical call"
+                    },
+                    {
+                      "from": "api",
+                      "to": "dep",
+                      "label": "attempt 1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Back off once",
+                  "explanation": "Wait 50 ms. At t=200 ms the second attempt starts with 400 ms left. This illustrated wait is one sampled jitter value, not a global synchronized schedule.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "400 ms budget left",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "Attempt 2/3 starts",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "Recovering",
+                      "tone": "active",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "api",
+                      "to": "dep",
+                      "label": "attempt 2"
+                    }
+                  ]
+                },
+                {
+                  "title": "Return success",
+                  "explanation": "Attempt 2 completes in 80 ms. Total modeled elapsed time is 280 ms; no third attempt is needed.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "Success at t=280 ms",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "Attempts used: 2",
+                      "tone": "success",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "Response delivered",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "dep",
+                      "to": "api",
+                      "label": "success in 80 ms"
+                    },
+                    {
+                      "from": "api",
+                      "to": "client",
+                      "label": "success"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "exhausted",
+              "label": "Persistent failure stops",
+              "steps": [
+                {
+                  "title": "Two failures",
+                  "explanation": "Attempt 1 uses 150 ms, then wait 50 ms; attempt 2 uses 150 ms. At t=350 ms there are 250 ms left.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "250 ms remaining",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "2 attempts failed",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "Still unavailable",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "api",
+                      "to": "dep",
+                      "label": "attempts 1 and 2"
+                    }
+                  ]
+                },
+                {
+                  "title": "Final bounded attempt",
+                  "explanation": "Wait 100 ms, then attempt 3 starts at t=450 ms. Its timeout is min(150 ms, remaining 150 ms). No nested retry layer is allowed in this model.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "150 ms remaining",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "Final attempt 3/3",
+                      "tone": "active",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "150 ms timeout cap",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "api",
+                      "to": "dep",
+                      "label": "attempt 3"
+                    }
+                  ]
+                },
+                {
+                  "title": "Stop at deadline",
+                  "explanation": "At 600 ms the final attempt times out. Return a controlled failure and release the concurrency slot; cancellation cannot guarantee the dependency never applied an effect.",
+                  "nodes": [
+                    {
+                      "id": "client",
+                      "label": "Caller",
+                      "detail": "Controlled failure at 600 ms",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "api",
+                      "label": "API retry owner",
+                      "detail": "Retry budget exhausted",
+                      "tone": "warning",
+                      "x": 390,
+                      "y": 35
+                    },
+                    {
+                      "id": "dep",
+                      "label": "Dependency",
+                      "detail": "Outcome may be uncertain",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "api",
+                      "to": "client",
+                      "label": "failure; no retry"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Maximum modeled budget",
+                      "columns": [
+                        "Work",
+                        "Time"
+                      ],
+                      "rows": [
+                        [
+                          "3 attempts × 150 ms",
+                          "450 ms"
+                        ],
+                        [
+                          "50 + 100 ms waits",
+                          "150 ms"
+                        ],
+                        [
+                          "Total",
+                          "600 ms"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "title": "Timeouts, retries and jitter",
+              "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+            }
+          ]
+        }
       },
       {
         "id": "backpressure",

@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const {root,readPaths,catalogSource}=require('./manifest.cjs');
 const out=path.join(root,'_site');
-const files=['index.html','course.html','handbook.html','content/paths.js','content/search.js','assets/js/notebook-search.js','assets/js/notebook-backup.js','assets/js/catalog.js','assets/js/learning-tools.js','assets/css/styles.css','assets/css/library.css','assets/js/library-map.js','practice/sample-positions.csv','practice/answers.md'];
+const files=['index.html','course.html','handbook.html','content/paths.js','content/search.js','assets/js/notebook-search.js','assets/js/notebook-backup.js','assets/js/catalog.js','assets/js/learning-tools.js','assets/css/styles.css','assets/css/library.css','assets/css/concept-explorer.css','assets/js/library-map.js','practice/sample-positions.csv','practice/answers.md'];
 for(const p of readPaths())if(p.status==='ready')for(const file of p.publicFiles)files.push('paths/'+p.id+'/'+file);
 if(fs.readFileSync(path.join(root,'content/paths.js'),'utf8')!==catalogSource())throw Error('Run node scripts/sync-catalog.cjs first.');
 if(fs.readFileSync(path.join(root,'content/search.js'),'utf8')!==require('./search-index.cjs').searchSource())throw Error('Run node scripts/sync-catalog.cjs first.');

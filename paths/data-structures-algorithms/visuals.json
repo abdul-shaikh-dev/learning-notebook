@@ -1,0 +1,1894 @@
+{
+  "linked-nodes": {
+    "title": "Follow the links",
+    "intro": "Compare traversal with insertion into a singly linked list.",
+    "scope": "Single-threaded singly linked list; allocation and ownership are omitted. Insertion is O(1) once the preceding node is known.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Traverse A → B → C",
+        "steps": [
+          {
+            "title": "Start at head",
+            "explanation": "Head identifies A. Each node stores a value and the next node reference.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "cursor here",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "next is C",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "next is null",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "next"
+              }
+            ]
+          },
+          {
+            "title": "Follow one link",
+            "explanation": "Read A.next to reach B; a linked list does not provide constant-time access by index.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "already visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "cursor here",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "next is null",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "next"
+              }
+            ]
+          },
+          {
+            "title": "Reach the tail",
+            "explanation": "Read B.next to reach C. C.next is null, so traversal finishes.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "visited",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "cursor; stop at null",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "next"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Insert X after A",
+        "steps": [
+          {
+            "title": "Keep the old link",
+            "explanation": "We already hold a reference to A. Finding A would itself require traversal.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "next is B",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "tail",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "X",
+                "detail": "new node",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              }
+            ]
+          },
+          {
+            "title": "Link X first",
+            "explanation": "Set X.next = A.next, preserving access to B.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "next is B",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "tail",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "X",
+                "detail": "next is B",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "next"
+              }
+            ]
+          },
+          {
+            "title": "Reconnect A",
+            "explanation": "Set A.next = X. The chain is now A → X → B, with no nodes lost.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "next is X",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "X",
+                "detail": "next is B",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "B",
+                "detail": "tail",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "next"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "next"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "stacks-queues": {
+    "title": "Same arrivals, different departures",
+    "intro": "A, B and C arrive in that order. Predict which leaves first.",
+    "scope": "Abstract push/pop and enqueue/dequeue behavior; storage strategy and thread safety are separate choices.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Stack: last in, first out",
+        "steps": [
+          {
+            "title": "Three arrivals",
+            "explanation": "The stored items are A, B and C.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "arrived first",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "arrived second",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "arrived last",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Removal rule",
+                    "LIFO"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "First removal",
+            "explanation": "C leaves first under LIFO.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "C",
+                "detail": "removed",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "A",
+                "detail": "still waiting",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "B",
+                "detail": "still waiting",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Drain the collection",
+            "explanation": "The complete departure order is C → B → A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Departure order",
+                "detail": "C → B → A",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Empty",
+                "detail": "no items remain",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Queue: first in, first out",
+        "steps": [
+          {
+            "title": "Three arrivals",
+            "explanation": "The stored items are A, B and C.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "arrived first",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "arrived second",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "arrived last",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Removal rule",
+                    "FIFO"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "First removal",
+            "explanation": "A leaves first under FIFO.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "removed",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "still waiting",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "still waiting",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Drain the collection",
+            "explanation": "The complete departure order is A → B → C.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Departure order",
+                "detail": "A → B → C",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Empty",
+                "detail": "no items remain",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      }
+    ]
+  },
+  "recursion": {
+    "title": "Walk a small tree",
+    "intro": "Compare preorder and postorder: the shape is unchanged, but when we emit each node changes.",
+    "scope": "Binary tree with three nodes. These snapshots group calls together; traversal time is O(n), and call-stack space depends on tree height.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Preorder: root before children",
+        "steps": [
+          {
+            "title": "Begin at root",
+            "explanation": "Emit A before recursing into B.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "root",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "left leaf",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "right leaf",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Emitted",
+                    "A"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Return from left leaf",
+            "explanation": "B has no children, so its recursive call returns to A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "resume caller",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "left call complete",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "not visited",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Emitted",
+                    "A, B"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Finish the right subtree",
+            "explanation": "C returns to A, then the root call finishes.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "complete",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "complete",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "complete",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Final order",
+                    "A, B, C"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Postorder: root after children",
+        "steps": [
+          {
+            "title": "Begin at root",
+            "explanation": "Do not emit A yet. Recurse into B first.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "root",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "left leaf",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "right leaf",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Emitted",
+                    "none"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Return from left leaf",
+            "explanation": "B has no children, so its recursive call returns to A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "resume caller",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "left call complete",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "not visited",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Emitted",
+                    "B"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Finish the right subtree",
+            "explanation": "C returns to A, then the root call finishes.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "complete",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "complete",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "complete",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Final order",
+                    "B, C, A"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sorting": {
+    "title": "Watch insertion sort grow a sorted prefix",
+    "intro": "Compare how input order changes the amount of shifting.",
+    "scope": "Each step is one outer-loop insertion, not one comparison. Insertion sort is O(n²) in the worst case; sorted input takes O(n) comparisons with this implementation.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Reverse input",
+        "steps": [
+          {
+            "title": "Initial array",
+            "explanation": "Insertion sort grows a sorted prefix, beginning with the first item.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "4",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "unprocessed",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "2",
+                "detail": "unprocessed",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "1",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 2",
+            "explanation": "Insert 3 into the sorted prefix, shifting 1 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "4",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "2",
+                "detail": "unprocessed",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "1",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 3",
+            "explanation": "Insert 2 into the sorted prefix, shifting 2 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "2",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "4",
+                "detail": "sorted prefix",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "1",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 4",
+            "explanation": "Insert 1 into the sorted prefix, shifting 3 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "1",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "2",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "4",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Nearly sorted input",
+        "steps": [
+          {
+            "title": "Initial array",
+            "explanation": "Insertion sort grows a sorted prefix, beginning with the first item.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "1",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "unprocessed",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "2",
+                "detail": "unprocessed",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "4",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 2",
+            "explanation": "Insert 3 into the sorted prefix, shifting 0 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "1",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "2",
+                "detail": "unprocessed",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "4",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 3",
+            "explanation": "Insert 2 into the sorted prefix, shifting 1 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "1",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "2",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "4",
+                "detail": "unprocessed",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          },
+          {
+            "title": "Insert item 4",
+            "explanation": "Insert 4 into the sorted prefix, shifting 0 larger item(s) right.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "1",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "2",
+                "detail": "sorted prefix",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "3",
+                "detail": "sorted prefix",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "4",
+                "detail": "sorted prefix",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      }
+    ]
+  },
+  "graphs": {
+    "title": "Breadth-first search keeps a frontier",
+    "intro": "Watch a FIFO queue find the shortest unweighted path, or exhaust the reachable component.",
+    "scope": "Directed, unweighted graph. Early exit occurs when the target is discovered; weighted shortest paths need different reasoning.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Reachable target",
+        "steps": [
+          {
+            "title": "Enqueue A",
+            "explanation": "Mark A discovered when enqueuing it. The queue starts with A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "start",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "undiscovered",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "target",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Queue",
+                    "A"
+                  ],
+                  [
+                    "Parents",
+                    "A: none"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Expand A",
+            "explanation": "Remove A and discover B. Record B’s parent as A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "expanded",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "queued",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "undiscovered",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Queue",
+                    "B"
+                  ],
+                  [
+                    "Parents",
+                    "B: A"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Expand B",
+            "explanation": "Discover C from B, record its parent, and reconstruct A → B → C.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "expanded",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "expanded",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "discovered; parent B",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Result",
+                    "2 edges: A → B → C"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Disconnected target",
+        "steps": [
+          {
+            "title": "Enqueue A",
+            "explanation": "Mark A discovered when enqueuing it. The queue starts with A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "start",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "undiscovered",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "target",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Queue",
+                    "A"
+                  ],
+                  [
+                    "Parents",
+                    "A: none"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Expand A",
+            "explanation": "Remove A and discover B. Record B’s parent as A.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "expanded",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "queued",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "undiscovered",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Queue",
+                    "B"
+                  ],
+                  [
+                    "Parents",
+                    "B: A"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Expand B",
+            "explanation": "B has no undiscovered neighbors. The queue empties without discovering C.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "A",
+                "detail": "expanded",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "B",
+                "detail": "expanded",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "C",
+                "detail": "unreachable from A",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "edge"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Result",
+                    "no path"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "binary-search-tree": {
+    "title": "Use ordering to choose a branch",
+    "intro": "At every node, compare the target with the stored key.",
+    "scope": "Distinct keys and a valid binary-search-tree ordering. Search is O(h); an unbalanced tree can have height n.",
+    "scenarios": [
+      {
+        "id": "0",
+        "label": "Find existing key 6",
+        "steps": [
+          {
+            "title": "Compare with 8",
+            "explanation": "Target 6 is smaller than 8: follow the left child.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "root",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "left child",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "10",
+                "detail": "right child",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "6",
+                "detail": "right child of 3",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              },
+              {
+                "from": "1",
+                "to": "3",
+                "label": "right"
+              }
+            ]
+          },
+          {
+            "title": "Compare with 3",
+            "explanation": "Target 6 is greater than 3: follow its right child.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "current comparison",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "10",
+                "detail": "skipped subtree",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "6",
+                "detail": "next comparison",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              },
+              {
+                "from": "1",
+                "to": "3",
+                "label": "right"
+              }
+            ]
+          },
+          {
+            "title": "Compare with 6",
+            "explanation": "The key matches. Return this node.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "visited",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "6",
+                "detail": "matches target",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Result",
+                    "found"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1",
+        "label": "Look for absent key 5",
+        "steps": [
+          {
+            "title": "Compare with 8",
+            "explanation": "Target 5 is smaller than 8: follow the left child.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "root",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "left child",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "10",
+                "detail": "right child",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "6",
+                "detail": "right child of 3",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              },
+              {
+                "from": "1",
+                "to": "3",
+                "label": "right"
+              }
+            ]
+          },
+          {
+            "title": "Compare with 3",
+            "explanation": "Target 5 is greater than 3: follow its right child.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "current comparison",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "10",
+                "detail": "skipped subtree",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "3",
+                "label": "6",
+                "detail": "next comparison",
+                "x": 40,
+                "y": 270,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "0",
+                "to": "2",
+                "label": "right"
+              },
+              {
+                "from": "1",
+                "to": "3",
+                "label": "right"
+              }
+            ]
+          },
+          {
+            "title": "Compare with 6",
+            "explanation": "5 is less than 6, but 6 has no left child. The search ends.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "8",
+                "detail": "visited",
+                "x": 40,
+                "y": 40,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "3",
+                "detail": "visited",
+                "x": 370,
+                "y": 40,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "6",
+                "detail": "left child is null",
+                "x": 700,
+                "y": 40,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "left"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "right"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Current state",
+                "columns": [
+                  "Item",
+                  "Value"
+                ],
+                "rows": [
+                  [
+                    "Result",
+                    "not found"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

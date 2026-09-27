@@ -21,3 +21,5 @@ require('./navigation-links.cjs');
 require('./library-map.cjs');
 
 require('./assessment-sources.cjs');
+
+require('./concept-explorers.cjs');

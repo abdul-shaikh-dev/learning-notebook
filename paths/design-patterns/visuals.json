@@ -1,0 +1,1010 @@
+{
+  "strategy": {
+    "title": "Exchange the ranking policy",
+    "intro": "Compare two policies whose shared contract keeps the workflow stable.",
+    "scope": "Illustrative records chosen so the policies produce different orders. Pure callables; no class lifecycle.",
+    "scenarios": [
+      {
+        "id": "title",
+        "label": "Rank by title",
+        "steps": [
+          {
+            "title": "Choose a policy",
+            "explanation": "The caller supplies the ranking callable. Both policies accept one record and return a comparable key; input order stays API then SQL.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Select key = title",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "arrange(rows, key)",
+                "detail": "Same workflow in both scenarios",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Input records",
+                "detail": "API: 40 min; SQL: 10 min",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "inject callable"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "same records"
+              }
+            ]
+          },
+          {
+            "title": "Evaluate keys",
+            "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "arrange(rows, key)",
+                "detail": "Call sorted with supplied key",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Policy callable",
+                "detail": "API / SQL",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "2",
+                "label": "Input records",
+                "detail": "API: 40 min; SQL: 10 min",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "evaluate each"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "record input"
+              }
+            ]
+          },
+          {
+            "title": "Return new ordering",
+            "explanation": "The workflow returns a new list ordered API, SQL. The duration policy changes order; neither policy mutates the input.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "arrange(rows, key)",
+                "detail": "Workflow code stays identical",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Result",
+                "detail": "API, SQL",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "2",
+                "label": "Original records",
+                "detail": "API then SQL: unchanged",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "return new list"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "minutes",
+        "label": "Rank by minutes",
+        "steps": [
+          {
+            "title": "Choose a policy",
+            "explanation": "The caller supplies the ranking callable. Both policies accept one record and return a comparable key; input order stays API then SQL.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Select key = minutes",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "arrange(rows, key)",
+                "detail": "Same workflow in both scenarios",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Input records",
+                "detail": "API: 40 min; SQL: 10 min",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "inject callable"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "same records"
+              }
+            ]
+          },
+          {
+            "title": "Evaluate keys",
+            "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "arrange(rows, key)",
+                "detail": "Call sorted with supplied key",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Policy callable",
+                "detail": "40 / 10",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "2",
+                "label": "Input records",
+                "detail": "API: 40 min; SQL: 10 min",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "evaluate each"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "record input"
+              }
+            ]
+          },
+          {
+            "title": "Return new ordering",
+            "explanation": "The workflow returns a new list ordered SQL, API. The duration policy changes order; neither policy mutates the input.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "arrange(rows, key)",
+                "detail": "Workflow code stays identical",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Result",
+                "detail": "SQL, API",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "2",
+                "label": "Original records",
+                "detail": "API then SQL: unchanged",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "return new list"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "adapter": {
+    "title": "Translate units and failures",
+    "intro": "Follow one consumer contract across an incompatible legacy interface.",
+    "scope": "Matches the lesson floor conversion policy; not a billing precision rule.",
+    "scenarios": [
+      {
+        "id": "valid",
+        "label": "125 seconds",
+        "steps": [
+          {
+            "title": "Consumer calls minutes",
+            "explanation": "The notebook requests whole minutes. The adapter owns translation; the legacy interface still returns seconds.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Needs minutes()",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "Validate and floor seconds / 60",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "seconds_spent() returns 125",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "minutes()"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "seconds_spent()"
+              }
+            ]
+          },
+          {
+            "title": "Check source meaning",
+            "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. 125 passes validation.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Awaiting minutes",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "125 // 60 = 2",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "125 seconds received",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "2",
+                "to": "1",
+                "label": "source value"
+              }
+            ]
+          },
+          {
+            "title": "Return or propagate",
+            "explanation": "Floor conversion intentionally discards 5 seconds.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Receives 2 minutes",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "Floor policy applied",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "Source remains 125 seconds",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "2 minutes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "invalid",
+        "label": "Reject negative seconds",
+        "steps": [
+          {
+            "title": "Consumer calls minutes",
+            "explanation": "The notebook requests whole minutes. The adapter owns translation; the legacy interface still returns seconds.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Needs minutes()",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "Validate and floor seconds / 60",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "seconds_spent() returns -1",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "minutes()"
+              },
+              {
+                "from": "1",
+                "to": "2",
+                "label": "seconds_spent()"
+              }
+            ]
+          },
+          {
+            "title": "Check source meaning",
+            "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. -1 fails before any conversion.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Awaiting minutes",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "Raise ValueError",
+                "x": 390,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "-1 seconds received",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "2",
+                "to": "1",
+                "label": "source value"
+              }
+            ]
+          },
+          {
+            "title": "Return or propagate",
+            "explanation": "No fabricated minute value is returned. ValueError reaches the caller; upstream data must be corrected.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Notebook",
+                "detail": "Receives ValueError",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "1",
+                "label": "MinutesAdapter",
+                "detail": "Invalid seconds rejected",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Legacy",
+                "detail": "Source remains -1 seconds",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "ValueError"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "decorator": {
+    "title": "Wrap, delegate, unwind",
+    "intro": "Watch the wrapper add a success measurement without changing the formatter role.",
+    "scope": "The lesson wrapper records only successful output sizes; no retries or exception swallowing.",
+    "scenarios": [
+      {
+        "id": "success",
+        "label": "Successful formatter",
+        "steps": [
+          {
+            "title": "Enter wrapper",
+            "explanation": "The caller invokes measured(formatter). sizes starts empty. The wrapper has the same string-returning role as the formatter.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "titles = [A, BC]",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "sizes = []",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Join with comma",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "call"
+              }
+            ]
+          },
+          {
+            "title": "Delegate once",
+            "explanation": "The wrapper calls the formatter exactly once. It returns A,BC, four characters including the comma.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Waiting",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "Waiting for formatter",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Return A,BC",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "2",
+                "label": "one delegation"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "text"
+              }
+            ]
+          },
+          {
+            "title": "Unwind to caller",
+            "explanation": "After successful return, append(4) runs and the same text returns.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Receives A,BC",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "sizes = [4]",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Completed once",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "failure",
+        "label": "Formatter raises",
+        "steps": [
+          {
+            "title": "Enter wrapper",
+            "explanation": "The caller invokes measured(formatter). sizes starts empty. The wrapper has the same string-returning role as the formatter.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "titles = [A, BC]",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "sizes = []",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Raises ValueError",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "call"
+              }
+            ]
+          },
+          {
+            "title": "Delegate once",
+            "explanation": "The wrapper calls the formatter exactly once. It raises before a text value exists; append has not run.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Waiting",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "Waiting for formatter",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Raise ValueError",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "2",
+                "label": "one delegation"
+              },
+              {
+                "from": "2",
+                "to": "1",
+                "label": "exception"
+              }
+            ]
+          },
+          {
+            "title": "Unwind to caller",
+            "explanation": "The exception unwinds through the wrapper unchanged. sizes remains empty because success recording is skipped.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Caller",
+                "detail": "Receives ValueError",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "1",
+                "label": "Measured wrapper",
+                "detail": "sizes = []",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Formatter",
+                "detail": "Failed once",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "exception"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "observer": {
+    "title": "Subscription and delivery order",
+    "intro": "Contrast successful synchronous publication with the lesson fail-fast policy.",
+    "scope": "Tuple snapshot fixes membership for this publication. Local callbacks provide no durable delivery guarantee.",
+    "scenarios": [
+      {
+        "id": "delivered",
+        "label": "Both subscribers run",
+        "steps": [
+          {
+            "title": "Register subscribers",
+            "explanation": "Badge registers before Counter. publish takes a tuple snapshot of these callbacks in registration order.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "Registered: Badge, Counter",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "First subscriber",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Second subscriber",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "subscribe first"
+              },
+              {
+                "from": "2",
+                "to": "0",
+                "label": "subscribe second"
+              }
+            ]
+          },
+          {
+            "title": "Deliver to Badge",
+            "explanation": "A synchronous lesson-completed event calls Badge first. Badge succeeds; delivery may continue.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "lesson-completed",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "Success",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Not called yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "event"
+              }
+            ]
+          },
+          {
+            "title": "Finish publication",
+            "explanation": "Counter runs next and publication returns.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "Returns normally",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "Called once",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Called once",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "2",
+                "label": "event"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stopped",
+        "label": "First callback fails",
+        "steps": [
+          {
+            "title": "Register subscribers",
+            "explanation": "Badge registers before Counter. publish takes a tuple snapshot of these callbacks in registration order.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "Registered: Badge, Counter",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "First subscriber",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Second subscriber",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "1",
+                "to": "0",
+                "label": "subscribe first"
+              },
+              {
+                "from": "2",
+                "to": "0",
+                "label": "subscribe second"
+              }
+            ]
+          },
+          {
+            "title": "Deliver to Badge",
+            "explanation": "A synchronous lesson-completed event calls Badge first. Badge raises ValueError; fail-fast policy stops iteration.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "lesson-completed",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "ValueError",
+                "x": 390,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Not called yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "0",
+                "to": "1",
+                "label": "event"
+              }
+            ]
+          },
+          {
+            "title": "Finish publication",
+            "explanation": "Counter is skipped and the exception reaches the publisher caller. Registration does not guarantee delivery.",
+            "nodes": [
+              {
+                "id": "0",
+                "label": "Publisher",
+                "detail": "Propagates ValueError",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "1",
+                "label": "Badge",
+                "detail": "Called once",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "2",
+                "label": "Counter",
+                "detail": "Skipped",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": []
+          }
+        ]
+      }
+    ]
+  }
+}
