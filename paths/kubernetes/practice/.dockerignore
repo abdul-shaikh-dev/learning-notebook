@@ -1,0 +1,4 @@
+*
+!Dockerfile
+!release_app.py
+!test_release_app.py

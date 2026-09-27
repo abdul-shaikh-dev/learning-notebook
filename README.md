@@ -54,7 +54,7 @@ Five paths offer foundations, intermediate development and advanced practice: Py
 
 Use index.html#path/<id> for the course overview and #pack/<id> for the complete printable pack, including project references. Practice code runs in the learner's tools; there is no browser code runner. Reading progress and project self-checks are separate, path-specific and local to the browser. Existing lesson IDs and reading progress keys remain compatible.
 
-Validation: all Python lesson examples/exercise solutions and the 18 project tests ran; DSA reference scripts and oracle checks passed. React practice TSX and domain modules passed strict TypeScript compilation, and domain tests ran in Node; illustrative browser-component tests were not executed. New C# console/API examples and HTTP acceptance checks ran using installed .NET 9; the curriculum targets .NET 10 LTS, which was not available. Package-based EF/auth examples remain extensions. SQL fixtures and expected results were checked without a SQL Server engine or live cross-session concurrency test; use a dedicated training instance. Run the curriculum and site checks with node verify.cjs.
+Validation is recorded by the executable release checks below and the course-specific practice guides. The SQL Server kit also includes an engine-verification record for the local SQL Express exercises and concurrency checks. Live providers, identity services, cloud deployments and production load remain separate exercises; passing the local suites does not establish production readiness.
 
 
 ### Design and architecture learning paths
@@ -143,3 +143,24 @@ address: local files, localhost and GitHub Pages have separate browser storage.
 The search index is generated from ready courses and their published resources.
 Run `node scripts/sync-catalog.cjs` after content changes; it rebuilds both catalog
 and search. Verification and publication reject stale search data.
+
+## Engineering practice paths
+
+Six further paths connect programming skills to teamwork and running services:
+
+- **Git & team workflows:** local history, collaboration, conflicts, recovery and release review.
+- **Testing & debugging:** useful assertions, test boundaries, failure diagnosis and investigation.
+- **Application security & identity:** threat modelling, authorization, sessions and verification boundaries.
+- **Networking & the web:** requests, DNS, transport, TLS, HTTP, caching and failure behaviour.
+- **Delivery & operations:** containers, delivery pipelines, observability, recovery and incidents.
+- **Kubernetes:** desired state, workloads, service discovery, configuration, rollout and troubleshooting.
+
+Each follows foundation, intermediate and advanced-practice stages, with lesson
+references, self-checks, projects, printable material and a downloadable task kit.
+The home map suggests a networking → delivery → Kubernetes sequence; all paths
+remain independently accessible. Files and run instructions appear beside the
+relevant lessons, so learners need not browse the repository for dependencies.
+
+Python-based checks exercise local models, HTTP services and temporary Git
+repositories. Docker execution, Kubernetes cluster behaviour and real identity
+provider integration have separate opt-in instructions and verification limits.

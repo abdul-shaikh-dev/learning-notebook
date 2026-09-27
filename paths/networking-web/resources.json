@@ -1,0 +1,236 @@
+{
+  "folder": "networking-web-practice",
+  "files": [
+    {
+      "id": "network_foundation-py",
+      "href": "paths/networking-web/practice/network_foundation.py",
+      "role": "reference",
+      "description": "URL-origin policy and offline DNS TTL/retry models"
+    },
+    {
+      "id": "network_http-py",
+      "href": "paths/networking-web/practice/network_http.py",
+      "role": "reference",
+      "description": "Loopback server/client for status, redirects, cookies and timeout experiments"
+    },
+    {
+      "id": "network_resilience-py",
+      "href": "paths/networking-web/practice/network_resilience.py",
+      "role": "reference",
+      "description": "Observation validation, private-excluding cache and bounded retry models"
+    },
+    {
+      "id": "test_network_labs-py",
+      "href": "paths/networking-web/practice/test_network_labs.py",
+      "role": "test",
+      "description": "Protocol model and real loopback HTTP regression suite"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/networking-web/practice/README.md",
+      "role": "guide",
+      "description": "Commands, expected outputs, verification scope and safe local use"
+    },
+    {
+      "id": "project-workbook-md",
+      "href": "paths/networking-web/practice/project-workbook.md",
+      "role": "guide",
+      "description": "Three stage briefs, assessment rubrics and reference reasoning"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Layered request and DNS worksheet",
+      "goal": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+      "fileIds": [
+        "network_foundation-py",
+        "network_http-py",
+        "network_resilience-py",
+        "test_network_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Parse scheme/host/default port and reject credentials, fragments and unsupported schemes.",
+        "Store an offline address with TTL and test just before and at expiry using injected time.",
+        "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
+        "Permit retries only for the explicit safe-read policy with attempts and time left.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run network_foundation.py",
+          "command": "python network_foundation.py",
+          "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+        },
+        {
+          "label": "Run network_http.py",
+          "command": "python network_http.py",
+          "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+        },
+        {
+          "label": "Run network_resilience.py",
+          "command": "python network_resilience.py",
+          "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_network_labs.py",
+          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Follow a request through layers",
+          "href": "#topic/networking-web/request-journey"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Loopback HTTP diagnostic client",
+      "goal": "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
+      "fileIds": [
+        "network_foundation-py",
+        "network_http-py",
+        "network_resilience-py",
+        "test_network_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Bind only 127.0.0.1 on port zero and close resources on failure.",
+        "Check GET, HEAD, ETag/304, relative 307 redirect and missing route.",
+        "Observe synthetic cookie issuance/private denial without claiming real authentication.",
+        "Reject malformed 200 JSON and classify 503.",
+        "Use a readiness Event and delayed response to observe a real bounded client read timeout.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run network_foundation.py",
+          "command": "python network_foundation.py",
+          "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+        },
+        {
+          "label": "Run network_http.py",
+          "command": "python network_http.py",
+          "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+        },
+        {
+          "label": "Run network_resilience.py",
+          "command": "python network_resilience.py",
+          "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_network_labs.py",
+          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Interpret status without overclaiming",
+          "href": "#topic/networking-web/status"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Bounded observation and cache review",
+      "goal": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+      "fileIds": [
+        "network_foundation-py",
+        "network_http-py",
+        "network_resilience-py",
+        "test_network_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Bound body size and require media type plus exact lesson/version schema.",
+        "Reject private cache insertion and test exact freshness expiry with an injected clock.",
+        "Stop new GET attempts after the attempt budget or overall deadline.",
+        "Record only status/attempt metadata and classify final failure.",
+        "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run network_foundation.py",
+          "command": "python network_foundation.py",
+          "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+        },
+        {
+          "label": "Run network_http.py",
+          "command": "python network_http.py",
+          "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+        },
+        {
+          "label": "Run network_resilience.py",
+          "command": "python network_resilience.py",
+          "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_network_labs.py",
+          "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "17. Follow redirects with a policy",
+          "href": "#topic/networking-web/redirects"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "request-journey": "foundation",
+    "addresses-ports": "foundation",
+    "dns": "foundation",
+    "dns-cache": "foundation",
+    "transport": "foundation",
+    "urls-origins": "foundation",
+    "encoding": "foundation",
+    "http-message": "foundation",
+    "status": "intermediate",
+    "methods-retries": "intermediate",
+    "tls": "intermediate",
+    "certificates": "intermediate",
+    "cookies": "intermediate",
+    "browser-boundaries": "intermediate",
+    "cache": "intermediate",
+    "validators": "intermediate",
+    "redirects": "advanced",
+    "proxies": "advanced",
+    "timeouts": "advanced",
+    "retry-budgets": "advanced",
+    "body-contracts": "advanced",
+    "diagnostics": "advanced",
+    "protocol-evolution": "advanced",
+    "network-review": "advanced"
+  },
+  "bundle": {
+    "href": "paths/networking-web/practice-bundle.zip"
+  }
+}

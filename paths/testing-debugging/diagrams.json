@@ -1,0 +1,188 @@
+{
+  "concurrency": {
+    "title": "One stale writer commits, the other conflicts",
+    "summary": "Both local threads read version zero; a barrier ensures the race precondition. The winning thread is unspecified.",
+    "nodes": [
+      {
+        "id": "read",
+        "label": "Both read v0",
+        "description": "Two proposals use the same old version."
+      },
+      {
+        "id": "gate",
+        "label": "Barrier",
+        "description": "Neither updates before both have read."
+      },
+      {
+        "id": "lock",
+        "label": "Locked compare/write",
+        "description": "Only one thread owns the critical section at a time."
+      },
+      {
+        "id": "commit",
+        "label": "One commit -> v1",
+        "description": "The first valid proposal increments version."
+      },
+      {
+        "id": "deny",
+        "label": "Stale proposal rejected",
+        "description": "The second expected version zero no longer matches."
+      }
+    ],
+    "edges": [
+      {
+        "from": "read",
+        "to": "gate",
+        "label": "arrive with stale proposals"
+      },
+      {
+        "from": "gate",
+        "to": "lock",
+        "label": "release both"
+      },
+      {
+        "from": "lock",
+        "to": "commit",
+        "label": "first writer matches"
+      },
+      {
+        "from": "commit",
+        "to": "deny",
+        "label": "next writer sees changed version"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish shared old version",
+        "activeNodes": [
+          "read",
+          "gate"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The barrier creates the material precondition without choosing a winner."
+      },
+      {
+        "title": "Commit one proposal",
+        "activeNodes": [
+          "lock",
+          "commit"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Comparison and update occur under the same local lock."
+      },
+      {
+        "title": "Reject the stale proposal",
+        "activeNodes": [
+          "commit",
+          "deny"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Assert one success, one conflict and version one; do not require a particular thread to win."
+      }
+    ]
+  },
+  "integration-files": {
+    "title": "Validate before replacing the report",
+    "summary": "A complete batch is checked before any replacement; a failure must preserve old output.",
+    "nodes": [
+      {
+        "id": "input",
+        "label": "Batch input",
+        "description": "Synthetic JSON lines with a bound."
+      },
+      {
+        "id": "validate",
+        "label": "Validate all rows",
+        "description": "Fields, types and duplicate IDs checked."
+      },
+      {
+        "id": "temporary",
+        "label": "Temporary report",
+        "description": "Serialization and flush in destination directory."
+      },
+      {
+        "id": "replace",
+        "label": "Replace once",
+        "description": "Publish the complete local report."
+      },
+      {
+        "id": "failure",
+        "label": "Failure branch",
+        "description": "Keep old bytes and clean temporary artifacts."
+      }
+    ],
+    "edges": [
+      {
+        "from": "input",
+        "to": "validate",
+        "label": "parse complete batch"
+      },
+      {
+        "from": "validate",
+        "to": "temporary",
+        "label": "all rows valid"
+      },
+      {
+        "from": "temporary",
+        "to": "replace",
+        "label": "complete temporary file"
+      },
+      {
+        "from": "validate",
+        "to": "failure",
+        "label": "invalid batch"
+      },
+      {
+        "from": "temporary",
+        "to": "failure",
+        "label": "replacement error"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Reject before effects",
+        "activeNodes": [
+          "input",
+          "validate",
+          "failure"
+        ],
+        "activeEdges": [
+          0,
+          3
+        ],
+        "explanation": "Validation failure never invokes replacement."
+      },
+      {
+        "title": "Prepare complete bytes",
+        "activeNodes": [
+          "validate",
+          "temporary"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The target remains old while a temporary report is built."
+      },
+      {
+        "title": "Publish or clean up",
+        "activeNodes": [
+          "temporary",
+          "replace",
+          "failure"
+        ],
+        "activeEdges": [
+          2,
+          4
+        ],
+        "explanation": "Real replacement is tested separately from an injected failure; this is not multi-writer coordination."
+      }
+    ]
+  }
+}

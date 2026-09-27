@@ -20,6 +20,14 @@ SUITES = (
     ("agent-harnesses/practice", "test_harness_workshop.py"),
     ("design-patterns", "test_workshop.py"),
     ("system-design/practice", "test_capacity_calculator.py"),
+    ("git-team-workflows", "test_sandbox.py"),
+    ("application-security", "test_security_lab.py"),
+    ("testing-debugging/practice", "test_testing_labs.py"),
+    ("networking-web/practice", "test_network_labs.py"),
+    ("delivery-operations/practice", "test_release_app.py"),
+    ("delivery-operations/practice", "test_release_tools.py"),
+    ("kubernetes/practice", "test_release_app.py"),
+    ("kubernetes/practice", "check_manifests.py"),
 )
 
 with tempfile.TemporaryDirectory(prefix="notebook-python-") as scratch:

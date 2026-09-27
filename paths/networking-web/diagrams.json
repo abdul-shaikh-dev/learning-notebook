@@ -1,0 +1,190 @@
+{
+  "request-journey": {
+    "title": "A 200 response can still fail the lesson contract",
+    "summary": "The real loopback lab stops at body validation; DNS and TLS remain separate model or extension boundaries.",
+    "nodes": [
+      {
+        "id": "name",
+        "label": "Name/address",
+        "description": "Offline DNS model or an already known loopback address."
+      },
+      {
+        "id": "connect",
+        "label": "Local connection",
+        "description": "Owned ephemeral TCP listener."
+      },
+      {
+        "id": "http",
+        "label": "HTTP response",
+        "description": "Status and representation fields observed."
+      },
+      {
+        "id": "decode",
+        "label": "Decode and validate",
+        "description": "Bounded content, media type, syntax and fields."
+      },
+      {
+        "id": "result",
+        "label": "Publish valid lesson",
+        "description": "Only compatible observations become application results."
+      }
+    ],
+    "edges": [
+      {
+        "from": "name",
+        "to": "connect",
+        "label": "choose endpoint"
+      },
+      {
+        "from": "connect",
+        "to": "http",
+        "label": "exchange request"
+      },
+      {
+        "from": "http",
+        "to": "decode",
+        "label": "200 is not enough"
+      },
+      {
+        "from": "decode",
+        "to": "result",
+        "label": "contract passes"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Locate the failure stage",
+        "activeNodes": [
+          "name",
+          "connect"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Name resolution and endpoint connectivity are distinct checks."
+      },
+      {
+        "title": "Observe response semantics",
+        "activeNodes": [
+          "connect",
+          "http"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "An HTTP response proves an exchange occurred, not that its lesson data is correct."
+      },
+      {
+        "title": "Reject malformed success",
+        "activeNodes": [
+          "http",
+          "decode"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The /bad-json route returns 200 but must fail decoding."
+      },
+      {
+        "title": "Accept compatible content",
+        "activeNodes": [
+          "decode",
+          "result"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "No TLS, browser authorization or public-service claim follows from this local result."
+      }
+    ]
+  },
+  "timeouts": {
+    "title": "The caller stops waiting; the server still needs cleanup",
+    "summary": "An Event confirms the local server received the request before the controlled header wait expires.",
+    "nodes": [
+      {
+        "id": "send",
+        "label": "Client sends /stall",
+        "description": "Client owns a short bounded socket wait."
+      },
+      {
+        "id": "started",
+        "label": "Server readiness event",
+        "description": "The handler has received the request."
+      },
+      {
+        "id": "wait",
+        "label": "Server waits for release",
+        "description": "No response headers yet."
+      },
+      {
+        "id": "timeout",
+        "label": "Client timeout",
+        "description": "Caller closes its connection."
+      },
+      {
+        "id": "cleanup",
+        "label": "Release and join",
+        "description": "Fixture releases the handler and closes listener/threads."
+      }
+    ],
+    "edges": [
+      {
+        "from": "send",
+        "to": "started",
+        "label": "request arrives"
+      },
+      {
+        "from": "started",
+        "to": "wait",
+        "label": "wait before response"
+      },
+      {
+        "from": "wait",
+        "to": "timeout",
+        "label": "client wait expires"
+      },
+      {
+        "from": "timeout",
+        "to": "cleanup",
+        "label": "fixture cleanup"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Confirm receipt",
+        "activeNodes": [
+          "send",
+          "started"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "A refusal would be a different test; readiness proves this route started."
+      },
+      {
+        "title": "Observe bounded waiting",
+        "activeNodes": [
+          "wait",
+          "timeout"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Timeout means the client stopped waiting, not that server processing was rolled back."
+      },
+      {
+        "title": "Clean owned resources",
+        "activeNodes": [
+          "timeout",
+          "cleanup"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Always release the handler and close the server, including failed assertions."
+      }
+    ]
+  }
+}

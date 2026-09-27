@@ -1,0 +1,63 @@
+{
+  "apiVersion": "batch/v1",
+  "kind": "Job",
+  "metadata": {
+    "name": "version-check",
+    "namespace": "notebook-lab"
+  },
+  "spec": {
+    "backoffLimit": 1,
+    "activeDeadlineSeconds": 60,
+    "ttlSecondsAfterFinished": 300,
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "notebook-client"
+        }
+      },
+      "spec": {
+        "restartPolicy": "Never",
+        "automountServiceAccountToken": false,
+        "securityContext": {
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "runAsGroup": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "containers": [
+          {
+            "name": "verify",
+            "image": "notebook-release:v1",
+            "imagePullPolicy": "Never",
+            "command": [
+              "python",
+              "-c",
+              "import urllib.request; print(urllib.request.urlopen('http://release-demo:8080/version', timeout=3).read().decode())"
+            ],
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "readOnlyRootFilesystem": true,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              }
+            },
+            "resources": {
+              "requests": {
+                "cpu": "100m",
+                "memory": "64Mi"
+              },
+              "limits": {
+                "cpu": "500m",
+                "memory": "128Mi"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Opt-in template for a NEW repository with this extracted kit at its root.
+# Review current official actions and pin full verified commit SHAs before production use.
+name: Local release lab checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: python -m unittest -v test_release_app.py test_release_tools.py
+      - run: python release_tools.py digest release_app.py > release-sha256.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: checked-local-source
+          path: |
+            release_app.py
+            release-sha256.txt
+          if-no-files-found: error
+          retention-days: 14

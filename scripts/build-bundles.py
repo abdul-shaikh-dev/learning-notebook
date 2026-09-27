@@ -101,7 +101,7 @@ def json_object(path):
 
 def source_bytes(path, name):
     payload = path.read_bytes()
-    if Path(name).suffix.lower() not in TEXT_EXTENSIONS:
+    if Path(name).suffix.lower() not in TEXT_EXTENSIONS and Path(name).name not in {'Dockerfile', '.dockerignore'}:
         return payload
     try:
         decoded = payload.decode('utf-8')

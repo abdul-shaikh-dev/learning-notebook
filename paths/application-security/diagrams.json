@@ -1,0 +1,108 @@
+{
+  "authorization-ownership": {
+    "title": "A trusted identity still needs object permission",
+    "summary": "Alice/red requests a private object. Tenant matching is required before owner/reader and action checks; denial returns no private payload.",
+    "nodes": [
+      {
+        "id": "request",
+        "label": "Request: document ID",
+        "description": "Untrusted request selects a target."
+      },
+      {
+        "id": "principal",
+        "label": "Trusted Alice/red principal",
+        "description": "Authentication adapter, not request JSON, establishes identity."
+      },
+      {
+        "id": "tenant",
+        "label": "Tenant match",
+        "description": "Object must belong to red."
+      },
+      {
+        "id": "owner",
+        "label": "Owner/action policy",
+        "description": "Owner read/update or reader read only."
+      },
+      {
+        "id": "deny",
+        "label": "Denied: no private data",
+        "description": "Missing/foreign/unsupported paths fail."
+      },
+      {
+        "id": "allow",
+        "label": "Allowed copied document",
+        "description": "Only the authorized object data crosses the boundary."
+      }
+    ],
+    "edges": [
+      {
+        "from": "request",
+        "to": "tenant",
+        "label": "load target context"
+      },
+      {
+        "from": "principal",
+        "to": "tenant",
+        "label": "trusted tenant"
+      },
+      {
+        "from": "tenant",
+        "to": "deny",
+        "label": "different tenant"
+      },
+      {
+        "from": "tenant",
+        "to": "owner",
+        "label": "same tenant"
+      },
+      {
+        "from": "owner",
+        "to": "deny",
+        "label": "foreign owner/action"
+      },
+      {
+        "from": "owner",
+        "to": "allow",
+        "label": "explicit grant"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish identity",
+        "explanation": "Caller fields cannot create the principal. A trusted adapter supplies Alice/red before policy evaluation.",
+        "activeNodes": [
+          "request",
+          "principal"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Check tenant first",
+        "explanation": "Alice/red requesting c in blue is denied even if its owner is named Alice.",
+        "activeNodes": [
+          "principal",
+          "tenant",
+          "deny"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Check object and action",
+        "explanation": "Within red, Bob b is denied to Alice; Alice a is granted. A reader gets read only, not update.",
+        "activeNodes": [
+          "owner",
+          "deny",
+          "allow"
+        ],
+        "activeEdges": [
+          3,
+          4,
+          5
+        ]
+      }
+    ]
+  }
+}

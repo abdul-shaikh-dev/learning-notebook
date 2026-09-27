@@ -1,0 +1,1487 @@
+{
+  "id": "kubernetes",
+  "title": "Kubernetes",
+  "category": "Software engineering",
+  "status": "ready",
+  "description": "24 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
+  "level": "Foundations → intermediate → selected advanced practice",
+  "prerequisites": [
+    "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
+    "Python 3.11+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
+  ],
+  "outcomes": [
+    "Trace declarative objects through controllers, scheduling, kubelet and ready endpoints.",
+    "Read consistent labels/selectors/ports and understand ConfigMap/Secret lifecycle boundaries.",
+    "Design distinct probes, requests/limits and compatible rollout/placement decisions.",
+    "Review non-root Pod security, scoped RBAC and enforced network-policy evidence.",
+    "Explain PVC/Job/HPA/PDB guarantees and prerequisites with bounded local exercises.",
+    "Render Helm, reason about GitOps drift and separate cluster/application recovery stores."
+  ],
+  "setup": [
+    "Run python -m unittest -v test_release_app.py check_manifests.py from the extracted flat kit.",
+    "JSON manifests use stable Kubernetes API versions; offline contract checks do not prove full schema admission or live behavior.",
+    "For an opted-in dedicated kind cluster, follow README.md exactly: verify context/loopback endpoint, build/load image, Bootstrap namespace, Validate server dry-run, then Apply.",
+    "Read optional-manifest prerequisites before network policy, storage, HPA or identity tests; no add-ons/cloud/cluster mutations occur merely by reading the course."
+  ],
+  "nextSteps": [
+    "Implement an external durable data owner and real authenticated application before using replicated service state.",
+    "Study CNI/CSI behavior, secure cluster lifecycle and controller design with measured failure-domain evidence.",
+    "Keep Helm/GitOps controllers and privileges separately reviewed; rendered YAML is not a live guarantee.",
+    "Plan and execute protected provider-specific backup/recovery and upgrade drills before production use."
+  ],
+  "sources": [
+    {
+      "title": "Kubernetes overview",
+      "url": "https://kubernetes.io/docs/concepts/overview/"
+    },
+    {
+      "title": "Kubernetes components",
+      "url": "https://kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "title": "kind quick start",
+      "url": "https://kind.sigs.k8s.io/docs/user/quick-start/"
+    },
+    {
+      "title": "Labels and selectors",
+      "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+    },
+    {
+      "title": "Pods",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "title": "Deployments",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "title": "Services",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "title": "ConfigMaps",
+      "url": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+    },
+    {
+      "title": "Secrets",
+      "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+    },
+    {
+      "title": "Pod probes",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/"
+    },
+    {
+      "title": "Resource management",
+      "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "title": "Taints and tolerations",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+    },
+    {
+      "title": "Network policies",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+    },
+    {
+      "title": "RBAC authorization",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+    },
+    {
+      "title": "Pod security standards",
+      "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+    },
+    {
+      "title": "Persistent volumes",
+      "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+    },
+    {
+      "title": "Jobs",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "title": "Horizontal Pod autoscaling",
+      "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/"
+    },
+    {
+      "title": "Pod disruptions",
+      "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+    },
+    {
+      "title": "Helm template guide",
+      "url": "https://helm.sh/docs/chart_template_guide/getting_started/"
+    },
+    {
+      "title": "Flux core concepts",
+      "url": "https://fluxcd.io/flux/concepts/"
+    },
+    {
+      "title": "Debug running Pods",
+      "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/"
+    },
+    {
+      "title": "Operating etcd clusters",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "cluster-model",
+      "title": "1. Identify the problem Kubernetes solves",
+      "takeaway": "Kubernetes coordinates container workloads through declarative API objects and controllers.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Kubernetes coordinates container workloads through declarative API objects and controllers. It schedules instances, replaces failed Pods and exposes services, but it does not make application transactions correct or produce backups automatically. Begin with a working container from Delivery & Operations and distinguish application failure from scheduler/control-plane failure. The supplied image runs a small Python/SQLite lab, not the React/.NET/SQL stack."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Every local replica has its own scratch SQLite file. Use /version and health endpoints for replicated exercises; notes are not a shared durable service. A real stateful API needs an external data owner or a carefully designed single-writer storage pattern."
+          ],
+          "example": "Desired:2 stateless web replicas\nObserved:1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
+        }
+      ],
+      "exercise": {
+        "prompt": "List which responsibilities remain with the application.",
+        "solution": "Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome.",
+        "checks": [
+          "Distinguish platform and application invariants.",
+          "Identify replicated scratch-data limits."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does adding a second replica fail to guarantee?",
+        "options": [
+          "Two scheduled application instances",
+          "Shared, correct note storage across replicas",
+          "Controller replacement behavior"
+        ],
+        "correct": 1,
+        "explanation": "Shared, correct note storage across replicas. Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome."
+      },
+      "references": [
+        {
+          "title": "Kubernetes overview",
+          "url": "https://kubernetes.io/docs/concepts/overview/",
+          "section": "What is Kubernetes?",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "control-plane",
+      "title": "2. Trace API server, etcd, scheduler and kubelet",
+      "takeaway": "The API server exposes the cluster API, etcd stores cluster state, controllers reconcile objects and the scheduler assigns unscheduled Pods to nodes.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "The API server exposes the cluster API, etcd stores cluster state, controllers reconcile objects and the scheduler assigns unscheduled Pods to nodes. Kubelets act on assigned Pod specifications through container runtimes. These roles explain why accepting a Deployment does not mean a container is already healthy. Desired state and observed status are different parts of the object contract."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "If the scheduler cannot find capacity, a Pod can remain Pending even though the API request succeeded. If an image is missing, the node may be assigned but container startup fails. Inspect the actual status/events before changing unrelated YAML."
+          ],
+          "example": "kubectl apply → API stores desired Deployment\nDeployment controller → ReplicaSet → Pods\nscheduler → node assignment\nkubelet → pull/start → probes/status"
+        }
+      ],
+      "exercise": {
+        "prompt": "Place an unsatisfied resource request and an image-pull error on the trace.",
+        "solution": "Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted.",
+        "checks": [
+          "Name the responsible component.",
+          "Separate admission, scheduling and startup."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which component assigns an unscheduled Pod to a node?",
+        "options": [
+          "The scheduler",
+          "The Service selector",
+          "The application database"
+        ],
+        "correct": 0,
+        "explanation": "The scheduler. Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted."
+      },
+      "references": [
+        {
+          "title": "Kubernetes components",
+          "url": "https://kubernetes.io/docs/concepts/overview/components/",
+          "section": "Control plane components; node components",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "local-context",
+      "title": "3. Create an opt-in local lab with context guards",
+      "takeaway": "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster notebook-lab, producing kind-notebook-lab, and every mutating example names that context and notebook-lab namespace. lab.ps1 refuses another context or a non-loopback API endpoint before making a cluster request."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "These commands consume local machine resources and are optional; no cloud account or provider provisioning is needed. Install compatible current kubectl/kind/Docker tools yourself, record versions and check official version skew. A context name alone is not proof of endpoint identity; the guard also checks the API URL."
+          ],
+          "example": "kind create cluster --name notebook-lab\nkubectl config current-context\n# Expected: kind-notebook-lab\n./lab.ps1 -Action Validate"
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain what the guard prevents and what it does not prove.",
+        "solution": "It blocks accidental operations against a different named or remote endpoint and confines namespace work. It does not certify the local cluster is trusted, guarantee a CNI feature, or replace reviewing the manifests.",
+        "checks": [
+          "Inspect context and endpoint.",
+          "Do not mutate an existing shared cluster."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Why explicitly pass --context in lab commands?",
+        "options": [
+          "To select the intended API/identity even if the default changes",
+          "To guarantee production isolation from any malicious kubeconfig",
+          "To skip API validation"
+        ],
+        "correct": 0,
+        "explanation": "To select the intended API/identity even if the default changes. It blocks accidental operations against a different named or remote endpoint and confines namespace work. It does not certify the local cluster is trusted, guarantee a CNI feature, or replace reviewing the manifests."
+      },
+      "references": [
+        {
+          "title": "kind quick start",
+          "url": "https://kind.sigs.k8s.io/docs/user/quick-start/",
+          "section": "Creating a cluster; loading an image into your cluster",
+          "reviewed": "2026-09-27",
+          "scope": "Dedicated local kind cluster; no cluster created by course author verification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "objects-labels",
+      "title": "4. Read manifests, namespaces, labels and selectors",
+      "takeaway": "A manifest states apiVersion, kind, metadata and desired fields.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A manifest states apiVersion, kind, metadata and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "A selector is not a descriptive caption: changing a label can remove a Pod from service routing or controller ownership. Keep controller selectors stable and examine matching Pods/EndpointSlices when diagnosing a Service with no endpoints. The offline checker verifies these specific relationships, not cluster admission."
+          ],
+          "example": "Deployment selector: app=release-demo\nPod-template label: app=release-demo\nService selector: app=release-demo\nAll namespaced objects: notebook-lab"
+        }
+      ],
+      "exercise": {
+        "prompt": "Change only the Service selector to app=wrong in a copy; predict the outcome.",
+        "solution": "The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill.",
+        "checks": [
+          "Compare selector to actual template labels.",
+          "Separate valid object from useful routing."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What causes a selector-based Service to discover these Pods?",
+        "options": [
+          "The Deployment filename",
+          "Matching Pod labels",
+          "The Docker image tag alone"
+        ],
+        "correct": 1,
+        "explanation": "Matching Pod labels. The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill."
+      },
+      "references": [
+        {
+          "title": "Labels and selectors",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
+          "section": "Label selectors",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "pods",
+      "title": "5. Understand Pod lifetime and shared resources",
+      "takeaway": "A Pod is the scheduling unit containing one or more containers with shared networking and selected volumes.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A Pod is the scheduling unit containing one or more containers with shared networking and selected volumes. Pod instances are disposable; a replacement has a new identity and can run elsewhere. Containers in one Pod communicate through localhost, while different Pods use their assigned network identities or Services. Keep one application container initially, adding sidecars only for a justified shared-lifetime role."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Restarting a container in the same Pod is not the same as replacing the Pod. emptyDir survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
+          ],
+          "example": "Pod A UID=old → deleted\nReplacement Pod B UID=new → new scratch volume\nTwo containers within B would share network namespace; independent Pods do not share localhost."
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict the lifetime of /tmp data mounted from emptyDir.",
+        "solution": "It remains through a container restart in the same Pod, then is lost on Pod removal/replacement. A PVC has a different lifecycle and still needs backup/recovery evidence.",
+        "checks": [
+          "Distinguish container restart from Pod replacement.",
+          "Name the volume type."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which operation ends an emptyDir volume lifetime?",
+        "options": [
+          "Restarting a container within the same Pod",
+          "Removing the Pod",
+          "Reading a Service DNS name"
+        ],
+        "correct": 1,
+        "explanation": "Removing the Pod. It remains through a container restart in the same Pod, then is lost on Pod removal/replacement. A PVC has a different lifecycle and still needs backup/recovery evidence."
+      },
+      "references": [
+        {
+          "title": "Pods",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
+          "section": "Using Pods; Pod lifecycle",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "deployments",
+      "title": "6. Reconcile a Deployment instead of hand-managing Pods",
+      "takeaway": "A Deployment manages ReplicaSets and declarative Pod-template updates.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A Deployment manages ReplicaSets and declarative Pod-template updates. With replicas 2 it aims to keep two desired instances; deleting one managed Pod usually prompts replacement. Editing a standalone Pod is a different contract and does not create a release history. The supplied workload uses apps/v1, a stable selector, bounded revision history and a progress deadline."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "A Deployment cannot guarantee availability if nodes lack resources, all images fail or the application is broken. Controller retry is not business-level retry safety. Read desired/current/available replica counts and their conditions before claiming the reconciliation succeeded."
+          ],
+          "example": "kubectl --context=kind-notebook-lab -n notebook-lab get deploy,rs,pods\n# Delete one named lab Pod only after observing ownership.\n# Watch a replacement appear with a different name/UID."
+        }
+      ],
+      "exercise": {
+        "prompt": "Why can replicas 2 coexist with availableReplicas0?",
+        "solution": "Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly.",
+        "checks": [
+          "Compare desired to available replicas.",
+          "Inspect owner relationships."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What should replace a deleted managed Pod?",
+        "options": [
+          "The Deployment/ReplicaSet reconciliation chain",
+          "The Service DNS server",
+          "A database transaction"
+        ],
+        "correct": 0,
+        "explanation": "The Deployment/ReplicaSet reconciliation chain. Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly."
+      },
+      "references": [
+        {
+          "title": "Deployments",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "section": "Creating a Deployment; updating a Deployment",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "services-dns",
+      "title": "7. Route through Services, DNS and EndpointSlices",
+      "takeaway": "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container targetPort; a named targetPort connects to the container port name. Pod IPs change as instances are replaced. Within notebook-lab, release-demo resolves the Service, while release-demo.notebook-lab.svc identifies its namespace more explicitly."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "A Service object with no ready matching Pods cannot serve requests. DNS resolution alone also does not prove transport or application health. The local Job exercises actual in-cluster DNS/HTTP only when the learner runs it; the offline checker inspects selector/port consistency."
+          ],
+          "example": "Job → http://release-demo:8080/version\nService port8080 → targetPort http → containerPort8080\nPod replacement changes endpoint IP; Service name remains."
+        }
+      ],
+      "exercise": {
+        "prompt": "Troubleshoot a successful DNS lookup followed by connection failure.",
+        "solution": "Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results.",
+        "checks": [
+          "Check endpoints and readiness.",
+          "Distinguish DNS from transport."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which name is stable across ordinary Pod replacement?",
+        "options": [
+          "A specific old Pod IP",
+          "The Service DNS name",
+          "The old Pod UID"
+        ],
+        "correct": 1,
+        "explanation": "The Service DNS name. Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results."
+      },
+      "references": [
+        {
+          "title": "Services",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/service/",
+          "section": "Defining a Service; discovering services",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "configmaps",
+      "title": "8. Configure behavior with a ConfigMap",
+      "takeaway": "A ConfigMap carries non-confidential configuration separately from container bytes.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A ConfigMap carries non-confidential configuration separately from container bytes. The kit injects RELEASE_VERSION through envFrom; this teaches the boundary but the value is only a label, not artifact identity. Values supplied as environment variables are captured at container start. Updating the ConfigMap does not automatically rewrite the environment of an already running process."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Mounted configuration files have different update behavior and applications still must reload them appropriately; subPath mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
+          ],
+          "example": "release-config: RELEASE_VERSION=v1\nPod environment captures v1 at startup\nConfigMap becomes v2 → existing process still reports v1\nControlled rollout creates new Pods with new environment."
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict /version after editing only the ConfigMap data.",
+        "solution": "Existing environment-injected Pods keep v1. Restart the intended workload through a controlled rollout and observe new process values; do not relabel this as proof the image changed.",
+        "checks": [
+          "Distinguish config update from Pod restart.",
+          "Separate release label from digest."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "When does an envFrom ConfigMap change reach an existing process?",
+        "options": [
+          "Automatically on every HTTP request",
+          "After a new/restarted container receives its environment",
+          "Whenever a Service is queried"
+        ],
+        "correct": 1,
+        "explanation": "After a new/restarted container receives its environment. Existing environment-injected Pods keep v1. Restart the intended workload through a controlled rollout and observe new process values; do not relabel this as proof the image changed."
+      },
+      "references": [
+        {
+          "title": "ConfigMaps",
+          "url": "https://kubernetes.io/docs/concepts/configuration/configmap/",
+          "section": "Using ConfigMaps; mounted ConfigMaps are updated automatically",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "foundation"
+    },
+    {
+      "id": "secrets",
+      "title": "9. Treat Secrets as protected references, not encryption",
+      "takeaway": "A Kubernetes Secret separates confidential configuration from ordinary application manifests, but base64 encoding is not encryption.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A Kubernetes Secret separates confidential configuration from ordinary application manifests, but base64 encoding is not encryption. Protection depends on storage encryption, access controls, workloads and the system that supplies/rotates the value. The download contains an unmistakable fake demo token in a separate manifest that is not required for the baseline workload. Never put real credentials in the practice bundle or Git history."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Anyone able to create a Pod that mounts a Secret may be able to obtain it even without direct get-secret permission. Review indirect access and namespace trust. Environment-injected secret changes need process lifecycle handling; do not assume a value rotates automatically inside existing processes."
+          ],
+          "example": "demo-secret.json: fake-only-not-a-credential\nRuntime service account: automountServiceAccountToken=false\nReal environment: secret store → restricted runtime reference"
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why base64 in a committed Secret is not adequate protection.",
+        "solution": "The value is readily decoded and persists in history. Keep real values outside the public repository, control direct and workload-mediated access, configure at-rest protection and rehearse rotation without logging the credential.",
+        "checks": [
+          "Discuss indirect Pod access.",
+          "Keep the sample fake."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does base64 encoding provide?",
+        "options": [
+          "Confidential encryption",
+          "An encoding reversible without a secret key",
+          "An authorization policy"
+        ],
+        "correct": 1,
+        "explanation": "An encoding reversible without a secret key. The value is readily decoded and persists in history. Keep real values outside the public repository, control direct and workload-mediated access, configure at-rest protection and rehearse rotation without logging the credential."
+      },
+      "references": [
+        {
+          "title": "Secrets",
+          "url": "https://kubernetes.io/docs/concepts/configuration/secret/",
+          "section": "Caution; information security for Secrets",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "probes",
+      "title": "10. Design startup, readiness and liveness independently",
+      "takeaway": "Startup probes give initialization time before liveness/readiness checks run.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Startup probes give initialization time before liveness/readiness checks run. Readiness controls eligible service traffic; liveness can restart a failing container. The kit uses /live for startup/liveness and /ready for required local schema/gate readiness. This avoids turning one dependency outage into repeated process restarts. Probe thresholds must match observed startup and recovery behavior rather than copied defaults."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Timing also depends on scheduling and probe execution; the arithmetic is an approximate configured budget, not an SLA. An aggressive liveness check on a shared dependency can worsen an outage. The local HTTP test confirms ready 503/live 200 distinction but does not execute kubelet probe scheduling."
+          ],
+          "example": "startup /live: period5s × failureThreshold12≈60s failure budget\nreadiness /ready: failure removes ready eligibility\nliveness /live: repeated failure triggers container restart"
+        }
+      ],
+      "exercise": {
+        "prompt": "Make the gate file inside a named lab Pod and predict its probe outcomes.",
+        "solution": "/ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill.",
+        "checks": [
+          "Distinguish traffic removal from restart.",
+          "Measure the optional cluster transition."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which probe should normally represent temporary inability to serve work?",
+        "options": [
+          "Readiness",
+          "Every liveness dependency check",
+          "An image tag"
+        ],
+        "correct": 0,
+        "explanation": "Readiness. /ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill."
+      },
+      "references": [
+        {
+          "title": "Pod probes",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
+          "section": "Liveness, readiness, startup probes",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "resources",
+      "title": "11. Use requests for scheduling and limits for runtime boundaries",
+      "takeaway": "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory. CPU over a limit can be throttled, while excessive memory can lead to termination. The lab requests100m CPU/64 Mi and limits500m / 128 Mi as teaching values, not measured capacity recommendations. Observe actual usage before tuning or adding autoscaling."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Scheduling considers requests and additional placement conditions, not only current CPU percentage. One hundred millicores is0.1core. For CPU utilization HPA, missing requests can prevent a useful percentage calculation; arbitrary low requests can distort scaling signals."
+          ],
+          "example": "Node free requested capacity:200mCPU\nPod request:300m → may remain Pending\nRunning Pod: CPU limit500m → throttling possible\nMemory beyond limit128Mi → OOM risk"
+        }
+      ],
+      "exercise": {
+        "prompt": "A Pending Pod uses no CPU. Why can its CPU request still be the cause?",
+        "solution": "The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values.",
+        "checks": [
+          "Use correct units.",
+          "Separate requested capacity from observed use."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What is100m CPU?",
+        "options": [
+          "100 full CPU cores",
+          "0.1 CPU core",
+          "100MiB memory"
+        ],
+        "correct": 1,
+        "explanation": "0.1 CPU core. The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values."
+      },
+      "references": [
+        {
+          "title": "Resource management",
+          "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+          "section": "Requests and limits; scheduling and resource limits",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "rolling-updates",
+      "title": "12. Roll a compatible Pod template and diagnose stalls",
+      "takeaway": "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. The kit uses surge1/unavailable0 for two replicas, requiring spare capacity for a third during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Changing a label in the ConfigMap alone is not a Pod-template change. For the local drill update the Deployment image to a separately built local v2 image, load that image into kind and watch status. Returning to the old image is safe only for the supplied unchanged-schema simulation."
+          ],
+          "example": "2 old +1 surge candidate\nCandidate Ready → reduce old\nRepeat until2 new\nCandidate never Ready → rollout waits/fails progress condition"
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict a rollout with no spare schedulable capacity.",
+        "solution": "With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green.",
+        "checks": [
+          "Explain spare capacity.",
+          "Keep readiness as a real gate."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Does progressDeadlineSeconds automatically perform rollback?",
+        "options": [
+          "Yes, including schema rollback",
+          "No; it reports progress failure for a release controller/operator to handle",
+          "It changes maxUnavailable to100%"
+        ],
+        "correct": 1,
+        "explanation": "No; it reports progress failure for a release controller/operator to handle. With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green."
+      },
+      "references": [
+        {
+          "title": "Deployments",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+          "section": "Rolling update Deployment; failed Deployment",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "scheduling",
+      "title": "13. Explain affinity, topology and taints before pinning",
+      "takeaway": "Scheduling combines resource fit with placement constraints.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Scheduling combines resource fit with placement constraints. Node selectors/affinity express placement needs, topology spread can reduce concentration, and taints repel Pods unless tolerated. A toleration permits consideration; it does not force assignment to that node. Begin with unconstrained placement in the small local cluster and add a constraint only when you can identify its operational purpose."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "The baseline deliberately omits hard multi-zone rules because a single-node kind cluster cannot satisfy them meaningfully. A workload pinned to one node loses resilience on that node failure. Inspect labels/taints/events, and distinguish availability goals from hardware/security placement requirements."
+          ],
+          "example": "Node label: workload=demo\nrequired nodeAffinity: workload=demo → only matching nodes\nTaint dedicated=ops:NoSchedule → needs matching toleration\nNo matching capacity → Pending"
+        }
+      ],
+      "exercise": {
+        "prompt": "Does adding a toleration guarantee placement on the tainted node?",
+        "solution": "No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences.",
+        "checks": [
+          "Distinguish permission from preference/requirement.",
+          "Explain single-node limitations."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "A toleration alone does what?",
+        "options": [
+          "Forces placement on one node",
+          "Allows consideration despite a matching taint",
+          "Creates another node"
+        ],
+        "correct": 1,
+        "explanation": "Allows consideration despite a matching taint. No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences."
+      },
+      "references": [
+        {
+          "title": "Taints and tolerations",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
+          "section": "Concepts",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "network-policy",
+      "title": "14. Test allowed and denied traffic with an enforcing CNI",
+      "takeaway": "NetworkPolicy selects Pods and declares allowed ingress/egress connections.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to app=release-demo and permits8080only from same-namespace app=notebook-client Pods. Baseline kind networking does not by itself establish policy enforcement."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Pod/namespace selector combination changes scope; separate list entries can be alternatives while selectors in the same peer are combined. Network policy is not HTTP authentication or TLS. Before claiming denial, run both an allowed client and an unlabelled client and verify the plugin; a refused service with no endpoints is a different failure."
+          ],
+          "example": "app-ingress selects release-demo\nAllowed: notebook-client → TCP 8080\nDenied: other Pod → TCP 8080, if CNI enforces policy\nEgress is unchanged because policyTypes lists Ingress only."
+        }
+      ],
+      "exercise": {
+        "prompt": "A deny policy is present but an unlabelled client succeeds. What next?",
+        "solution": "Confirm target labels, policy namespace/semantics and CNI enforcement. Do not mark isolation passed because kubectl apply succeeded. Use a compatible enforcing local CNI as a separately reviewed optional setup before repeating the paired traffic checks.",
+        "checks": [
+          "Verify enforcement prerequisites.",
+          "Run allowed and denied probes."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which claim is valid after apply alone?",
+        "options": [
+          "The API accepted the policy object",
+          "All traffic was proven denied",
+          "Application authorization is configured"
+        ],
+        "correct": 0,
+        "explanation": "The API accepted the policy object. Confirm target labels, policy namespace/semantics and CNI enforcement. Do not mark isolation passed because kubectl apply succeeded. Use a compatible enforcing local CNI as a separately reviewed optional setup before repeating the paired traffic checks."
+      },
+      "references": [
+        {
+          "title": "Network policies",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
+          "section": "Prerequisites; behavior of selectors",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "rbac",
+      "title": "15. Separate identities and scope RBAC permissions",
+      "takeaway": "Authentication establishes an API identity; RBAC authorization permits verbs on resources within scope.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Authentication establishes an API identity; RBAC authorization permits verbs on resources within scope. A Role is namespaced, a ClusterRole can express cluster-wide resource rules or be bound within a namespace, and bindings connect subjects to rules. The optional viewer role grants read/list/watch on Pods and Pod logs in notebook-lab; the runtime workload has no auto-mounted API token."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Impersonation-based kubectl auth can-i checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
+          ],
+          "example": "viewer ServiceAccount → RoleBinding → pod-viewer Role\nAllowed: get/list/watch pods and pods/log\nNot granted: read secrets, create Pods, mutating Deployments"
+        }
+      ],
+      "exercise": {
+        "prompt": "Would a Role granting create Pods be safe just because it excludes get Secrets?",
+        "solution": "Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations.",
+        "checks": [
+          "Include subresource and namespace scope.",
+          "Explain indirect escalation."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does a namespaced RoleBinding determine?",
+        "options": [
+          "Which subjects receive referenced rules in that namespace",
+          "The container CPU limit",
+          "Whether application tokens are valid"
+        ],
+        "correct": 0,
+        "explanation": "Which subjects receive referenced rules in that namespace. Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations."
+      },
+      "references": [
+        {
+          "title": "RBAC authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
+          "section": "Role and ClusterRole; RoleBinding and ClusterRoleBinding",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "pod-security",
+      "title": "16. Harden a workload and distinguish admission from runtime",
+      "takeaway": "Pod security settings restrict process privileges and filesystem capabilities.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root10001, disables privilege escalation, drops Linux capabilities, uses RuntimeDefault seccomp and a read-only root filesystem. A writable emptyDir at /tmp supports this application. The namespace requests restricted Pod Security admission atv1.34, independently of the application configuration."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
+          ],
+          "example": "USER10001 + runAsNonRoot\nallowPrivilegeEscalation:false\ncapabilities dropALL\nreadOnlyRootFilesystem:true\n/tmp is an explicit writable volume"
+        }
+      ],
+      "exercise": {
+        "prompt": "Why does the app need a writable /tmp mount under a read-only root?",
+        "solution": "Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root.",
+        "checks": [
+          "Explain required writable paths.",
+          "Separate image risk from Pod privilege."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which setting directly removes ambient Linux capabilities?",
+        "options": [
+          "replicas:2",
+          "capabilities.drop:[ALL]",
+          "Service typeClusterIP"
+        ],
+        "correct": 1,
+        "explanation": "capabilities.drop:[ALL]. Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root."
+      },
+      "references": [
+        {
+          "title": "Pod security standards",
+          "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+          "section": "Restricted policy",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "intermediate"
+    },
+    {
+      "id": "persistent-storage",
+      "title": "17. Connect PVC lifecycle, access mode and recovery",
+      "takeaway": "A PersistentVolumeClaim requests storage supplied by a matching volume or StorageClass.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A PersistentVolumeClaim requests storage supplied by a matching volume or StorageClass. A Pod mounts the claim; deleting a Pod need not delete the claim/data, while deleting the claim can trigger provider-specific reclaim behavior. ReadWriteOnce means read-write mounting by a single node, not a universal one-Pod distributed lock. The optional storage-demo writes one synthetic file to a dedicated claim."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Provisioning may wait for first consumer or stay Pending if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. fsGroup support and ownership depend on the driver; inspect events if the non-root writer cannot open /data."
+          ],
+          "example": "storage.json → PVC lab-data +Pod storage-demo\nDelete storage-demo only → reapply → same message if storage remains\nDelete namespace/PVC → data may be deleted by reclaim policy"
+        }
+      ],
+      "exercise": {
+        "prompt": "Does a bound PVC prove disaster recoverability?",
+        "solution": "No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state.",
+        "checks": [
+          "Inspect StorageClass and reclaim policy.",
+          "Test retained contents separately from backup."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "ReadWriteOnce is best interpreted as?",
+        "options": [
+          "Automatic exclusive one-Pod transaction safety",
+          "A single-node read-write access mode",
+          "Guaranteed multi-region replication"
+        ],
+        "correct": 1,
+        "explanation": "A single-node read-write access mode. No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state."
+      },
+      "references": [
+        {
+          "title": "Persistent volumes",
+          "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
+          "section": "Access modes; reclaiming",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "jobs",
+      "title": "18. Run finite Jobs with bounded retries and idempotent work",
+      "takeaway": "A Job manages work intended to finish, unlike a continuously serving Deployment.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests /version through Service DNS, prints the result and exits; backoffLimit 1 and activeDeadlineSeconds 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "The supplied Job has no irreversible side effects. Do not run database migrations independently in every API Pod as a substitute for a reviewed migration job. Cleanup TTL means logs may disappear; capture evidence before it expires. Changing an existing Job template normally requires a new Job identity."
+          ],
+          "example": "batch/v1 Job version-check\nrestartPolicy:Never\nbackoffLimit:1\nactiveDeadlineSeconds:60\nttlSecondsAfterFinished:300"
+        }
+      ],
+      "exercise": {
+        "prompt": "A payment Job times out after the external provider commits. What should retry do?",
+        "solution": "Use a durable scoped idempotency key and reconcile uncertain outcomes; another Pod execution must not create another payment. A Job controller completion guarantee is not an exactly-once business-effect guarantee.",
+        "checks": [
+          "Bound retry and deadline.",
+          "Preserve uncertain-outcome semantics."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does backoffLimit fail to guarantee?",
+        "options": [
+          "A configured retry bound",
+          "Exactly one external side effect",
+          "Failure reporting for the Job"
+        ],
+        "correct": 1,
+        "explanation": "Exactly one external side effect. Use a durable scoped idempotency key and reconcile uncertain outcomes; another Pod execution must not create another payment. A Job controller completion guarantee is not an exactly-once business-effect guarantee."
+      },
+      "references": [
+        {
+          "title": "Jobs",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
+          "section": "Pod backoff failure policy; Job termination and cleanup",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "autoscaling",
+      "title": "19. Scale from useful metrics and retain overload controls",
+      "takeaway": "HorizontalPodAutoscaler changes replica count based on configured metrics.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "HorizontalPodAutoscaler changes replica count based on configured metrics. The optional autoscaling/v2 object targets60% CPU utilization with bounds2..4 and a scale-down stabilization window. CPU utilization depends on declared requests and the metrics API. A default local cluster may lack Metrics Server; applying the HPA can leave it unable to compute a recommendation."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "This calculation is simplified; readiness, missing metrics, tolerance and controller behavior matter. More replicas cannot repair a serialized database bottleneck or create shared scratch data. Maintain queue/admission controls and measure actual latency/error improvements before trusting autoscaling as an availability mechanism."
+          ],
+          "example": "request100m; observed60m → 60%utilization\n2 Pods averaging90% at60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
+        }
+      ],
+      "exercise": {
+        "prompt": "Why might kubectl get hpa show unknown metrics?",
+        "solution": "Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds.",
+        "checks": [
+          "Verify metrics prerequisite.",
+          "Keep maximum replicas bounded."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which prerequisite supports CPU percentage HPA?",
+        "options": [
+          "Only a Service DNS name",
+          "CPU requests and an available resource metrics API",
+          "A ConfigMap release label"
+        ],
+        "correct": 1,
+        "explanation": "CPU requests and an available resource metrics API. Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds."
+      },
+      "references": [
+        {
+          "title": "Horizontal Pod autoscaling",
+          "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
+          "section": "How does a HorizontalPodAutoscaler work?",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "disruptions",
+      "title": "20. Plan voluntary disruption without claiming universal availability",
+      "takeaway": "PodDisruptionBudget limits certain voluntary evictions based on healthy availability.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and minAvailable 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional policy/v1 manifest selects the same app labels as the Deployment."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Rolling Deployment updates use their own rollout availability settings; a PDB is not a substitute for them. A single-node local cluster cannot demonstrate multi-zone resilience. Do not drain nodes in an existing shared cluster for this exercise; use paper timelines or a separately approved disposable local drill."
+          ],
+          "example": "2 healthy Pods; minAvailable 1 → one voluntary eviction may proceed\n1 healthy Pod → another eviction may beblocked\nUnexpected node loss can violate desired availability anyway."
+        }
+      ],
+      "exercise": {
+        "prompt": "Could a PDB alone make a two-replica service survive a single-node outage?",
+        "solution": "No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures.",
+        "checks": [
+          "Distinguish voluntary from involuntary failure.",
+          "Consider placement and capacity."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does a PDB primarily constrain?",
+        "options": [
+          "Every possible application crash",
+          "Eligible voluntary eviction requests",
+          "All SQL transactions"
+        ],
+        "correct": 1,
+        "explanation": "Eligible voluntary eviction requests. No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures."
+      },
+      "references": [
+        {
+          "title": "Pod disruptions",
+          "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
+          "section": "Pod disruption budgets",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "helm",
+      "title": "21. Render Helm configuration before enabling installation",
+      "takeaway": "Helm packages parameterized manifests as charts.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Helm packages parameterized manifests as charts. Values customize templates, releases record installations and upgrades, and rendering exposes the resulting API objects. A chart does not make invalid selectors or unsafe privileges correct. The course uses a render-first exercise rather than shipping a flattened chart that would lose its expected directory structure in the downloadable bundle."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
+          ],
+          "example": "helm create lab-chart\n# Review generated Service,Deployment,values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
+        }
+      ],
+      "exercise": {
+        "prompt": "What must be checked after values change an application label or port?",
+        "solution": "Inspect rendered selectors, Pod labels, Service target ports and probes together; linting alone does not test runtime routing. Treat rendered diffs as review artifacts and run server admission only after local context verification.",
+        "checks": [
+          "Review rendered output.",
+          "Do not confuse lint with cluster execution."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which command inspects rendered objects without installation?",
+        "options": [
+          "helm template",
+          "helm uninstall",
+          "kubectl drain"
+        ],
+        "correct": 0,
+        "explanation": "helm template. Inspect rendered selectors, Pod labels, Service target ports and probes together; linting alone does not test runtime routing. Treat rendered diffs as review artifacts and run server admission only after local context verification."
+      },
+      "references": [
+        {
+          "title": "Helm template guide",
+          "url": "https://helm.sh/docs/chart_template_guide/getting_started/",
+          "section": "A starter chart; running a first template",
+          "reviewed": "2026-09-27",
+          "scope": "Current Helm chart principles; learner-generated chart, no packaged or installed release supplied. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "gitops",
+      "title": "22. Reconcile reviewed Git state and control drift",
+      "takeaway": "GitOps controllers reconcile versioned desired state rather than treating a successful shell command as permanent truth.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "GitOps controllers reconcile versioned desired state rather than treating a successful shell command as permanent truth. Separate application build from environment promotion, use immutable image identity and review desired-state changes. Manual changes can be overwritten on reconciliation. The lesson uses a timeline and rendered manifests; it does not install Flux, Argo CD or new CRDs into the local cluster."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "A controller needs scoped API permissions and secret access appropriate to its work. Pruning can remove resources omitted from desired state, including data-bearing objects if carelessly managed. Bootstrap credentials, approvals and controller provenance are separate operational boundaries."
+          ],
+          "example": "Git desired image v1 → controller applies v1\nManual kubectl sets image v2 → drift\nNext reconcile may restore v1\nReviewed Gitpromotion changes desired state to v2"
+        }
+      ],
+      "exercise": {
+        "prompt": "A rollback via kubectl succeeds but later v2 returns. Explain why.",
+        "solution": "The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately.",
+        "checks": [
+          "Explain source of truth and drift.",
+          "Review pruning/data consequences."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What should a durable GitOps rollback change?",
+        "options": [
+          "Only the current Pod label",
+          "The reviewed desired state in its source of truth",
+          "The database password in a public commit"
+        ],
+        "correct": 1,
+        "explanation": "The reviewed desired state in its source of truth. The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately."
+      },
+      "references": [
+        {
+          "title": "Flux core concepts",
+          "url": "https://fluxcd.io/flux/concepts/",
+          "section": "Reconciliation; GitOps toolkit",
+          "reviewed": "2026-09-27",
+          "scope": "GitOps reconciliation principles; no Flux controller installed by the lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "troubleshooting",
+      "title": "23. Diagnose status, events, logs and network boundaries",
+      "takeaway": "Troubleshooting follows the failed boundary: API rejection, Pending scheduling, container startup, readiness, Service routing, policy or application/data behavior.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Troubleshooting follows the failed boundary: API rejection, Pending scheduling, container startup, readiness, Service routing, policy or application/data behavior. Inspect current conditions and recent events, then logs including a previous crashed container when available. Debug tooling should use the least privilege needed and avoid printing Secret contents. A fresh log line is evidence only for the process that emitted it."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "ImagePullBackOff, CrashLoopBackOff and Pending indicate different stages, not interchangeable root causes. The kit imagePullPolicy Never intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
+          ],
+          "example": "kubectl --context=kind-notebook-lab -n notebook-lab describe pod NAME\nkubectl --context=kind-notebook-lab -n notebook-lab logs NAME --previous\nkubectl --context=kind-notebook-lab -n notebook-lab get endpointslices\n# Use actual object names and check their readiness conditions."
+        }
+      ],
+      "exercise": {
+        "prompt": "Classify Pending, ErrImageNeverPull and readiness 503.",
+        "solution": "Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary.",
+        "checks": [
+          "Tie observations to stage of failure.",
+          "Preserve secrets and incident evidence."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "A running Pod can still have no Service traffic because?",
+        "options": [
+          "Readiness may fail even though its process runs",
+          "Running status guarantees every user operation succeeds",
+          "Its YAML filename is too short"
+        ],
+        "correct": 0,
+        "explanation": "Readiness may fail even though its process runs. Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary."
+      },
+      "references": [
+        {
+          "title": "Debug running Pods",
+          "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/",
+          "section": "Examining Pod status; logs; debugging",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    },
+    {
+      "id": "backup-production",
+      "title": "24. Separate cluster backup, application restore and production readiness",
+      "takeaway": "Cluster state backup preserves API objects and related control-plane state, while application data may live in volumes or external databases.",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Cluster state backup preserves API objects and related control-plane state, while application data may live in volumes or external databases. Recovering etcd does not restore every database byte or validate user invariants. Production planning includes multiple failure domains, access/identity controls, workload limits, reliable storage, observability, upgrades and tested recovery. A local kind exercise demonstrates only selected mechanics."
+          ]
+        },
+        {
+          "title": "Work through a release decision",
+          "paragraphs": [
+            "The lab PVC is not an off-node backup, and deleting the local cluster can remove its only copy. Use the delivery path SQLite restore test to understand independent data verification, then design provider-specific volume/database recovery. Never run etcd recovery commands against a shared cluster as a classroom shortcut."
+          ],
+          "example": "Recovery inventory: Git desired manifests + protected Secrets +etcd state\nApplication: database backups/logs +volume snapshots if supported\nRestore drill: rebuild platform → restore app data → verify business records → controlled traffic"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write separate RPO/RTO checks for cluster state and notes data.",
+        "solution": "Identify each authoritative store, its supported backup method, protected/off-cluster copies and compatible restoration sequence. Verify known notes through the restored application, measure time/loss and list untested failure domains. Review platform upgrades against version skew and API deprecations.",
+        "checks": [
+          "Separate control-plane and application data.",
+          "Label local evidence versus production unknowns."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does an etcd snapshot alone not establish?",
+        "options": [
+          "A recoverable copy of that control-plane state",
+          "Recovery of external application database records",
+          "A cluster-state backup artifact"
+        ],
+        "correct": 1,
+        "explanation": "Recovery of external application database records. Identify each authoritative store, its supported backup method, protected/off-cluster copies and compatible restoration sequence. Verify known notes through the restored application, measure time/loss and list untested failure domains. Review platform upgrades against version skew and API deprecations."
+      },
+      "references": [
+        {
+          "title": "Operating etcd clusters",
+          "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/",
+          "section": "Backing up an etcd cluster; restoring an etcd cluster",
+          "reviewed": "2026-09-27",
+          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        }
+      ],
+      "stage": "advanced"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundations · reconcile a local workload",
+      "description": "Read stable API objects and connect controllers, Pods, labels, Services and configuration.",
+      "exitCriteria": [
+        "Trace API acceptance to ready endpoints.",
+        "Run offline service/manifest-contract checks.",
+        "Guard local context/endpoint and namespace before optional operations."
+      ],
+      "project": {
+        "title": "Object and reconciliation notebook",
+        "brief": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
+        "requirements": [
+          "Run the7 service and4 offline manifest-contract checks.",
+          "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
+          "Compare labels,selectors,ports and config lifecycle.",
+          "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+          "Capture desired/current/available counts and local health/version results."
+        ],
+        "rubric": [
+          "Offline checks are not claimed as live API admission.",
+          "Every mutating command uses the dedicated local context/namespace.",
+          "Replicated scratch data is not labelled shared persistence.",
+          "A failed boundary is diagnosed from actual status/events."
+        ],
+        "solution": "Use standard Python checks without a cluster first. The Deployment selector and Service selector match app=release-demo, and targetPort http matches the named 8080 container port. Bootstrap persists the namespace before server dry-run. Optional live checks wait for readiness and inspect endpoints; scratch notes remain per Pod."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate · enforce workload boundaries",
+      "description": "Practice probes, resource/rollout/scheduling choices and scoped security.",
+      "exitCriteria": [
+        "Separate ready failure from process restart.",
+        "Explain requests/limits and rollout capacity.",
+        "Verify allowed/denied rules with enforcement prerequisites."
+      ],
+      "project": {
+        "title": "Controlled failure and access packet",
+        "brief": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
+        "requirements": [
+          "Explain and observe the synthetic readiness gate where a cluster exists.",
+          "Record resource units and scheduling/rollout implications.",
+          "Use a separately changed/loaded different image for actual rollout evidence.",
+          "Review viewer RBAC and paired allowed/denied identity checks.",
+          "Only claim network isolation after verifying an enforcing CNI and both clients.",
+          "Review restricted non-root/read-only settings and necessary writable paths."
+        ],
+        "rubric": [
+          "Traffic eligibility and liveness outcomes are distinguished.",
+          "A progress deadline is not called automatic rollback.",
+          "Policy application is not called enforcement evidence.",
+          "No production identity/cluster is reused."
+        ],
+        "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0,expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced practice · handle storage, controllers and recovery",
+      "description": "Study finite work, autoscaling, disruption, render-first templating, GitOps and distinct recovery stores.",
+      "exitCriteria": [
+        "Separate PVC retention from backup.",
+        "Recognize Job/HPA/PDB guarantees and prerequisites.",
+        "Produce desired-state and recovery evidence with production limits."
+      ],
+      "project": {
+        "title": "Selected operational cluster review",
+        "brief": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+        "requirements": [
+          "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
+          "Run bounded Job and capture completion/logs before TTL if opted in.",
+          "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+          "Explain voluntary eviction versus node outage and rollout constraints.",
+          "Render a learner-generated Helm chart and compare to known workload contracts.",
+          "Draw GitOps drift/revert timeline without installing a controller.",
+          "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately."
+        ],
+        "rubric": [
+          "No exactly-once external-effect claim is made for Jobs.",
+          "Autoscaling evidence includes real metrics rather than apply alone.",
+          "PDB scope and single-node limits are explicit.",
+          "Business-data restoration is separate from control-plane restoration."
+        ],
+        "solution": "Use the optional Job to read Service /version with deadline 60 and backoff 1. A bound PVC and RWO access do not certify disaster recovery or exclusive transaction ownership. Render Helm before any install; durable GitOps rollback changes desired source state. Separate etcd state and application store recovery with known-record verification; the dedicated kind lab is selected mechanics practice, not production readiness."
+      }
+    }
+  ],
+  "publicFiles": [
+    "practice/release_app.py",
+    "practice/test_release_app.py",
+    "practice/Dockerfile",
+    "practice/.dockerignore",
+    "practice/README.md",
+    "practice/cluster-workbook.md",
+    "practice/check_manifests.py",
+    "practice/lab.ps1",
+    "practice/namespace.json",
+    "practice/workload.json",
+    "practice/network-policy.json",
+    "practice/rbac.json",
+    "practice/demo-secret.json",
+    "practice/hpa.json",
+    "practice/disruption-budget.json",
+    "practice/job.json",
+    "practice/storage.json",
+    "practice/test_lab_guard.ps1"
+  ],
+  "downloads": [
+    {
+      "title": "release_app.py — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/release_app.py"
+    },
+    {
+      "title": "test_release_app.py — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/test_release_app.py"
+    },
+    {
+      "title": "Dockerfile — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/Dockerfile"
+    },
+    {
+      "title": ".dockerignore — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/.dockerignore"
+    },
+    {
+      "title": "README.md — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/README.md"
+    },
+    {
+      "title": "cluster-workbook.md — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/cluster-workbook.md"
+    },
+    {
+      "title": "check_manifests.py — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/check_manifests.py"
+    },
+    {
+      "title": "lab.ps1 — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/lab.ps1"
+    },
+    {
+      "title": "namespace.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/namespace.json"
+    },
+    {
+      "title": "workload.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/workload.json"
+    },
+    {
+      "title": "network-policy.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/network-policy.json"
+    },
+    {
+      "title": "rbac.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/rbac.json"
+    },
+    {
+      "title": "demo-secret.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/demo-secret.json"
+    },
+    {
+      "title": "hpa.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/hpa.json"
+    },
+    {
+      "title": "disruption-budget.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/disruption-budget.json"
+    },
+    {
+      "title": "job.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/job.json"
+    },
+    {
+      "title": "storage.json — local reference or guided exercise",
+      "href": "paths/kubernetes/practice/storage.json"
+    },
+    {
+      "title": "Offline PowerShell guard behavior checks",
+      "href": "paths/kubernetes/practice/test_lab_guard.ps1"
+    }
+  ]
+}

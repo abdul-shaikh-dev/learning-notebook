@@ -1,0 +1,16 @@
+{
+  "apiVersion": "policy/v1",
+  "kind": "PodDisruptionBudget",
+  "metadata": {
+    "name": "release-demo",
+    "namespace": "notebook-lab"
+  },
+  "spec": {
+    "minAvailable": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "release-demo"
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "three-states": {
+    "title": "The staged snapshot is distinct from the editor buffer",
+    "summary": "Trace the foundation fixture: committed one, staged two, edited three. A normal commit takes the index; the later working edit remains.",
+    "nodes": [
+      {
+        "id": "head",
+        "label": "HEAD: one",
+        "description": "Previous committed snapshot."
+      },
+      {
+        "id": "index",
+        "label": "Index: two",
+        "description": "git add copied the then-current contents."
+      },
+      {
+        "id": "work",
+        "label": "Working: three",
+        "description": "Later edit has not been staged."
+      },
+      {
+        "id": "next",
+        "label": "New HEAD: two",
+        "description": "Commit snapshots index, not the editor buffer."
+      }
+    ],
+    "edges": [
+      {
+        "from": "head",
+        "to": "index",
+        "label": "cached diff: one -> two"
+      },
+      {
+        "from": "index",
+        "to": "work",
+        "label": "ordinary diff: two -> three"
+      },
+      {
+        "from": "index",
+        "to": "next",
+        "label": "commit takes staged two"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect the three states",
+        "explanation": "HEAD, index and working tree each name a different version; none is automatically the other.",
+        "activeNodes": [
+          "head",
+          "index",
+          "work"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Read the two diffs",
+        "explanation": "Cached diff compares HEAD to index. Ordinary diff compares index to working tree. These have different baselines.",
+        "activeNodes": [
+          "head",
+          "index",
+          "work"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Commit the index",
+        "explanation": "The new commit contains two while the working file remains three. The fixture asserts both independently.",
+        "activeNodes": [
+          "index",
+          "next",
+          "work"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  }
+}

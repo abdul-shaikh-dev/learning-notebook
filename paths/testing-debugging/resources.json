@@ -1,0 +1,235 @@
+{
+  "folder": "testing-debugging-practice",
+  "files": [
+    {
+      "id": "testing_foundation-py",
+      "href": "paths/testing-debugging/practice/testing_foundation.py",
+      "role": "reference",
+      "description": "Strict record parser, total function and deliberate boolean mutant"
+    },
+    {
+      "id": "testing_integration-py",
+      "href": "paths/testing-debugging/practice/testing_integration.py",
+      "role": "reference",
+      "description": "Validated report import with atomic replacement and failure injection seam"
+    },
+    {
+      "id": "testing_concurrency-py",
+      "href": "paths/testing-debugging/practice/testing_concurrency.py",
+      "role": "reference",
+      "description": "Locked version store and allowlisted diagnostic event reference"
+    },
+    {
+      "id": "test_testing_labs-py",
+      "href": "paths/testing-debugging/practice/test_testing_labs.py",
+      "role": "test",
+      "description": "Boundary, metamorphic, file-failure, race and local command-route tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/testing-debugging/practice/README.md",
+      "role": "guide",
+      "description": "Commands, expected outputs, verification scope and safe local use"
+    },
+    {
+      "id": "project-workbook-md",
+      "href": "paths/testing-debugging/practice/project-workbook.md",
+      "role": "guide",
+      "description": "Three stage briefs, assessment rubrics and reference reasoning"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Validated study-log parser",
+      "goal": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+      "fileIds": [
+        "testing_foundation-py",
+        "testing_integration-py",
+        "testing_concurrency-py",
+        "test_testing_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Require exact id/minutes fields, nonblank bounded IDs and integer duration 0 through 1440.",
+        "Reject duplicate JSON keys, booleans, invalid JSON and oversized text.",
+        "Compute known totals and demonstrate a test distinguishing the supplied boolean mutant.",
+        "Produce a minimal reproduction note with expected and observed results.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run testing_foundation.py",
+          "command": "python testing_foundation.py",
+          "expected": "Prints 5 for one validated five-minute record."
+        },
+        {
+          "label": "Run testing_integration.py",
+          "command": "python testing_integration.py",
+          "expected": "Prints 7; creates and cleans a temporary report directory."
+        },
+        {
+          "label": "Run testing_concurrency.py",
+          "command": "python testing_concurrency.py",
+          "expected": "Prints stale edit rejected (1, 8)."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_testing_labs.py",
+          "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Behavior before test code",
+          "href": "#topic/testing-debugging/contracts"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Failure-safe report importer",
+      "goal": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+      "fileIds": [
+        "testing_foundation-py",
+        "testing_integration-py",
+        "testing_concurrency-py",
+        "test_testing_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Validate at most 1000 rows and unique IDs before writing.",
+        "Serialize schema_version, records and total; read stored JSON back.",
+        "Use an injected replacement failure and assert old bytes remain.",
+        "Assert rejected input does not invoke replacement and temporary files are removed.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run testing_foundation.py",
+          "command": "python testing_foundation.py",
+          "expected": "Prints 5 for one validated five-minute record."
+        },
+        {
+          "label": "Run testing_integration.py",
+          "command": "python testing_integration.py",
+          "expected": "Prints 7; creates and cleans a temporary report directory."
+        },
+        {
+          "label": "Run testing_concurrency.py",
+          "command": "python testing_concurrency.py",
+          "expected": "Prints stale edit rejected (1, 8)."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_testing_labs.py",
+          "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Choose test scope by risk",
+          "href": "#topic/testing-debugging/strategy"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Reproducible stale-writer diagnosis",
+      "goal": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+      "fileIds": [
+        "testing_foundation-py",
+        "testing_integration-py",
+        "testing_concurrency-py",
+        "test_testing_labs-py",
+        "README-md",
+        "project-workbook-md"
+      ],
+      "steps": [
+        "Read README.md and run the supplied references.",
+        "Attempt the stage brief before inspecting its reference solution.",
+        "Use a Barrier so both threads read the same version before updating.",
+        "Allow exactly one compare-and-update commit; reject the stale proposal.",
+        "Join workers with bounds and assert final version and allowed winner.",
+        "Add seeded metamorphic totals and an allowlisted diagnostic event.",
+        "Write a release evidence table that separates thread/file tests from missing async, browser and distributed scopes.",
+        "Compare your evidence with the stage rubric and document extensions separately."
+      ],
+      "commands": [
+        {
+          "label": "Run testing_foundation.py",
+          "command": "python testing_foundation.py",
+          "expected": "Prints 5 for one validated five-minute record."
+        },
+        {
+          "label": "Run testing_integration.py",
+          "command": "python testing_integration.py",
+          "expected": "Prints 7; creates and cleans a temporary report directory."
+        },
+        {
+          "label": "Run testing_concurrency.py",
+          "command": "python testing_concurrency.py",
+          "expected": "Prints stale edit rejected (1, 8)."
+        },
+        {
+          "label": "Run meaningful regression suite",
+          "command": "python -m unittest -v test_testing_labs.py",
+          "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "17. Make a race observable without sleep",
+          "href": "#topic/testing-debugging/concurrency"
+        }
+      ],
+      "notes": [
+        "All files are flat at the root of the downloadable practice folder.",
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "contracts": "foundation",
+    "first-test": "foundation",
+    "boundaries": "foundation",
+    "failures": "foundation",
+    "fixtures": "foundation",
+    "tracebacks": "foundation",
+    "reproduce": "foundation",
+    "hypotheses": "foundation",
+    "strategy": "intermediate",
+    "mocks": "intermediate",
+    "contracts-adapters": "intermediate",
+    "integration-files": "intermediate",
+    "properties": "intermediate",
+    "regressions": "intermediate",
+    "coverage": "intermediate",
+    "test-data": "intermediate",
+    "concurrency": "advanced",
+    "flaky-tests": "advanced",
+    "async-debugging": "advanced",
+    "observability": "advanced",
+    "performance": "advanced",
+    "release-evidence": "advanced",
+    "debug-report": "advanced",
+    "cli-route": "advanced"
+  },
+  "bundle": {
+    "href": "paths/testing-debugging/practice-bundle.zip"
+  }
+}

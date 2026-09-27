@@ -1,0 +1,324 @@
+{
+  "folder": "kubernetes-practice",
+  "files": [
+    {
+      "id": "release_app-py",
+      "href": "paths/kubernetes/practice/release_app.py",
+      "role": "reference",
+      "description": "release_app.py — local reference or guided exercise"
+    },
+    {
+      "id": "test_release_app-py",
+      "href": "paths/kubernetes/practice/test_release_app.py",
+      "role": "test",
+      "description": "test_release_app.py — local reference or guided exercise"
+    },
+    {
+      "id": "Dockerfile",
+      "href": "paths/kubernetes/practice/Dockerfile",
+      "role": "reference",
+      "description": "Dockerfile — local reference or guided exercise"
+    },
+    {
+      "id": "dockerignore",
+      "href": "paths/kubernetes/practice/.dockerignore",
+      "role": "reference",
+      "description": ".dockerignore — local reference or guided exercise"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/kubernetes/practice/README.md",
+      "role": "guide",
+      "description": "README.md — local reference or guided exercise"
+    },
+    {
+      "id": "cluster-workbook-md",
+      "href": "paths/kubernetes/practice/cluster-workbook.md",
+      "role": "guide",
+      "description": "cluster-workbook.md — local reference or guided exercise"
+    },
+    {
+      "id": "check_manifests-py",
+      "href": "paths/kubernetes/practice/check_manifests.py",
+      "role": "test",
+      "description": "check_manifests.py — local reference or guided exercise"
+    },
+    {
+      "id": "lab-ps1",
+      "href": "paths/kubernetes/practice/lab.ps1",
+      "role": "reference",
+      "description": "lab.ps1 — local reference or guided exercise"
+    },
+    {
+      "id": "namespace-json",
+      "href": "paths/kubernetes/practice/namespace.json",
+      "role": "reference",
+      "description": "namespace.json — local reference or guided exercise"
+    },
+    {
+      "id": "workload-json",
+      "href": "paths/kubernetes/practice/workload.json",
+      "role": "reference",
+      "description": "workload.json — local reference or guided exercise"
+    },
+    {
+      "id": "network-policy-json",
+      "href": "paths/kubernetes/practice/network-policy.json",
+      "role": "reference",
+      "description": "network-policy.json — local reference or guided exercise"
+    },
+    {
+      "id": "rbac-json",
+      "href": "paths/kubernetes/practice/rbac.json",
+      "role": "reference",
+      "description": "rbac.json — local reference or guided exercise"
+    },
+    {
+      "id": "demo-secret-json",
+      "href": "paths/kubernetes/practice/demo-secret.json",
+      "role": "reference",
+      "description": "demo-secret.json — local reference or guided exercise"
+    },
+    {
+      "id": "hpa-json",
+      "href": "paths/kubernetes/practice/hpa.json",
+      "role": "reference",
+      "description": "hpa.json — local reference or guided exercise"
+    },
+    {
+      "id": "disruption-budget-json",
+      "href": "paths/kubernetes/practice/disruption-budget.json",
+      "role": "reference",
+      "description": "disruption-budget.json — local reference or guided exercise"
+    },
+    {
+      "id": "job-json",
+      "href": "paths/kubernetes/practice/job.json",
+      "role": "reference",
+      "description": "job.json — local reference or guided exercise"
+    },
+    {
+      "id": "storage-json",
+      "href": "paths/kubernetes/practice/storage.json",
+      "role": "reference",
+      "description": "storage.json — local reference or guided exercise"
+    },
+    {
+      "id": "test_lab_guard-ps1",
+      "href": "paths/kubernetes/practice/test_lab_guard.ps1",
+      "role": "test",
+      "description": "Offline PowerShell guard behavior checks (fake kubectl)"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Object and reconciliation notebook",
+      "goal": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
+      "fileIds": [
+        "release_app-py",
+        "test_release_app-py",
+        "Dockerfile",
+        "dockerignore",
+        "README-md",
+        "cluster-workbook-md",
+        "check_manifests-py",
+        "lab-ps1",
+        "namespace-json",
+        "workload-json",
+        "network-policy-json",
+        "rbac-json",
+        "demo-secret-json",
+        "hpa-json",
+        "disruption-budget-json",
+        "job-json",
+        "storage-json",
+        "test_lab_guard-ps1"
+      ],
+      "steps": [
+        "Extract all listed flat files together into a new practice folder.",
+        "Read README.md and the workbook before any optional Docker/cluster command.",
+        "Run offline checks and record actual runtime/results.",
+        "Run the7 service and4 offline manifest-contract checks.",
+        "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
+        "Compare labels,selectors,ports and config lifecycle.",
+        "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+        "Capture desired/current/available counts and local health/version results.",
+        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+      ],
+      "commands": [
+        {
+          "label": "Extracted kit root · offline Python checks",
+          "command": "python -m unittest -v test_release_app.py check_manifests.py",
+          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+        },
+        {
+          "label": "Optional local lab · after context review and namespace Bootstrap",
+          "command": "./lab.ps1 -Action Validate",
+          "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Identify the problem Kubernetes solves",
+          "href": "#topic/kubernetes/cluster-model"
+        }
+      ],
+      "notes": [
+        "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+        "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+        "Build the stage requirements and document evidence separately from reference results."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Controlled failure and access packet",
+      "goal": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
+      "fileIds": [
+        "release_app-py",
+        "test_release_app-py",
+        "Dockerfile",
+        "dockerignore",
+        "README-md",
+        "cluster-workbook-md",
+        "check_manifests-py",
+        "lab-ps1",
+        "namespace-json",
+        "workload-json",
+        "network-policy-json",
+        "rbac-json",
+        "demo-secret-json",
+        "hpa-json",
+        "disruption-budget-json",
+        "job-json",
+        "storage-json",
+        "test_lab_guard-ps1"
+      ],
+      "steps": [
+        "Extract all listed flat files together into a new practice folder.",
+        "Read README.md and the workbook before any optional Docker/cluster command.",
+        "Run offline checks and record actual runtime/results.",
+        "Explain and observe the synthetic readiness gate where a cluster exists.",
+        "Record resource units and scheduling/rollout implications.",
+        "Use a separately changed/loaded different image for actual rollout evidence.",
+        "Review viewer RBAC and paired allowed/denied identity checks.",
+        "Only claim network isolation after verifying an enforcing CNI and both clients.",
+        "Review restricted non-root/read-only settings and necessary writable paths.",
+        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+      ],
+      "commands": [
+        {
+          "label": "Extracted kit root · offline Python checks",
+          "command": "python -m unittest -v test_release_app.py check_manifests.py",
+          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+        },
+        {
+          "label": "Optional local lab · after context review and namespace Bootstrap",
+          "command": "./lab.ps1 -Action Validate",
+          "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Treat Secrets as protected references, not encryption",
+          "href": "#topic/kubernetes/secrets"
+        }
+      ],
+      "notes": [
+        "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+        "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+        "Build the stage requirements and document evidence separately from reference results."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Selected operational cluster review",
+      "goal": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+      "fileIds": [
+        "release_app-py",
+        "test_release_app-py",
+        "Dockerfile",
+        "dockerignore",
+        "README-md",
+        "cluster-workbook-md",
+        "check_manifests-py",
+        "lab-ps1",
+        "namespace-json",
+        "workload-json",
+        "network-policy-json",
+        "rbac-json",
+        "demo-secret-json",
+        "hpa-json",
+        "disruption-budget-json",
+        "job-json",
+        "storage-json",
+        "test_lab_guard-ps1"
+      ],
+      "steps": [
+        "Extract all listed flat files together into a new practice folder.",
+        "Read README.md and the workbook before any optional Docker/cluster command.",
+        "Run offline checks and record actual runtime/results.",
+        "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
+        "Run bounded Job and capture completion/logs before TTL if opted in.",
+        "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+        "Explain voluntary eviction versus node outage and rollout constraints.",
+        "Render a learner-generated Helm chart and compare to known workload contracts.",
+        "Draw GitOps drift/revert timeline without installing a controller.",
+        "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately.",
+        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+      ],
+      "commands": [
+        {
+          "label": "Extracted kit root · offline Python checks",
+          "command": "python -m unittest -v test_release_app.py check_manifests.py",
+          "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+        },
+        {
+          "label": "Optional local lab · after context review and namespace Bootstrap",
+          "command": "./lab.ps1 -Action Validate",
+          "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "17. Connect PVC lifecycle, access mode and recovery",
+          "href": "#topic/kubernetes/persistent-storage"
+        }
+      ],
+      "notes": [
+        "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+        "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+        "Build the stage requirements and document evidence separately from reference results."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "cluster-model": "foundation",
+    "control-plane": "foundation",
+    "local-context": "foundation",
+    "objects-labels": "foundation",
+    "pods": "foundation",
+    "deployments": "foundation",
+    "services-dns": "foundation",
+    "configmaps": "foundation",
+    "secrets": "intermediate",
+    "probes": "intermediate",
+    "resources": "intermediate",
+    "rolling-updates": "intermediate",
+    "scheduling": "intermediate",
+    "network-policy": "intermediate",
+    "rbac": "intermediate",
+    "pod-security": "intermediate",
+    "persistent-storage": "advanced",
+    "jobs": "advanced",
+    "autoscaling": "advanced",
+    "disruptions": "advanced",
+    "helm": "advanced",
+    "gitops": "advanced",
+    "troubleshooting": "advanced",
+    "backup-production": "advanced"
+  },
+  "bundle": {
+    "href": "paths/kubernetes/practice-bundle.zip"
+  }
+}

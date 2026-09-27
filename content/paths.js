@@ -3998,6 +3998,1759 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "application-security",
+    "title": "Application Security",
+    "category": "Security",
+    "status": "ready",
+    "description": "Learn trusted identity, object authorization, web input and session defenses, OAuth/OIDC boundaries and security verification through 21 lessons and three synthetic offline projects.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic programming and HTTP concepts; complete Python or web foundations if functions, dictionaries and requests are unfamiliar."
+    ],
+    "setup": [
+      "Extract the practice bundle and keep all files together at its flat folder root.",
+      "Read README.md and the three stage kits before executing commands.",
+      "Use Python 3.11+ with SQLite; run python -B -m unittest -v test_security_lab.py. No live credentials, server or identity provider are needed."
+    ],
+    "outcomes": [
+      "Trace assets, trust boundaries and abuse cases.",
+      "Enforce server-side tenant/owner/action decisions with trusted identities.",
+      "Verify narrow input, output/SQL contexts and session/CSRF failures.",
+      "Distinguish OAuth delegation, OIDC login, PKCE and token validation.",
+      "Build a selected ASVS evidence matrix and recovery plan with explicit integration limits."
+    ],
+    "nextSteps": [
+      "Integrate the controls into a real framework and test actual routes/browser behavior.",
+      "Opt into the identity-provider worksheet only with an authorized training tenant and maintained libraries.",
+      "Choose broader applicable ASVS 5.0.0 requirements; this selected path is not compliance or certification."
+    ],
+    "sources": [
+      {
+        "title": "OWASP ASVS 5.0.0: V15: secure dependencies and development",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V6: password and multifactor authentication",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md"
+      },
+      {
+        "title": "OWASP Authentication Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V8: authorization design and operation",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x17-V8-Authorization.md"
+      },
+      {
+        "title": "OWASP Authorization Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V2: business logic and anti-automation",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V7: session lifecycle and termination",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V3: cross-site request forgery",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md"
+      },
+      {
+        "title": "RFC 6265 HTTP State Management Mechanism",
+        "url": "https://www.rfc-editor.org/rfc/rfc6265.html"
+      },
+      {
+        "title": "MDN Set-Cookie reference",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+      },
+      {
+        "title": "OWASP Password Storage Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+      },
+      {
+        "title": "OWASP CSRF Prevention Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V1: injection prevention",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md"
+      },
+      {
+        "title": "OWASP XSS Prevention Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+      },
+      {
+        "title": "Python sqlite3 documentation",
+        "url": "https://docs.python.org/3.11/library/sqlite3.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V10: authorization flow defenses",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md"
+      },
+      {
+        "title": "RFC 9700 OAuth Security BCP",
+        "url": "https://www.rfc-editor.org/rfc/rfc9700.html"
+      },
+      {
+        "title": "OpenID Connect Core 1.0 errata set 2",
+        "url": "https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation"
+      },
+      {
+        "title": "RFC 7636 PKCE",
+        "url": "https://www.rfc-editor.org/rfc/rfc7636.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V9: token integrity and validation",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x18-V9-Self-contained-Tokens.md"
+      },
+      {
+        "title": "RFC 8725 JWT Best Current Practices",
+        "url": "https://www.rfc-editor.org/rfc/rfc8725.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V13: secrets management",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x22-V13-Configuration.md"
+      },
+      {
+        "title": "OWASP Secrets Management Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: V16: incident evidence and safe error handling",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md"
+      },
+      {
+        "title": "OWASP ASVS 5.0.0: Assessment and certification scope",
+        "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md"
+      },
+      {
+        "title": "OWASP ASVS project",
+        "url": "https://owasp.org/projects/asvs"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete offline practice bundle",
+        "href": "paths/application-security/practice-bundle.zip"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "assets-threats",
+        "title": "1. Name assets, threats and trust boundaries",
+        "stage": "foundation",
+        "takeaway": "A control should protect an asset against a concrete unwanted action.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "An asset is something the application must protect: private documents, account access, money, availability or evidence of an action. A threat is a way that asset could be harmed. Start with the workflow rather than a list of fashionable security tools.",
+              "A trust boundary separates components with different authority. Browser inputs, HTTP headers and uploaded files are untrusted even when the interface looks friendly. A server-side identity adapter and an application database have different responsibilities; a browser assertion is not proof of identity."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The synthetic notebook stores Alice’s and Bob’s private documents across two tenants. If Alice guesses Bob’s document ID, the unwanted action is reading another owner’s private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
+              "Write asset -> entry point -> trust boundary -> abuse case -> control -> verification. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
+            ],
+            "example": "Asset: Bob private document\nEntry: GET /documents/b\nBoundary: request identity -> server policy -> stored object\nAbuse: Alice changes requested ID to b\nControl: tenant + ownership check\nEvidence: denied response and no document data"
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete the worksheet for a title-update request and a login endpoint. Name one denial test for each.",
+          "solution": "For update, protect ownership/title integrity: reject foreign objects and owner/role fields before mutation. For login, protect account access and availability: verify credentials through a real adapter, throttle abuse and avoid account-enumerating responses. The local module tests policy but does not authenticate passwords.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Asset and unwanted action are concrete.",
+            "The boundary is named.",
+            "Each control has observable negative evidence."
+          ]
+        },
+        "quiz": {
+          "question": "What control addresses a guessed private document ID?",
+          "options": [
+            "Authorize the requested object against the trusted principal on the server.",
+            "Hide the edit button and assume no one sends another request.",
+            "Make the ID long enough that authorization is unnecessary."
+          ],
+          "correct": 0,
+          "explanation": "Authorize the requested object against the trusted principal on the server."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V15: threat modeling and architecture",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
+            "section": "V15: threat modeling and architecture",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "identity-principals",
+        "title": "2. Treat identity as verified context",
+        "stage": "foundation",
+        "takeaway": "A principal is trusted authentication output, not request-supplied profile data.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Authentication establishes who is acting under a particular mechanism. A principal is the server’s representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
+              "The offline Principal dataclass represents an identity already verified by a trusted adapter. It deliberately does not parse tokens, compare passwords or claim cryptographic verification. Only tests and trusted application code construct it; accepting this object’s fields from request JSON would defeat the boundary."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture gives subject alice two records with different tenant contexts. Same spelling of the owner name does not override tenant separation. In real systems use stable internal subject IDs and correctly mapped issuer/tenant context rather than mutable display fields.",
+              "Keep authentication failures distinct from policy decisions in internal evidence, while minimizing unnecessary public detail. A successful login is not blanket permission to every stored object."
+            ],
+            "example": "from security_lab import Principal, read_document\nalice = Principal('alice','red')\nassert read_document(alice,'a')['owner'] == 'alice'\n# This construction is trusted fixture code, not request JSON parsing."
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify where a request becomes a trusted principal in a real web application. Explain what the synthetic fixture omits.",
+          "solution": "The session middleware or standards-compliant token adapter verifies the authentication mechanism and establishes server context. The fixture begins after that step. It tests downstream policy with synthetic identities; it cannot prove a real login, JWT signature or issuer integration.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identity context comes from a trusted adapter.",
+            "Display claims are not trusted automatically.",
+            "Authentication and policy evidence are separate."
+          ]
+        },
+        "quiz": {
+          "question": "Can an API trust a caller’s JSON field subject=alice?",
+          "options": [
+            "Yes, because JSON has a defined syntax.",
+            "No; trusted server authentication must establish the principal before authorization uses it.",
+            "Yes, if the caller also supplies role=admin."
+          ],
+          "correct": 1,
+          "explanation": "No; trusted server authentication must establish the principal before authorization uses it."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V6: authentication architecture",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
+            "section": "V6: authentication architecture",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "authentication-boundary",
+        "title": "3. Distinguish proof of identity from account data",
+        "stage": "foundation",
+        "takeaway": "Authentication mechanisms need a verified credential or trusted protocol result.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A username locates an account; a credential or authentication protocol provides evidence about control of that account. Credential verification, login throttling, recovery and session creation form a lifecycle. Protecting just the initial password check leaves reset and recovery paths as alternate entrances.",
+              "Use established authentication libraries or an identity provider rather than inventing password storage or token verification. The training kit has no credential database. Its login method means the trusted adapter already authenticated the principal."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "An anonymous request cannot read Alice’s private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
+              "Public login errors should avoid revealing whether an account exists. Internal monitoring still needs structured failure reasons and rate evidence without storing passwords. Recovery verification should be at least as carefully designed as ordinary login."
+            ],
+            "example": "from security_lab import read_document\ntry:\n    read_document(None,'a')\nexcept PermissionError:\n    pass\nelse:\n    raise AssertionError('anonymous read allowed')"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design failure handling for an absent credential, wrong credential and disabled account. Which evidence stays internal?",
+          "solution": "All fail to establish a principal. Return a consistent public failure appropriate to the protocol and retain sanitized internal outcome categories for diagnosis. Never log credentials. Test recovery and disabled-account behavior using a real adapter in the opt-in extension; they are not proved by the local policy suite.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Missing authentication defaults to denial.",
+            "Public errors avoid account enumeration.",
+            "Recovery is included in the authentication lifecycle."
+          ]
+        },
+        "quiz": {
+          "question": "What does Sessions.login in the local lab establish?",
+          "options": [
+            "It validates every JWT signature and password.",
+            "It proves a real identity provider accepted the user.",
+            "Only a local session for an already authenticated fixture principal; it performs no credential verification."
+          ],
+          "correct": 2,
+          "explanation": "Only a local session for an already authenticated fixture principal; it performs no credential verification."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V6: general authentication security",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
+            "section": "V6: general authentication security",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP Authentication Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+            "section": "Authentication responses and reauthentication",
+            "reviewed": "2026-09-27",
+            "scope": "Current OWASP guidance reviewed 2026-09-27; production mechanisms remain provider-specific."
+          }
+        ]
+      },
+      {
+        "id": "authorization-ownership",
+        "title": "4. Enforce tenant, owner and action authorization",
+        "stage": "foundation",
+        "takeaway": "An authenticated user still needs permission for this object and operation.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Authorization is a decision over principal, resource, action and relevant context. Roles alone often miss object relationships: a member may update their own document but not another member’s. Tenant checks prevent a same-named subject from crossing organizational boundaries.",
+              "The reference policy accepts only read/update, requires matching tenant, then grants owners both actions and readers read-only access. Every other action defaults to denial. UI visibility and unpredictable identifiers are usability measures, not authorization enforcement."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Alice in red can read a, cannot read Bob’s b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
+              "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
+            ],
+            "example": "from security_lab import Principal, DOCUMENTS, authorized\nassert authorized(Principal('alice','red'),DOCUMENTS['a'],'update')\nassert not authorized(Principal('alice','red'),DOCUMENTS['c'],'read')\nassert not authorized(Principal('reviewer','red','reader'),DOCUMENTS['b'],'update')"
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a delete action with an explicit policy and expand the matrix before implementing it. Test a same-subject cross-tenant request.",
+          "solution": "Decide exactly who may delete; unsupported actions remain denied until that policy exists. Add owner/nonowner, tenant, role, anonymous and missing-object cases for delete. Enforce the decision at the data-change boundary; do not merely add a delete button.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Matrix covers subject, tenant and action.",
+            "Unknown actions deny by default.",
+            "Denied reads reveal no object contents."
+          ]
+        },
+        "quiz": {
+          "question": "Alice owns a blue-tenant document but has a red-tenant principal. Should ownership alone grant access?",
+          "options": [
+            "No; the tenant boundary must also match before ownership grants an action.",
+            "Yes; matching the owner string overrides tenant boundaries.",
+            "Yes; an authenticated member can read all private objects."
+          ],
+          "correct": 0,
+          "explanation": "No; the tenant boundary must also match before ownership grants an action."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V8: authorization design and operation",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x17-V8-Authorization.md",
+            "section": "V8: authorization design and operation",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP Authorization Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+            "section": "Deny by default; validate permissions on every request",
+            "reviewed": "2026-09-27",
+            "scope": "Selected server-side object-authorization guidance, not a complete enterprise entitlement model."
+          }
+        ],
+        "diagram": {
+          "title": "A trusted identity still needs object permission",
+          "summary": "Alice/red requests a private object. Tenant matching is required before owner/reader and action checks; denial returns no private payload.",
+          "nodes": [
+            {
+              "id": "request",
+              "label": "Request: document ID",
+              "description": "Untrusted request selects a target."
+            },
+            {
+              "id": "principal",
+              "label": "Trusted Alice/red principal",
+              "description": "Authentication adapter, not request JSON, establishes identity."
+            },
+            {
+              "id": "tenant",
+              "label": "Tenant match",
+              "description": "Object must belong to red."
+            },
+            {
+              "id": "owner",
+              "label": "Owner/action policy",
+              "description": "Owner read/update or reader read only."
+            },
+            {
+              "id": "deny",
+              "label": "Denied: no private data",
+              "description": "Missing/foreign/unsupported paths fail."
+            },
+            {
+              "id": "allow",
+              "label": "Allowed copied document",
+              "description": "Only the authorized object data crosses the boundary."
+            }
+          ],
+          "edges": [
+            {
+              "from": "request",
+              "to": "tenant",
+              "label": "load target context"
+            },
+            {
+              "from": "principal",
+              "to": "tenant",
+              "label": "trusted tenant"
+            },
+            {
+              "from": "tenant",
+              "to": "deny",
+              "label": "different tenant"
+            },
+            {
+              "from": "tenant",
+              "to": "owner",
+              "label": "same tenant"
+            },
+            {
+              "from": "owner",
+              "to": "deny",
+              "label": "foreign owner/action"
+            },
+            {
+              "from": "owner",
+              "to": "allow",
+              "label": "explicit grant"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish identity",
+              "explanation": "Caller fields cannot create the principal. A trusted adapter supplies Alice/red before policy evaluation.",
+              "activeNodes": [
+                "request",
+                "principal"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Check tenant first",
+              "explanation": "Alice/red requesting c in blue is denied even if its owner is named Alice.",
+              "activeNodes": [
+                "principal",
+                "tenant",
+                "deny"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Check object and action",
+              "explanation": "Within red, Bob b is denied to Alice; Alice a is granted. A reader gets read only, not update.",
+              "activeNodes": [
+                "owner",
+                "deny",
+                "allow"
+              ],
+              "activeEdges": [
+                3,
+                4,
+                5
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "input-contracts",
+        "title": "5. Validate a narrow update contract",
+        "stage": "foundation",
+        "takeaway": "Validation accepts supported data; authorization determines whether it may be applied.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A request schema should define accepted fields, types, sizes and normalization. It should reject unsupported shapes before state changes. Validation does not prove identity, permission or business correctness; it is one boundary among several.",
+              "parse_update accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "A payload with title plus owner is rejected even when the title is valid. A title at 80 characters succeeds; 81 fails. A control character embedded inside the normalized title fails. All accepted output is a new dictionary, so validation does not mutate the caller.",
+              "Validate at the server boundary and then authorize the particular update. Browser validation can improve feedback but is easily bypassed. Database constraints provide another layer for persisted invariants."
+            ],
+            "example": "from security_lab import parse_update\nassert parse_update({'title':' Notes '}) == {'title':'Notes'}\n# {'title':'Notes','owner':'alice'} is rejected, not mass-assigned."
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a description field with a stated maximum length, and test missing/extra fields, wrong types, boundaries and normalization.",
+          "solution": "Define the schema first, deliberately allow the new field, and preserve rejection of owner/role/tenant. Add both accepted boundaries and one-past-limit failures. Apply only allowed fields after object authorization; never persist the whole request dictionary by default.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Unexpected privilege fields are rejected.",
+            "Boundary values and malformed shapes are tested.",
+            "Validation and permission remain separate checks."
+          ]
+        },
+        "quiz": {
+          "question": "Why reject owner in a title-update payload?",
+          "options": [
+            "A valid title proves the caller may change every field.",
+            "Ownership is server-controlled context, so accepting it through broad assignment could bypass object policy.",
+            "All strings are unsafe regardless of context."
+          ],
+          "correct": 1,
+          "explanation": "Ownership is server-controlled context, so accepting it through broad assignment could bypass object policy."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V2: input validation and business logic",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
+            "section": "V2: input validation and business logic",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "sessions",
+        "title": "6. Manage session rotation, expiry and logout",
+        "stage": "foundation",
+        "takeaway": "A session is a bearer capability with a lifecycle.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A server session maps an unpredictable opaque identifier to authenticated context. Whoever presents a valid bearer identifier may act as that session, so protect it in transport/storage and never log it. The application must define creation, expiry, privilege changes and revocation.",
+              "Sessions in the kit generate random identifiers using Python secrets, rotate a previous session during login, expire after five minutes using injected time, and revoke on logout. The short lifetime is a fixture policy, not a universal recommendation. There is no durable store, idle timeout or multi-worker coordination here."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Login at time 1 creates an expiry at 301. A lookup at 300 succeeds and at 301 fails. Rotation makes the old identifier unusable. The tests control time rather than sleeping, so the exact boundary is repeatable.",
+              "A production session store must handle concurrent requests, expiry cleanup, privilege changes and deployment persistence. Logout should revoke server state rather than merely remove a browser display flag."
+            ],
+            "example": "from security_lab import Sessions, Principal\ns = Sessions()\nold = s.login(Principal('alice','red'),0)\nnew = s.login(Principal('alice','red'),1,old)\nassert old != new\ns.logout(new)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Add an idle timeout policy to a copy of the fixture. Specify how concurrent requests update last-use time and test expiry boundaries.",
+          "solution": "Store last-use and absolute expiry separately. Reject when either limit is reached, refresh only after valid use, and define atomic updates for a real shared store. Test old-token rotation, exactly-at-expiry, logout and privilege-change revocation. Do not label the local dictionary as distributed session evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Rotation invalidates the old session.",
+            "Expiry is tested at the exact boundary.",
+            "Logout revokes server state."
+          ]
+        },
+        "quiz": {
+          "question": "Why does clearing a client-side logged-in flag not prove logout?",
+          "options": [
+            "Only the page title determines whether a session is valid.",
+            "Session identifiers can never be copied by an attacker.",
+            "A stolen bearer session can still work unless the server session is revoked or expires."
+          ],
+          "correct": 2,
+          "explanation": "A stolen bearer session can still work unless the server session is revoked or expires."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V7: session lifecycle and termination",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md",
+            "section": "V7: session lifecycle and termination",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "cookies-transport",
+        "title": "7. Set cookies and transport policies deliberately",
+        "stage": "foundation",
+        "takeaway": "Cookie attributes reduce specific exposure paths; they do not replace application checks.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A browser sends cookies according to scope and attributes. Secure limits transmission to secure contexts; HttpOnly prevents ordinary JavaScript cookie reads; SameSite influences cross-site sending. Path/domain scope and expiry also matter. None of these attributes establishes object authorization.",
+              "Prefer a deliberately scoped session cookie over exposing a session ID to application JavaScript without need. For a __Host- prefixed cookie, browsers require Secure, Path=/ and no Domain. A real integration must be tested under HTTPS and the browser’s current behavior."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The example is a response-header design, not an HTTP server in the fixture. HttpOnly can hinder token theft via script, but an XSS payload may still send authenticated actions from the same page. SameSite defense also has workflow limitations and should not be described as universal CSRF protection.",
+              "Cross-origin frontend/backend designs need careful credential, origin and cookie decisions. Test the intended browser flow rather than copying a permissive CORS rule. TLS protects traffic in transit; it does not make a compromised endpoint trustworthy.",
+              "Cookie Path selects where the browser sends the cookie; it does not isolate an application from hostile content on another path. Keep untrusted applications on appropriate distinct origins and test the actual browser policy."
+            ],
+            "example": "Set-Cookie: __Host-session=<opaque>; Secure; HttpOnly; Path=/; SameSite=Lax\n# No Domain attribute. Use HTTPS.\n# Header illustration only; the offline lab sends no HTTP traffic."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain what each attribute does and identify which protections still need separate server logic.",
+          "solution": "Secure constrains cookie transport, HttpOnly blocks normal script access, Path/host prefix constrain scope, and SameSite reduces some cross-site sending. Keep authorization, CSRF verification, XSS prevention and revocation as separate controls. Verify actual headers and browser behavior in the opt-in web extension.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Attributes are matched to their specific effects.",
+            "HTTPS/browser evidence is distinguished from header prose.",
+            "HttpOnly is not claimed to stop all XSS effects."
+          ]
+        },
+        "quiz": {
+          "question": "Does HttpOnly prevent a same-page malicious script from making authenticated requests?",
+          "options": [
+            "No; it blocks ordinary cookie reads, but the script may still trigger requests that carry the cookie.",
+            "Yes; it disables every script in the page.",
+            "Yes; it performs object authorization for the server."
+          ],
+          "correct": 0,
+          "explanation": "No; it blocks ordinary cookie reads, but the script may still trigger requests that carry the cookie."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V3: browser security controls",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
+            "section": "V3: browser security controls",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "RFC 6265 HTTP State Management Mechanism",
+            "url": "https://www.rfc-editor.org/rfc/rfc6265.html",
+            "section": "Sections 4.1.2.5–4.1.2.6: Secure and HttpOnly",
+            "reviewed": "2026-09-27",
+            "scope": "RFC 6265 cookie semantics; SameSite and cookie prefixes are additional current browser policies, not defined by this original RFC."
+          },
+          {
+            "title": "MDN Set-Cookie reference",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie",
+            "section": "Attributes, SameSite, cookie prefixes and browser compatibility",
+            "reviewed": "2026-09-27",
+            "scope": "Current browser-reference guidance reviewed 2026-09-27; Path controls sending scope but is not a security boundary. Verify supported browser behavior."
+          }
+        ]
+      },
+      {
+        "id": "passwords-mfa",
+        "title": "8. Use established password and MFA mechanisms",
+        "stage": "foundation",
+        "takeaway": "Authentication strength includes storage, recovery and independent factors.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Passwords must be stored using a suitable password-hashing mechanism with salts and an appropriate work factor, not encryption for later recovery or a fast general-purpose hash. Established libraries/providers handle these details; the course deliberately provides no homemade password hash.",
+              "Multi-factor authentication combines factors with distinct compromise properties. Two passwords are not two independent factor types. Recovery, factor enrollment and replacement can become weaker bypasses if they are not protected and monitored."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Design a login-and-recovery table: operation, required proof, throttling, session effect and safe audit outcome. A password change or account recovery may require revoking prior sessions. The offline module can test the downstream revocation policy but cannot prove a real factor ceremony.",
+              "Choose phishing-resistant mechanisms where the application’s risk and provider support justify them. Avoid treating an SMS code or authenticator code as identical to a passkey’s properties. Record the actual provider mechanism and tested failure paths."
+            ],
+            "example": "Operation: factor replacement\nRequired proof: strong reauthentication + provider policy\nFailure: do not change factor or issue privileged session\nEvidence: old factor revoked, new enrollment verified, sanitized audit"
+          }
+        ],
+        "exercise": {
+          "prompt": "Review a recovery flow that emails a reusable reset link and keeps every old session active. Propose specific corrections.",
+          "solution": "Use a short-lived single-use recovery capability with secure generation/storage, rate controls and a defined reauthentication policy. Invalidate the capability after use and decide session revocation on successful recovery. Verify provider behavior instead of writing a custom token or password scheme.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Password storage uses an established mechanism.",
+            "Recovery/enrollment paths are reviewed.",
+            "Distinct factor properties are understood."
+          ]
+        },
+        "quiz": {
+          "question": "Does a password plus a second password constitute distinct factor types?",
+          "options": [
+            "Yes; a second password removes the need for secure recovery.",
+            "No; both are knowledge factors and can share compromise paths.",
+            "Yes; any two text fields automatically provide independent factors."
+          ],
+          "correct": 1,
+          "explanation": "No; both are knowledge factors and can share compromise paths."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V6: password and multifactor authentication",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
+            "section": "V6: password and multifactor authentication",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP Password Storage Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+            "section": "Password hashing algorithms and work factors",
+            "reviewed": "2026-09-27",
+            "scope": "Current mechanism guidance reviewed 2026-09-27; no production hashing implementation supplied."
+          }
+        ]
+      },
+      {
+        "id": "csrf",
+        "title": "9. Verify CSRF at cookie-authenticated mutations",
+        "stage": "intermediate",
+        "takeaway": "A browser sending a cookie does not prove the user intended this request.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Cross-site request forgery exploits ambient browser credentials to cause an unwanted action. A victim’s browser may attach a valid session cookie to an attacker-initiated request. Authentication alone therefore does not establish deliberate user intent for a state-changing operation.",
+              "The synthetic session stores an unpredictable CSRF token and requires a matching token for a mutation. This illustrates the server-side synchronizer-token decision. A real implementation also defines safe methods, origin checks, SameSite policy and framework integration; GET should not mutate state."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B’s token, and reject an expired session. ASCII validation ensures malformed input fails as PermissionError rather than leaking an internal comparison exception.",
+              "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
+            ],
+            "example": "from security_lab import Sessions, Principal\ns=Sessions(); sid=s.login(Principal('alice','red'),0)\ntoken=s.records[sid][2]  # trusted fixture inspection\ns.csrf(sid,token,1)\n# A missing or another session's token is denied."
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a state-changing endpoint contract covering authentication, CSRF, authorization and validation in a safe order.",
+          "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. Add real browser/HTTP tests separately; local token comparisons do not establish route integration.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Missing and cross-session tokens fail.",
+            "Expired sessions cannot use a CSRF token.",
+            "Same-origin XSS remains a separate risk."
+          ]
+        },
+        "quiz": {
+          "question": "What does a valid session cookie alone establish for a mutation?",
+          "options": [
+            "The user intentionally requested every mutation from any site.",
+            "The input data is automatically valid and owned.",
+            "Authentication context may be valid, but request intent and object authorization still need their own controls."
+          ],
+          "correct": 2,
+          "explanation": "Authentication context may be valid, but request intent and object authorization still need their own controls."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V3: cross-site request forgery",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
+            "section": "V3: cross-site request forgery",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP CSRF Prevention Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+            "section": "Synchronizer token pattern and defense in depth",
+            "reviewed": "2026-09-27",
+            "scope": "Cookie-authenticated web mutations; bearer-only APIs and browser integrations require separate threat analysis."
+          }
+        ]
+      },
+      {
+        "id": "xss-context",
+        "title": "10. Encode output for its actual context",
+        "stage": "intermediate",
+        "takeaway": "Untrusted text becomes executable only when a sink interprets it as code or markup.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Cross-site scripting occurs when untrusted content is interpreted as executable browser content. The safe operation depends on the output context: text nodes, attributes, URLs, JavaScript and CSS have different rules. Generic input validation is not a universal output encoder.",
+              "title_html validates the title then uses Python html.escape for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The test compares exact encoded output for a synthetic script string and ensures an img-shaped input is not emitted as a raw tag. These strings are test data in memory; no attack is sent to a site or browser.",
+              "Prefer template autoescaping and safe DOM text APIs. If rich HTML is truly required, use a maintained sanitizer with an explicit allowed-content policy. A content security policy can reduce impact but does not make unsafe sinks correct."
+            ],
+            "example": "from security_lab import title_html\nassert title_html('<script>alert(1)</script>') == '<h1>&lt;script&gt;alert(1)&lt;/script&gt;</h1>'\n# Valid only for the documented HTML text context."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why reusing title_html’s escaping inside a JavaScript string or an href is unsafe. Propose a safe sink for plain text.",
+          "solution": "Use textContent or the template engine’s escaped text context for plain text. JavaScript and URL contexts require their own APIs/validation and should not receive copied HTML escaping. Test the actual rendering sink in a browser integration rather than claiming the local text fixture covers every context.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Exact HTML text encoding is checked.",
+            "Contexts are not conflated.",
+            "Rich HTML requires a separate sanitizer policy."
+          ]
+        },
+        "quiz": {
+          "question": "Can HTML text escaping be reused as a universal JavaScript/URL defense?",
+          "options": [
+            "No; encoding and validation must match the actual sink context.",
+            "Yes; replacing angle brackets secures every possible browser context.",
+            "Yes; validation makes output encoding unnecessary."
+          ],
+          "correct": 0,
+          "explanation": "No; encoding and validation must match the actual sink context."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V1: output encoding and sanitization",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
+            "section": "V1: output encoding and sanitization",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP XSS Prevention Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+            "section": "Output encoding by context and safe sinks",
+            "reviewed": "2026-09-27",
+            "scope": "HTML text-only fixture; no browser certification or rich-HTML sanitizer."
+          }
+        ]
+      },
+      {
+        "id": "sql-injection",
+        "title": "11. Bind data separately from SQL structure",
+        "stage": "intermediate",
+        "takeaway": "A query parameter is data; it must not become SQL syntax.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "SQL injection occurs when untrusted input changes the structure of a database instruction. Bind parameters with the driver rather than concatenate quoted values. Parameters handle values; identifiers or sort directions require an explicit allowlist mapping because they are part of structure.",
+              "find_title uses SQLite’s ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The synthetic input apostrophe OR 1=1 is searched literally and matches no title. The normal Alice private value returns one row, and the total row count remains two. This exercises a real local SQL engine’s binding, not merely a mock query string.",
+              "Prepared queries do not establish object authorization. Scope the queried records to the trusted principal/tenant and apply least database privileges. An ORM can still expose injection if raw SQL strings are assembled unsafely."
+            ],
+            "example": "from security_lab import synthetic_database, find_title\nc=synthetic_database()\ntry:\n    assert find_title(c,\"' OR 1=1 --\") == []\nfinally:\n    c.close()"
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a caller-selectable sort order without concatenating arbitrary caller text into SQL. Explain how ownership remains enforced.",
+          "solution": "Map a small allowed name such as title_ascending to a fixed SQL fragment chosen by server code; reject every other sort value. Bind all values through the driver. Add principal/tenant restrictions to data access and test foreign-object requests separately from injection-shaped input.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Injection-shaped input remains data.",
+            "Normal query behavior still works.",
+            "Identifier choices are allowlisted, not parameterized as values."
+          ]
+        },
+        "quiz": {
+          "question": "Can a value parameter safely stand in for an arbitrary table name?",
+          "options": [
+            "No parameter binding is needed when using an ORM.",
+            "No; identifiers are query structure and need a fixed server-side allowlist or another trusted construction policy.",
+            "Yes; the driver interprets any bound string as a table identifier."
+          ],
+          "correct": 1,
+          "explanation": "No; identifiers are query structure and need a fixed server-side allowlist or another trusted construction policy."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V1: injection prevention",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
+            "section": "V1: injection prevention",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "Python sqlite3 documentation",
+            "url": "https://docs.python.org/3.11/library/sqlite3.html",
+            "section": "How to use placeholders to bind values",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ SQLite in-memory fixture; syntax of another database driver may differ."
+          }
+        ]
+      },
+      {
+        "id": "oauth-roles",
+        "title": "12. Understand OAuth delegation and its participants",
+        "stage": "intermediate",
+        "takeaway": "OAuth delegates access; it is not by itself a complete user-login protocol.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "OAuth has a resource owner, client, authorization server and resource server. The client obtains an access token with an intended scope and audience so it can access a protected resource. Different participants have different trust relationships and credentials.",
+              "Do not assume that receiving an access token means the client has authenticated the user for its own login purposes. OpenID Connect adds a standardized identity layer. An access token’s scope is also not a substitute for application ownership policy."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Draw a notebook client, training identity provider and document API. The authorization server issues access for the API; the API validates the token using its configured mechanism and then applies object authorization. The client should not invent validation based on merely decoding token text.",
+              "The offline fixture begins after a trusted adapter produces a principal. The opt-in provider worksheet specifies the real flow and required negative cases; no outbound requests, account creation or credentials are part of the local baseline."
+            ],
+            "example": "Client -> authorization server: authorization request\nAuthorization server -> client: code\nClient -> token endpoint: code + applicable proof\nClient -> document API: access token\nAPI: validate token, then authorize document action"
+          }
+        ],
+        "exercise": {
+          "prompt": "Label every participant and distinguish client login evidence from API access evidence.",
+          "solution": "Use OpenID Connect for the client’s identity needs and an appropriately validated access token for the API. Record issuer, audience, client type and scope. Map trusted identity into application policy; a provider login does not establish document ownership. Execute a real flow only in the opted-in training tenant.",
+          "solutionFormat": "prose",
+          "checks": [
+            "OAuth participants are correctly named.",
+            "Access and identity tokens are not conflated.",
+            "Application authorization follows token validation."
+          ]
+        },
+        "quiz": {
+          "question": "Does an OAuth access token automatically prove a client’s user-login identity?",
+          "options": [
+            "Yes; every access token is an ID token with the same audience.",
+            "Yes; any decoded subject field is sufficient.",
+            "No; OAuth access delegation and a standardized identity/login layer have different contracts."
+          ],
+          "correct": 2,
+          "explanation": "No; OAuth access delegation and a standardized identity/login layer have different contracts."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V10: OAuth client and resource server security",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
+            "section": "V10: OAuth client and resource server security",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "RFC 9700 OAuth Security BCP",
+            "url": "https://www.rfc-editor.org/rfc/rfc9700.html",
+            "section": "Sections 2.1–2.3: flows, tokens and privileges",
+            "reviewed": "2026-09-27",
+            "scope": "Published January 2025 best current practice; no custom protocol implementation."
+          }
+        ]
+      },
+      {
+        "id": "oidc-login",
+        "title": "13. Use OpenID Connect for verified login context",
+        "stage": "intermediate",
+        "takeaway": "An ID token has a specific client and validation contract.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "OpenID Connect builds an identity layer on OAuth. An ID token communicates authentication claims to its intended client. The client must validate it under the issuer’s documented metadata, key and claim rules; it should not treat a decoded payload as a verified identity.",
+              "ID tokens and access tokens serve different recipients and purposes. An ID token for the client is not a bearer access token for every API. Stable subject identity includes the issuer context; email is not universally a permanent account key."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library’s integration tests.",
+              "The local Principal is a downstream test seam only. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
+            ],
+            "example": "OIDC login adapter -> verified (issuer, subject)\nApplication account mapping -> internal principal\nDocument policy -> permitted action\n# An unverified payload cannot enter this pipeline as a principal."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why using email as the sole account identifier can create an identity-mapping problem.",
+          "solution": "Email can change and its verification/uniqueness properties depend on the issuer. Map the issuer’s stable subject under the provider contract to an internal account. Validate the ID token for its intended client and enforce application authorization separately.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Issuer and subject mapping are explicit.",
+            "ID/access token purpose is distinguished.",
+            "Real library validation is not replaced by a fixture identity."
+          ]
+        },
+        "quiz": {
+          "question": "Should an API accept a client ID token as its access credential without an explicit protocol contract?",
+          "options": [
+            "No; tokens have intended recipients and purposes, and the API needs its documented access-token validation contract.",
+            "Yes; all JWT-looking strings authorize all APIs.",
+            "Yes; a matching display email replaces audience validation."
+          ],
+          "correct": 0,
+          "explanation": "No; tokens have intended recipients and purposes, and the API needs its documented access-token validation contract."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V10: OpenID Connect",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
+            "section": "V10: OpenID Connect",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OpenID Connect Core 1.0 errata set 2",
+            "url": "https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation",
+            "section": "Section 3.1.3.7: ID Token Validation",
+            "reviewed": "2026-09-27",
+            "scope": "OIDC Core 1.0 incorporating errata set 2; implement through a maintained provider/library."
+          }
+        ]
+      },
+      {
+        "id": "pkce-state",
+        "title": "14. Bind an authorization response to its initiating flow",
+        "stage": "intermediate",
+        "takeaway": "PKCE, state and nonce address related but distinct protocol threats.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "In authorization-code flows, PKCE binds code redemption to proof based on a per-request verifier. The authorization request sends a derived challenge; redemption includes the verifier. S256 is the standard challenge method normally required by modern provider policy. A public client cannot securely hide a static secret in distributed code.",
+              "State binds the returned response to client request context under the selected framework; OIDC nonce binds the identity response to the authentication request. These values are not interchangeable. Use library-managed correlation and one-time flow handling rather than homegrown storage tricks."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Trace the training flow: initiation stores correlation, authorization sends challenge/state/nonce as applicable, callback checks correlation and redeems the code with the verifier, and the client validates the ID token. Replay and mismatched redirect/correlation cases must fail.",
+              "The worksheet deliberately has no cryptographic implementation or live endpoint. Real tests use the provider’s supported flow and record sanitized outcomes. A passing authorization policy unit test says nothing about PKCE verification."
+            ],
+            "example": "Authorization: code_challenge=<S256 challenge>, state=<correlation>\nRedemption: code_verifier=<per-flow verifier>\nOIDC request/ID token: nonce under the chosen library contract\n# Do not log these values or implement fake redemption."
+          }
+        ],
+        "exercise": {
+          "prompt": "Write negative tests for a reused code, wrong verifier and mismatched callback state. State which component must enforce each.",
+          "solution": "The authorization server rejects invalid/reused code redemption and wrong PKCE proof under its contract. The client/library rejects mismatched callback correlation and validates nonce where required. Use a training tenant and maintained library; record observed denials rather than inventing a local fake token result.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Code redemption and callback correlation are distinct.",
+            "Per-flow proof is not a stored public client secret.",
+            "Negative evidence comes from the actual provider integration."
+          ]
+        },
+        "quiz": {
+          "question": "Are state, nonce and PKCE verifier interchangeable?",
+          "options": [
+            "Yes; PKCE removes all redirect URI and token validation needs.",
+            "No; they bind different parts of the client and authorization flow and must follow their own protocol contracts.",
+            "Yes; any random string in one field secures the entire protocol."
+          ],
+          "correct": 1,
+          "explanation": "No; they bind different parts of the client and authorization flow and must follow their own protocol contracts."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V10: authorization flow defenses",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
+            "section": "V10: authorization flow defenses",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "RFC 7636 PKCE",
+            "url": "https://www.rfc-editor.org/rfc/rfc7636.html",
+            "section": "Sections 4.1–4.6: verifier, challenge and verification",
+            "reviewed": "2026-09-27",
+            "scope": "RFC 7636 plus OAuth Security BCP RFC 9700; no custom verifier protocol supplied."
+          }
+        ]
+      },
+      {
+        "id": "token-validation",
+        "title": "15. Verify tokens before trusting claims",
+        "stage": "intermediate",
+        "takeaway": "Decoding is parsing; cryptographic and claim validation establish a trusted token.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A JWT payload can be decoded without establishing who created it. A resource server must use a maintained validator configured for allowed algorithms, trusted issuer/key sources, intended audience and relevant lifetime/type rules. Accepting whichever algorithm or key URL a token suggests can cross a trust boundary.",
+              "Signature success alone is insufficient: a correctly signed token for another audience or issuer must still fail. Token purpose and expected claim rules matter. Opaque access tokens require the provider’s documented mechanism, which may be introspection rather than local JWT validation."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The opt-in validation matrix includes wrong issuer, wrong audience, expiry, tampered signature, disallowed algorithm, token-type confusion and key rotation. It states expected outcomes before recording provider/library results. The offline module implements none of those cryptographic checks.",
+              "After validation, map minimal trusted claims to a principal and still perform action/object authorization. Do not log raw bearer tokens as evidence; use sanitized case IDs and validator outcomes."
+            ],
+            "example": "Untrusted token -> established validator\nChecks: signature/key policy + issuer + audience + lifetime + purpose\nVerified claims -> principal mapping -> object policy\n# JSON/base64 decoding is not a validation step."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why a signed token with the wrong audience must be rejected and how you would test key rotation.",
+          "solution": "The signature proves a key endorsed the contents, not that this API is the intended recipient. Reject wrong audience under the API contract. In a training provider, rotate keys using its supported process, test cached-key refresh and old-key behavior, and preserve sanitized validator evidence. Do not implement fake JWT verification.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Wrong audience/issuer fail despite valid syntax.",
+            "Allowed algorithms and key sources are configured.",
+            "Policy checks remain after validation."
+          ]
+        },
+        "quiz": {
+          "question": "Is a parsed payload with exp in the future a verified token?",
+          "options": [
+            "Yes; expiry is the only required token property.",
+            "Yes; base64 text proves the issuer’s identity.",
+            "No; parsing and one claim check do not establish signature, issuer, audience or token-purpose validity."
+          ],
+          "correct": 2,
+          "explanation": "No; parsing and one claim check do not establish signature, issuer, audience or token-purpose validity."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V9: token integrity and validation",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x18-V9-Self-contained-Tokens.md",
+            "section": "V9: token integrity and validation",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "RFC 8725 JWT Best Current Practices",
+            "url": "https://www.rfc-editor.org/rfc/rfc8725.html",
+            "section": "Section 3: algorithm, issuer, audience and explicit typing",
+            "reviewed": "2026-09-27",
+            "scope": "JWT BCP; use maintained validators, not the synthetic Principal constructor."
+          }
+        ]
+      },
+      {
+        "id": "secrets",
+        "title": "16. Keep secrets out of source and routine evidence",
+        "stage": "advanced",
+        "takeaway": "A secret needs restricted access, rotation and a safe failure path.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Secrets include credentials, signing material, session identifiers and bearer tokens. Configuration names or public client IDs are not automatically secrets, but classify them deliberately. Store production secrets in an appropriate managed mechanism with least access; do not embed them in source, bundles, screenshots or logs.",
+              "Rotation changes the value and the consumers that depend on it. A deployment needs a defined transition, old-value revocation and failure handling. Deleting a source file does not revoke leaked copies. The downloaded course uses no live credentials."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The identity-provider worksheet records environment variable names and sanitized metadata only. Test evidence uses case IDs, not tokens. For a suspected leak, revoke/rotate, investigate scope and preserve approved sanitized evidence before claiming remediation.",
+              "Environment variables can still leak through process diagnostics or error reporting. Redaction should be field-aware and tested; a broad promise that logs are safe is weaker than checking the actual emitted fields."
+            ],
+            "example": "Evidence: issuer URL, client type, validator/library version, case ID\nExcluded: client secret, bearer token, authorization code, session cookie\nRotation: create -> deploy consumers -> verify -> revoke old -> audit"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a signing-key or API-key rotation plan with a rollback constraint and explicit old-key revocation evidence.",
+          "solution": "Use the provider/secret manager’s supported key lifecycle, deploy consumers with an overlap policy where appropriate, verify the new value, revoke the old value and test failure after revocation. A rollback must not silently re-enable a compromised key. Keep raw secret values out of the report.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Only synthetic/nonsecret fixture values are stored.",
+            "Rotation includes consumers and revocation.",
+            "Rollback does not reactivate compromised authority."
+          ]
+        },
+        "quiz": {
+          "question": "Does removing a leaked credential from the latest source snapshot revoke it?",
+          "options": [
+            "No; revoke or rotate it through the issuing system and investigate historical/external copies.",
+            "Yes; credentials depend on whether Git tracks them.",
+            "Yes; log redaction automatically deletes remote access."
+          ],
+          "correct": 0,
+          "explanation": "No; revoke or rotate it through the issuing system and investigate historical/external copies."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V13: secrets management",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x22-V13-Configuration.md",
+            "section": "V13: secrets management",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP Secrets Management Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+            "section": "Lifecycle, rotation and access control",
+            "reviewed": "2026-09-27",
+            "scope": "Current guidance; no live secret store is provisioned by the course."
+          }
+        ]
+      },
+      {
+        "id": "logging",
+        "title": "17. Record useful security events without sensitive payloads",
+        "stage": "advanced",
+        "takeaway": "Logs should explain a decision without becoming a second sensitive-data store.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Security evidence needs enough context to diagnose denied access, login abuse and configuration failures. Structured event names, internal subject IDs, outcome categories and correlation identifiers can help. Raw passwords, tokens, cookies and full private bodies should not be routine evidence.",
+              "Log injection can forge apparent records when untrusted text contains control characters or when an application concatenates log lines. Use structured logging and validated fields; apply storage permissions, retention and monitoring to the log system itself."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "safe_audit permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
+              "A denied request can be audited without publishing private object contents or detailed account-existence information. Logs should be reviewed for actual emitted fields, not only for a redaction helper that callers can bypass."
+            ],
+            "example": "from security_lab import safe_audit\nassert safe_audit('document.read','u-123','denied') == {'event':'document.read','subject':'u-123','outcome':'denied'}\n# The subject is an internal ID, never a password/token/body."
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a correlation identifier with a bounded contract and test malformed values. Explain what a production logging adapter must provide.",
+          "solution": "Validate length/type/control characters, emit a dedicated field and test that credential fields never appear. The adapter needs protected storage, retention, integrity considerations and monitoring. A local dictionary test verifies only event construction, not log delivery or operational response.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Control characters cannot forge event fields.",
+            "Sensitive bearer/credential fields are absent.",
+            "Construction and durable delivery evidence are distinct."
+          ]
+        },
+        "quiz": {
+          "question": "What does the local safe_audit test establish?",
+          "options": [
+            "That tokens should be stored to make debugging easier.",
+            "Only that the emitted structured record meets the small field contract; durable protection and monitoring remain separate.",
+            "That every application log is permanently confidential."
+          ],
+          "correct": 1,
+          "explanation": "Only that the emitted structured record meets the small field contract; durable protection and monitoring remain separate."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V16: security logging and error handling",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
+            "section": "V16: security logging and error handling",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "dependencies",
+        "title": "18. Track dependencies and respond to advisories",
+        "stage": "advanced",
+        "takeaway": "A dependency inventory links shipped software to maintenance decisions.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Your application includes code and packages you did not author. Pin and lock dependencies under an explicit update policy, retain provenance and inventory what is actually shipped. A package version in a README does not prove the deployed artifact uses that version.",
+              "An advisory scanner reports known signals, not a complete exploitability assessment or a guarantee that everything unreported is safe. Consider affected versions, reachable use, deployment context and available fixes. Test upgrades rather than ignoring breaking changes indefinitely."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The local kit uses only Python’s standard library and the installed Git binary, so its inventory starts with those runtime versions and local source files. This reduces setup but does not mean the runtimes have no vulnerabilities.",
+              "For a real OIDC adapter, record library/provider/runtime versions and follow their maintenance notices. Map an advisory to the shipped lockfile/artifact, assess impact, update, run security regression checks, and document unresolved exposure."
+            ],
+            "example": "Inventory: component / version / source / shipped artifact / owner\nAdvisory: affected range / reachable use / exposure / fix\nEvidence: updated lockfile + candidate tests + artifact version\nRemaining risk: explicit decision and review date"
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe the response to a critical advisory in a library that your API imports but may not exercise in the affected mode.",
+          "solution": "Confirm the actual shipped version, inspect the affected behavior and exposure, and prioritize a supported fix. Record any temporary mitigation with tests and an owner/review date. Absence of a reachable path is a reasoned assessment, not a reason to discard version/provenance evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Inventory reflects the shipped candidate.",
+            "Known vulnerability signals are interpreted in context.",
+            "Updates include regression evidence."
+          ]
+        },
+        "quiz": {
+          "question": "Does a scanner with zero findings prove the application has no security flaws?",
+          "options": [
+            "Yes; zero findings is equivalent to complete security verification.",
+            "Yes; runtime maintenance is unnecessary once source is tested.",
+            "No; it reports the scanner’s known coverage, while design, configuration and unknown vulnerabilities still matter."
+          ],
+          "correct": 2,
+          "explanation": "No; it reports the scanner’s known coverage, while design, configuration and unknown vulnerabilities still matter."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V15: secure dependencies and development",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
+            "section": "V15: secure dependencies and development",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "abuse-limits",
+        "title": "19. Bound abuse without overstating a local limiter",
+        "stage": "advanced",
+        "takeaway": "Rate controls need identity, resource and deployment assumptions.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Attackers can abuse legitimate operations through repetition: login attempts, expensive searches, uploads or repeated notifications. Bound inputs, work and request rates according to the asset and failure cost. Authentication does not eliminate abuse by compromised or legitimate accounts.",
+              "FixedWindowLimiter allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The tests permit the first three Alice requests, deny the fourth, allow Bob independently and reset Alice at minute 1. This verifies a small algorithm contract, not distributed abuse prevention. The dictionary also needs bounded storage/expiry for a real long-lived service.",
+              "Production policies often combine account, origin/network and global resource limits with monitoring. Define response behavior and safe recovery so defensive limits do not cause avoidable lockout or denial of service."
+            ],
+            "example": "from security_lab import FixedWindowLimiter\nl=FixedWindowLimiter()\nassert [l.allow('alice',t) for t in [1,2,3,4]] == [True,True,True,False]\nassert l.allow('alice',60)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain how three independent workers can exceed the intended global limit. Propose a shared-store contract and a boundary-burst test.",
+          "solution": "Each worker owns its own count, so the total can exceed three. Use an atomic shared limiting mechanism with explicit failure and expiry behavior. Test concurrent updates and requests just before/after the window boundary. The local reference deliberately does not claim fairness, distributed consistency or memory bounds.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Limit keys are trusted context.",
+            "Exact per-window behavior is tested.",
+            "Worker multiplication and burst limitations are stated."
+          ]
+        },
+        "quiz": {
+          "question": "Why does the single-process limiter not prove a three-request global limit?",
+          "options": [
+            "Independent workers maintain independent counters unless a coordinated shared mechanism enforces the policy.",
+            "Python dictionaries automatically synchronize across every machine.",
+            "A caller-selected key makes the limit stronger."
+          ],
+          "correct": 0,
+          "explanation": "Independent workers maintain independent counters unless a coordinated shared mechanism enforces the policy."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V2: business logic and anti-automation",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
+            "section": "V2: business logic and anti-automation",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      },
+      {
+        "id": "verification",
+        "title": "20. Verify controls with adversarial cases and explicit evidence",
+        "stage": "advanced",
+        "takeaway": "A security claim needs an observed boundary and a stated coverage limit.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Security tests should challenge each control’s actual failure mode. A successful request demonstrates functionality; foreign ownership, malformed input, expired session and injected text demonstrate selected defenses. Keep assertions about effects as well as status: a denied mutation must not change stored state.",
+              "ASVS is a verification standard with a larger scope than this selected course. Choose applicable requirements and a suitable level for the actual application. Do not call a handful of local tests ASVS certification or assume every requirement is applicable to every architecture."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. It has no HTTP server or crypto validator.",
+              "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
+            ],
+            "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a verification record for two passing local controls and two unexecuted provider/browser controls.",
+          "solution": "Record the exact fixture command and observed assertions for local authorization and SQL binding. Mark token signature validation and browser cookie/CSRF behavior unexecuted until tested through real adapters/routes. Use ASVS 5.0.0 section pointers to guide applicability; avoid a blanket compliance claim.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Expected and observed outcomes are separated.",
+            "Denied paths assert no data/effect leakage.",
+            "Unexecuted boundaries remain visible."
+          ]
+        },
+        "quiz": {
+          "question": "Does the local authorization matrix prove real API routes are protected?",
+          "options": [
+            "Yes; any unit suite is complete ASVS certification.",
+            "No; integration evidence must show each actual route uses the trusted identity and authorization boundary.",
+            "Yes; imported policy code automatically protects every endpoint."
+          ],
+          "correct": 1,
+          "explanation": "No; integration evidence must show each actual route uses the trusted identity and authorization boundary."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: Assessment and certification scope",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md",
+            "section": "Assessment and certification scope",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          },
+          {
+            "title": "OWASP ASVS project",
+            "url": "https://owasp.org/projects/asvs",
+            "section": "Using the ASVS and versioned requirements",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 selected controls, not a formal certification assessment."
+          }
+        ]
+      },
+      {
+        "id": "incident-recovery",
+        "title": "21. Prepare a bounded response and secure recovery",
+        "stage": "advanced",
+        "takeaway": "Response restores control while preserving useful, sanitized evidence.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "An incident plan names who can act, which assets are at risk, what evidence is needed and how to contain the problem. Examples include leaked credentials, unauthorized object access, malicious uploads and a vulnerable dependency exposed in production. The correct containment depends on the mechanism.",
+              "Recovery is more than restarting a service. Revoke compromised authority, correct the boundary, verify negative cases, restore legitimate access and monitor recurrence. Preserve approved evidence without turning logs into a collection of bearer tokens or private records."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "For a cross-owner read defect, stop the affected exposure, establish the scope, fix server authorization and test every alternate endpoint. For a leaked bearer or key, revocation/rotation is necessary even after source cleanup. Communication and destructive operations require the organization’s actual authority.",
+              "The advanced kit produces an offline runbook with triggers, actions, ownership, validation, rollback and remaining risk. It sends no messages or scans live systems. The runbook is reviewable practice, not evidence of an executed incident response."
+            ],
+            "example": "Trigger: cross-tenant read observed\nContainment: restrict affected route under approved authority\nEvidence: sanitized request IDs and candidate versions\nCorrection: tenant + object policy at data boundary\nVerification: foreign subject/tenant denial + legitimate success\nRecovery: approved rollout and monitoring"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a response for a leaked key and a cross-owner access bug. Explain why their immediate remedies differ.",
+          "solution": "Revoke/rotate the leaked key through its issuing mechanism and investigate copies/usage. Contain the access bug, correct the authorization boundary and retest alternate data paths. Both need evidence, accountable decisions and monitored recovery, but fixing code alone does not revoke a key and revoking one key alone does not repair every object-policy route.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Containment targets the actual mechanism.",
+            "Corrections have negative regression tests.",
+            "Runbook authority and unexecuted status are explicit."
+          ]
+        },
+        "quiz": {
+          "question": "Why is deploying an authorization fix insufficient remediation for a separately leaked API key?",
+          "options": [
+            "New source code automatically removes every stolen key.",
+            "A successful health check proves all compromised authority is gone.",
+            "The leaked capability remains usable until its issuing system revokes or rotates it."
+          ],
+          "correct": 2,
+          "explanation": "The leaked capability remains usable until its issuing system revokes or rotates it."
+        },
+        "references": [
+          {
+            "title": "OWASP ASVS 5.0.0: V16: incident evidence and safe error handling",
+            "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
+            "section": "V16: incident evidence and safe error handling",
+            "reviewed": "2026-09-27",
+            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation: Private-document authorization contract",
+        "description": "Verify tenant/owner/action decisions and narrow update shapes on synthetic records.",
+        "exitCriteria": [
+          "Cross-owner and cross-tenant reads are denied without private data.",
+          "Unknown actions default to denial.",
+          "Privilege fields cannot be mass-assigned.",
+          "The report does not call synthetic principals real authentication."
+        ],
+        "project": {
+          "title": "Private-document authorization contract",
+          "brief": "Verify tenant/owner/action decisions and narrow update shapes on synthetic records.",
+          "requirements": [
+            "Run the AuthorizationTests suite.",
+            "Explain the already-authenticated Principal boundary.",
+            "Build an owner/nonowner/tenant/role/action matrix including unknown and anonymous cases.",
+            "Reject owner/role fields in update bodies.",
+            "Complete the threat-model worksheet for read and update."
+          ],
+          "rubric": [
+            "Cross-owner and cross-tenant reads are denied without private data.",
+            "Unknown actions default to denial.",
+            "Privilege fields cannot be mass-assigned.",
+            "The report does not call synthetic principals real authentication."
+          ],
+          "solution": "Use Principal only as trusted fixture context. The policy requires a matching tenant and either ownership or read-only reader permission; unknown actions deny. read_document returns a copy and the same outward unavailable error for denied/missing. parse_update accepts only title. Run AuthorizationTests, record the matrix and extend a copy with a new explicitly tested action."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate: Validated content and session defense portfolio",
+        "description": "Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF decision with negative assertions.",
+        "exitCriteria": [
+          "Synthetic attack strings remain data in the documented contexts.",
+          "SQL binding executes against a real in-memory SQLite fixture.",
+          "Expired/revoked sessions and wrong CSRF tokens fail.",
+          "Local methods are not presented as browser or cryptographic integration."
+        ],
+        "project": {
+          "title": "Validated content and session defense portfolio",
+          "brief": "Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF decision with negative assertions.",
+          "requirements": [
+            "Run ValidationTests and SessionTests.",
+            "Test malformed shapes, exact title boundaries and control characters.",
+            "Compare encoded HTML text and a literal injection-shaped SQL search.",
+            "Verify rotation, exact expiry and logout.",
+            "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
+            "Write a route contract identifying browser/HTTP tests still needed."
+          ],
+          "rubric": [
+            "Synthetic attack strings remain data in the documented contexts.",
+            "SQL binding executes against a real in-memory SQLite fixture.",
+            "Expired/revoked sessions and wrong CSRF tokens fail.",
+            "Local methods are not presented as browser or cryptographic integration."
+          ],
+          "solution": "Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. HTTP route calls, cookie attributes and real browser requests remain separately verified extensions."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced: Security verification and identity integration review",
+        "description": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+        "exitCriteria": [
+          "No raw token, cookie, credential or private body enters evidence.",
+          "Local test claims match their actual boundary.",
+          "Provider and browser results are labeled unexecuted until observed.",
+          "No fake JWT cryptography is implemented.",
+          "The report rejects blanket ASVS certification and covers practical recovery."
+        ],
+        "project": {
+          "title": "Security verification and identity integration review",
+          "brief": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+          "requirements": [
+            "Run the entire local regression suite and OperationsTests.",
+            "Document log fields and single-process rate-limit limitations.",
+            "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
+            "Complete identity-provider-lab.md without placing secrets in the report.",
+            "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
+            "Write an incident/rotation plan with authorized containment and recovery."
+          ],
+          "rubric": [
+            "No raw token, cookie, credential or private body enters evidence.",
+            "Local test claims match their actual boundary.",
+            "Provider and browser results are labeled unexecuted until observed.",
+            "No fake JWT cryptography is implemented.",
+            "The report rejects blanket ASVS certification and covers practical recovery."
+          ],
+          "solution": "Run all nine unittest methods. Use safe_audit and the limiter as narrowly scoped local examples, and complete verification-matrix.md with exact commands/outcomes. The IdP worksheet requires explicit learner opt-in to a training tenant and a maintained OIDC/token library; execute its matrix only after configuring that environment. Record sanitized provider/library versions and denial outcomes, not token text. Add an incident response and rotation plan targeting the actual compromised mechanism."
+        }
+      }
+    ],
+    "resources": {
+      "folder": "application-security-practice",
+      "files": [
+        {
+          "id": "security_lab-py",
+          "href": "paths/application-security/security_lab.py",
+          "role": "reference",
+          "description": "Synthetic security reference boundaries"
+        },
+        {
+          "id": "test_security_lab-py",
+          "href": "paths/application-security/test_security_lab.py",
+          "role": "test",
+          "description": "Positive and adversarial regression tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/application-security/README.md",
+          "role": "guide",
+          "description": "Runtime/setup/scope instructions"
+        },
+        {
+          "id": "threat-model-md",
+          "href": "paths/application-security/threat-model.md",
+          "role": "guide",
+          "description": "threat model"
+        },
+        {
+          "id": "verification-matrix-md",
+          "href": "paths/application-security/verification-matrix.md",
+          "role": "guide",
+          "description": "verification matrix"
+        },
+        {
+          "id": "identity-provider-lab-md",
+          "href": "paths/application-security/identity-provider-lab.md",
+          "role": "guide",
+          "description": "Opt-in real-provider validation worksheet"
+        },
+        {
+          "id": "foundation-kit-md",
+          "href": "paths/application-security/foundation-kit.md",
+          "role": "guide",
+          "description": "foundation kit"
+        },
+        {
+          "id": "intermediate-kit-md",
+          "href": "paths/application-security/intermediate-kit.md",
+          "role": "guide",
+          "description": "intermediate kit"
+        },
+        {
+          "id": "advanced-kit-md",
+          "href": "paths/application-security/advanced-kit.md",
+          "role": "guide",
+          "description": "advanced kit"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Private-document authorization contract",
+          "goal": "Verify tenant/owner/action decisions and narrow update shapes on synthetic records.",
+          "fileIds": [
+            "security_lab-py",
+            "test_security_lab-py",
+            "README-md",
+            "threat-model-md",
+            "verification-matrix-md",
+            "identity-provider-lab-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and foundation-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run the AuthorizationTests suite.",
+            "Explain the already-authenticated Principal boundary.",
+            "Build an owner/nonowner/tenant/role/action matrix including unknown and anonymous cases.",
+            "Reject owner/role fields in update bodies.",
+            "Complete the threat-model worksheet for read and update.",
+            "Compare submitted evidence with the rubric: Cross-owner and cross-tenant reads are denied without private data. Unknown actions default to denial. Privilege fields cannot be mass-assigned. The report does not call synthetic principals real authentication."
+          ],
+          "commands": [
+            {
+              "label": "Run authorization matrix",
+              "command": "python -B -m unittest -v test_security_lab.AuthorizationTests",
+              "expected": "Two methods pass: permission matrix/default denial and allowed-field/copy boundaries."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Name assets, threats and trust boundaries",
+              "href": "#topic/application-security/assets-threats"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Validated content and session defense portfolio",
+          "goal": "Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF decision with negative assertions.",
+          "fileIds": [
+            "security_lab-py",
+            "test_security_lab-py",
+            "README-md",
+            "threat-model-md",
+            "verification-matrix-md",
+            "identity-provider-lab-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and intermediate-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run ValidationTests and SessionTests.",
+            "Test malformed shapes, exact title boundaries and control characters.",
+            "Compare encoded HTML text and a literal injection-shaped SQL search.",
+            "Verify rotation, exact expiry and logout.",
+            "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
+            "Write a route contract identifying browser/HTTP tests still needed.",
+            "Compare submitted evidence with the rubric: Synthetic attack strings remain data in the documented contexts. SQL binding executes against a real in-memory SQLite fixture. Expired/revoked sessions and wrong CSRF tokens fail. Local methods are not presented as browser or cryptographic integration."
+          ],
+          "commands": [
+            {
+              "label": "Run content and session defenses",
+              "command": "python -B -m unittest -v test_security_lab.ValidationTests test_security_lab.SessionTests",
+              "expected": "Five methods pass: content boundaries, HTML encoding, SQLite binding, session lifecycle and CSRF denials."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Verify CSRF at cookie-authenticated mutations",
+              "href": "#topic/application-security/csrf"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Security verification and identity integration review",
+          "goal": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+          "fileIds": [
+            "security_lab-py",
+            "test_security_lab-py",
+            "README-md",
+            "threat-model-md",
+            "verification-matrix-md",
+            "identity-provider-lab-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and advanced-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run the entire local regression suite and OperationsTests.",
+            "Document log fields and single-process rate-limit limitations.",
+            "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
+            "Complete identity-provider-lab.md without placing secrets in the report.",
+            "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
+            "Write an incident/rotation plan with authorized containment and recovery.",
+            "Compare submitted evidence with the rubric: No raw token, cookie, credential or private body enters evidence. Local test claims match their actual boundary. Provider and browser results are labeled unexecuted until observed. No fake JWT cryptography is implemented. The report rejects blanket ASVS certification and covers practical recovery."
+          ],
+          "commands": [
+            {
+              "label": "Run all local security evidence",
+              "command": "python -B -m unittest -v test_security_lab.py",
+              "expected": "Nine methods pass. This does not execute HTTP/browser/provider or cryptographic validation."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "16. Keep secrets out of source and routine evidence",
+              "href": "#topic/application-security/secrets"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "assets-threats": "foundation",
+        "identity-principals": "foundation",
+        "authentication-boundary": "foundation",
+        "authorization-ownership": "foundation",
+        "input-contracts": "foundation",
+        "sessions": "foundation",
+        "cookies-transport": "foundation",
+        "passwords-mfa": "foundation",
+        "csrf": "intermediate",
+        "xss-context": "intermediate",
+        "sql-injection": "intermediate",
+        "oauth-roles": "intermediate",
+        "oidc-login": "intermediate",
+        "pkce-state": "intermediate",
+        "token-validation": "intermediate",
+        "secrets": "advanced",
+        "logging": "advanced",
+        "dependencies": "advanced",
+        "abuse-limits": "advanced",
+        "verification": "advanced",
+        "incident-recovery": "advanced"
+      },
+      "bundle": {
+        "href": "paths/application-security/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "dotnet",
     "title": "C# & .NET",
     "category": "Programming",
@@ -7482,6 +9235,1745 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "delivery-operations",
+    "title": "Delivery & Operations",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "24 lessons bridge checked code to reviewable release, health, compatible rollout, telemetry and recovery, with a tested local service and concrete React/.NET/SQL integration runbook.",
+    "level": "Foundations → intermediate → selected advanced practice",
+    "prerequisites": [
+      "Use the existing React (react), C#/.NET (dotnet), SQL Server (sql-server) and Networking & the Web (networking-web) paths for their application/data/network boundaries.",
+      "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
+    ],
+    "outcomes": [
+      "Name source/artifact/config/schema identities and user release invariants.",
+      "Run HTTP/storage and operational arithmetic checks on a synthetic local service.",
+      "Package a non-root container and plan same-origin frontend/API/private-database topology.",
+      "Review secrets, CI permissions, migration compatibility and promotion/rollback gates.",
+      "Interpret logs/metrics/SLOs and bounded workload evidence honestly.",
+      "Verify independent restoration and coordinate a synthetic incident with recorded limits."
+    ],
+    "setup": [
+      "Extract the complete kit; run python -m unittest -v test_release_app.py test_release_tools.py.",
+      "Start release_app.py only on loopback for manual synthetic checks; http.server is not a production server.",
+      "Read integration-runbook.md for the learner-built React/.NET/SQL release walkthrough; the immediate runtime is a separate Python/SQLite stand-in.",
+      "Docker and ci-example.yaml are opt-in exercises requiring their tools/review; neither was executed or enabled by opening the kit."
+    ],
+    "nextSteps": [
+      "Implement and verify the integration runbook with your actual React adapter, persistent/authenticated .NET API and SQL Server database.",
+      "Add real TLS, trusted proxy configuration, telemetry exporters and staging token/provider checks before exposure.",
+      "Study Kubernetes after understanding image, process, data and release boundaries.",
+      "Repeat a provider-specific restore and compatible deployment drill; keep recorded execution distinct from conceptual review."
+    ],
+    "sources": [
+      {
+        "title": "Google SRE monitoring",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "title": "GitHub Actions secure use",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      {
+        "title": "GitHub workflow artifacts",
+        "url": "https://docs.github.com/en/actions/tutorials/store-and-share-data"
+      },
+      {
+        "title": "npm ci",
+        "url": "https://docs.npmjs.com/cli/v11/commands/npm-ci"
+      },
+      {
+        "title": "Python HTTP server",
+        "url": "https://docs.python.org/3/library/http.server.html"
+      },
+      {
+        "title": "Docker build concepts",
+        "url": "https://docs.docker.com/build/concepts/overview/"
+      },
+      {
+        "title": "Docker multi-stage builds",
+        "url": "https://docs.docker.com/build/building/multi-stage/"
+      },
+      {
+        "title": "Dockerfile reference",
+        "url": "https://docs.docker.com/reference/dockerfile/"
+      },
+      {
+        "title": "ASP.NET Core proxy configuration",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-10.0"
+      },
+      {
+        "title": "EF Core applying migrations",
+        "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying"
+      },
+      {
+        "title": "Kubernetes probes",
+        "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/"
+      },
+      {
+        "title": "Azure deployment stamps",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/deployment-stamp"
+      },
+      {
+        "title": "OpenTelemetry logs",
+        "url": "https://opentelemetry.io/docs/concepts/signals/logs/"
+      },
+      {
+        "title": "Google SRE implementing SLOs",
+        "url": "https://sre.google/workbook/implementing-slos/"
+      },
+      {
+        "title": "Google SRE handling overload",
+        "url": "https://sre.google/sre-book/handling-overload/"
+      },
+      {
+        "title": "Python SQLite backup",
+        "url": "https://docs.python.org/3/library/sqlite3.html"
+      },
+      {
+        "title": "SQL Server restore planning",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/restore-and-recovery-overview-sql-server?view=sql-server-ver17"
+      },
+      {
+        "title": "Google SRE managing incidents",
+        "url": "https://sre.google/sre-book/managing-incidents/"
+      },
+      {
+        "title": "Google SRE release engineering",
+        "url": "https://sre.google/sre-book/release-engineering/"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "release-contract",
+        "title": "1. Define what a release promises",
+        "takeaway": "A release joins code, configuration, data compatibility and an operational decision.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A release joins code, configuration, data compatibility and an operational decision. A green build proves a particular artifact can be produced; it does not prove requests succeed in the target environment. Name one user operation, its owner and a rollback trigger before choosing automation. The course follows a small note service so every claim has an observable boundary."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The executable download is a Python/SQLite stand-in. A separate integration runbook maps the same decisions onto a React static build, .NET API and SQL Server. Their actual artifacts and credentials must be supplied by the learner; no complete three-service stack is bundled."
+            ],
+            "example": "Source commit → tests → immutable artifact → target config → readiness → smoke → observe\nUser contract: existing notes remain readable across v1 → v2."
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a release contract for adding a notes label without losing old notes.",
+          "solution": "Preserve old reads/writes during mixed versions; record artifact ID, schema version, allowed config and smoke checks. Stop rollout on readiness failure or data corruption, and retain v1 plus a compatible schema.",
+          "checks": [
+            "Separate build success from service success.",
+            "Name one invariant and a stop condition."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which evidence directly tests the release user contract?",
+          "options": [
+            "The artifact ZIP exists",
+            "Existing notes can be read after deploying the candidate",
+            "The commit message says ready"
+          ],
+          "correct": 1,
+          "explanation": "Existing notes can be read after deploying the candidate. Preserve old reads/writes during mixed versions; record artifact ID, schema version, allowed config and smoke checks. Stop rollout on readiness failure or data corruption, and retain v1 plus a compatible schema."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "Monitoring symptoms versus causes",
+            "reviewed": "2026-09-27",
+            "scope": "Service monitoring principles; numeric examples are local teaching scenarios. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "environments",
+        "title": "2. Separate local, test, staging and production",
+        "takeaway": "An environment is a set of endpoints, identities, data and configuration.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An environment is a set of endpoints, identities, data and configuration. Calling a machine staging does not isolate it if its connection string reaches production. Make boundaries inspectable: loopback-only service, disposable test database and synthetic records. Promote an artifact between environments while changing only reviewed configuration, rather than rebuilding different binaries for each environment."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The test suite allocates and deletes its own temporary directory. Manual commands create notes.db in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
+            ],
+            "example": "Tests: random loopback port + temporary notes.db\nLocal manual app: 127.0.0.1:8080\nStaging: separate database + least-privilege identity"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draw the four environment boundaries and mark where real customer data is forbidden.",
+          "solution": "Use temporary fixtures in tests, synthetic staging data and a production-only runtime identity. Never infer database identity from the frontend URL; inspect the server configuration without printing credentials.",
+          "checks": [
+            "Identify the actual database endpoint.",
+            "Keep test records synthetic."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A staging UI calls a production API. Which boundary is wrong?",
+          "options": [
+            "The browser theme",
+            "The staging request/data boundary",
+            "The build compiler"
+          ],
+          "correct": 1,
+          "explanation": "The staging request/data boundary. Use temporary fixtures in tests, synthetic staging data and a production-only runtime identity. Never infer database identity from the frontend URL; inspect the server configuration without printing credentials."
+        },
+        "references": [
+          {
+            "title": "GitHub Actions secure use",
+            "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+            "section": "Principle of least privilege",
+            "reviewed": "2026-09-27",
+            "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "source-release",
+        "title": "3. Name source, artifact and deployed version separately",
+        "takeaway": "A source commit identifies code, an artifact digest identifies bytes, and a deployed release identifies what is running with a particular configuration.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A source commit identifies code, an artifact digest identifies bytes, and a deployed release identifies what is running with a particular configuration. Tags and names are convenient but can be moved or overwritten. Keep a release record tying these identities together. The /version endpoint in the lab reports a configured release label, so it is useful for smoke checks but is not cryptographic proof."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Do not treat an environment variable named RELEASE_VERSION as evidence of the image digest. A process can report v2 while running v1 bytes. Record the digest from the artifact store or container runtime and compare it with the approved release record."
+            ],
+            "example": "commit: abc123\nartifact_sha256: recorded from release_tools.py digest\nrelease_label: v2\nconfig_revision: reviewed-7\nschema: notes-v1"
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a release record and explain which values a hostile process could forge.",
+          "solution": "Store source commit, artifact checksum, builder provenance, config revision and schema compatibility in the reviewed record. A self-reported version is only one signal; verify artifact identity independently before promotion.",
+          "checks": [
+            "Distinguish labels from digests.",
+            "Tie deployment to approved bytes."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which property does a SHA-256 checksum establish by itself?",
+          "options": [
+            "The publisher is trusted",
+            "The bytes match the recorded digest",
+            "The application has no bugs"
+          ],
+          "correct": 1,
+          "explanation": "The bytes match the recorded digest. Store source commit, artifact checksum, builder provenance, config revision and schema compatibility in the reviewed record. A self-reported version is only one signal; verify artifact identity independently before promotion."
+        },
+        "references": [
+          {
+            "title": "GitHub workflow artifacts",
+            "url": "https://docs.github.com/en/actions/tutorials/store-and-share-data",
+            "section": "Validating artifacts",
+            "reviewed": "2026-09-27",
+            "scope": "Current Actions artifact lifecycle; local byte hashing is separately tested. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "reproducible-builds",
+        "title": "4. Reproduce dependencies and toolchains",
+        "takeaway": "A repeatable build controls source, runtime, dependency graph and build inputs.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A repeatable build controls source, runtime, dependency graph and build inputs. A lockfile narrows dependency resolution; it does not freeze the operating system or prove all packages are safe. The standard-library Python service has no package restore, while React needs its npm lockfile and .NET needs reviewed restore inputs. Record tool versions and base-image identity alongside test results."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The downloadable Dockerfile deliberately uses the readable python:3.13-slim tag. Tags can change. As an assessed extension, resolve its current digest, replace both FROM references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
+            ],
+            "example": "React: npm ci; npm test; npm run build\n.NET: dotnet restore; dotnet test -c Release; dotnet publish -c Release\nPython: python --version; python -m unittest -v"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why two builds from one commit might produce different images.",
+          "solution": "A mutable base tag or unlocked transitive dependency can change inputs. Record a known base digest and dependency lock, then rebuild deliberately when applying security updates; reproducibility must not mean ignoring patches.",
+          "checks": [
+            "Record runtime and dependency inputs.",
+            "Explain how patches enter the process."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does npm ci primarily constrain?",
+          "options": [
+            "The server secret values",
+            "Installation against the recorded npm lockfile",
+            "Every future browser version"
+          ],
+          "correct": 1,
+          "explanation": "Installation against the recorded npm lockfile. A mutable base tag or unlocked transitive dependency can change inputs. Record a known base digest and dependency lock, then rebuild deliberately when applying security updates; reproducibility must not mean ignoring patches."
+        },
+        "references": [
+          {
+            "title": "npm ci",
+            "url": "https://docs.npmjs.com/cli/v11/commands/npm-ci",
+            "section": "Description",
+            "reviewed": "2026-09-27",
+            "scope": "npm 11; applies to the existing React kit, not the package-free Python lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "test-gates",
+        "title": "5. Match tests to release boundaries",
+        "takeaway": "A useful gate rejects a candidate for a reason tied to user risk.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A useful gate rejects a candidate for a reason tied to user risk. Unit checks cover pure decisions, HTTP tests cover protocol behavior, restart checks cover durable state and restore drills cover recoverability. The lab has seven HTTP/storage tests and five tool tests. Their assertions are evidence for these local behaviors, not load capacity, authentication or public internet safety."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Passing checks that mirror only setup can hide missing behavior. Intentionally remove a readiness distinction or break parameterization in a copied lab, observe a specific failure and restore the implementation. Keep destructive experiments in the disposable practice copy."
+            ],
+            "example": "python -m unittest -v test_release_app.py test_release_tools.py\nGate examples: invalid body → 400; not-ready → 503; live → 200; v2→v1 retains rows."
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a test for each of build, deployment and recovery.",
+          "solution": "Type-check/build the actual source; smoke-check deployed /version and readiness; restore a snapshot into a separate database and assert record values. Mark unexecuted Docker or staging checks as planned.",
+          "checks": [
+            "State an observable assertion per gate.",
+            "Separate executed and planned evidence."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which test addresses data recovery?",
+          "options": [
+            "A successful image pull",
+            "Reading expected records from a separately restored database",
+            "Counting test filenames"
+          ],
+          "correct": 1,
+          "explanation": "Reading expected records from a separately restored database. Type-check/build the actual source; smoke-check deployed /version and readiness; restore a snapshot into a separate database and assert record values. Mark unexecuted Docker or staging checks as planned."
+        },
+        "references": [
+          {
+            "title": "Python HTTP server",
+            "url": "https://docs.python.org/3/library/http.server.html",
+            "section": "Security considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "containers",
+        "title": "6. Understand image, container and volume",
+        "takeaway": "An image is a packaged filesystem and launch configuration.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An image is a packaged filesystem and launch configuration. A container is a running instance with its own process and writable layer. Removing a container can discard data in that layer; a volume has a separate lifecycle. Port publication forwards traffic but EXPOSE is metadata. Start with one process and one loopback-published port before adding orchestration."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The lab writes to /tmp so a non-root container can run without a host data mount. This is intentionally disposable. Persisted data requires a reviewed volume path and permissions; bind-mounting an arbitrary folder does not make its contents a consistent database backup."
+            ],
+            "example": "docker build -t notebook-release:v1 .\ndocker run --rm -p 127.0.0.1:8080:8080 notebook-release:v1\n# Temporary /tmp/notes.db is lost when the container is removed."
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict the note count after deleting and recreating the unmounted container.",
+          "solution": "It returns to zero because each fresh container initializes a new SQLite file in its own writable /tmp. Preserve data only with an explicit volume strategy and prove it by replacing the container.",
+          "checks": [
+            "Distinguish image from instance.",
+            "Explain data lifecycle."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does EXPOSE 8080 do?",
+          "options": [
+            "Publishes port 8080 on every host interface",
+            "Documents the listening port without publishing it",
+            "Creates a TLS certificate"
+          ],
+          "correct": 1,
+          "explanation": "Documents the listening port without publishing it. It returns to zero because each fresh container initializes a new SQLite file in its own writable /tmp. Preserve data only with an explicit volume strategy and prove it by replacing the container."
+        },
+        "references": [
+          {
+            "title": "Docker build concepts",
+            "url": "https://docs.docker.com/build/concepts/overview/",
+            "section": "Images and containers",
+            "reviewed": "2026-09-27",
+            "scope": "Linux containers/BuildKit; local Python 3.13 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "docker-build",
+        "title": "7. Use a tested build stage and narrow runtime image",
+        "takeaway": "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes the same local suite, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The .dockerignore file permits only the Dockerfile and two named Python sources. The numeric runtime user can write /tmp; it cannot write arbitrary /app files. Verify the final image user and filesystem with docker inspect, rather than assuming a small image is hardened or vulnerability-free."
+            ],
+            "example": "FROM python:3.13-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
+          }
+        ],
+        "exercise": {
+          "prompt": "Inspect the supplied Dockerfile and identify which files survive in runtime.",
+          "solution": "Only release_app.py is copied into /app. The Python interpreter/base files remain from the runtime base. Tests run in the build dependency stage, but no Docker build has occurred until the learner executes it with a daemon.",
+          "checks": [
+            "Identify build and runtime inputs.",
+            "Record image inspection evidence."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why copy only runtime files across stages?",
+          "options": [
+            "To remove all base-image vulnerabilities automatically",
+            "To exclude build/test material unnecessary at runtime",
+            "To make data backups unnecessary"
+          ],
+          "correct": 1,
+          "explanation": "To exclude build/test material unnecessary at runtime. Only release_app.py is copied into /app. The Python interpreter/base files remain from the runtime base. Tests run in the build dependency stage, but no Docker build has occurred until the learner executes it with a daemon."
+        },
+        "references": [
+          {
+            "title": "Docker multi-stage builds",
+            "url": "https://docs.docker.com/build/building/multi-stage/",
+            "section": "Use multi-stage builds",
+            "reviewed": "2026-09-27",
+            "scope": "BuildKit multi-stage mechanism; supplied Dockerfile reviewed, daemon exercise optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "runtime-configuration",
+        "title": "8. Inject configuration and handle process shutdown",
+        "takeaway": "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label. Validate values before serving. Exec-form CMD makes Python the container process so it receives termination signals. The app responds to SIGTERM by stopping accept/serve work and closing its server; this simple lab does not implement a fully bounded production request-drain protocol."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The default host is loopback outside containers and 0.0.0.0 in the Dockerfile. Threaded request handlers are daemon threads, so shutdown is intentionally limited. For a real .NET service, propagate cancellation to handlers and database work, bound drain time and test an in-flight write during termination."
+            ],
+            "example": "RELEASE_VERSION=v2\nPORT=8080\nRELEASE_DB=/tmp/notes.db\nCMD [\"python\", \"release_app.py\"]\n# On stop: signal handler requests server.shutdown from another thread."
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a shutdown check for a long-running request.",
+          "solution": "Start a controlled request, send termination, observe whether it finishes within the chosen deadline and verify committed state after restart. Do not equate successful process exit with every accepted request being durable.",
+          "checks": [
+            "Identify accepted-request behavior.",
+            "State a drain deadline."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What is a benefit of exec-form CMD?",
+          "options": [
+            "It guarantees transactions finish",
+            "The intended process receives container signals directly",
+            "It eliminates runtime configuration"
+          ],
+          "correct": 1,
+          "explanation": "The intended process receives container signals directly. Start a controlled request, send termination, observe whether it finishes within the chosen deadline and verify committed state after restart. Do not equate successful process exit with every accepted request being durable."
+        },
+        "references": [
+          {
+            "title": "Dockerfile reference",
+            "url": "https://docs.docker.com/reference/dockerfile/",
+            "section": "Shell and exec form; CMD",
+            "reviewed": "2026-09-27",
+            "scope": "Dockerfile stable instructions; runtime and build behavior reviewed, daemon execution remains optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "secrets",
+        "title": "9. Keep secrets out of artifacts and logs",
+        "takeaway": "A secret is a value whose disclosure grants access or reveals protected data.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A secret is a value whose disclosure grants access or reveals protected data. Inject it from an appropriate secret store at runtime or a build secret mount when truly needed during build. ARG, ENV and copied .env files can leave sensitive values in image metadata or layers. Redaction is a helpful backstop, not a guarantee that transformed values never escape."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The toy service is unauthenticated and belongs on loopback or a dedicated local cluster. Adding a fake token to its config would not supply real authorization. When integrating SQL Server, use a narrowly scoped runtime identity and a separate migration identity; rotate leaked credentials even if later logs are hidden."
+            ],
+            "example": "Bad: COPY .env /app/.env\nBad: ARG DATABASE_PASSWORD=real-value\nBetter: a runtime reference to a secret managed outside source and image\nLab: no credentials or token validation supplied."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain how to handle a connection string accidentally uploaded as an artifact.",
+          "solution": "Stop distribution, revoke/rotate the credential, remove affected artifacts according to incident policy and review exposure. Rebuild clean bytes; deleting the current source line alone does not erase old image layers or downloads.",
+          "checks": [
+            "Identify historic artifact exposure.",
+            "Include credential rotation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A password is removed in a later Docker layer. What follows?",
+          "options": [
+            "Earlier layers may still contain it",
+            "The secret is necessarily erased from history",
+            "No rotation is needed"
+          ],
+          "correct": 0,
+          "explanation": "Earlier layers may still contain it. Stop distribution, revoke/rotate the credential, remove affected artifacts according to incident policy and review exposure. Rebuild clean bytes; deleting the current source line alone does not erase old image layers or downloads."
+        },
+        "references": [
+          {
+            "title": "GitHub Actions secure use",
+            "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+            "section": "Use secrets for sensitive information",
+            "reviewed": "2026-09-27",
+            "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "web-topology",
+        "title": "10. Connect React, .NET and SQL across explicit boundaries",
+        "takeaway": "A browser downloads React static assets and sends API requests; the API authenticates the caller and accesses SQL with its own identity.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A browser downloads React static assets and sends API requests; the API authenticates the caller and accesses SQL with its own identity. The database should not be directly reachable from the browser. Choose same-origin reverse proxy routing or a deliberately scoped cross-origin policy. Browser build-time configuration is public, so a frontend API URL is acceptable while a database password is not."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "integration-runbook.md gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to index.html. Test cookie/token assumptions and CORS with the actual staging origin."
+            ],
+            "example": "Browser HTTPS → / assets (React dist)\n                 → /api/* reverse proxy → .NET :8080\n.NET → private SQL Server TCP1433\nMigration runner → SQL with separate schema permission"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design routing for /lessons/7 and /api/tasks/7.",
+          "solution": "Return the frontend shell for the UI path when appropriate, route /api/tasks/7 to the API and preserve its HTTP errors. SQL credentials stay server-side. Verify refresh, denial, proxy headers and TLS at staging before launch.",
+          "checks": [
+            "Keep API errors distinct from SPA fallback.",
+            "Keep database credentials server-side."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Where should the SQL connection identity live?",
+          "options": [
+            "In the browser JavaScript bundle",
+            "In reviewed server-side runtime configuration",
+            "In a public query parameter"
+          ],
+          "correct": 1,
+          "explanation": "In reviewed server-side runtime configuration. Return the frontend shell for the UI path when appropriate, route /api/tasks/7 to the API and preserve its HTTP errors. SQL credentials stay server-side. Verify refresh, denial, proxy headers and TLS at staging before launch."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core proxy configuration",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-10.0",
+            "section": "Forwarded Headers Middleware",
+            "reviewed": "2026-09-27",
+            "scope": "ASP.NET Core 10 behind a trusted proxy; integration design rather than a supplied full stack. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "schema-evolution",
+        "title": "11. Release application and schema compatibly",
+        "takeaway": "A rolling release can run old and new application versions against one database.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A rolling release can run old and new application versions against one database. Expand-and-contract introduces compatible fields first, deploys readers/writers that handle both, backfills deliberately and removes old fields after evidence. Application rollback does not automatically undo data changes. Review migration SQL and its lock/runtime impact separately from the normal API deployment."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The bundled SQLite service never changes its schema between v1 and v2. Its simulated release-label rollback test therefore proves only the compatible unchanged-schema case. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
+            ],
+            "example": "v1 reads title\nMigration adds nullable label\nv2 reads title + optional label\nBackfill in bounded batches\nRemove old representation only after old consumers disappear."
+          }
+        ],
+        "exercise": {
+          "prompt": "Would you drop title before rolling out v2? Explain a safer plan.",
+          "solution": "No: old readers would fail during coexistence and binary rollback. Add a compatible representation, migrate readers/writers, measure old use, then contract in a later reviewed release with a tested recovery plan.",
+          "checks": [
+            "Describe the mixed-version interval.",
+            "Separate schema and binary rollback."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "After a destructive migration, what can binary rollback guarantee?",
+          "options": [
+            "That deleted values reappear",
+            "Only behavior compatible with the remaining schema/data",
+            "That every old query will work"
+          ],
+          "correct": 1,
+          "explanation": "Only behavior compatible with the remaining schema/data. No: old readers would fail during coexistence and binary rollback. Add a compatible representation, migrate readers/writers, measure old use, then contract in a later reviewed release with a tested recovery plan."
+        },
+        "references": [
+          {
+            "title": "EF Core applying migrations",
+            "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying",
+            "section": "SQL scripts; production deployment",
+            "reviewed": "2026-09-27",
+            "scope": "EF Core 10/SQL Server integration exercise; bundled runtime uses SQLite, not SQL Server. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "ci-pipeline",
+        "title": "12. Build CI as a bounded trust boundary",
+        "takeaway": "CI runs code from contributors and third-party actions with runner permissions.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "CI runs code from contributors and third-party actions with runner permissions. Keep pull-request checks free of deployment secrets, minimize token permissions and review actions as dependencies. Separate testing from promotion; a successful untrusted branch must not automatically publish privileged artifacts. The downloadable workflow template checks the local lab only and never installs itself into the notebook repository."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "ci-example.yaml uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
+            ],
+            "example": "pull request → checkout → Python tests → artifact record\nrelease approval → promote approved artifact (separate job/system)\npermissions: contents: read"
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify which job should receive production credentials.",
+          "solution": "Only the reviewed promotion/deployment job, after source and artifact approval, with least privilege. The pull-request test job should have none. Check trigger semantics and environment protection before enabling the template.",
+          "checks": [
+            "Separate contributor checks from promotion.",
+            "Minimize token permissions."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why are read-only permissions useful for PR checks?",
+          "options": [
+            "They prove the code is safe",
+            "They reduce effects available if test code is malicious",
+            "They skip authentication entirely"
+          ],
+          "correct": 1,
+          "explanation": "They reduce effects available if test code is malicious. Only the reviewed promotion/deployment job, after source and artifact approval, with least privilege. The pull-request test job should have none. Check trigger semantics and environment protection before enabling the template."
+        },
+        "references": [
+          {
+            "title": "GitHub Actions secure use",
+            "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+            "section": "Mitigating risks of untrusted code checkout; third-party actions",
+            "reviewed": "2026-09-27",
+            "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "artifact-promotion",
+        "title": "13. Promote the tested artifact and retain provenance",
+        "takeaway": "Rebuilding from a tag at deployment can select different dependencies than the tested build.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Rebuilding from a tag at deployment can select different dependencies than the tested build. Promote the same approved bytes, record their digest and retain the previous compatible artifact. Provenance connects the source and builder to those bytes; checksums detect changes but do not by themselves authenticate who produced them. Retention must cover the rollback window and incident investigation needs."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The lab hashes a file, not a registry image or signed attestation. For Docker use a verified registry digest after push. The workflow artifact validates transfer integrity according to the Actions mechanism; production provenance and signing require an explicit verification policy and trusted builder."
+            ],
+            "example": "python release_tools.py digest release_app.py\nRecord SHA256 with commit and test result\nPromotion selects that approved artifact, not latest\nRetain v1 until v2 verification and rollback window close."
+          }
+        ],
+        "exercise": {
+          "prompt": "An artifact is recreated after tests with different base inputs. Can it be promoted?",
+          "solution": "Treat it as a new candidate and run the required checks; do not attach the old test result to new bytes. Promotion records should point to immutable identity and independent provenance checks where required.",
+          "checks": [
+            "Tie evidence to exact bytes.",
+            "Define retention and verification."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What should deploy after candidate testing?",
+          "options": [
+            "A fresh untested rebuild from latest",
+            "The approved artifact with its recorded identity",
+            "Any image with the same friendly tag"
+          ],
+          "correct": 1,
+          "explanation": "The approved artifact with its recorded identity. Treat it as a new candidate and run the required checks; do not attach the old test result to new bytes. Promotion records should point to immutable identity and independent provenance checks where required."
+        },
+        "references": [
+          {
+            "title": "GitHub workflow artifacts",
+            "url": "https://docs.github.com/en/actions/tutorials/store-and-share-data",
+            "section": "Passing artifacts between jobs; validating artifacts",
+            "reviewed": "2026-09-27",
+            "scope": "Current Actions artifact lifecycle; local byte hashing is separately tested. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "health-contracts",
+        "title": "14. Split liveness, readiness and user smoke checks",
+        "takeaway": "Liveness asks whether the process should continue running; readiness asks whether it can accept the intended work.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Liveness asks whether the process should continue running; readiness asks whether it can accept the intended work. A dependency failure should normally remove traffic without blindly restarting every healthy process. A smoke check exercises a user operation after readiness. The lab /ready checks the local schema and a synthetic gate file; /live simply confirms the HTTP process responds."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A query such as SELECT 1 alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
+            ],
+            "example": "Create NOT_READY_FILE → /ready returns503, /live returns200\nRemove file → /ready returns200\nReadiness success → write/read a synthetic note → inspect /version"
+          }
+        ],
+        "exercise": {
+          "prompt": "During SQL maintenance, should every API be restarted by liveness?",
+          "solution": "Keep process liveness independent where possible, mark readiness false if required work is unavailable, and use bounded retries/backpressure. Resume routing after dependency recovery and smoke validation; restart only when there is evidence the process itself cannot recover.",
+          "checks": [
+            "Show distinct HTTP outcomes.",
+            "Include a user smoke operation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "The lab is not ready but live. What follows?",
+          "options": [
+            "It must be killed immediately",
+            "Stop normal routing while retaining a recoverable process",
+            "Declare every request successful"
+          ],
+          "correct": 1,
+          "explanation": "Stop normal routing while retaining a recoverable process. Keep process liveness independent where possible, mark readiness false if required work is unavailable, and use bounded retries/backpressure. Resume routing after dependency recovery and smoke validation; restart only when there is evidence the process itself cannot recover."
+        },
+        "references": [
+          {
+            "title": "Kubernetes probes",
+            "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
+            "section": "Liveness, readiness and startup probes",
+            "reviewed": "2026-09-27",
+            "scope": "Probe decision model reused for container/service operations; no cluster required for local tests. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Separate process survival from traffic eligibility",
+          "summary": "Follow one temporary readiness failure without treating it as a dead process.",
+          "nodes": [
+            {
+              "id": "gate",
+              "label": "Required work unavailable",
+              "description": "The synthetic readiness gate file exists."
+            },
+            {
+              "id": "ready",
+              "label": "Readiness 503",
+              "description": "Routing should withhold ordinary traffic."
+            },
+            {
+              "id": "live",
+              "label": "Liveness 200",
+              "description": "The HTTP process remains responsive."
+            },
+            {
+              "id": "recover",
+              "label": "Gate removed; smoke succeeds",
+              "description": "Eligibility returns after recovery and user checks."
+            }
+          ],
+          "edges": [
+            {
+              "from": "gate",
+              "to": "ready",
+              "label": "required work fails"
+            },
+            {
+              "from": "gate",
+              "to": "live",
+              "label": "process still responds"
+            },
+            {
+              "from": "ready",
+              "to": "recover",
+              "label": "dependency/gate recovers"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Observe the failure",
+              "activeNodes": [
+                "gate",
+                "ready",
+                "live"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A dependency/readiness failure and a process failure are separate decisions."
+            },
+            {
+              "title": "Recover deliberately",
+              "activeNodes": [
+                "ready",
+                "recover"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Remove the synthetic gate, check readiness and repeat a synthetic user operation before restoring normal routing."
+            }
+          ]
+        }
+      },
+      {
+        "id": "deployment-strategies",
+        "title": "15. Choose a rollout strategy and admission gate",
+        "takeaway": "A rolling deployment mixes old and new instances, blue/green keeps two environments, and a canary exposes a smaller population to a candidate.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A rolling deployment mixes old and new instances, blue/green keeps two environments, and a canary exposes a smaller population to a candidate. Each requires data compatibility and an explicit traffic decision. For one local service the learner can compare two loopback ports manually; this is a deployment exercise, not automated production canary infrastructure. Write stop conditions before observing results."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The provided app has no reverse proxy or orchestrator. Changing which local port a client calls models a traffic switch without claiming high availability. A real canary must compare error/latency/correctness across representative traffic and control concurrent deployment writers."
+            ],
+            "example": "v1 on127.0.0.1:8080; candidate v2 on127.0.0.1:8081\nCheck candidate identity/readiness/synthetic requests\nPromote only after chosen gate; retain v1\nNever run both against unsafe incompatible local files."
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose rolling or blue/green for a breaking database migration.",
+          "solution": "Neither makes the breaking schema safe by itself. First create compatibility or plan a controlled maintenance window with restore evidence. Choose the traffic strategy afterward and document resource, session and data implications.",
+          "checks": [
+            "Keep data compatibility separate from traffic strategy.",
+            "Name a quantitative stop gate."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does blue/green alone fail to solve?",
+          "options": [
+            "Keeping an old application environment available",
+            "Compatibility of destructive changes to shared data",
+            "Selecting a candidate endpoint"
+          ],
+          "correct": 1,
+          "explanation": "Compatibility of destructive changes to shared data. Neither makes the breaking schema safe by itself. First create compatibility or plan a controlled maintenance window with restore evidence. Choose the traffic strategy afterward and document resource, session and data implications."
+        },
+        "references": [
+          {
+            "title": "Azure deployment stamps",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/deployment-stamp",
+            "section": "Issues and considerations",
+            "reviewed": "2026-09-27",
+            "scope": "General deployment isolation strategy; local two-port comparison is a teaching simulation. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "rollback",
+        "title": "16. Roll back bytes without assuming data rollback",
+        "takeaway": "Rollback restores a previous application artifact or configuration only when that version still understands current data and external effects.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Rollback restores a previous application artifact or configuration only when that version still understands current data and external effects. A release can write rows that old code cannot parse, send irreversible messages or destroy fields. Classify rollback as safe, forward-fix required or restore needed before deployment. The lab tests v1/v2 labels against an unchanged schema and retains rows across host replacement."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Do not replace a live database file underneath a running server. Restore into a separate location, verify it and perform a controlled switch after stopping writers. The course runbook distinguishes release rollback from recovery to an earlier data point, which intentionally loses later writes.",
+              "The executable test changes the configured release label while reusing the same code. Actual differing-image rollback is a separate optional Docker/staging exercise."
+            ],
+            "example": "Create note in v1 → stop → start v2 using same db → read\nStop v2 → start v1 using same db → read again\nObserved: data retained, because schema stayed compatible."
+          }
+        ],
+        "exercise": {
+          "prompt": "A v2 migration removed a column v1 reads. Is reverting the image enough?",
+          "solution": "No. v1 remains incompatible. A reviewed forward fix or separately tested data recovery is required. Restoring a backup changes the data timeline and needs an explicit RPO/user reconciliation decision.",
+          "checks": [
+            "State schema compatibility evidence.",
+            "Describe lost-write consequences of restore."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which rollback claim does the supplied test prove?",
+          "options": [
+            "Rollback after every destructive schema migration",
+            "Simulated release-label and host replacement using the same code and compatible SQLite schema",
+            "Distributed failover without data loss"
+          ],
+          "correct": 1,
+          "explanation": "Simulated release-label/host replacement with the same compatible SQLite schema. No. v1 remains incompatible. A reviewed forward fix or separately tested data recovery is required. Restoring a backup changes the data timeline and needs an explicit RPO/user reconciliation decision."
+        },
+        "references": [
+          {
+            "title": "EF Core applying migrations",
+            "url": "https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying",
+            "section": "Rollback scripts and potential data loss",
+            "reviewed": "2026-09-27",
+            "scope": "EF Core 10/SQL Server integration exercise; bundled runtime uses SQLite, not SQL Server. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "structured-logs",
+        "title": "17. Log events without leaking payloads",
+        "takeaway": "Logs explain a specific event; metrics aggregate behavior.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Logs explain a specific event; metrics aggregate behavior. Record timestamp, release identity, stable route, result and a correlation identifier where useful. Do not log request bodies or authorization headers by default. The supplied JSON logs intentionally exclude note titles and query strings. They are printed to stdout so the runtime can collect them without an application-specific file location."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A production logging contract also needs access controls, retention, clock consistency and bounded cardinality. The lab does not ship a collector or tracing backend. Unknown request paths should be normalized before indexing; otherwise user-supplied identifiers can create expensive indexes or expose private data."
+            ],
+            "example": "{\"route\":\"/ready\",\"status\":503,\"release\":\"v2\"}\n{\"route\":\"/notes\",\"status\":201,\"release\":\"v2\"}\n# Note title and credentials are omitted."
+          }
+        ],
+        "exercise": {
+          "prompt": "Define a useful event for failed API authorization without recording its token.",
+          "solution": "Log stable operation, status, release and a request ID. Store only an approved subject identifier if policy allows it; never serialize raw bearer tokens. Verify logs under a denied request and review retention/access separately.",
+          "checks": [
+            "Omit bodies and credentials.",
+            "Explain retention and correlation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which field is safest for an aggregate route dimension?",
+          "options": [
+            "A full URL containing a token",
+            "A stable route template such as /tasks/{id}",
+            "The full user-written note"
+          ],
+          "correct": 1,
+          "explanation": "A stable route template such as /tasks/{id}. Log stable operation, status, release and a request ID. Store only an approved subject identifier if policy allows it; never serialize raw bearer tokens. Verify logs under a denied request and review retention/access separately."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry logs",
+            "url": "https://opentelemetry.io/docs/concepts/signals/logs/",
+            "section": "Logs",
+            "reviewed": "2026-09-27",
+            "scope": "OpenTelemetry signal concepts; bundled stdout JSON is not an OTLP exporter. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "metrics",
+        "title": "18. Measure traffic, errors, latency and saturation",
+        "takeaway": "Counters measure cumulative events, gauges describe a current level, and histograms retain a distribution useful for latency.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Counters measure cumulative events, gauges describe a current level, and histograms retain a distribution useful for latency. Interpret a counter through a rate over a window, including resets after restart. Monitor user symptoms and resource saturation together. The lab /metrics exposes simple JSON request/error totals; it deliberately supplies neither Prometheus exposition nor latency histograms."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The JSON totals include probes and instrumentation requests, so they are not an eligible-user-request SLI. A production exporter should distinguish user operations, classify errors and avoid per-user labels. Two replicas require correct aggregation; averaging percentages without their denominators can distort the result."
+            ],
+            "example": "before: requests=100, errors=2\nafter60s: requests=220, errors=5\nrequest rate=120/60=2 per second\n5xx fraction for interval=3/120=2.5%"
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare one instance with1 error/10requests and another with0 / 90.",
+          "solution": "The combined error fraction is1 / 100=1%, not the average of10% and0%=5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate.",
+          "checks": [
+            "Keep denominators aligned.",
+            "Account for counter resets."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "How should fleet error fractions be combined?",
+          "options": [
+            "Average instance percentages equally",
+            "Sum bad and eligible counts before division",
+            "Ignore low-traffic instances"
+          ],
+          "correct": 1,
+          "explanation": "Sum bad and eligible counts before division. The combined error fraction is1 / 100=1%, not the average of10% and0%=5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "The four golden signals",
+            "reviewed": "2026-09-27",
+            "scope": "Service monitoring principles; numeric examples are local teaching scenarios. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "slos",
+        "title": "19. Turn a user SLI into an error budget",
+        "takeaway": "An SLI is a measured fraction or distribution; an SLO is its target over a defined window.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An SLI is a measured fraction or distribution; an SLO is its target over a defined window. Specify eligible requests, successful outcomes and exclusions before calculating a budget. At99.9% success over10,000 eligible requests,10 bad requests are allowed;12 consumes120% of that budget. A negative remaining budget should affect release decisions, not be hidden by rounding."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The helper computes arithmetic on supplied counts. It does not gather telemetry or implement multiwindow burn alerts. A short fast-burning window should be considered alongside a longer window; a single failure fraction from a tiny sample can be noisy. Error-budget policy is an agreed operational choice."
+            ],
+            "example": "python release_tools.py slo --total 10000 --errors 12 --target 0.999\nallowed_bad=10; remaining=-2; burn_rate≈1.2"
+          }
+        ],
+        "exercise": {
+          "prompt": "Define an SLO for reading an existing note and a release policy after exhaustion.",
+          "solution": "Count eligible read attempts, classify timeout/5xx/wrong-data as bad as appropriate, choose a justified target/window and stop risk-increasing releases when the agreed policy triggers. Recovery fixes can follow a different emergency policy.",
+          "checks": [
+            "Define eligibility and window.",
+            "Do not treat arithmetic as measured reliability."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What must be defined before a meaningful error budget?",
+          "options": [
+            "Only the server CPU limit",
+            "Eligible events, good outcomes, target and window",
+            "The number of monitoring dashboards"
+          ],
+          "correct": 1,
+          "explanation": "Eligible events, good outcomes, target and window. Count eligible read attempts, classify timeout/5xx/wrong-data as bad as appropriate, choose a justified target/window and stop risk-increasing releases when the agreed policy triggers. Recovery fixes can follow a different emergency policy."
+        },
+        "references": [
+          {
+            "title": "Google SRE implementing SLOs",
+            "url": "https://sre.google/workbook/implementing-slos/",
+            "section": "Choosing an appropriate time window; error budgets",
+            "reviewed": "2026-09-27",
+            "scope": "Request-based SLO scenario; no observed production reliability claim. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "load-testing",
+        "title": "20. Describe the workload before interpreting speed",
+        "takeaway": "A load result belongs to its workload, environment and dataset.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A load result belongs to its workload, environment and dataset. Sequential closed-loop clients wait for each response and reduce offered traffic when the server slows; an arrival-rate generator asks a different overload question. Record error rate and tail latency as well as throughput. The local helper caps requests at200 and accepts only loopback HTTP URLs."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "This helper is a smoke-sized timing exercise with concurrency1, not a benchmark proving capacity. Record Python/runtime, hardware, warmup, payload and sample count. A p95 from50 samples describes few tail observations and is unstable; no speed target is guaranteed by the supplied code."
+            ],
+            "example": "python release_tools.py load http://127.0.0.1:8080/version --count 50\nOutput: model, request count, errors, p50_ms, p95_ms\nCompare v1 and v2 under the same synthetic workload."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why a slow server can appear stable under a sequential client.",
+          "solution": "The client self-throttles while waiting, hiding backlog that a fixed arrival rate could create. Compare a controlled arrival-rate experiment in an isolated environment, with stop limits and correctness checks before increasing load.",
+          "checks": [
+            "Record arrival model and dataset.",
+            "Include failure and stop criteria."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What limitation does a sequential closed-loop client have?",
+          "options": [
+            "It proves infinite parallel capacity",
+            "It may reduce offered traffic when responses slow",
+            "It sends at a fixed arrival rate regardless of latency"
+          ],
+          "correct": 1,
+          "explanation": "It may reduce offered traffic when responses slow. The client self-throttles while waiting, hiding backlog that a fixed arrival rate could create. Compare a controlled arrival-rate experiment in an isolated environment, with stop limits and correctness checks before increasing load."
+        },
+        "references": [
+          {
+            "title": "Google SRE handling overload",
+            "url": "https://sre.google/sre-book/handling-overload/",
+            "section": "The pitfalls of queries per second",
+            "reviewed": "2026-09-27",
+            "scope": "General overload behavior; local helper is bounded sequential timing, not a production load generator. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "backups",
+        "title": "21. Capture a consistent backup and define RPO",
+        "takeaway": "A backup is a recoverable copy, not simply a file that exists.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite Connection.backup into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Recovery point objective describes acceptable lost data age, while recovery time objective describes acceptable time to restore service. Backup frequency contributes to RPO but successful independent restoration determines recoverability. Retain off-host copies under appropriate access controls; a disk loss can destroy both local source and local snapshot."
+            ],
+            "example": "python release_tools.py backup notes.db snapshot-1.db\nSnapshot contains notes committed before the backup snapshot\nA write afterward is intentionally absent from that snapshot."
+          }
+        ],
+        "exercise": {
+          "prompt": "For hourly snapshots, what does a09:59 failure imply after a09:00 snapshot?",
+          "solution": "Up to59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss.",
+          "checks": [
+            "Use a supported backup API.",
+            "Separate RPO from RTO."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why avoid naive copying of a live SQLite file?",
+          "options": [
+            "Copying is always faster than a supported API",
+            "Transactions/journal state can make the copied set inconsistent",
+            "A checksum automatically fixes missing WAL data"
+          ],
+          "correct": 1,
+          "explanation": "Transactions/journal state can make the copied set inconsistent. Up to59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss."
+        },
+        "references": [
+          {
+            "title": "Python SQLite backup",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Connection.backup",
+            "reviewed": "2026-09-27",
+            "scope": "Python sqlite3 Connection.backup; synthetic local SQLite data only. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "restore-drill",
+        "title": "22. Restore into isolation and verify business state",
+        "takeaway": "A restore drill starts with a known snapshot, restores into a separate location, checks integrity and application-level invariants, and measures elapsed recovery work.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A restore drill starts with a known snapshot, restores into a separate location, checks integrity and application-level invariants, and measures elapsed recovery work. Do not overwrite a live database while writers are running. The lab test reads expected note values from an independent restored SQLite file and verifies that post-snapshot writes are absent. It does not establish an enterprise disaster recovery system."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A process that starts successfully can still serve the wrong dataset. Record snapshot identity/time, restore commands, missing-write reconciliation and who can approve the final traffic switch. SQL Server tests must restore actual full/differential/log sets as applicable, not rename a .bak file as if it were a usable database."
+            ],
+            "example": "Snapshot: note A\nLater source: note A + note B\nRestored independent file: A only\nVerify integrity, row values and release compatibility before switching traffic."
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a restore acceptance checklist for a lost notes database.",
+          "solution": "Verify backup identity, restore in isolation, run integrity/schema checks, compare known notes/counts and check the compatible app. Measure time and lost-data interval; only then plan a controlled writer stop and traffic cutover.",
+          "checks": [
+            "Read expected business values.",
+            "Measure recovery and identify lost writes."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which result most strongly supports restore success?",
+          "options": [
+            "The backup file has a large size",
+            "An isolated restored application returns expected records and passes integrity checks",
+            "The restore command was typed"
+          ],
+          "correct": 1,
+          "explanation": "An isolated restored application returns expected records and passes integrity checks. Verify backup identity, restore in isolation, run integrity/schema checks, compare known notes/counts and check the compatible app. Measure time and lost-data interval; only then plan a controlled writer stop and traffic cutover."
+        },
+        "references": [
+          {
+            "title": "SQL Server restore planning",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/restore-and-recovery-overview-sql-server?view=sql-server-ver17",
+            "section": "Restore and recovery overview",
+            "reviewed": "2026-09-27",
+            "scope": "SQL Server restore/recovery planning; local executable proof uses SQLite only. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "incident-response",
+        "title": "23. Stabilize an incident and preserve evidence",
+        "takeaway": "An incident response coordinates impact reduction, investigation and communication.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An incident response coordinates impact reduction, investigation and communication. Assign an incident lead, separate operations from diagnosis, record a timeline and bound changes. Compare symptoms with recent release/config/schema changes without assuming the newest deploy is always the cause. A rollback is useful only if compatibility and the failure mechanism support it."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "In the local drill create the readiness gate file, observe503 while liveness remains200, remove it and verify recovery. This simulates one failure boundary. A postmortem should explain contributing conditions and actionable follow-ups rather than blame the operator or invent evidence not recorded during the drill."
+            ],
+            "example": "12:00 v2 promoted\n12:03 eligible errors increase\n12:04 stop further promotion; assign lead\n12:06 inspect readiness, logs, dependency health\n12:08 choose verified rollback or dependency mitigation"
+          }
+        ],
+        "exercise": {
+          "prompt": "Respond to a readiness failure immediately after a configuration change.",
+          "solution": "Freeze further releases, confirm impact and changed values safely, inspect dependency state and revert the reviewed configuration if supported by evidence. Verify user smoke outcomes, document the timeline and assign a prevention/verification action.",
+          "checks": [
+            "Separate stabilization from diagnosis.",
+            "Record observed versus assumed causes."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What should an incident timeline contain?",
+          "options": [
+            "Only the final guessed cause",
+            "Timestamped observations, decisions and effects",
+            "Credentials needed to reproduce access"
+          ],
+          "correct": 1,
+          "explanation": "Timestamped observations, decisions and effects. Freeze further releases, confirm impact and changed values safely, inspect dependency state and revert the reviewed configuration if supported by evidence. Verify user smoke outcomes, document the timeline and assign a prevention/verification action."
+        },
+        "references": [
+          {
+            "title": "Google SRE managing incidents",
+            "url": "https://sre.google/sre-book/managing-incidents/",
+            "section": "Elements of incident management",
+            "reviewed": "2026-09-27",
+            "scope": "Incident coordination principles; local readiness drill is a synthetic exercise. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "release-review",
+        "title": "24. Produce a release evidence packet and runbook",
+        "takeaway": "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence. Keep commands and expected results close to the decision they justify. Distinguish local tests, optional Docker checks, staging integrations and planned production work. Completing this path is selected operations practice, not a claim of operating a production platform."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Use release-workbook.md and integration-runbook.md to assemble the packet. The smallest shipped service remains learning-only and unauthenticated. Real TLS, identity providers, monitored SQL, real collectors, proxy routing and provider-specific deployment must be implemented and checked separately before exposure."
+            ],
+            "example": "Packet: commit/digest + tests + topology + schema plan\nCandidate: version/readiness/smoke evidence\nObserve: eligible errors/latency + release attribution\nRecover: compatible v1 + validated snapshot + incident timeline"
+          }
+        ],
+        "exercise": {
+          "prompt": "Make one claim in the final packet falsifiable.",
+          "solution": "Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim.",
+          "checks": [
+            "Tie each claim to a named executed or planned check.",
+            "Expose unsupported production assumptions."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which is the most honest release claim?",
+          "options": [
+            "All deployment risks are solved because unit tests pass",
+            "The named local behaviors passed; staging and production boundaries have separate evidence",
+            "A review date certifies current runtime safety"
+          ],
+          "correct": 1,
+          "explanation": "The named local behaviors passed; staging and production boundaries have separate evidence. Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim."
+        },
+        "references": [
+          {
+            "title": "Google SRE release engineering",
+            "url": "https://sre.google/sre-book/release-engineering/",
+            "section": "Build and release methodology",
+            "reviewed": "2026-09-27",
+            "scope": "Release reproducibility and process principles; course uses a bounded local stand-in. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations · make a release observable",
+        "description": "Connect local source, repeatable checks, container packaging and process/configuration boundaries.",
+        "exitCriteria": [
+          "Trace source to running behavior.",
+          "Run the local HTTP/storage/helper suite and explain limits.",
+          "Separate artifact bytes from release labels and config."
+        ],
+        "project": {
+          "title": "Local release contract and evidence",
+          "brief": "Run the synthetic note service and create an evidence packet for a compatible change.",
+          "requirements": [
+            "Run the12 local checks and capture actual results.",
+            "Write the user invariant and environment/data boundaries.",
+            "Record source identity, runtime version and file digest.",
+            "Observe /version,/live,/ready and a synthetic note create/read.",
+            "Explain image/container/volume lifetime and inspect the Dockerfile without claiming it executed."
+          ],
+          "rubric": [
+            "Tests check meaningful observable boundaries.",
+            "No secrets or customer data appear in evidence.",
+            "Labels and digests are distinguished.",
+            "The learning-only HTTP server scope is explicit."
+          ],
+          "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate · promote compatible artifacts",
+        "description": "Add secrets/topology/schema/CI gates and a deliberate deployment/rollback decision.",
+        "exitCriteria": [
+          "Keep browser, API and database trust boundaries explicit.",
+          "Tie tests to exact promoted artifacts.",
+          "Explain mixed versions and schema-compatible rollback."
+        ],
+        "project": {
+          "title": "Candidate release and full-stack integration plan",
+          "brief": "Promote a compatible local candidate and write the React/.NET/SQL staging walkthrough.",
+          "requirements": [
+            "If opted in, build/inspect the local Docker image and record user/health/digest.",
+            "Create a genuine changed v2 artifact separately from a configured version-label simulation.",
+            "Use integration-runbook.md to plan/build React dist and publish the .NET API.",
+            "Specify real API persistence/auth integration and SQL migration permissions.",
+            "Write candidate health/user gates and compatible rollback steps.",
+            "Review ci-example.yaml permissions and current action pinning before enabling it in a separate repository."
+          ],
+          "rubric": [
+            "Rollback restores intended compatible behavior.",
+            "The stock memory-only API is not labelled persistent or authenticated.",
+            "Schema rollback/data recovery limits are explicit.",
+            "No build or runtime credential is embedded in public assets."
+          ],
+          "solution": "Build the local Dockerfile only with an opted-in daemon, implement a small backward-compatible v2 change in a separate copy and retain v1 identity. The full-stack packet follows browser→proxy→API→private SQL with a separate migration identity; it requires learner-built adapters/store/auth and actual staging checks. Promote the checked artifact, not a fresh untested rebuild."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice · operate and recover",
+        "description": "Interpret eligible signals, compare bounded workloads, restore independently and coordinate an incident.",
+        "exitCriteria": [
+          "Define an eligible-request SLI/window and budget.",
+          "State workload assumptions and measured limits.",
+          "Verify business values from an independent restore."
+        ],
+        "project": {
+          "title": "Operational release review",
+          "brief": "Assemble a release record, synthetic incident timeline and recovery evidence without provisioning cloud services.",
+          "requirements": [
+            "Define eligible/good events,target, window and budget policy.",
+            "Run bounded loopback timing and record model/errors/tail samples.",
+            "Capture a supported SQLite snapshot and verify independent values.",
+            "Distinguish the SQL Server recovery plan from SQLite test evidence.",
+            "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+            "List real production proxy/identity/telemetry/data/failure-domain gaps."
+          ],
+          "rubric": [
+            "Every claim names executed or planned evidence.",
+            "Counts/percentages have aligned denominators.",
+            "Backup recovery measures missing writes as well as time.",
+            "Incident decisions preserve scope and avoid secret disclosure."
+          ],
+          "solution": "At10,000 eligible requests and 99.9%,10 bad are allowed;12 leaves -2. The helper timing model is sequential closed-loop and cannot certify capacity. A snapshot before B restores A only. Record the same-code label simulation separately from differing-image rollout and the unexecuted full-stack/provider boundaries. Use the workbook to tie mechanism, check, result and next experiment together."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "release_app.py — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/release_app.py"
+      },
+      {
+        "title": "test_release_app.py — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/test_release_app.py"
+      },
+      {
+        "title": "release_tools.py — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/release_tools.py"
+      },
+      {
+        "title": "test_release_tools.py — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/test_release_tools.py"
+      },
+      {
+        "title": "Dockerfile — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/Dockerfile"
+      },
+      {
+        "title": ".dockerignore — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/.dockerignore"
+      },
+      {
+        "title": "README.md — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/README.md"
+      },
+      {
+        "title": "ci-example.yaml — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/ci-example.yaml"
+      },
+      {
+        "title": "integration-runbook.md — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/integration-runbook.md"
+      },
+      {
+        "title": "release-workbook.md — local reference or guided exercise",
+        "href": "paths/delivery-operations/practice/release-workbook.md"
+      }
+    ],
+    "resources": {
+      "folder": "delivery-operations-practice",
+      "files": [
+        {
+          "id": "release_app-py",
+          "href": "paths/delivery-operations/practice/release_app.py",
+          "role": "reference",
+          "description": "release_app.py — local reference or guided exercise"
+        },
+        {
+          "id": "test_release_app-py",
+          "href": "paths/delivery-operations/practice/test_release_app.py",
+          "role": "test",
+          "description": "test_release_app.py — local reference or guided exercise"
+        },
+        {
+          "id": "release_tools-py",
+          "href": "paths/delivery-operations/practice/release_tools.py",
+          "role": "reference",
+          "description": "release_tools.py — local reference or guided exercise"
+        },
+        {
+          "id": "test_release_tools-py",
+          "href": "paths/delivery-operations/practice/test_release_tools.py",
+          "role": "test",
+          "description": "test_release_tools.py — local reference or guided exercise"
+        },
+        {
+          "id": "Dockerfile",
+          "href": "paths/delivery-operations/practice/Dockerfile",
+          "role": "reference",
+          "description": "Dockerfile — local reference or guided exercise"
+        },
+        {
+          "id": "dockerignore",
+          "href": "paths/delivery-operations/practice/.dockerignore",
+          "role": "reference",
+          "description": ".dockerignore — local reference or guided exercise"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/delivery-operations/practice/README.md",
+          "role": "guide",
+          "description": "README.md — local reference or guided exercise"
+        },
+        {
+          "id": "ci-example-yaml",
+          "href": "paths/delivery-operations/practice/ci-example.yaml",
+          "role": "reference",
+          "description": "ci-example.yaml — local reference or guided exercise"
+        },
+        {
+          "id": "integration-runbook-md",
+          "href": "paths/delivery-operations/practice/integration-runbook.md",
+          "role": "guide",
+          "description": "integration-runbook.md — local reference or guided exercise"
+        },
+        {
+          "id": "release-workbook-md",
+          "href": "paths/delivery-operations/practice/release-workbook.md",
+          "role": "guide",
+          "description": "release-workbook.md — local reference or guided exercise"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Local release contract and evidence",
+          "goal": "Run the synthetic note service and create an evidence packet for a compatible change.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "release_tools-py",
+            "test_release_tools-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "ci-example-yaml",
+            "integration-runbook-md",
+            "release-workbook-md"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "Run the12 local checks and capture actual results.",
+            "Write the user invariant and environment/data boundaries.",
+            "Record source identity, runtime version and file digest.",
+            "Observe /version,/live,/ready and a synthetic note create/read.",
+            "Explain image/container/volume lifetime and inspect the Dockerfile without claiming it executed.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py test_release_tools.py",
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Offline request-budget arithmetic",
+              "command": "python release_tools.py slo --total 10000 --errors 12 --target 0.999",
+              "expected": "allowed_bad 10, remaining -2, burn rate approximately 1.2 from supplied counts."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Define what a release promises",
+              "href": "#topic/delivery-operations/release-contract"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Candidate release and full-stack integration plan",
+          "goal": "Promote a compatible local candidate and write the React/.NET/SQL staging walkthrough.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "release_tools-py",
+            "test_release_tools-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "ci-example-yaml",
+            "integration-runbook-md",
+            "release-workbook-md"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "If opted in, build/inspect the local Docker image and record user/health/digest.",
+            "Create a genuine changed v2 artifact separately from a configured version-label simulation.",
+            "Use integration-runbook.md to plan/build React dist and publish the .NET API.",
+            "Specify real API persistence/auth integration and SQL migration permissions.",
+            "Write candidate health/user gates and compatible rollback steps.",
+            "Review ci-example.yaml permissions and current action pinning before enabling it in a separate repository.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py test_release_tools.py",
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Offline request-budget arithmetic",
+              "command": "python release_tools.py slo --total 10000 --errors 12 --target 0.999",
+              "expected": "allowed_bad 10, remaining -2, burn rate approximately 1.2 from supplied counts."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Keep secrets out of artifacts and logs",
+              "href": "#topic/delivery-operations/secrets"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Operational release review",
+          "goal": "Assemble a release record, synthetic incident timeline and recovery evidence without provisioning cloud services.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "release_tools-py",
+            "test_release_tools-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "ci-example-yaml",
+            "integration-runbook-md",
+            "release-workbook-md"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "Define eligible/good events,target, window and budget policy.",
+            "Run bounded loopback timing and record model/errors/tail samples.",
+            "Capture a supported SQLite snapshot and verify independent values.",
+            "Distinguish the SQL Server recovery plan from SQLite test evidence.",
+            "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+            "List real production proxy/identity/telemetry/data/failure-domain gaps.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py test_release_tools.py",
+              "expected": "12 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Offline request-budget arithmetic",
+              "command": "python release_tools.py slo --total 10000 --errors 12 --target 0.999",
+              "expected": "allowed_bad 10, remaining -2, burn rate approximately 1.2 from supplied counts."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Log events without leaking payloads",
+              "href": "#topic/delivery-operations/structured-logs"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "release-contract": "foundation",
+        "environments": "foundation",
+        "source-release": "foundation",
+        "reproducible-builds": "foundation",
+        "test-gates": "foundation",
+        "containers": "foundation",
+        "docker-build": "foundation",
+        "runtime-configuration": "foundation",
+        "secrets": "intermediate",
+        "web-topology": "intermediate",
+        "schema-evolution": "intermediate",
+        "ci-pipeline": "intermediate",
+        "artifact-promotion": "intermediate",
+        "health-contracts": "intermediate",
+        "deployment-strategies": "intermediate",
+        "rollback": "intermediate",
+        "structured-logs": "advanced",
+        "metrics": "advanced",
+        "slos": "advanced",
+        "load-testing": "advanced",
+        "backups": "advanced",
+        "restore-drill": "advanced",
+        "incident-response": "advanced",
+        "release-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/delivery-operations/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "design-patterns",
     "title": "Design Patterns",
     "category": "Software design",
@@ -9451,6 +12943,1532 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "git-team-workflows",
+    "title": "Git & Team Workflows",
+    "category": "Engineering practice",
+    "status": "ready",
+    "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three temporary-only executable projects.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
+    ],
+    "setup": [
+      "Extract the practice bundle and keep all files together at its flat folder root.",
+      "Read README.md and the three stage kits before executing commands.",
+      "Install Git 2.28+ and Python 3.11+; run python -B -m unittest -v test_sandbox.py. The fixture uses only its own disposable repositories."
+    ],
+    "outcomes": [
+      "Explain working tree/index/commit and inspect intended changes.",
+      "Create coherent changes and resolve integration by intent.",
+      "Distinguish fetch, merge, cherry-pick, rebase and revert.",
+      "Recover committed work and locate a regression with repeatable evidence.",
+      "Prepare a team review/release record without overstating local checks."
+    ],
+    "nextSteps": [
+      "Apply the workflow in an authorized team repository with real review and hosting policies.",
+      "Verify release artifact provenance and deployment rollback separately.",
+      "These projects provide advanced practice, not complete professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Git reference: git-config",
+        "url": "https://git-scm.com/docs/git-config"
+      },
+      {
+        "title": "Git reference: git-add",
+        "url": "https://git-scm.com/docs/git-add"
+      },
+      {
+        "title": "Git reference: git-diff",
+        "url": "https://git-scm.com/docs/git-diff"
+      },
+      {
+        "title": "Git reference: git-commit",
+        "url": "https://git-scm.com/docs/git-commit"
+      },
+      {
+        "title": "Git reference: gitignore",
+        "url": "https://git-scm.com/docs/gitignore"
+      },
+      {
+        "title": "Git reference: gitrevisions",
+        "url": "https://git-scm.com/docs/gitrevisions"
+      },
+      {
+        "title": "Git reference: git-switch",
+        "url": "https://git-scm.com/docs/git-switch"
+      },
+      {
+        "title": "Git reference: git-restore",
+        "url": "https://git-scm.com/docs/git-restore"
+      },
+      {
+        "title": "Git reference: git-merge",
+        "url": "https://git-scm.com/docs/git-merge"
+      },
+      {
+        "title": "Git reference: git-fetch",
+        "url": "https://git-scm.com/docs/git-fetch"
+      },
+      {
+        "title": "Git reference: git-request-pull",
+        "url": "https://git-scm.com/docs/git-request-pull"
+      },
+      {
+        "title": "Git reference: git-reset",
+        "url": "https://git-scm.com/docs/git-reset"
+      },
+      {
+        "title": "Git reference: git-reflog",
+        "url": "https://git-scm.com/docs/git-reflog"
+      },
+      {
+        "title": "Git reference: git-bisect",
+        "url": "https://git-scm.com/docs/git-bisect"
+      },
+      {
+        "title": "Git reference: git-cherry-pick",
+        "url": "https://git-scm.com/docs/git-cherry-pick"
+      },
+      {
+        "title": "Git reference: git-rebase",
+        "url": "https://git-scm.com/docs/git-rebase"
+      },
+      {
+        "title": "Git reference: git-stash",
+        "url": "https://git-scm.com/docs/git-stash"
+      },
+      {
+        "title": "Git reference: git-tag",
+        "url": "https://git-scm.com/docs/git-tag"
+      },
+      {
+        "title": "Git reference: gitworkflows",
+        "url": "https://git-scm.com/docs/gitworkflows"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete offline practice bundle",
+        "href": "paths/git-team-workflows/practice-bundle.zip"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "safe-sandbox",
+        "title": "1. Start in a repository you can safely change",
+        "stage": "foundation",
+        "takeaway": "A repository has local state; identify it before changing it.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Git records snapshots and their relationships. A hosting website is optional: you can learn every core operation in a local directory. A repository usually has a working directory plus a .git directory containing objects, references and configuration. A nested terminal can point at a different repository than the editor you are looking at.",
+              "Run the provided sandbox instead of experimenting in an existing checkout. It creates repositories beneath a new temporary root, isolates Git configuration and hooks, uses a synthetic identity per command, and deletes only its own temporary directories. It never pushes or contacts a hosting service."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Check the repository root and status before any mutation. Git configuration has scopes: system, global and repository local; command-line -c values apply to that invocation. Changing global identity is not necessary for these exercises.",
+              "The sandbox supports --stage foundation, intermediate, advanced or all. Its output is actual assertion evidence. This does not prove remote permissions, branch protection or team policy."
+            ],
+            "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation"
+          }
+        ],
+        "exercise": {
+          "prompt": "Run the foundation fixture. Record the Git version and explain why a command in the wrong working directory could affect another project.",
+          "solution": "The JSON report records git_version and foundation results. Every fixture subprocess checks that its resolved working directory remains beneath the newly created temporary root. User/global config and existing repository contents are outside that root.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Report includes an installed Git version.",
+            "Only generated temporary repositories are changed.",
+            "Configuration scope is distinguished from repository state."
+          ]
+        },
+        "quiz": {
+          "question": "Why does the fixture use command-scoped identity?",
+          "options": [
+            "It gives fixture commits an identity without changing the user’s global configuration.",
+            "It authenticates the learner to every remote server.",
+            "It makes all repositories use the fixture identity permanently."
+          ],
+          "correct": 0,
+          "explanation": "It gives fixture commits an identity without changing the user’s global configuration."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-config",
+            "url": "https://git-scm.com/docs/git-config",
+            "section": "Configuration scopes and command-line -c",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "three-states",
+        "title": "2. Separate working tree, index and commit",
+        "stage": "foundation",
+        "takeaway": "A commit snapshots the index, not every current file.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The working tree is the editable files you see. The index, often called the staging area, is the proposed next snapshot. HEAD normally points to the current branch tip commit. These three states can differ even for one file.",
+              "git add copies the file’s current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "In the fixture notes.txt is committed as one, staged as two, then edited to three. The next commit stores two while the working file remains three. git diff compares working tree to index; git diff --cached compares index to HEAD.",
+              "If you expect the latest edit in the commit, stage it again and inspect the cached diff. Commit success alone says nothing about whether the intended contents were staged."
+            ],
+            "example": "git diff\ngit diff --cached\ngit show HEAD:notes.txt\n# Fixture assertion: HEAD is two while working tree is three."
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict both diffs after one -> stage two -> edit three. Verify using the foundation fixture.",
+          "solution": "The cached diff replaces one with two. The ordinary diff replaces two with three. After the commit HEAD contains two. Stage three again only if the intended next snapshot should include it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Both diffs have the correct baseline.",
+            "Commit content is checked independently with git show.",
+            "The remaining unstaged edit is explained."
+          ]
+        },
+        "quiz": {
+          "question": "A file is staged, then edited again. What does a normal commit include?",
+          "options": [
+            "Both versions as separate commits.",
+            "The staged snapshot; the later unstaged edit remains in the working tree.",
+            "The latest file automatically because it is tracked."
+          ],
+          "correct": 1,
+          "explanation": "The staged snapshot; the later unstaged edit remains in the working tree."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-add",
+            "url": "https://git-scm.com/docs/git-add",
+            "section": "Description: add current contents to the index",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "diagram": {
+          "title": "The staged snapshot is distinct from the editor buffer",
+          "summary": "Trace the foundation fixture: committed one, staged two, edited three. A normal commit takes the index; the later working edit remains.",
+          "nodes": [
+            {
+              "id": "head",
+              "label": "HEAD: one",
+              "description": "Previous committed snapshot."
+            },
+            {
+              "id": "index",
+              "label": "Index: two",
+              "description": "git add copied the then-current contents."
+            },
+            {
+              "id": "work",
+              "label": "Working: three",
+              "description": "Later edit has not been staged."
+            },
+            {
+              "id": "next",
+              "label": "New HEAD: two",
+              "description": "Commit snapshots index, not the editor buffer."
+            }
+          ],
+          "edges": [
+            {
+              "from": "head",
+              "to": "index",
+              "label": "cached diff: one -> two"
+            },
+            {
+              "from": "index",
+              "to": "work",
+              "label": "ordinary diff: two -> three"
+            },
+            {
+              "from": "index",
+              "to": "next",
+              "label": "commit takes staged two"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect the three states",
+              "explanation": "HEAD, index and working tree each name a different version; none is automatically the other.",
+              "activeNodes": [
+                "head",
+                "index",
+                "work"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Read the two diffs",
+              "explanation": "Cached diff compares HEAD to index. Ordinary diff compares index to working tree. These have different baselines.",
+              "activeNodes": [
+                "head",
+                "index",
+                "work"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Commit the index",
+              "explanation": "The new commit contains two while the working file remains three. The fixture asserts both independently.",
+              "activeNodes": [
+                "index",
+                "next",
+                "work"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "inspect-changes",
+        "title": "3. Read status and diffs before acting",
+        "stage": "foundation",
+        "takeaway": "Inspect the exact boundary your command will change.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git status reports tracked modifications, staged changes and untracked files. Short status uses separate index and working-tree columns. An untracked file is not part of a commit until added; a clean status does not inspect ignored files or prove the application works.",
+              "A diff is a comparison between states. Read filenames and hunks, not just the changed-line count. A whitespace-only edit can hide a meaningful change; a generated file can obscure the source file that explains the behavior."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Use git diff --cached immediately before a commit to review the actual proposed snapshot. Use git diff HEAD to include staged and unstaged tracked changes; it still does not include ordinary untracked file contents.",
+              "The foundation fixture asserts the states separately. When a file appears unexpectedly, check whether you are at the right repository root and whether .gitignore is excluding something you expected to see."
+            ],
+            "example": "git status --short\ngit diff --stat\ngit diff --cached -- notes.txt\ngit diff HEAD -- notes.txt"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why a clean status cannot certify a release. List two independent checks you still need.",
+          "solution": "Status verifies tracked/index cleanliness only. Run the relevant tests/build against the candidate commit and review the release inputs, including generated or ignored outputs that will be shipped. Record the exact commit identifier for those checks.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Index and working-tree comparisons are distinguished.",
+            "Untracked and ignored files are not conflated.",
+            "Tests are attached to an exact candidate."
+          ]
+        },
+        "quiz": {
+          "question": "Which comparison reviews what a normal commit will contain?",
+          "options": [
+            "git diff without options always shows the entire future commit.",
+            "git status being clean means all tests passed.",
+            "git diff --cached compares the index with HEAD."
+          ],
+          "correct": 2,
+          "explanation": "git diff --cached compares the index with HEAD."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-diff",
+            "url": "https://git-scm.com/docs/git-diff",
+            "section": "Comparisons between working tree, index and commits",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "coherent-commits",
+        "title": "4. Make a coherent, reviewable commit",
+        "stage": "foundation",
+        "takeaway": "A commit should explain one useful change and its evidence.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A commit stores a tree, parent commit identifiers, author/committer metadata and a message. It is a snapshot, not a backup of every editor buffer. Small coherent changes help reviewers understand intent and help future maintainers locate regressions.",
+              "Before committing, inspect the staged diff and run checks relevant to that snapshot. A message names the problem and resulting behavior; tests and limitations belong in the accompanying review evidence. Separate unrelated formatting or generated churn when it obscures the change."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The sandbox stages explicit fixture content and commits with synthetic metadata. Outside the sandbox, selective staging or git add -p can split independent hunks; inspect the result because a partially staged file may differ from the version you tested.",
+              "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people’s references. Coordinate rather than assuming every local improvement authorizes history rewriting."
+            ],
+            "example": "git diff --cached\ngit commit -m \"Preserve staged note snapshot\"\ngit show --stat --oneline HEAD"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a message for a bug fix and name how you would verify a partially staged version rather than only the working tree.",
+          "solution": "Use a problem/result message such as Reject duplicate completion requests. Verify the candidate staged contents in an isolated checkout or stage a complete coherent change before running tests. The working tree can contain extra edits that alter test results.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Message explains observable behavior.",
+            "Staged contents match intended scope.",
+            "Verification does not silently depend on unstaged edits."
+          ]
+        },
+        "quiz": {
+          "question": "Why can testing the working tree be insufficient for a partial commit?",
+          "options": [
+            "The tested files may include unstaged edits absent from the committed snapshot.",
+            "Git automatically tests and includes every edited file.",
+            "Partial staging creates separate branches automatically."
+          ],
+          "correct": 0,
+          "explanation": "The tested files may include unstaged edits absent from the committed snapshot."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-commit",
+            "url": "https://git-scm.com/docs/git-commit",
+            "section": "Description, patch staging and amend",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "ignore-secrets",
+        "title": "5. Ignore generated files and protect secrets",
+        "stage": "foundation",
+        "takeaway": "Ignore rules affect untracked files; they do not erase history.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              ".gitignore expresses which untracked files should normally stay out of version control, such as machine-local configuration or build outputs. Shared patterns belong in the repository; personal noise can use a personal excludes file. A previously tracked file remains tracked despite a new ignore rule.",
+              "Use synthetic secrets in training. If a real credential was committed, revoke or rotate it first and investigate exposure. Deleting it in a later commit or rewriting history does not retract copies already fetched. Secret scanners and restricted credentials add defenses beyond ignore patterns."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token text is explicitly not a credential. Inspect an example config template before sharing it: placeholders must not be live values.",
+              "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else’s repository."
+            ],
+            "example": "git check-ignore -v local.env\ngit ls-files -- local.env\n# If previously tracked, ignore rules alone do not remove it."
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain the response when a real API key was committed yesterday. Contrast it with an ignored synthetic fixture.",
+          "solution": "Revoke/rotate the real key, establish where it was used and shared, and coordinate remediation including historical copies. The fake fixture only proves an untracked ignore rule. Neither a clean status nor a later deletion proves a leaked credential is safe.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Fixture contains only a synthetic token.",
+            "Tracked files and ignored untracked files are distinct.",
+            "Credential rotation precedes claims of cleanup."
+          ]
+        },
+        "quiz": {
+          "question": "A tracked secret is added to .gitignore. What happens?",
+          "options": [
+            "The key becomes unusable because Git ignores its name.",
+            "It remains tracked and in existing history; rotation and coordinated remediation are still required.",
+            "Git deletes it from all historical commits immediately."
+          ],
+          "correct": 1,
+          "explanation": "It remains tracked and in existing history; rotation and coordinated remediation are still required."
+        },
+        "references": [
+          {
+            "title": "Git reference: gitignore",
+            "url": "https://git-scm.com/docs/gitignore",
+            "section": "Description: intentionally untracked files; tracked-file caveat",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "history-refs",
+        "title": "6. Read commits, parents and references",
+        "stage": "foundation",
+        "takeaway": "Names move; commit identities describe specific snapshots and ancestry.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A branch is a movable reference to a commit. HEAD usually refers to a branch, but can point directly to a commit in detached HEAD state. A commit identifier is content-addressed: changing its tree, parent or metadata creates a different commit.",
+              "History forms a directed acyclic graph. A normal commit usually has one parent; a merge can have two or more. Log order and commit timestamps alone do not prove that one change is an ancestor of another."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Use a graph view to see where branches diverged. git show inspects one object; rev-parse resolves a name; merge-base answers ancestry questions. In the intermediate fixture the conflict-resolution merge has two parents, which the verifier asserts directly.",
+              "In detached HEAD you can inspect or experiment. Before switching away from useful new commits, create a branch pointing at them; otherwise recovery may depend on a local reflog that can expire."
+            ],
+            "example": "git log --graph --oneline --decorate --all\ngit rev-parse HEAD\ngit rev-list --parents -n 1 HEAD\ngit show HEAD:policy.txt"
+          }
+        ],
+        "exercise": {
+          "prompt": "Interpret a log where feature and main have different tips but a shared base. How would you preserve a useful detached commit?",
+          "solution": "The tips are different snapshots descended from a common ancestor. Resolve ancestry with merge-base rather than dates. Create a named branch at the detached commit before leaving it, then inspect and integrate the change deliberately.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Parents, labels and timestamps are distinguished.",
+            "Two-parent merge is identified.",
+            "Detached work is given a reference before switching."
+          ]
+        },
+        "quiz": {
+          "question": "What is a branch in Git?",
+          "options": [
+            "A permanent folder containing all versions of a file.",
+            "A commit timestamp shared by every teammate.",
+            "A movable reference to a commit, not an independent copy of every file."
+          ],
+          "correct": 2,
+          "explanation": "A movable reference to a commit, not an independent copy of every file."
+        },
+        "references": [
+          {
+            "title": "Git reference: gitrevisions",
+            "url": "https://git-scm.com/docs/gitrevisions",
+            "section": "Specifying revisions and symbolic references",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "branch-switch",
+        "title": "7. Isolate work with branches",
+        "stage": "foundation",
+        "takeaway": "Switching a branch changes which snapshot your working files represent.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A topic branch names a line of development. Creating a branch is cheap because it initially points at an existing commit. Switching updates HEAD and the working tree to that branch’s snapshot; uncommitted edits may be carried along or block the switch if they would be overwritten.",
+              "Start from an agreed base and a understood status. A branch name communicates purpose but does not guarantee that unrelated changes are absent. Keep changes coherent and inspect the branch diff against its base."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture creates feature from the base, edits policy.txt, then switches to main and edits the same line differently. Neither commit disappears: the two branch tips preserve both histories.",
+              "If switching is blocked, understand the local changes first. Commit useful work or deliberately stash it in training; do not reach for forced checkout to hide uncertainty."
+            ],
+            "example": "git switch -c feature\ngit branch --show-current\ngit switch main\ngit log --all --oneline --decorate"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why a branch created after unrelated commits already exist may contain those commits in its history.",
+          "solution": "The new branch starts at the selected base, normally current HEAD. Its ancestry includes every ancestor of that base. Choose the intended base explicitly, inspect the diff and move individual useful changes only when that is the right integration policy.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Starting reference is named.",
+            "Existing commits remain reachable.",
+            "Uncommitted changes are handled deliberately."
+          ]
+        },
+        "quiz": {
+          "question": "Why might git switch refuse to change branches?",
+          "options": [
+            "The switch could overwrite local changes that must first be preserved or deliberately discarded.",
+            "Branches can only be switched once per session.",
+            "A topic branch must be pushed before switching."
+          ],
+          "correct": 0,
+          "explanation": "The switch could overwrite local changes that must first be preserved or deliberately discarded."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-switch",
+            "url": "https://git-scm.com/docs/git-switch",
+            "section": "Description and local-change safeguards",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "restore-staging",
+        "title": "8. Undo an edit or staging decision precisely",
+        "stage": "foundation",
+        "takeaway": "Restoring files and unstaging are different operations.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git restore --staged removes a path’s staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
+              "Discarding working edits loses those uncommitted contents unless another copy exists. Git does not promise a reflog for every untracked or unstaged file. Inspect diffs and preserve useful edits before a destructive restore."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "In the fixture the commit contains two and the working tree contains three. Restoring notes.txt from the index changes the file back to two without moving the branch tip.",
+              "The sandbox deliberately discards only generated synthetic content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
+            ],
+            "example": "git diff -- notes.txt\ngit restore --staged -- notes.txt\n# Only in the disposable fixture after inspecting the diff:\ngit restore -- notes.txt"
+          }
+        ],
+        "exercise": {
+          "prompt": "You accidentally staged a correct but unfinished edit. Which operation keeps the edit while removing it from the next commit?",
+          "solution": "git restore --staged -- notes.txt restores the index from HEAD. The working file remains edited. Confirm with both ordinary and cached diffs. A working-tree restore is a different choice and can discard useful contents.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Unstaging preserves the working edit.",
+            "Working restore is described as content loss.",
+            "The branch tip stays unchanged."
+          ]
+        },
+        "quiz": {
+          "question": "Which action normally unstages while retaining the working file?",
+          "options": [
+            "git reset --hard is the safest first response to accidental staging.",
+            "git restore --staged -- path restores the index from HEAD without discarding the working edit.",
+            "git restore -- path always unstages and preserves every edit."
+          ],
+          "correct": 1,
+          "explanation": "git restore --staged -- path restores the index from HEAD without discarding the working edit."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-restore",
+            "url": "https://git-scm.com/docs/git-restore",
+            "section": "Description: restore source, --staged and --worktree",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "merge-integration",
+        "title": "9. Integrate histories with a merge",
+        "stage": "intermediate",
+        "takeaway": "A merge uses ancestry and contents; a fast-forward just moves a reference.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "When the other tip is already descended from your current tip, Git can fast-forward the branch to it. When both sides have new commits, a merge combines their changes and usually records a new commit with both parents. A merge is not the same operation as concatenating files.",
+              "A successful automatic merge establishes that Git could combine text, not that the combined program is correct. Run relevant tests and review interacting changes even when no conflict marker appears."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The intermediate fixture diverges feature and main and records a two-parent merge after resolution. Later a reviewer clone fetches a descendant and integrates it with --ff-only, which refuses unexpected divergence.",
+              "Choose integration policy deliberately. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
+            ],
+            "example": "git log --graph --oneline --all\ngit merge feature\ngit rev-list --parents -n 1 HEAD\n# Strict update when divergence is unexpected:\ngit merge --ff-only origin/main"
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe what --ff-only does when both branches contain unique commits. Explain why a clean textual merge still needs tests.",
+          "solution": "It refuses the integration rather than creating a merge commit. Investigate divergence and use the agreed workflow. Independently changed code can compose incorrectly without overlapping lines, so run checks against the combined candidate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Fast-forward versus two-parent merge is recognized.",
+            "Unexpected divergence is not hidden.",
+            "Combined behavior is tested."
+          ]
+        },
+        "quiz": {
+          "question": "What does --ff-only protect against?",
+          "options": [
+            "It proves the merged application has no bugs.",
+            "It rewrites the remote branch to match local contents.",
+            "It refuses integration requiring a non-fast-forward merge, so unexpected divergence remains visible."
+          ],
+          "correct": 2,
+          "explanation": "It refuses integration requiring a non-fast-forward merge, so unexpected divergence remains visible."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-merge",
+            "url": "https://git-scm.com/docs/git-merge",
+            "section": "Fast-forward merge and true merge",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "conflict-resolution",
+        "title": "10. Resolve a conflict by preserving intent",
+        "stage": "intermediate",
+        "takeaway": "Conflict markers identify unresolved text; the intended behavior still needs reasoning.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A conflict occurs when Git cannot automatically combine changes. The index can hold base, ours and theirs versions of a conflicted path. Conflict markers in a file are an editing aid; deleting the markers alone does not choose a correct design.",
+              "Read both changes and their purpose. Resolve the final behavior, stage the resolved path and continue the operation. Merge, rebase and cherry-pick each have their own continue/abort lifecycle; do not use a generic forced reset to escape uncertainty."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture first aborts a merge and verifies main’s file is restored, then repeats the conflict and writes main and feature as a deliberate resolution. It asserts that the final merge commit has two parents.",
+              "Abort recovery is most predictable when the working tree was clean before starting. Preserve unrelated local edits before integration. A resolved file still needs review and tests for the combined requirement."
+            ],
+            "example": "git diff --name-only --diff-filter=U\ngit show :1:policy.txt\ngit show :2:policy.txt\ngit show :3:policy.txt\n# Choose a real resolution, then:\ngit add policy.txt\ngit commit"
+          }
+        ],
+        "exercise": {
+          "prompt": "Trace the fixture’s base/main/feature versions. Propose a resolution when both sides represent necessary requirements, then explain the abort path.",
+          "solution": "The base is base, ours is main and theirs is feature for this merge. The fixture writes main and feature to preserve both illustrative intents. git merge --abort exits the unresolved merge; a real application resolution must satisfy its own requirements and checks.",
+          "solutionFormat": "prose",
+          "checks": [
+            "All three input versions are understood.",
+            "No conflict markers remain staged.",
+            "Abort and completion paths are distinguished."
+          ]
+        },
+        "quiz": {
+          "question": "What establishes a correct conflict resolution?",
+          "options": [
+            "The resulting contents preserve the intended requirements and pass relevant checks; removing markers alone is insufficient.",
+            "Selecting ours is always correct because it is local.",
+            "A file is correct as soon as every marker is deleted."
+          ],
+          "correct": 0,
+          "explanation": "The resulting contents preserve the intended requirements and pass relevant checks; removing markers alone is insufficient."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-merge",
+            "url": "https://git-scm.com/docs/git-merge",
+            "section": "How conflicts are presented and resolving conflicts",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "remotes-fetch",
+        "title": "11. Understand remotes, fetch and pull",
+        "stage": "intermediate",
+        "takeaway": "Fetch updates your knowledge of a remote without integrating it into the current branch.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote’s state at the last fetch; they can be stale.",
+              "git fetch retrieves objects and updates tracking references. git pull combines fetch with integration according to explicit options/configuration. A push asks the remote to update references and requires separate authorization; the sandbox never pushes."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture clones a repository using only a local filesystem path, makes a new source commit, and fetches from the reviewer clone. It asserts that origin/main moves while reviewer HEAD does not, then performs a fast-forward update.",
+              "This demonstrates Git behavior without credentials or a hosting account. It does not demonstrate protected branches, remote permissions, review enforcement or service availability. Inspect a remote URL before contacting it."
+            ],
+            "example": "git remote -v\ngit fetch origin\ngit log --oneline HEAD..origin/main\ngit merge --ff-only origin/main\n# No push command is executed by the lab."
+          }
+        ],
+        "exercise": {
+          "prompt": "Why can a fetched remote-tracking branch contain new commits while your files remain unchanged?",
+          "solution": "Fetch updates objects/tracking refs but not the current branch or working snapshot. Review the difference and choose integration separately. The lab asserts HEAD before/after fetch, then after the fast-forward merge.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Fetch leaves local HEAD unchanged.",
+            "Tracking references are identified as local observations.",
+            "Local fixture evidence is not hosting-policy evidence."
+          ]
+        },
+        "quiz": {
+          "question": "After fetch updates origin/main, why might your working tree stay unchanged?",
+          "options": [
+            "origin/main and main are always the same reference.",
+            "Fetch records remote state; integrating it into your current branch is a separate action.",
+            "Fetch discards local files but the editor hides it."
+          ],
+          "correct": 1,
+          "explanation": "Fetch records remote state; integrating it into your current branch is a separate action."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-fetch",
+            "url": "https://git-scm.com/docs/git-fetch",
+            "section": "Description and remote-tracking branches",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "pull-request-review",
+        "title": "12. Prepare a pull request that can be reviewed",
+        "stage": "intermediate",
+        "takeaway": "A review needs a clear problem, scoped diff and evidence tied to the candidate.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A pull request is a hosting workflow around proposed integration, not a Git object. It normally compares a topic branch with a target branch and records discussion, checks and decisions. Repository policy determines who can approve and merge.",
+              "Explain what user-visible behavior changes, why the approach fits, what was tested and what remains unverified. A reviewer needs enough context to assess the final diff without reading your entire development conversation."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "Use the local fixture’s feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. This produces a reviewable artifact without publishing a pull request or sending a message.",
+              "A later change can invalidate earlier review or checks. Recheck the final candidate against the current target, especially after a rebase or conflict resolution. Approval of an old commit is not automatic evidence for a new one."
+            ],
+            "example": "git diff main...feature\ngit log --oneline main..feature\n# Offline review.md fields:\n# Problem / Behavior / Base / Candidate / Checks / Remaining limits"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a review for the policy fixture and identify one concern that a green unit test cannot answer.",
+          "solution": "State why both policy changes are required and how the resolution combines them. Record the candidate identifier and executed fixture assertions. Hosting branch protection, production behavior and required human approval remain separate evidence; the local suite does not establish them.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Description matches the final diff.",
+            "Checks name the tested candidate.",
+            "Review questions focus on behavior and risks."
+          ]
+        },
+        "quiz": {
+          "question": "A reviewed branch is rebased after approval. What evidence needs attention?",
+          "options": [
+            "The old approval proves every future version is correct.",
+            "Rebasing automatically reruns every hosted check.",
+            "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+          ],
+          "correct": 2,
+          "explanation": "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-request-pull",
+            "url": "https://git-scm.com/docs/git-request-pull",
+            "section": "Description: summarize changes between commits",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "revert-reset",
+        "title": "13. Choose revert or reset by the recovery contract",
+        "stage": "intermediate",
+        "takeaway": "Revert adds a compensating commit; reset moves local references and may discard state.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git revert creates a new commit that reverses an earlier change while preserving the original history. It is often suitable for an already shared simple commit. Reverting a merge requires selecting the appropriate mainline and understanding later integration effects.",
+              "git reset moves a branch reference. --soft keeps index and working changes, --mixed also resets the index, and --hard also overwrites tracked working contents. These are different recovery contracts; none should be chosen without inspecting what it will affect."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The advanced fixture reverts a synthetic regression while retaining unrelated changes. It uses reset --hard only in its generated private repository to demonstrate reference movement and reflog recovery.",
+              "Do not use the destructive fixture command in a user checkout. Untracked files and never-committed edits have different recovery limits. For shared histories, coordinate a remedy rather than assuming force publication is permitted."
+            ],
+            "example": "# Disposable fixture only:\ngit revert --no-edit <synthetic-bad-commit>\ngit log --oneline -3\n# Inspect first; sandbox demonstrates reset separately."
+          }
+        ],
+        "exercise": {
+          "prompt": "A shared bug commit is followed by useful unrelated work. Explain why resetting to the bug’s parent is a poor default.",
+          "solution": "Resetting the shared branch drops later references and can discard useful work. A targeted revert preserves ancestry and the unrelated commit, though the result still needs tests. A merge revert needs an additional mainline decision.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Revert preserves later useful history.",
+            "Reset modes have explicit index/tree consequences.",
+            "Uncommitted recovery is not promised."
+          ]
+        },
+        "quiz": {
+          "question": "Which remedy usually preserves shared history while reversing a simple commit?",
+          "options": [
+            "A targeted revert adds a new compensating commit, followed by verification of the resulting behavior.",
+            "reset --hard always preserves every later useful commit.",
+            "Deleting the branch deletes the bug from every clone."
+          ],
+          "correct": 0,
+          "explanation": "A targeted revert adds a new compensating commit, followed by verification of the resulting behavior."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-reset",
+            "url": "https://git-scm.com/docs/git-reset",
+            "section": "Description: --soft, --mixed and --hard",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "reflog-recovery",
+        "title": "14. Recover a local reference with the reflog",
+        "stage": "intermediate",
+        "takeaway": "The reflog records local reference movements, not a permanent shared backup.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A reflog records updates to a reference in a repository. HEAD’s reflog also records switches. A commit lost from the visible branch graph may still be named by a reflog entry, allowing you to inspect it and create a branch at it.",
+              "Reflogs are local and expire; unreachable objects may later be pruned. A teammate’s clone does not automatically contain your reflog. Never promise that reflog recovery can restore arbitrary deleted untracked files or unstaged editor contents."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The advanced fixture remembers a committed private experiment, resets its private tip back one parent, verifies the old commit remains in the reflog, and creates recovered at that exact commit. It later cherry-picks the useful change.",
+              "Recover by inspection before another destructive move: identify the candidate, show its files and give it a named branch. This is more reviewable than immediately resetting your main branch to an uncertain reflog position."
+            ],
+            "example": "git reflog --format=\"%h %gs\"\ngit show <candidate>\ngit branch recovered <candidate>\ngit log --all --oneline --decorate"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain which lost work the fixture can recover and which work the reflog does not guarantee.",
+          "solution": "The fixture can recover a previously committed snapshot while the object and reflog entry remain available. It cannot promise recovery of never-committed content, another repository’s history, or objects already expired/pruned. Create a branch after inspecting the candidate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recovered object is inspected.",
+            "A new branch names useful recovered work.",
+            "Expiry and local-only limits are stated."
+          ]
+        },
+        "quiz": {
+          "question": "Why is a reflog not a permanent team backup?",
+          "options": [
+            "Every reflog entry is automatically pushed to all teammates.",
+            "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements.",
+            "It contains only remote pull requests."
+          ],
+          "correct": 1,
+          "explanation": "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-reflog",
+            "url": "https://git-scm.com/docs/git-reflog",
+            "section": "Description and expiry",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "bisect",
+        "title": "15. Find a regression with a repeatable bisect test",
+        "stage": "advanced",
+        "takeaway": "Bisect narrows history using a predicate that must mean the same thing at each candidate.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git bisect searches between a known good and known bad revision. Marking candidates divides the search space; git bisect run can automate a repeatable test. Good/bad describe the chosen behavior, not whether a commit is universally high quality.",
+              "The predicate must be reliable on historical revisions. Build failures unrelated to the defect may need skip rather than bad. A flaky test or changing external dependency can send the search toward the wrong commit."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture commits safe, then bug, then an unrelated file. Its Python predicate checks mode.txt and exits nonzero only when bug is present. The verifier asserts that refs/bisect/bad identifies the exact regression commit, then exits bisect mode.",
+              "For a real project, pin needed dependencies or build each candidate consistently and record the failing condition. Reproduce the result on the candidate and its parent before concluding causation."
+            ],
+            "example": "git bisect start <known-bad> <known-good>\ngit bisect run python check.py\ngit bisect reset\n# check.py: exit 0 for good, 1 for this failure; 125 to skip."
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a predicate for a duplicate-output regression and explain how an unrelated build failure should be classified.",
+          "solution": "Assert the precise duplicate-output behavior on a deterministic fixture. Return a good/bad result only when that behavior was evaluated; use skip for a candidate that cannot be meaningfully tested. Reproduce the first bad and its parent after the search.",
+          "solutionFormat": "prose",
+          "checks": [
+            "First bad commit matches the fixture oracle.",
+            "Predicate measures the same behavior at each candidate.",
+            "Bisect state is reset afterward."
+          ]
+        },
+        "quiz": {
+          "question": "A historical revision cannot build for an unrelated reason. What should you consider?",
+          "options": [
+            "Always mark it bad because any failure proves this regression.",
+            "Edit every historical commit until all builds are identical.",
+            "Skip the untestable revision rather than labeling the target behavior bad without evaluating it."
+          ],
+          "correct": 2,
+          "explanation": "Skip the untestable revision rather than labeling the target behavior bad without evaluating it."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-bisect",
+            "url": "https://git-scm.com/docs/git-bisect",
+            "section": "Bisect run and exit codes",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "cherry-pick",
+        "title": "16. Transfer a selected change with cherry-pick",
+        "stage": "advanced",
+        "takeaway": "Cherry-pick reapplies a change; it does not preserve the original ancestry identity.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git cherry-pick applies the change introduced by a commit to your current branch and normally records a new commit. It is useful for a selected backport when merging an entire branch would include unrelated work.",
+              "A selected commit may depend on earlier changes that were not selected. Inspect dependencies and test the target branch. Reapplying an already present patch can become empty; a conflict requires a deliberate resolution or abort."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The advanced fixture recovers one private.txt commit and cherry-picks it onto main. It asserts the expected file content rather than claiming that matching a commit message proves behavior.",
+              "A new parent context usually means a new identity. Record the original source in a backport note and review the adapted result. Repeated backports can complicate future merges, so keep the policy explicit."
+            ],
+            "example": "git show <source-commit>\ngit cherry-pick <source-commit>\n# On unresolved conflicts:\ngit cherry-pick --abort"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain what to verify before backporting a small fix that calls a helper introduced in another commit.",
+          "solution": "Check that the helper exists and has the required contract on the target branch. Backport its dependency or adapt the fix coherently, then run relevant target-branch tests. The selected patch’s original success does not prove the new context works.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Source patch and dependencies are reviewed.",
+            "Target behavior is verified.",
+            "Abort/continue states are handled explicitly."
+          ]
+        },
+        "quiz": {
+          "question": "Why can cherry-picking a correct fix still fail on the target branch?",
+          "options": [
+            "The patch may depend on absent earlier changes or different surrounding behavior.",
+            "Cherry-pick never changes file contents.",
+            "A matching message guarantees all dependencies exist."
+          ],
+          "correct": 0,
+          "explanation": "The patch may depend on absent earlier changes or different surrounding behavior."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-cherry-pick",
+            "url": "https://git-scm.com/docs/git-cherry-pick",
+            "section": "Description and sequencer continue/abort",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "rebase",
+        "title": "17. Rebase private history with clear ownership",
+        "stage": "advanced",
+        "takeaway": "Rebase replays commits onto a new base and changes their identities.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A rebase takes selected commits and reapplies them after another base, producing a different history. This can simplify a private topic branch before review. It is not simply a display preference: parent changes create new commit identities.",
+              "Rewriting already shared work can disrupt other branches and approvals. Know who depends on the old history and follow the team’s publication policy. A force-with-lease mechanism can reduce accidental overwrite, but is not permission to rewrite someone else’s work."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The advanced fixture creates a private topic at the original base and rebases it onto main. It asserts that the topic identifier changes and main becomes its ancestor, then verifies the final file.",
+              "Interactive rebase can combine or reorder commits, but the final changes still need review. During conflicts, understand which patch is being replayed; ours/theirs labels in a rebase can be surprising compared with a normal merge."
+            ],
+            "example": "# Owned private fixture only:\ngit rebase main\ngit log --graph --oneline --all\n# If abandoning the replay:\ngit rebase --abort"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain the difference between rebasing an unpublished topic and rebasing a branch used by other developers.",
+          "solution": "The private branch can be replayed within its owner’s workflow after preserving a recovery point. A shared branch requires coordination because others refer to the old identities. Recheck final behavior and review evidence in either case.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Changed identity is demonstrated.",
+            "Final ancestry and contents are verified.",
+            "Shared-history coordination is explicit."
+          ]
+        },
+        "quiz": {
+          "question": "Why does rebase normally produce new commit identifiers?",
+          "options": [
+            "Only file content determines a commit identifier; parents never matter.",
+            "Replayed commits have a new parent context, which changes the commit object identity.",
+            "Git assigns identifiers randomly on every log command."
+          ],
+          "correct": 1,
+          "explanation": "Replayed commits have a new parent context, which changes the commit object identity."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-rebase",
+            "url": "https://git-scm.com/docs/git-rebase",
+            "section": "Description and recovering from upstream rebase",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "stash",
+        "title": "18. Park local work without confusing it with delivery",
+        "stage": "advanced",
+        "takeaway": "A stash is local temporary storage with its own inclusion and recovery limits.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "git stash records selected local changes so the working tree can be prepared for another operation. By default ordinary untracked files are not included; options such as --include-untracked change that scope. Ignored files require a still different deliberate choice.",
+              "A stash is not a reviewed commit or a shared backup. Applying it can conflict with the current files. Name useful stashes and inspect their contents before applying or dropping them."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "In a disposable repository, change a tracked note and create an untracked scratch file. Predict what remains after an ordinary stash versus a stash including untracked content. Use stash apply to retain the saved entry until the applied result is verified.",
+              "A team handoff needs reachable commits and a review context, not the statement that the change is in a local stash. Avoid parking secrets in a stash: its saved objects can still contain sensitive content."
+            ],
+            "example": "git stash push -m \"training note\"\ngit stash list\ngit stash show -p\ngit stash apply\n# Inspect/test before deciding to drop the saved entry."
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe a safe stash workflow for switching tasks and explain the untracked-file caveat.",
+          "solution": "Inspect status, deliberately choose tracked-only or include-untracked scope, give the entry a meaningful message, and inspect it later. Apply while retaining the entry, resolve/test the result, then decide whether to drop it. A stash does not deliver work to a teammate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Scope includes an explicit untracked-file decision.",
+            "Applied contents are checked before dropping.",
+            "Local parking is distinguished from collaboration."
+          ]
+        },
+        "quiz": {
+          "question": "Does an ordinary stash automatically preserve every untracked file?",
+          "options": [
+            "Yes; every file under the repository root is always saved.",
+            "A stash is automatically published as a pull request.",
+            "No; untracked inclusion is an explicit option and must be part of the intended scope."
+          ],
+          "correct": 2,
+          "explanation": "No; untracked inclusion is an explicit option and must be part of the intended scope."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-stash",
+            "url": "https://git-scm.com/docs/git-stash",
+            "section": "Description, --include-untracked and apply",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "tags-release",
+        "title": "19. Identify a release candidate with a tag",
+        "stage": "advanced",
+        "takeaway": "A tag identifies a candidate; verification and publication remain separate actions.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A lightweight tag is a reference; an annotated tag has its own object with tagger metadata and a message, and can be signed. A tag name alone does not prove who created it, that tests passed, or that a deployed artifact corresponds to it.",
+              "Choose release candidates from a reviewed commit and record build/test evidence plus artifact identifiers. Do not silently move a published release tag: consumers may already rely on its meaning. Document a new correction release instead when policy requires it."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The fixture creates an annotated v0.1-training tag and asserts its object type is tag. It remains local and synthetic. Signature verification is not simulated; real trust policy requires approved keys and a verification process.",
+              "For a team release, distinguish commit, built artifact and deployment. A rebuilt artifact can differ even from the same source if dependencies or build inputs change. Preserve exact inputs and hashes needed to explain the release."
+            ],
+            "example": "git tag -a v0.1-training -m \"Synthetic reviewed candidate\"\ngit cat-file -t v0.1-training\ngit show v0.1-training\n# No publication occurs in the fixture."
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a release record naming the source commit, tag, checks, artifact and rollback choice.",
+          "solution": "Record immutable candidate identifiers, executed checks and the built artifact hash. Explain who may approve publication and how to revert deployment if behavior fails. An annotated tag provides metadata but does not by itself provide a trusted signature or deployment evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Annotated tag object is distinguished from a lightweight ref.",
+            "Candidate and artifact are linked by evidence.",
+            "Publication is separately authorized."
+          ]
+        },
+        "quiz": {
+          "question": "What does an unsigned annotated tag prove by itself?",
+          "options": [
+            "It provides a local tag object and metadata; it does not establish trusted signer identity or passing release checks.",
+            "It guarantees production deployed exactly that source.",
+            "It automatically enforces every branch-protection rule."
+          ],
+          "correct": 0,
+          "explanation": "It provides a local tag object and metadata; it does not establish trusted signer identity or passing release checks."
+        },
+        "references": [
+          {
+            "title": "Git reference: git-tag",
+            "url": "https://git-scm.com/docs/git-tag",
+            "section": "Description, annotated tags and signing",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      },
+      {
+        "id": "team-release-review",
+        "title": "20. Review a team workflow from change to recovery",
+        "stage": "advanced",
+        "takeaway": "A team workflow defines ownership, integration, verification and recovery.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Agree on a base branch, topic ownership, review expectations, required checks and who can publish. Git supplies history mechanisms; the team and host define policies. Small changes and clear candidate evidence reduce the effort needed to review and recover.",
+              "A workflow should also say what happens when a release fails: preserve evidence, stop harmful rollout, identify the failing candidate, choose a tested revert or forward fix, and communicate through authorized team channels. Avoid rewriting shared history as a surprise."
+            ]
+          },
+          {
+            "title": "Trace the behavior and failure",
+            "paragraphs": [
+              "The advanced kit asks for an offline release-review record tied to the sandbox’s candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
+              "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
+            ],
+            "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
+          }
+        ],
+        "exercise": {
+          "prompt": "Deliver a reviewable release record and choose between merge, cherry-pick, rebase and revert for four concrete scenarios.",
+          "solution": "Use merge for combining branch histories, cherry-pick for a selected backport, rebase for coordinated/private replay, and revert for a compensating shared-history change. Explain dependencies, verification and ownership in each choice. Attach fixture outputs and separate unexecuted hosting/deployment claims.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Each operation matches its concrete purpose.",
+            "Evidence is tied to an exact candidate.",
+            "Recovery and publication ownership are stated."
+          ]
+        },
+        "quiz": {
+          "question": "What is missing from a green local sandbox report before a real team release?",
+          "options": [
+            "A force push is always required to make the release safe.",
+            "Repository policy, review/approval, artifact and deployment evidence must still be established for the actual candidate.",
+            "Nothing: local mechanics automatically authorize production publication."
+          ],
+          "correct": 1,
+          "explanation": "Repository policy, review/approval, artifact and deployment evidence must still be established for the actual candidate."
+        },
+        "references": [
+          {
+            "title": "Git reference: gitworkflows",
+            "url": "https://git-scm.com/docs/gitworkflows",
+            "section": "Topic branches, integration and published history",
+            "reviewed": "2026-09-27",
+            "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation: Three-state snapshot investigation",
+        "description": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+        "exitCriteria": [
+          "The two diff baselines and committed snapshot are correct.",
+          "No existing repository or global config is changed.",
+          "Ignore evidence uses check-ignore and ls-files.",
+          "Report separates mechanical checks from release verification."
+        ],
+        "project": {
+          "title": "Three-state snapshot investigation",
+          "brief": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+          "requirements": [
+            "Run the complete foundation fixture in its own temporary root.",
+            "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
+            "Verify committed contents independently with git show.",
+            "Show that an untracked synthetic config file is ignored without claiming history erasure."
+          ],
+          "rubric": [
+            "The two diff baselines and committed snapshot are correct.",
+            "No existing repository or global config is changed.",
+            "Ignore evidence uses check-ignore and ls-files.",
+            "Report separates mechanical checks from release verification."
+          ],
+          "solution": "Use sandbox.py --stage foundation. The fixture commits one, stages two, edits three and commits the index; HEAD contains two and the working file three. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate: Two-developer integration review",
+        "description": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+        "exitCriteria": [
+          "Conflict/abort/resolution states are supported by actual outputs.",
+          "The resolved contents preserve both stated intents.",
+          "Fetch and integration are distinguished.",
+          "Review evidence names the candidate and no hosted approval is invented."
+        ],
+        "project": {
+          "title": "Two-developer integration review",
+          "brief": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+          "requirements": [
+            "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+            "Explain base/ours/theirs and preserve both fixture intents.",
+            "Verify a two-parent merge.",
+            "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
+            "Write an offline pull-request review with candidate identifiers and remaining hosting limits."
+          ],
+          "rubric": [
+            "Conflict/abort/resolution states are supported by actual outputs.",
+            "The resolved contents preserve both stated intents.",
+            "Fetch and integration are distinguished.",
+            "Review evidence names the candidate and no hosted approval is invented."
+          ],
+          "solution": "Use sandbox.py --stage intermediate. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced: Local recovery and release portfolio",
+        "description": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+        "exitCriteria": [
+          "Bisect result identifies the known synthetic defect.",
+          "Recovery branches retain the intended committed work.",
+          "History operations are justified by ownership and purpose.",
+          "Release records do not equate a tag with trusted deployment evidence."
+        ],
+        "project": {
+          "title": "Local recovery and release portfolio",
+          "brief": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+          "requirements": [
+            "Run the advanced fixture and verify the first bad commit with its predicate.",
+            "Compare targeted revert with the private reset/reflog recovery.",
+            "Explain the cherry-picked change and rebased topic’s changed identity.",
+            "Verify the annotated tag object.",
+            "Produce an offline release record including artifact/hosting checks not executed."
+          ],
+          "rubric": [
+            "Bisect result identifies the known synthetic defect.",
+            "Recovery branches retain the intended committed work.",
+            "History operations are justified by ownership and purpose.",
+            "Release records do not equate a tag with trusted deployment evidence."
+          ],
+          "solution": "Use sandbox.py --stage advanced. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
+        }
+      }
+    ],
+    "resources": {
+      "folder": "git-team-workflows-practice",
+      "files": [
+        {
+          "id": "sandbox-py",
+          "href": "paths/git-team-workflows/sandbox.py",
+          "role": "reference",
+          "description": "Fresh local Git fixture generator and assertion verifier"
+        },
+        {
+          "id": "test_sandbox-py",
+          "href": "paths/git-team-workflows/test_sandbox.py",
+          "role": "test",
+          "description": "History and sandbox-boundary tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/git-team-workflows/README.md",
+          "role": "guide",
+          "description": "Runtime/setup/scope instructions"
+        },
+        {
+          "id": "release-review-md",
+          "href": "paths/git-team-workflows/release-review.md",
+          "role": "guide",
+          "description": "release review"
+        },
+        {
+          "id": "foundation-kit-md",
+          "href": "paths/git-team-workflows/foundation-kit.md",
+          "role": "guide",
+          "description": "foundation kit"
+        },
+        {
+          "id": "intermediate-kit-md",
+          "href": "paths/git-team-workflows/intermediate-kit.md",
+          "role": "guide",
+          "description": "intermediate kit"
+        },
+        {
+          "id": "advanced-kit-md",
+          "href": "paths/git-team-workflows/advanced-kit.md",
+          "role": "guide",
+          "description": "advanced kit"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Three-state snapshot investigation",
+          "goal": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+          "fileIds": [
+            "sandbox-py",
+            "test_sandbox-py",
+            "README-md",
+            "release-review-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and foundation-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run the complete foundation fixture in its own temporary root.",
+            "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
+            "Verify committed contents independently with git show.",
+            "Show that an untracked synthetic config file is ignored without claiming history erasure.",
+            "Compare submitted evidence with the rubric: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
+          ],
+          "commands": [
+            {
+              "label": "Run foundation snapshot fixture",
+              "command": "python -B sandbox.py --stage foundation",
+              "expected": "JSON reports staged_snapshot two and ignored_untracked true; owned temporary repositories removed."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Start in a repository you can safely change",
+              "href": "#topic/git-team-workflows/safe-sandbox"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Two-developer integration review",
+          "goal": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+          "fileIds": [
+            "sandbox-py",
+            "test_sandbox-py",
+            "README-md",
+            "release-review-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and intermediate-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+            "Explain base/ours/theirs and preserve both fixture intents.",
+            "Verify a two-parent merge.",
+            "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
+            "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
+            "Compare submitted evidence with the rubric: Conflict/abort/resolution states are supported by actual outputs. The resolved contents preserve both stated intents. Fetch and integration are distinguished. Review evidence names the candidate and no hosted approval is invented."
+          ],
+          "commands": [
+            {
+              "label": "Run local two-developer fixture",
+              "command": "python -B sandbox.py --stage intermediate",
+              "expected": "JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Integrate histories with a merge",
+              "href": "#topic/git-team-workflows/merge-integration"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Local recovery and release portfolio",
+          "goal": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+          "fileIds": [
+            "sandbox-py",
+            "test_sandbox-py",
+            "README-md",
+            "release-review-md",
+            "foundation-kit-md",
+            "intermediate-kit-md",
+            "advanced-kit-md"
+          ],
+          "steps": [
+            "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+            "Read README.md and advanced-kit.md before running the references.",
+            "Run the commands below and record actual results separately from expected results.",
+            "Run the advanced fixture and verify the first bad commit with its predicate.",
+            "Compare targeted revert with the private reset/reflog recovery.",
+            "Explain the cherry-picked change and rebased topic’s changed identity.",
+            "Verify the annotated tag object.",
+            "Produce an offline release record including artifact/hosting checks not executed.",
+            "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence."
+          ],
+          "commands": [
+            {
+              "label": "Run history/release fixture",
+              "command": "python -B sandbox.py --stage advanced",
+              "expected": "JSON identifies first bad/recovered commit, safe reverted content, changed rebase identity and annotated tag."
+            },
+            {
+              "label": "Run sandbox boundary regression tests",
+              "command": "python -B -m unittest -v test_sandbox.py",
+              "expected": "Four test methods pass, including repository-root escape and push rejection."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "15. Find a regression with a repeatable bisect test",
+              "href": "#topic/git-team-workflows/bisect"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "safe-sandbox": "foundation",
+        "three-states": "foundation",
+        "inspect-changes": "foundation",
+        "coherent-commits": "foundation",
+        "ignore-secrets": "foundation",
+        "history-refs": "foundation",
+        "branch-switch": "foundation",
+        "restore-staging": "foundation",
+        "merge-integration": "intermediate",
+        "conflict-resolution": "intermediate",
+        "remotes-fetch": "intermediate",
+        "pull-request-review": "intermediate",
+        "revert-reset": "intermediate",
+        "reflog-recovery": "intermediate",
+        "bisect": "advanced",
+        "cherry-pick": "advanced",
+        "rebase": "advanced",
+        "stash": "advanced",
+        "tags-release": "advanced",
+        "team-release-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/git-team-workflows/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "react",
     "title": "JavaScript → TypeScript → React",
     "category": "Web development",
@@ -11182,6 +16200,3663 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/react/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "kubernetes",
+    "title": "Kubernetes",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "24 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
+    "level": "Foundations → intermediate → selected advanced practice",
+    "prerequisites": [
+      "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
+      "Python 3.11+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
+    ],
+    "outcomes": [
+      "Trace declarative objects through controllers, scheduling, kubelet and ready endpoints.",
+      "Read consistent labels/selectors/ports and understand ConfigMap/Secret lifecycle boundaries.",
+      "Design distinct probes, requests/limits and compatible rollout/placement decisions.",
+      "Review non-root Pod security, scoped RBAC and enforced network-policy evidence.",
+      "Explain PVC/Job/HPA/PDB guarantees and prerequisites with bounded local exercises.",
+      "Render Helm, reason about GitOps drift and separate cluster/application recovery stores."
+    ],
+    "setup": [
+      "Run python -m unittest -v test_release_app.py check_manifests.py from the extracted flat kit.",
+      "JSON manifests use stable Kubernetes API versions; offline contract checks do not prove full schema admission or live behavior.",
+      "For an opted-in dedicated kind cluster, follow README.md exactly: verify context/loopback endpoint, build/load image, Bootstrap namespace, Validate server dry-run, then Apply.",
+      "Read optional-manifest prerequisites before network policy, storage, HPA or identity tests; no add-ons/cloud/cluster mutations occur merely by reading the course."
+    ],
+    "nextSteps": [
+      "Implement an external durable data owner and real authenticated application before using replicated service state.",
+      "Study CNI/CSI behavior, secure cluster lifecycle and controller design with measured failure-domain evidence.",
+      "Keep Helm/GitOps controllers and privileges separately reviewed; rendered YAML is not a live guarantee.",
+      "Plan and execute protected provider-specific backup/recovery and upgrade drills before production use."
+    ],
+    "sources": [
+      {
+        "title": "Kubernetes overview",
+        "url": "https://kubernetes.io/docs/concepts/overview/"
+      },
+      {
+        "title": "Kubernetes components",
+        "url": "https://kubernetes.io/docs/concepts/overview/components/"
+      },
+      {
+        "title": "kind quick start",
+        "url": "https://kind.sigs.k8s.io/docs/user/quick-start/"
+      },
+      {
+        "title": "Labels and selectors",
+        "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+      },
+      {
+        "title": "Pods",
+        "url": "https://kubernetes.io/docs/concepts/workloads/pods/"
+      },
+      {
+        "title": "Deployments",
+        "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+      },
+      {
+        "title": "Services",
+        "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
+      },
+      {
+        "title": "ConfigMaps",
+        "url": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+      },
+      {
+        "title": "Secrets",
+        "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+      },
+      {
+        "title": "Pod probes",
+        "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/"
+      },
+      {
+        "title": "Resource management",
+        "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+      },
+      {
+        "title": "Taints and tolerations",
+        "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+      },
+      {
+        "title": "Network policies",
+        "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+      },
+      {
+        "title": "RBAC authorization",
+        "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+      },
+      {
+        "title": "Pod security standards",
+        "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+      },
+      {
+        "title": "Persistent volumes",
+        "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+      },
+      {
+        "title": "Jobs",
+        "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+      },
+      {
+        "title": "Horizontal Pod autoscaling",
+        "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/"
+      },
+      {
+        "title": "Pod disruptions",
+        "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+      },
+      {
+        "title": "Helm template guide",
+        "url": "https://helm.sh/docs/chart_template_guide/getting_started/"
+      },
+      {
+        "title": "Flux core concepts",
+        "url": "https://fluxcd.io/flux/concepts/"
+      },
+      {
+        "title": "Debug running Pods",
+        "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/"
+      },
+      {
+        "title": "Operating etcd clusters",
+        "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "cluster-model",
+        "title": "1. Identify the problem Kubernetes solves",
+        "takeaway": "Kubernetes coordinates container workloads through declarative API objects and controllers.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Kubernetes coordinates container workloads through declarative API objects and controllers. It schedules instances, replaces failed Pods and exposes services, but it does not make application transactions correct or produce backups automatically. Begin with a working container from Delivery & Operations and distinguish application failure from scheduler/control-plane failure. The supplied image runs a small Python/SQLite lab, not the React/.NET/SQL stack."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Every local replica has its own scratch SQLite file. Use /version and health endpoints for replicated exercises; notes are not a shared durable service. A real stateful API needs an external data owner or a carefully designed single-writer storage pattern."
+            ],
+            "example": "Desired:2 stateless web replicas\nObserved:1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
+          }
+        ],
+        "exercise": {
+          "prompt": "List which responsibilities remain with the application.",
+          "solution": "Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome.",
+          "checks": [
+            "Distinguish platform and application invariants.",
+            "Identify replicated scratch-data limits."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does adding a second replica fail to guarantee?",
+          "options": [
+            "Two scheduled application instances",
+            "Shared, correct note storage across replicas",
+            "Controller replacement behavior"
+          ],
+          "correct": 1,
+          "explanation": "Shared, correct note storage across replicas. Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome."
+        },
+        "references": [
+          {
+            "title": "Kubernetes overview",
+            "url": "https://kubernetes.io/docs/concepts/overview/",
+            "section": "What is Kubernetes?",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "control-plane",
+        "title": "2. Trace API server, etcd, scheduler and kubelet",
+        "takeaway": "The API server exposes the cluster API, etcd stores cluster state, controllers reconcile objects and the scheduler assigns unscheduled Pods to nodes.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "The API server exposes the cluster API, etcd stores cluster state, controllers reconcile objects and the scheduler assigns unscheduled Pods to nodes. Kubelets act on assigned Pod specifications through container runtimes. These roles explain why accepting a Deployment does not mean a container is already healthy. Desired state and observed status are different parts of the object contract."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "If the scheduler cannot find capacity, a Pod can remain Pending even though the API request succeeded. If an image is missing, the node may be assigned but container startup fails. Inspect the actual status/events before changing unrelated YAML."
+            ],
+            "example": "kubectl apply → API stores desired Deployment\nDeployment controller → ReplicaSet → Pods\nscheduler → node assignment\nkubelet → pull/start → probes/status"
+          }
+        ],
+        "exercise": {
+          "prompt": "Place an unsatisfied resource request and an image-pull error on the trace.",
+          "solution": "Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted.",
+          "checks": [
+            "Name the responsible component.",
+            "Separate admission, scheduling and startup."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which component assigns an unscheduled Pod to a node?",
+          "options": [
+            "The scheduler",
+            "The Service selector",
+            "The application database"
+          ],
+          "correct": 0,
+          "explanation": "The scheduler. Insufficient resources prevent assignment at scheduling; an unavailable image fails after node assignment during kubelet/runtime startup. Both differ from an API validation rejection before the object is accepted."
+        },
+        "references": [
+          {
+            "title": "Kubernetes components",
+            "url": "https://kubernetes.io/docs/concepts/overview/components/",
+            "section": "Control plane components; node components",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation",
+        "diagram": {
+          "title": "Desired state becomes an available endpoint",
+          "summary": "API acceptance is only the first step; every later boundary can fail.",
+          "nodes": [
+            {
+              "id": "api",
+              "label": "API desired Deployment",
+              "description": "The validated object is stored."
+            },
+            {
+              "id": "controller",
+              "label": "ReplicaSet and Pods",
+              "description": "Controllers create the intended instances."
+            },
+            {
+              "id": "node",
+              "label": "Scheduler and kubelet",
+              "description": "A node is selected; runtime starts the image."
+            },
+            {
+              "id": "ready",
+              "label": "Ready endpoint",
+              "description": "Probe success makes a matching Pod eligible."
+            }
+          ],
+          "edges": [
+            {
+              "from": "api",
+              "to": "controller",
+              "label": "reconcile desired replicas"
+            },
+            {
+              "from": "controller",
+              "to": "node",
+              "label": "schedule and start"
+            },
+            {
+              "from": "node",
+              "to": "ready",
+              "label": "probe and publish readiness"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Accept desired state",
+              "activeNodes": [
+                "api",
+                "controller"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "A successful apply does not prove a container is running."
+            },
+            {
+              "title": "Resolve scheduling/startup",
+              "activeNodes": [
+                "controller",
+                "node"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Capacity failure and missing-image failure occur at different boundaries."
+            },
+            {
+              "title": "Route ready work",
+              "activeNodes": [
+                "node",
+                "ready"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The Service selector and readiness must both match before requests reach a usable endpoint."
+            }
+          ]
+        }
+      },
+      {
+        "id": "local-context",
+        "title": "3. Create an opt-in local lab with context guards",
+        "takeaway": "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster notebook-lab, producing kind-notebook-lab, and every mutating example names that context and notebook-lab namespace. lab.ps1 refuses another context or a non-loopback API endpoint before making a cluster request."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "These commands consume local machine resources and are optional; no cloud account or provider provisioning is needed. Install compatible current kubectl/kind/Docker tools yourself, record versions and check official version skew. A context name alone is not proof of endpoint identity; the guard also checks the API URL."
+            ],
+            "example": "kind create cluster --name notebook-lab\nkubectl config current-context\n# Expected: kind-notebook-lab\n./lab.ps1 -Action Validate"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain what the guard prevents and what it does not prove.",
+          "solution": "It blocks accidental operations against a different named or remote endpoint and confines namespace work. It does not certify the local cluster is trusted, guarantee a CNI feature, or replace reviewing the manifests.",
+          "checks": [
+            "Inspect context and endpoint.",
+            "Do not mutate an existing shared cluster."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why explicitly pass --context in lab commands?",
+          "options": [
+            "To select the intended API/identity even if the default changes",
+            "To guarantee production isolation from any malicious kubeconfig",
+            "To skip API validation"
+          ],
+          "correct": 0,
+          "explanation": "To select the intended API/identity even if the default changes. It blocks accidental operations against a different named or remote endpoint and confines namespace work. It does not certify the local cluster is trusted, guarantee a CNI feature, or replace reviewing the manifests."
+        },
+        "references": [
+          {
+            "title": "kind quick start",
+            "url": "https://kind.sigs.k8s.io/docs/user/quick-start/",
+            "section": "Creating a cluster; loading an image into your cluster",
+            "reviewed": "2026-09-27",
+            "scope": "Dedicated local kind cluster; no cluster created by course author verification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "objects-labels",
+        "title": "4. Read manifests, namespaces, labels and selectors",
+        "takeaway": "A manifest states apiVersion, kind, metadata and desired fields.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A manifest states apiVersion, kind, metadata and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A selector is not a descriptive caption: changing a label can remove a Pod from service routing or controller ownership. Keep controller selectors stable and examine matching Pods/EndpointSlices when diagnosing a Service with no endpoints. The offline checker verifies these specific relationships, not cluster admission."
+            ],
+            "example": "Deployment selector: app=release-demo\nPod-template label: app=release-demo\nService selector: app=release-demo\nAll namespaced objects: notebook-lab"
+          }
+        ],
+        "exercise": {
+          "prompt": "Change only the Service selector to app=wrong in a copy; predict the outcome.",
+          "solution": "The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill.",
+          "checks": [
+            "Compare selector to actual template labels.",
+            "Separate valid object from useful routing."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What causes a selector-based Service to discover these Pods?",
+          "options": [
+            "The Deployment filename",
+            "Matching Pod labels",
+            "The Docker image tag alone"
+          ],
+          "correct": 1,
+          "explanation": "Matching Pod labels. The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill."
+        },
+        "references": [
+          {
+            "title": "Labels and selectors",
+            "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
+            "section": "Label selectors",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "pods",
+        "title": "5. Understand Pod lifetime and shared resources",
+        "takeaway": "A Pod is the scheduling unit containing one or more containers with shared networking and selected volumes.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A Pod is the scheduling unit containing one or more containers with shared networking and selected volumes. Pod instances are disposable; a replacement has a new identity and can run elsewhere. Containers in one Pod communicate through localhost, while different Pods use their assigned network identities or Services. Keep one application container initially, adding sidecars only for a justified shared-lifetime role."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Restarting a container in the same Pod is not the same as replacing the Pod. emptyDir survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
+            ],
+            "example": "Pod A UID=old → deleted\nReplacement Pod B UID=new → new scratch volume\nTwo containers within B would share network namespace; independent Pods do not share localhost."
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict the lifetime of /tmp data mounted from emptyDir.",
+          "solution": "It remains through a container restart in the same Pod, then is lost on Pod removal/replacement. A PVC has a different lifecycle and still needs backup/recovery evidence.",
+          "checks": [
+            "Distinguish container restart from Pod replacement.",
+            "Name the volume type."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which operation ends an emptyDir volume lifetime?",
+          "options": [
+            "Restarting a container within the same Pod",
+            "Removing the Pod",
+            "Reading a Service DNS name"
+          ],
+          "correct": 1,
+          "explanation": "Removing the Pod. It remains through a container restart in the same Pod, then is lost on Pod removal/replacement. A PVC has a different lifecycle and still needs backup/recovery evidence."
+        },
+        "references": [
+          {
+            "title": "Pods",
+            "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
+            "section": "Using Pods; Pod lifecycle",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "deployments",
+        "title": "6. Reconcile a Deployment instead of hand-managing Pods",
+        "takeaway": "A Deployment manages ReplicaSets and declarative Pod-template updates.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A Deployment manages ReplicaSets and declarative Pod-template updates. With replicas 2 it aims to keep two desired instances; deleting one managed Pod usually prompts replacement. Editing a standalone Pod is a different contract and does not create a release history. The supplied workload uses apps/v1, a stable selector, bounded revision history and a progress deadline."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A Deployment cannot guarantee availability if nodes lack resources, all images fail or the application is broken. Controller retry is not business-level retry safety. Read desired/current/available replica counts and their conditions before claiming the reconciliation succeeded."
+            ],
+            "example": "kubectl --context=kind-notebook-lab -n notebook-lab get deploy,rs,pods\n# Delete one named lab Pod only after observing ownership.\n# Watch a replacement appear with a different name/UID."
+          }
+        ],
+        "exercise": {
+          "prompt": "Why can replicas 2 coexist with availableReplicas0?",
+          "solution": "Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly.",
+          "checks": [
+            "Compare desired to available replicas.",
+            "Inspect owner relationships."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What should replace a deleted managed Pod?",
+          "options": [
+            "The Deployment/ReplicaSet reconciliation chain",
+            "The Service DNS server",
+            "A database transaction"
+          ],
+          "correct": 0,
+          "explanation": "The Deployment/ReplicaSet reconciliation chain. Desired replicas is a target; both containers may fail image startup or readiness. Inspect ReplicaSet/Pod events, application logs and probes, fix the failure and wait for rollout status rather than increasing replicas blindly."
+        },
+        "references": [
+          {
+            "title": "Deployments",
+            "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+            "section": "Creating a Deployment; updating a Deployment",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "services-dns",
+        "title": "7. Route through Services, DNS and EndpointSlices",
+        "takeaway": "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container targetPort; a named targetPort connects to the container port name. Pod IPs change as instances are replaced. Within notebook-lab, release-demo resolves the Service, while release-demo.notebook-lab.svc identifies its namespace more explicitly."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A Service object with no ready matching Pods cannot serve requests. DNS resolution alone also does not prove transport or application health. The local Job exercises actual in-cluster DNS/HTTP only when the learner runs it; the offline checker inspects selector/port consistency."
+            ],
+            "example": "Job → http://release-demo:8080/version\nService port8080 → targetPort http → containerPort8080\nPod replacement changes endpoint IP; Service name remains."
+          }
+        ],
+        "exercise": {
+          "prompt": "Troubleshoot a successful DNS lookup followed by connection failure.",
+          "solution": "Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results.",
+          "checks": [
+            "Check endpoints and readiness.",
+            "Distinguish DNS from transport."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which name is stable across ordinary Pod replacement?",
+          "options": [
+            "A specific old Pod IP",
+            "The Service DNS name",
+            "The old Pod UID"
+          ],
+          "correct": 1,
+          "explanation": "The Service DNS name. Inspect Service port/targetPort, selector, EndpointSlices, readiness and policy enforcement in that order. Separate name resolution from usable ready backends and application HTTP results."
+        },
+        "references": [
+          {
+            "title": "Services",
+            "url": "https://kubernetes.io/docs/concepts/services-networking/service/",
+            "section": "Defining a Service; discovering services",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "configmaps",
+        "title": "8. Configure behavior with a ConfigMap",
+        "takeaway": "A ConfigMap carries non-confidential configuration separately from container bytes.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A ConfigMap carries non-confidential configuration separately from container bytes. The kit injects RELEASE_VERSION through envFrom; this teaches the boundary but the value is only a label, not artifact identity. Values supplied as environment variables are captured at container start. Updating the ConfigMap does not automatically rewrite the environment of an already running process."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Mounted configuration files have different update behavior and applications still must reload them appropriately; subPath mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
+            ],
+            "example": "release-config: RELEASE_VERSION=v1\nPod environment captures v1 at startup\nConfigMap becomes v2 → existing process still reports v1\nControlled rollout creates new Pods with new environment."
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict /version after editing only the ConfigMap data.",
+          "solution": "Existing environment-injected Pods keep v1. Restart the intended workload through a controlled rollout and observe new process values; do not relabel this as proof the image changed.",
+          "checks": [
+            "Distinguish config update from Pod restart.",
+            "Separate release label from digest."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "When does an envFrom ConfigMap change reach an existing process?",
+          "options": [
+            "Automatically on every HTTP request",
+            "After a new/restarted container receives its environment",
+            "Whenever a Service is queried"
+          ],
+          "correct": 1,
+          "explanation": "After a new/restarted container receives its environment. Existing environment-injected Pods keep v1. Restart the intended workload through a controlled rollout and observe new process values; do not relabel this as proof the image changed."
+        },
+        "references": [
+          {
+            "title": "ConfigMaps",
+            "url": "https://kubernetes.io/docs/concepts/configuration/configmap/",
+            "section": "Using ConfigMaps; mounted ConfigMaps are updated automatically",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "foundation"
+      },
+      {
+        "id": "secrets",
+        "title": "9. Treat Secrets as protected references, not encryption",
+        "takeaway": "A Kubernetes Secret separates confidential configuration from ordinary application manifests, but base64 encoding is not encryption.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A Kubernetes Secret separates confidential configuration from ordinary application manifests, but base64 encoding is not encryption. Protection depends on storage encryption, access controls, workloads and the system that supplies/rotates the value. The download contains an unmistakable fake demo token in a separate manifest that is not required for the baseline workload. Never put real credentials in the practice bundle or Git history."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Anyone able to create a Pod that mounts a Secret may be able to obtain it even without direct get-secret permission. Review indirect access and namespace trust. Environment-injected secret changes need process lifecycle handling; do not assume a value rotates automatically inside existing processes."
+            ],
+            "example": "demo-secret.json: fake-only-not-a-credential\nRuntime service account: automountServiceAccountToken=false\nReal environment: secret store → restricted runtime reference"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why base64 in a committed Secret is not adequate protection.",
+          "solution": "The value is readily decoded and persists in history. Keep real values outside the public repository, control direct and workload-mediated access, configure at-rest protection and rehearse rotation without logging the credential.",
+          "checks": [
+            "Discuss indirect Pod access.",
+            "Keep the sample fake."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does base64 encoding provide?",
+          "options": [
+            "Confidential encryption",
+            "An encoding reversible without a secret key",
+            "An authorization policy"
+          ],
+          "correct": 1,
+          "explanation": "An encoding reversible without a secret key. The value is readily decoded and persists in history. Keep real values outside the public repository, control direct and workload-mediated access, configure at-rest protection and rehearse rotation without logging the credential."
+        },
+        "references": [
+          {
+            "title": "Secrets",
+            "url": "https://kubernetes.io/docs/concepts/configuration/secret/",
+            "section": "Caution; information security for Secrets",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "probes",
+        "title": "10. Design startup, readiness and liveness independently",
+        "takeaway": "Startup probes give initialization time before liveness/readiness checks run.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Startup probes give initialization time before liveness/readiness checks run. Readiness controls eligible service traffic; liveness can restart a failing container. The kit uses /live for startup/liveness and /ready for required local schema/gate readiness. This avoids turning one dependency outage into repeated process restarts. Probe thresholds must match observed startup and recovery behavior rather than copied defaults."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Timing also depends on scheduling and probe execution; the arithmetic is an approximate configured budget, not an SLA. An aggressive liveness check on a shared dependency can worsen an outage. The local HTTP test confirms ready 503/live 200 distinction but does not execute kubelet probe scheduling."
+            ],
+            "example": "startup /live: period5s × failureThreshold12≈60s failure budget\nreadiness /ready: failure removes ready eligibility\nliveness /live: repeated failure triggers container restart"
+          }
+        ],
+        "exercise": {
+          "prompt": "Make the gate file inside a named lab Pod and predict its probe outcomes.",
+          "solution": "/ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill.",
+          "checks": [
+            "Distinguish traffic removal from restart.",
+            "Measure the optional cluster transition."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which probe should normally represent temporary inability to serve work?",
+          "options": [
+            "Readiness",
+            "Every liveness dependency check",
+            "An image tag"
+          ],
+          "correct": 0,
+          "explanation": "Readiness. /ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill."
+        },
+        "references": [
+          {
+            "title": "Pod probes",
+            "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
+            "section": "Liveness, readiness, startup probes",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "resources",
+        "title": "11. Use requests for scheduling and limits for runtime boundaries",
+        "takeaway": "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory. CPU over a limit can be throttled, while excessive memory can lead to termination. The lab requests100m CPU/64 Mi and limits500m / 128 Mi as teaching values, not measured capacity recommendations. Observe actual usage before tuning or adding autoscaling."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Scheduling considers requests and additional placement conditions, not only current CPU percentage. One hundred millicores is0.1core. For CPU utilization HPA, missing requests can prevent a useful percentage calculation; arbitrary low requests can distort scaling signals."
+            ],
+            "example": "Node free requested capacity:200mCPU\nPod request:300m → may remain Pending\nRunning Pod: CPU limit500m → throttling possible\nMemory beyond limit128Mi → OOM risk"
+          }
+        ],
+        "exercise": {
+          "prompt": "A Pending Pod uses no CPU. Why can its CPU request still be the cause?",
+          "solution": "The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values.",
+          "checks": [
+            "Use correct units.",
+            "Separate requested capacity from observed use."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What is100m CPU?",
+          "options": [
+            "100 full CPU cores",
+            "0.1 CPU core",
+            "100MiB memory"
+          ],
+          "correct": 1,
+          "explanation": "0.1 CPU core. The scheduler reserves against requested capacity and cannot fit the declared request, even when measured instantaneous usage appears low. Inspect FailedScheduling events and node allocatable/request totals before reducing values."
+        },
+        "references": [
+          {
+            "title": "Resource management",
+            "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+            "section": "Requests and limits; scheduling and resource limits",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "rolling-updates",
+        "title": "12. Roll a compatible Pod template and diagnose stalls",
+        "takeaway": "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. The kit uses surge1/unavailable0 for two replicas, requiring spare capacity for a third during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Changing a label in the ConfigMap alone is not a Pod-template change. For the local drill update the Deployment image to a separately built local v2 image, load that image into kind and watch status. Returning to the old image is safe only for the supplied unchanged-schema simulation."
+            ],
+            "example": "2 old +1 surge candidate\nCandidate Ready → reduce old\nRepeat until2 new\nCandidate never Ready → rollout waits/fails progress condition"
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict a rollout with no spare schedulable capacity.",
+          "solution": "With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green.",
+          "checks": [
+            "Explain spare capacity.",
+            "Keep readiness as a real gate."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Does progressDeadlineSeconds automatically perform rollback?",
+          "options": [
+            "Yes, including schema rollback",
+            "No; it reports progress failure for a release controller/operator to handle",
+            "It changes maxUnavailable to100%"
+          ],
+          "correct": 1,
+          "explanation": "No; it reports progress failure for a release controller/operator to handle. With unavailable0 and surge1, a new Pod may stay Pending while the two old Pods remain. Add justified capacity or revise the reviewed rollout budget; do not disable readiness just to make the status green."
+        },
+        "references": [
+          {
+            "title": "Deployments",
+            "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
+            "section": "Rolling update Deployment; failed Deployment",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "scheduling",
+        "title": "13. Explain affinity, topology and taints before pinning",
+        "takeaway": "Scheduling combines resource fit with placement constraints.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Scheduling combines resource fit with placement constraints. Node selectors/affinity express placement needs, topology spread can reduce concentration, and taints repel Pods unless tolerated. A toleration permits consideration; it does not force assignment to that node. Begin with unconstrained placement in the small local cluster and add a constraint only when you can identify its operational purpose."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The baseline deliberately omits hard multi-zone rules because a single-node kind cluster cannot satisfy them meaningfully. A workload pinned to one node loses resilience on that node failure. Inspect labels/taints/events, and distinguish availability goals from hardware/security placement requirements."
+            ],
+            "example": "Node label: workload=demo\nrequired nodeAffinity: workload=demo → only matching nodes\nTaint dedicated=ops:NoSchedule → needs matching toleration\nNo matching capacity → Pending"
+          }
+        ],
+        "exercise": {
+          "prompt": "Does adding a toleration guarantee placement on the tainted node?",
+          "solution": "No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences.",
+          "checks": [
+            "Distinguish permission from preference/requirement.",
+            "Explain single-node limitations."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A toleration alone does what?",
+          "options": [
+            "Forces placement on one node",
+            "Allows consideration despite a matching taint",
+            "Creates another node"
+          ],
+          "correct": 1,
+          "explanation": "Allows consideration despite a matching taint. No: the scheduler can consider that node but other constraints and scoring still apply. Combine a justified node affinity with toleration when dedicated placement is required, and test capacity/failure consequences."
+        },
+        "references": [
+          {
+            "title": "Taints and tolerations",
+            "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
+            "section": "Concepts",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "network-policy",
+        "title": "14. Test allowed and denied traffic with an enforcing CNI",
+        "takeaway": "NetworkPolicy selects Pods and declares allowed ingress/egress connections.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to app=release-demo and permits8080only from same-namespace app=notebook-client Pods. Baseline kind networking does not by itself establish policy enforcement."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Pod/namespace selector combination changes scope; separate list entries can be alternatives while selectors in the same peer are combined. Network policy is not HTTP authentication or TLS. Before claiming denial, run both an allowed client and an unlabelled client and verify the plugin; a refused service with no endpoints is a different failure."
+            ],
+            "example": "app-ingress selects release-demo\nAllowed: notebook-client → TCP 8080\nDenied: other Pod → TCP 8080, if CNI enforces policy\nEgress is unchanged because policyTypes lists Ingress only."
+          }
+        ],
+        "exercise": {
+          "prompt": "A deny policy is present but an unlabelled client succeeds. What next?",
+          "solution": "Confirm target labels, policy namespace/semantics and CNI enforcement. Do not mark isolation passed because kubectl apply succeeded. Use a compatible enforcing local CNI as a separately reviewed optional setup before repeating the paired traffic checks.",
+          "checks": [
+            "Verify enforcement prerequisites.",
+            "Run allowed and denied probes."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which claim is valid after apply alone?",
+          "options": [
+            "The API accepted the policy object",
+            "All traffic was proven denied",
+            "Application authorization is configured"
+          ],
+          "correct": 0,
+          "explanation": "The API accepted the policy object. Confirm target labels, policy namespace/semantics and CNI enforcement. Do not mark isolation passed because kubectl apply succeeded. Use a compatible enforcing local CNI as a separately reviewed optional setup before repeating the paired traffic checks."
+        },
+        "references": [
+          {
+            "title": "Network policies",
+            "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
+            "section": "Prerequisites; behavior of selectors",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "rbac",
+        "title": "15. Separate identities and scope RBAC permissions",
+        "takeaway": "Authentication establishes an API identity; RBAC authorization permits verbs on resources within scope.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Authentication establishes an API identity; RBAC authorization permits verbs on resources within scope. A Role is namespaced, a ClusterRole can express cluster-wide resource rules or be bound within a namespace, and bindings connect subjects to rules. The optional viewer role grants read/list/watch on Pods and Pod logs in notebook-lab; the runtime workload has no auto-mounted API token."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Impersonation-based kubectl auth can-i checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
+            ],
+            "example": "viewer ServiceAccount → RoleBinding → pod-viewer Role\nAllowed: get/list/watch pods and pods/log\nNot granted: read secrets, create Pods, mutating Deployments"
+          }
+        ],
+        "exercise": {
+          "prompt": "Would a Role granting create Pods be safe just because it excludes get Secrets?",
+          "solution": "Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations.",
+          "checks": [
+            "Include subresource and namespace scope.",
+            "Explain indirect escalation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does a namespaced RoleBinding determine?",
+          "options": [
+            "Which subjects receive referenced rules in that namespace",
+            "The container CPU limit",
+            "Whether application tokens are valid"
+          ],
+          "correct": 0,
+          "explanation": "Which subjects receive referenced rules in that namespace. Not necessarily: created Pods can mount namespace Secrets or powerful service accounts. Review indirect access/escalation, constrain workload/admission permissions and keep the viewer limited to required observations."
+        },
+        "references": [
+          {
+            "title": "RBAC authorization",
+            "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
+            "section": "Role and ClusterRole; RoleBinding and ClusterRoleBinding",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "pod-security",
+        "title": "16. Harden a workload and distinguish admission from runtime",
+        "takeaway": "Pod security settings restrict process privileges and filesystem capabilities.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root10001, disables privilege escalation, drops Linux capabilities, uses RuntimeDefault seccomp and a read-only root filesystem. A writable emptyDir at /tmp supports this application. The namespace requests restricted Pod Security admission atv1.34, independently of the application configuration."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
+            ],
+            "example": "USER10001 + runAsNonRoot\nallowPrivilegeEscalation:false\ncapabilities dropALL\nreadOnlyRootFilesystem:true\n/tmp is an explicit writable volume"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why does the app need a writable /tmp mount under a read-only root?",
+          "solution": "Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root.",
+          "checks": [
+            "Explain required writable paths.",
+            "Separate image risk from Pod privilege."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which setting directly removes ambient Linux capabilities?",
+          "options": [
+            "replicas:2",
+            "capabilities.drop:[ALL]",
+            "Service typeClusterIP"
+          ],
+          "correct": 1,
+          "explanation": "capabilities.drop:[ALL]. Its local SQLite file and temporary state must live on an explicitly writable volume. Keep /app read-only, use least privilege, and verify permissions as the numeric runtime user instead of switching the whole container back to root."
+        },
+        "references": [
+          {
+            "title": "Pod security standards",
+            "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+            "section": "Restricted policy",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "intermediate"
+      },
+      {
+        "id": "persistent-storage",
+        "title": "17. Connect PVC lifecycle, access mode and recovery",
+        "takeaway": "A PersistentVolumeClaim requests storage supplied by a matching volume or StorageClass.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A PersistentVolumeClaim requests storage supplied by a matching volume or StorageClass. A Pod mounts the claim; deleting a Pod need not delete the claim/data, while deleting the claim can trigger provider-specific reclaim behavior. ReadWriteOnce means read-write mounting by a single node, not a universal one-Pod distributed lock. The optional storage-demo writes one synthetic file to a dedicated claim."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Provisioning may wait for first consumer or stay Pending if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. fsGroup support and ownership depend on the driver; inspect events if the non-root writer cannot open /data."
+            ],
+            "example": "storage.json → PVC lab-data +Pod storage-demo\nDelete storage-demo only → reapply → same message if storage remains\nDelete namespace/PVC → data may be deleted by reclaim policy"
+          }
+        ],
+        "exercise": {
+          "prompt": "Does a bound PVC prove disaster recoverability?",
+          "solution": "No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state.",
+          "checks": [
+            "Inspect StorageClass and reclaim policy.",
+            "Test retained contents separately from backup."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "ReadWriteOnce is best interpreted as?",
+          "options": [
+            "Automatic exclusive one-Pod transaction safety",
+            "A single-node read-write access mode",
+            "Guaranteed multi-region replication"
+          ],
+          "correct": 1,
+          "explanation": "A single-node read-write access mode. No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state."
+        },
+        "references": [
+          {
+            "title": "Persistent volumes",
+            "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
+            "section": "Access modes; reclaiming",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "jobs",
+        "title": "18. Run finite Jobs with bounded retries and idempotent work",
+        "takeaway": "A Job manages work intended to finish, unlike a continuously serving Deployment.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests /version through Service DNS, prints the result and exits; backoffLimit 1 and activeDeadlineSeconds 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The supplied Job has no irreversible side effects. Do not run database migrations independently in every API Pod as a substitute for a reviewed migration job. Cleanup TTL means logs may disappear; capture evidence before it expires. Changing an existing Job template normally requires a new Job identity."
+            ],
+            "example": "batch/v1 Job version-check\nrestartPolicy:Never\nbackoffLimit:1\nactiveDeadlineSeconds:60\nttlSecondsAfterFinished:300"
+          }
+        ],
+        "exercise": {
+          "prompt": "A payment Job times out after the external provider commits. What should retry do?",
+          "solution": "Use a durable scoped idempotency key and reconcile uncertain outcomes; another Pod execution must not create another payment. A Job controller completion guarantee is not an exactly-once business-effect guarantee.",
+          "checks": [
+            "Bound retry and deadline.",
+            "Preserve uncertain-outcome semantics."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does backoffLimit fail to guarantee?",
+          "options": [
+            "A configured retry bound",
+            "Exactly one external side effect",
+            "Failure reporting for the Job"
+          ],
+          "correct": 1,
+          "explanation": "Exactly one external side effect. Use a durable scoped idempotency key and reconcile uncertain outcomes; another Pod execution must not create another payment. A Job controller completion guarantee is not an exactly-once business-effect guarantee."
+        },
+        "references": [
+          {
+            "title": "Jobs",
+            "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
+            "section": "Pod backoff failure policy; Job termination and cleanup",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "autoscaling",
+        "title": "19. Scale from useful metrics and retain overload controls",
+        "takeaway": "HorizontalPodAutoscaler changes replica count based on configured metrics.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "HorizontalPodAutoscaler changes replica count based on configured metrics. The optional autoscaling/v2 object targets60% CPU utilization with bounds2..4 and a scale-down stabilization window. CPU utilization depends on declared requests and the metrics API. A default local cluster may lack Metrics Server; applying the HPA can leave it unable to compute a recommendation."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "This calculation is simplified; readiness, missing metrics, tolerance and controller behavior matter. More replicas cannot repair a serialized database bottleneck or create shared scratch data. Maintain queue/admission controls and measure actual latency/error improvements before trusting autoscaling as an availability mechanism."
+            ],
+            "example": "request100m; observed60m → 60%utilization\n2 Pods averaging90% at60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
+          }
+        ],
+        "exercise": {
+          "prompt": "Why might kubectl get hpa show unknown metrics?",
+          "solution": "Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds.",
+          "checks": [
+            "Verify metrics prerequisite.",
+            "Keep maximum replicas bounded."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which prerequisite supports CPU percentage HPA?",
+          "options": [
+            "Only a Service DNS name",
+            "CPU requests and an available resource metrics API",
+            "A ConfigMap release label"
+          ],
+          "correct": 1,
+          "explanation": "CPU requests and an available resource metrics API. Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds."
+        },
+        "references": [
+          {
+            "title": "Horizontal Pod autoscaling",
+            "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
+            "section": "How does a HorizontalPodAutoscaler work?",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "disruptions",
+        "title": "20. Plan voluntary disruption without claiming universal availability",
+        "takeaway": "PodDisruptionBudget limits certain voluntary evictions based on healthy availability.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and minAvailable 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional policy/v1 manifest selects the same app labels as the Deployment."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Rolling Deployment updates use their own rollout availability settings; a PDB is not a substitute for them. A single-node local cluster cannot demonstrate multi-zone resilience. Do not drain nodes in an existing shared cluster for this exercise; use paper timelines or a separately approved disposable local drill."
+            ],
+            "example": "2 healthy Pods; minAvailable 1 → one voluntary eviction may proceed\n1 healthy Pod → another eviction may beblocked\nUnexpected node loss can violate desired availability anyway."
+          }
+        ],
+        "exercise": {
+          "prompt": "Could a PDB alone make a two-replica service survive a single-node outage?",
+          "solution": "No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures.",
+          "checks": [
+            "Distinguish voluntary from involuntary failure.",
+            "Consider placement and capacity."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does a PDB primarily constrain?",
+          "options": [
+            "Every possible application crash",
+            "Eligible voluntary eviction requests",
+            "All SQL transactions"
+          ],
+          "correct": 1,
+          "explanation": "Eligible voluntary eviction requests. No if both replicas are on that node. Placement, node/failure-domain diversity, capacity and application data dependencies also determine availability. A PDB controls a specific voluntary-disruption boundary, not physical failures."
+        },
+        "references": [
+          {
+            "title": "Pod disruptions",
+            "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
+            "section": "Pod disruption budgets",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "helm",
+        "title": "21. Render Helm configuration before enabling installation",
+        "takeaway": "Helm packages parameterized manifests as charts.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Helm packages parameterized manifests as charts. Values customize templates, releases record installations and upgrades, and rendering exposes the resulting API objects. A chart does not make invalid selectors or unsafe privileges correct. The course uses a render-first exercise rather than shipping a flattened chart that would lose its expected directory structure in the downloadable bundle."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
+            ],
+            "example": "helm create lab-chart\n# Review generated Service,Deployment,values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
+          }
+        ],
+        "exercise": {
+          "prompt": "What must be checked after values change an application label or port?",
+          "solution": "Inspect rendered selectors, Pod labels, Service target ports and probes together; linting alone does not test runtime routing. Treat rendered diffs as review artifacts and run server admission only after local context verification.",
+          "checks": [
+            "Review rendered output.",
+            "Do not confuse lint with cluster execution."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which command inspects rendered objects without installation?",
+          "options": [
+            "helm template",
+            "helm uninstall",
+            "kubectl drain"
+          ],
+          "correct": 0,
+          "explanation": "helm template. Inspect rendered selectors, Pod labels, Service target ports and probes together; linting alone does not test runtime routing. Treat rendered diffs as review artifacts and run server admission only after local context verification."
+        },
+        "references": [
+          {
+            "title": "Helm template guide",
+            "url": "https://helm.sh/docs/chart_template_guide/getting_started/",
+            "section": "A starter chart; running a first template",
+            "reviewed": "2026-09-27",
+            "scope": "Current Helm chart principles; learner-generated chart, no packaged or installed release supplied. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "gitops",
+        "title": "22. Reconcile reviewed Git state and control drift",
+        "takeaway": "GitOps controllers reconcile versioned desired state rather than treating a successful shell command as permanent truth.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "GitOps controllers reconcile versioned desired state rather than treating a successful shell command as permanent truth. Separate application build from environment promotion, use immutable image identity and review desired-state changes. Manual changes can be overwritten on reconciliation. The lesson uses a timeline and rendered manifests; it does not install Flux, Argo CD or new CRDs into the local cluster."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "A controller needs scoped API permissions and secret access appropriate to its work. Pruning can remove resources omitted from desired state, including data-bearing objects if carelessly managed. Bootstrap credentials, approvals and controller provenance are separate operational boundaries."
+            ],
+            "example": "Git desired image v1 → controller applies v1\nManual kubectl sets image v2 → drift\nNext reconcile may restore v1\nReviewed Gitpromotion changes desired state to v2"
+          }
+        ],
+        "exercise": {
+          "prompt": "A rollback via kubectl succeeds but later v2 returns. Explain why.",
+          "solution": "The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately.",
+          "checks": [
+            "Explain source of truth and drift.",
+            "Review pruning/data consequences."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What should a durable GitOps rollback change?",
+          "options": [
+            "Only the current Pod label",
+            "The reviewed desired state in its source of truth",
+            "The database password in a public commit"
+          ],
+          "correct": 1,
+          "explanation": "The reviewed desired state in its source of truth. The repository still declares v2 and the controller reconciles it. Perform a reviewed Git revert/promotion back to the compatible v1 desired state, monitor reconciliation and account for schema/data changes separately."
+        },
+        "references": [
+          {
+            "title": "Flux core concepts",
+            "url": "https://fluxcd.io/flux/concepts/",
+            "section": "Reconciliation; GitOps toolkit",
+            "reviewed": "2026-09-27",
+            "scope": "GitOps reconciliation principles; no Flux controller installed by the lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "troubleshooting",
+        "title": "23. Diagnose status, events, logs and network boundaries",
+        "takeaway": "Troubleshooting follows the failed boundary: API rejection, Pending scheduling, container startup, readiness, Service routing, policy or application/data behavior.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Troubleshooting follows the failed boundary: API rejection, Pending scheduling, container startup, readiness, Service routing, policy or application/data behavior. Inspect current conditions and recent events, then logs including a previous crashed container when available. Debug tooling should use the least privilege needed and avoid printing Secret contents. A fresh log line is evidence only for the process that emitted it."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "ImagePullBackOff, CrashLoopBackOff and Pending indicate different stages, not interchangeable root causes. The kit imagePullPolicy Never intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
+            ],
+            "example": "kubectl --context=kind-notebook-lab -n notebook-lab describe pod NAME\nkubectl --context=kind-notebook-lab -n notebook-lab logs NAME --previous\nkubectl --context=kind-notebook-lab -n notebook-lab get endpointslices\n# Use actual object names and check their readiness conditions."
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify Pending, ErrImageNeverPull and readiness 503.",
+          "solution": "Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary.",
+          "checks": [
+            "Tie observations to stage of failure.",
+            "Preserve secrets and incident evidence."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A running Pod can still have no Service traffic because?",
+          "options": [
+            "Readiness may fail even though its process runs",
+            "Running status guarantees every user operation succeeds",
+            "Its YAML filename is too short"
+          ],
+          "correct": 0,
+          "explanation": "Readiness may fail even though its process runs. Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary."
+        },
+        "references": [
+          {
+            "title": "Debug running Pods",
+            "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/",
+            "section": "Examining Pod status; logs; debugging",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      },
+      {
+        "id": "backup-production",
+        "title": "24. Separate cluster backup, application restore and production readiness",
+        "takeaway": "Cluster state backup preserves API objects and related control-plane state, while application data may live in volumes or external databases.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Cluster state backup preserves API objects and related control-plane state, while application data may live in volumes or external databases. Recovering etcd does not restore every database byte or validate user invariants. Production planning includes multiple failure domains, access/identity controls, workload limits, reliable storage, observability, upgrades and tested recovery. A local kind exercise demonstrates only selected mechanics."
+            ]
+          },
+          {
+            "title": "Work through a release decision",
+            "paragraphs": [
+              "The lab PVC is not an off-node backup, and deleting the local cluster can remove its only copy. Use the delivery path SQLite restore test to understand independent data verification, then design provider-specific volume/database recovery. Never run etcd recovery commands against a shared cluster as a classroom shortcut."
+            ],
+            "example": "Recovery inventory: Git desired manifests + protected Secrets +etcd state\nApplication: database backups/logs +volume snapshots if supported\nRestore drill: rebuild platform → restore app data → verify business records → controlled traffic"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write separate RPO/RTO checks for cluster state and notes data.",
+          "solution": "Identify each authoritative store, its supported backup method, protected/off-cluster copies and compatible restoration sequence. Verify known notes through the restored application, measure time/loss and list untested failure domains. Review platform upgrades against version skew and API deprecations.",
+          "checks": [
+            "Separate control-plane and application data.",
+            "Label local evidence versus production unknowns."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does an etcd snapshot alone not establish?",
+          "options": [
+            "A recoverable copy of that control-plane state",
+            "Recovery of external application database records",
+            "A cluster-state backup artifact"
+          ],
+          "correct": 1,
+          "explanation": "Recovery of external application database records. Identify each authoritative store, its supported backup method, protected/off-cluster copies and compatible restoration sequence. Verify known notes through the restored application, measure time/loss and list untested failure domains. Review platform upgrades against version skew and API deprecations."
+        },
+        "references": [
+          {
+            "title": "Operating etcd clusters",
+            "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/",
+            "section": "Backing up an etcd cluster; restoring an etcd cluster",
+            "reviewed": "2026-09-27",
+            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          }
+        ],
+        "stage": "advanced"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundations · reconcile a local workload",
+        "description": "Read stable API objects and connect controllers, Pods, labels, Services and configuration.",
+        "exitCriteria": [
+          "Trace API acceptance to ready endpoints.",
+          "Run offline service/manifest-contract checks.",
+          "Guard local context/endpoint and namespace before optional operations."
+        ],
+        "project": {
+          "title": "Object and reconciliation notebook",
+          "brief": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
+          "requirements": [
+            "Run the7 service and4 offline manifest-contract checks.",
+            "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
+            "Compare labels,selectors,ports and config lifecycle.",
+            "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+            "Capture desired/current/available counts and local health/version results."
+          ],
+          "rubric": [
+            "Offline checks are not claimed as live API admission.",
+            "Every mutating command uses the dedicated local context/namespace.",
+            "Replicated scratch data is not labelled shared persistence.",
+            "A failed boundary is diagnosed from actual status/events."
+          ],
+          "solution": "Use standard Python checks without a cluster first. The Deployment selector and Service selector match app=release-demo, and targetPort http matches the named 8080 container port. Bootstrap persists the namespace before server dry-run. Optional live checks wait for readiness and inspect endpoints; scratch notes remain per Pod."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate · enforce workload boundaries",
+        "description": "Practice probes, resource/rollout/scheduling choices and scoped security.",
+        "exitCriteria": [
+          "Separate ready failure from process restart.",
+          "Explain requests/limits and rollout capacity.",
+          "Verify allowed/denied rules with enforcement prerequisites."
+        ],
+        "project": {
+          "title": "Controlled failure and access packet",
+          "brief": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
+          "requirements": [
+            "Explain and observe the synthetic readiness gate where a cluster exists.",
+            "Record resource units and scheduling/rollout implications.",
+            "Use a separately changed/loaded different image for actual rollout evidence.",
+            "Review viewer RBAC and paired allowed/denied identity checks.",
+            "Only claim network isolation after verifying an enforcing CNI and both clients.",
+            "Review restricted non-root/read-only settings and necessary writable paths."
+          ],
+          "rubric": [
+            "Traffic eligibility and liveness outcomes are distinguished.",
+            "A progress deadline is not called automatic rollback.",
+            "Policy application is not called enforcement evidence.",
+            "No production identity/cluster is reused."
+          ],
+          "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0,expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice · handle storage, controllers and recovery",
+        "description": "Study finite work, autoscaling, disruption, render-first templating, GitOps and distinct recovery stores.",
+        "exitCriteria": [
+          "Separate PVC retention from backup.",
+          "Recognize Job/HPA/PDB guarantees and prerequisites.",
+          "Produce desired-state and recovery evidence with production limits."
+        ],
+        "project": {
+          "title": "Selected operational cluster review",
+          "brief": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+          "requirements": [
+            "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
+            "Run bounded Job and capture completion/logs before TTL if opted in.",
+            "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+            "Explain voluntary eviction versus node outage and rollout constraints.",
+            "Render a learner-generated Helm chart and compare to known workload contracts.",
+            "Draw GitOps drift/revert timeline without installing a controller.",
+            "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately."
+          ],
+          "rubric": [
+            "No exactly-once external-effect claim is made for Jobs.",
+            "Autoscaling evidence includes real metrics rather than apply alone.",
+            "PDB scope and single-node limits are explicit.",
+            "Business-data restoration is separate from control-plane restoration."
+          ],
+          "solution": "Use the optional Job to read Service /version with deadline 60 and backoff 1. A bound PVC and RWO access do not certify disaster recovery or exclusive transaction ownership. Render Helm before any install; durable GitOps rollback changes desired source state. Separate etcd state and application store recovery with known-record verification; the dedicated kind lab is selected mechanics practice, not production readiness."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "release_app.py — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/release_app.py"
+      },
+      {
+        "title": "test_release_app.py — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/test_release_app.py"
+      },
+      {
+        "title": "Dockerfile — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/Dockerfile"
+      },
+      {
+        "title": ".dockerignore — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/.dockerignore"
+      },
+      {
+        "title": "README.md — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/README.md"
+      },
+      {
+        "title": "cluster-workbook.md — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/cluster-workbook.md"
+      },
+      {
+        "title": "check_manifests.py — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/check_manifests.py"
+      },
+      {
+        "title": "lab.ps1 — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/lab.ps1"
+      },
+      {
+        "title": "namespace.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/namespace.json"
+      },
+      {
+        "title": "workload.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/workload.json"
+      },
+      {
+        "title": "network-policy.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/network-policy.json"
+      },
+      {
+        "title": "rbac.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/rbac.json"
+      },
+      {
+        "title": "demo-secret.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/demo-secret.json"
+      },
+      {
+        "title": "hpa.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/hpa.json"
+      },
+      {
+        "title": "disruption-budget.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/disruption-budget.json"
+      },
+      {
+        "title": "job.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/job.json"
+      },
+      {
+        "title": "storage.json — local reference or guided exercise",
+        "href": "paths/kubernetes/practice/storage.json"
+      },
+      {
+        "title": "Offline PowerShell guard behavior checks",
+        "href": "paths/kubernetes/practice/test_lab_guard.ps1"
+      }
+    ],
+    "resources": {
+      "folder": "kubernetes-practice",
+      "files": [
+        {
+          "id": "release_app-py",
+          "href": "paths/kubernetes/practice/release_app.py",
+          "role": "reference",
+          "description": "release_app.py — local reference or guided exercise"
+        },
+        {
+          "id": "test_release_app-py",
+          "href": "paths/kubernetes/practice/test_release_app.py",
+          "role": "test",
+          "description": "test_release_app.py — local reference or guided exercise"
+        },
+        {
+          "id": "Dockerfile",
+          "href": "paths/kubernetes/practice/Dockerfile",
+          "role": "reference",
+          "description": "Dockerfile — local reference or guided exercise"
+        },
+        {
+          "id": "dockerignore",
+          "href": "paths/kubernetes/practice/.dockerignore",
+          "role": "reference",
+          "description": ".dockerignore — local reference or guided exercise"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/kubernetes/practice/README.md",
+          "role": "guide",
+          "description": "README.md — local reference or guided exercise"
+        },
+        {
+          "id": "cluster-workbook-md",
+          "href": "paths/kubernetes/practice/cluster-workbook.md",
+          "role": "guide",
+          "description": "cluster-workbook.md — local reference or guided exercise"
+        },
+        {
+          "id": "check_manifests-py",
+          "href": "paths/kubernetes/practice/check_manifests.py",
+          "role": "test",
+          "description": "check_manifests.py — local reference or guided exercise"
+        },
+        {
+          "id": "lab-ps1",
+          "href": "paths/kubernetes/practice/lab.ps1",
+          "role": "reference",
+          "description": "lab.ps1 — local reference or guided exercise"
+        },
+        {
+          "id": "namespace-json",
+          "href": "paths/kubernetes/practice/namespace.json",
+          "role": "reference",
+          "description": "namespace.json — local reference or guided exercise"
+        },
+        {
+          "id": "workload-json",
+          "href": "paths/kubernetes/practice/workload.json",
+          "role": "reference",
+          "description": "workload.json — local reference or guided exercise"
+        },
+        {
+          "id": "network-policy-json",
+          "href": "paths/kubernetes/practice/network-policy.json",
+          "role": "reference",
+          "description": "network-policy.json — local reference or guided exercise"
+        },
+        {
+          "id": "rbac-json",
+          "href": "paths/kubernetes/practice/rbac.json",
+          "role": "reference",
+          "description": "rbac.json — local reference or guided exercise"
+        },
+        {
+          "id": "demo-secret-json",
+          "href": "paths/kubernetes/practice/demo-secret.json",
+          "role": "reference",
+          "description": "demo-secret.json — local reference or guided exercise"
+        },
+        {
+          "id": "hpa-json",
+          "href": "paths/kubernetes/practice/hpa.json",
+          "role": "reference",
+          "description": "hpa.json — local reference or guided exercise"
+        },
+        {
+          "id": "disruption-budget-json",
+          "href": "paths/kubernetes/practice/disruption-budget.json",
+          "role": "reference",
+          "description": "disruption-budget.json — local reference or guided exercise"
+        },
+        {
+          "id": "job-json",
+          "href": "paths/kubernetes/practice/job.json",
+          "role": "reference",
+          "description": "job.json — local reference or guided exercise"
+        },
+        {
+          "id": "storage-json",
+          "href": "paths/kubernetes/practice/storage.json",
+          "role": "reference",
+          "description": "storage.json — local reference or guided exercise"
+        },
+        {
+          "id": "test_lab_guard-ps1",
+          "href": "paths/kubernetes/practice/test_lab_guard.ps1",
+          "role": "test",
+          "description": "Offline PowerShell guard behavior checks (fake kubectl)"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Object and reconciliation notebook",
+          "goal": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "cluster-workbook-md",
+            "check_manifests-py",
+            "lab-ps1",
+            "namespace-json",
+            "workload-json",
+            "network-policy-json",
+            "rbac-json",
+            "demo-secret-json",
+            "hpa-json",
+            "disruption-budget-json",
+            "job-json",
+            "storage-json",
+            "test_lab_guard-ps1"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "Run the7 service and4 offline manifest-contract checks.",
+            "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
+            "Compare labels,selectors,ports and config lifecycle.",
+            "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+            "Capture desired/current/available counts and local health/version results.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py check_manifests.py",
+              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Optional local lab · after context review and namespace Bootstrap",
+              "command": "./lab.ps1 -Action Validate",
+              "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Identify the problem Kubernetes solves",
+              "href": "#topic/kubernetes/cluster-model"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Controlled failure and access packet",
+          "goal": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "cluster-workbook-md",
+            "check_manifests-py",
+            "lab-ps1",
+            "namespace-json",
+            "workload-json",
+            "network-policy-json",
+            "rbac-json",
+            "demo-secret-json",
+            "hpa-json",
+            "disruption-budget-json",
+            "job-json",
+            "storage-json",
+            "test_lab_guard-ps1"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "Explain and observe the synthetic readiness gate where a cluster exists.",
+            "Record resource units and scheduling/rollout implications.",
+            "Use a separately changed/loaded different image for actual rollout evidence.",
+            "Review viewer RBAC and paired allowed/denied identity checks.",
+            "Only claim network isolation after verifying an enforcing CNI and both clients.",
+            "Review restricted non-root/read-only settings and necessary writable paths.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py check_manifests.py",
+              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Optional local lab · after context review and namespace Bootstrap",
+              "command": "./lab.ps1 -Action Validate",
+              "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Treat Secrets as protected references, not encryption",
+              "href": "#topic/kubernetes/secrets"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Selected operational cluster review",
+          "goal": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+          "fileIds": [
+            "release_app-py",
+            "test_release_app-py",
+            "Dockerfile",
+            "dockerignore",
+            "README-md",
+            "cluster-workbook-md",
+            "check_manifests-py",
+            "lab-ps1",
+            "namespace-json",
+            "workload-json",
+            "network-policy-json",
+            "rbac-json",
+            "demo-secret-json",
+            "hpa-json",
+            "disruption-budget-json",
+            "job-json",
+            "storage-json",
+            "test_lab_guard-ps1"
+          ],
+          "steps": [
+            "Extract all listed flat files together into a new practice folder.",
+            "Read README.md and the workbook before any optional Docker/cluster command.",
+            "Run offline checks and record actual runtime/results.",
+            "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
+            "Run bounded Job and capture completion/logs before TTL if opted in.",
+            "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+            "Explain voluntary eviction versus node outage and rollout constraints.",
+            "Render a learner-generated Helm chart and compare to known workload contracts.",
+            "Draw GitOps drift/revert timeline without installing a controller.",
+            "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately.",
+            "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+          ],
+          "commands": [
+            {
+              "label": "Extracted kit root · offline Python checks",
+              "command": "python -m unittest -v test_release_app.py check_manifests.py",
+              "expected": "11 named local tests pass; this does not execute a Docker daemon or cluster."
+            },
+            {
+              "label": "Optional local lab · after context review and namespace Bootstrap",
+              "command": "./lab.ps1 -Action Validate",
+              "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Connect PVC lifecycle, access mode and recovery",
+              "href": "#topic/kubernetes/persistent-storage"
+            }
+          ],
+          "notes": [
+            "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
+            "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
+            "Build the stage requirements and document evidence separately from reference results."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "cluster-model": "foundation",
+        "control-plane": "foundation",
+        "local-context": "foundation",
+        "objects-labels": "foundation",
+        "pods": "foundation",
+        "deployments": "foundation",
+        "services-dns": "foundation",
+        "configmaps": "foundation",
+        "secrets": "intermediate",
+        "probes": "intermediate",
+        "resources": "intermediate",
+        "rolling-updates": "intermediate",
+        "scheduling": "intermediate",
+        "network-policy": "intermediate",
+        "rbac": "intermediate",
+        "pod-security": "intermediate",
+        "persistent-storage": "advanced",
+        "jobs": "advanced",
+        "autoscaling": "advanced",
+        "disruptions": "advanced",
+        "helm": "advanced",
+        "gitops": "advanced",
+        "troubleshooting": "advanced",
+        "backup-production": "advanced"
+      },
+      "bundle": {
+        "href": "paths/kubernetes/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "networking-web",
+    "title": "Networking & the Web",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "Follow requests from names to validated bodies through 24 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
+      "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+    ],
+    "outcomes": [
+      "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+      "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
+      "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+      "Explain the difference between supplied test evidence and unexecuted deployment extensions."
+    ],
+    "setup": [
+      "Download the complete practice kit and keep its files together in one directory.",
+      "Run each reference and the exact unittest command from that directory.",
+      "Use synthetic data and owned temporary resources. Read README.md for execution scope and limits."
+    ],
+    "nextSteps": [
+      "Implement one explicitly identified missing boundary and add a falsifying integration test.",
+      "Record runtime, fixtures, changed contract, actual outcome and remaining limits in a review note.",
+      "Use the neighboring Python, System Design and security paths to extend the same small application without claiming professional certification."
+    ],
+    "sources": [
+      {
+        "title": "IETF RFC 9111: HTTP Caching",
+        "url": "https://www.rfc-editor.org/rfc/rfc9111.html"
+      },
+      {
+        "title": "IETF RFC 6265: HTTP State Management",
+        "url": "https://www.rfc-editor.org/rfc/rfc6265.html"
+      },
+      {
+        "title": "IETF RFC 1035: DNS",
+        "url": "https://www.rfc-editor.org/rfc/rfc1035.html"
+      },
+      {
+        "title": "WHATWG Fetch Standard",
+        "url": "https://fetch.spec.whatwg.org/#http-cors-protocol"
+      },
+      {
+        "title": "IETF RFC 9110: HTTP Semantics",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
+      },
+      {
+        "title": "Python http.server",
+        "url": "https://docs.python.org/3/library/http.server.html"
+      },
+      {
+        "title": "Python socket",
+        "url": "https://docs.python.org/3/library/socket.html"
+      },
+      {
+        "title": "Google SRE monitoring",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "title": "Python ssl",
+        "url": "https://docs.python.org/3/library/ssl.html"
+      },
+      {
+        "title": "IETF RFC 8446: TLS 1.3",
+        "url": "https://www.rfc-editor.org/rfc/rfc8446.html"
+      },
+      {
+        "title": "Python urllib.parse",
+        "url": "https://docs.python.org/3/library/urllib.parse.html"
+      },
+      {
+        "title": "IETF RFC 8259: JSON",
+        "url": "https://www.rfc-editor.org/rfc/rfc8259.html"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation practice",
+        "description": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+        "exitCriteria": [
+          "Examples include different scheme and port origins.",
+          "TTL tests do not sleep or access a public resolver.",
+          "The model is labeled incomplete and separate from real DNS."
+        ],
+        "project": {
+          "title": "Layered request and DNS worksheet",
+          "brief": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+          "requirements": [
+            "Parse scheme/host/default port and reject credentials, fragments and unsupported schemes.",
+            "Store an offline address with TTL and test just before and at expiry using injected time.",
+            "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
+            "Permit retries only for the explicit safe-read policy with attempts and time left."
+          ],
+          "rubric": [
+            "Examples include different scheme and port origins.",
+            "TTL tests do not sleep or access a public resolver.",
+            "The model is labeled incomplete and separate from real DNS.",
+            "POST is not repeated without an explicit operation contract."
+          ],
+          "solution": "network_foundation.py implements the origin tuple, injected-time DnsCache and retry_allowed. ProtocolModels verifies normalization, rejection, exact TTL expiry and attempt policy. The example address is documentation-only and no DNS query is performed."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate practice",
+        "description": "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
+        "exitCriteria": [
+          "Status, headers and content are asserted separately.",
+          "HEAD and 304 have no body.",
+          "Redirects are observed and not followed without policy."
+        ],
+        "project": {
+          "title": "Loopback HTTP diagnostic client",
+          "brief": "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
+          "requirements": [
+            "Bind only 127.0.0.1 on port zero and close resources on failure.",
+            "Check GET, HEAD, ETag/304, relative 307 redirect and missing route.",
+            "Observe synthetic cookie issuance/private denial without claiming real authentication.",
+            "Reject malformed 200 JSON and classify 503.",
+            "Use a readiness Event and delayed response to observe a real bounded client read timeout."
+          ],
+          "rubric": [
+            "Status, headers and content are asserted separately.",
+            "HEAD and 304 have no body.",
+            "Redirects are observed and not followed without policy.",
+            "The fixture owns its port, threads and cleanup.",
+            "Evidence is HTTP/1.1 loopback, with no TLS or browser enforcement claim."
+          ],
+          "solution": "network_http.py supplies the complete server, bounded fetch and context-managed cleanup. LoopbackHttp exercises actual socket exchanges, including a blocked response released on cleanup. The cookie is fixed synthetic data; no credential service or real TLS exists."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+        "exitCriteria": [
+          "Malformed syntax, incompatible types and wrong media type each reject.",
+          "User-specific output is not placed in the shared model cache.",
+          "Three transient failures cause exactly three calls."
+        ],
+        "project": {
+          "title": "Bounded observation and cache review",
+          "brief": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+          "requirements": [
+            "Bound body size and require media type plus exact lesson/version schema.",
+            "Reject private cache insertion and test exact freshness expiry with an injected clock.",
+            "Stop new GET attempts after the attempt budget or overall deadline.",
+            "Record only status/attempt metadata and classify final failure.",
+            "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed."
+          ],
+          "rubric": [
+            "Malformed syntax, incompatible types and wrong media type each reject.",
+            "User-specific output is not placed in the shared model cache.",
+            "Three transient failures cause exactly three calls.",
+            "An exhausted deadline causes no new dispatch.",
+            "Callback timeouts, backoff and complete HTTP caching remain named extensions."
+          ],
+          "solution": "network_resilience.py implements the observation decoder, private-excluding SharedCache and bounded_get with an injected clock. ResilienceTests checks contract errors, cache expiry and retry counts; ProtocolModels only verifies default TLS settings. The retry callback must itself be bounded and this model has no jitter or production HTTP cache parser."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "request-journey",
+        "title": "1. Follow a request through layers",
+        "stage": "foundation",
+        "takeaway": "A browser action becomes a request with a destination, transport, protocol and application meaning.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A browser action becomes a request with a destination, transport, protocol and application meaning. Naming, connectivity, encryption, HTTP status and body validation can fail separately. Start with a lesson fetch: the user needs readable lesson data, not merely a socket that opened."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A successful lower layer does not prove higher-layer success. A 200 response may carry malformed JSON; a correct JSON object may belong to the wrong user. Keep the stages visible in a diagnostic note so 'the network is broken' becomes a testable claim."
+            ],
+            "example": "Name -> address -> connection -> TLS if HTTPS -> HTTP response -> validated lesson\nFailure after HTTP 200: malformed JSON is an application observation error"
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify connection refusal versus invalid JSON.",
+          "solution": "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists. Check server/listener configuration for the former and response contract for the latter.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists.",
+            "Explain the reasoning behind this answer: Body satisfies the lesson contract."
+          ]
+        },
+        "quiz": {
+          "question": "Which proves a valid application result?",
+          "options": [
+            "TCP connection opened",
+            "HTTP 200 alone",
+            "Body satisfies the lesson contract"
+          ],
+          "correct": 2,
+          "explanation": "A connection or status code alone cannot validate application meaning and schema."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 3.1–3.5: resources, representations, connections",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "diagram": {
+          "title": "A 200 response can still fail the lesson contract",
+          "summary": "The real loopback lab stops at body validation; DNS and TLS remain separate model or extension boundaries.",
+          "nodes": [
+            {
+              "id": "name",
+              "label": "Name/address",
+              "description": "Offline DNS model or an already known loopback address."
+            },
+            {
+              "id": "connect",
+              "label": "Local connection",
+              "description": "Owned ephemeral TCP listener."
+            },
+            {
+              "id": "http",
+              "label": "HTTP response",
+              "description": "Status and representation fields observed."
+            },
+            {
+              "id": "decode",
+              "label": "Decode and validate",
+              "description": "Bounded content, media type, syntax and fields."
+            },
+            {
+              "id": "result",
+              "label": "Publish valid lesson",
+              "description": "Only compatible observations become application results."
+            }
+          ],
+          "edges": [
+            {
+              "from": "name",
+              "to": "connect",
+              "label": "choose endpoint"
+            },
+            {
+              "from": "connect",
+              "to": "http",
+              "label": "exchange request"
+            },
+            {
+              "from": "http",
+              "to": "decode",
+              "label": "200 is not enough"
+            },
+            {
+              "from": "decode",
+              "to": "result",
+              "label": "contract passes"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Locate the failure stage",
+              "activeNodes": [
+                "name",
+                "connect"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Name resolution and endpoint connectivity are distinct checks."
+            },
+            {
+              "title": "Observe response semantics",
+              "activeNodes": [
+                "connect",
+                "http"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "An HTTP response proves an exchange occurred, not that its lesson data is correct."
+            },
+            {
+              "title": "Reject malformed success",
+              "activeNodes": [
+                "http",
+                "decode"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The /bad-json route returns 200 but must fail decoding."
+            },
+            {
+              "title": "Accept compatible content",
+              "activeNodes": [
+                "decode",
+                "result"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "No TLS, browser authorization or public-service claim follows from this local result."
+            }
+          ]
+        }
+      },
+      {
+        "id": "addresses-ports",
+        "title": "2. Understand addresses, ports and listeners",
+        "stage": "foundation",
+        "takeaway": "An address identifies a network destination and a port selects a transport endpoint.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An address identifies a network destination and a port selects a transport endpoint. Loopback addresses refer to the local host. Binding the lab to 127.0.0.1 prevents it intentionally listening on every interface, while port zero asks the operating system for an available port."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A listener on one port does not serve every URL. Connection refused often means no listener at that endpoint; a timeout can mean filtering, congestion or an unresponsive peer. Our lab only opens an ephemeral loopback listener and closes it through a context manager."
+            ],
+            "example": "Server binds ('127.0.0.1', 0)\nserver.server_port gives assigned port\nClient connects to that actual port\nNo fixed port 8000 collision required"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why should tests use the assigned port rather than assume 8000?",
+          "solution": "Parallel tests or another app may occupy 8000. Port zero reserves an available endpoint and the client reads its actual assigned value.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Parallel tests or another app may occupy 8000.",
+            "Explain the reasoning behind this answer: 127.0.0.1."
+          ]
+        },
+        "quiz": {
+          "question": "Which host is deliberately local here?",
+          "options": [
+            "0.0.0.0",
+            "127.0.0.1",
+            "192.0.2.1 as a public service"
+          ],
+          "correct": 1,
+          "explanation": "127.0.0.1 is IPv4 loopback; binding there limits this listener to the local host."
+        },
+        "references": [
+          {
+            "title": "Python socket",
+            "url": "https://docs.python.org/3/library/socket.html",
+            "section": "socket.bind; getsockname; create_connection",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "dns",
+        "title": "3. Names, records and resolver roles",
+        "stage": "foundation",
+        "takeaway": "DNS relates names to typed records; a name can have more than one address and resolution can involve caching and delegation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "DNS relates names to typed records; a name can have more than one address and resolution can involve caching and delegation. An A record carries an IPv4 address, while AAAA carries IPv6. A DNS result is not a guarantee that the destination service is listening or authorized."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Use the supplied DnsCache as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
+            ],
+            "example": "lessons.example -> A 192.0.2.10\nName resolution succeeds\nPort 443 can still refuse a connection\nThese are separate observations"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which evidence would distinguish name failure from HTTP 404?",
+          "solution": "A resolver error happens before an HTTP response; 404 means a server responded to the request. Capture the stage and actual error category.",
+          "solutionFormat": "prose",
+          "checks": [
+            "A resolver error happens before an HTTP response; 404 means a server responded to the request.",
+            "Explain the reasoning behind this answer: No, it only provides an address mapping."
+          ]
+        },
+        "quiz": {
+          "question": "Does an A record prove HTTPS is working?",
+          "options": [
+            "Yes",
+            "Only if TTL is long",
+            "No, it only provides an address mapping"
+          ],
+          "correct": 2,
+          "explanation": "An address record does not establish listener, TLS identity or application behavior."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 1035: DNS",
+            "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
+            "section": "Sections 3.2.1–3.2.2: resource record format and types",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "dns-cache",
+        "title": "4. TTL and stale DNS observations",
+        "stage": "foundation",
+        "takeaway": "A TTL limits how long a DNS answer may be retained under the resolver's rules.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A small TTL does not migrate an already-open connection and is not a universal failover promise. DNS caches, connection reuse and application state have different lifetimes. The reference injects now so the exact boundary is deterministic, not a test that sleeps for five seconds."
+            ],
+            "example": "Remember at t=10 with TTL=5\nlookup(14.99) -> old address\nlookup(15) -> None\nRe-resolution must be a separate step"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a case for TTL zero.",
+          "solution": "Remembering with zero TTL expires immediately in this model. At the same time lookup returns None; assert that without sleeping.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Remembering with zero TTL expires immediately in this model.",
+            "Explain the reasoning behind this answer: No cached answer."
+          ]
+        },
+        "quiz": {
+          "question": "At t=15, which result matches the model?",
+          "options": [
+            "Return cached address forever",
+            "No cached answer",
+            "Open an encrypted connection"
+          ],
+          "correct": 1,
+          "explanation": "This model expires the entry at now equal to its expiry; it does not keep stale data indefinitely."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 1035: DNS",
+            "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
+            "section": "Section 3.2.1: TTL field",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "transport",
+        "title": "5. TCP streams and message boundaries",
+        "stage": "foundation",
+        "takeaway": "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read. Applications define message boundaries through a protocol. HTTP framing tells a recipient where headers and content end, so a client must not infer completeness from a single packet."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Use the standard HTTP client rather than writing a partial TCP parser for this course. A read can yield fewer bytes than requested, and a peer can close halfway through content. Bounded reads protect the application from accepting unlimited bodies, but correct handling must also recognize truncated messages."
+            ],
+            "example": "Server sends 20 bytes in two writes\nReceiver reads 8 then 12\nSame content, different chunking\nA one-read parser would silently truncate"
+          }
+        ],
+        "exercise": {
+          "prompt": "What assertion belongs in a truncated-body test extension?",
+          "solution": "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix..",
+            "Explain the reasoning behind this answer: Stream chunks need not match messages."
+          ]
+        },
+        "quiz": {
+          "question": "Why is one socket read insufficient as a general parser?",
+          "options": [
+            "Stream chunks need not match messages",
+            "TCP changes JSON fields",
+            "Ports define JSON length"
+          ],
+          "correct": 0,
+          "explanation": "TCP is a stream: reads may split or combine application messages."
+        },
+        "references": [
+          {
+            "title": "Python socket",
+            "url": "https://docs.python.org/3/library/socket.html",
+            "section": "socket.recv; socket.sendall",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "urls-origins",
+        "title": "6. Parse a URL and its origin",
+        "stage": "foundation",
+        "takeaway": "A URL contains scheme, authority, path, query and sometimes a fragment.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A URL contains scheme, authority, path, query and sometimes a fragment. An origin is the scheme, host and port tuple used by browser security rules. Our origin helper normalizes the host and default port and rejects embedded credentials or fragments as an explicit lab request policy."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Parsing is not full validation or authorization. A syntactically acceptable HTTPS URL could point to an internal resource in a server-side fetcher. Fragments identify client-side locations and are not sent as the HTTP request target. Do not concatenate untrusted strings into URLs without understanding encoding."
+            ],
+            "example": "https://EXAMPLE.test/a?q=1 -> ('https','example.test',443)\nhttp://example.test -> ('http','example.test',80)\nDifferent scheme means different origin"
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare https://example.test and https://example.test:444.",
+          "solution": "Their ports differ, so their origins differ. A path change on the same scheme, host and port keeps the origin unchanged.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Their ports differ, so their origins differ.",
+            "Explain the reasoning behind this answer: Changing the port."
+          ]
+        },
+        "quiz": {
+          "question": "Which changes the origin?",
+          "options": [
+            "Only a fragment",
+            "Only the path",
+            "Changing the port"
+          ],
+          "correct": 2,
+          "explanation": "Origin includes scheme, host and port; changing only the path or fragment does not alter it."
+        },
+        "references": [
+          {
+            "title": "Python urllib.parse",
+            "url": "https://docs.python.org/3/library/urllib.parse.html",
+            "section": "urlsplit; URL parsing security",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "encoding",
+        "title": "7. Decode bytes at a named boundary",
+        "stage": "foundation",
+        "takeaway": "A response body arrives as bytes.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. JSON exchanged between systems uses UTF-8, and malformed encodings must not quietly become valid-looking lesson content."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The supplied decoder passes bytes to Python's JSON reader and rejects decoding/syntax failures. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
+            ],
+            "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
+          }
+        ],
+        "exercise": {
+          "prompt": "Add a byte-encoding boundary test without a remote server.",
+          "solution": "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError. Also test a correctly UTF-8-encoded non-ASCII lesson to show valid input remains accepted.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError.",
+            "Explain the reasoning behind this answer: A protocol observation error."
+          ]
+        },
+        "quiz": {
+          "question": "What should an invalid byte sequence become?",
+          "options": [
+            "A silently truncated valid lesson",
+            "A protocol observation error",
+            "A DNS cache miss"
+          ],
+          "correct": 1,
+          "explanation": "Invalid encoded content cannot be published as a valid lesson; the observation decoder rejects it."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 8.3 and 8.4: media type and content encoding",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "IETF RFC 8259: JSON",
+            "url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+            "section": "Section 8.1: character encoding",
+            "reviewed": "2026-09-27",
+            "scope": "JSON exchanged between systems uses UTF-8; supplied tests reject invalid encoded observations and accept non-ASCII UTF-8 content."
+          }
+        ]
+      },
+      {
+        "id": "http-message",
+        "title": "8. Read methods, fields and content",
+        "stage": "foundation",
+        "takeaway": "An HTTP request has a method and target plus fields and optional content.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An HTTP request has a method and target plus fields and optional content. A response has a status and fields plus permitted content. Treat field names case-insensitively at a real boundary, and keep content type separate from the bytes themselves. The local server serves a tiny JSON lesson with an explicit byte length."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Content-Length counts octets, not characters or JSON entries. HEAD describes the representation without sending its body; it is useful for metadata but does not validate a GET body. Our local reference uses the Python server/client libraries for framing, not a complete teaching implementation of HTTP parsing."
+            ],
+            "example": "GET /lesson -> 200, Content-Type application/json, body bytes\nHEAD /lesson -> 200, same representation length, empty body"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why calculate Content-Length from encoded bytes?",
+          "solution": "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')). A wrong length breaks framing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Non-ASCII characters can occupy multiple bytes, so len(text) can differ from len(text.encode('utf-8')).",
+            "Explain the reasoning behind this answer: An empty body with metadata."
+          ]
+        },
+        "quiz": {
+          "question": "For HEAD, what should the lab client receive?",
+          "options": [
+            "The entire JSON body",
+            "An empty body with metadata",
+            "A mandatory error"
+          ],
+          "correct": 1,
+          "explanation": "HEAD returns representation metadata without the representation body."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 6 and 9.3.2: message abstraction and HEAD",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "status",
+        "title": "9. Interpret status without overclaiming",
+        "stage": "intermediate",
+        "takeaway": "Status codes describe HTTP response semantics.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Status codes describe HTTP response semantics. A successful representation response, a missing route and an unavailable service require different client actions. Our synthetic server exposes 200, 401, 404 and 503 deliberately. A response status says nothing by itself about whether returned JSON satisfies the app schema."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Separate status handling from body parsing. Retrying every 4xx can repeat a client mistake, while retrying 503 indefinitely can amplify an outage. The lab decoder accepts only the intended 200 lesson contract; that narrow decision is local application policy rather than a generic HTTP library rule."
+            ],
+            "example": "/lesson -> 200 lesson\n/private without cookie -> 401 synthetic denial\n/missing -> 404\n/unavailable -> 503\n/bad-json -> 200 but decoder rejects"
+          }
+        ],
+        "exercise": {
+          "prompt": "Does a 404 identify a DNS failure?",
+          "solution": "No. It is an HTTP response from a server. Check the requested target or route; DNS already resolved enough for the exchange to happen.",
+          "solutionFormat": "prose",
+          "checks": [
+            "No.",
+            "Explain the reasoning behind this answer: 200 body fails lesson schema."
+          ]
+        },
+        "quiz": {
+          "question": "Which observation belongs after the HTTP layer?",
+          "options": [
+            "DNS name did not resolve",
+            "Connection refused",
+            "200 body fails lesson schema"
+          ],
+          "correct": 2,
+          "explanation": "Body validation follows transport and HTTP status processing."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Section 15: status codes",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "methods-retries",
+        "title": "10. Safety, idempotency and retry decisions",
+        "stage": "intermediate",
+        "takeaway": "A safe method requests a read-oriented operation according to HTTP semantics; idempotency concerns the intended effect of repeating a request.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A safe method requests a read-oriented operation according to HTTP semantics; idempotency concerns the intended effect of repeating a request. GET and HEAD are good candidates for a bounded read retry policy. That does not make a badly designed endpoint immune to effects or remove traffic costs."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "POST is not generically idempotent. A server may implement an operation key that makes a particular POST safely repeatable, but the client needs that actual contract. Our simple policy retries only GET or HEAD and only with attempts and time remaining. It does not establish application idempotency."
+            ],
+            "example": "GET attempt 1 of 3 with 1s remaining -> retry allowed\nPOST attempt 1 -> denied by local policy\nGET attempt 3 -> no remaining attempt"
+          }
+        ],
+        "exercise": {
+          "prompt": "How should a booking client handle a lost POST response?",
+          "solution": "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking. The local read-only retry helper is insufficient.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use the booking API's documented operation identity and reconciliation semantics; do not assume failure means no booking.",
+            "Explain the reasoning behind this answer: A documented deduplication contract for that operation."
+          ]
+        },
+        "quiz": {
+          "question": "Which alone justifies retrying an uncertain POST?",
+          "options": [
+            "A timeout",
+            "A documented deduplication contract for that operation",
+            "A long TTL"
+          ],
+          "correct": 1,
+          "explanation": "An uncertain POST needs its operation-specific deduplication contract; a timeout alone is insufficient."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 9.2.1–9.2.2: safe and idempotent methods",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "tls",
+        "title": "11. TLS protects a transport boundary",
+        "stage": "intermediate",
+        "takeaway": "TLS authenticates peers under its configuration and protects transport confidentiality and integrity.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "TLS authenticates peers under its configuration and protects transport confidentiality and integrity. HTTPS combines HTTP with TLS; it does not prove the application authorizes a resource or validates its own data. A trusted certificate must also match the requested server name for ordinary HTTPS identity checks."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Our lab uses plain loopback HTTP and does not perform a TLS handshake. The test inspects a default client's certificate-required and hostname-check settings only. Do not label those configuration assertions as encrypted-network evidence or disable verification merely to make an exercise connect."
+            ],
+            "example": "Valid chain + wrong hostname -> reject in a correctly configured HTTPS client\nValid HTTPS + invalid lesson JSON -> decoder still rejects\nLocal HTTP lab -> no transport encryption"
+          }
+        ],
+        "exercise": {
+          "prompt": "What would a real local TLS extension require?",
+          "solution": "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport. Keep it separate from the current HTTP evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport.",
+            "Explain the reasoning behind this answer: Required checks are configured."
+          ]
+        },
+        "quiz": {
+          "question": "What does a TLS configuration test prove here?",
+          "options": [
+            "A real handshake succeeded",
+            "Required checks are configured",
+            "The app has correct authorization"
+          ],
+          "correct": 1,
+          "explanation": "The test checks context settings only; no certificate or handshake was exchanged."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 8446: TLS 1.3",
+            "url": "https://www.rfc-editor.org/rfc/rfc8446.html",
+            "section": "Sections 4.4 and 7: authentication and cryptographic computation",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "certificates",
+        "title": "12. Inspect trust configuration without bypasses",
+        "stage": "intermediate",
+        "takeaway": "Certificate trust is configured by a client's trust roots and verification policy.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Certificate trust is configured by a client's trust roots and verification policy. Python's create_default_context enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Never turn off checks to hide an unknown certificate error in a production-style recommendation. Diagnose name mismatch, trust-chain issues and time validity separately. This reference deliberately does not generate certificates or reach the public internet, so certificate-expiry and handshake-failure drills are design extensions."
+            ],
+            "example": "context = ssl.create_default_context()\ncontext.verify_mode == CERT_REQUIRED\ncontext.check_hostname is True\nNo network exchange has occurred"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which report is honest after these assertions pass?",
+          "solution": "The default context requires identity checks. No server certificate was presented and no encrypted session was established; a handshake test remains unexecuted.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The default context requires identity checks.",
+            "Explain the reasoning behind this answer: The server-name identity check."
+          ]
+        },
+        "quiz": {
+          "question": "What would disabling hostname checking weaken?",
+          "options": [
+            "The server-name identity check",
+            "JSON parsing",
+            "DNS TTL expiration"
+          ],
+          "correct": 0,
+          "explanation": "Hostname checking verifies the requested server identity against the presented certificate."
+        },
+        "references": [
+          {
+            "title": "Python ssl",
+            "url": "https://docs.python.org/3/library/ssl.html",
+            "section": "create_default_context; security considerations",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "cookies",
+        "title": "13. Cookies add state with explicit scope",
+        "stage": "intermediate",
+        "takeaway": "A server uses Set-Cookie to ask a user agent to retain a name/value and attributes; later requests may send matching Cookie values.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A server uses Set-Cookie to ask a user agent to retain a name/value and attributes; later requests may send matching Cookie values. Cookies are scoped state, not proof of identity by themselves. The lab issues a visibly synthetic session token and checks it on one private route to demonstrate transport mechanics."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "HttpOnly limits script access, while Secure requires secure transport under user-agent rules. The lab runs HTTP, so it deliberately does not claim a Secure-cookie authentication design. The synthetic token is fixed and forgeable. Production sessions need real authentication, unpredictable identifiers and server-side authorization."
+            ],
+            "example": "GET /cookie -> Set-Cookie: session=synthetic; Path=/; HttpOnly; SameSite=Lax\nGET /private without cookie -> 401\nCookie: session=synthetic -> local demonstration 200"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why is the lab cookie not a security boundary?",
+          "solution": "Its fixed value is known to every learner and the server has no real identity service. It demonstrates header flow, not authenticated accounts.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Its fixed value is known to every learner and the server has no real identity service.",
+            "Explain the reasoning behind this answer: JavaScript access to that cookie."
+          ]
+        },
+        "quiz": {
+          "question": "What does HttpOnly chiefly restrict?",
+          "options": [
+            "JavaScript access to that cookie",
+            "All cross-site requests",
+            "Every server-side authorization failure"
+          ],
+          "correct": 0,
+          "explanation": "HttpOnly restricts script access to a cookie; it is not general cross-site or authorization protection."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 6265: HTTP State Management",
+            "url": "https://www.rfc-editor.org/rfc/rfc6265.html",
+            "section": "Sections 4.1.2.5–4.1.2.6: Secure and HttpOnly",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "browser-boundaries",
+        "title": "14. CORS and browser-specific enforcement",
+        "stage": "intermediate",
+        "takeaway": "An origin policy and CORS affect how browsers expose cross-origin responses to scripts.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An origin policy and CORS affect how browsers expose cross-origin responses to scripts. CORS is not a general network firewall: non-browser clients can send requests regardless of browser response-exposure rules. Server authorization must independently decide whether an actor can access a resource."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The Python HTTP client does not implement browser CORS enforcement. Seeing it read a response does not prove a browser script can read that response. Some requests trigger preflight, and credentials add requirements. Keep credentials and allowed origins narrowly scoped when designing a real extension."
+            ],
+            "example": "Browser page origin A fetches API origin B\nServer returns no appropriate CORS permission\nBrowser script may be denied response access\nPython client is not that browser"
+          }
+        ],
+        "exercise": {
+          "prompt": "Would adding Access-Control-Allow-Origin authorize a private booking?",
+          "solution": "No. It changes browser exposure policy; authentication and object-level authorization remain separate server checks. Specify them separately in tests.",
+          "solutionFormat": "prose",
+          "checks": [
+            "No.",
+            "Explain the reasoning behind this answer: It is not enforcing the browser CORS protocol."
+          ]
+        },
+        "quiz": {
+          "question": "Why can a Python client read an otherwise CORS-blocked body?",
+          "options": [
+            "It is not enforcing the browser CORS protocol",
+            "TLS is always disabled",
+            "The server has no private data"
+          ],
+          "correct": 0,
+          "explanation": "A Python HTTP client does not apply browser CORS response-exposure rules."
+        },
+        "references": [
+          {
+            "title": "WHATWG Fetch Standard",
+            "url": "https://fetch.spec.whatwg.org/#http-cors-protocol",
+            "section": "HTTP CORS protocol; CORS-preflight fetch",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "cache",
+        "title": "15. Freshness, reuse and storage permission",
+        "stage": "intermediate",
+        "takeaway": "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while private restricts shared-cache reuse. Our SharedCache is a deliberately small offline model with an explicit private flag."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not infer cacheability from status alone. User-specific output and public lesson data require different keys and storage policy. The reference is not a parser for every Cache-Control directive; it demonstrates that private content stays out of the shared map and that expiry is tested with an injected time. The offline cache omits Vary, Age, revalidation and full directive parsing; those need separate protocol tests before it could be a real HTTP cache."
+            ],
+            "example": "Store public lesson at 10 with max_age 5\nget at 14 -> body\nget at 15 -> miss\nprivate=True -> nothing stored"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why is a URL-only shared key unsafe for personalized output?",
+          "solution": "Different accounts may request the same URL and receive different representations. Prefer no-store for this exercise; real caching needs explicit partition and variation policy.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Different accounts may request the same URL and receive different representations.",
+            "Explain the reasoning behind this answer: no-store."
+          ]
+        },
+        "quiz": {
+          "question": "Which is stronger than merely requiring revalidation?",
+          "options": [
+            "no-store",
+            "A long max-age",
+            "An ETag string alone"
+          ],
+          "correct": 0,
+          "explanation": "no-store forbids storage, while revalidation rules permit storage under conditions."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9111: HTTP Caching",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+            "section": "Sections 3 and 5.2.2: storing responses and response directives",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "validators",
+        "title": "16. Conditional requests and 304 responses",
+        "stage": "intermediate",
+        "takeaway": "A validator lets a client ask whether its stored representation still matches the server's current one.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A validator lets a client ask whether its stored representation still matches the server's current one. Our fixed lesson ETag and If-None-Match produce a 304 response when they match. The client must already have a suitable representation to reuse; 304 does not deliver a new lesson body."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The lab's ETag is a teaching constant for an immutable sample. A changing application must update validators with the representation and respect variation and cache rules. Compare bytes and metadata deliberately; do not parse an empty 304 body as newly returned JSON."
+            ],
+            "example": "First GET -> 200 with ETag '\"lesson-v1\"'\nConditional GET with same value -> 304, no body\nClient reuses its stored lesson"
+          }
+        ],
+        "exercise": {
+          "prompt": "What should a client without a cached body do on unexpected 304?",
+          "solution": "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy. Do not publish an empty lesson.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Treat its local state as insufficient and recover with an appropriate unconditional request under the application policy.",
+            "Explain the reasoning behind this answer: The cached representation."
+          ]
+        },
+        "quiz": {
+          "question": "Where does the body after a legitimate 304 come from?",
+          "options": [
+            "The cached representation",
+            "The 304 content",
+            "DNS storage"
+          ],
+          "correct": 0,
+          "explanation": "A 304 validates an existing stored representation and does not supply a new body."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 8.8.3, 13.1.2 and 15.4.5: ETag, If-None-Match, 304",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "redirects",
+        "title": "17. Follow redirects with a policy",
+        "stage": "advanced",
+        "takeaway": "A redirect describes another target; deciding to follow it belongs to the client's policy.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A redirect describes another target; deciding to follow it belongs to the client's policy. The lab observes a 307 and relative Location without automatically following. For 307, the method is preserved when a client redirects. Redirect chains still need bounds and destination validation."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A redirect can cross origins or lead from a permitted public target to an internal service in a server-side fetcher. Reapply destination and credential-forwarding policy at each hop. Never assume a successful first target makes every later Location safe. Keep observations and followed results distinct in diagnostics."
+            ],
+            "example": "GET /redirect -> 307, Location /lesson\nLab result is the redirect itself\nOptional follow -> validate resolved target, count hop, GET /lesson"
+          }
+        ],
+        "exercise": {
+          "prompt": "What must a bounded redirect helper track?",
+          "solution": "Hop count, resolved destination origin, method rules and whether credentials may be forwarded. Stop loops and reject destinations outside its policy.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Hop count, resolved destination origin, method rules and whether credentials may be forwarded.",
+            "Explain the reasoning behind this answer: Returns it to the caller."
+          ]
+        },
+        "quiz": {
+          "question": "What does the supplied fetch do with 307?",
+          "options": [
+            "Returns it to the caller",
+            "Follows every Location",
+            "Transforms it into DNS failure"
+          ],
+          "correct": 0,
+          "explanation": "fetch returns the redirect status and Location; following requires a separate bounded policy."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 10.2.2 and 15.4.8: Location and 307",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "proxies",
+        "title": "18. Forward proxies, reverse proxies and trust",
+        "stage": "advanced",
+        "takeaway": "A forward proxy acts for clients; a reverse proxy or gateway faces clients on behalf of an origin service.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A forward proxy acts for clients; a reverse proxy or gateway faces clients on behalf of an origin service. Each hop can alter routing, buffering, TLS termination and timeout behavior. An origin may receive a proxy's connection rather than the browser's, so forwarded metadata needs a trusted boundary."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The loopback reference has no proxy. Do not trust an arbitrary client-supplied forwarding field as proof of identity or IP policy. A real deployment must define which intermediary may set it and how spoofed incoming fields are removed. Diagnose status origin before blaming the application."
+            ],
+            "example": "Browser -> edge proxy (TLS terminates) -> origin HTTP\nProxy times out waiting -> 504 to browser\nOrigin might still be computing; no rollback implied"
+          }
+        ],
+        "exercise": {
+          "prompt": "What should be verified for a forwarded client-IP policy?",
+          "solution": "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored. Test spoofed fields and document the connection trust boundary.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored.",
+            "Explain the reasoning behind this answer: No, work may still be running."
+          ]
+        },
+        "quiz": {
+          "question": "Can a proxy timeout prove the origin did nothing?",
+          "options": [
+            "Yes",
+            "No, work may still be running",
+            "Only if the response body is empty"
+          ],
+          "correct": 1,
+          "explanation": "A caller-facing proxy timeout does not prove the origin stopped processing."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 3.7 and 7.6: intermediaries and message forwarding",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "timeouts",
+        "title": "19. Distinguish waits and overall deadlines",
+        "stage": "advanced",
+        "takeaway": "A timeout bounds a particular wait under a library's semantics; an overall deadline limits how long the application is willing to keep trying.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A timeout bounds a particular wait under a library's semantics; an overall deadline limits how long the application is willing to keep trying. DNS, connection, TLS, response headers and content reads may have different wait points. A caller timeout does not cancel remote effects automatically."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The /stall endpoint waits on an Event before sending a response. A client with a short socket timeout should stop waiting; cleanup releases the server event afterward. This controlled local read timeout is real, while injected-clock retry tests model a separate policy. Avoid treating either as internet latency benchmarking."
+            ],
+            "example": "Server signals request started\nClient waits for headers with timeout .15s\nClient gets TimeoutError\nCleanup releases server; request did reach it"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why does the readiness event matter?",
+          "solution": "It establishes the server received the request before the timeout observation. A refusal or thread-start failure would be a different behavior and should not satisfy the intended case.",
+          "solutionFormat": "prose",
+          "checks": [
+            "It establishes the server received the request before the timeout observation.",
+            "Explain the reasoning behind this answer: The caller stopped waiting at that boundary."
+          ]
+        },
+        "quiz": {
+          "question": "What does client timeout establish?",
+          "options": [
+            "No request reached the server",
+            "The caller stopped waiting at that boundary",
+            "Remote work was forcibly rolled back"
+          ],
+          "correct": 1,
+          "explanation": "The caller stops waiting at the timed boundary; remote effects are not forcibly undone."
+        },
+        "references": [
+          {
+            "title": "Python socket",
+            "url": "https://docs.python.org/3/library/socket.html",
+            "section": "Timeout notes; socket.settimeout",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "diagram": {
+          "title": "The caller stops waiting; the server still needs cleanup",
+          "summary": "An Event confirms the local server received the request before the controlled header wait expires.",
+          "nodes": [
+            {
+              "id": "send",
+              "label": "Client sends /stall",
+              "description": "Client owns a short bounded socket wait."
+            },
+            {
+              "id": "started",
+              "label": "Server readiness event",
+              "description": "The handler has received the request."
+            },
+            {
+              "id": "wait",
+              "label": "Server waits for release",
+              "description": "No response headers yet."
+            },
+            {
+              "id": "timeout",
+              "label": "Client timeout",
+              "description": "Caller closes its connection."
+            },
+            {
+              "id": "cleanup",
+              "label": "Release and join",
+              "description": "Fixture releases the handler and closes listener/threads."
+            }
+          ],
+          "edges": [
+            {
+              "from": "send",
+              "to": "started",
+              "label": "request arrives"
+            },
+            {
+              "from": "started",
+              "to": "wait",
+              "label": "wait before response"
+            },
+            {
+              "from": "wait",
+              "to": "timeout",
+              "label": "client wait expires"
+            },
+            {
+              "from": "timeout",
+              "to": "cleanup",
+              "label": "fixture cleanup"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Confirm receipt",
+              "activeNodes": [
+                "send",
+                "started"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "A refusal would be a different test; readiness proves this route started."
+            },
+            {
+              "title": "Observe bounded waiting",
+              "activeNodes": [
+                "wait",
+                "timeout"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Timeout means the client stopped waiting, not that server processing was rolled back."
+            },
+            {
+              "title": "Clean owned resources",
+              "activeNodes": [
+                "timeout",
+                "cleanup"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Always release the handler and close the server, including failed assertions."
+            }
+          ]
+        }
+      },
+      {
+        "id": "retry-budgets",
+        "title": "20. Bound retries by attempts and time",
+        "stage": "advanced",
+        "takeaway": "Repeated reads can recover a transient failure, but every retry adds load.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Repeated reads can recover a transient failure, but every retry adds load. The advanced reference bounds GET attempts and checks an injected overall deadline before dispatch. It retries selected gateway/unavailable statuses and returns the final status with minimal attempt metadata."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The reference call must itself be bounded by a transport timeout; the helper cannot preempt a blocked callback. It has no backoff or jitter and performs no real retries against a service by default. A deployment extension needs retry timing, per-attempt budget, cancellation and coordination with existing retry layers."
+            ],
+            "example": "503,503,503 with max_attempts=3 -> stop at three calls\nClock already beyond deadline -> zero new calls\n503 then 200 -> success on attempt two"
+          }
+        ],
+        "exercise": {
+          "prompt": "What can multiplying retries across three layers do?",
+          "solution": "If each layer attempts three times, one logical operation can reach up to 27 deepest calls. Coordinate ownership and use an end-to-end bound.",
+          "solutionFormat": "prose",
+          "checks": [
+            "If each layer attempts three times, one logical operation can reach up to 27 deepest calls.",
+            "Explain the reasoning behind this answer: A deadline check before dispatch."
+          ]
+        },
+        "quiz": {
+          "question": "Which prevents a new call after time is exhausted?",
+          "options": [
+            "A deadline check before dispatch",
+            "Only printing attempt numbers",
+            "A DNS cache"
+          ],
+          "correct": 0,
+          "explanation": "Checking before dispatch prevents a new attempt when the overall budget is already exhausted."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Section 9.2.2: retrying idempotent requests",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "body-contracts",
+        "title": "21. Validate response bodies after transport",
+        "stage": "advanced",
+        "takeaway": "A client should bound content and validate media type, syntax and application schema.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A client should bound content and validate media type, syntax and application schema. The lesson decoder expects a JSON object with string lesson and exact integer version. It rejects malformed JSON, unknown fields and booleans where a numeric version is intended. Transport success is only the start."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "An error page can arrive with 200, and a valid JSON object can have incompatible fields. Preserve the distinction between HTTP errors and protocol/application observation errors. The reference's 4096-byte bound is a teaching limit chosen for this small representation; state it in the contract and test oversized input."
+            ],
+            "example": "200 + application/json + {broken -> ProtocolError\n200 + text/html + expected-looking bytes -> ProtocolError\n200 + {\"lesson\":\"http\",\"version\":true} -> ProtocolError"
+          }
+        ],
+        "exercise": {
+          "prompt": "Add an oversized-body assertion.",
+          "solution": "Supply more than 4096 bytes to the decoder and assert ProtocolError. For streaming extensions, enforce the bound during reading before accumulating the whole body.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Supply more than 4096 bytes to the decoder and assert ProtocolError.",
+            "Explain the reasoning behind this answer: Reject it at the body contract boundary."
+          ]
+        },
+        "quiz": {
+          "question": "What should happen to a malformed 200 response?",
+          "options": [
+            "Publish it because status succeeded",
+            "Reject it at the body contract boundary",
+            "Retry indefinitely without classifying it"
+          ],
+          "correct": 1,
+          "explanation": "A malformed successful-status observation must fail schema/syntax validation before publication."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Section 8.3: Content-Type; representation metadata",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "diagnostics",
+        "title": "22. Build a layered incident timeline",
+        "stage": "advanced",
+        "takeaway": "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata. Request ID, status, attempt and timings can locate a failure without copying cookies or full bodies. Compare client and server observations: a timeout on one side may coexist with completed work on the other."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Use a controlled case to test a hypothesis before changing every timeout. The lab's trace contains attempt and status only; it is not distributed tracing. A real system must propagate safe correlation and distinguish proxy, origin and client events. Do not log credentials to make a reproduction easier."
+            ],
+            "example": "Client attempt 1 -> 503\nClient attempt 2 -> 200\nTrace: [{attempt:1,status:503},{attempt:2,status:200}]\nNo Cookie or private body retained"
+          }
+        ],
+        "exercise": {
+          "prompt": "What evidence separates a proxy 504 from an origin 500?",
+          "solution": "Correlated proxy and origin logs with clocks and request identity, plus the response metadata. A single browser status cannot establish where processing failed.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Correlated proxy and origin logs with clocks and request identity, plus the response metadata.",
+            "Explain the reasoning behind this answer: Session cookie value."
+          ]
+        },
+        "quiz": {
+          "question": "Which diagnostic field should be excluded?",
+          "options": [
+            "Synthetic request ID",
+            "Attempt count",
+            "Session cookie value"
+          ],
+          "correct": 2,
+          "explanation": "Cookies carry sensitive session state and should not be copied into diagnostic events."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "White-box versus black-box monitoring; symptoms and causes",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "protocol-evolution",
+        "title": "23. Keep semantics separate from HTTP version",
+        "stage": "advanced",
+        "takeaway": "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports. Applications should rely on the method, status and representation contract instead of assuming packet shape or one connection per request. The stdlib lab explicitly exercises HTTP/1.1 only."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not call a local HTTP/1.1 result evidence for multiplexing, QUIC or proxy compatibility. Compare repeated representation outcomes when extending to another client/server stack, while measuring protocol-specific behavior separately. Header normalization and framing decisions belong to the actual protocol implementation."
+            ],
+            "example": "Same application contract: GET lesson -> 200 JSON\nCurrent lab: HTTP/1.1 over loopback TCP\nUnexecuted extension: same contract over HTTP/2 or HTTP/3"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which claims need new experiments for HTTP/3?",
+          "solution": "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests. Existing JSON-schema checks remain useful but do not establish them.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Negotiation, connection migration and transport behavior need a suitable implementation and controlled network tests.",
+            "Explain the reasoning behind this answer: HTTP/1.1 local response contracts."
+          ]
+        },
+        "quiz": {
+          "question": "What is verified by this lab?",
+          "options": [
+            "HTTP/1.1 local response contracts",
+            "QUIC migration",
+            "All browser transports"
+          ],
+          "correct": 0,
+          "explanation": "The actual server/client pair uses HTTP/1.1; other transport claims require other implementations."
+        },
+        "references": [
+          {
+            "title": "IETF RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+            "section": "Sections 2.5 and 3.5: conformance and messages",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "network-review",
+        "title": "24. Defend a client with explicit evidence",
+        "stage": "advanced",
+        "takeaway": "The final project combines URL policy, observed HTTP semantics, validated bodies, public-cache isolation and bounded reads.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "The final project combines URL policy, observed HTTP semantics, validated bodies, public-cache isolation and bounded reads. An evidence table should link each requirement to a fixture and actual result. Keep an unexecuted extension list for real DNS, TLS, browser cookies, CORS and intermediary behavior."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Passing local tests makes a useful baseline, not a complete production client. The synthetic cookie is not authentication, cache models do not implement the full RFC, and the retry helper needs bounded callbacks. A review should name these boundaries so another learner knows what to implement next."
+            ],
+            "example": "Claim: private data never enters shared model cache -> private-flag test\nClaim: malformed lesson rejected -> /bad-json integration test\nUnknown: real certificate validation -> separate TLS drill"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose the smallest next experiment before using real HTTPS.",
+          "solution": "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts..",
+            "Explain the reasoning behind this answer: Controlled loopback and offline model behaviors passed."
+          ]
+        },
+        "quiz": {
+          "question": "Which review claim is supported today?",
+          "options": [
+            "The client's browser security is certified",
+            "Controlled loopback and offline model behaviors passed",
+            "Every remote request is secure"
+          ],
+          "correct": 1,
+          "explanation": "The suite supplies controlled loopback and model evidence, not browser or remote security certification."
+        },
+        "references": [
+          {
+            "title": "Python http.server",
+            "url": "https://docs.python.org/3/library/http.server.html",
+            "section": "Security considerations; ThreadingHTTPServer",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Practice guide",
+        "href": "paths/networking-web/practice/README.md"
+      },
+      {
+        "title": "Stage project workbook",
+        "href": "paths/networking-web/practice/project-workbook.md"
+      },
+      {
+        "title": "Regression suite",
+        "href": "paths/networking-web/practice/test_network_labs.py"
+      }
+    ],
+    "resources": {
+      "folder": "networking-web-practice",
+      "files": [
+        {
+          "id": "network_foundation-py",
+          "href": "paths/networking-web/practice/network_foundation.py",
+          "role": "reference",
+          "description": "URL-origin policy and offline DNS TTL/retry models"
+        },
+        {
+          "id": "network_http-py",
+          "href": "paths/networking-web/practice/network_http.py",
+          "role": "reference",
+          "description": "Loopback server/client for status, redirects, cookies and timeout experiments"
+        },
+        {
+          "id": "network_resilience-py",
+          "href": "paths/networking-web/practice/network_resilience.py",
+          "role": "reference",
+          "description": "Observation validation, private-excluding cache and bounded retry models"
+        },
+        {
+          "id": "test_network_labs-py",
+          "href": "paths/networking-web/practice/test_network_labs.py",
+          "role": "test",
+          "description": "Protocol model and real loopback HTTP regression suite"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/networking-web/practice/README.md",
+          "role": "guide",
+          "description": "Commands, expected outputs, verification scope and safe local use"
+        },
+        {
+          "id": "project-workbook-md",
+          "href": "paths/networking-web/practice/project-workbook.md",
+          "role": "guide",
+          "description": "Three stage briefs, assessment rubrics and reference reasoning"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Layered request and DNS worksheet",
+          "goal": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+          "fileIds": [
+            "network_foundation-py",
+            "network_http-py",
+            "network_resilience-py",
+            "test_network_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Parse scheme/host/default port and reject credentials, fragments and unsupported schemes.",
+            "Store an offline address with TTL and test just before and at expiry using injected time.",
+            "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
+            "Permit retries only for the explicit safe-read policy with attempts and time left.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run network_foundation.py",
+              "command": "python network_foundation.py",
+              "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+            },
+            {
+              "label": "Run network_http.py",
+              "command": "python network_http.py",
+              "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+            },
+            {
+              "label": "Run network_resilience.py",
+              "command": "python network_resilience.py",
+              "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_network_labs.py",
+              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Follow a request through layers",
+              "href": "#topic/networking-web/request-journey"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Loopback HTTP diagnostic client",
+          "goal": "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
+          "fileIds": [
+            "network_foundation-py",
+            "network_http-py",
+            "network_resilience-py",
+            "test_network_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Bind only 127.0.0.1 on port zero and close resources on failure.",
+            "Check GET, HEAD, ETag/304, relative 307 redirect and missing route.",
+            "Observe synthetic cookie issuance/private denial without claiming real authentication.",
+            "Reject malformed 200 JSON and classify 503.",
+            "Use a readiness Event and delayed response to observe a real bounded client read timeout.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run network_foundation.py",
+              "command": "python network_foundation.py",
+              "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+            },
+            {
+              "label": "Run network_http.py",
+              "command": "python network_http.py",
+              "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+            },
+            {
+              "label": "Run network_resilience.py",
+              "command": "python network_resilience.py",
+              "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_network_labs.py",
+              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Interpret status without overclaiming",
+              "href": "#topic/networking-web/status"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Bounded observation and cache review",
+          "goal": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+          "fileIds": [
+            "network_foundation-py",
+            "network_http-py",
+            "network_resilience-py",
+            "test_network_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Bound body size and require media type plus exact lesson/version schema.",
+            "Reject private cache insertion and test exact freshness expiry with an injected clock.",
+            "Stop new GET attempts after the attempt budget or overall deadline.",
+            "Record only status/attempt metadata and classify final failure.",
+            "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run network_foundation.py",
+              "command": "python network_foundation.py",
+              "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+            },
+            {
+              "label": "Run network_http.py",
+              "command": "python network_http.py",
+              "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
+            },
+            {
+              "label": "Run network_resilience.py",
+              "command": "python network_resilience.py",
+              "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_network_labs.py",
+              "expected": "All 12 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Follow redirects with a policy",
+              "href": "#topic/networking-web/redirects"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "request-journey": "foundation",
+        "addresses-ports": "foundation",
+        "dns": "foundation",
+        "dns-cache": "foundation",
+        "transport": "foundation",
+        "urls-origins": "foundation",
+        "encoding": "foundation",
+        "http-message": "foundation",
+        "status": "intermediate",
+        "methods-retries": "intermediate",
+        "tls": "intermediate",
+        "certificates": "intermediate",
+        "cookies": "intermediate",
+        "browser-boundaries": "intermediate",
+        "cache": "intermediate",
+        "validators": "intermediate",
+        "redirects": "advanced",
+        "proxies": "advanced",
+        "timeouts": "advanced",
+        "retry-budgets": "advanced",
+        "body-contracts": "advanced",
+        "diagnostics": "advanced",
+        "protocol-evolution": "advanced",
+        "network-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/networking-web/practice-bundle.zip"
       }
     }
   },
@@ -17417,6 +26092,1769 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/system-design/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "testing-debugging",
+    "title": "Testing & Debugging",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "Learn to specify, test and diagnose behavior through 24 lessons and three runnable projects: strict parsing, failure-safe files and reproducible stale-writer tests.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
+      "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+    ],
+    "outcomes": [
+      "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+      "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+      "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+      "Explain the difference between supplied test evidence and unexecuted deployment extensions."
+    ],
+    "setup": [
+      "Download the complete practice kit and keep its files together in one directory.",
+      "Run each reference and the exact unittest command from that directory.",
+      "Use synthetic data and owned temporary resources. Read README.md for execution scope and limits."
+    ],
+    "nextSteps": [
+      "Implement one explicitly identified missing boundary and add a falsifying integration test.",
+      "Record runtime, fixtures, changed contract, actual outcome and remaining limits in a review note.",
+      "Use the neighboring Python, System Design and security paths to extend the same small application without claiming professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Hypothesis author documentation",
+        "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html"
+      },
+      {
+        "title": "Python logging",
+        "url": "https://docs.python.org/3/library/logging.html"
+      },
+      {
+        "title": "Python unittest.mock",
+        "url": "https://docs.python.org/3/library/unittest.mock.html"
+      },
+      {
+        "title": "Python pdb",
+        "url": "https://docs.python.org/3/library/pdb.html"
+      },
+      {
+        "title": "Google SRE monitoring",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "title": "Python tempfile",
+        "url": "https://docs.python.org/3/library/tempfile.html"
+      },
+      {
+        "title": "Python threading",
+        "url": "https://docs.python.org/3/library/threading.html"
+      },
+      {
+        "title": "Python traceback",
+        "url": "https://docs.python.org/3/library/traceback.html"
+      },
+      {
+        "title": "Python unittest",
+        "url": "https://docs.python.org/3/library/unittest.html"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation practice",
+        "description": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+        "exitCriteria": [
+          "Boundary tests include zero, 1440, 1441 and true.",
+          "Expected values are independent of the implementation.",
+          "Error assertions distinguish ValueError from unrelated failures."
+        ],
+        "project": {
+          "title": "Validated study-log parser",
+          "brief": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+          "requirements": [
+            "Require exact id/minutes fields, nonblank bounded IDs and integer duration 0 through 1440.",
+            "Reject duplicate JSON keys, booleans, invalid JSON and oversized text.",
+            "Compute known totals and demonstrate a test distinguishing the supplied boolean mutant.",
+            "Produce a minimal reproduction note with expected and observed results."
+          ],
+          "rubric": [
+            "Boundary tests include zero, 1440, 1441 and true.",
+            "Expected values are independent of the implementation.",
+            "Error assertions distinguish ValueError from unrelated failures.",
+            "A regression case demonstrably catches the deliberate mutant."
+          ],
+          "solution": "testing_foundation.py implements the full parser and total. FoundationTests covers boundaries, invalid shape and a deliberate mutant comparison. Run the module for total 5. Add a learner-built CLI only after this contract passes."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate practice",
+        "description": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+        "exitCriteria": [
+          "The integration crosses a real filesystem boundary.",
+          "Validation failure and replacement failure have separate fixtures.",
+          "Old output and absence of temporary leftovers are asserted."
+        ],
+        "project": {
+          "title": "Failure-safe report importer",
+          "brief": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+          "requirements": [
+            "Validate at most 1000 rows and unique IDs before writing.",
+            "Serialize schema_version, records and total; read stored JSON back.",
+            "Use an injected replacement failure and assert old bytes remain.",
+            "Assert rejected input does not invoke replacement and temporary files are removed."
+          ],
+          "rubric": [
+            "The integration crosses a real filesystem boundary.",
+            "Validation failure and replacement failure have separate fixtures.",
+            "Old output and absence of temporary leftovers are asserted.",
+            "Single-writer/trusted-directory and power-loss limits are explicit."
+          ],
+          "solution": "testing_integration.py validates first, writes in the destination directory, flushes and fsyncs the temporary file, then replaces once. IntegrationTests checks readback, empty batches, duplicate/oversized rejection and injected replacement failure. This is not a multi-writer transaction."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+        "exitCriteria": [
+          "Ordering is established by synchronization rather than sleeps.",
+          "Assertions tolerate either valid winning thread.",
+          "Invalid input causes no update and traces exclude payloads/secrets."
+        ],
+        "project": {
+          "title": "Reproducible stale-writer diagnosis",
+          "brief": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+          "requirements": [
+            "Use a Barrier so both threads read the same version before updating.",
+            "Allow exactly one compare-and-update commit; reject the stale proposal.",
+            "Join workers with bounds and assert final version and allowed winner.",
+            "Add seeded metamorphic totals and an allowlisted diagnostic event.",
+            "Write a release evidence table that separates thread/file tests from missing async, browser and distributed scopes."
+          ],
+          "rubric": [
+            "Ordering is established by synchronization rather than sleeps.",
+            "Assertions tolerate either valid winning thread.",
+            "Invalid input causes no update and traces exclude payloads/secrets.",
+            "A diagnosis links reproduction, cause, fix, evidence and limits."
+          ],
+          "solution": "testing_concurrency.py locks comparison and write together. ConcurrencyTests proves one success plus one conflict after a shared barrier and checks no effect on invalid update. FoundationTests adds seeded finite metamorphic checks. State is volatile and limited to threads in one process; no distributed claim follows."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "contracts",
+        "title": "1. Behavior before test code",
+        "stage": "foundation",
+        "takeaway": "A test compares an observation with a stated expectation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A test compares an observation with a stated expectation. A defect is a mismatch with an agreed behavior, while a failure is an observed event. Start with a small study-log importer: an integer duration from 0 to 1440 is valid, an invalid row must not replace the saved report. This gives tests a reason beyond making lines run."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Write the observation in user terms before choosing a test framework. A test that merely repeats the function's current arithmetic can preserve a bug. Include one allowed action and one rejected action, then decide what must stay unchanged. Use synthetic records so a failing fixture never contains private learner data."
+            ],
+            "example": "Input {\"id\":\"a\",\"minutes\":7} -> report total 7\nInput {\"id\":\"a\",\"minutes\":-1} -> ValueError; old report unchanged"
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify a contract for a blank record ID and for an empty batch.",
+          "solution": "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy. State these separately so empty does not accidentally mean malformed.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Reject blank IDs, but permit an empty batch with total zero if that is the agreed product policy.",
+            "Explain the reasoning behind this answer: An invalid batch preserves the previous report."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a behavioral expectation?",
+          "options": [
+            "The function has ten lines",
+            "An invalid batch preserves the previous report",
+            "The implementation uses a list"
+          ],
+          "correct": 1,
+          "explanation": "The requirement describes an observable rejected-input outcome, while line counts and data structure choices do not."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "first-test",
+        "title": "2. Arrange, act and assert",
+        "stage": "foundation",
+        "takeaway": "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. unittest collects independent methods on TestCase; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not place the expected computation inside the assertion by calling the same implementation twice. Pick a hand-computable case and distinguish the expected literal from the observed result. Keep setup short enough that the reason for a failure remains visible in the test body."
+            ],
+            "example": "Arrange: rows with 7 and 2 minutes\nAct: total_minutes(rows)\nAssert: result equals 9, not total_minutes(rows)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a test for total_minutes on an empty list.",
+          "solution": "Arrange [], call total_minutes once, assertEqual(result, 0). Then intentionally change the expected value to confirm the runner reports the failure and restore it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Arrange [], call total_minutes once, assertEqual(result, 0).",
+            "Explain the reasoning behind this answer: Using a known expected value."
+          ]
+        },
+        "quiz": {
+          "question": "What makes an assertion independent?",
+          "options": [
+            "Calling the same function on both sides",
+            "Using a known expected value",
+            "Removing the assertion when it fails"
+          ],
+          "correct": 1,
+          "explanation": "A known expected value avoids using the subject itself as the oracle."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "boundaries",
+        "title": "3. Choose boundaries and equivalence classes",
+        "stage": "foundation",
+        "takeaway": "Input space is usually too large to enumerate.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Input space is usually too large to enumerate. Partition it by behavior: valid durations, negative numbers, excess duration, wrong types and missing fields. Boundary values expose comparison errors cheaply. Our duration contract includes both zero and 1440, while 1441 is invalid."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract explicitly rejects it. That decision must be tested rather than assumed."
+            ],
+            "example": "0 -> accepted\n1440 -> accepted\n1441 -> rejected\ntrue -> rejected although isinstance(True, int) is true"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design the smallest useful duration table.",
+          "solution": "Use -1, 0, 1, 1440, 1441, true and a string. Add fractional and null inputs to cover separate type classes. Explain why each row adds behavior evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use -1, 0, 1, 1440, 1441, true and a string.",
+            "Explain the reasoning behind this answer: 1440 and 1441 together."
+          ]
+        },
+        "quiz": {
+          "question": "Which catches an inclusive-upper-bound bug?",
+          "options": [
+            "Only 30",
+            "Only a long string",
+            "1440 and 1441 together"
+          ],
+          "correct": 2,
+          "explanation": "1440 tests inclusion and 1441 tests rejection immediately above it."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Distinguishing test iterations using subtests",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "failures",
+        "title": "4. Assert exceptions and absent effects",
+        "stage": "foundation",
+        "takeaway": "A negative test needs an expected error and a postcondition.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use assertRaises around the smallest action and inspect unchanged state afterward."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Catching every exception in a test can accidentally accept an unrelated NameError as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
+            ],
+            "example": "with assertRaises(ValueError): parse_record('[]')\nAfter failed import: target still contains 'old'; replacement callback has zero calls"
+          }
+        ],
+        "exercise": {
+          "prompt": "What should a rejected duplicate-ID batch demonstrate?",
+          "solution": "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left. An exception alone would miss an early write.",
+          "solutionFormat": "prose",
+          "checks": [
+            "It raises ValueError, the old destination bytes remain, no replacement occurs and no temporary files are left.",
+            "Explain the reasoning behind this answer: An unrelated implementation error."
+          ]
+        },
+        "quiz": {
+          "question": "What does a broad try/except risk hiding?",
+          "options": [
+            "An unrelated implementation error",
+            "Only performance",
+            "The expected value"
+          ],
+          "correct": 0,
+          "explanation": "A blanket handler can accept an unrelated exception and make a broken test look successful."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "assertRaises; assertRaisesRegex",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "fixtures",
+        "title": "5. Keep fixtures isolated and clean",
+        "stage": "foundation",
+        "takeaway": "A fixture is a known starting state, not a shared pile of leftovers.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A fixture is a known starting state, not a shared pile of leftovers. A temporary directory gives each file test a fresh destination. Context-manager cleanup also runs when an assertion fails. This prevents one successful test from preparing the next test's hidden preconditions."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Avoid absolute home-directory files, shared fixed ports and suite-wide mutable records for beginner labs. A test must be runnable alone and in a different order. If setup can fail after acquiring a resource, register cleanup immediately instead of waiting for a later step."
+            ],
+            "example": "with TemporaryDirectory() as root:\n    target = Path(root) / 'report.json'\n    target.write_text('old')\nAfter context exit: root removed"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why two tests should not reuse report.json in the source folder.",
+          "solution": "Their order would determine initial content; a crash could leave data behind. Give each test a fresh temporary directory and assert its own starting state.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Their order would determine initial content; a crash could leave data behind.",
+            "Explain the reasoning behind this answer: A fresh temporary directory per case."
+          ]
+        },
+        "quiz": {
+          "question": "Which fixture is most independent?",
+          "options": [
+            "A source-folder file reused by all tests",
+            "A fresh temporary directory per case",
+            "Yesterday's output copied manually"
+          ],
+          "correct": 1,
+          "explanation": "A fresh directory prevents earlier cases or crashes from determining initial data."
+        },
+        "references": [
+          {
+            "title": "Python tempfile",
+            "url": "https://docs.python.org/3/library/tempfile.html",
+            "section": "TemporaryDirectory; context-managed cleanup",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "tracebacks",
+        "title": "6. Read a traceback as a call chain",
+        "stage": "foundation",
+        "takeaway": "A traceback records how execution reached an exception.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A traceback records how execution reached an exception. Begin with the exception type and message, then locate the lowest relevant application frame. The last frame may be a library conversion, while the caller supplied the wrong value. Separate the triggering input from the line where the symptom appeared."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not erase the original error by returning None from a blanket handler. The parser chains JSONDecodeError into a public ValueError so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
+            ],
+            "example": "import_batch -> parse_record -> json.loads\nPublic failure: ValueError('invalid JSON')\n__cause__: JSONDecodeError, retaining location information"
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify the first hypothesis for a JSON parse failure after a successful file read.",
+          "solution": "Inspect whether the file contains valid JSON and whether framing expects a complete object per line. Do not blame disk permissions when the read already succeeded.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Inspect whether the file contains valid JSON and whether framing expects a complete object per line.",
+            "Explain the reasoning behind this answer: The original lower-level failure."
+          ]
+        },
+        "quiz": {
+          "question": "What does an exception cause preserve?",
+          "options": [
+            "The original lower-level failure",
+            "Automatic recovery",
+            "Proof the caller was authorized"
+          ],
+          "correct": 0,
+          "explanation": "Exception chaining retains the lower-level cause while exposing the application error type."
+        },
+        "references": [
+          {
+            "title": "Python traceback",
+            "url": "https://docs.python.org/3/library/traceback.html",
+            "section": "TracebackException; exception chaining output",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "reproduce",
+        "title": "7. Build a minimal reproducible case",
+        "stage": "foundation",
+        "takeaway": "A useful reproduction records the exact command, runtime, smallest synthetic input, expected behavior and observed failure.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A useful reproduction records the exact command, runtime, smallest synthetic input, expected behavior and observed failure. Reduce unrelated rows and options while keeping the failure. A tiny reproduction makes a hypothesis cheap to test and easier for another person to verify."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Reduction must preserve the condition that triggers the bug. Deleting a duplicate row may make a duplicate-ID failure disappear, which teaches that duplication is material. A reproduction that needs today's remote data is unstable; capture a small permitted fixture with a fixed version instead."
+            ],
+            "example": "1000 input rows fail\nReduce to two rows with ID a\nRemove one row -> failure disappears\nHypothesis: uniqueness boundary, not file size"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a reproduction note for duplicate JSON keys.",
+          "solution": "Include the command, Python version, text with two minutes keys, expected rejection and actual result. State whether keys differ only by case or are identical.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Include the command, Python version, text with two minutes keys, expected rejection and actual result.",
+            "Explain the reasoning behind this answer: A smaller input that preserves the failure."
+          ]
+        },
+        "quiz": {
+          "question": "Which reduction is informative?",
+          "options": [
+            "A smaller input that preserves the failure",
+            "Deleting the failing assertion",
+            "Changing several code paths at once"
+          ],
+          "correct": 0,
+          "explanation": "A reduced input is useful when it preserves the triggering condition."
+        },
+        "references": [
+          {
+            "title": "Python pdb",
+            "url": "https://docs.python.org/3/library/pdb.html",
+            "section": "Debugger commands; run",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "hypotheses",
+        "title": "8. Debug by falsifying one hypothesis",
+        "stage": "foundation",
+        "takeaway": "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes deliberately admits booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect type(value) and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
+            ],
+            "example": "Hypothesis: True passes because bool subclasses int\nObservation: isinstance(True, int) -> True\nDiscriminator: type(True) is int -> False"
+          }
+        ],
+        "exercise": {
+          "prompt": "State a test that falsifies 'all nonnegative inputs are valid durations'.",
+          "solution": "Pass true, a fractional number and a numeric string to the strict parser. Each is nonnegative in an informal sense but violates the exact integer contract.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Pass true, a fractional number and a numeric string to the strict parser.",
+            "Explain the reasoning behind this answer: Choose a discriminating observation."
+          ]
+        },
+        "quiz": {
+          "question": "What should happen before changing the implementation?",
+          "options": [
+            "Choose a discriminating observation",
+            "Rewrite every caller",
+            "Delete difficult input cases"
+          ],
+          "correct": 0,
+          "explanation": "A discriminating observation tests a cause before the implementation is changed."
+        },
+        "references": [
+          {
+            "title": "Python pdb",
+            "url": "https://docs.python.org/3/library/pdb.html",
+            "section": "break; p; next; step; continue",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "strategy",
+        "title": "9. Choose test scope by risk",
+        "stage": "intermediate",
+        "takeaway": "A unit test exercises a small behavior with dependencies controlled.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A unit test exercises a small behavior with dependencies controlled. An integration test combines real collaborators such as parser, filesystem and replacement. An end-to-end test follows a complete user route through its deployed boundaries. These labels describe scope; test value comes from the failure the test can reveal."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "For our importer, fast parser tests cover many types. A smaller set of real-file tests covers serialization and replacement. A real CLI subprocess would cover argument parsing and exit status but would not prove a future web interface. Balance scopes using risk and maintenance cost, not a fixed universal ratio."
+            ],
+            "example": "Risk: invalid row corrupts report\nUnit: reject row\nIntegration: old file survives\nE2E extension: invoke packaged CLI and inspect output"
+          }
+        ],
+        "exercise": {
+          "prompt": "Place a stale HTTP-response UI bug in the appropriate scope.",
+          "solution": "A domain unit test cannot observe browser effects. Use a component or browser test that controls two responses and asserts the later-selected result remains visible.",
+          "solutionFormat": "prose",
+          "checks": [
+            "A domain unit test cannot observe browser effects.",
+            "Explain the reasoning behind this answer: Filesystem integration."
+          ]
+        },
+        "quiz": {
+          "question": "Which scope checks real parser plus file replacement?",
+          "options": [
+            "Pure unit only",
+            "Filesystem integration",
+            "A full deployed browser journey"
+          ],
+          "correct": 1,
+          "explanation": "The real parser and filesystem operation cross an integration boundary."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Organizing test code; test fixtures",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "mocks",
+        "title": "10. Use doubles at owned boundaries",
+        "stage": "intermediate",
+        "takeaway": "A test double substitutes a collaborator so a failure or observation can be controlled.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A test double substitutes a collaborator so a failure or observation can be controlled. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This is a deliberate seam around a file operation rather than a mock of every internal helper."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A mock can verify that a forbidden operation was never attempted. It cannot prove the real dependency behaves like the double. Patch where a name is looked up when using patch; injection is simpler here. Avoid asserting incidental call order unless that order protects a stated invariant."
+            ],
+            "example": "replace = Mock(side_effect=OSError('injected'))\nimport_batch(valid_rows, target, replace=replace)\nExpected: OSError, old file, zero .tmp leftovers"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which checks are still needed after the mock test passes?",
+          "solution": "Run the real replacement integration case and read the generated JSON. Mock behavior only establishes the injected-failure branch, not actual filesystem compatibility.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Run the real replacement integration case and read the generated JSON.",
+            "Explain the reasoning behind this answer: The dependency was not invoked in this case."
+          ]
+        },
+        "quiz": {
+          "question": "What does assert_not_called prove here?",
+          "options": [
+            "The dependency was not invoked in this case",
+            "Real storage is durable",
+            "All implementations are correct"
+          ],
+          "correct": 0,
+          "explanation": "A call assertion observes this injected dependency in this case; it does not validate real storage."
+        },
+        "references": [
+          {
+            "title": "Python unittest.mock",
+            "url": "https://docs.python.org/3/library/unittest.mock.html",
+            "section": "Mock.side_effect; assert_not_called; where to patch",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "contracts-adapters",
+        "title": "11. Test an adapter's input and output contract",
+        "stage": "intermediate",
+        "takeaway": "A boundary contract includes accepted shape, meaning, failures and effects.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A boundary contract includes accepted shape, meaning, failures and effects. The study-log parser requires exactly id and minutes, not merely any JSON object. Adapter tests should cover malformed observations too: valid transport is not the same as valid application data."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Unknown fields can indicate a caller-version mismatch or hidden ambiguity. Decide whether to reject or tolerate them before testing. The supplied strict parser rejects extra fields and duplicate JSON keys; that is a teaching policy, not a requirement for every API. Version contracts when policy changes."
+            ],
+            "example": "{\"id\":\"a\",\"minutes\":5,\"admin\":true} -> reject\n{\"id\":\"a\",\"minutes\":5,\"minutes\":9} -> reject\n{\"id\":\"a\",\"minutes\":5} -> accept"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a migration test if notes becomes an optional field.",
+          "solution": "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes. Do not silently change an exact-field assertion while claiming compatibility.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Run old and new fixtures against both schema versions; specify whether old readers reject or ignore notes.",
+            "Explain the reasoning behind this answer: It violates the application contract."
+          ]
+        },
+        "quiz": {
+          "question": "Why can valid JSON still be rejected?",
+          "options": [
+            "It violates the application contract",
+            "JSON always means HTTP failed",
+            "Only whitespace is allowed"
+          ],
+          "correct": 0,
+          "explanation": "Syntax validity does not establish required fields, types or meaning."
+        },
+        "references": [
+          {
+            "title": "Python unittest.mock",
+            "url": "https://docs.python.org/3/library/unittest.mock.html",
+            "section": "Autospeccing; specification of doubles",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "integration-files",
+        "title": "12. Verify serialization and replacement together",
+        "stage": "intermediate",
+        "takeaway": "Integration evidence should cross a real boundary.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Integration evidence should cross a real boundary. The report reference validates the complete batch, serializes a schema-versioned object into the destination directory, flushes it and replaces the target once. A readback assertion checks both the returned report and actual stored JSON."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The filesystem is real but the environment is local and trusted. Atomic replacement protects readers from an in-progress target write; it does not make concurrent writers safe or prove power-loss durability. Missing parent directories and permission failures remain explicit errors rather than invented successful imports."
+            ],
+            "example": "Input a:7, b:2\nStored JSON: schema_version 1, records [a,b], total 9\nRe-read with json.loads and compare to returned object"
+          }
+        ],
+        "exercise": {
+          "prompt": "How would you test that serialization did not drop a record?",
+          "solution": "Use distinct IDs and values, read the saved report and compare its full records array and total. Checking only the return value would miss a disk-output mismatch.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use distinct IDs and values, read the saved report and compare its full records array and total.",
+            "Explain the reasoning behind this answer: Reading and parsing the saved bytes."
+          ]
+        },
+        "quiz": {
+          "question": "Which assertion crosses the real file boundary?",
+          "options": [
+            "Checking only the returned dict",
+            "Reading and parsing the saved bytes",
+            "Counting mock calls only"
+          ],
+          "correct": 1,
+          "explanation": "Reading the stored bytes checks the actual filesystem result."
+        },
+        "references": [
+          {
+            "title": "Python tempfile",
+            "url": "https://docs.python.org/3/library/tempfile.html",
+            "section": "NamedTemporaryFile; temporary-file lifecycle",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "diagram": {
+          "title": "Validate before replacing the report",
+          "summary": "A complete batch is checked before any replacement; a failure must preserve old output.",
+          "nodes": [
+            {
+              "id": "input",
+              "label": "Batch input",
+              "description": "Synthetic JSON lines with a bound."
+            },
+            {
+              "id": "validate",
+              "label": "Validate all rows",
+              "description": "Fields, types and duplicate IDs checked."
+            },
+            {
+              "id": "temporary",
+              "label": "Temporary report",
+              "description": "Serialization and flush in destination directory."
+            },
+            {
+              "id": "replace",
+              "label": "Replace once",
+              "description": "Publish the complete local report."
+            },
+            {
+              "id": "failure",
+              "label": "Failure branch",
+              "description": "Keep old bytes and clean temporary artifacts."
+            }
+          ],
+          "edges": [
+            {
+              "from": "input",
+              "to": "validate",
+              "label": "parse complete batch"
+            },
+            {
+              "from": "validate",
+              "to": "temporary",
+              "label": "all rows valid"
+            },
+            {
+              "from": "temporary",
+              "to": "replace",
+              "label": "complete temporary file"
+            },
+            {
+              "from": "validate",
+              "to": "failure",
+              "label": "invalid batch"
+            },
+            {
+              "from": "temporary",
+              "to": "failure",
+              "label": "replacement error"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Reject before effects",
+              "activeNodes": [
+                "input",
+                "validate",
+                "failure"
+              ],
+              "activeEdges": [
+                0,
+                3
+              ],
+              "explanation": "Validation failure never invokes replacement."
+            },
+            {
+              "title": "Prepare complete bytes",
+              "activeNodes": [
+                "validate",
+                "temporary"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The target remains old while a temporary report is built."
+            },
+            {
+              "title": "Publish or clean up",
+              "activeNodes": [
+                "temporary",
+                "replace",
+                "failure"
+              ],
+              "activeEdges": [
+                2,
+                4
+              ],
+              "explanation": "Real replacement is tested separately from an injected failure; this is not multi-writer coordination."
+            }
+          ]
+        }
+      },
+      {
+        "id": "properties",
+        "title": "13. Use invariant and metamorphic tests",
+        "stage": "intermediate",
+        "takeaway": "A property describes behavior across many inputs; a metamorphic relation links results after a controlled transformation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A property describes behavior across many inputs; a metamorphic relation links results after a controlled transformation. Adding a zero-minute row must preserve the total, and reordering rows must preserve a sum. These relations catch some errors without calculating a separate expected result for every generated list."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Our suite uses a fixed seed and finite generated cases, so it is reproducible rather than exhaustive. A property-testing engine such as Hypothesis can generate and shrink counterexamples, but it is an optional dependency. A weak property can still pass a constant-zero implementation; retain concrete nonzero examples."
+            ],
+            "example": "total([a:7,b:2]) == total([b:2,a:7])\ntotal(rows + [zero:0]) == total(rows)\nAlso require total([a:7]) == 7"
+          }
+        ],
+        "exercise": {
+          "prompt": "Give a counterexample to using only the reorder property.",
+          "solution": "An implementation returning zero for every input preserves order invariance while being wrong. Add a known nonzero example and other independent properties.",
+          "solutionFormat": "prose",
+          "checks": [
+            "An implementation returning zero for every input preserves order invariance while being wrong.",
+            "Explain the reasoning behind this answer: Properties can be too weak."
+          ]
+        },
+        "quiz": {
+          "question": "Why keep concrete examples beside generated properties?",
+          "options": [
+            "Properties can be too weak",
+            "Random cases prove all inputs",
+            "Examples replace all contracts"
+          ],
+          "correct": 0,
+          "explanation": "An invariant can be satisfied by a wrong constant implementation; concrete nonzero examples distinguish it."
+        },
+        "references": [
+          {
+            "title": "Hypothesis author documentation",
+            "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html",
+            "section": "An example; falsifying and shrinking",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "regressions",
+        "title": "14. Turn a fix into a durable regression",
+        "stage": "intermediate",
+        "takeaway": "A regression test preserves the condition that previously failed and the intended user outcome.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the deliberately buggy validator from parse_record's exact-type policy without requiring the entire importer to run."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A test is not useful merely because it executes a changed line. Observe the boundary, relevant output and absent unwanted effects. Keep a brief issue explanation in the test name or comment. If the bug was caused by two competing updates, a sequential happy path will not preserve it."
+            ],
+            "example": "Old: buggy_minutes(True) returns True\nNew boundary: parse_record with true raises ValueError\nDiscriminator: only integer JSON duration is accepted"
+          }
+        ],
+        "exercise": {
+          "prompt": "How do you demonstrate a test catches the original bug?",
+          "solution": "Temporarily point the specific assertion at the old implementation or run the included mutant comparison. Restore the corrected subject and record both outcomes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Temporarily point the specific assertion at the old implementation or run the included mutant comparison.",
+            "Explain the reasoning behind this answer: The old behavior fails the test and the fix passes."
+          ]
+        },
+        "quiz": {
+          "question": "What is the strongest regression evidence?",
+          "options": [
+            "The old behavior fails the test and the fix passes",
+            "The test runs twice",
+            "The file has more assertions"
+          ],
+          "correct": 0,
+          "explanation": "A regression is strongest when it distinguishes the old failure from the intended correction."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "TestCase; assert methods",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "coverage",
+        "title": "15. Interpret coverage and mutation carefully",
+        "stage": "intermediate",
+        "takeaway": "Coverage reports which code ran; it does not measure how well expected behavior was checked.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments deliberately alter behavior and ask whether a test notices; surviving mutants reveal weak assertions or equivalent changes."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "No coverage or mutation package is required for this path. The supplied boolean mutant is one controlled experiment. Record the exact altered rule and which case distinguishes it. Do not treat one killed mutant as a universal quality score or add tests only to chase a percentage."
+            ],
+            "example": "Mutant: <=1440 becomes <1440\nTest using 30 survives\nTest using 1440 distinguishes\nCoverage of comparison line alone cannot tell them apart"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which test catches replacing addition with constant zero?",
+          "solution": "Assert a known nonzero total such as 7+2=9. Order invariance alone would not catch it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Assert a known nonzero total such as 7+2=9.",
+            "Explain the reasoning behind this answer: Measured lines executed under the chosen run."
+          ]
+        },
+        "quiz": {
+          "question": "What can 100% line coverage establish?",
+          "options": [
+            "All requirements are met",
+            "Measured lines executed under the chosen run",
+            "Every race is impossible"
+          ],
+          "correct": 1,
+          "explanation": "Line coverage reports execution in a run, not requirement satisfaction or race safety."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "assertEqual; test discovery",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "test-data",
+        "title": "16. Manage test data and reproducibility",
+        "stage": "intermediate",
+        "takeaway": "A fixture's provenance matters.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A fixture's provenance matters. Synthetic IDs, bounded lists and fixed clocks keep the labs portable and private. Record seeds, runtime versions and relevant configuration when failure depends on generation. Minimize fixtures so the expected result is readable and hand-checkable."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not overwrite a historical captured incident merely to make a new test pass. Add a new fixture or document a migration. Avoid copying credentials or raw production records into regression folders. Time and external state should be injected or controlled when they are not the subject of the test."
+            ],
+            "example": "Fixture: IDs a,b; durations 7,2\nSeed: 27\nExpected sum: 9\nEnvironment: Python 3.11+; local filesystem"
+          }
+        ],
+        "exercise": {
+          "prompt": "What should an incident-derived fixture retain?",
+          "solution": "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering. Record why the transformed fixture still reproduces.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Only fields needed to trigger the failure, with sensitive values replaced while preserving relevant shape and ordering.",
+            "Explain the reasoning behind this answer: Live production records queried each run."
+          ]
+        },
+        "quiz": {
+          "question": "Which creates the strongest reproducibility dependency?",
+          "options": [
+            "A fixed synthetic fixture",
+            "Live production records queried each run",
+            "A documented seed"
+          ],
+          "correct": 1,
+          "explanation": "Live production data makes expected outcomes depend on uncontrolled changing state."
+        },
+        "references": [
+          {
+            "title": "Python tempfile",
+            "url": "https://docs.python.org/3/library/tempfile.html",
+            "section": "TemporaryDirectory; cleanup",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "concurrency",
+        "title": "17. Make a race observable without sleep",
+        "stage": "advanced",
+        "takeaway": "A race appears when competing actions depend on an ordering the implementation does not enforce.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A race appears when competing actions depend on an ordering the implementation does not enforce. The VersionStore test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "The winning thread is intentionally unspecified. Assert one success and one conflict, then inspect version one and either allowed value. Sleeping to encourage an ordering is fragile. This is a single-process thread test; it cannot establish distributed database or multi-process coordination."
+            ],
+            "example": "Both read version 0\nBarrier releases both\nWriter A commits -> version 1\nWriter B's expected 0 conflicts (or roles reverse)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why should the test avoid requiring A to win?",
+          "solution": "Scheduling is outside the contract. The invariant is one commit and one conflict; either allowed winner demonstrates it without making timing a test oracle.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Scheduling is outside the contract.",
+            "Explain the reasoning behind this answer: Exactly one commits."
+          ]
+        },
+        "quiz": {
+          "question": "What should the race test assert?",
+          "options": [
+            "A always wins",
+            "Exactly one commits",
+            "Both must sleep equally"
+          ],
+          "correct": 1,
+          "explanation": "Either thread may win; exactly one commit is the contract."
+        },
+        "references": [
+          {
+            "title": "Python threading",
+            "url": "https://docs.python.org/3/library/threading.html",
+            "section": "Barrier; Lock objects",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "diagram": {
+          "title": "One stale writer commits, the other conflicts",
+          "summary": "Both local threads read version zero; a barrier ensures the race precondition. The winning thread is unspecified.",
+          "nodes": [
+            {
+              "id": "read",
+              "label": "Both read v0",
+              "description": "Two proposals use the same old version."
+            },
+            {
+              "id": "gate",
+              "label": "Barrier",
+              "description": "Neither updates before both have read."
+            },
+            {
+              "id": "lock",
+              "label": "Locked compare/write",
+              "description": "Only one thread owns the critical section at a time."
+            },
+            {
+              "id": "commit",
+              "label": "One commit -> v1",
+              "description": "The first valid proposal increments version."
+            },
+            {
+              "id": "deny",
+              "label": "Stale proposal rejected",
+              "description": "The second expected version zero no longer matches."
+            }
+          ],
+          "edges": [
+            {
+              "from": "read",
+              "to": "gate",
+              "label": "arrive with stale proposals"
+            },
+            {
+              "from": "gate",
+              "to": "lock",
+              "label": "release both"
+            },
+            {
+              "from": "lock",
+              "to": "commit",
+              "label": "first writer matches"
+            },
+            {
+              "from": "commit",
+              "to": "deny",
+              "label": "next writer sees changed version"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish shared old version",
+              "activeNodes": [
+                "read",
+                "gate"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The barrier creates the material precondition without choosing a winner."
+            },
+            {
+              "title": "Commit one proposal",
+              "activeNodes": [
+                "lock",
+                "commit"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Comparison and update occur under the same local lock."
+            },
+            {
+              "title": "Reject the stale proposal",
+              "activeNodes": [
+                "commit",
+                "deny"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Assert one success, one conflict and version one; do not require a particular thread to win."
+            }
+          ]
+        }
+      },
+      {
+        "id": "flaky-tests",
+        "title": "18. Diagnose flakiness before rerunning",
+        "stage": "advanced",
+        "takeaway": "A flaky test changes outcome without a relevant code change.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A flaky test changes outcome without a relevant code change. Investigate shared state, wall-clock assumptions, unmanaged threads, port conflicts and uncontrolled external services. A rerun is diagnostic evidence, not a repair. Capture the failure and isolate the dependency before adding retries to the suite."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, capture that failure clearly rather than letting a later join obscure the cause."
+            ],
+            "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
+          }
+        ],
+        "exercise": {
+          "prompt": "A test fails only when run after another file test. What first?",
+          "solution": "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures. Do not increase every timeout first.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures.",
+            "Explain the reasoning behind this answer: Fresh owned fixtures."
+          ]
+        },
+        "quiz": {
+          "question": "What fixes a hidden shared-file dependency?",
+          "options": [
+            "Unlimited reruns",
+            "Fresh owned fixtures",
+            "Skipping the assertion on slow machines"
+          ],
+          "correct": 1,
+          "explanation": "Fresh owned fixtures remove hidden order dependence rather than masking it with reruns."
+        },
+        "references": [
+          {
+            "title": "Python threading",
+            "url": "https://docs.python.org/3/library/threading.html",
+            "section": "Event objects; Thread.join",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "async-debugging",
+        "title": "19. Test async cleanup and cancellation contracts",
+        "stage": "advanced",
+        "takeaway": "Async tests must distinguish an operation failure, caller cancellation and timeout.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless its contract deliberately converts it. Record whether cleanup completes before the operation reports its final result."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "IsolatedAsyncioTestCase supplies an isolated test event loop. Use events to order tasks and a short external bound to detect hangs; don't rely on sleep as the cause of cancellation. The separate Python path's TaskGroup lab is a next exercise; this path teaches the testing contract without claiming this thread suite executes async behavior."
+            ],
+            "example": "Child acquires resource -> readiness event\nParent cancels task -> child's finally runs\nAwait raises CancelledError -> assert cleanup marker"
+          }
+        ],
+        "exercise": {
+          "prompt": "Define assertions for a cancelled background export.",
+          "solution": "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation. Document any partial local work that can remain.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Assert the task is cancelled, cleanup has completed, no final report was published and the caller observes the cancellation.",
+            "Explain the reasoning behind this answer: Cleanup and effects."
+          ]
+        },
+        "quiz": {
+          "question": "What should a cancellation test observe besides an error?",
+          "options": [
+            "Cleanup and effects",
+            "Only the task's name",
+            "A larger random delay"
+          ],
+          "correct": 0,
+          "explanation": "Cancellation must be checked alongside resource cleanup and unintended effects."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "IsolatedAsyncioTestCase; asyncSetUp and asyncTearDown",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "observability",
+        "title": "20. Use diagnostics to explain a failure",
+        "stage": "advanced",
+        "takeaway": "Assertions say whether a contract held; diagnostics help explain why.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Assertions say whether a contract held; diagnostics help explain why. A synthetic case ID connects a test, event and failure note without logging the learner's full text. The supplied event helper accepts known outcomes and elapsed milliseconds, then returns only an allowlisted metadata shape."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Useful diagnostics describe a bounded action and its outcome. Logging every input creates privacy and volume problems. Metrics summarize populations while traces describe a particular route; neither replaces an assertion. State what was measured and avoid interpreting a local test's duration as a production latency guarantee."
+            ],
+            "example": "{\"case_id\":\"synthetic-1\",\"outcome\":\"conflict\",\"elapsed_ms\":2}\nNo raw payload, cookie, token or learner name in event"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose fields for diagnosing a replacement failure.",
+          "solution": "Use synthetic case ID, operation stage, error category and elapsed duration. Keep raw content and credentials out; attach sanitized reproducible input separately when permitted.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use synthetic case ID, operation stage, error category and elapsed duration.",
+            "Explain the reasoning behind this answer: Outcome category plus synthetic case ID."
+          ]
+        },
+        "quiz": {
+          "question": "Which event is safest and useful here?",
+          "options": [
+            "The complete private record",
+            "Outcome category plus synthetic case ID",
+            "A session cookie"
+          ],
+          "correct": 1,
+          "explanation": "Synthetic identity and outcome metadata support diagnosis without copying private content."
+        },
+        "references": [
+          {
+            "title": "Python logging",
+            "url": "https://docs.python.org/3/library/logging.html",
+            "section": "LogRecord attributes; logging levels",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "performance",
+        "title": "21. Separate correctness from measurement",
+        "stage": "advanced",
+        "takeaway": "A correctness assertion expects a value or invariant.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A correctness assertion expects a value or invariant. A performance experiment measures a distribution under a specified workload and environment. One fast unit-test run says little about tail latency, memory growth or load behavior. First ensure the measured operation produces correct output."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Do not assert an arbitrary few milliseconds in a general-purpose CI test. Keep a separate benchmark command with warmup, repeated samples, dataset size and platform notes. When optimization changes ordering or laziness, retain correctness tests so faster output does not silently become incomplete output."
+            ],
+            "example": "Correctness: total is 9\nExperiment: 1000 rows, 20 samples, same runtime\nReport median and range; no universal threshold inferred"
+          }
+        ],
+        "exercise": {
+          "prompt": "What should accompany 'import is twice as fast'?",
+          "solution": "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread. A single stopwatch sample is insufficient.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Baseline and changed revision, equivalent workload, environment, sample count, output validation and measurement spread.",
+            "Explain the reasoning behind this answer: A repeated specified workload with measurements."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement is a performance experiment?",
+          "options": [
+            "A repeated specified workload with measurements",
+            "assertEqual(total,9)",
+            "The test runner prints OK"
+          ],
+          "correct": 0,
+          "explanation": "A measurement experiment states workload, environment and repeated observations."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "Latency; traffic; saturation",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "release-evidence",
+        "title": "22. Build a release regression argument",
+        "stage": "advanced",
+        "takeaway": "A release decision combines targeted evidence and known limits.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A release decision combines targeted evidence and known limits. List changed contracts, relevant test scopes, actual results and unresolved environments. The lab suite proves local parser, file and thread behaviors; it does not certify a deployed API, GUI or adversarial service."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "A passing runner can still have skipped tests or collect the wrong module. Record the exact entry point and test count. If tests import an installed package instead of the intended checkout, investigate module location. Require failures to stop the validation command rather than printing success unconditionally."
+            ],
+            "example": "python -m unittest -v test_testing_labs.py\nEvidence table: parser boundaries, file failure, stale writers\nLimits: no browser, cloud storage or cross-process worker test"
+          }
+        ],
+        "exercise": {
+          "prompt": "What evidence changes when the importer gains a web API?",
+          "solution": "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser. Update limits instead of reusing an old completion claim.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Keep existing unit and file tests, add protocol/authorization integration cases and a user route test appropriate to the browser.",
+            "Explain the reasoning behind this answer: Entry point, scope and actual outcome."
+          ]
+        },
+        "quiz": {
+          "question": "What should be recorded with 'tests passed'?",
+          "options": [
+            "Only a screenshot of green text",
+            "Entry point, scope and actual outcome",
+            "A guess at production availability"
+          ],
+          "correct": 1,
+          "explanation": "The exact entry point and scope make the reported outcome interpretable and reproducible."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Command-Line Interface; Test Discovery",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "debug-report",
+        "title": "23. Write a reviewable diagnosis and handoff",
+        "stage": "advanced",
+        "takeaway": "A useful diagnosis connects symptom, reproduction, cause, correction and evidence.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A useful diagnosis connects symptom, reproduction, cause, correction and evidence. Explain how a stale-version race allowed an overwritten report, which boundary now rejects the second writer and what remains untested. Another developer should be able to run the reproducer without reconstructing your session."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Separate observations from hypotheses. A local lock fixes the supplied single-process reference, while a persistent multi-worker service needs a transaction or appropriate coordination at its real storage boundary. Record the smallest next falsifying test rather than claiming mastery from one suite."
+            ],
+            "example": "Symptom: lost minutes under two stale edits\nCause: compare and write separated\nFix: locked compare/write\nEvidence: barrier test has one winner\nLimit: volatile one-process state"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a diagnosis for the deliberate boolean mutant.",
+          "solution": "True was accepted because isinstance treats bool as int. The strict parser uses exact int typing. Boolean regression rejects it while 0 and 1440 still pass. The fixture is synthetic and no production data was used.",
+          "solutionFormat": "prose",
+          "checks": [
+            "True was accepted because isinstance treats bool as int.",
+            "Explain the reasoning behind this answer: The barrier test recorded one success and one conflict."
+          ]
+        },
+        "quiz": {
+          "question": "Which sentence is an observation rather than a hypothesis?",
+          "options": [
+            "The barrier test recorded one success and one conflict",
+            "All future races are impossible",
+            "The network probably caused it"
+          ],
+          "correct": 0,
+          "explanation": "Recorded outcomes are observations; universal claims and guessed causes go beyond them."
+        },
+        "references": [
+          {
+            "title": "Python pdb",
+            "url": "https://docs.python.org/3/library/pdb.html",
+            "section": "Debugger commands; post-mortem debugging",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      },
+      {
+        "id": "cli-route",
+        "title": "24. Test a complete local command route",
+        "stage": "advanced",
+        "takeaway": "An end-to-end boundary is defined by the product route, not a framework label.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An end-to-end boundary is defined by the product route, not a framework label. Running a reference as a subprocess checks import resolution, process startup, printed output and exit status together. This is a complete local command route; it is not a deployed browser or authenticated service test."
+            ]
+          },
+          {
+            "title": "Work through a diagnosis",
+            "paragraphs": [
+              "Keep the command and working directory explicit and bound the process with a timeout. Check return code and output separately; a script that prints a plausible total before crashing must fail. Use an owned temporary directory when the command writes data, and never point an incident reproducer at a user's live files."
+            ],
+            "example": "python testing_foundation.py -> exit 0 and output 5\npython testing_integration.py -> exit 0 and output 7\nBoth run their complete local entry points"
+          }
+        ],
+        "exercise": {
+          "prompt": "What does a subprocess check add beyond importing a function?",
+          "solution": "It observes main-entry execution, import paths, output and process exit behavior. It still does not establish packaged-install, GUI or production-service behavior unless those actual routes are exercised.",
+          "solutionFormat": "prose",
+          "checks": [
+            "It observes main-entry execution, import paths, output and process exit behavior.",
+            "Explain the reasoning behind this answer: The actual script process and its output."
+          ]
+        },
+        "quiz": {
+          "question": "What does a local command-route test verify?",
+          "options": [
+            "The actual script process and its output",
+            "A deployed browser workflow",
+            "Every authentication boundary"
+          ],
+          "correct": 0,
+          "explanation": "A subprocess observes the actual main entry point, output and exit code; it is not a browser journey."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Command-Line Interface; test suites",
+            "reviewed": "2026-09-27",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ]
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Practice guide",
+        "href": "paths/testing-debugging/practice/README.md"
+      },
+      {
+        "title": "Stage project workbook",
+        "href": "paths/testing-debugging/practice/project-workbook.md"
+      },
+      {
+        "title": "Regression suite",
+        "href": "paths/testing-debugging/practice/test_testing_labs.py"
+      }
+    ],
+    "resources": {
+      "folder": "testing-debugging-practice",
+      "files": [
+        {
+          "id": "testing_foundation-py",
+          "href": "paths/testing-debugging/practice/testing_foundation.py",
+          "role": "reference",
+          "description": "Strict record parser, total function and deliberate boolean mutant"
+        },
+        {
+          "id": "testing_integration-py",
+          "href": "paths/testing-debugging/practice/testing_integration.py",
+          "role": "reference",
+          "description": "Validated report import with atomic replacement and failure injection seam"
+        },
+        {
+          "id": "testing_concurrency-py",
+          "href": "paths/testing-debugging/practice/testing_concurrency.py",
+          "role": "reference",
+          "description": "Locked version store and allowlisted diagnostic event reference"
+        },
+        {
+          "id": "test_testing_labs-py",
+          "href": "paths/testing-debugging/practice/test_testing_labs.py",
+          "role": "test",
+          "description": "Boundary, metamorphic, file-failure, race and local command-route tests"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/testing-debugging/practice/README.md",
+          "role": "guide",
+          "description": "Commands, expected outputs, verification scope and safe local use"
+        },
+        {
+          "id": "project-workbook-md",
+          "href": "paths/testing-debugging/practice/project-workbook.md",
+          "role": "guide",
+          "description": "Three stage briefs, assessment rubrics and reference reasoning"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Validated study-log parser",
+          "goal": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+          "fileIds": [
+            "testing_foundation-py",
+            "testing_integration-py",
+            "testing_concurrency-py",
+            "test_testing_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Require exact id/minutes fields, nonblank bounded IDs and integer duration 0 through 1440.",
+            "Reject duplicate JSON keys, booleans, invalid JSON and oversized text.",
+            "Compute known totals and demonstrate a test distinguishing the supplied boolean mutant.",
+            "Produce a minimal reproduction note with expected and observed results.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run testing_foundation.py",
+              "command": "python testing_foundation.py",
+              "expected": "Prints 5 for one validated five-minute record."
+            },
+            {
+              "label": "Run testing_integration.py",
+              "command": "python testing_integration.py",
+              "expected": "Prints 7; creates and cleans a temporary report directory."
+            },
+            {
+              "label": "Run testing_concurrency.py",
+              "command": "python testing_concurrency.py",
+              "expected": "Prints stale edit rejected (1, 8)."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_testing_labs.py",
+              "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Behavior before test code",
+              "href": "#topic/testing-debugging/contracts"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Failure-safe report importer",
+          "goal": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+          "fileIds": [
+            "testing_foundation-py",
+            "testing_integration-py",
+            "testing_concurrency-py",
+            "test_testing_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Validate at most 1000 rows and unique IDs before writing.",
+            "Serialize schema_version, records and total; read stored JSON back.",
+            "Use an injected replacement failure and assert old bytes remain.",
+            "Assert rejected input does not invoke replacement and temporary files are removed.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run testing_foundation.py",
+              "command": "python testing_foundation.py",
+              "expected": "Prints 5 for one validated five-minute record."
+            },
+            {
+              "label": "Run testing_integration.py",
+              "command": "python testing_integration.py",
+              "expected": "Prints 7; creates and cleans a temporary report directory."
+            },
+            {
+              "label": "Run testing_concurrency.py",
+              "command": "python testing_concurrency.py",
+              "expected": "Prints stale edit rejected (1, 8)."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_testing_labs.py",
+              "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "9. Choose test scope by risk",
+              "href": "#topic/testing-debugging/strategy"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Reproducible stale-writer diagnosis",
+          "goal": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+          "fileIds": [
+            "testing_foundation-py",
+            "testing_integration-py",
+            "testing_concurrency-py",
+            "test_testing_labs-py",
+            "README-md",
+            "project-workbook-md"
+          ],
+          "steps": [
+            "Read README.md and run the supplied references.",
+            "Attempt the stage brief before inspecting its reference solution.",
+            "Use a Barrier so both threads read the same version before updating.",
+            "Allow exactly one compare-and-update commit; reject the stale proposal.",
+            "Join workers with bounds and assert final version and allowed winner.",
+            "Add seeded metamorphic totals and an allowlisted diagnostic event.",
+            "Write a release evidence table that separates thread/file tests from missing async, browser and distributed scopes.",
+            "Compare your evidence with the stage rubric and document extensions separately."
+          ],
+          "commands": [
+            {
+              "label": "Run testing_foundation.py",
+              "command": "python testing_foundation.py",
+              "expected": "Prints 5 for one validated five-minute record."
+            },
+            {
+              "label": "Run testing_integration.py",
+              "command": "python testing_integration.py",
+              "expected": "Prints 7; creates and cleans a temporary report directory."
+            },
+            {
+              "label": "Run testing_concurrency.py",
+              "command": "python testing_concurrency.py",
+              "expected": "Prints stale edit rejected (1, 8)."
+            },
+            {
+              "label": "Run meaningful regression suite",
+              "command": "python -m unittest -v test_testing_labs.py",
+              "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "17. Make a race observable without sleep",
+              "href": "#topic/testing-debugging/concurrency"
+            }
+          ],
+          "notes": [
+            "All files are flat at the root of the downloadable practice folder.",
+            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "contracts": "foundation",
+        "first-test": "foundation",
+        "boundaries": "foundation",
+        "failures": "foundation",
+        "fixtures": "foundation",
+        "tracebacks": "foundation",
+        "reproduce": "foundation",
+        "hypotheses": "foundation",
+        "strategy": "intermediate",
+        "mocks": "intermediate",
+        "contracts-adapters": "intermediate",
+        "integration-files": "intermediate",
+        "properties": "intermediate",
+        "regressions": "intermediate",
+        "coverage": "intermediate",
+        "test-data": "intermediate",
+        "concurrency": "advanced",
+        "flaky-tests": "advanced",
+        "async-debugging": "advanced",
+        "observability": "advanced",
+        "performance": "advanced",
+        "release-evidence": "advanced",
+        "debug-report": "advanced",
+        "cli-route": "advanced"
+      },
+      "bundle": {
+        "href": "paths/testing-debugging/practice-bundle.zip"
       }
     }
   }

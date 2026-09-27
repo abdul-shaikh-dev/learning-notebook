@@ -1,0 +1,221 @@
+{
+  "folder": "application-security-practice",
+  "files": [
+    {
+      "id": "security_lab-py",
+      "href": "paths/application-security/security_lab.py",
+      "role": "reference",
+      "description": "Synthetic security reference boundaries"
+    },
+    {
+      "id": "test_security_lab-py",
+      "href": "paths/application-security/test_security_lab.py",
+      "role": "test",
+      "description": "Positive and adversarial regression tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/application-security/README.md",
+      "role": "guide",
+      "description": "Runtime/setup/scope instructions"
+    },
+    {
+      "id": "threat-model-md",
+      "href": "paths/application-security/threat-model.md",
+      "role": "guide",
+      "description": "threat model"
+    },
+    {
+      "id": "verification-matrix-md",
+      "href": "paths/application-security/verification-matrix.md",
+      "role": "guide",
+      "description": "verification matrix"
+    },
+    {
+      "id": "identity-provider-lab-md",
+      "href": "paths/application-security/identity-provider-lab.md",
+      "role": "guide",
+      "description": "Opt-in real-provider validation worksheet"
+    },
+    {
+      "id": "foundation-kit-md",
+      "href": "paths/application-security/foundation-kit.md",
+      "role": "guide",
+      "description": "foundation kit"
+    },
+    {
+      "id": "intermediate-kit-md",
+      "href": "paths/application-security/intermediate-kit.md",
+      "role": "guide",
+      "description": "intermediate kit"
+    },
+    {
+      "id": "advanced-kit-md",
+      "href": "paths/application-security/advanced-kit.md",
+      "role": "guide",
+      "description": "advanced kit"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Private-document authorization contract",
+      "goal": "Verify tenant/owner/action decisions and narrow update shapes on synthetic records.",
+      "fileIds": [
+        "security_lab-py",
+        "test_security_lab-py",
+        "README-md",
+        "threat-model-md",
+        "verification-matrix-md",
+        "identity-provider-lab-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and foundation-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run the AuthorizationTests suite.",
+        "Explain the already-authenticated Principal boundary.",
+        "Build an owner/nonowner/tenant/role/action matrix including unknown and anonymous cases.",
+        "Reject owner/role fields in update bodies.",
+        "Complete the threat-model worksheet for read and update.",
+        "Compare submitted evidence with the rubric: Cross-owner and cross-tenant reads are denied without private data. Unknown actions default to denial. Privilege fields cannot be mass-assigned. The report does not call synthetic principals real authentication."
+      ],
+      "commands": [
+        {
+          "label": "Run authorization matrix",
+          "command": "python -B -m unittest -v test_security_lab.AuthorizationTests",
+          "expected": "Two methods pass: permission matrix/default denial and allowed-field/copy boundaries."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Name assets, threats and trust boundaries",
+          "href": "#topic/application-security/assets-threats"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Validated content and session defense portfolio",
+      "goal": "Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF decision with negative assertions.",
+      "fileIds": [
+        "security_lab-py",
+        "test_security_lab-py",
+        "README-md",
+        "threat-model-md",
+        "verification-matrix-md",
+        "identity-provider-lab-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and intermediate-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run ValidationTests and SessionTests.",
+        "Test malformed shapes, exact title boundaries and control characters.",
+        "Compare encoded HTML text and a literal injection-shaped SQL search.",
+        "Verify rotation, exact expiry and logout.",
+        "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
+        "Write a route contract identifying browser/HTTP tests still needed.",
+        "Compare submitted evidence with the rubric: Synthetic attack strings remain data in the documented contexts. SQL binding executes against a real in-memory SQLite fixture. Expired/revoked sessions and wrong CSRF tokens fail. Local methods are not presented as browser or cryptographic integration."
+      ],
+      "commands": [
+        {
+          "label": "Run content and session defenses",
+          "command": "python -B -m unittest -v test_security_lab.ValidationTests test_security_lab.SessionTests",
+          "expected": "Five methods pass: content boundaries, HTML encoding, SQLite binding, session lifecycle and CSRF denials."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Verify CSRF at cookie-authenticated mutations",
+          "href": "#topic/application-security/csrf"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Security verification and identity integration review",
+      "goal": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+      "fileIds": [
+        "security_lab-py",
+        "test_security_lab-py",
+        "README-md",
+        "threat-model-md",
+        "verification-matrix-md",
+        "identity-provider-lab-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and advanced-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run the entire local regression suite and OperationsTests.",
+        "Document log fields and single-process rate-limit limitations.",
+        "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
+        "Complete identity-provider-lab.md without placing secrets in the report.",
+        "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
+        "Write an incident/rotation plan with authorized containment and recovery.",
+        "Compare submitted evidence with the rubric: No raw token, cookie, credential or private body enters evidence. Local test claims match their actual boundary. Provider and browser results are labeled unexecuted until observed. No fake JWT cryptography is implemented. The report rejects blanket ASVS certification and covers practical recovery."
+      ],
+      "commands": [
+        {
+          "label": "Run all local security evidence",
+          "command": "python -B -m unittest -v test_security_lab.py",
+          "expected": "Nine methods pass. This does not execute HTTP/browser/provider or cryptographic validation."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "16. Keep secrets out of source and routine evidence",
+          "href": "#topic/application-security/secrets"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "assets-threats": "foundation",
+    "identity-principals": "foundation",
+    "authentication-boundary": "foundation",
+    "authorization-ownership": "foundation",
+    "input-contracts": "foundation",
+    "sessions": "foundation",
+    "cookies-transport": "foundation",
+    "passwords-mfa": "foundation",
+    "csrf": "intermediate",
+    "xss-context": "intermediate",
+    "sql-injection": "intermediate",
+    "oauth-roles": "intermediate",
+    "oidc-login": "intermediate",
+    "pkce-state": "intermediate",
+    "token-validation": "intermediate",
+    "secrets": "advanced",
+    "logging": "advanced",
+    "dependencies": "advanced",
+    "abuse-limits": "advanced",
+    "verification": "advanced",
+    "incident-recovery": "advanced"
+  },
+  "bundle": {
+    "href": "paths/application-security/practice-bundle.zip"
+  }
+}

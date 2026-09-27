@@ -53,3 +53,16 @@ Regenerate with `node scripts/sync-catalog.cjs` and
 `scripts/verify-python.py`; framework suites live in `validation/react` and
 `scripts/verify-dotnet.py`. Clearly distinguish locally verified tests, CI checks,
 opt-in external services and learner extensions.
+
+## Container and infrastructure practice files
+
+The public-file allowlist accepts YAML (`.yaml` and `.yml`) and the exact
+basenames `Dockerfile` and `.dockerignore`. Declare each explicitly in the
+course manifest and resource kit. ZIP generation normalizes these UTF-8 text
+files to LF, as it does other source files. ZIPs flatten filenames: avoid
+duplicate basenames and document any directories a learner must create.
+
+Infrastructure exercises must name their required tools, target context and
+namespace, expected result, cleanup and execution limits. Keep local
+simulations and static manifest checks distinct from evidence obtained by
+running a real container, cluster or identity provider.

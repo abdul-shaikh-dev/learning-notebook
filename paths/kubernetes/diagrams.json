@@ -1,0 +1,80 @@
+{
+  "control-plane": {
+    "title": "Desired state becomes an available endpoint",
+    "summary": "API acceptance is only the first step; every later boundary can fail.",
+    "nodes": [
+      {
+        "id": "api",
+        "label": "API desired Deployment",
+        "description": "The validated object is stored."
+      },
+      {
+        "id": "controller",
+        "label": "ReplicaSet and Pods",
+        "description": "Controllers create the intended instances."
+      },
+      {
+        "id": "node",
+        "label": "Scheduler and kubelet",
+        "description": "A node is selected; runtime starts the image."
+      },
+      {
+        "id": "ready",
+        "label": "Ready endpoint",
+        "description": "Probe success makes a matching Pod eligible."
+      }
+    ],
+    "edges": [
+      {
+        "from": "api",
+        "to": "controller",
+        "label": "reconcile desired replicas"
+      },
+      {
+        "from": "controller",
+        "to": "node",
+        "label": "schedule and start"
+      },
+      {
+        "from": "node",
+        "to": "ready",
+        "label": "probe and publish readiness"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Accept desired state",
+        "activeNodes": [
+          "api",
+          "controller"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "A successful apply does not prove a container is running."
+      },
+      {
+        "title": "Resolve scheduling/startup",
+        "activeNodes": [
+          "controller",
+          "node"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Capacity failure and missing-image failure occur at different boundaries."
+      },
+      {
+        "title": "Route ready work",
+        "activeNodes": [
+          "node",
+          "ready"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The Service selector and readiness must both match before requests reach a usable endpoint."
+      }
+    ]
+  }
+}

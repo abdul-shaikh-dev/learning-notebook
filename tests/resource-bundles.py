@@ -93,11 +93,15 @@ class ResourceBundleTests(unittest.TestCase):
     def test_text_crlf_and_lf_checkouts_produce_identical_bundles(self):
         content = 'First line: café\nSecond line\n'.encode('utf-8')
         paths = [self.course / 'practice' / 'lesson.py', self.course / 'README.md']
-        for extension in ('.ts', '.json', '.csv', '.sql', '.csproj', '.svg'):
+        for extension in ('.ts', '.json', '.csv', '.sql', '.csproj', '.svg', '.yaml', '.yml'):
             filename = 'extra' + extension
             paths.append(self.course / filename)
             self.resources['files'].append({'id': filename, 'href': 'paths/example/' + filename,
                                            'role': 'reference', 'description': 'Line ending fixture.'})
+        for filename in ('Dockerfile', '.dockerignore'):
+            paths.append(self.course / filename)
+            self.resources['files'].append({'id': filename, 'href': 'paths/example/' + filename,
+                                           'role': 'reference', 'description': 'Container text fixture.'})
         for path in paths:
             path.write_bytes(content)
         binary = b'\x89PNG\r\n\x1a\n\xffpayload\r\n'

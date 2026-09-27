@@ -36,6 +36,9 @@ jobs:
           python tests/resource-bundles.py
       - name: Verify lessons and calculations
         run: node verify.cjs
+      - name: Verify Kubernetes context guard without a cluster
+        shell: pwsh
+        run: ./paths/kubernetes/practice/test_lab_guard.ps1
       - name: Build portable static site
         run: node scripts/build-pages.cjs
       - name: Upload site artifact

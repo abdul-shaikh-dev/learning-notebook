@@ -1,0 +1,71 @@
+{
+  "health-contracts": {
+    "title": "Separate process survival from traffic eligibility",
+    "summary": "Follow one temporary readiness failure without treating it as a dead process.",
+    "nodes": [
+      {
+        "id": "gate",
+        "label": "Required work unavailable",
+        "description": "The synthetic readiness gate file exists."
+      },
+      {
+        "id": "ready",
+        "label": "Readiness 503",
+        "description": "Routing should withhold ordinary traffic."
+      },
+      {
+        "id": "live",
+        "label": "Liveness 200",
+        "description": "The HTTP process remains responsive."
+      },
+      {
+        "id": "recover",
+        "label": "Gate removed; smoke succeeds",
+        "description": "Eligibility returns after recovery and user checks."
+      }
+    ],
+    "edges": [
+      {
+        "from": "gate",
+        "to": "ready",
+        "label": "required work fails"
+      },
+      {
+        "from": "gate",
+        "to": "live",
+        "label": "process still responds"
+      },
+      {
+        "from": "ready",
+        "to": "recover",
+        "label": "dependency/gate recovers"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Observe the failure",
+        "activeNodes": [
+          "gate",
+          "ready",
+          "live"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A dependency/readiness failure and a process failure are separate decisions."
+      },
+      {
+        "title": "Recover deliberately",
+        "activeNodes": [
+          "ready",
+          "recover"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Remove the synthetic gate, check readiness and repeat a synthetic user operation before restoring normal routing."
+      }
+    ]
+  }
+}

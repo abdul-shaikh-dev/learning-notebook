@@ -1,0 +1,204 @@
+{
+  "folder": "git-team-workflows-practice",
+  "files": [
+    {
+      "id": "sandbox-py",
+      "href": "paths/git-team-workflows/sandbox.py",
+      "role": "reference",
+      "description": "Fresh local Git fixture generator and assertion verifier"
+    },
+    {
+      "id": "test_sandbox-py",
+      "href": "paths/git-team-workflows/test_sandbox.py",
+      "role": "test",
+      "description": "History and sandbox-boundary tests"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/git-team-workflows/README.md",
+      "role": "guide",
+      "description": "Runtime/setup/scope instructions"
+    },
+    {
+      "id": "release-review-md",
+      "href": "paths/git-team-workflows/release-review.md",
+      "role": "guide",
+      "description": "release review"
+    },
+    {
+      "id": "foundation-kit-md",
+      "href": "paths/git-team-workflows/foundation-kit.md",
+      "role": "guide",
+      "description": "foundation kit"
+    },
+    {
+      "id": "intermediate-kit-md",
+      "href": "paths/git-team-workflows/intermediate-kit.md",
+      "role": "guide",
+      "description": "intermediate kit"
+    },
+    {
+      "id": "advanced-kit-md",
+      "href": "paths/git-team-workflows/advanced-kit.md",
+      "role": "guide",
+      "description": "advanced kit"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Three-state snapshot investigation",
+      "goal": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+      "fileIds": [
+        "sandbox-py",
+        "test_sandbox-py",
+        "README-md",
+        "release-review-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and foundation-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run the complete foundation fixture in its own temporary root.",
+        "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
+        "Verify committed contents independently with git show.",
+        "Show that an untracked synthetic config file is ignored without claiming history erasure.",
+        "Compare submitted evidence with the rubric: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
+      ],
+      "commands": [
+        {
+          "label": "Run foundation snapshot fixture",
+          "command": "python -B sandbox.py --stage foundation",
+          "expected": "JSON reports staged_snapshot two and ignored_untracked true; owned temporary repositories removed."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Start in a repository you can safely change",
+          "href": "#topic/git-team-workflows/safe-sandbox"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Two-developer integration review",
+      "goal": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+      "fileIds": [
+        "sandbox-py",
+        "test_sandbox-py",
+        "README-md",
+        "release-review-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and intermediate-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+        "Explain base/ours/theirs and preserve both fixture intents.",
+        "Verify a two-parent merge.",
+        "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
+        "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
+        "Compare submitted evidence with the rubric: Conflict/abort/resolution states are supported by actual outputs. The resolved contents preserve both stated intents. Fetch and integration are distinguished. Review evidence names the candidate and no hosted approval is invented."
+      ],
+      "commands": [
+        {
+          "label": "Run local two-developer fixture",
+          "command": "python -B sandbox.py --stage intermediate",
+          "expected": "JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "9. Integrate histories with a merge",
+          "href": "#topic/git-team-workflows/merge-integration"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Local recovery and release portfolio",
+      "goal": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+      "fileIds": [
+        "sandbox-py",
+        "test_sandbox-py",
+        "README-md",
+        "release-review-md",
+        "foundation-kit-md",
+        "intermediate-kit-md",
+        "advanced-kit-md"
+      ],
+      "steps": [
+        "Extract the full bundle into an empty folder; all listed files are flat at its root.",
+        "Read README.md and advanced-kit.md before running the references.",
+        "Run the commands below and record actual results separately from expected results.",
+        "Run the advanced fixture and verify the first bad commit with its predicate.",
+        "Compare targeted revert with the private reset/reflog recovery.",
+        "Explain the cherry-picked change and rebased topic’s changed identity.",
+        "Verify the annotated tag object.",
+        "Produce an offline release record including artifact/hosting checks not executed.",
+        "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence."
+      ],
+      "commands": [
+        {
+          "label": "Run history/release fixture",
+          "command": "python -B sandbox.py --stage advanced",
+          "expected": "JSON identifies first bad/recovered commit, safe reverted content, changed rebase identity and annotated tag."
+        },
+        {
+          "label": "Run sandbox boundary regression tests",
+          "command": "python -B -m unittest -v test_sandbox.py",
+          "expected": "Four test methods pass, including repository-root escape and push rejection."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "15. Find a regression with a repeatable bisect test",
+          "href": "#topic/git-team-workflows/bisect"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "safe-sandbox": "foundation",
+    "three-states": "foundation",
+    "inspect-changes": "foundation",
+    "coherent-commits": "foundation",
+    "ignore-secrets": "foundation",
+    "history-refs": "foundation",
+    "branch-switch": "foundation",
+    "restore-staging": "foundation",
+    "merge-integration": "intermediate",
+    "conflict-resolution": "intermediate",
+    "remotes-fetch": "intermediate",
+    "pull-request-review": "intermediate",
+    "revert-reset": "intermediate",
+    "reflog-recovery": "intermediate",
+    "bisect": "advanced",
+    "cherry-pick": "advanced",
+    "rebase": "advanced",
+    "stash": "advanced",
+    "tags-release": "advanced",
+    "team-release-review": "advanced"
+  },
+  "bundle": {
+    "href": "paths/git-team-workflows/practice-bundle.zip"
+  }
+}
