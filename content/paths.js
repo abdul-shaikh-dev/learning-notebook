@@ -10728,61 +10728,61 @@ const LEARNING_PATHS = [
           "id": "release_app-py",
           "href": "paths/delivery-operations/practice/release_app.py",
           "role": "reference",
-          "description": "release_app.py — local reference or guided exercise"
+          "description": "Local HTTP service with health, version, notes and metrics endpoints backed by disposable SQLite data."
         },
         {
           "id": "test_release_app-py",
           "href": "paths/delivery-operations/practice/test_release_app.py",
           "role": "test",
-          "description": "test_release_app.py — local reference or guided exercise"
+          "description": "HTTP, readiness, persistence, backup and simulated release-restart assertions."
         },
         {
           "id": "release_tools-py",
           "href": "paths/delivery-operations/practice/release_tools.py",
           "role": "reference",
-          "description": "release_tools.py — local reference or guided exercise"
+          "description": "Local-only workload sampler, artifact checksum, SLO arithmetic and SQLite backup commands."
         },
         {
           "id": "test_release_tools-py",
           "href": "paths/delivery-operations/practice/test_release_tools.py",
           "role": "test",
-          "description": "test_release_tools.py — local reference or guided exercise"
+          "description": "Checks operational arithmetic, checksums and redirect refusal for the local sampler."
         },
         {
           "id": "Dockerfile",
           "href": "paths/delivery-operations/practice/Dockerfile",
           "role": "reference",
-          "description": "Dockerfile — local reference or guided exercise"
+          "description": "Multi-stage container build that runs service tests and uses a non-root runtime."
         },
         {
           "id": "dockerignore",
           "href": "paths/delivery-operations/practice/.dockerignore",
           "role": "reference",
-          "description": ".dockerignore — local reference or guided exercise"
+          "description": "Limits the container build context to the required app, tests and Dockerfile."
         },
         {
           "id": "README-md",
           "href": "paths/delivery-operations/practice/README.md",
           "role": "guide",
-          "description": "README.md — local reference or guided exercise"
+          "description": "Setup, exact commands, expected results, cleanup and verification limits."
         },
         {
           "id": "ci-example-yaml",
           "href": "paths/delivery-operations/practice/ci-example.yaml",
           "role": "reference",
-          "description": "ci-example.yaml — local reference or guided exercise"
+          "description": "Opt-in CI example for review and adaptation; separate from the notebook publishing workflow."
         },
         {
           "id": "integration-runbook-md",
           "href": "paths/delivery-operations/practice/integration-runbook.md",
           "role": "guide",
-          "description": "integration-runbook.md — local reference or guided exercise"
+          "description": "Step-by-step learner integration of React, .NET and SQL with release and recovery evidence."
         },
         {
           "id": "release-workbook-md",
           "href": "paths/delivery-operations/practice/release-workbook.md",
           "role": "guide",
-          "description": "release-workbook.md — local reference or guided exercise"
+          "description": "Three delivery projects with requirements, assessment rubrics and reference reasoning."
         }
       ],
       "tasks": [
@@ -17754,109 +17754,109 @@ const LEARNING_PATHS = [
           "id": "release_app-py",
           "href": "paths/kubernetes/practice/release_app.py",
           "role": "reference",
-          "description": "release_app.py — local reference or guided exercise"
+          "description": "Local HTTP service with health, version, notes and metrics endpoints backed by disposable SQLite data."
         },
         {
           "id": "test_release_app-py",
           "href": "paths/kubernetes/practice/test_release_app.py",
           "role": "test",
-          "description": "test_release_app.py — local reference or guided exercise"
+          "description": "HTTP, readiness, persistence, backup and simulated release-restart assertions."
         },
         {
           "id": "Dockerfile",
           "href": "paths/kubernetes/practice/Dockerfile",
           "role": "reference",
-          "description": "Dockerfile — local reference or guided exercise"
+          "description": "Multi-stage container build that runs service tests and uses a non-root runtime."
         },
         {
           "id": "dockerignore",
           "href": "paths/kubernetes/practice/.dockerignore",
           "role": "reference",
-          "description": ".dockerignore — local reference or guided exercise"
+          "description": "Limits the container build context to the required app, tests and Dockerfile."
         },
         {
           "id": "README-md",
           "href": "paths/kubernetes/practice/README.md",
           "role": "guide",
-          "description": "README.md — local reference or guided exercise"
+          "description": "Setup, exact commands, expected results, cleanup and verification limits."
         },
         {
           "id": "cluster-workbook-md",
           "href": "paths/kubernetes/practice/cluster-workbook.md",
           "role": "guide",
-          "description": "cluster-workbook.md — local reference or guided exercise"
+          "description": "Three Kubernetes projects with observable outcomes, review criteria and reference approaches."
         },
         {
           "id": "check_manifests-py",
           "href": "paths/kubernetes/practice/check_manifests.py",
           "role": "test",
-          "description": "check_manifests.py — local reference or guided exercise"
+          "description": "Offline checks for manifest namespaces, selectors, ports and selected security properties."
         },
         {
           "id": "lab-ps1",
           "href": "paths/kubernetes/practice/lab.ps1",
           "role": "reference",
-          "description": "lab.ps1 — local reference or guided exercise"
+          "description": "Guarded PowerShell helper for local namespace bootstrap, server dry-run, rollout and cleanup."
         },
         {
           "id": "namespace-json",
           "href": "paths/kubernetes/practice/namespace.json",
           "role": "reference",
-          "description": "namespace.json — local reference or guided exercise"
+          "description": "Dedicated notebook-lab namespace with a training marker and restricted Pod Security policy."
         },
         {
           "id": "workload-json",
           "href": "paths/kubernetes/practice/workload.json",
           "role": "reference",
-          "description": "workload.json — local reference or guided exercise"
+          "description": "Baseline application Deployment, Service, configuration and service account."
         },
         {
           "id": "network-policy-json",
           "href": "paths/kubernetes/practice/network-policy.json",
           "role": "reference",
-          "description": "network-policy.json — local reference or guided exercise"
+          "description": "Optional ingress policy; requires a network plugin that actually enforces NetworkPolicy."
         },
         {
           "id": "rbac-json",
           "href": "paths/kubernetes/practice/rbac.json",
           "role": "reference",
-          "description": "rbac.json — local reference or guided exercise"
+          "description": "Optional read-only Pod/log viewer account, Role and RoleBinding."
         },
         {
           "id": "demo-secret-json",
           "href": "paths/kubernetes/practice/demo-secret.json",
           "role": "reference",
-          "description": "demo-secret.json — local reference or guided exercise"
+          "description": "Synthetic demonstration Secret containing no real credential."
         },
         {
           "id": "hpa-json",
           "href": "paths/kubernetes/practice/hpa.json",
           "role": "reference",
-          "description": "hpa.json — local reference or guided exercise"
+          "description": "Optional CPU autoscaler; requires a working resource metrics API."
         },
         {
           "id": "disruption-budget-json",
           "href": "paths/kubernetes/practice/disruption-budget.json",
           "role": "reference",
-          "description": "disruption-budget.json — local reference or guided exercise"
+          "description": "Optional budget for eligible voluntary Pod evictions."
         },
         {
           "id": "job-json",
           "href": "paths/kubernetes/practice/job.json",
           "role": "reference",
-          "description": "job.json — local reference or guided exercise"
+          "description": "Bounded in-cluster Job that checks the application through its Service."
         },
         {
           "id": "storage-json",
           "href": "paths/kubernetes/practice/storage.json",
           "role": "reference",
-          "description": "storage.json — local reference or guided exercise"
+          "description": "Optional volume claim and writer Pod for a local persistence experiment."
         },
         {
           "id": "test_lab_guard-ps1",
           "href": "paths/kubernetes/practice/test_lab_guard.ps1",
           "role": "test",
-          "description": "Offline PowerShell guard behavior checks (fake kubectl)"
+          "description": "Seven offline command-guard tests using a fake kubectl function; no cluster access."
         }
       ],
       "tasks": [

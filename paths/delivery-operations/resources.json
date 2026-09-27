@@ -5,61 +5,61 @@
       "id": "release_app-py",
       "href": "paths/delivery-operations/practice/release_app.py",
       "role": "reference",
-      "description": "release_app.py — local reference or guided exercise"
+      "description": "Local HTTP service with health, version, notes and metrics endpoints backed by disposable SQLite data."
     },
     {
       "id": "test_release_app-py",
       "href": "paths/delivery-operations/practice/test_release_app.py",
       "role": "test",
-      "description": "test_release_app.py — local reference or guided exercise"
+      "description": "HTTP, readiness, persistence, backup and simulated release-restart assertions."
     },
     {
       "id": "release_tools-py",
       "href": "paths/delivery-operations/practice/release_tools.py",
       "role": "reference",
-      "description": "release_tools.py — local reference or guided exercise"
+      "description": "Local-only workload sampler, artifact checksum, SLO arithmetic and SQLite backup commands."
     },
     {
       "id": "test_release_tools-py",
       "href": "paths/delivery-operations/practice/test_release_tools.py",
       "role": "test",
-      "description": "test_release_tools.py — local reference or guided exercise"
+      "description": "Checks operational arithmetic, checksums and redirect refusal for the local sampler."
     },
     {
       "id": "Dockerfile",
       "href": "paths/delivery-operations/practice/Dockerfile",
       "role": "reference",
-      "description": "Dockerfile — local reference or guided exercise"
+      "description": "Multi-stage container build that runs service tests and uses a non-root runtime."
     },
     {
       "id": "dockerignore",
       "href": "paths/delivery-operations/practice/.dockerignore",
       "role": "reference",
-      "description": ".dockerignore — local reference or guided exercise"
+      "description": "Limits the container build context to the required app, tests and Dockerfile."
     },
     {
       "id": "README-md",
       "href": "paths/delivery-operations/practice/README.md",
       "role": "guide",
-      "description": "README.md — local reference or guided exercise"
+      "description": "Setup, exact commands, expected results, cleanup and verification limits."
     },
     {
       "id": "ci-example-yaml",
       "href": "paths/delivery-operations/practice/ci-example.yaml",
       "role": "reference",
-      "description": "ci-example.yaml — local reference or guided exercise"
+      "description": "Opt-in CI example for review and adaptation; separate from the notebook publishing workflow."
     },
     {
       "id": "integration-runbook-md",
       "href": "paths/delivery-operations/practice/integration-runbook.md",
       "role": "guide",
-      "description": "integration-runbook.md — local reference or guided exercise"
+      "description": "Step-by-step learner integration of React, .NET and SQL with release and recovery evidence."
     },
     {
       "id": "release-workbook-md",
       "href": "paths/delivery-operations/practice/release-workbook.md",
       "role": "guide",
-      "description": "release-workbook.md — local reference or guided exercise"
+      "description": "Three delivery projects with requirements, assessment rubrics and reference reasoning."
     }
   ],
   "tasks": [
