@@ -13,7 +13,7 @@ The staged orphan is intentional. SQL Server does not enforce foreign keys on te
 
 Solutions include a DELETE demonstration only against a dedicated temporary work copy and roll it back. Procedure/index demonstrations in the reader are optional and affect only session-local objects. Run transaction demonstrations without an existing transaction.
 
-Verification: JSON structure, twelve exercises/quizzes, fixture arithmetic and SQL source review. No installed SQL Server engine was used to execute these examples; expected results are not an engine test report. Microsoft Learn references are listed in path.json and the reader.
+Verification: the foundation and import fixtures were executed on SQL Server 2025 Express 17.0.1000.7 on 27 September 2026. See engine-verification.md for observed results, the temporary database-context adaptation and limits. Microsoft Learn references are listed in path.json and the reader.
 
 
 ## Three assessed stages
@@ -32,8 +32,8 @@ The conflict policy is deliberately conservative: different amount strings under
 
 The reader's Query Store queries are read-only and can require permissions. The deadlock schedule and retry solution are reasoning/pseudocode, not scripts to induce blocking. Cross-session concurrency needs a trainer-provisioned shared sandbox: local temporary tables do not test that behavior.
 
-Verification remains structural/content review and independent fixture arithmetic. No SQL Server engine was available for execution. Query plans, procedure errors, locking, crash recovery and permissions must be validated on an actual supported training instance before claiming those checks passed. No server was installed or started.
+The dedicated concurrency and Query Store labs were also executed on SQL Server 2025 Express; engine-verification.md records the results and the Query Store lookup defect corrected during testing. Crash recovery, production permissions, migrations and optional extensions remain separate verification work.
 
 ## Opt-in advanced engine practice
 
-Read concurrency-lab.md before changing the setup opt-in flag. It provides an isolated disposable database, separate A/B schedules for isolation, lost updates and deadlocks, a Query Store before/after index lab, assertions and guarded cleanup. Run only one selected numbered session block at a time. No database workload was executed by the content editor; record your actual engine evidence. Run rounding-lab.sql separately to see raw 1.004/1.005 become 1.00/1.01 under the deliberate accepted rounding policy.
+Read concurrency-lab.md before changing the setup opt-in flag. It provides an isolated disposable database, separate A/B schedules for isolation, lost updates and deadlocks, a Query Store before/after index lab, assertions and guarded cleanup. Run only one selected numbered session block at a time. Recorded execution evidence is in engine-verification.md; record your own engine/build/settings when repeating it. Run rounding-lab.sql separately to see raw 1.004/1.005 become 1.00/1.01 under the deliberate accepted rounding policy.

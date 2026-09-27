@@ -13203,7 +13203,7 @@ const LEARNING_PATHS = [
       "Run snippets or solutions.sql in the same session. GO is a client batch separator. Do not paste GO into an application driver call.",
       "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed.",
       "Advanced practice uses advanced-lab.sql and advanced-solutions.sql in the same session after setup.sql. It has a different payment-event dataset from the foundation fixture.",
-      "Stage exit projects require explained evidence. No SQL Server engine, concurrent-session or durability tests have been executed by this website authoring pass."
+      "Stage exit projects require explained evidence. Selected downloadable fixtures, two-session races and Query Store were executed on SQL Server 2025 Express; see engine-verification.md. Crash durability and optional extensions remain unverified."
     ],
     "nextSteps": [
       "Implement the capstone with permanent tables in a separately approved training database, adding foreign keys and source-batch uniqueness rules.",
@@ -13381,7 +13381,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/ssms/quickstarts/ssms-connect-query-sql-server",
             "section": "Connect and query",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13440,7 +13440,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql?view=sql-server-ver17",
             "section": "Remarks: NULL and UNKNOWN",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13499,7 +13499,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17",
             "section": "Logical processing order",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13558,7 +13558,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17",
             "section": "Logical and physical joins",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ],
         "diagram": {
@@ -13736,7 +13736,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
             "section": "GROUP BY arguments",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13795,7 +13795,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17",
             "section": "Guidelines for CTEs",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13854,7 +13854,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17",
             "section": "General remarks: determinism",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13913,7 +13913,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-procedure-transact-sql?view=sql-server-ver17",
             "section": "Parameters and examples",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -13972,7 +13972,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "Temporary tables",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14038,7 +14038,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
             "section": "READ COMMITTED and RCSI",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ],
         "diagram": {
@@ -14195,7 +14195,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-ver17",
             "section": "Index types and design",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14257,7 +14257,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
             "section": "GROUP BY and aggregate expressions",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14324,7 +14324,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17",
             "section": "Conversion and rounding",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14385,7 +14385,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17",
             "section": "Using APPLY",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14445,7 +14445,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver17",
             "section": "ROWS and RANGE frames",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14506,7 +14506,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics?view=sql-server-ver17",
             "section": "Histogram and cardinality estimates",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14566,7 +14566,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql?view=sql-server-ver17",
             "section": "Uncommittable transactions and XACT_STATE",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14632,7 +14632,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql?view=sql-server-ver17",
             "section": "Return types and failed conversions",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14672,6 +14672,12 @@ const LEARNING_PATHS = [
               "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
+          },
+          {
+            "title": "Match the measured workload reliably",
+            "paragraphs": [
+              "The downloadable lab identifies its dedicated procedure by object_id in Query Store. Exact text matching can miss automatically parameterized statements, while an inspection query can accidentally match its own text. Require captured successful runtime executions for the workload, not merely a matching query-text row. See engine-verification.md for the reproduced defect and negative control."
+            ]
           }
         ],
         "exercise": {
@@ -14700,14 +14706,21 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store?view=sql-server-ver17",
             "section": "Query Store collection and runtime statistics",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           },
           {
             "title": "Microsoft Learn: sys.query_store_runtime_stats",
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-query-store-runtime-stats-transact-sql?view=sql-server-ver17",
             "section": "count_executions, avg_duration, avg_logical_io_reads and active interval aggregation",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ lab; SQL Server 17.x documentation view. Source inspected; engine measurements remain learner verification."
+            "scope": "SQL Server 2019+ lab; SQL Server 17.x documentation view. Source inspected; selected local engine measurements are recorded in engine-verification.md. Reproduce them on your own instance."
+          },
+          {
+            "title": "Microsoft: sys.query_store_query",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-query-store-query-transact-sql?view=sql-server-ver17",
+            "section": "object_id and query_parameterization_type",
+            "reviewed": "2026-09-27",
+            "scope": "Module identity for the dedicated Query Store lab; verified on Express 17.0.1000.7."
           }
         ]
       },
@@ -14774,7 +14787,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
             "section": "Read protection versus modification locks",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14842,7 +14855,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide?view=sql-server-ver17",
             "section": "Deadlock detection, victim selection and error handling",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14902,7 +14915,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-executesql-transact-sql?view=sql-server-ver17",
             "section": "Parameters and SQL injection caution",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -14963,7 +14976,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-table-transact-sql?view=sql-server-ver17",
             "section": "Locking and online operations",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       },
@@ -15040,7 +15053,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-xact-abort-transact-sql?view=sql-server-ver17",
             "section": "Remarks and transaction error behavior",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Engine examples inspected, not executed by content editor; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
         ]
       }
@@ -15230,6 +15243,12 @@ const LEARNING_PATHS = [
           "href": "paths/sql-server/rounding-lab.sql",
           "role": "reference",
           "description": "Raw versus normalized decimal fixture"
+        },
+        {
+          "id": "engine-verification-md",
+          "href": "paths/sql-server/engine-verification.md",
+          "role": "guide",
+          "description": "Observed SQL Server results, Query Store correction and verification limits"
         }
       ],
       "tasks": [
@@ -15250,7 +15269,8 @@ const LEARNING_PATHS = [
             "concurrency-reset-sql",
             "query-store-lab-sql",
             "concurrency-cleanup-sql",
-            "rounding-lab-sql"
+            "rounding-lab-sql",
+            "engine-verification-md"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -15290,7 +15310,8 @@ const LEARNING_PATHS = [
             "concurrency-reset-sql",
             "query-store-lab-sql",
             "concurrency-cleanup-sql",
-            "rounding-lab-sql"
+            "rounding-lab-sql",
+            "engine-verification-md"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
@@ -15330,7 +15351,8 @@ const LEARNING_PATHS = [
             "concurrency-reset-sql",
             "query-store-lab-sql",
             "concurrency-cleanup-sql",
-            "rounding-lab-sql"
+            "rounding-lab-sql",
+            "engine-verification-md"
           ],
           "steps": [
             "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",

@@ -13,6 +13,10 @@ IF EXISTS(SELECT 1 FROM sys.database_query_store_options WHERE actual_state_desc
  THROW 51406,'Query Store must be READ_WRITE; inspect its readonly_reason.',1;
 IF (SELECT COUNT(*) FROM dbo.QueryFixture WHERE Category=1)<>100
  THROW 51406,'Expected exactly 100 matching fixture rows.',1;
+-- Module identity survives automatic parameterization and text normalization.
+-- CREATE refuses an existing object; never overwrite a learner's procedure.
+EXEC(N'CREATE PROCEDURE dbo.LabReadQueryFixture AS
+ SELECT COUNT(*) AS Matches FROM dbo.QueryFixture WHERE Category=1;');
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
 GO
@@ -24,8 +28,8 @@ IF NOT EXISTS(SELECT 1 FROM dbo.LabOwnership WHERE Marker='LearningNotebook disp
 IF @@TRANCOUNT<>0 THROW 51401,'Finish the previous experiment first.',1;
 SET XACT_ABORT ON;
 SET LOCK_TIMEOUT 30000;
--- Stable statement text lets Query Store identify the same query before/after index.
-SELECT COUNT(*) AS Matches FROM dbo.QueryFixture WHERE Category=1; -- 100
+-- Run the same module before and after the index; identify its query by object_id.
+EXEC dbo.LabReadQueryFixture; -- 100
 GO 5
 IF DB_NAME()<>N'LN_Disposable_Concurrency_20260927' OR
  OBJECT_ID(N'dbo.LabOwnership',N'U') IS NULL
@@ -55,7 +59,7 @@ IF NOT EXISTS(SELECT 1 FROM dbo.LabOwnership WHERE Marker='LearningNotebook disp
 IF @@TRANCOUNT<>0 THROW 51401,'Finish the previous experiment first.',1;
 SET XACT_ABORT ON;
 SET LOCK_TIMEOUT 30000;
-SELECT COUNT(*) AS Matches FROM dbo.QueryFixture WHERE Category=1; -- 100
+EXEC dbo.LabReadQueryFixture; -- 100
 GO 5
 IF DB_NAME()<>N'LN_Disposable_Concurrency_20260927' OR
  OBJECT_ID(N'dbo.LabOwnership',N'U') IS NULL
@@ -75,9 +79,12 @@ IF NOT EXISTS(SELECT 1 FROM dbo.LabOwnership WHERE Marker='LearningNotebook disp
 IF @@TRANCOUNT<>0 THROW 51401,'Finish the previous experiment first.',1;
 SET XACT_ABORT ON;
 SET LOCK_TIMEOUT 30000;
-IF NOT EXISTS(SELECT 1 FROM sys.query_store_query_text WHERE query_sql_text LIKE
- N'%SELECT COUNT(*) AS Matches FROM dbo.QueryFixture WHERE Category=1%')
- THROW 51406,'Expected captured statement; inspect capture state and flush again.',1;
+IF COALESCE((SELECT SUM(r.count_executions)
+ FROM sys.query_store_query q
+ JOIN sys.query_store_plan p ON p.query_id=q.query_id
+ JOIN sys.query_store_runtime_stats r ON r.plan_id=p.plan_id
+ WHERE q.object_id=OBJECT_ID(N'dbo.LabReadQueryFixture') AND r.execution_type=0),0)<10
+ THROW 51406,'Expected ten captured successful module executions; inspect capture state and flush again.',1;
 SELECT q.query_id,p.plan_id,p.query_plan,r.count_executions,r.avg_duration,
  r.avg_logical_io_reads,i.start_time,i.end_time
 FROM sys.query_store_query_text t
@@ -85,8 +92,7 @@ JOIN sys.query_store_query q ON q.query_text_id=t.query_text_id
 JOIN sys.query_store_plan p ON p.query_id=q.query_id
 JOIN sys.query_store_runtime_stats r ON r.plan_id=p.plan_id
 JOIN sys.query_store_runtime_stats_interval i ON i.runtime_stats_interval_id=r.runtime_stats_interval_id
-WHERE t.query_sql_text LIKE N'%SELECT COUNT(*) AS Matches FROM dbo.QueryFixture WHERE Category=1%'
- AND t.query_sql_text NOT LIKE N'%query_store%'
+WHERE q.object_id=OBJECT_ID(N'dbo.LabReadQueryFixture') AND r.execution_type=0
 ORDER BY q.query_id,p.plan_id,i.start_time;
 -- Duration is microseconds; logical IO is 8KB page reads, not elapsed time.
 -- Multiple runtime rows can describe the active interval: aggregate by plan/interval
@@ -94,3 +100,5 @@ ORDER BY q.query_id,p.plan_id,i.start_time;
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
 DROP INDEX IX_LabQueryFixture_Category ON dbo.QueryFixture;
+
+DROP PROCEDURE dbo.LabReadQueryFixture;
