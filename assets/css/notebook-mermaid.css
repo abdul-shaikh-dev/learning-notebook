@@ -1,0 +1,6 @@
+.mermaid-panel{margin:1.3rem 0;min-width:0}.mermaid-toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}.mermaid-toolbar button{min-height:44px}.mermaid-view{max-width:100%;overflow:auto;background:#fff;border-radius:8px;padding:1rem}.mermaid-view:empty{display:none}.mermaid-view svg{display:block;margin:auto;width:100%;min-width:360px;height:auto;max-height:none}.mermaid-view .mermaid-current rect,.mermaid-view .mermaid-current polygon,.mermaid-view .mermaid-current path{stroke:#17392f!important;stroke-width:3px!important;fill:#d0e8bb!important}.mermaid-status{font-size:.9rem;color:#405e59}.mermaid-hint{font-size:.875rem;color:#405e59}.mermaid-text summary{font-weight:600;cursor:pointer;padding:.7rem 0}.mermaid-view:focus-visible{outline:3px solid #225d90;outline-offset:2px}
+@media print{.mermaid-toolbar,.mermaid-hint{display:none!important}.mermaid-view{overflow:visible;padding:0}.mermaid-view svg{min-width:0;max-height:24cm;break-inside:avoid}.mermaid-text{display:block}.mermaid-panel{break-inside:avoid}}
+
+.concept-diagram .diagram-explanation h3{color:inherit}
+
+.mermaid-view.is-fit svg{min-width:0}

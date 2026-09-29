@@ -26,3 +26,4 @@ require('./concept-explorers.cjs');
 
 require('./code-panels.cjs');
 require('./visual-playback.cjs');
+require('./mermaid-diagrams.cjs');
