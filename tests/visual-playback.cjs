@@ -1,15 +1,15 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 let controls={},timers=new Map(),serial=0,events={},mediaEvents={};
 const media={matches:false,addEventListener:(t,f)=>mediaEvents[t]=f,removeEventListener:t=>delete mediaEvents[t]};
-const element=()=>({innerHTML:'',textContent:'',disabled:false,value:'7000',isConnected:true,events:{},attributes:{},addEventListener(t,f){this.events[t]=f;},setAttribute(k,v){this.attributes[k]=v;},querySelectorAll(){return [];}});
+const element=()=>({innerHTML:'',textContent:'',disabled:false,value:'2000',isConnected:true,events:{},attributes:{},addEventListener(t,f){this.events[t]=f;},setAttribute(k,v){this.attributes[k]=v;},querySelectorAll(){return [];}});
 const ctx={escapeText:s=>String(s),matchMedia:()=>media,setTimeout:(f,ms)=>{const id=++serial;timers.set(id,{f,ms});return id;},clearTimeout:id=>timers.delete(id),document:{hidden:false,getElementById:id=>controls[id]??=element(),addEventListener:(t,f)=>events[t]=f,removeEventListener:t=>delete events[t]}};
 vm.createContext(ctx);vm.runInContext(fs.readFileSync('assets/js/learning-tools.js','utf8'),ctx);
 const lesson=require('../scripts/manifest.cjs').readPaths().find(p=>p.id==='react').lessons.find(l=>l.visual);
 const c=id=>controls['visual-'+id],click=id=>c(id).events.click(),tick=()=>{const [id,t]=timers.entries().next().value;timers.delete(id);t.f();};
 ctx.bindVisualExplorer(lesson);assert.equal(timers.size,0,'no automatic playback on entry');
-click('play');assert.equal(timers.size,1);assert.equal(c('play').textContent,'Pause sequence');tick();assert.match(c('status').textContent,/Step 2/);
+click('play');assert.equal(timers.size,1);assert.equal([...timers.values()][0].ms,2000);assert.equal(c('play').textContent,'Pause sequence');tick();assert.match(c('status').textContent,/Step 2/);
 click('play');assert.equal(timers.size,0,'pause cancels pending step');
-click('play');c('pace').value='10000';c('pace').events.change();assert.equal(timers.size,1);assert.equal([...timers.values()][0].ms,10000);
+click('play');c('pace').value='1000';c('pace').events.change();assert.equal(timers.size,1);assert.equal([...timers.values()][0].ms,1000);
 click('next');assert.equal(timers.size,0,'manual step pauses playback');
 click('reset');assert.match(c('status').textContent,/Step 1/);click('play');for(let i=1;i<lesson.visual.scenarios[0].steps.length;i++)tick();assert.equal(timers.size,0);assert.equal(c('play').textContent,'Replay sequence');
 click('play');assert.match(c('status').textContent,/Step 1/);ctx.document.hidden=true;events.visibilitychange();assert.equal(timers.size,0);ctx.document.hidden=false;
