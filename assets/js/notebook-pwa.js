@@ -129,7 +129,7 @@
   }
   if ($('pwa-refresh')) $('pwa-refresh').addEventListener('click', refresh);
   function updateNotice() {
-    if (!registration.waiting || $('pwa-update-notice')) return;
+    if (!registration.waiting || !registration.active || registration.active === registration.waiting || registration.active.state !== 'activated' || $('pwa-update-notice')) return;
     const notice = element('section', '', 'pwa-notice'); notice.id = 'pwa-update-notice'; notice.setAttribute('aria-label', 'Notebook update'); notice.setAttribute('role', 'status');
     notice.append(element('strong', 'A fresh notebook is ready'));
     notice.append(element('p', 'Apply the update and reload notebook tabs. Saved progress stays. Refresh offline course downloads afterward.'));

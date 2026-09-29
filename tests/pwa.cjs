@@ -59,3 +59,14 @@ function worker(version='one',storage=new Storage(),courseVersion){
  const evicted=worker();await evicted.event('install');await evicted.message('SAVE_COURSE','python');await evicted.storage.delete(prefix+'shell:one');assert.equal((await evicted.status()).courses[0].saved,false);assert.equal((await evicted.status()).shellReady,false);await evicted.message('SAVE_COURSE','python');assert.equal((await evicted.status()).courses[0].saved,true);
  console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates and offline routing verified.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
+// A first install is not an update; only a distinct waiting worker behind an active one is.
+{
+ const ui=fs.readFileSync(require('node:path').join(__dirname,'../assets/js/notebook-pwa.js'),'utf8');
+ const notice=ui.slice(ui.indexOf('  function updateNotice()'),ui.indexOf("  navigator.serviceWorker.addEventListener('controllerchange'"));
+ let appended=0;const context=vm.createContext({registration:{waiting:{}},$:()=>null,document:{body:{append:()=>appended++}},element:()=>({setAttribute(){},append(){},addEventListener(){}})});
+ vm.runInContext(notice+';updateNotice();',context);assert.equal(appended,0);
+ context.registration.active={state:'activating'};vm.runInContext('updateNotice()',context);assert.equal(appended,0);
+ context.registration.active={state:'activated'};vm.runInContext('updateNotice()',context);assert.equal(appended,1);
+ context.registration.waiting=context.registration.active;vm.runInContext('updateNotice()',context);assert.equal(appended,1);
+}
