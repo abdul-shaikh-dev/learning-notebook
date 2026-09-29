@@ -31,7 +31,7 @@ const NotebookLoader = (() => {
    if(turn!==epoch||hash!==location.hash)return;
    // Allow a fresh request after network errors or a malformed/stale chunk.
    pending.delete(route==='search'?NOTEBOOK_SEARCH_FILE:p.dataFile);
-   main.innerHTML='<h1>Content could not load</h1><p>Check your connection, then try again. Your saved progress is unchanged.</p><button id="retry-content" type="button">Try again</button><p><a href="#">All learning paths</a></p>';
+   main.innerHTML='<h1>Content could not load</h1><p>Check your connection, then try again. Your saved progress is unchanged. For offline access, save this course first from <a href="offline.html">Offline &amp; install</a>.</p><button id="retry-content" type="button">Try again</button><p><a href="#">All learning paths</a></p>';
    document.getElementById('retry-content').addEventListener('click',render);
   });
   return true;
