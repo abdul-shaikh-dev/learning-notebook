@@ -21,7 +21,7 @@ console.log('PASS: opt-in playback, pause, pace, manual stepping, replay, scenar
 const sorting=require('../scripts/manifest.cjs').readPaths().find(p=>p.id==='data-structures-algorithms').lessons.find(l=>l.id==='sorting');
 media.matches=false;controls={};let moves=[];
 ctx.document.getElementById('visual-frame').querySelectorAll=function(){const initial=this.innerHTML.includes('<h3>Initial array</h3>');return [{dataset:{motionNode:'desktop-value-4'},textContent:'4',querySelector:()=>({textContent:'4'}),getBoundingClientRect:()=>({x:initial?0:115,y:0,width:103}),getScreenCTM:()=>({a:.5,d:.5}),animate:(frames,options)=>{moves.push({frames,options});return {cancel(){}};}}];};
-ctx.bindVisualExplorer(sorting);click('next');assert.equal(moves.length,1);assert.equal(moves[0].frames[0].transform,'translate(-230px,0px)');assert.equal(moves[0].options.duration,480);
+ctx.bindVisualExplorer(sorting);click('next');assert.equal(moves.length,1);assert.equal(moves[0].frames[0].translate,'-230px 0px');assert.equal(moves[0].options.duration,480);
 media.matches=true;mediaEvents.change();moves=[];click('prev');assert.equal(moves.length,0,'reduced motion suppresses movement');ctx.bindVisualExplorer(null);
 for(const scenario of sorting.visual.scenarios){const keys=scenario.steps[0].nodes.map(n=>n.motionKey).sort();for(const step of scenario.steps)assert.deepEqual(step.nodes.map(n=>n.motionKey).sort(),keys,'moving values retain identity');}
 console.log('PASS: stable sorting identities, scaled SVG movement and reduced-motion suppression.');
