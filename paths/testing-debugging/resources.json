@@ -36,6 +36,36 @@
       "href": "paths/testing-debugging/practice/project-workbook.md",
       "role": "guide",
       "description": "Three stage briefs, assessment rubrics and reference reasoning"
+    },
+    {
+      "id": "diagnosis_lab-py",
+      "href": "paths/testing-debugging/practice/diagnosis_lab.py",
+      "role": "reference",
+      "description": "Deliberate slice defect, cancellable resource and bounded benchmark"
+    },
+    {
+      "id": "test_diagnosis_lab-py",
+      "href": "paths/testing-debugging/practice/test_diagnosis_lab.py",
+      "role": "test",
+      "description": "Regression, boundary, successful cleanup and cancelled cleanup checks"
+    },
+    {
+      "id": "branch_subject-py",
+      "href": "paths/testing-debugging/practice/branch_subject.py",
+      "role": "reference",
+      "description": "Tiny subject contrasting statement and branch execution"
+    },
+    {
+      "id": "test_branch_lab-py",
+      "href": "paths/testing-debugging/practice/test_branch_lab.py",
+      "role": "test",
+      "description": "One-sided and both-direction branch test fixtures"
+    },
+    {
+      "id": "diagnosis-workbook-md",
+      "href": "paths/testing-debugging/practice/diagnosis-workbook.md",
+      "role": "guide",
+      "description": "Pdb commands, async event trace, optional branch report and timing experiment"
     }
   ],
   "tasks": [
@@ -166,7 +196,7 @@
         "Allow exactly one compare-and-update commit; reject the stale proposal.",
         "Join workers with bounds and assert final version and allowed winner.",
         "Add seeded metamorphic totals and an allowlisted diagnostic event.",
-        "Write a release evidence table that separates thread/file tests from missing async, browser and distributed scopes.",
+        "Write a release evidence table that separates thread/file tests from separately tested async cleanup and untested browser/distributed scopes.",
         "Compare your evidence with the stage rubric and document extensions separately."
       ],
       "commands": [
@@ -201,6 +231,52 @@
         "All files are flat at the root of the downloadable practice folder.",
         "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
       ]
+    },
+    {
+      "id": "guided-diagnosis",
+      "title": "See a bug, cancellation and a missing branch",
+      "goal": "Use debugger observations and runnable failure tests; measure a bounded optimization without confusing speed with correctness.",
+      "fileIds": [
+        "diagnosis_lab-py",
+        "test_diagnosis_lab-py",
+        "branch_subject-py",
+        "test_branch_lab-py",
+        "diagnosis-workbook-md"
+      ],
+      "steps": [
+        "Read diagnosis-workbook.md and predict each result before inspecting its solution.",
+        "Step through the deliberately wrong slice in pdb; record the missing element and caller.",
+        "Run successful and cancelled cleanup cases; explain the readiness event and absence of a commit.",
+        "Optionally measure the untested branch using coverage in a disposable environment.",
+        "Compare scan and index timing with setup included; record inputs, runtime and sample distributions."
+      ],
+      "commands": [
+        {
+          "label": "Local diagnosis and cancellation tests",
+          "command": "python -m unittest -v test_diagnosis_lab.py test_branch_lab.py",
+          "expected": "Eight tests pass; readiness orders cancellation without a sleep race."
+        },
+        {
+          "label": "Observe deliberate defect",
+          "command": "python diagnosis_lab.py",
+          "expected": "Expected inclusive total 12; observed 4. This is the intentional debugger example."
+        },
+        {
+          "label": "Bounded benchmark",
+          "command": "python diagnosis_lab.py --benchmark",
+          "expected": "Two sample distributions and medians; no fixed performance threshold."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Basic Python functions and exceptions",
+          "href": "#path/python"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ for the required local exercises. Coverage installation is optional; see the workbook.",
+        "A synthetic cleanup test does not demonstrate recovery after process termination."
+      ]
     }
   ],
   "lessonTasks": {
@@ -211,20 +287,20 @@
     "fixtures": "foundation",
     "tracebacks": "foundation",
     "reproduce": "foundation",
-    "hypotheses": "foundation",
+    "hypotheses": "guided-diagnosis",
     "strategy": "intermediate",
     "mocks": "intermediate",
     "contracts-adapters": "intermediate",
     "integration-files": "intermediate",
     "properties": "intermediate",
     "regressions": "intermediate",
-    "coverage": "intermediate",
+    "coverage": "guided-diagnosis",
     "test-data": "intermediate",
     "concurrency": "advanced",
     "flaky-tests": "advanced",
-    "async-debugging": "advanced",
+    "async-debugging": "guided-diagnosis",
     "observability": "advanced",
-    "performance": "advanced",
+    "performance": "guided-diagnosis",
     "release-evidence": "advanced",
     "debug-report": "advanced",
     "cli-route": "advanced"

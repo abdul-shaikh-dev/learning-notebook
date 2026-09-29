@@ -42,6 +42,24 @@
       "href": "paths/ai-agents/provider-integration-exercise.md",
       "role": "guide",
       "description": "Optional focused practice: provider-integration-exercise"
+    },
+    {
+      "id": "provider_eval-py",
+      "href": "paths/ai-agents/provider_eval.py",
+      "role": "reference",
+      "description": "Opt-in measured Responses evaluation"
+    },
+    {
+      "id": "test_provider_eval-py",
+      "href": "paths/ai-agents/test_provider_eval.py",
+      "role": "test",
+      "description": "Offline provider evaluation tests"
+    },
+    {
+      "id": "provider-evaluation-lab-md",
+      "href": "paths/ai-agents/provider-evaluation-lab.md",
+      "role": "guide",
+      "description": "Optional provider evaluation guide"
     }
   ],
   "tasks": [
@@ -140,7 +158,10 @@
         "README-md",
         "provider_scaffold-py",
         "test_provider_scaffold-py",
-        "provider-integration-exercise-md"
+        "provider-integration-exercise-md",
+        "provider_eval-py",
+        "test_provider_eval-py",
+        "provider-evaluation-lab-md"
       ],
       "steps": [
         "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
@@ -148,7 +169,8 @@
         "Run the provided baseline and record its actual results.",
         "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
         "Complete the assessment requirements in the reader: Create at least six task cases including no-answer, ambiguity, injection and tool failure.; Define deterministic and semantic scoring separately.; Record expected terminal statuses and forbidden actions.; Write a held-out comparison, judge-calibration and rollback plan.; State all guarantees the offline suite cannot establish.",
-        "Compare your evidence with the stage rubric: Task criteria are defined before observing results.; Security failures cannot be hidden by average quality.; No claims of model accuracy are derived from scripted tests.; The release plan versions tools, policy, retrieval and model configuration.; Live integration uses current official protocol docs and no embedded credentials."
+        "Compare your evidence with the stage rubric: Task criteria are defined before observing results.; Security failures cannot be hidden by average quality.; No claims of model accuracy are derived from scripted tests.; The release plan versions tools, policy, retrieval and model configuration.; Live integration uses current official protocol docs and no embedded credentials.",
+        "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
       ],
       "commands": [
         {

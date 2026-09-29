@@ -36,6 +36,24 @@
       "href": "paths/system-design/practice/threat-model-worksheet.md",
       "role": "guide",
       "description": "Optional focused practice: threat-model-worksheet"
+    },
+    {
+      "id": "practice-booking_lab-py",
+      "href": "paths/system-design/practice/booking_lab.py",
+      "role": "reference",
+      "description": "SQLite booking and outbox lab"
+    },
+    {
+      "id": "practice-test_booking_lab-py",
+      "href": "paths/system-design/practice/test_booking_lab.py",
+      "role": "test",
+      "description": "Booking race and failure tests"
+    },
+    {
+      "id": "practice-booking-lab-md",
+      "href": "paths/system-design/practice/booking-lab.md",
+      "role": "guide",
+      "description": "Runnable booking failure guide"
     }
   ],
   "tasks": [
@@ -135,7 +153,10 @@
         "design-workbook-md",
         "adr-template-md",
         "README-md",
-        "threat-model-worksheet-md"
+        "threat-model-worksheet-md",
+        "practice-booking_lab-py",
+        "practice-test_booking_lab-py",
+        "practice-booking-lab-md"
       ],
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
@@ -143,7 +164,8 @@
         "Run the provided baseline and record its actual results.",
         "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
         "Complete the assessment requirements in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals.; Document retries at every layer and a bounded end-to-end deadline.; Specify outbox/consumer crash handling and unresolved external-effect risks.; Threat-model cross-user data access, upload abuse and credential exposure.; Define RPO/RTO, an isolated restore drill and an expand-and-contract migration.; Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
-        "Compare your evidence with the stage rubric: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.; Every important claim identifies a verification method and a remaining unknown.; Runbooks identify ownership, rollback limits and validation criteria.; No benchmark, availability or cost claim is invented from calculator output."
+        "Compare your evidence with the stage rubric: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.; Every important claim identifies a verification method and a remaining unknown.; Runbooks identify ownership, rollback limits and validation criteria.; No benchmark, availability or cost claim is invented from calculator output.",
+        "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
       ],
       "commands": [
         {

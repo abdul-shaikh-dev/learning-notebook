@@ -143,3 +143,7 @@ network request before parsing; a live transport needs its own byte-size limit.
 ## Focused optional extension (2026-09-27)
 
 From this practice directory run `python -m unittest test_provider_scaffold.py`. Read the corresponding lesson for evidence limits and extension scope.
+
+## Optional measured provider sample
+
+See `provider-evaluation-lab.md`. Run `python -m unittest -v test_provider_eval.py` offline, then inspect `python provider_eval.py --model YOUR_SUPPORTED_MODEL`. Live requests require `--live` and a locally supplied API key.

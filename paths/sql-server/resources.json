@@ -84,6 +84,24 @@
       "href": "paths/sql-server/engine-verification.md",
       "role": "guide",
       "description": "Observed SQL Server results, Query Store correction and verification limits"
+    },
+    {
+      "id": "schema-permissions-lab-md",
+      "href": "paths/sql-server/schema-permissions-lab.md",
+      "role": "guide",
+      "description": "Optional schema and permission lab guide"
+    },
+    {
+      "id": "schema-permissions-lab-sql",
+      "href": "paths/sql-server/schema-permissions-lab.sql",
+      "role": "reference",
+      "description": "Optional permanent-schema lab script"
+    },
+    {
+      "id": "schema-permissions-cleanup-sql",
+      "href": "paths/sql-server/schema-permissions-cleanup.sql",
+      "role": "reference",
+      "description": "Optional lab cleanup script"
     }
   ],
   "tasks": [

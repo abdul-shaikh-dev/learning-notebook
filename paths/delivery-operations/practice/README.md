@@ -7,7 +7,7 @@ Start with the existing JavaScript/TypeScript/React (`react`), C#/.NET (`dotnet`
 Python 3.11 or newer, standard library only. Extract all files together into a fresh practice folder:
 
 ```powershell
-python -m unittest -v test_release_app.py test_release_tools.py
+python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py
 python release_tools.py slo --total 10000 --errors 12 --target 0.999
 python release_tools.py digest release_app.py
 python release_app.py --port 8080 --db notes.db --version v1 --ready-file not-ready
@@ -24,7 +24,9 @@ python release_tools.py load http://127.0.0.1:8080/version --count 50
 python release_tools.py backup notes.db snapshot-1.db
 ```
 
-Create the file `not-ready` in this practice folder to make /ready return 503; /live continues returning 200. Remove that exact file to recover. Stop the server with Ctrl+C before replacing its database or release. The seven service tests cover health distinction, validation/parameterization, simulated release-label restart/rollback with unchanged code/schema, independent backup records, safe payload omission in logs/metrics and missing routes. Five helper tests cover budget inputs/math, hashes and nearest-rank sample percentile. The test suite does not build different binary versions.
+Create the file `not-ready` in this practice folder to make /ready return 503; /live continues returning 200. Remove that exact file to recover. Stop the server with Ctrl+C before replacing its database or release. Service tests cover health distinction, validation/parameterization, simulated release-label restart/rollback with unchanged code/schema, independent backup records, safe payload omission in logs/metrics and missing routes. Helper tests cover budget inputs/math, hashes, redirect refusal and nearest-rank sample percentile. The test suite does not build different binary versions.
+
+Run `python distinct_artifact_drill.py` for a guided separate-source-artifact exercise without Docker. It makes a reviewed one-line v2 change in a temporary copy of `release_app.py`, records different SHA-256 hashes, runs v1/v2/v1 as separate processes against the same SQLite file, holds v2 at readiness 503 before admitting user traffic, and checks the retained note after rollback. The JSON reports a note-read SLI whose denominator includes only the three admitted `/notes` reads. Inspect the script and output before claiming completion; it does not measure production traffic or schema rollback.
 
 ## Optional Docker exercise
 
@@ -42,7 +44,7 @@ docker stop notebook-release-lab
 
 Expect user 10001:10001; readiness must become healthy after startup. Docker tests execute in a build stage; the runtime copies only the app. The /tmp database is disposable with this run command. Add a separately reviewed writable volume and prove its permissions/replacement behavior before claiming persistence. Resolve/pin a verified base-image digest as an assessment extension; the readable python:3.13-slim tag is mutable.
 
-For a genuine distinct-artifact rollout, copy the practice folder to a separate v2 source tree, implement a backward-compatible visible behavior change, rerun tests, build a new immutable image and record both image IDs/digests. Compare candidates on different loopback ports and switch only after health/user smoke gates. Revert to the retained v1 artifact and verify existing compatible data. This differs from the supplied same-code version-label simulation.
+For a container rollout, build each reviewed source tree into its own image, record immutable image IDs/digests, run health and user smoke gates, then roll back to the retained v1 image against compatible data. Keep container evidence distinct from the Python process drill.
 
 ## Evidence and limitations
 

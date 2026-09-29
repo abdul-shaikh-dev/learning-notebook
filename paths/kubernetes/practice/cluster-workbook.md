@@ -9,6 +9,8 @@ Draw Deployment→ReplicaSet→Pod and Service→ready EndpointSlices. Record de
 3. Apply optional RBAC only after reviewing scope; verify a Pod read is allowed and Secret read is denied using the local identity/impersonation mechanism.
 4. For NetworkPolicy, record the enforcing CNI and actual allowed/denied Pod client results. If no enforcing plugin is installed, mark this reviewed only.
 
+`optional-enforcement-track.md` gives a guarded local-cluster command sequence and positive controls for these live checks.
+
 ## Advanced selected operational evidence
 Storage: inspect class/access/reclaim/permissions; retain a known synthetic file after Pod replacement; separately plan off-cluster backup/restore.
 Job: record version-check completion, bounded failure and logs; explain why external effects still need idempotency.

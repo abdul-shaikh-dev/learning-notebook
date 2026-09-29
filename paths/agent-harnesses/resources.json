@@ -48,6 +48,24 @@
       "href": "paths/agent-harnesses/practice/test_parser_properties.py",
       "role": "test",
       "description": "Optional focused practice: test parser properties"
+    },
+    {
+      "id": "practice-persisted_run_lab-py",
+      "href": "paths/agent-harnesses/practice/persisted_run_lab.py",
+      "role": "reference",
+      "description": "Integrated SQLite run and effect exercise"
+    },
+    {
+      "id": "practice-test_persisted_run_lab-py",
+      "href": "paths/agent-harnesses/practice/test_persisted_run_lab.py",
+      "role": "test",
+      "description": "Persisted run crash recovery tests"
+    },
+    {
+      "id": "practice-persisted-run-lab-md",
+      "href": "paths/agent-harnesses/practice/persisted-run-lab.md",
+      "role": "guide",
+      "description": "Run and effect reconciliation guide"
     }
   ],
   "tasks": [
@@ -149,7 +167,10 @@
         "architecture-decision-md",
         "durable_state-py",
         "test_durable_state-py",
-        "test_parser_properties-py"
+        "test_parser_properties-py",
+        "practice-persisted_run_lab-py",
+        "practice-test_persisted_run_lab-py",
+        "practice-persisted-run-lab-md"
       ],
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
@@ -157,7 +178,8 @@
         "Run the provided baseline and record its actual results.",
         "Defend the offline harness and design its next production boundary without deploying infrastructure.",
         "Complete the assessment requirements in the reader: Run the provided suite and add two adversarial proposal fixtures.; Write an ADR for a durable checkpoint/receipt service with concurrency ownership.; Draw the trusted host, model, tool and optional compute boundaries.; Specify safe telemetry fields, retention and operator authority.; Write a response-loss incident timeline and controlled release/rollback plan.; Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
-        "Compare your evidence with the stage rubric: Claims match executed fixtures; no sandbox or intelligence certification is implied.; The ADR distinguishes CAS/fencing from external-effect idempotency.; Runbook actions preserve evidence and avoid blind retries.; Every new permission or external adapter has a verification plan."
+        "Compare your evidence with the stage rubric: Claims match executed fixtures; no sandbox or intelligence certification is implied.; The ADR distinguishes CAS/fencing from external-effect idempotency.; Runbook actions preserve evidence and avoid blind retries.; Every new permission or external adapter has a verification plan.",
+        "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
       ],
       "commands": [
         {

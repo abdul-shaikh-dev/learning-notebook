@@ -91,3 +91,7 @@ Use the operations runbook and architecture-decision template to design those ne
 ## Focused optional extension (2026-09-27)
 
 From this practice directory run `python -m unittest test_durable_state.py test_parser_properties.py`. Read the corresponding lesson for evidence limits and extension scope.
+
+## Integrated persisted-run lab
+
+`persisted-run-lab.md` combines SQLite checkpoints, a transactional note/receipt and crash recovery. Run `python -m unittest -v test_persisted_run_lab.py`. This demonstrates a local single-host recovery boundary.

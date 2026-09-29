@@ -7,6 +7,17 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = (
+    ("delivery-operations/practice", "test_distinct_artifact_drill.py"),
+    ("testing-debugging/practice", "test_diagnosis_lab.py"),
+    ("testing-debugging/practice", "test_branch_lab.py"),
+    ("financial-foundations/practice", "test_swap_repricing.py"),
+    ("python/practice", "test_io_failure_bridge.py"),
+    ("data-structures-algorithms/practice", "test_advanced_oracles.py"),
+    ("design-patterns", "test_refactoring.py"),
+    ("system-design/practice", "test_booking_lab.py"),
+    ("ai-agents", "test_provider_eval.py"),
+    ("agent-harnesses/practice", "test_persisted_run_lab.py"),
+    ("application-security", "test_security_http.py"),
     ("python/practice", "test_installed_package.py"),
     ("data-structures-algorithms/practice", "test_trees_graphs.py"),
     ("design-patterns", "test_collaboration.py"),

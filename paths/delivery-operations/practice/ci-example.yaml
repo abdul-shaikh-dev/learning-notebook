@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
-      - run: python -m unittest -v test_release_app.py test_release_tools.py
+      - run: python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py
       - run: python release_tools.py digest release_app.py > release-sha256.txt
       - uses: actions/upload-artifact@v7
         with:

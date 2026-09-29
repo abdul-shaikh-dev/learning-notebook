@@ -28,3 +28,7 @@ Packaging extension: split the intermediate tool into a package with __init__.py
 From this practice directory run `python -m unittest test_async_failure_lab.py`. Read the corresponding lesson for evidence limits and extension scope.
 
 Run `python -m unittest -v test_installed_package.py` for the complete generated wheel exercise. This local build/install test passed on 2026-09-27 with Python 3.14, build 1.4.0 and setuptools 82.0.1; it reports missing pinned tooling as a skip.
+
+## Short bridges before the staged projects
+
+Run `python main.py` to see a real two-file import. Then run `python -m unittest -v test_io_failure_bridge.py`. Predict the report state for valid, invalid and missing input before reading the tests. The I/O exercise uses a disposable directory and demonstrates that failed input cannot replace an earlier report; it does not prove power-loss durability or concurrent-writer safety.

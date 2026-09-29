@@ -1315,7 +1315,8 @@
         {
           "title": "Tradeoffs and failure cases",
           "paragraphs": [
-            "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior."
+            "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
+            "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
           ]
         }
       ],
@@ -1656,7 +1657,10 @@
     "practice/design-workbook.md",
     "practice/adr-template.md",
     "practice/README.md",
-    "practice/threat-model-worksheet.md"
+    "practice/threat-model-worksheet.md",
+    "practice/booking_lab.py",
+    "practice/test_booking_lab.py",
+    "practice/booking-lab.md"
   ],
   "downloads": [
     {
@@ -1678,6 +1682,18 @@
     {
       "title": "Practice run instructions",
       "href": "paths/system-design/practice/README.md"
+    },
+    {
+      "title": "SQLite booking and outbox lab",
+      "href": "paths/system-design/practice/booking_lab.py"
+    },
+    {
+      "title": "Booking race and failure tests",
+      "href": "paths/system-design/practice/test_booking_lab.py"
+    },
+    {
+      "title": "Runnable booking failure guide",
+      "href": "paths/system-design/practice/booking-lab.md"
     }
   ]
 }

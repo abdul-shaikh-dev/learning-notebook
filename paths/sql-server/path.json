@@ -1680,7 +1680,10 @@
     "query-store-lab.sql",
     "concurrency-cleanup.sql",
     "rounding-lab.sql",
-    "engine-verification.md"
+    "engine-verification.md",
+    "schema-permissions-lab.md",
+    "schema-permissions-lab.sql",
+    "schema-permissions-cleanup.sql"
   ],
   "downloads": [
     {
@@ -1702,6 +1705,18 @@
     {
       "title": "Advanced import worked solution",
       "href": "paths/sql-server/advanced-solutions.sql"
+    },
+    {
+      "title": "Optional schema and permission lab guide",
+      "href": "paths/sql-server/schema-permissions-lab.md"
+    },
+    {
+      "title": "Optional permanent-schema lab script",
+      "href": "paths/sql-server/schema-permissions-lab.sql"
+    },
+    {
+      "title": "Optional lab cleanup script",
+      "href": "paths/sql-server/schema-permissions-cleanup.sql"
     }
   ],
   "stages": [
@@ -1775,7 +1790,8 @@
           "Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.",
           "Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.",
           "Specify security role boundaries,backward-compatible migration steps and incident diagnostics.",
-          "Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path."
+          "Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
+          "Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence."
         ],
         "rubric": [
           "Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.",

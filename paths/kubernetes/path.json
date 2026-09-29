@@ -781,7 +781,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A deny policy is present but an unlabelled client succeeds. What next?",
+        "prompt": "A deny policy is present but an unlabelled client succeeds. What next? Optional live cluster track: practice/optional-enforcement-track.md; document prerequisites and actual positive/negative results.",
         "solution": "Confirm target labels, policy namespace/semantics and CNI enforcement. Do not mark isolation passed because kubectl apply succeeded. Use a compatible enforcing local CNI as a separately reviewed optional setup before repeating the paired traffic checks.",
         "checks": [
           "Verify enforcement prerequisites.",
@@ -928,7 +928,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Does a bound PVC prove disaster recoverability?",
+        "prompt": "Does a bound PVC prove disaster recoverability? Optional live cluster track: practice/optional-enforcement-track.md; document prerequisites and actual positive/negative results.",
         "solution": "No: verify access permissions, actual retained data after Pod replacement, backend/reclaim behavior and independent backups. A disk or cluster loss can remove the only copy even when the claim remains in API state.",
         "checks": [
           "Inspect StorageClass and reclaim policy.",
@@ -1026,7 +1026,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Why might kubectl get hpa show unknown metrics?",
+        "prompt": "Why might kubectl get hpa show unknown metrics? Optional live cluster track: practice/optional-enforcement-track.md; document prerequisites and actual positive/negative results.",
         "solution": "Check the resource metrics API/Metrics Server, per-container requests and readiness rather than generating more arbitrary load. Install a reviewed compatible metrics add-on only in the opted-in local cluster, then record actual scaling and bounds.",
         "checks": [
           "Verify metrics prerequisite.",
@@ -1315,7 +1315,7 @@
         "title": "Object and reconciliation notebook",
         "brief": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
         "requirements": [
-          "Run the7 service and4 offline manifest-contract checks.",
+          "Run the8 service and4 offline manifest-contract checks.",
           "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
           "Compare labels,selectors,ports and config lifecycle.",
           "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
@@ -1408,7 +1408,9 @@
     "practice/disruption-budget.json",
     "practice/job.json",
     "practice/storage.json",
-    "practice/test_lab_guard.ps1"
+    "practice/test_lab_guard.ps1",
+    "practice/optional-enforcement-track.md",
+    "practice/policy-clients.json"
   ],
   "downloads": [
     {

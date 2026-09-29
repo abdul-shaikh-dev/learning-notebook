@@ -27,7 +27,7 @@
     "Apply one justified pattern to a small existing application and compare change effort before and after.",
     "Use the System Design path for service boundaries, capacity, reliability and distributed tradeoffs.",
     "Add a real database adapter and run provider integration tests for constraints, rollback and concurrent conflicts.",
-    "Study additional patterns such as Bridge, Visitor and Mediator only when their problem contexts arise.",
+    "Study additional patterns such as Bridge and Visitor only when their problem contexts arise.",
     "These projects provide advanced practice, not exhaustive coverage or a professional certification."
   ],
   "sources": [
@@ -1531,7 +1531,8 @@
         {
           "title": "Tradeoffs and failure cases",
           "paragraphs": [
-            "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive."
+            "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive.",
+            "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract."
           ]
         }
       ],
@@ -1626,7 +1627,11 @@
     "test_workshop.py",
     "README.md",
     "collaboration.py",
-    "test_collaboration.py"
+    "test_collaboration.py",
+    "legacy_export.py",
+    "refactored_export.py",
+    "test_refactoring.py",
+    "refactoring-lab.md"
   ],
   "downloads": [
     {
@@ -1640,6 +1645,22 @@
     {
       "title": "Workshop setup and limitations",
       "href": "paths/design-patterns/README.md"
+    },
+    {
+      "title": "Tangled exporter starter",
+      "href": "paths/design-patterns/legacy_export.py"
+    },
+    {
+      "title": "Incremental refactor endpoint",
+      "href": "paths/design-patterns/refactored_export.py"
+    },
+    {
+      "title": "Refactoring characterization tests",
+      "href": "paths/design-patterns/test_refactoring.py"
+    },
+    {
+      "title": "Regression-led refactoring guide",
+      "href": "paths/design-patterns/refactoring-lab.md"
     }
   ]
 }

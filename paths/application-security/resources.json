@@ -54,6 +54,18 @@
       "href": "paths/application-security/advanced-kit.md",
       "role": "guide",
       "description": "advanced kit"
+    },
+    {
+      "id": "security_http-py",
+      "href": "paths/application-security/security_http.py",
+      "role": "reference",
+      "description": "Loopback PATCH route using trusted synthetic sessions and file-backed SQLite."
+    },
+    {
+      "id": "test_security_http-py",
+      "href": "paths/application-security/test_security_http.py",
+      "role": "test",
+      "description": "HTTP denials with fresh-connection persisted-state checks and authorized success."
     }
   ],
   "tasks": [
@@ -70,7 +82,9 @@
         "identity-provider-lab-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "security_http-py",
+        "test_security_http-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -114,7 +128,9 @@
         "identity-provider-lab-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "security_http-py",
+        "test_security_http-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -159,7 +175,9 @@
         "identity-provider-lab-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "security_http-py",
+        "test_security_http-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -168,16 +186,17 @@
         "Run the entire local regression suite and OperationsTests.",
         "Document log fields and single-process rate-limit limitations.",
         "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
-        "Complete identity-provider-lab.md without placing secrets in the report.",
+        "For the required offline submission, document provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
         "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
         "Write an incident/rotation plan with authorized containment and recovery.",
-        "Compare submitted evidence with the rubric: No raw token, cookie, credential or private body enters evidence. Local test claims match their actual boundary. Provider and browser results are labeled unexecuted until observed. No fake JWT cryptography is implemented. The report rejects blanket ASVS certification and covers practical recovery."
+        "Compare submitted evidence with the rubric: No raw token, cookie, credential or private body enters evidence. Local test claims match their actual boundary. Provider and browser results are labeled unexecuted until observed. No fake JWT cryptography is implemented. The report rejects blanket ASVS certification and covers practical recovery.",
+        "Run the local PATCH route test and verify each denial leaves persisted rows unchanged, then verify owner success."
       ],
       "commands": [
         {
           "label": "Run all local security evidence",
-          "command": "python -B -m unittest -v test_security_lab.py",
-          "expected": "Nine methods pass. This does not execute HTTP/browser/provider or cryptographic validation."
+          "command": "python -B -m unittest -v test_security_lab.py test_security_http.py",
+          "expected": "Ten methods pass, including loopback HTTP mutation denial. Browser/provider and cryptographic validation remain unexecuted."
         }
       ],
       "prerequisites": [

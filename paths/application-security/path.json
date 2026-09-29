@@ -11,7 +11,7 @@
   "setup": [
     "Extract the practice bundle and keep all files together at its flat folder root.",
     "Read README.md and the three stage kits before executing commands.",
-    "Use Python 3.11+ with SQLite; run python -B -m unittest -v test_security_lab.py. No live credentials, server or identity provider are needed."
+    "Use Python 3.11+ with SQLite; run python -B -m unittest -v test_security_lab.py test_security_http.py. The HTTP test uses only a loopback fixture server; no live credentials or identity provider are needed."
   ],
   "outcomes": [
     "Trace assets, trust boundaries and abuse cases.",
@@ -140,7 +140,9 @@
     "identity-provider-lab.md",
     "foundation-kit.md",
     "intermediate-kit.md",
-    "advanced-kit.md"
+    "advanced-kit.md",
+    "security_http.py",
+    "test_security_http.py"
   ],
   "downloads": [
     {
@@ -624,7 +626,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Write a state-changing endpoint contract covering authentication, CSRF, authorization and validation in a safe order.",
+        "prompt": "Write a state-changing endpoint contract covering authentication, CSRF, authorization and validation in a safe order. Use security_http.py and test_security_http.py to observe denied PATCH requests and unchanged SQLite rows.",
         "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. Add real browser/HTTP tests separately; local token comparisons do not establish route integration.",
         "solutionFormat": "prose",
         "checks": [
@@ -1419,7 +1421,7 @@
           "Run the entire local regression suite and OperationsTests.",
           "Document log fields and single-process rate-limit limitations.",
           "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
-          "Complete identity-provider-lab.md without placing secrets in the report.",
+          "For the required offline submission, document provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
           "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
           "Write an incident/rotation plan with authorized containment and recovery."
         ],
@@ -1430,7 +1432,7 @@
           "No fake JWT cryptography is implemented.",
           "The report rejects blanket ASVS certification and covers practical recovery."
         ],
-        "solution": "Run all nine unittest methods. Use safe_audit and the limiter as narrowly scoped local examples, and complete verification-matrix.md with exact commands/outcomes. The IdP worksheet requires explicit learner opt-in to a training tenant and a maintained OIDC/token library; execute its matrix only after configuring that environment. Record sanitized provider/library versions and denial outcomes, not token text. Add an incident response and rotation plan targeting the actual compromised mechanism."
+        "solution": "Run the ten local unittest methods, including loopback HTTP denial and persisted-state checks. Use safe_audit and the limiter as narrowly scoped local examples, and complete verification-matrix.md with exact commands/outcomes. The IdP worksheet requires explicit learner opt-in to a training tenant and a maintained OIDC/token library; execute its matrix only after configuring that environment. Record sanitized provider/library versions and denial outcomes, not token text. Add an incident response and rotation plan targeting the actual compromised mechanism."
       }
     }
   ]

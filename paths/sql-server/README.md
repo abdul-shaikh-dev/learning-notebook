@@ -47,3 +47,7 @@ it does not create or change permanent databases/tables. It checks baseline impo
 idempotent replay, and raw amount text differences including trailing spaces.
 The amount comparison uses byte length and bytes, avoiding collation and padding
 rules that would make ordinary SQL string equality too permissive for this policy.
+
+## Optional permanent-schema extension
+
+Read `schema-permissions-lab.md` before running `schema-permissions-lab.sql` in a disposable database. It adds a real foreign key, a repeatable nullable-column expand/backfill and a read-only role. A separate limited user is needed to observe write denial. Use `schema-permissions-cleanup.sql` only after confirming object ownership. These permanent objects are separate from the main session-local fixtures.

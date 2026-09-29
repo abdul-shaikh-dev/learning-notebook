@@ -135,7 +135,7 @@
           "Allow exactly one compare-and-update commit; reject the stale proposal.",
           "Join workers with bounds and assert final version and allowed winner.",
           "Add seeded metamorphic totals and an allowlisted diagnostic event.",
-          "Write a release evidence table that separates thread/file tests from missing async, browser and distributed scopes."
+          "Write a release evidence table that separates thread/file tests from separately tested async cleanup and untested browser/distributed scopes."
         ],
         "rubric": [
           "Ordering is established by synchronization rather than sleeps.",
@@ -509,6 +509,12 @@
             "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect type(value) and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
           ],
           "example": "Hypothesis: True passes because bool subclasses int\nObservation: isinstance(True, int) -> True\nDiscriminator: type(True) is int -> False"
+        },
+        {
+          "title": "Watch the value, not the guess",
+          "paragraphs": [
+            "Open the guided diagnosis task. The contract sums through index 1, so [4, 8, 16] must give 12. In pdb, inspect values[:stop]: it is [4], not [4, 8]. The missing item is evidence for an exclusive slice boundary. A regression with an independent expected value distinguishes the fix; editing the printed message would not."
+          ]
         }
       ],
       "exercise": {
@@ -852,6 +858,12 @@
             "No coverage or mutation package is required for this path. The supplied boolean mutant is one controlled experiment. Record the exact altered rule and which case distinguishes it. Do not treat one killed mutant as a universal quality score or add tests only to chase a percentage."
           ],
           "example": "Mutant: <=1440 becomes <1440\nTest using 30 survives\nTest using 1440 distinguishes\nCoverage of comparison line alone cannot tell them apart"
+        },
+        {
+          "title": "Run the missing branch",
+          "paragraphs": [
+            "The optional branch workbook gives PositiveOnly and BothDirections test classes. The positive case executes every statement of label, but never takes the false direction. Adding zero covers it. Even both branches need meaningful expected-value assertions; execution is not correctness."
+          ]
         }
       ],
       "exercise": {
@@ -1045,9 +1057,15 @@
         {
           "title": "Work through a diagnosis",
           "paragraphs": [
-            "IsolatedAsyncioTestCase supplies an isolated test event loop. Use events to order tasks and a short external bound to detect hangs; don't rely on sleep as the cause of cancellation. The separate Python path's TaskGroup lab is a next exercise; this path teaches the testing contract without claiming this thread suite executes async behavior."
+            "IsolatedAsyncioTestCase supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. Run the guided diagnosis kit for cancellation after acquisition and successful cleanup; then continue to the Python TaskGroup lab for sibling-failure behavior."
           ],
           "example": "Child acquires resource -> readiness event\nParent cancels task -> child's finally runs\nAwait raises CancelledError -> assert cleanup marker"
+        },
+        {
+          "title": "Observe cancellation after acquisition",
+          "paragraphs": [
+            "The guided diagnosis kit now includes IsolatedAsyncioTestCase tests. A started event proves acquisition before cancellation. The cancelled task must propagate CancelledError, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
+          ]
         }
       ],
       "exercise": {
@@ -1146,6 +1164,12 @@
             "Do not assert an arbitrary few milliseconds in a general-purpose CI test. Keep a separate benchmark command with warmup, repeated samples, dataset size and platform notes. When optimization changes ordering or laziness, retain correctness tests so faster output does not silently become incomplete output."
           ],
           "example": "Correctness: total is 9\nExperiment: 1000 rows, 20 samples, same runtime\nReport median and range; no universal threshold inferred"
+        },
+        {
+          "title": "Measure the entire operation",
+          "paragraphs": [
+            "The guided diagnosis benchmark compares repeated scans with an index over unique keys. Index construction stays inside each timed call, and both implementations first match an independently calculated answer. Try 200 queries and then one query: setup may outweigh lookup savings. Record medians and all samples, never a universal speed claim."
+          ]
         }
       ],
       "exercise": {
@@ -1331,7 +1355,12 @@
     "practice/testing_concurrency.py",
     "practice/test_testing_labs.py",
     "practice/README.md",
-    "practice/project-workbook.md"
+    "practice/project-workbook.md",
+    "practice/diagnosis_lab.py",
+    "practice/test_diagnosis_lab.py",
+    "practice/branch_subject.py",
+    "practice/test_branch_lab.py",
+    "practice/diagnosis-workbook.md"
   ],
   "downloads": [
     {

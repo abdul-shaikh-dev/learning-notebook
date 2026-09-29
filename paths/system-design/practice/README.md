@@ -27,3 +27,7 @@ Important boundaries:
 ## Threat-model extension
 
 Complete `threat-model-worksheet.md` for the booking design. Record planned versus executed tests and repeat after trust-boundary changes.
+
+## Optional booking lab
+
+`booking-lab.md` links a runnable SQLite last-seat race, idempotency replay, injected rollback and outbox relay crash to the workbook timeline. Run `python -m unittest -v test_booking_lab.py`.

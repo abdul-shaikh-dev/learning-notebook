@@ -10,10 +10,17 @@ public sealed class TaskRow {
 }
 public sealed class TaskDb(DbContextOptions<TaskDb> options) : DbContext(options) {
     public DbSet<TaskRow> Tasks => Set<TaskRow>();
+    public DbSet<TaskAudit> Audits => Set<TaskAudit>();
     protected override void OnModelCreating(ModelBuilder model) {
         model.Entity<TaskRow>().Property(t=>t.Version).IsConcurrencyToken();
         model.Entity<TaskRow>().HasIndex(t=>new {t.Owner,t.Id});
+        model.Entity<TaskAudit>().HasIndex(a=>a.EventKey).IsUnique();
     }
+}
+public sealed class TaskAudit {
+    public int Id {get;set;}
+    public string EventKey {get;set;} = "";
+    public string Action {get;set;} = "";
 }
 public sealed record CreateTask(string? Title);
 public sealed record CompleteTask(int Version);

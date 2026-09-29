@@ -1384,7 +1384,8 @@
         {
           "title": "Failure cases and design choices",
           "paragraphs": [
-            "Exact model regeneration may differ because sampling, provider behavior or dependencies changed. Keep replay claims narrow: deterministic application logic can be replayed when its inputs and versions are fixed. Old authorization does not necessarily remain valid today. A migration must account for pending actions, changed argument meanings and idempotency scope, not only rename JSON fields."
+            "Exact model regeneration may differ because sampling, provider behavior or dependencies changed. Keep replay claims narrow: deterministic application logic can be replayed when its inputs and versions are fixed. Old authorization does not necessarily remain valid today. A migration must account for pending actions, changed argument meanings and idempotency scope, not only rename JSON fields.",
+            "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
           ]
         }
       ],
@@ -1720,7 +1721,10 @@
     "practice/architecture-decision.md",
     "practice/durable_state.py",
     "practice/test_durable_state.py",
-    "practice/test_parser_properties.py"
+    "practice/test_parser_properties.py",
+    "practice/persisted_run_lab.py",
+    "practice/test_persisted_run_lab.py",
+    "practice/persisted-run-lab.md"
   ],
   "downloads": [
     {
@@ -1742,6 +1746,18 @@
     {
       "title": "Harness architecture decision template",
       "href": "paths/agent-harnesses/practice/architecture-decision.md"
+    },
+    {
+      "title": "Integrated SQLite run and effect exercise",
+      "href": "paths/agent-harnesses/practice/persisted_run_lab.py"
+    },
+    {
+      "title": "Persisted run crash recovery tests",
+      "href": "paths/agent-harnesses/practice/test_persisted_run_lab.py"
+    },
+    {
+      "title": "Run and effect reconciliation guide",
+      "href": "paths/agent-harnesses/practice/persisted-run-lab.md"
     }
   ]
 }

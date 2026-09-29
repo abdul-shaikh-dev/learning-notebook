@@ -48,10 +48,20 @@ try {
         Check(row is {Done:true,Version:2,Title:"Persistent task"},"Restart must preserve values and version");
         using(var scope=restarted.Services.CreateScope()) {
             var db=scope.ServiceProvider.GetRequiredService<TaskDb>();
+            db.Audits.Add(new TaskAudit{EventKey="duplicate-audit",Action="existing"});
+            await db.SaveChangesAsync();
             await using var tx=await db.Database.BeginTransactionAsync();
-            db.Tasks.Add(new TaskRow{Owner="alice",Title="Rolled back"});await db.SaveChangesAsync();await tx.RollbackAsync();
+            db.Tasks.Add(new TaskRow{Owner="alice",Title="Rolled back"});
+            await db.SaveChangesAsync(); // First write succeeded inside this transaction.
+            db.Audits.Add(new TaskAudit{EventKey="duplicate-audit",Action="must fail"});
+            try {await db.SaveChangesAsync();Check(false,"Duplicate audit write must fail");}
+            catch(DbUpdateException){Check(true,"Second audit write failed on unique key");await tx.RollbackAsync();}
         }
-        using(var scope=restarted.Services.CreateScope())Check(!await scope.ServiceProvider.GetRequiredService<TaskDb>().Tasks.AnyAsync(t=>t.Title=="Rolled back"),"Rollback checked from fresh context");
+        using(var scope=restarted.Services.CreateScope()) {
+            var db=scope.ServiceProvider.GetRequiredService<TaskDb>();
+            Check(!await db.Tasks.AnyAsync(t=>t.Title=="Rolled back"),"Failed audit rolls back task in fresh context");
+            Check(await db.Audits.CountAsync(a=>a.EventKey=="duplicate-audit")==1,"Failed audit leaves only seed audit in fresh context");
+        }
         using var firstScope=restarted.Services.CreateScope();using var secondScope=restarted.Services.CreateScope();
         var first=firstScope.ServiceProvider.GetRequiredService<TaskDb>();var second=secondScope.ServiceProvider.GetRequiredService<TaskDb>();
         var a=await first.Tasks.SingleAsync(t=>t.Id==id);var b=await second.Tasks.SingleAsync(t=>t.Id==id);

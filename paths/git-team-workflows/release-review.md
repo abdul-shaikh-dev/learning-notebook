@@ -6,6 +6,7 @@ Changed paths and dependencies:
 Integration choice and why:
 Executed command, runtime version, assertion outcomes:
 Conflict decisions and review concerns:
+Reviewer feedback, first candidate, revised candidate and second review evidence:
 Tag type and candidate it resolves to:
 Artifact/version/hash evidence (unexecuted in baseline):
 Hosted review/approval and release authority (unexecuted in baseline):

@@ -98,7 +98,13 @@
     "practice/index.html",
     "practice/package.json",
     "practice/package-lock.json",
-    "practice/tsconfig.json"
+    "practice/tsconfig.json",
+    "practice/performance-fixture.ts",
+    "practice/persistence-bridge.ts",
+    "practice/http-loader.ts",
+    "practice/advanced-bridge.test.ts",
+    "practice/javascript-steps.js",
+    "practice/performance-runner.js"
   ],
   "downloads": [
     {
@@ -120,6 +126,30 @@
     {
       "title": "Workshop run instructions",
       "href": "paths/react/practice/README.md"
+    },
+    {
+      "title": "Separate 10,000-row benchmark fixture",
+      "href": "paths/react/practice/performance-fixture.ts"
+    },
+    {
+      "title": "Versioned local persistence bridge",
+      "href": "paths/react/practice/persistence-bridge.ts"
+    },
+    {
+      "title": "HTTP remote-data adapter",
+      "href": "paths/react/practice/http-loader.ts"
+    },
+    {
+      "title": "Persistence and HTTP bridge tests",
+      "href": "paths/react/practice/advanced-bridge.test.ts"
+    },
+    {
+      "title": "Graduated JavaScript practice",
+      "href": "paths/react/practice/javascript-steps.js"
+    },
+    {
+      "title": "Benchmark command entry point",
+      "href": "paths/react/practice/performance-runner.js"
     }
   ],
   "lessons": [
@@ -190,6 +220,12 @@
           "title": "Common mistake to avoid",
           "paragraphs": [
             "Treating every falsy value as missing rejects valid zero. Check the condition you actually mean."
+          ]
+        },
+        {
+          "title": "Run a small progression",
+          "paragraphs": [
+            "Run practice/javascript-steps.js with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
           ]
         }
       ],
@@ -1223,10 +1259,16 @@
           "paragraphs": [
             "React memo compares props shallowly by default; new object/function identities may still trigger work. A custom comparator can be wrong when it ignores callbacks with captured state. Large lists may need virtualization; it introduces keyboard and accessibility considerations. Compiler-enabled projects can change how much manual memoization is useful."
           ]
+        },
+        {
+          "title": "Separate benchmark fixture",
+          "paragraphs": [
+            "The tracker accepts at most 1,000 records. Run practice/performance-fixture.ts for 10,000 synthetic records; do not import that array into the tracker. Compare calculation timing with React Profiler evidence from a real UI interaction before choosing an optimization."
+          ]
         }
       ],
       "exercise": {
-        "prompt": "Record a before/after experiment for a 10,000-record filter.",
+        "prompt": "Use practice/performance-fixture.ts for a separate 10,000-record synthetic filter. Keep the tracker’s 1,000-record validation limit. Record repeated filter and UI Profiler measurements, correctness and device/build.",
         "solution": "Use a fixed synthetic dataset and the same device/build.\nMeasure typing-to-update latency and render/calculate time.\nTry removing redundant state first.\nCompare a memoized filter or deferred presentation only if warranted.\nCheck result correctness and keyboard behavior after optimization.",
         "checks": [
           "Report workload and build mode.",
@@ -1277,6 +1319,12 @@
           "title": "Debugging and design tradeoffs",
           "paragraphs": [
             "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record what was actually tested; a green build is not evidence that every user journey works."
+          ]
+        },
+        {
+          "title": "Guided advanced milestones",
+          "paragraphs": [
+            "See practice/README.md and the persistence-bridge.ts and http-loader.ts exercises. Wire migration and storage into a copy of the tracker, then wire a real training API into RemoteLesson. Submit refresh, malformed data, HTTP error, race, authorization and unsaved-draft evidence. The supplied app still uses in-memory data and a local delayed loader until you complete those steps."
           ]
         }
       ],

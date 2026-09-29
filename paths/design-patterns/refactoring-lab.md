@@ -1,0 +1,10 @@
+# Regression-led refactoring lab
+
+Start with `legacy_export.py`. Copy it to `candidate_export.py` in the same folder. In PowerShell set `$env:EXPORT_UNDER_TEST = "candidate_export"`; then run `python -m unittest -v test_refactoring.py` after each edit. In a POSIX shell use `EXPORT_UNDER_TEST=candidate_export python -m unittest -v test_refactoring.py`. Clear the variable afterward to compare the supplied starter and endpoint. The suite imports your candidate when the variable is set, so green feedback applies to your edits. The starter deliberately combines title validation, format selection, formatting, writing and success measurement in one function. Run `python -m unittest -v test_refactoring.py` before changing it. The tests characterize output, order, input preservation, validation errors, failed writes and success-only measurement. They do not assert private call structure.
+
+1. Copy the starter into a scratch module and extract title validation without changing when the writer runs. Run the same tests. A premature write before validating every title is a regression.
+2. Extract line and JSON formatting, then choose the formatter at the entry point. Run the tests again. `refactored_export.py` is a compact endpoint using the existing workshop contracts, not a substitute for doing each step yourself.
+3. Move delivery and success measurement into one function. Keep the rule that a writer failure propagates and does not record success. Run the tests again.
+4. Add a third format in your scratch copy, with one test for its output and one malformed-title test. Write a short decision note: format selection is the variation point; injecting every operation would add ceremony without an observed need.
+
+Compare the starter and endpoint by observable behavior rather than line count. The fake writer establishes local call order and failure timing; it says nothing about durable files or databases. A new requirement to retry writes would need an explicit idempotency and failure contract, rather than a blind retry decorator.

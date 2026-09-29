@@ -42,6 +42,24 @@
       "href": "paths/financial-foundations/practice/test_finance_workbook.py",
       "role": "test",
       "description": "Five checks including changed FX and broken position reconciliation"
+    },
+    {
+      "id": "swap_repricing-py",
+      "href": "paths/financial-foundations/practice/swap_repricing.py",
+      "role": "reference",
+      "description": "Two floating-rate payments and sequential forecast/discount attribution"
+    },
+    {
+      "id": "test_swap_repricing-py",
+      "href": "paths/financial-foundations/practice/test_swap_repricing.py",
+      "role": "test",
+      "description": "Independent values, signs, fixing immutability and input checks"
+    },
+    {
+      "id": "swap-repricing-md",
+      "href": "paths/financial-foundations/practice/swap-repricing.md",
+      "role": "guide",
+      "description": "Paper-first swap trace, worked bridge, wrong answers and fixing variant"
     }
   ],
   "tasks": [
@@ -104,6 +122,44 @@
       "notes": [
         "Python is optional: all tasks and worked answers also work on paper or in a spreadsheet.",
         "All event rates, evidence and accounting deductions are supplied synthetic assumptions. This is not a production accounting or pricing engine."
+      ]
+    },
+    {
+      "id": "swap-repricing",
+      "title": "Forecast and discount a floating-leg swap",
+      "goal": "Build net interest payments and reconcile a same-time input difference; distinguish forecasts from known fixings.",
+      "fileIds": [
+        "swap_repricing-py",
+        "test_swap_repricing-py",
+        "swap-repricing-md"
+      ],
+      "steps": [
+        "Read the contract in swap-repricing.md; principal is not exchanged.",
+        "Compute each signed net payment, then discount and sum.",
+        "Change forecasts before factors and reconcile the two effects.",
+        "Reverse the attribution order and then substitute a known first fixing.",
+        "Explain why the difference is neither notional nor automatic daily P&L or posting authority."
+      ],
+      "commands": [
+        {
+          "label": "Optional Python reference and checks",
+          "command": "python swap_repricing.py\npython -m unittest -v test_swap_repricing.py",
+          "expected": "FO EUR -100; independent EUR -573.50; difference EUR -473.50; five tests pass."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Market data and models",
+          "href": "course.html#lesson/3"
+        },
+        {
+          "label": "Fixed-cash-flow curve investigation",
+          "href": "index.html#resources/financial-foundations/daily-pnl-and-curves"
+        }
+      ],
+      "notes": [
+        "Paper/spreadsheet is sufficient; optional Python needs 3.11+.",
+        "Synthetic supplied factors, projections and accruals; no market calibration or production pricer."
       ]
     }
   ],

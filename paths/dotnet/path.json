@@ -997,6 +997,12 @@
             "Parameters cannot substitute table names or sort keywords. Choose structural options from a fixed allowlist. Do not log secrets or put database credentials in committed code."
           ],
           "example": "// Inside an async endpoint with TaskDb db and string title:\nvar rows = await db.Tasks.Where(t => t.Title == title).ToListAsync();\n// Equivalent parameterized raw-SQL form for this entity:\nvar rowsFromSql = await db.Tasks.FromSql($\"SELECT * FROM Tasks WHERE Title = {title}\").ToListAsync();\n// A title containing an apostrophe remains a value, not SQL syntax."
+        },
+        {
+          "title": "Relational prerequisite",
+          "paragraphs": [
+            "Before the EF Core scaffold, work through the SQL Server foundation lessons on table grain, keys, joins and transactions. Start with paths/sql-server/README.md and setup.sql. Those exercises use SQL Server; the guided .NET persistence check uses SQLite, so repeat provider-specific behavior on the database you deploy."
+          ]
         }
       ],
       "exercise": {
@@ -1060,6 +1066,12 @@
             "A process-local lock cannot coordinate multiple servers. SQLite and SQL Server have different token facilities, so choose a token strategy for your provider. Do not silently overwrite a newer edit merely because a stale request arrived later."
           ],
           "example": "// Application-managed Guid token, provider-portable EF Core fragments:\nmodelBuilder.Entity<SavedTask>().Property(t => t.Version).IsConcurrencyToken();\n// On SavedTask: public Guid Version { get; set; } = Guid.NewGuid();\n// After loading and verifying the client's original version:\nitem.Done = true;\nitem.Version = Guid.NewGuid();\ntry { await db.SaveChangesAsync(token); }\ncatch (DbUpdateConcurrencyException)\n{\n    return Results.Problem(statusCode: 409, title: \"Task changed; reload before retrying\");\n}"
+        },
+        {
+          "title": "Runnable failed second write",
+          "paragraphs": [
+            "Run practice/PersistenceChecks.csproj. It inserts a task inside an explicit transaction, then tries to insert an audit event with a duplicate unique key. That second SaveChanges fails; the catch rolls back. Fresh-context queries must find no new task and only the original audit event. This is stronger evidence than calling RollbackAsync without a failed write."
+          ]
         }
       ],
       "exercise": {

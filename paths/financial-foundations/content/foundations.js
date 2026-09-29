@@ -140,3 +140,10 @@ FOUNDATIONS.push(...[
     "answer": "PV is linear in fixed cash flows times supplied discount factors. Discount factors are nonlinear functions of rates, so a first-order rate approximation omits curvature. Both need aligned units and evidence."
   }
 ]);
+
+// Floating-leg worked extension: keep the existing lesson and bookmarks.
+{
+ const swap = FOUNDATIONS.find(f => f.id === 'swaps-options');
+ swap.resourceTask = 'swap-repricing';
+ swap.paragraphs.push('Try the worked floating-leg extension: receive floating and pay 4% on EUR 1m, with two half-year periods. FO projected rates 3%/5% and discount factors 0.98/0.96 produce signed net payments -5,000/+5,000 and value -100. Independent projections 3.1%/4.8% and factors 0.979/0.958 give -573.50. The -473.50 difference splits into -470 from forecasts, then -3.50 from discounting. A known fixing replaces a projection; notional is not exchanged. The workbook derives every row and shows how attribution order changes components but not the total.');
+}

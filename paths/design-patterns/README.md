@@ -1,6 +1,6 @@
 # Design Patterns workshop
 
-Read the 22-lesson path first or use this workshop beside its three stage projects.
+Read the 24-lesson path first or use this workshop beside its three stage projects.
 Basic functions, collections, exceptions and classes are prerequisites. Python
 3.11+ is sufficient; no packages, accounts or services are required.
 
@@ -116,3 +116,7 @@ answer may deliberately use fewer patterns than the reference vocabulary.
 ## Selected catalog and collaboration lab
 
 This Python-oriented catalog selects GoF patterns and adds DI/Repository/Unit of Work; it does not cover all 23 classic patterns. Canonical source: Gamma, Helm, Johnson, Vlissides, Design Patterns (1994), ISBN 9780201633610. Read the new Chain of Responsibility and Mediator lessons and collaboration.py. Run `python -m unittest -v test_collaboration.py`. First-handler short circuit differs from Observer broadcast; Mediator owns coordination rules; Command represents an action. Exercise: reverse overlapping handlers, add a new prerequisite and verify no notification is produced by failed validation. Local notification records provide no external delivery guarantee.
+
+## Refactoring lab
+
+Use `legacy_export.py`, `test_refactoring.py` and `refactoring-lab.md` to practice the actual structural migration; `refactored_export.py` shows one behavior-preserving endpoint. Run `python -m unittest -v test_refactoring.py`.

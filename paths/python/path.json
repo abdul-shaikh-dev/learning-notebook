@@ -644,9 +644,9 @@
         }
       ],
       "exercise": {
-        "prompt": "Write format_label(topic, minutes) in helpers.py and import it in main.py. For a quick one-file check, use the solution below; then split the definition and the call into the two files.",
+        "prompt": "Write format_label(topic, minutes) in helpers.py and import it in main.py. Compare your two files with the downloadable helpers.py and main.py, then run python main.py and import helpers from the prompt.",
         "starter": "# helpers.py: define format_label\n# main.py: import and call it",
-        "solution": "def format_label(topic, minutes):\n    return f\"{topic}: {minutes} min\"\n\nif __name__ == \"__main__\":\n    print(format_label(\"functions\", 20))",
+        "solution": "See practice/helpers.py and practice/main.py for the runnable two-file reference. The helper has no top-level print; main.py calls it only under __main__. Run python main.py to print functions: 20 min.",
         "checks": [
           "One-file output is functions: 20 min.",
           "After splitting files, python main.py gives the same output.",
@@ -699,6 +699,13 @@
           "paragraphs": [
             "A test that only prints a value does not check it. Keep a unit test deterministic: do not depend on a live service staying available. Never place API keys in source or publish them; load credentials from environment variables when a real service needs them. Retrying writes can duplicate actions, so learn the API semantics before retrying."
           ]
+        },
+        {
+          "title": "Bridge to local file failures",
+          "paragraphs": [
+            "After the in-memory counter, run practice/test_io_failure_bridge.py. The source is a real JSON file and the output is an existing report. Invalid or missing input must leave that report unchanged. Inspect io_failure_bridge.py only after predicting where the exception occurs and why the temporary file is removed.",
+            "This local exercise checks validation and replacement in one process. It does not prove crash durability or safe concurrent writers. The advanced import pipeline adds bounded input and more failure cases."
+          ]
         }
       ],
       "exercise": {
@@ -709,7 +716,8 @@
           "Output is 2 then True.",
           "Temporarily change the expected mixed result to 2; success becomes False.",
           "Restore the correct expectation after proving the test can fail.",
-          "Explain which fields a real API response must provide before this function can use it."
+          "Explain which fields a real API response must provide before this function can use it.",
+          "Run python -m unittest -v test_io_failure_bridge.py; deliberately change a boolean to a string and verify the old report remains."
         ]
       },
       "quiz": {
@@ -1462,7 +1470,11 @@
     "practice/test_async_failure_lab.py",
     "practice/installed-package-exercise.md",
     "practice/python_package_starter.py",
-    "practice/test_installed_package.py"
+    "practice/test_installed_package.py",
+    "practice/helpers.py",
+    "practice/main.py",
+    "practice/io_failure_bridge.py",
+    "practice/test_io_failure_bridge.py"
   ],
   "stages": [
     {
@@ -1569,6 +1581,22 @@
     {
       "title": "Practice instructions and limitations",
       "href": "paths/python/practice/README.md"
+    },
+    {
+      "title": "Two-file helper reference",
+      "href": "paths/python/practice/helpers.py"
+    },
+    {
+      "title": "Two-file import entry point",
+      "href": "paths/python/practice/main.py"
+    },
+    {
+      "title": "Local I/O failure bridge",
+      "href": "paths/python/practice/io_failure_bridge.py"
+    },
+    {
+      "title": "Local I/O failure checks",
+      "href": "paths/python/practice/test_io_failure_bridge.py"
     }
   ]
 }

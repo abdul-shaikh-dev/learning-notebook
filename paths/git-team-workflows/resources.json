@@ -42,6 +42,12 @@
       "href": "paths/git-team-workflows/advanced-kit.md",
       "role": "guide",
       "description": "advanced kit"
+    },
+    {
+      "id": "review_roleplay-py",
+      "href": "paths/git-team-workflows/review_roleplay.py",
+      "role": "reference",
+      "description": "Local author/reviewer feedback and revised-candidate exercise."
     }
   ],
   "tasks": [
@@ -56,7 +62,8 @@
         "release-review-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "review_roleplay-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -98,7 +105,8 @@
         "release-review-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "review_roleplay-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -141,7 +149,8 @@
         "release-review-md",
         "foundation-kit-md",
         "intermediate-kit-md",
-        "advanced-kit-md"
+        "advanced-kit-md",
+        "review_roleplay-py"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -152,7 +161,8 @@
         "Explain the cherry-picked change and rebased topic’s changed identity.",
         "Verify the annotated tag object.",
         "Produce an offline release record including artifact/hosting checks not executed.",
-        "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence."
+        "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
+        "Run review_roleplay.py in a fresh owned child and inspect reviewer feedback, revised candidate and second review."
       ],
       "commands": [
         {
@@ -163,7 +173,7 @@
         {
           "label": "Run sandbox boundary regression tests",
           "command": "python -B -m unittest -v test_sandbox.py",
-          "expected": "Six test methods pass, including repository-root escape and push rejection."
+          "expected": "Seven test methods pass, including local review revision, repository-root escape and push rejection."
         }
       ],
       "prerequisites": [

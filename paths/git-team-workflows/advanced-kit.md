@@ -14,7 +14,7 @@ Expected: JSON identifies first bad/recovered commit, safe reverted content, cha
 python -B -m unittest -v test_sandbox.py
 ```
 
-Expected: Six test methods pass, including repository-root escape and push rejection.
+Expected: Seven test methods pass, including local review revision, repository-root escape and push rejection.
 
 ## Implement and submit
 
@@ -23,6 +23,7 @@ Expected: Six test methods pass, including repository-root escape and push rejec
 3. Explain the cherry-picked change and rebased topic’s changed identity.
 4. Verify the annotated tag object.
 5. Produce an offline release record including artifact/hosting checks not executed.
+6. Run `python -B review_roleplay.py --workspace-parent .`; inspect reviewer feedback, revised candidate and second review before completing release-review.md.
 
 ## Reference approach
 

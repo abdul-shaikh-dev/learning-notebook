@@ -60,6 +60,30 @@
       "href": "paths/python/practice/test_installed_package.py",
       "role": "test",
       "description": "Complete installed-wheel packaging exercise"
+    },
+    {
+      "id": "practice-helpers-py",
+      "href": "paths/python/practice/helpers.py",
+      "role": "reference",
+      "description": "Two-file helper reference"
+    },
+    {
+      "id": "practice-main-py",
+      "href": "paths/python/practice/main.py",
+      "role": "reference",
+      "description": "Two-file import entry point"
+    },
+    {
+      "id": "practice-io_failure_bridge-py",
+      "href": "paths/python/practice/io_failure_bridge.py",
+      "role": "reference",
+      "description": "Local I/O failure bridge"
+    },
+    {
+      "id": "practice-test_io_failure_bridge-py",
+      "href": "paths/python/practice/test_io_failure_bridge.py",
+      "role": "test",
+      "description": "Local I/O failure checks"
     }
   ],
   "tasks": [

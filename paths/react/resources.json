@@ -78,6 +78,42 @@
       "href": "paths/react/practice/tsconfig.json",
       "role": "reference",
       "description": "tsconfig.json — guided executable scaffold"
+    },
+    {
+      "id": "practice-performance-fixture-ts",
+      "href": "paths/react/practice/performance-fixture.ts",
+      "role": "reference",
+      "description": "Separate 10,000-row benchmark fixture"
+    },
+    {
+      "id": "practice-persistence-bridge-ts",
+      "href": "paths/react/practice/persistence-bridge.ts",
+      "role": "reference",
+      "description": "Versioned local persistence bridge"
+    },
+    {
+      "id": "practice-http-loader-ts",
+      "href": "paths/react/practice/http-loader.ts",
+      "role": "reference",
+      "description": "HTTP remote-data adapter"
+    },
+    {
+      "id": "practice-advanced-bridge-test-ts",
+      "href": "paths/react/practice/advanced-bridge.test.ts",
+      "role": "test",
+      "description": "Persistence and HTTP bridge tests"
+    },
+    {
+      "id": "practice-javascript-steps-js",
+      "href": "paths/react/practice/javascript-steps.js",
+      "role": "reference",
+      "description": "Graduated JavaScript practice"
+    },
+    {
+      "id": "practice-performance-runner-js",
+      "href": "paths/react/practice/performance-runner.js",
+      "role": "reference",
+      "description": "Benchmark command entry point"
     }
   ],
   "tasks": [

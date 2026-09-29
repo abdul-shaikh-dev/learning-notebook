@@ -52,6 +52,8 @@ Every optional operation must retain `--context=kind-notebook-lab -n notebook-la
 
 ## Cleanup and evidence
 
+For optional live positive/negative checks of NetworkPolicy, HPA and PVC, follow `optional-enforcement-track.md`. It names CNI, metrics and storage prerequisites, actual commands, expected observations and cleanup. Offline manifest checks do not satisfy that rubric.
+
 Stop port-forward with Ctrl+C. After preserving needed evidence/data, `./lab.ps1 -Action Cleanup` deletes only the marked notebook-lab namespace in the verified local context. Namespace deletion also removes claims and can destroy their local data; decide before invoking. The cluster itself is retained. To remove the dedicated cluster later, explicitly review `kind delete cluster --name notebook-lab`; it destroys local cluster state.
 
 Record API/client/node-image versions, applied/rendered object identities, rollout/probe events, client results and storage contents. Distinguish offline checks, API dry-run and live workload/CNI/storage evidence. Helm/GitOps lessons are render/reconciliation exercises; no chart/controller/CRD is installed by this kit. Production requires real identity, data/backups, network enforcement, telemetry, multiple failure domains, capacity, secure updates and a rehearsed recovery plan.

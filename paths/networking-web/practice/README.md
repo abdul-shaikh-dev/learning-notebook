@@ -21,6 +21,8 @@ The server binds only 127.0.0.1 and an ephemeral port. It exercises real local H
 
 The references implement all three stage baselines. Read project-workbook.md for requirements, rubrics and reference reasoning. Rebuild the small stages yourself, then compare outputs. Keep new exercises separate from supplied verification evidence.
 
+For an optional real-browser CORS failure/success, disposable HTTPS certificate and forwarded-header trust investigation, use `browser-boundary-drill.md`. Record actual browser and TLS observations separately from the offline suite.
+
 Primary source sections were reviewed on 2026-09-27. Local test results follow; these do not establish unexecuted internet or deployment behavior.
 
 Local verification on 2026-09-27: Python 3.14; 12 regression tests passed. Reference script commands also executed successfully.

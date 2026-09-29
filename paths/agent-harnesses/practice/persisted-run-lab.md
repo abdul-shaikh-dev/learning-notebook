@@ -1,0 +1,9 @@
+# Persisted run and effect recovery lab
+
+Run `python -m unittest -v test_persisted_run_lab.py` from this directory. The tests use temporary SQLite files and the existing scripted `Harness`. No model or external tool is invoked. Read `persisted_run_lab.py` beside `durable_state.py` and `harness_workshop.py`.
+
+The exercise combines two previously separate boundaries. `StateStore` saves the harness checkpoint with a version check. `SQLiteEffects` commits a note and its caller/run/call receipt together. A simulated lost reply leaves the harness uncertain. After closing and reopening both stores, recovery looks up the receipt and reconciles before the script advances. One test crashes before saving the uncertain checkpoint: the old waiting checkpoint is recovered, the already committed receipt is found and the host changes the trusted checkpoint to uncertain for reconciliation. No second note is written. A separate same-key retry test returns the existing receipt and rejects a changed fingerprint without another note.
+
+Predict and explain all three tests: lost reply with persisted uncertain state; effect commit before checkpoint save; and a waiting run with no receipt. Approval is never serialized. The last case remains waiting and requires a fresh trusted-host approval. This local lookup is authoritative only because note and receipt share one SQLite transaction and the test uses one host. Do not generalize absence of a receipt to an unknown external provider effect.
+
+The checkpoint and effect are still two commits. The recovery probe closes the demonstrated crash gap, but this is a single-worker teaching model. It lacks leases, concurrent-host fencing, authenticated checkpoint storage and expiry across offline time. To extend it, test two host processes trying to resume the same run and design a lease or ownership protocol before claiming multi-worker safety. Record which rows and status changes each test actually observes.

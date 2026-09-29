@@ -108,6 +108,18 @@
       "href": "paths/kubernetes/practice/test_lab_guard.ps1",
       "role": "test",
       "description": "Seven offline command-guard tests using a fake kubectl function; no cluster access."
+    },
+    {
+      "id": "optional-enforcement-track-md",
+      "href": "paths/kubernetes/practice/optional-enforcement-track.md",
+      "role": "guide",
+      "description": "Optional local-cluster positive/negative policy, HPA and PVC track with prerequisites and cleanup."
+    },
+    {
+      "id": "policy-clients-json",
+      "href": "paths/kubernetes/practice/policy-clients.json",
+      "role": "reference",
+      "description": "Restricted Pod clients for NetworkPolicy allowed and denied traffic."
     }
   ],
   "tasks": [
@@ -133,13 +145,15 @@
         "disruption-budget-json",
         "job-json",
         "storage-json",
-        "test_lab_guard-ps1"
+        "test_lab_guard-ps1",
+        "optional-enforcement-track-md",
+        "policy-clients-json"
       ],
       "steps": [
         "Extract all listed flat files together into a new practice folder.",
         "Read README.md and the workbook before any optional Docker/cluster command.",
         "Run offline checks and record actual runtime/results.",
-        "Run the7 service and4 offline manifest-contract checks.",
+        "Run the8 service and4 offline manifest-contract checks.",
         "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
         "Compare labels,selectors,ports and config lifecycle.",
         "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
@@ -192,7 +206,9 @@
         "disruption-budget-json",
         "job-json",
         "storage-json",
-        "test_lab_guard-ps1"
+        "test_lab_guard-ps1",
+        "optional-enforcement-track-md",
+        "policy-clients-json"
       ],
       "steps": [
         "Extract all listed flat files together into a new practice folder.",
@@ -252,7 +268,9 @@
         "disruption-budget-json",
         "job-json",
         "storage-json",
-        "test_lab_guard-ps1"
+        "test_lab_guard-ps1",
+        "optional-enforcement-track-md",
+        "policy-clients-json"
       ],
       "steps": [
         "Extract all listed flat files together into a new practice folder.",
@@ -265,7 +283,8 @@
         "Render a learner-generated Helm chart and compare to known workload contracts.",
         "Draw GitOps drift/revert timeline without installing a controller.",
         "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately.",
-        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
+        "Optionally follow optional-enforcement-track.md in an authorized local environment; mark unexecuted checks explicitly."
       ],
       "commands": [
         {

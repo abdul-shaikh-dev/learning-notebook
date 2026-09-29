@@ -24,6 +24,18 @@
       "href": "paths/data-structures-algorithms/practice/test_trees_graphs.py",
       "role": "test",
       "description": "Independent tree and graph oracle tests"
+    },
+    {
+      "id": "practice-test_advanced_oracles-py",
+      "href": "paths/data-structures-algorithms/practice/test_advanced_oracles.py",
+      "role": "test",
+      "description": "Independent graph and knapsack oracle tests"
+    },
+    {
+      "id": "practice-advanced-reasoning-md",
+      "href": "paths/data-structures-algorithms/practice/advanced-reasoning.md",
+      "role": "guide",
+      "description": "Worked advanced algorithm reasoning and feedback"
     }
   ],
   "tasks": [
@@ -115,7 +127,9 @@
         "algorithms-py",
         "advanced_algorithms-py",
         "trees_graphs-py",
-        "test_trees_graphs-py"
+        "test_trees_graphs-py",
+        "practice-test_advanced_oracles-py",
+        "practice-advanced-reasoning-md"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -123,7 +137,8 @@
         "Run the provided baseline and record its actual results.",
         "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
         "Complete the assessment requirements in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights.; Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.; Choose items under an integer budget with each item used at most once.; Compare small cases against independent brute-force oracles.; Write invariants, termination arguments and representation-specific complexity.; Define input size limits and document remaining limitations.",
-        "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations."
+        "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations.",
+        "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
       ],
       "commands": [
         {

@@ -34,6 +34,9 @@
     "practice/daily-pnl-and-curves.md",
     "practice/finance_workbook.py",
     "practice/test_finance_workbook.py",
-    "practice/two-date-events.csv"
+    "practice/two-date-events.csv",
+    "practice/swap_repricing.py",
+    "practice/test_swap_repricing.py",
+    "practice/swap-repricing.md"
   ]
 }

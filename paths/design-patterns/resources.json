@@ -30,6 +30,30 @@
       "href": "paths/design-patterns/test_collaboration.py",
       "role": "test",
       "description": "Behavioral collaboration contract tests"
+    },
+    {
+      "id": "legacy_export-py",
+      "href": "paths/design-patterns/legacy_export.py",
+      "role": "starter",
+      "description": "Tangled exporter starter"
+    },
+    {
+      "id": "refactored_export-py",
+      "href": "paths/design-patterns/refactored_export.py",
+      "role": "reference",
+      "description": "Incremental refactor endpoint"
+    },
+    {
+      "id": "test_refactoring-py",
+      "href": "paths/design-patterns/test_refactoring.py",
+      "role": "test",
+      "description": "Refactoring characterization tests"
+    },
+    {
+      "id": "refactoring-lab-md",
+      "href": "paths/design-patterns/refactoring-lab.md",
+      "role": "guide",
+      "description": "Regression-led refactoring guide"
     }
   ],
   "tasks": [
@@ -134,7 +158,11 @@
         "test_workshop-py",
         "README-md",
         "collaboration-py",
-        "test_collaboration-py"
+        "test_collaboration-py",
+        "legacy_export-py",
+        "refactored_export-py",
+        "test_refactoring-py",
+        "refactoring-lab-md"
       ],
       "steps": [
         "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
@@ -143,7 +171,8 @@
         "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
         "Complete the assessment requirements in the reader: Reject missing IDs and repeated completion according to a stated policy.; Commit a valid transition and keep the original store unchanged when validation fails.; Run the provided rollback tests and add a failing repository substitute.; Propose provider integration tests and a notification failure policy.; Write a decision record rejecting at least one unnecessary pattern.",
         "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes.",
-        "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation."
+        "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation.",
+        "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract."
       ],
       "commands": [
         {

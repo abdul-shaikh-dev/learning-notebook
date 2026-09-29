@@ -18,7 +18,7 @@
     "Verify independent restoration and coordinate a synthetic incident with recorded limits."
   ],
   "setup": [
-    "Extract the complete kit; run python -m unittest -v test_release_app.py test_release_tools.py.",
+    "Extract the complete kit; run python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py.",
     "Start release_app.py only on loopback for manual synthetic checks; http.server is not a production server.",
     "Read integration-runbook.md for the learner-built React/.NET/SQL release walkthrough; the immediate runtime is a separate Python/SQLite stand-in.",
     "Docker and ci-example.yaml are opt-in exercises requiring their tools/review; neither was executed or enabled by opening the kit."
@@ -312,7 +312,7 @@
         {
           "title": "Understand the mechanism",
           "paragraphs": [
-            "A useful gate rejects a candidate for a reason tied to user risk. Unit checks cover pure decisions, HTTP tests cover protocol behavior, restart checks cover durable state and restore drills cover recoverability. The lab has seven HTTP/storage tests and five tool tests. Their assertions are evidence for these local behaviors, not load capacity, authentication or public internet safety."
+            "A useful gate rejects a candidate for a reason tied to user risk. Unit checks cover pure decisions, HTTP tests cover protocol behavior, restart checks cover durable state and restore drills cover recoverability. The local suites check these boundaries and include a distinct-artifact rollback drill with a bounded startup-failure case. Their assertions are evidence for these local behaviors, not load capacity, authentication or public internet safety."
           ]
         },
         {
@@ -320,7 +320,7 @@
           "paragraphs": [
             "Passing checks that mirror only setup can hide missing behavior. Intentionally remove a readiness distinction or break parameterization in a copied lab, observe a specific failure and restore the implementation. Keep destructive experiments in the disposable practice copy."
           ],
-          "example": "python -m unittest -v test_release_app.py test_release_tools.py\nGate examples: invalid body → 400; not-ready → 503; live → 200; v2→v1 retains rows."
+          "example": "python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py\nGate examples: invalid body → 400; not-ready → 503; live → 200; distinct v2→v1 retains rows."
         }
       ],
       "exercise": {
@@ -716,7 +716,7 @@
         }
       ],
       "exercise": {
-        "prompt": "An artifact is recreated after tests with different base inputs. Can it be promoted?",
+        "prompt": "An artifact is recreated after tests with different base inputs. Can it be promoted? Run distinct_artifact_drill.py for the separate v1/v2 source-artifact and rollback evidence.",
         "solution": "Treat it as a new candidate and run the required checks; do not attach the old test result to new bytes. Promotion records should point to immutable identity and independent provenance checks where required.",
         "checks": [
           "Tie evidence to exact bytes.",
@@ -864,7 +864,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A v2 migration removed a column v1 reads. Is reverting the image enough?",
+        "prompt": "A v2 migration removed a column v1 reads. Is reverting the image enough? Run distinct_artifact_drill.py for the separate v1/v2 source-artifact and rollback evidence.",
         "solution": "No. v1 remains incompatible. A reviewed forward fix or separately tested data recovery is required. Restoring a backup changes the data timeline and needs an explicit RPO/user reconciliation decision.",
         "checks": [
           "State schema compatibility evidence.",
@@ -1300,7 +1300,7 @@
         "title": "Local release contract and evidence",
         "brief": "Run the synthetic note service and create an evidence packet for a compatible change.",
         "requirements": [
-          "Run the12 local checks and capture actual results.",
+          "Run the local checks and capture actual results.",
           "Write the user invariant and environment/data boundaries.",
           "Record source identity, runtime version and file digest.",
           "Observe /version,/live,/ready and a synthetic note create/read.",
@@ -1384,7 +1384,9 @@
     "practice/README.md",
     "practice/ci-example.yaml",
     "practice/integration-runbook.md",
-    "practice/release-workbook.md"
+    "practice/release-workbook.md",
+    "practice/distinct_artifact_drill.py",
+    "practice/test_distinct_artifact_drill.py"
   ],
   "downloads": [
     {

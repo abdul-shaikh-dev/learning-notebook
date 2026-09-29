@@ -1640,7 +1640,8 @@
         {
           "title": "Failures and tradeoffs",
           "paragraphs": [
-            "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested."
+            "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
+            "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
           ]
         }
       ],
@@ -1689,7 +1690,10 @@
     "README.md",
     "provider_scaffold.py",
     "test_provider_scaffold.py",
-    "provider-integration-exercise.md"
+    "provider-integration-exercise.md",
+    "provider_eval.py",
+    "test_provider_eval.py",
+    "provider-evaluation-lab.md"
   ],
   "downloads": [
     {
@@ -1707,6 +1711,18 @@
     {
       "title": "Practice guide and limits",
       "href": "paths/ai-agents/README.md"
+    },
+    {
+      "title": "Opt-in measured Responses evaluation",
+      "href": "paths/ai-agents/provider_eval.py"
+    },
+    {
+      "title": "Offline provider evaluation tests",
+      "href": "paths/ai-agents/test_provider_eval.py"
+    },
+    {
+      "title": "Optional provider evaluation guide",
+      "href": "paths/ai-agents/provider-evaluation-lab.md"
     }
   ]
 }

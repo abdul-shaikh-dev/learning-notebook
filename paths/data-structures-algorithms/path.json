@@ -59,7 +59,9 @@
     "practice/algorithms.py",
     "practice/advanced_algorithms.py",
     "practice/trees_graphs.py",
-    "practice/test_trees_graphs.py"
+    "practice/test_trees_graphs.py",
+    "practice/test_advanced_oracles.py",
+    "practice/advanced-reasoning.md"
   ],
   "downloads": [
     {
@@ -69,6 +71,14 @@
     {
       "title": "Advanced algorithms and executable checks",
       "href": "paths/data-structures-algorithms/practice/advanced_algorithms.py"
+    },
+    {
+      "title": "Independent graph and knapsack oracle tests",
+      "href": "paths/data-structures-algorithms/practice/test_advanced_oracles.py"
+    },
+    {
+      "title": "Worked advanced algorithm reasoning and feedback",
+      "href": "paths/data-structures-algorithms/practice/advanced-reasoning.md"
     }
   ],
   "lessons": [
@@ -1146,7 +1156,8 @@
         {
           "title": "Preconditions versus boundary validation",
           "paragraphs": [
-            "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug."
+            "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug.",
+            "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
           ]
         }
       ],

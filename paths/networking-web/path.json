@@ -681,7 +681,7 @@
         }
       ],
       "exercise": {
-        "prompt": "What would a real local TLS extension require?",
+        "prompt": "What would a real local TLS extension require? Optional live drill: practice/browser-boundary-drill.md; record browser/TLS observations separately.",
         "solution": "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport. Keep it separate from the current HTTP evidence.",
         "solutionFormat": "prose",
         "checks": [
@@ -828,7 +828,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Would adding Access-Control-Allow-Origin authorize a private booking?",
+        "prompt": "Would adding Access-Control-Allow-Origin authorize a private booking? Optional live drill: practice/browser-boundary-drill.md; record browser/TLS observations separately.",
         "solution": "No. It changes browser exposure policy; authentication and object-level authorization remain separate server checks. Specify them separately in tests.",
         "solutionFormat": "prose",
         "checks": [
@@ -1024,7 +1024,7 @@
         }
       ],
       "exercise": {
-        "prompt": "What should be verified for a forwarded client-IP policy?",
+        "prompt": "What should be verified for a forwarded client-IP policy? Optional live drill: practice/browser-boundary-drill.md; record browser/TLS observations separately.",
         "solution": "Only configured proxies may supply authoritative forwarding metadata; direct client values are rejected or ignored. Test spoofed fields and document the connection trust boundary.",
         "solutionFormat": "prose",
         "checks": [
@@ -1353,7 +1353,9 @@
     "practice/network_resilience.py",
     "practice/test_network_labs.py",
     "practice/README.md",
-    "practice/project-workbook.md"
+    "practice/project-workbook.md",
+    "practice/browser-boundary-drill.md",
+    "practice/browser_drill.py"
   ],
   "downloads": [
     {

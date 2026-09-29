@@ -1,9 +1,19 @@
 import tempfile
+import json
 from pathlib import Path
 import unittest
 from sandbox import Sandbox, run_stage
+from review_roleplay import exercise
 
 class SandboxTests(unittest.TestCase):
+    def test_local_reviewer_feedback_and_revised_candidate(self):
+        with tempfile.TemporaryDirectory(prefix='ln-review-test-') as root:
+            result=exercise(root)
+            self.assertNotEqual(result['first_candidate'],result['revised_candidate'])
+            self.assertIn('rollback',result['feedback'])
+            self.assertIn('smoke check and rollback',result['reviewer_verified'])
+            self.assertEqual(json.loads((Path(root)/'review-evidence.json').read_text(encoding='utf-8'))['revised_candidate'],
+                             result['revised_candidate'])
     def test_foundation(self):
         result=run_stage('foundation')['results'][0]
         self.assertEqual(result['staged_snapshot'],'two')
