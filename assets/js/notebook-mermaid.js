@@ -30,7 +30,7 @@
    try{
     const api=await load();if(!panel.isConnected)continue;
     const result=await api.render('notebook-mermaid-'+(++serial),text);if(!panel.isConnected)continue;
-    view.innerHTML=result.svg;panel.dataset.mermaidReady='ready';status.textContent='';
+    view.innerHTML=result.svg;const drawing=view.querySelector('svg');const naturalWidth=Number(drawing.getAttribute('viewBox').split(/\s+/)[2]);drawing.style.minWidth=Math.min(naturalWidth,480)+'px';panel.dataset.mermaidReady='ready';status.textContent='';
     const svg=panel.querySelector('[data-mermaid-svg]');svg.disabled=false;svg.addEventListener('click',()=>download(result.svg,'image/svg+xml','learning-diagram.svg'));
     const section=panel.closest('.concept-diagram');active(section,d,{activeNodes:JSON.parse(section.dataset.mermaidActive||'[]')});
    }catch{panel.dataset.mermaidReady='failed';status.textContent='Diagram unavailable. The full explanation and connections are available below.';}

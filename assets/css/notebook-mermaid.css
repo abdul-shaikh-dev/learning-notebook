@@ -4,3 +4,5 @@
 .concept-diagram .diagram-explanation h3{color:inherit}
 
 .mermaid-view.is-fit svg{min-width:0}
+
+.mermaid-view.is-fit svg{min-width:0!important}@media print{.mermaid-view svg{min-width:0!important}}
