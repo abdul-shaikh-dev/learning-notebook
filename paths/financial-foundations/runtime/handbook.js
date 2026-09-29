@@ -26,3 +26,5 @@ Prudent assessment: $5,000 gross − $2,000 eligible same-source amount = $3,000
       → Customer book: Company A +11 shares; Company C +20 shares
       → Hedge book: Company A −5 shares</pre><p>Three Company A trades produce one +11-share position in the customer book. Books are internal groupings, not separate legal entities. The same instrument may appear in multiple books; do not automatically net them for every reporting purpose. Regulatory trading/banking-book classification is a separate concept.</p></article>${journeyPrint()}<article id="sources"><h1>Source register</h1><p>Exact references and access limitations for added technical sections appear next to those sections. A reviewed date is not the legal effective date.</p>${SOURCE_REGISTER.map(s=>`<h2>${esc(s.title)}</h2><p>${esc(s.edition)}</p><p>Review date ${esc(s.checkedDate)} · ${esc(s.access)}</p><p>${esc(s.changeTrigger)}</p><p><a href="${esc(s.url)}">${esc(s.url)}</a></p>`).join('')}</article>`;
 document.getElementById('print-pack').addEventListener('click',()=>window.print());
+
+if(typeof NotebookCode!=='undefined')NotebookCode.enhance(document.getElementById('book'),'financial-foundations');

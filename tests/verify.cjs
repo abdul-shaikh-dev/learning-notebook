@@ -23,3 +23,5 @@ require('./library-map.cjs');
 require('./assessment-sources.cjs');
 
 require('./concept-explorers.cjs');
+
+require('./code-panels.cjs');
