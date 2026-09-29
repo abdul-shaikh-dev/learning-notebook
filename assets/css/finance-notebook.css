@@ -1,0 +1,107 @@
+/* Finance reader follows the atlas' green editorial language. */
+.finance-course{
+  --ink:#183731;--navy:#183731;--muted:#4d635d;--teal:#245535;
+  --mint:#e3eedc;--blue:#245535;--line:#cbd7d0;--paper:#f3f6f3;
+  background:var(--paper);color:var(--ink);
+}
+.finance-course>header{min-height:76px;padding:14px clamp(20px,4vw,64px);gap:20px;background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+.finance-course>header .brand{color:var(--ink);font-size:22px}
+.finance-course>header .mark{background:var(--ink);color:#d0f27b;border-radius:5px 5px 0 0}
+.finance-course>header .header-note{color:var(--muted)}
+.finance-course>header .notebook-nav{gap:6px}
+.finance-course>header .notebook-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;background:#fff;color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:6px;box-shadow:none;font-weight:600}
+.finance-course>header .notebook-nav a:hover{background:#e7efe4}
+.finance-course .shell{max-width:1500px;grid-template-columns:278px minmax(0,1fr)}
+.finance-course aside{background:#edf3ed;border-right:1px solid #c5d4c8;padding:24px 20px 40px}
+.finance-course aside .catalog-return{margin:0 0 22px;padding:8px 0;color:#345b43;font-size:13px}
+.finance-course aside .catalog-return:hover{background:transparent;color:#173b27;text-decoration:underline}
+.finance-sidebar-heading{display:flex;align-items:center;gap:12px;padding:0 0 22px;border-bottom:1px solid #c3d2c4}
+.finance-sidebar-icon{display:grid;place-items:center;flex:none;width:40px;height:40px;background:var(--ink);color:#d0f27b;border-radius:6px;font:400 25px/1 Georgia,serif}
+.finance-sidebar-heading strong{display:block;font:400 18px/1.2 Georgia,serif;color:var(--ink)}
+.finance-sidebar-heading div>span{display:block;margin-top:3px;font-size:12px;line-height:1.45;color:#41604c}
+.finance-start{margin:22px 0 24px;padding:18px;background:#dceacb;border-radius:0 8px 8px 8px;position:relative;color:var(--ink)}
+.finance-start::before{content:"";position:absolute;left:0;top:-10px;width:62px;height:10px;background:#dceacb;border-radius:5px 5px 0 0}
+.finance-start>span{font:400 21px/1.2 Georgia,serif}
+.finance-start p{font-size:13px;line-height:1.55;margin:8px 0 10px;color:#345341}
+.finance-start a{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px;padding:10px 0 0;border-top:1px solid #a8bc9d;color:#183731;font-size:13px;font-weight:700;text-decoration:none}
+.finance-start a:hover{text-decoration:underline}
+.finance-course .course-menu{border:0;background:transparent;padding:0;margin:0}
+.finance-course .course-menu>summary{display:none}
+.finance-course #nav{display:block;margin:0 0 28px;overflow:visible}
+.finance-nav-group{margin:0 0 20px}
+.finance-nav-group p{margin:0 0 5px;padding:0 10px;color:#4a6450;font-size:12px;font-weight:700;line-height:1.5}
+.finance-course #nav a{display:block;min-height:42px;padding:9px 10px;border-radius:5px;color:#244635;font-size:14px;line-height:1.5;font-weight:550;white-space:normal}
+.finance-course #nav a:hover{background:#dfeadc;color:#183731}
+.finance-course #nav a.active,.finance-course #nav a[aria-current=page]{background:#183731;color:#fff}
+.finance-course .study-tools{padding:18px 0 0;border:0;border-top:1px solid #c3d2c4;border-radius:0;background:transparent}
+.finance-course .study-tools>summary{display:block;list-style:none;margin:0 0 14px;font-size:13px;font-weight:700;color:#395842;cursor:default}
+.finance-course .study-tools>summary::-webkit-details-marker{display:none}
+.finance-course .study-tools .progress-box{border:0;padding:0;margin:0 0 16px;color:var(--ink)}
+.finance-course .study-tools progress{margin:11px 0 4px;accent-color:#245535}
+.finance-course .study-tools small{font-size:12px;line-height:1.5}
+.finance-course .study-tools .file-link{margin:2px 0;padding:10px 6px;color:#244b36;font-size:13px;min-height:44px}
+.finance-course .study-tools .file-link:hover{background:#dfeadc;color:#183731}
+.finance-course .study-tools .quiet{min-height:44px;margin:8px 8px 0 0;padding:8px 10px;color:var(--ink);border-color:#a8bfab;background:#fff}
+.finance-course .study-tools .quiet:hover{background:#dfeadc}
+.finance-course #storage-note{overflow-wrap:anywhere}
+.finance-course main{background:#fff;padding:clamp(28px,4vw,56px) clamp(24px,5vw,72px) 80px}
+.finance-course h1,.finance-course .course-welcome h1{font:400 clamp(36px,4.2vw,62px)/1.1 Georgia,'Times New Roman',serif;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+.finance-course h2{color:var(--ink)}
+.finance-course .intro{color:#405a52}
+.finance-course .course-welcome{border-bottom-color:var(--line)}
+.finance-course .course-label{color:#345b43}
+.finance-course .welcome-diagram{background:#e5eee1}
+.finance-course .diagram-node{border-color:#b4c8b6}
+.finance-course .diagram-node.emphasis{background:var(--ink);border-color:var(--ink)}
+.finance-course .diagram-arrow{color:#41644e}
+.finance-course .diagram-foot,.finance-course .diagram-caption,.finance-course .diagram-node span{color:#405b48}
+.finance-course .diagram-node.emphasis span{color:#e1efe4}
+.finance-course .primary,.finance-course .continue{background:var(--ink);color:#fff}
+.finance-course .primary:hover{background:#2b5346}
+.finance-course .continue a{background:#d0f27b;color:#183731}
+.finance-course .badge{background:#e1efda;color:#245535}
+.finance-course .takeaway{background:#e5eee1;color:#244331;border:1px solid #b9cdb7}
+.finance-course .quiz{background:#f0f5ed}
+.finance-course .quiz .eyebrow{color:#345b43}
+.finance-course .course-module,.finance-course .card{border-color:var(--line)}
+.finance-course .story-tabs,.finance-course .diagram-node,.finance-course .stage-nav button{background:#f0f5ed}
+.finance-course .story-tabs a[aria-current=page]{background:var(--ink);color:#fff}
+.finance-course :focus-visible{outline:3px solid #a04425;outline-offset:3px}
+.finance-course footer{color:var(--muted)}
+@media(max-width:1100px){
+  .finance-course .shell{grid-template-columns:240px minmax(0,1fr)}
+  .finance-course aside{padding-inline:16px}
+}
+@media(max-width:700px){
+  .finance-course>header{padding:12px 20px;gap:10px}
+  .finance-course>header .brand{font-size:20px;flex:1}
+  .finance-course>header .notebook-nav{width:100%;margin:0}
+  .finance-course>header .notebook-nav a{flex:1;font-size:13px}
+  .finance-course .shell{display:block}
+  .finance-course aside{padding:14px 20px;border-right:0;border-bottom:1px solid var(--line)}
+  .finance-course aside .catalog-return,.finance-course .finance-sidebar-heading{display:none!important}
+  .finance-course .finance-start{display:none}
+  .finance-course .course-menu{border-top:1px solid #c3d2c4}
+  .finance-course .course-menu>summary{display:block;min-height:48px;padding:12px 0;font-size:14px;color:var(--ink)}
+  .finance-course .course-menu>summary::after{content:'+';float:right}
+  .finance-course .course-menu[open]>summary::after{content:'−'}
+  .finance-course #nav{display:block;margin:0 0 12px;overflow:visible}
+  .finance-course .finance-nav-group{margin:10px 0 16px}
+  .finance-course .finance-nav-group p{padding:0 4px}
+  .finance-course #nav a{min-height:44px;padding:10px 8px}
+  .finance-course .study-tools{margin:0;padding:0}
+  .finance-course .study-tools>summary{display:list-item;list-style:disclosure-closed;min-height:48px;margin:0;padding:12px 0;font-size:14px;cursor:pointer}
+  .finance-course .study-tools[open]>summary{list-style:disclosure-open}
+  .finance-course .study-tools .progress-box{display:block;margin:6px 0 14px}
+  .finance-course .study-tools .file-link,.finance-course .study-tools .quiet,.finance-course .study-tools #storage-note{display:block}
+  .finance-course .study-tools .quiet{width:100%;margin:6px 0;text-align:center}
+  .finance-course .study-tools-content{padding-bottom:14px}
+  .finance-course main{padding:28px 20px 52px}
+  .finance-course h1,.finance-course .course-welcome h1{font-size:clamp(32px,8vw,44px)}
+}
+@media print{
+  .finance-course .shell{display:block}
+  .finance-course main{padding:0}
+}
+
+.finance-course .continue h2{color:#fff}
