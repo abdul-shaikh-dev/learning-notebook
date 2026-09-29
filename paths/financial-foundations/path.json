@@ -37,6 +37,8 @@
     "practice/two-date-events.csv",
     "practice/swap_repricing.py",
     "practice/test_swap_repricing.py",
-    "practice/swap-repricing.md"
+    "practice/swap-repricing.md",
+    "content/diagrams.js",
+    "runtime/diagrams.js"
   ]
 }

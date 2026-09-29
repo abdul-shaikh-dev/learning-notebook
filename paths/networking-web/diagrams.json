@@ -96,6 +96,9 @@
         ],
         "explanation": "No TLS, browser authorization or public-service claim follows from this local result."
       }
+    ],
+    "textExampleSections": [
+      1
     ]
   },
   "timeouts": {
@@ -185,6 +188,712 @@
         ],
         "explanation": "Always release the handler and close the server, including failed assertions."
       }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "dns-cache": {
+    "title": "An exact TTL boundary requires fresh resolution",
+    "summary": "Offline injected-clock model only; no DNS query or connection migration is demonstrated.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Remember at t=10, TTL=5",
+        "description": "The stored answer expires at t=15."
+      },
+      {
+        "id": "n1",
+        "label": "Lookup at t=14.99",
+        "description": "The old address is still returned."
+      },
+      {
+        "id": "n2",
+        "label": "Lookup at t=15",
+        "description": "At or after expiry the model returns None."
+      },
+      {
+        "id": "n3",
+        "label": "Resolve again separately",
+        "description": "New resolution may return a changed address or fail; a short TTL does not migrate an open connection."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "before expiry"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "reach expiry boundary"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "cache miss requires resolution"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "The stored answer expires at t=15.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "The old address is still returned. At or after expiry the model returns None.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "New resolution may return a changed address or fail; a short TTL does not migrate an open connection.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "validators": {
+    "title": "304 reuses an existing representation",
+    "summary": "The fixed ETag is an immutable sample teaching constant; 304 does not send a new lesson body.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Initial GET",
+        "description": "Client requests the lesson without a cached body."
+      },
+      {
+        "id": "n1",
+        "label": "200 + body + ETag",
+        "description": "Store a suitable representation with validator lesson-v1."
+      },
+      {
+        "id": "n2",
+        "label": "Conditional GET",
+        "description": "Send If-None-Match using that stored validator."
+      },
+      {
+        "id": "n3",
+        "label": "304 without body",
+        "description": "The matching validator says the stored representation may be reused under the contract."
+      },
+      {
+        "id": "n4",
+        "label": "Reuse stored lesson",
+        "description": "Do not parse the empty 304 content as a new JSON body."
+      },
+      {
+        "id": "n5",
+        "label": "Missing cached body",
+        "description": "Unexpected 304 without suitable local content requires recovery with an appropriate unconditional request."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "first representation"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "retain body and validator"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "validator matches"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "cached body available"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "local state insufficient"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Acquire representation and validator",
+        "explanation": "The body is needed later; an ETag alone is insufficient.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "Validate conditionally",
+        "explanation": "The conditional request receives 304 and no new lesson body.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Choose reuse or recovery",
+        "explanation": "Use the suitable stored body; otherwise recover under the application request policy.",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "redirects": {
+    "title": "Reapply policy at every redirect hop",
+    "summary": "The lab observes 307 with Location /lesson without automatically following it.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "GET /redirect",
+        "description": "Begin with an allowed destination."
+      },
+      {
+        "id": "n1",
+        "label": "307 + relative Location /lesson",
+        "description": "Record the redirect itself; method is preserved when following 307."
+      },
+      {
+        "id": "n2",
+        "label": "Resolve and validate next target",
+        "description": "Check hop count, destination origin and credential-forwarding policy again."
+      },
+      {
+        "id": "n3",
+        "label": "Follow allowed target or stop",
+        "description": "Reject loops/out-of-policy destinations; an allowed first target does not approve every later Location."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "observe response"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "consider optional follow"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "bounded policy decision"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Begin with an allowed destination.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Record the redirect itself; method is preserved when following 307. Check hop count, destination origin and credential-forwarding policy again.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Reject loops/out-of-policy destinations; an allowed first target does not approve every later Location.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "body-contracts": {
+    "title": "Validate more than HTTP success",
+    "summary": "The decoder accepts only the declared lesson observation; malformed 200 responses remain failures.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "HTTP response received",
+        "description": "A 200 status alone is insufficient application evidence."
+      },
+      {
+        "id": "n1",
+        "label": "Bound body and media type",
+        "description": "Require intended JSON media type and the 4096-byte teaching limit."
+      },
+      {
+        "id": "n2",
+        "label": "Decode JSON syntax",
+        "description": "Malformed JSON or decoding failure raises ProtocolError."
+      },
+      {
+        "id": "n3",
+        "label": "Validate exact schema",
+        "description": "Require object fields lesson:string and version:exact integer; boolean version is rejected."
+      },
+      {
+        "id": "n4",
+        "label": "Publish validated observation",
+        "description": "Every rejected stage must prevent publishing a lesson; streaming extensions enforce size during reading."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "status is only first boundary"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "representation checks"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "syntax is not schema"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "only valid contract"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "A 200 status alone is insufficient application evidence.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Require intended JSON media type and the 4096-byte teaching limit. Malformed JSON or decoding failure raises ProtocolError. Require object fields lesson:string and version:exact integer; boolean version is rejected.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Every rejected stage must prevent publishing a lesson; streaming extensions enforce size during reading.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "retry-budgets": {
+    "title": "Check attempt and time budgets before dispatch",
+    "summary": "The injected-clock GET helper is a policy model; callbacks need their own transport timeout and this helper has no backoff or jitter.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Before next GET",
+        "description": "Track total attempts including the first."
+      },
+      {
+        "id": "n1",
+        "label": "Attempts and deadline remain",
+        "description": "Check the injected overall deadline before dispatch."
+      },
+      {
+        "id": "n2",
+        "label": "Invoke bounded callback",
+        "description": "The helper cannot preempt a blocked callback."
+      },
+      {
+        "id": "n3",
+        "label": "Response status",
+        "description": "Selected gateway/unavailable failures can lead to another attempt."
+      },
+      {
+        "id": "n4",
+        "label": "Return final result / stop",
+        "description": "Exhausted deadline starts zero new calls; three failures stop after three calls."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check both budgets"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "both allow new call"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "either exhausted"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "receive status"
+      },
+      {
+        "from": "n3",
+        "to": "n0",
+        "label": "retryable status"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "success or final status"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Bound new dispatch",
+        "explanation": "Three attempts means at most three calls, not three retries after the first.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          0,
+          2
+        ]
+      },
+      {
+        "title": "Bound each callback separately",
+        "explanation": "The overall helper deadline cannot interrupt an unbounded transport callback.",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          3
+        ]
+      },
+      {
+        "title": "Account for added load",
+        "explanation": "503 then 200 succeeds on attempt two; coordinated retry ownership prevents multiplied deepest calls.",
+        "activeNodes": [
+          "n3",
+          "n0",
+          "n4"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "cookies": {
+    "title": "Synthetic cookie issuance and replay",
+    "summary": "This fixed, forgeable token demonstrates headers, not authenticated accounts.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "GET /cookie",
+        "description": "The local server issues a known synthetic cookie."
+      },
+      {
+        "id": "n1",
+        "label": "Set-Cookie session=synthetic",
+        "description": "Path=/, HttpOnly and SameSite=Lax are the lesson attributes; the HTTP lab makes no Secure-cookie claim."
+      },
+      {
+        "id": "n2",
+        "label": "Request /private with matching Cookie",
+        "description": "Without it the synthetic route returns 401; the known value can be supplied by any learner."
+      },
+      {
+        "id": "n3",
+        "label": "Local demonstration returns 200",
+        "description": "Production needs real authentication, unpredictable session identifiers and server-side authorization."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "issuance response"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "send scoped header"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "synthetic value matched"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "The local server issues a known synthetic cookie.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Path=/, HttpOnly and SameSite=Lax are the lesson attributes; the HTTP lab makes no Secure-cookie claim. Without it the synthetic route returns 401; the known value can be supplied by any learner.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Production needs real authentication, unpredictable session identifiers and server-side authorization.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "browser-boundaries": {
+    "title": "CORS controls browser response exposure",
+    "summary": "Python’s HTTP client does not enforce browser CORS; authorization is a separate server decision.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Browser page origin A",
+        "description": "A script requests an API at origin B."
+      },
+      {
+        "id": "n1",
+        "label": "Server response from B",
+        "description": "The server returns no appropriate CORS permission in the illustrated case."
+      },
+      {
+        "id": "n2",
+        "label": "Browser exposure check",
+        "description": "The script may be denied access to the response under browser rules."
+      },
+      {
+        "id": "n3",
+        "label": "Separate client and server evidence",
+        "description": "A Python read does not prove browser access; CORS permission does not authorize private data."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "cross-origin fetch"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "evaluate CORS"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "report actual boundary"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "A script requests an API at origin B.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "The server returns no appropriate CORS permission in the illustrated case. The script may be denied access to the response under browser rules.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "A Python read does not prove browser access; CORS permission does not authorize private data.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "proxies": {
+    "title": "Proxy timeout does not establish origin rollback",
+    "summary": "Conceptual topology; the supplied loopback reference contains no proxy.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Browser HTTPS request",
+        "description": "Begin with the browser’s observed request and deadline."
+      },
+      {
+        "id": "n1",
+        "label": "Edge proxy terminates TLS",
+        "description": "Define routing, forwarded-header trust and independent timeout behavior."
+      },
+      {
+        "id": "n2",
+        "label": "Origin HTTP work",
+        "description": "The origin receives the proxy connection and may still be computing."
+      },
+      {
+        "id": "n3",
+        "label": "Proxy returns 504 after waiting",
+        "description": "Correlate proxy and origin evidence; this response does not prove remote effects stopped."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "proxy boundary"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "forward request"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "proxy wait expires"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Begin with the browser’s observed request and deadline.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Define routing, forwarded-header trust and independent timeout behavior. The origin receives the proxy connection and may still be computing.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Correlate proxy and origin evidence; this response does not prove remote effects stopped.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
     ]
   }
 }

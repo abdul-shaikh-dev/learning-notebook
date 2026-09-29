@@ -1,5 +1,8 @@
 # Agent Harnesses offline workshop
 
+Visual companions in the notebook: [Harness architecture boundary](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/agent-harnesses/runtime-boundary). The original text traces below remain available for offline use.
+
+
 This is a deterministic runtime-policy workshop with a scripted model and two in-memory fake business tools. No API key or cloud account is required. It makes no network requests, invokes no shell commands and contains no application file-reading or writing tool. Running Python itself loads these source files normally.
 
 ## Run it

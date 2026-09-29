@@ -78,5 +78,512 @@
         ]
       }
     ]
+  },
+  "history-refs": {
+    "title": "Read parent relationships separately from branch labels",
+    "summary": "The divergent fixture has a common base and a two-parent merge. Branch names move; timestamps do not prove ancestry.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Common base",
+        "description": "Shared committed snapshot before divergence."
+      },
+      {
+        "id": "n1",
+        "label": "Main tip",
+        "description": "Main adds its policy change."
+      },
+      {
+        "id": "n2",
+        "label": "Feature tip",
+        "description": "Feature preserves a different policy change."
+      },
+      {
+        "id": "n3",
+        "label": "Merge commit",
+        "description": "Resolved combined snapshot records both parents."
+      },
+      {
+        "id": "n4",
+        "label": "Branch and HEAD references",
+        "description": "Names identify current tips; commits retain their parent relationships."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "main development"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "feature development"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "first parent"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "second parent"
+      },
+      {
+        "from": "n4",
+        "to": "n3",
+        "label": "main and HEAD resolve to merge"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Find common ancestry",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Use parent relationships and merge-base rather than dates."
+      },
+      {
+        "title": "Inspect a two-parent merge",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "The merge snapshot combines changes; its two parents preserve both lines of history."
+      },
+      {
+        "title": "Distinguish names from objects",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "A branch is a movable reference. Useful detached work needs a named reference before leaving it."
+      }
+    ]
+  },
+  "conflict-resolution": {
+    "title": "Resolve behavior or deliberately abort the merge",
+    "summary": "The fixture starts clean, aborts its first conflict, then repeats and resolves both illustrative intents. Real combined behavior still needs checks.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Clean starting state",
+        "description": "Preserve unrelated edits before beginning integration."
+      },
+      {
+        "id": "n1",
+        "label": "Unresolved merge",
+        "description": "Inspect base, ours and theirs in the index."
+      },
+      {
+        "id": "n2",
+        "label": "Deliberate resolution",
+        "description": "Choose content that meets the combined requirement."
+      },
+      {
+        "id": "n3",
+        "label": "Stage and complete",
+        "description": "Stage the resolved path and create the merge commit."
+      },
+      {
+        "id": "n4",
+        "label": "Review and test",
+        "description": "Verify the final combined contents and two-parent result."
+      },
+      {
+        "id": "n5",
+        "label": "Abort recovery",
+        "description": "Exit unresolved merge and verify restored main contents."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "begin conflicting merge"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "understand both intents"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "stage resolved path"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "verify combined candidate"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "choose merge abort"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect the three inputs",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Deleting markers alone is not a design decision; read each change and its purpose."
+      },
+      {
+        "title": "Complete a reviewed resolution",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Stage the actual resolution, then inspect and test the combined behavior."
+      },
+      {
+        "title": "Use the explicit abort lifecycle",
+        "activeNodes": [
+          "n1",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "The fixture verifies restoration after abort; clean preconditions make recovery more predictable."
+      }
+    ]
+  },
+  "remotes-fetch": {
+    "title": "Fetch updates observations before integration changes HEAD",
+    "summary": "The local reviewer clone fetches from the owned source repository. It does not exercise network credentials, branch protection or push.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Source new commit",
+        "description": "The fixture source repository advances its main tip."
+      },
+      {
+        "id": "n1",
+        "label": "Reviewer HEAD",
+        "description": "Current branch and files remain at the old snapshot."
+      },
+      {
+        "id": "n2",
+        "label": "Fetch objects and refs",
+        "description": "Fetch records the source state locally."
+      },
+      {
+        "id": "n3",
+        "label": "Updated origin/main",
+        "description": "Remote-tracking reference now includes the descendant."
+      },
+      {
+        "id": "n4",
+        "label": "Review difference",
+        "description": "Inspect new commits and choose integration."
+      },
+      {
+        "id": "n5",
+        "label": "Fast-forward HEAD",
+        "description": "ff-only advances the reviewer branch if no divergence exists."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "retrieve source objects"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "update tracking ref"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "compare current snapshot"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "inspect fetched difference"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "explicit ff-only integration"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Record the source separately",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A remote-tracking ref is a local observation of the latest fetched state."
+      },
+      {
+        "title": "Inspect without changing HEAD",
+        "activeNodes": [
+          "n1",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Fetch alone leaves the current branch and working snapshot unchanged."
+      },
+      {
+        "title": "Choose integration deliberately",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "ff-only refuses unexpected divergence. Updating refs requires a separate integration choice."
+      }
+    ]
+  },
+  "bisect": {
+    "title": "Use one reliable predicate across historical candidates",
+    "summary": "Good and bad name the selected behavior. A candidate that cannot test it meaningfully may need skip.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Known good and bad",
+        "description": "Bound the search with observed behavior."
+      },
+      {
+        "id": "n1",
+        "label": "Historical candidate",
+        "description": "Bisect selects a revision within the range."
+      },
+      {
+        "id": "n2",
+        "label": "Repeatable predicate",
+        "description": "Evaluate the same precise regression on the candidate."
+      },
+      {
+        "id": "n3",
+        "label": "Classify observation",
+        "description": "Good, bad or skip for unrelated inability to test."
+      },
+      {
+        "id": "n4",
+        "label": "First bad candidate",
+        "description": "Search narrows to the regression candidate."
+      },
+      {
+        "id": "n5",
+        "label": "Reproduce and exit",
+        "description": "Test candidate and parent, then reset bisect state."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "start bounded search"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "run controlled test"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "record observed result"
+      },
+      {
+        "from": "n3",
+        "to": "n1",
+        "label": "narrow remaining range"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "search resolves"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "confirm condition and finish"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Define the behavior",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Pin relevant inputs/dependencies so the predicate means the same thing on each revision."
+      },
+      {
+        "title": "Classify honestly",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "A flaky predicate or unrelated build failure can misdirect the search; skip unevaluable candidates."
+      },
+      {
+        "title": "Confirm the boundary",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "Reproduce the candidate and its parent before concluding causation; leave bisect mode afterward."
+      }
+    ]
+  },
+  "rebase": {
+    "title": "A new base produces new commit identities",
+    "summary": "The owned private fixture replays its topic onto main and verifies ancestry and contents. Shared history needs coordination.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Original base",
+        "description": "Private topic began at this snapshot."
+      },
+      {
+        "id": "n1",
+        "label": "Old topic commit",
+        "description": "Existing commit has the old parent context."
+      },
+      {
+        "id": "n2",
+        "label": "Advanced main",
+        "description": "The new agreed base has additional changes."
+      },
+      {
+        "id": "n3",
+        "label": "Replayed topic commit",
+        "description": "Reapply selected change after main; identity changes."
+      },
+      {
+        "id": "n4",
+        "label": "Final verification",
+        "description": "Inspect new ancestry, dependencies and file contents."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "original topic parent"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "main advances independently"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "replay selected change"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "new parent context"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "review and test result"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect the original history",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A private replay begins from known ownership and base; shared users may depend on old identities."
+      },
+      {
+        "title": "Change the parent context",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Rebase creates a different history, rather than merely changing how the log is displayed."
+      },
+      {
+        "title": "Verify the new candidate",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "New parent context needs fresh checks and review. Follow the operation continue/abort lifecycle for conflicts."
+      }
+    ]
   }
 }

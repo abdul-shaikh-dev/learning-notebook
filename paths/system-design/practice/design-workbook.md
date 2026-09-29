@@ -1,5 +1,8 @@
 # System Design workbook
 
+Visual companions in the notebook: [Transaction boundary](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/system-design/transactions) · [Durable outbox delivery](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/system-design/outbox). The original text traces below remain available for offline use.
+
+
 Use synthetic data and paper diagrams. No infrastructure provisioning is required. These are reference arguments, not a deployed service or a reliability certification.
 
 ## 1. Write the problem before drawing boxes

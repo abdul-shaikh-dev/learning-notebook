@@ -104,5 +104,790 @@
         ]
       }
     ]
+  },
+  "sessions": {
+    "title": "Rotate, expire and revoke server session state",
+    "summary": "The fixture uses a local dictionary and injected time. Its five-minute expiry is a teaching policy, not a universal lifetime.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Authenticated fixture principal",
+        "description": "Identity is already established by a trusted adapter."
+      },
+      {
+        "id": "n1",
+        "label": "Login and rotation",
+        "description": "Generate a new random opaque ID; invalidate the old ID."
+      },
+      {
+        "id": "n2",
+        "label": "Stored session expiry",
+        "description": "Login at 1 records expiry at 301."
+      },
+      {
+        "id": "n3",
+        "label": "Valid lookup at 300",
+        "description": "The current ID remains usable before expiry."
+      },
+      {
+        "id": "n4",
+        "label": "Denied at 301",
+        "description": "The exact expiry boundary rejects use."
+      },
+      {
+        "id": "n5",
+        "label": "Logout revocation",
+        "description": "Remove server authority for the session."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "establish local session"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "store authenticated context"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "time before expiry"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "time reaches expiry"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "explicit logout"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "old identifier invalidated"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Rotate authority",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          5
+        ],
+        "explanation": "Login creation is not credential verification; rotation makes the prior bearer ID unusable."
+      },
+      {
+        "title": "Test exact time boundaries",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Injected time verifies success at 300 and failure at 301 without sleeping."
+      },
+      {
+        "title": "Revoke server state",
+        "activeNodes": [
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Logout must invalidate authority rather than only clear a display flag; shared storage remains an extension."
+      }
+    ]
+  },
+  "csrf": {
+    "title": "A mutation needs several independent gates",
+    "summary": "The lesson route contract establishes session, CSRF policy, object authorization and allowed fields before mutation. Denials must preserve state.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Mutation request",
+        "description": "Browser credentials alone do not establish deliberate intent."
+      },
+      {
+        "id": "n1",
+        "label": "Valid session",
+        "description": "Establish current authenticated context."
+      },
+      {
+        "id": "n2",
+        "label": "CSRF decision",
+        "description": "Verify the session-bound token and framework/origin policy."
+      },
+      {
+        "id": "n3",
+        "label": "Object action permission",
+        "description": "Authorize this principal for this resource and action."
+      },
+      {
+        "id": "n4",
+        "label": "Allowed-field validation",
+        "description": "Validate the narrow title-update contract."
+      },
+      {
+        "id": "n5",
+        "label": "Mutation and audit",
+        "description": "Apply only the permitted change and record safe outcome."
+      },
+      {
+        "id": "n6",
+        "label": "Denied with unchanged state",
+        "description": "Failed gates leave the persisted object untouched."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "establish session"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "authenticated request"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "CSRF accepted"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "object action granted"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "allowed payload"
+      },
+      {
+        "from": "n1",
+        "to": "n6",
+        "label": "absent or expired session"
+      },
+      {
+        "from": "n2",
+        "to": "n6",
+        "label": "missing or wrong token"
+      },
+      {
+        "from": "n3",
+        "to": "n6",
+        "label": "foreign object"
+      },
+      {
+        "from": "n4",
+        "to": "n6",
+        "label": "invalid fields"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish request context",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n6"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          5,
+          6
+        ],
+        "explanation": "Expired sessions and wrong or cross-session tokens must fail."
+      },
+      {
+        "title": "Authorize the concrete object",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4",
+          "n6"
+        ],
+        "activeEdges": [
+          2,
+          3,
+          7
+        ],
+        "explanation": "A matching token does not grant ownership or stop same-origin XSS."
+      },
+      {
+        "title": "Verify effects and denied state",
+        "activeNodes": [
+          "n4",
+          "n5",
+          "n6"
+        ],
+        "activeEdges": [
+          4,
+          8
+        ],
+        "explanation": "The local HTTP extension checks denied status and unchanged SQLite rows; browser behavior remains separate evidence."
+      }
+    ]
+  },
+  "oauth-roles": {
+    "title": "Trace code issuance to protected API access",
+    "summary": "The client, authorization server and resource server have distinct responsibilities. This conceptual flow is not executed by the offline fixture.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Resource owner",
+        "description": "The learner participates in the provider authorization flow."
+      },
+      {
+        "id": "n1",
+        "label": "Notebook client",
+        "description": "Requests access for the document API."
+      },
+      {
+        "id": "n2",
+        "label": "Authorization server",
+        "description": "Processes authorization and returns a code."
+      },
+      {
+        "id": "n3",
+        "label": "Token endpoint",
+        "description": "Redeems code plus applicable proof under provider policy."
+      },
+      {
+        "id": "n4",
+        "label": "Document API",
+        "description": "Receives an access token for its intended audience."
+      },
+      {
+        "id": "n5",
+        "label": "Validation and object policy",
+        "description": "Validate token, map identity and authorize document action."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "initiate client flow"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "authorization request"
+      },
+      {
+        "from": "n2",
+        "to": "n1",
+        "label": "return code"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "code and applicable proof"
+      },
+      {
+        "from": "n3",
+        "to": "n1",
+        "label": "issue access token"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "present API access token"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "validate then authorize"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Identify participant roles",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "OAuth access does not by itself establish the client login identity contract."
+      },
+      {
+        "title": "Redeem under provider rules",
+        "activeNodes": [
+          "n1",
+          "n3"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Do not invent validation by decoding a token; use maintained provider mechanisms."
+      },
+      {
+        "title": "Authorize the API object",
+        "activeNodes": [
+          "n1",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          5,
+          6
+        ],
+        "explanation": "Access token scope and a provider login are not substitutes for document ownership policy."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "oidc-login": {
+    "title": "Verified identity must be mapped before object policy",
+    "summary": "The opt-in OIDC adapter verifies the identity response. The synthetic Principal constructor begins after that real authentication boundary.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "OIDC identity response",
+        "description": "An ID token is intended for the configured client."
+      },
+      {
+        "id": "n1",
+        "label": "Maintained client validator",
+        "description": "Validate metadata, key and applicable claim/correlation rules."
+      },
+      {
+        "id": "n2",
+        "label": "Verified issuer and subject",
+        "description": "Stable identity retains its issuer context."
+      },
+      {
+        "id": "n3",
+        "label": "Internal account mapping",
+        "description": "Map the trusted identity to an internal principal and tenant."
+      },
+      {
+        "id": "n4",
+        "label": "Document policy",
+        "description": "Decide the requested action on the particular object."
+      },
+      {
+        "id": "n5",
+        "label": "Rejected identity response",
+        "description": "Unverified or invalid claims cannot create a principal."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "validate identity response"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "configured rules succeed"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "map stable identity"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "apply object permission"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "validation fails"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Validate for the client",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          4
+        ],
+        "explanation": "Decoded payloads are not verified identity and an ID token is not a universal API bearer token."
+      },
+      {
+        "title": "Map issuer and subject",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Email can change; use the issuer contract and an explicit account/tenant mapping."
+      },
+      {
+        "title": "Keep authorization separate",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Successful login does not establish document ownership. The optional provider integration supplies its own negative tests."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "pkce-state": {
+    "title": "Correlation and code redemption protect different boundaries",
+    "summary": "Use the chosen library and provider contract. This diagram restates the training flow without implementing cryptography or live requests.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Flow initiation",
+        "description": "Library stores per-request correlation and verifier."
+      },
+      {
+        "id": "n1",
+        "label": "Authorization request",
+        "description": "Send S256 challenge, state and OIDC nonce as applicable."
+      },
+      {
+        "id": "n2",
+        "label": "Callback correlation",
+        "description": "Client/library checks returned request context."
+      },
+      {
+        "id": "n3",
+        "label": "Code redemption",
+        "description": "Send code and per-flow verifier to token endpoint."
+      },
+      {
+        "id": "n4",
+        "label": "Identity validation",
+        "description": "Client validates ID token and required nonce."
+      },
+      {
+        "id": "n5",
+        "label": "Rejected flow",
+        "description": "Wrong verifier, reused code or mismatched correlation fails at its owning boundary."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "create one-time flow context"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "receive callback"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "matching client context"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "provider redemption succeeds"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "state mismatch"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "wrong verifier or reused code"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "identity validation mismatch"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare separate proofs",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "PKCE proof, callback state and OIDC nonce have distinct roles."
+      },
+      {
+        "title": "Check callback before redemption",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          2,
+          4
+        ],
+        "explanation": "The client rejects mismatched correlation; the authorization server owns code/proof redemption checks."
+      },
+      {
+        "title": "Observe real denials",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          5,
+          6
+        ],
+        "explanation": "Negative evidence belongs to the actual library/provider integration; local policy tests do not prove PKCE."
+      }
+    ]
+  },
+  "token-validation": {
+    "title": "Token syntax is not trusted API identity",
+    "summary": "Use a maintained validator configured for the API token format and purpose; opaque tokens follow the provider mechanism.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Untrusted bearer token",
+        "description": "Decoding JSON or base64 is not validation."
+      },
+      {
+        "id": "n1",
+        "label": "Configured validator",
+        "description": "Use trusted key/issuer sources and allowed algorithms."
+      },
+      {
+        "id": "n2",
+        "label": "Audience, lifetime and purpose",
+        "description": "Signature success alone does not establish the API contract."
+      },
+      {
+        "id": "n3",
+        "label": "Trusted minimal claims",
+        "description": "Only successfully validated claims enter mapping."
+      },
+      {
+        "id": "n4",
+        "label": "Principal and object policy",
+        "description": "Map internal identity, then authorize the action."
+      },
+      {
+        "id": "n5",
+        "label": "Denied validation",
+        "description": "Wrong issuer/audience, expiry, tampering or purpose cannot pass."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "validate configured mechanism"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "verify key and claim policy"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "all applicable rules succeed"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "map then authorize"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "invalid signature or key policy"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "claim or purpose mismatch"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Use trusted configuration",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          4
+        ],
+        "explanation": "A token cannot select its own arbitrary algorithm or key destination."
+      },
+      {
+        "title": "Check more than the signature",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          2,
+          5
+        ],
+        "explanation": "A signed token for another audience or issuer still fails."
+      },
+      {
+        "title": "Apply business authorization",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Validated minimal claims are mapped before object policy. The offline kit implements none of these cryptographic checks."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "secrets": {
+    "title": "Rotation includes consumers and old-value revocation",
+    "summary": "The lesson keeps raw secret values out of evidence. A source deletion or rollback must not reactivate compromised authority.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Create replacement",
+        "description": "Use the issuing provider or secret manager lifecycle."
+      },
+      {
+        "id": "n1",
+        "label": "Deploy consumers",
+        "description": "Move dependent components under a defined overlap policy."
+      },
+      {
+        "id": "n2",
+        "label": "Verify new value",
+        "description": "Observe legitimate use and relevant failure cases."
+      },
+      {
+        "id": "n3",
+        "label": "Revoke old value",
+        "description": "Confirm the old credential no longer grants access."
+      },
+      {
+        "id": "n4",
+        "label": "Safe audit evidence",
+        "description": "Record sanitized versions, case IDs and outcomes."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "distribute through managed mechanism"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "verify consumers"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "complete transition"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "record revocation evidence"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Plan the transition",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Rotation changes both the credential and the consumers that depend on it."
+      },
+      {
+        "title": "Verify before completing revocation",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Use the supported provider lifecycle and document overlap/failure policy."
+      },
+      {
+        "title": "Preserve safe evidence",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Do not log raw values. Rollback cannot silently re-enable a compromised key."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
   }
 }

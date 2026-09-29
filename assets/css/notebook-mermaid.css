@@ -6,3 +6,4 @@
 .mermaid-view.is-fit svg{min-width:0}
 
 .mermaid-view.is-fit svg{min-width:0!important}@media print{.mermaid-view svg{min-width:0!important}}
+.flow-text-alternative{margin:1rem 0}.flow-text-alternative details{margin-top:.6rem}.finance-course .example details{background:#fff;color:#17392f}.finance-course .example details>summary{color:#17392f}.finance-concept-diagram dd{margin:0 0 1rem 1rem}.finance-concept-diagram dt{font-weight:700}

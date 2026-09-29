@@ -1,0 +1,710 @@
+{
+  "binary-search": {
+    "title": "Shrink the remaining sorted range",
+    "summary": "Arrows show the inclusive-range algorithm. Sorted input under the same comparison is a precondition; a matching index need not be the first duplicate.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Remaining low..high",
+        "description": "Start with 0 through len(values)-1."
+      },
+      {
+        "id": "n1",
+        "label": "Range nonempty?",
+        "description": "Continue only while low <= high."
+      },
+      {
+        "id": "n2",
+        "label": "Compare middle",
+        "description": "Compute mid and compare values[mid] with target."
+      },
+      {
+        "id": "n3",
+        "label": "Found index",
+        "description": "Equality returns mid."
+      },
+      {
+        "id": "n4",
+        "label": "Shrink range",
+        "description": "Below target: low=mid+1. Above target: high=mid-1."
+      },
+      {
+        "id": "n5",
+        "label": "Missing: -1",
+        "description": "An empty range means no matching value was found."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check bounds"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "yes"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "no"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "equal"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "below or above"
+      },
+      {
+        "from": "n4",
+        "to": "n1",
+        "label": "strictly smaller range"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check the invariant",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "If an unfound target exists it stays in the remaining range. Empty input immediately returns -1."
+      },
+      {
+        "title": "Match or exclude",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Return on equality; otherwise discard the middle and the side that cannot contain the target."
+      },
+      {
+        "title": "Repeat on a smaller range",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "Every update shrinks the interval, eventually finding a match or exhausting it."
+      }
+    ]
+  },
+  "topological": {
+    "title": "Dependencies and ready vertices",
+    "summary": "A dependency edge means its source must precede its target. Kahn’s algorithm removes dependencies and rejects a cycle when not all vertices are emitted.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Count incoming edges",
+        "description": "Include neighbor-only vertices in the vertex set."
+      },
+      {
+        "id": "n1",
+        "label": "Ready queue",
+        "description": "Queue vertices with zero remaining prerequisites."
+      },
+      {
+        "id": "n2",
+        "label": "Emit next vertex",
+        "description": "Remove a ready vertex and append it to the order."
+      },
+      {
+        "id": "n3",
+        "label": "Remove outgoing dependencies",
+        "description": "Decrement each neighbor indegree; enqueue neighbors that reach zero."
+      },
+      {
+        "id": "n4",
+        "label": "Check emitted count",
+        "description": "When the queue empties, compare order length with vertex count."
+      },
+      {
+        "id": "n5",
+        "label": "Valid order",
+        "description": "Equal counts mean every vertex was emitted."
+      },
+      {
+        "id": "n6",
+        "label": "Cycle error",
+        "description": "Unequal counts raise dependency cycle."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "zero indegree"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "queue nonempty"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "process outgoing edges"
+      },
+      {
+        "from": "n3",
+        "to": "n1",
+        "label": "new zero indegrees"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "queue empty"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "all emitted"
+      },
+      {
+        "from": "n4",
+        "to": "n6",
+        "label": "vertices remain"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Find initially ready vertices",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Vertices with no incoming dependencies can come first."
+      },
+      {
+        "title": "Remove one dependency layer",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2,
+          3
+        ],
+        "explanation": "Emit a ready vertex and update neighbors. Multiple valid orders may exist."
+      },
+      {
+        "title": "Check completeness",
+        "activeNodes": [
+          "n1",
+          "n4",
+          "n5",
+          "n6"
+        ],
+        "activeEdges": [
+          4,
+          5,
+          6
+        ],
+        "explanation": "A partial order is not success: un-emitted vertices reveal a directed cycle."
+      }
+    ]
+  },
+  "dijkstra": {
+    "title": "A cheaper detour beats the direct edge",
+    "summary": "The lesson graph has A to B cost 8, A to C cost 2 and C to B cost 1. Nonnegative weights support this distance reasoning.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "A: cost 0",
+        "description": "The start has distance zero."
+      },
+      {
+        "id": "n1",
+        "label": "C: cost 2",
+        "description": "The first relaxation discovers C at cost 2."
+      },
+      {
+        "id": "n2",
+        "label": "B candidate: 8",
+        "description": "The direct edge initially proposes B at cost 8."
+      },
+      {
+        "id": "n3",
+        "label": "B improved: 3",
+        "description": "Popping C proposes 2+1=3, replacing the best-known distance to B."
+      },
+      {
+        "id": "n4",
+        "label": "Old B=8 entry skipped",
+        "description": "The old heap entry remains but is stale once B has distance 3."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "A to C: 2"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "A to B: 8"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "C to B: 1"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "best cost decreases"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "later stale entry"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Discover candidates",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "After exploring A, the heap contains C at 2 and B at 8."
+      },
+      {
+        "title": "Relax through the cheapest candidate",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Pop C first and improve B to 3. First discovery is not finalization."
+      },
+      {
+        "title": "Skip obsolete work",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "When the old B=8 entry is popped, it differs from distance[B] and is skipped."
+      }
+    ]
+  },
+  "two-pointers": {
+    "title": "Move the pointer that can improve the sum",
+    "summary": "Sorted input makes the discard argument valid. The two indexes refer to the sorted input.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Opposite endpoints",
+        "description": "Initialize left=0 and right=len(values)-1."
+      },
+      {
+        "id": "n1",
+        "label": "left < right?",
+        "description": "Require two distinct positions."
+      },
+      {
+        "id": "n2",
+        "label": "Compare sum",
+        "description": "Compare values[left]+values[right] with the target."
+      },
+      {
+        "id": "n3",
+        "label": "Return pair",
+        "description": "Equal sum returns the two indexes."
+      },
+      {
+        "id": "n4",
+        "label": "Move one endpoint",
+        "description": "Too small: left+=1. Too large: right-=1."
+      },
+      {
+        "id": "n5",
+        "label": "No pair",
+        "description": "If endpoints meet, return None."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "yes"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "no"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "equal"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "too small or large"
+      },
+      {
+        "from": "n4",
+        "to": "n1",
+        "label": "shorter interval"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Require two positions",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "Empty and one-value inputs have no two distinct positions."
+      },
+      {
+        "title": "Use ordering to discard",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "A too-small sum needs a larger left value; a too-large sum needs a smaller right value."
+      },
+      {
+        "title": "Terminate as the interval shrinks",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "Each move shortens the interval; the loop ends with a pair or None."
+      }
+    ]
+  },
+  "backtracking": {
+    "title": "Choose, recurse, restore",
+    "summary": "The subset generator explores exclusion first, then inclusion. A copied result preserves each leaf independently.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "visit(index)",
+        "description": "The state is index plus selected values."
+      },
+      {
+        "id": "n1",
+        "label": "At end?",
+        "description": "Compare index with the number of inputs."
+      },
+      {
+        "id": "n2",
+        "label": "Copy selected",
+        "description": "At a leaf append selected.copy() and return."
+      },
+      {
+        "id": "n3",
+        "label": "Exclude current item",
+        "description": "Visit index+1 without appending the item."
+      },
+      {
+        "id": "n4",
+        "label": "Include current item",
+        "description": "Append the current item, then visit index+1."
+      },
+      {
+        "id": "n5",
+        "label": "Restore selected",
+        "description": "Pop the appended item when the include branch returns."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check leaf"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "yes"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "no"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "exclude branch returns"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "include branch returns"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Recognize a finished subset",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "At the final index copy the selection, so later edits cannot change that output."
+      },
+      {
+        "title": "Explore both choices",
+        "activeNodes": [
+          "n1",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "The exclusion branch completes before appending and exploring inclusion."
+      },
+      {
+        "title": "Restore the parent state",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Pop after inclusion so the caller sees the selection it had before this choice."
+      }
+    ]
+  },
+  "knapsack": {
+    "title": "Read previous-item states by moving downward",
+    "summary": "For one item of weight 2/value 3 at capacity 4, descending capacity prevents using that item twice. The correct 0/1 value is 3.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Previous dp: all zero",
+        "description": "Before the only item, every capacity allows the empty selection."
+      },
+      {
+        "id": "n1",
+        "label": "Capacity 4",
+        "description": "Read previous dp[2]=0 and set dp[4]=max(0,0+3)=3."
+      },
+      {
+        "id": "n2",
+        "label": "Capacity 3",
+        "description": "Read previous dp[1]=0 and set dp[3]=3."
+      },
+      {
+        "id": "n3",
+        "label": "Capacity 2",
+        "description": "Read previous dp[0]=0 and set dp[2]=3."
+      },
+      {
+        "id": "n4",
+        "label": "Answer dp[4]=3",
+        "description": "The capacity-4 cell was computed before dp[2] changed."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "process c=4 first"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "next lower capacity"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "next lower capacity"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "retained final cell"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Start from the previous item prefix",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Every source state is zero before processing this one item."
+      },
+      {
+        "title": "Move downward",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Capacities 4, 3, 2 read lower cells before those cells are updated this pass."
+      },
+      {
+        "title": "Take the item once",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "dp[4] stays 3. An upward traversal would reuse newly updated dp[2] and incorrectly produce 6."
+      }
+    ]
+  },
+  "algorithm-review": {
+    "title": "Three kinds of algorithm evidence",
+    "summary": "The lesson review checklist asks for a correctness argument, a cost argument and tests. The diagram organizes evidence; benchmarks alone prove neither correctness nor asymptotic growth.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Contract and invariant",
+        "description": "Define valid inputs, promised results and the property maintained during work."
+      },
+      {
+        "id": "n1",
+        "label": "Termination and result",
+        "description": "Show progress toward termination and why the final result meets the contract."
+      },
+      {
+        "id": "n2",
+        "label": "Representation and cost",
+        "description": "Name the representation, counted operations and worst-case bound."
+      },
+      {
+        "id": "n3",
+        "label": "Independent checks",
+        "description": "Compare a bounded simple oracle and adversarial cases; state resource limits."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "argue behavior"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "account for work"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "test selected cases"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Termination and result",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Show progress toward termination and why the final result meets the contract."
+      },
+      {
+        "title": "Representation and cost",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Name the representation, counted operations and worst-case bound."
+      },
+      {
+        "title": "Independent checks",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Compare a bounded simple oracle and adversarial cases; state resource limits."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  }
+}

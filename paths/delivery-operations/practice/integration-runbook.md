@@ -1,5 +1,8 @@
 # React + .NET + SQL release walkthrough
 
+Visual companions in the notebook: [Browser, proxy, API and database topology](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/delivery-operations/web-topology). The original text traces below remain available for offline use.
+
+
 This integration exercise uses your implementations from `react`, `dotnet` and `sql-server`. The complete stack is learner-built. The separate release_app.py kit runs immediately with standard Python; it is not evidence that this stack is deployed or authenticated.
 
 ## Topology and prerequisites

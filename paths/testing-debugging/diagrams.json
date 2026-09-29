@@ -86,6 +86,9 @@
         ],
         "explanation": "Assert one success, one conflict and version one; do not require a particular thread to win."
       }
+    ],
+    "textExampleSections": [
+      1
     ]
   },
   "integration-files": {
@@ -182,6 +185,543 @@
           4
         ],
         "explanation": "Real replacement is tested separately from an injected failure; this is not multi-writer coordination."
+      }
+    ]
+  },
+  "reproduce": {
+    "title": "Reduction must preserve the failure condition",
+    "summary": "The duplicate-ID example shrinks 1000 rows to two matching IDs. Removing a material row makes the failure disappear.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Recorded failure",
+        "description": "Exact command, runtime, expected result and observed failure."
+      },
+      {
+        "id": "n1",
+        "label": "Large input",
+        "description": "1000 synthetic rows reproduce the defect."
+      },
+      {
+        "id": "n2",
+        "label": "Two duplicate rows",
+        "description": "Reduce unrelated data while retaining ID a twice."
+      },
+      {
+        "id": "n3",
+        "label": "One row removed",
+        "description": "The duplicate condition is no longer present."
+      },
+      {
+        "id": "n4",
+        "label": "Failure disappears",
+        "description": "The changed observation identifies a material condition."
+      },
+      {
+        "id": "n5",
+        "label": "Minimal reproduction note",
+        "description": "Share the remaining fixture and explicit expected/observed outcomes."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "capture failing input"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "reduce unrelated rows"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "remove candidate condition"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "observe changed result"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "retain actual reproducer"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Capture before reducing",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Synthetic versioned input makes the failure repeatable without live private data."
+      },
+      {
+        "title": "Test what is material",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Failure disappearing after one duplicate row is removed supports a uniqueness-boundary hypothesis."
+      },
+      {
+        "title": "Keep the failing fixture",
+        "activeNodes": [
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "The final note preserves the two-row failure, command and runtime; it does not keep the nonfailing reduction as the reproducer."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "hypotheses": {
+    "title": "Make a prediction that an observation can disprove",
+    "summary": "The guided diagnosis contract includes index stop. For [4,8,16] with stop 1, the expected sum is independently 12.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Contract and input",
+        "description": "Sum indexes zero through stop; expected 12."
+      },
+      {
+        "id": "n1",
+        "label": "Observed mutant result",
+        "description": "The deliberate mutant prints 4."
+      },
+      {
+        "id": "n2",
+        "label": "Boundary hypothesis",
+        "description": "Suspect an exclusive slice endpoint."
+      },
+      {
+        "id": "n3",
+        "label": "Debugger observation",
+        "description": "values[:stop] is [4], omitting the needed 8."
+      },
+      {
+        "id": "n4",
+        "label": "Correction and regression",
+        "description": "Include stop+1 and assert an independent expected result."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "compare expectation with output"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "state a falsifiable cause"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "inspect slice at boundary"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "correct and discriminate"
+      }
+    ],
+    "steps": [
+      {
+        "title": "State the mismatch",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Keep the agreed contract separate from current arithmetic."
+      },
+      {
+        "title": "Choose a discriminating observation",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "A breakpoint is useful when it answers a concrete question about input and chosen branch."
+      },
+      {
+        "title": "Preserve the corrected behavior",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The regression distinguishes the mutant from the fix; changing only the printed message does not repair the function."
+      }
+    ]
+  },
+  "async-debugging": {
+    "title": "Cancel after acquisition and observe cleanup",
+    "summary": "The guided kit uses an event to establish readiness. The timeout is a hang guard; it does not order the tasks.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Resource acquired",
+        "description": "Child owns the synthetic resource."
+      },
+      {
+        "id": "n1",
+        "label": "Started event",
+        "description": "Signals acquisition before cancellation."
+      },
+      {
+        "id": "n2",
+        "label": "Parent cancels",
+        "description": "Cancel only after readiness is observed."
+      },
+      {
+        "id": "n3",
+        "label": "Cancellation cleanup",
+        "description": "The cancelled child’s finally appends released exactly once before cancellation propagates."
+      },
+      {
+        "id": "n4",
+        "label": "Caller observes cancellation",
+        "description": "Await propagates CancelledError and no commit."
+      },
+      {
+        "id": "n5",
+        "label": "Successful work commits",
+        "description": "Without cancellation, the child records committed before leaving the body."
+      },
+      {
+        "id": "n6",
+        "label": "Success cleanup",
+        "description": "The successful child’s finally also appends released exactly once."
+      },
+      {
+        "id": "n7",
+        "label": "Caller observes success",
+        "description": "Await finishes normally; assert both committed and released markers."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "signal actual readiness"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "parent waits then cancels"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "run finally cleanup"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "propagate cancellation after cleanup"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "allow successful work"
+      },
+      {
+        "from": "n5",
+        "to": "n6",
+        "label": "normal body completion enters finally"
+      },
+      {
+        "from": "n6",
+        "to": "n7",
+        "label": "return normally after cleanup"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish acquisition",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "The started event avoids racing cancellation against startup."
+      },
+      {
+        "title": "Observe cancellation and cleanup",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Assert cancellation propagation, no committed marker and exactly one released marker."
+      },
+      {
+        "title": "Check the success path too",
+        "activeNodes": [
+          "n1",
+          "n5",
+          "n6",
+          "n7"
+        ],
+        "activeEdges": [
+          4,
+          5,
+          6
+        ],
+        "explanation": "The separate successful case records committed, runs finally to record released, then finishes normally. It does not raise CancelledError. This local resource test does not prove process-kill or repeated-cancellation cleanup."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "coverage": {
+    "title": "A reached line can still miss a discriminating boundary",
+    "summary": "The lesson changes <=1440 to <1440. Both tests execute the comparison, but only the endpoint reveals the altered contract.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Duration contract",
+        "description": "1440 is valid; 1441 is invalid."
+      },
+      {
+        "id": "n1",
+        "label": "Altered comparison",
+        "description": "Mutant rejects exactly 1440."
+      },
+      {
+        "id": "n2",
+        "label": "Ordinary case 30",
+        "description": "Passes both original and mutant."
+      },
+      {
+        "id": "n3",
+        "label": "Boundary case 1440",
+        "description": "Expected acceptance distinguishes the mutant."
+      },
+      {
+        "id": "n4",
+        "label": "Observed evidence",
+        "description": "Record which assertion fails; coverage alone reports execution."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "deliberately alter rule"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "exercise ordinary input"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "exercise endpoint"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "surviving mutant"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "discriminating failure"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Name the altered rule",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "A controlled mutation asks whether assertions protect the actual contract."
+      },
+      {
+        "title": "Compare the two cases",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "30 reaches the comparison but misses the changed endpoint; 1440 exposes it."
+      },
+      {
+        "title": "Interpret evidence narrowly",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Line coverage cannot tell these tests apart. One caught mutant is not a universal quality score."
+      }
+    ]
+  },
+  "strategy": {
+    "title": "Choose test scope for the observable risk",
+    "summary": "The importer example needs parser, filesystem and command-route evidence. A future browser interface introduces another boundary.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Risk: corrupt report",
+        "description": "Invalid rows must not replace the saved report."
+      },
+      {
+        "id": "n1",
+        "label": "Unit parser test",
+        "description": "Control input classes and assert rejection."
+      },
+      {
+        "id": "n2",
+        "label": "Integration file test",
+        "description": "Use real collaborators and verify old bytes survive."
+      },
+      {
+        "id": "n3",
+        "label": "Complete local CLI route",
+        "description": "Observe actual process output and exit status."
+      },
+      {
+        "id": "n4",
+        "label": "Future browser route",
+        "description": "UI effects need a component or browser test."
+      },
+      {
+        "id": "n5",
+        "label": "Evidence limits",
+        "description": "Each passing scope leaves other product boundaries unproved."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check small input boundary"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "check real stored effect"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "check command entry point"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "browser evidence is separate"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "state unit limit"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "state local filesystem limit"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "state process-route limit"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Test the small behavior",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          4
+        ],
+        "explanation": "Parser tests cover types quickly but cannot observe browser rendering or persisted output."
+      },
+      {
+        "title": "Cross real collaborators",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          1,
+          5
+        ],
+        "explanation": "File readback checks storage effects; mocks need separate real-boundary checks."
+      },
+      {
+        "title": "Exercise the actual route",
+        "activeNodes": [
+          "n0",
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          2,
+          3,
+          6
+        ],
+        "explanation": "A local subprocess verifies the command route, while a stale-response UI bug needs its actual component/browser boundary."
       }
     ]
   }

@@ -1,5 +1,8 @@
 # Cluster evidence workbook
 
+Visual companions in the notebook: [Control-plane responsibilities](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/kubernetes/control-plane) · [GitOps drift and reconciliation](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/kubernetes/gitops) · [Recovery inputs](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/kubernetes/backup-production). The original text traces below remain available for offline use.
+
+
 ## Foundation object trace
 Draw Deployment→ReplicaSet→Pod and Service→ready EndpointSlices. Record desired versus available counts; map Pending, unavailable local image and HTTP readiness failure to their separate boundaries. Compare selector/label/port values in workload.json. Record the dedicated context and loopback server before any optional cluster operation.
 

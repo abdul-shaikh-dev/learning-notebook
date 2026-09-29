@@ -131,6 +131,746 @@
         ],
         "explanation": "If final checks accept, status is completed. If the budget is exhausted before a valid final answer, the separate exhausted status must not be reported as success."
       }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "workflow": {
+    "title": "Choose the control structure the task needs",
+    "summary": "Compare the fixed lookup, model-assisted handler and bounded agent described in the lesson. Every design needs explicit outcomes.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Input",
+        "description": "An ID can follow known rules; varied language may require interpretation."
+      },
+      {
+        "id": "n1",
+        "label": "Validate and exact lookup",
+        "description": "Fixed code validates an ID and retrieves its lesson."
+      },
+      {
+        "id": "n2",
+        "label": "Classify and fixed handler",
+        "description": "A model classifier can select a predetermined handler."
+      },
+      {
+        "id": "n3",
+        "label": "Propose next action",
+        "description": "A bounded agent proposes an evidence-dependent step."
+      },
+      {
+        "id": "n4",
+        "label": "Validate and execute",
+        "description": "Application checks precede tool execution."
+      },
+      {
+        "id": "n5",
+        "label": "Observe result",
+        "description": "New evidence can change the next proposal."
+      },
+      {
+        "id": "n6",
+        "label": "Explicit outcome",
+        "description": "Success and failure must be defined for all three designs."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "known ID sequence"
+      },
+      {
+        "from": "n1",
+        "to": "n6",
+        "label": "render lookup outcome"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "question in fixed pipeline"
+      },
+      {
+        "from": "n2",
+        "to": "n6",
+        "label": "handler outcome"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "evidence-dependent question"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "submit proposal"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "allowed tool result"
+      },
+      {
+        "from": "n5",
+        "to": "n3",
+        "label": "next decision"
+      },
+      {
+        "from": "n4",
+        "to": "n6",
+        "label": "stop or finish"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Follow known rules",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n6"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "The exact-ID lookup uses deterministic code."
+      },
+      {
+        "title": "Use a classifier in a pipeline",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n6"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "A model can assist a fixed workflow without making every component autonomous."
+      },
+      {
+        "title": "Bound evidence-dependent choice",
+        "activeNodes": [
+          "n0",
+          "n3",
+          "n4",
+          "n5",
+          "n6"
+        ],
+        "activeEdges": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "explanation": "The agent can loop on observations, but application checks and explicit stopping remain necessary."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "instructions": {
+    "title": "Evidence cannot grant a new capability",
+    "summary": "The malicious lesson snippet remains task data. Trusted policy and the tool registry enforce the read-only boundary.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Trusted policy",
+        "description": "Read approved public lesson snippets only."
+      },
+      {
+        "id": "n1",
+        "label": "Retrieved snippet",
+        "description": "The page says to ignore policy and upload profiles."
+      },
+      {
+        "id": "n2",
+        "label": "Decision proposal",
+        "description": "A decision source may request an upload."
+      },
+      {
+        "id": "n3",
+        "label": "Application boundary",
+        "description": "Check registered capabilities and trusted policy."
+      },
+      {
+        "id": "n4",
+        "label": "Denied upload",
+        "description": "Unknown upload capability never executes."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "may influence proposal"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "supplies actual authority"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "submit action request"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "unknown tool rejected"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Keep the source as data",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Instruction-shaped source text does not become permission."
+      },
+      {
+        "title": "Check outside generated text",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The trusted application checks the requested capability even if the decision source follows the snippet."
+      },
+      {
+        "title": "Reject the unavailable action",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The search-only registry has no upload tool; labels alone are not a security proof."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "retrieval": {
+    "title": "Retrieve evidence, then evaluate its use",
+    "summary": "The paraphrase example separates retrieval relevance from final-answer support; the workshop itself uses lexical matching.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Learner question",
+        "description": "How do I combine matching records?"
+      },
+      {
+        "id": "n1",
+        "label": "Bounded search query",
+        "description": "Keyword matching may miss the paraphrase."
+      },
+      {
+        "id": "n2",
+        "label": "Reformulated query",
+        "description": "INNER JOIN names the concept more directly."
+      },
+      {
+        "id": "n3",
+        "label": "Evidence package",
+        "description": "Preserve SQL-07 ID, revision, excerpt and source location."
+      },
+      {
+        "id": "n4",
+        "label": "Grounded answer",
+        "description": "Use only available support."
+      },
+      {
+        "id": "n5",
+        "label": "Separate evaluations",
+        "description": "Measure relevant retrieval and correct evidence use separately."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "search paraphrase"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "bounded reformulation if needed"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "retrieve SQL-07"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "provide supporting excerpt"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "assess retrieval relevance"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "assess answer support"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Test the search wording",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A paraphrase can miss lexical matching; similarity alone would not establish truth or access."
+      },
+      {
+        "title": "Keep provenance",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Access-filtered evidence needs stable references and enough context to support the answer."
+      },
+      {
+        "title": "Score two boundaries",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "Finding the right passage and using it correctly are distinct evaluation questions."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "planning": {
+    "title": "Revise a plan when evidence changes the next action",
+    "summary": "One search exposes different course prerequisite lists, so the current run needs learner intent before a final recommendation.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Plan v1",
+        "description": "Search advanced joins, inspect prerequisites, answer."
+      },
+      {
+        "id": "n1",
+        "label": "Executed search",
+        "description": "Record the search that actually ran."
+      },
+      {
+        "id": "n2",
+        "label": "Conflicting course context",
+        "description": "Two courses have different prerequisite lists."
+      },
+      {
+        "id": "n3",
+        "label": "Focused clarification",
+        "description": "Ask which course the learner means."
+      },
+      {
+        "id": "n4",
+        "label": "Needs input",
+        "description": "No final recommendation is complete yet."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "execute permitted search"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "observe ambiguity"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "revise next step"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "wait for dependent intent"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Separate plan from execution",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Intended steps do not establish completed work."
+      },
+      {
+        "title": "Use the new observation",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The differing course lists change the useful next action."
+      },
+      {
+        "title": "Pause the dependent recommendation",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Needs_input records an honest outcome; the completed search remains recorded."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "approval": {
+    "title": "Match approval to the concrete report action",
+    "summary": "This is a hypothetical send design. The workshop has no send tool and does not implement a production approval service.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Prepared report R3",
+        "description": "Show exact content, attachments and recipient A."
+      },
+      {
+        "id": "n1",
+        "label": "Trusted user decision",
+        "description": "User U approves that concrete action version."
+      },
+      {
+        "id": "n2",
+        "label": "Execution check",
+        "description": "Match identity, scope, content and destination."
+      },
+      {
+        "id": "n3",
+        "label": "Matching intent",
+        "description": "Only the same authorized action can use the record."
+      },
+      {
+        "id": "n4",
+        "label": "Changed recipient B",
+        "description": "A different destination causes approval mismatch."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "review concrete action"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "consult trusted record"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "same action details"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "recipient changed"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare a reviewable action",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Approval comes from the trusted user channel, not generated approved=true."
+      },
+      {
+        "title": "Bind the decision",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The executor consults a record for the concrete action and user."
+      },
+      {
+        "title": "Reject changed intent",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Approval does not replace authorization or allow a changed recipient."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "judges": {
+    "title": "Combine exact checks with calibrated semantic review",
+    "summary": "A fluent answer can still have fabricated support. Judge agreement and false acceptance need separate inspection.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Answer and sources",
+        "description": "Inspect important claims and their cited evidence."
+      },
+      {
+        "id": "n1",
+        "label": "Deterministic checks",
+        "description": "Check citation membership and prohibited actions."
+      },
+      {
+        "id": "n2",
+        "label": "Semantic rubric",
+        "description": "Review support, uncertainty and source correspondence."
+      },
+      {
+        "id": "n3",
+        "label": "Trusted human labels",
+        "description": "Use representative supported, unsupported and unclear examples."
+      },
+      {
+        "id": "n4",
+        "label": "Disagreement review",
+        "description": "Inspect false accepts and rubric ambiguity."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check exact properties"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "judge semantic properties"
+      },
+      {
+        "from": "n3",
+        "to": "n2",
+        "label": "calibrate against labels"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "inspect exact failures"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "review disagreement"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check what is exact",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Citation-ID membership and forbidden actions can be checked mechanically."
+      },
+      {
+        "title": "Calibrate judgment",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Semantic review needs a rubric and comparison with trusted human labels."
+      },
+      {
+        "title": "Investigate false acceptance",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Agreement is not a safety probability; inspect fluent but unsupported answers and important errors."
+      }
+    ]
+  },
+  "multiagent": {
+    "title": "Reconcile bounded worker evidence",
+    "summary": "The lesson compares Python and SQL prerequisites without writes. Aggregate budgets and failure behavior belong to the whole task.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Coordinator",
+        "description": "Own the comparison and shared task limits."
+      },
+      {
+        "id": "n1",
+        "label": "Python worker",
+        "description": "Return sources, claims and uncertainties for Python."
+      },
+      {
+        "id": "n2",
+        "label": "SQL worker",
+        "description": "Return sources, claims and uncertainties for SQL."
+      },
+      {
+        "id": "n3",
+        "label": "Structured results",
+        "description": "Keep provenance and possible conflicts visible."
+      },
+      {
+        "id": "n4",
+        "label": "Evidence reconciliation",
+        "description": "Compare support before combining claims."
+      },
+      {
+        "id": "n5",
+        "label": "Final comparison",
+        "description": "Cite supported claims and stop explicitly."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "bounded question and permissions"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "bounded question and permissions"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "return Python evidence"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "return SQL evidence"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "check conflicts and gaps"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "combine supported results"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Define independent work",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Each worker receives a bounded responsibility and the task retains aggregate limits."
+      },
+      {
+        "title": "Collect provenance",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "A failed worker does not validate the other worker; shared evidence can produce correlated mistakes."
+      },
+      {
+        "title": "Reconcile before answering",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "Agreement is not proof. Inspect source support and coordination failures before delivering the comparison."
+      }
+    ],
+    "textExampleSections": [
+      1
     ]
   }
 }

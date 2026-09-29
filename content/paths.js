@@ -215,7 +215,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Keep proposal control separate from tool execution",
+          "summary": "The offline workshop uses scripted proposals and in-memory fake tools. A function registry is not a sandbox.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Trusted host",
+              "description": "Supplies subject, run identity, allowed resources and policy."
+            },
+            {
+              "id": "n1",
+              "label": "Harness state machine",
+              "description": "Owns counters, state and stopping rules."
+            },
+            {
+              "id": "n2",
+              "label": "Scripted proposal source",
+              "description": "Proposes the next step without executing it."
+            },
+            {
+              "id": "n3",
+              "label": "Validation and authority",
+              "description": "Check shape, resource policy and required approval."
+            },
+            {
+              "id": "n4",
+              "label": "Scoped fake adapter",
+              "description": "Run only an allowed reviewed handler."
+            },
+            {
+              "id": "n5",
+              "label": "Recorded outcome",
+              "description": "Update state from confirmed results or uncertainty."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "configure actual scope"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "request next proposal"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "submit proposal data"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "dispatch only after gates"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "record observed result"
+            },
+            {
+              "from": "n5",
+              "to": "n1",
+              "label": "next step or explicit stop"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish trusted scope",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Host identity and configuration are distinct from proposal text."
+            },
+            {
+              "title": "Gate execution",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "The harness checks the proposal before invoking a capability."
+            },
+            {
+              "title": "Record an outcome",
+              "activeNodes": [
+                "n1",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "An execution result updates runtime state; a generated completion sentence is not a receipt."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "task-contract",
@@ -327,7 +439,137 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Waiting and uncertainty are separate run states",
+          "summary": "Read the allowed transitions as a lifecycle, not a claim that every operation ends successfully.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Ready",
+              "description": "May request the next proposal within current limits."
+            },
+            {
+              "id": "n1",
+              "label": "Waiting",
+              "description": "A valid write proposal awaits exact host approval."
+            },
+            {
+              "id": "n2",
+              "label": "Uncertain",
+              "description": "An effect may exist but no usable result is confirmed."
+            },
+            {
+              "id": "n3",
+              "label": "Done",
+              "description": "Accepted final step; ordinary execution stays terminal."
+            },
+            {
+              "id": "n4",
+              "label": "Stopped",
+              "description": "Denied, cancelled or limited outcomes stop normal dispatch."
+            },
+            {
+              "id": "n5",
+              "label": "Receipt reconciliation",
+              "description": "Trusted outcome lookup resolves the original effect."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n0",
+              "label": "valid read returns ready"
+            },
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "write needs review"
+            },
+            {
+              "from": "n1",
+              "to": "n0",
+              "label": "matching approval and current policy"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "denial or cancellation"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "response lost after effect"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "query original receipt"
+            },
+            {
+              "from": "n5",
+              "to": "n0",
+              "label": "confirmed recovery permits continuation"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "accepted final"
+            },
+            {
+              "from": "n0",
+              "to": "n4",
+              "label": "cancellation or budget stop"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Pause a proposed write",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "explanation": "Waiting is not successful completion. A cancelled run must not be revived by late approval."
+            },
+            {
+              "title": "Preserve ambiguous effects",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5,
+                6
+              ],
+              "explanation": "Uncertain means an effect may have happened; recovery needs trusted receipt evidence."
+            },
+            {
+              "title": "Stop explicitly",
+              "activeNodes": [
+                "n0",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                7,
+                8
+              ],
+              "explanation": "Done and other terminal outcomes prevent accidental ordinary execution afterward."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "state-context",
@@ -766,7 +1008,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Review exact intent and recheck current authority",
+          "summary": "The toy fingerprint is an equality aid. It is not authentication, encryption or a production approval protocol.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Pending save",
+              "description": "save_note L1 with Review indexes text."
+            },
+            {
+              "id": "n1",
+              "label": "Canonical intent",
+              "description": "Bind run, subject, call ID, tool and arguments."
+            },
+            {
+              "id": "n2",
+              "label": "Trusted host review",
+              "description": "Approve the displayed pending fingerprint."
+            },
+            {
+              "id": "n3",
+              "label": "Current policy and intent",
+              "description": "Revalidate permissions and unchanged arguments."
+            },
+            {
+              "id": "n4",
+              "label": "One dispatch",
+              "description": "A successful dispatch consumes approval."
+            },
+            {
+              "id": "n5",
+              "label": "Mismatch or denial",
+              "description": "Changed text, restored review or revoked permission prevents reuse."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "prepare scoped fingerprint"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "show exact operation"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "trusted decision"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "match and current grant"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "changed intent or denied policy"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Show the concrete operation",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "The reviewer sees meaningful arguments and destination before the host decides."
+            },
+            {
+              "title": "Recheck after waiting",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Approval cannot override a current authorization denial."
+            },
+            {
+              "title": "Consume only matching approval",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Changed arguments invalidate the reviewed intent. Restored pending work requires fresh review in the toy."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "deadlines",
@@ -975,7 +1322,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A lost response requires receipt reconciliation",
+          "summary": "The fake store commits a note and scoped receipt together in one local method. This does not establish distributed or crash-durable behavior.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Operation C2",
+              "description": "Stable subject/task identity and canonical payload."
+            },
+            {
+              "id": "n1",
+              "label": "Note plus receipt",
+              "description": "Fake store commits N1 and receipt C2 together."
+            },
+            {
+              "id": "n2",
+              "label": "Lost response",
+              "description": "Adapter cannot deliver a usable completion response."
+            },
+            {
+              "id": "n3",
+              "label": "Uncertain run",
+              "description": "Do not issue a blind second write."
+            },
+            {
+              "id": "n4",
+              "label": "Authoritative lookup",
+              "description": "Host queries the same store using C2."
+            },
+            {
+              "id": "n5",
+              "label": "Confirmed outcome",
+              "description": "Matching receipt establishes the original effect."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "submit same logical intent"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "simulate reply loss"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "preserve uncertainty"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "reconcile original identity"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "matching receipt found"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Commit the identity with the effect",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Operation identity is bound to its payload; changing arguments with the same ID conflicts."
+            },
+            {
+              "title": "Report uncertainty",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "A timeout is missing evidence, not proof of failure or success."
+            },
+            {
+              "title": "Confirm without a new save",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "The receipt resolves the original effect; new generated IDs are not proof of new user intent."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "checkpoints",
@@ -1086,7 +1538,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Restore state without restoring approval authority",
+          "summary": "The workshop validates trusted checkpoint JSON and preserves spent budgets. Optional SQLite labs add a separate local persistence boundary.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Runtime checkpoint",
+              "description": "Run identity, state, cursor, pending proposal and used budgets."
+            },
+            {
+              "id": "n1",
+              "label": "Versioned JSON",
+              "description": "Schema v2 includes final text, stop reason and receipt references."
+            },
+            {
+              "id": "n2",
+              "label": "Restore validation",
+              "description": "Check version, script identity and expected host identity."
+            },
+            {
+              "id": "n3",
+              "label": "Preserved usage",
+              "description": "Spent proposal/elapsed usage remains spent."
+            },
+            {
+              "id": "n4",
+              "label": "Fresh pending review",
+              "description": "Approval authority is omitted; waiting writes need review."
+            },
+            {
+              "id": "n5",
+              "label": "Rejected checkpoint",
+              "description": "Unsupported or inconsistent state cannot dispatch."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "serialize trusted state"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "load through trusted host"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "valid counters and lifecycle"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "pending write restored"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "unknown or inconsistent schema"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Save explicit state",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Checkpoint data records observed state; JSON validation does not authenticate it."
+            },
+            {
+              "title": "Validate recovery inputs",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                1,
+                4
+              ],
+              "explanation": "Unknown schemas need rejection or an explicit tested migration."
+            },
+            {
+              "title": "Preserve budget and review",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Restore is not a new entitlement, and omitted approval must not be reconstructed from prose."
+            }
+          ]
+        }
       },
       {
         "id": "context-lifecycle",
@@ -1293,7 +1847,107 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Draw a separate compute boundary",
+          "summary": "This is an architecture extension. The workshop executes reviewed in-memory functions and does not implement a sandbox.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Trusted host",
+              "description": "Own identity, policy, approval, receipts and secrets."
+            },
+            {
+              "id": "n1",
+              "label": "Scoped request",
+              "description": "Bounded inputs carry only needed task data."
+            },
+            {
+              "id": "n2",
+              "label": "Isolated compute",
+              "description": "Temporary workspace with explicit filesystem, network and resource controls."
+            },
+            {
+              "id": "n3",
+              "label": "Untrusted artifact",
+              "description": "Result or artifact is bounded and remains untrusted."
+            },
+            {
+              "id": "n4",
+              "label": "Host validation",
+              "description": "Validate the result and choose the next action."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "minimize authority and data"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "cross controlled boundary"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "produce bounded result"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "validate before use"
+            },
+            {
+              "from": "n4",
+              "to": "n0",
+              "label": "record and decide"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Keep authority with the host",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Raw host credentials are not copied into compute by default."
+            },
+            {
+              "title": "Constrain actual execution",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "A registry or container name alone does not establish configured isolation."
+            },
+            {
+              "title": "Validate returned artifacts",
+              "activeNodes": [
+                "n0",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Stopping a worker does not undo effects already sent; reconcile those separately."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "concurrency",
@@ -1362,7 +2016,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reject writes from a stale lease owner",
+          "summary": "This conceptual extension requires enforcement by protected storage. The single-worker workshop does not implement leases or fencing.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Worker A token 7",
+              "description": "A obtains the first lease and then pauses."
+            },
+            {
+              "id": "n1",
+              "label": "Lease expires",
+              "description": "A no longer has current ownership."
+            },
+            {
+              "id": "n2",
+              "label": "Worker B token 8",
+              "description": "B obtains a newer token and advances state."
+            },
+            {
+              "id": "n3",
+              "label": "A resumes token 7",
+              "description": "The old worker tries to write."
+            },
+            {
+              "id": "n4",
+              "label": "Protected storage",
+              "description": "Compare token 7 with the current token 8."
+            },
+            {
+              "id": "n5",
+              "label": "Stale write rejected",
+              "description": "Storage enforcement prevents the old overwrite."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "pause beyond ownership"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "grant newer ownership"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "resume old worker"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "establish latest token"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "submit stale write"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "7 is older than 8"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Observe ownership change",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A lease can expire while its old worker is paused."
+            },
+            {
+              "title": "Require receiver enforcement",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3,
+                4
+              ],
+              "explanation": "Logging a fencing token does not prevent a write; the protected receiver must check it."
+            },
+            {
+              "title": "Separate effects from checkpoints",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "Checkpoint CAS can reject stale state updates while external effects still need their own identity or fencing contract."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "replay",
@@ -1419,7 +2185,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Historical replay and live resume have different effects",
+          "summary": "Recorded call C2 can be displayed offline. Pending live work requires current policy, receipt reconciliation and compatible contracts.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Versioned trace",
+              "description": "Retain proposals, results and schema/policy/adapter configuration."
+            },
+            {
+              "id": "n1",
+              "label": "Offline replay",
+              "description": "Use recorded C2 and recorded receipt R2."
+            },
+            {
+              "id": "n2",
+              "label": "No live effect",
+              "description": "Historical display must not execute fresh writes."
+            },
+            {
+              "id": "n3",
+              "label": "Live resume",
+              "description": "Continue pending C2 against current systems."
+            },
+            {
+              "id": "n4",
+              "label": "Current checks",
+              "description": "Reconcile receipts and validate policy and contract versions."
+            },
+            {
+              "id": "n5",
+              "label": "Migration or rejection",
+              "description": "Changed argument semantics require an explicit decision."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "select recorded path"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "display historical evidence"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "select unfinished live work"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "check current authority and outcome"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "contract meaning changed"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Replay recorded inputs",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Offline trace replay does not grant permission to repeat business effects."
+            },
+            {
+              "title": "Resume against current boundaries",
+              "activeNodes": [
+                "n0",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Old authorization and model configuration do not necessarily remain valid."
+            },
+            {
+              "title": "Reject silent reinterpretation",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "A field changing from minutes to hours requires explicit migration or rejection before live execution."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "audit",
@@ -1643,7 +2514,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Investigate an uncertain save before another effect",
+          "summary": "The runbook preserves operation evidence. Its actions are design practice for a future service, not an executed incident response.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Freeze new effects",
+              "description": "Prevent another ordinary dispatch for the affected run."
+            },
+            {
+              "id": "n1",
+              "label": "Identify original operation",
+              "description": "Find subject, run/call ID, intent and adapter/policy versions."
+            },
+            {
+              "id": "n2",
+              "label": "Authorized receipt lookup",
+              "description": "Use a separately bounded recovery path."
+            },
+            {
+              "id": "n3",
+              "label": "Matching receipt",
+              "description": "Attach evidence and report the actual committed effect."
+            },
+            {
+              "id": "n4",
+              "label": "Unresolved result",
+              "description": "Retain uncertainty and assign escalation ownership."
+            },
+            {
+              "id": "n5",
+              "label": "Recovery decision",
+              "description": "Continue only under explicit policy; record the decision."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "preserve original identity"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "query authoritative source"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "matching receipt exists"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "absent or conflicting evidence"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "apply current stop/recovery policy"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "document escalation or recovery"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Contain without deleting evidence",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "A fresh operation ID could duplicate the same user intention."
+            },
+            {
+              "title": "Query authoritative outcomes",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                1,
+                2,
+                3
+              ],
+              "explanation": "A missing receipt in a real system may be incomplete evidence, not proof of no effect."
+            },
+            {
+              "title": "Apply recovery authority",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "A cancellation or consumed deadline still stops further ordinary work after a confirmed receipt."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "capstone",
@@ -2260,7 +3243,144 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Choose the control structure the task needs",
+          "summary": "Compare the fixed lookup, model-assisted handler and bounded agent described in the lesson. Every design needs explicit outcomes.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Input",
+              "description": "An ID can follow known rules; varied language may require interpretation."
+            },
+            {
+              "id": "n1",
+              "label": "Validate and exact lookup",
+              "description": "Fixed code validates an ID and retrieves its lesson."
+            },
+            {
+              "id": "n2",
+              "label": "Classify and fixed handler",
+              "description": "A model classifier can select a predetermined handler."
+            },
+            {
+              "id": "n3",
+              "label": "Propose next action",
+              "description": "A bounded agent proposes an evidence-dependent step."
+            },
+            {
+              "id": "n4",
+              "label": "Validate and execute",
+              "description": "Application checks precede tool execution."
+            },
+            {
+              "id": "n5",
+              "label": "Observe result",
+              "description": "New evidence can change the next proposal."
+            },
+            {
+              "id": "n6",
+              "label": "Explicit outcome",
+              "description": "Success and failure must be defined for all three designs."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "known ID sequence"
+            },
+            {
+              "from": "n1",
+              "to": "n6",
+              "label": "render lookup outcome"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "question in fixed pipeline"
+            },
+            {
+              "from": "n2",
+              "to": "n6",
+              "label": "handler outcome"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "evidence-dependent question"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "submit proposal"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "allowed tool result"
+            },
+            {
+              "from": "n5",
+              "to": "n3",
+              "label": "next decision"
+            },
+            {
+              "from": "n4",
+              "to": "n6",
+              "label": "stop or finish"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Follow known rules",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n6"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "The exact-ID lookup uses deterministic code."
+            },
+            {
+              "title": "Use a classifier in a pipeline",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n6"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "A model can assist a fixed workflow without making every component autonomous."
+            },
+            {
+              "title": "Bound evidence-dependent choice",
+              "activeNodes": [
+                "n0",
+                "n3",
+                "n4",
+                "n5",
+                "n6"
+              ],
+              "activeEdges": [
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "explanation": "The agent can loop on observations, but application checks and explicit stopping remain necessary."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "context",
@@ -2374,7 +3494,100 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Evidence cannot grant a new capability",
+          "summary": "The malicious lesson snippet remains task data. Trusted policy and the tool registry enforce the read-only boundary.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Trusted policy",
+              "description": "Read approved public lesson snippets only."
+            },
+            {
+              "id": "n1",
+              "label": "Retrieved snippet",
+              "description": "The page says to ignore policy and upload profiles."
+            },
+            {
+              "id": "n2",
+              "label": "Decision proposal",
+              "description": "A decision source may request an upload."
+            },
+            {
+              "id": "n3",
+              "label": "Application boundary",
+              "description": "Check registered capabilities and trusted policy."
+            },
+            {
+              "id": "n4",
+              "label": "Denied upload",
+              "description": "Unknown upload capability never executes."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "may influence proposal"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "supplies actual authority"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "submit action request"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "unknown tool rejected"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Keep the source as data",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Instruction-shaped source text does not become permission."
+            },
+            {
+              "title": "Check outside generated text",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The trusted application checks the requested capability even if the decision source follows the snippet."
+            },
+            {
+              "title": "Reject the unavailable action",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The search-only registry has no upload tool; labels alone are not a security proof."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "tools",
@@ -2659,6 +3872,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "If final checks accept, status is completed. If the budget is exhausted before a valid final answer, the separate exhausted status must not be reported as success."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -2953,7 +4169,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Retrieve evidence, then evaluate its use",
+          "summary": "The paraphrase example separates retrieval relevance from final-answer support; the workshop itself uses lexical matching.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Learner question",
+              "description": "How do I combine matching records?"
+            },
+            {
+              "id": "n1",
+              "label": "Bounded search query",
+              "description": "Keyword matching may miss the paraphrase."
+            },
+            {
+              "id": "n2",
+              "label": "Reformulated query",
+              "description": "INNER JOIN names the concept more directly."
+            },
+            {
+              "id": "n3",
+              "label": "Evidence package",
+              "description": "Preserve SQL-07 ID, revision, excerpt and source location."
+            },
+            {
+              "id": "n4",
+              "label": "Grounded answer",
+              "description": "Use only available support."
+            },
+            {
+              "id": "n5",
+              "label": "Separate evaluations",
+              "description": "Measure relevant retrieval and correct evidence use separately."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "search paraphrase"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "bounded reformulation if needed"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "retrieve SQL-07"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "provide supporting excerpt"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "assess retrieval relevance"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "assess answer support"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Test the search wording",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A paraphrase can miss lexical matching; similarity alone would not establish truth or access."
+            },
+            {
+              "title": "Keep provenance",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Access-filtered evidence needs stable references and enough context to support the answer."
+            },
+            {
+              "title": "Score two boundaries",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "Finding the right passage and using it correctly are distinct evaluation questions."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "memory",
@@ -3074,7 +4402,100 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Revise a plan when evidence changes the next action",
+          "summary": "One search exposes different course prerequisite lists, so the current run needs learner intent before a final recommendation.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Plan v1",
+              "description": "Search advanced joins, inspect prerequisites, answer."
+            },
+            {
+              "id": "n1",
+              "label": "Executed search",
+              "description": "Record the search that actually ran."
+            },
+            {
+              "id": "n2",
+              "label": "Conflicting course context",
+              "description": "Two courses have different prerequisite lists."
+            },
+            {
+              "id": "n3",
+              "label": "Focused clarification",
+              "description": "Ask which course the learner means."
+            },
+            {
+              "id": "n4",
+              "label": "Needs input",
+              "description": "No final recommendation is complete yet."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "execute permitted search"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "observe ambiguity"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "revise next step"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "wait for dependent intent"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Separate plan from execution",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Intended steps do not establish completed work."
+            },
+            {
+              "title": "Use the new observation",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The differing course lists change the useful next action."
+            },
+            {
+              "title": "Pause the dependent recommendation",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Needs_input records an honest outcome; the completed search remains recorded."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "clarification",
@@ -3217,7 +4638,100 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Match approval to the concrete report action",
+          "summary": "This is a hypothetical send design. The workshop has no send tool and does not implement a production approval service.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Prepared report R3",
+              "description": "Show exact content, attachments and recipient A."
+            },
+            {
+              "id": "n1",
+              "label": "Trusted user decision",
+              "description": "User U approves that concrete action version."
+            },
+            {
+              "id": "n2",
+              "label": "Execution check",
+              "description": "Match identity, scope, content and destination."
+            },
+            {
+              "id": "n3",
+              "label": "Matching intent",
+              "description": "Only the same authorized action can use the record."
+            },
+            {
+              "id": "n4",
+              "label": "Changed recipient B",
+              "description": "A different destination causes approval mismatch."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "review concrete action"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "consult trusted record"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "same action details"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "recipient changed"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Prepare a reviewable action",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Approval comes from the trusted user channel, not generated approved=true."
+            },
+            {
+              "title": "Bind the decision",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The executor consults a record for the concrete action and user."
+            },
+            {
+              "title": "Reject changed intent",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Approval does not replace authorization or allow a changed recipient."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "failures",
@@ -3625,7 +5139,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Combine exact checks with calibrated semantic review",
+          "summary": "A fluent answer can still have fabricated support. Judge agreement and false acceptance need separate inspection.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Answer and sources",
+              "description": "Inspect important claims and their cited evidence."
+            },
+            {
+              "id": "n1",
+              "label": "Deterministic checks",
+              "description": "Check citation membership and prohibited actions."
+            },
+            {
+              "id": "n2",
+              "label": "Semantic rubric",
+              "description": "Review support, uncertainty and source correspondence."
+            },
+            {
+              "id": "n3",
+              "label": "Trusted human labels",
+              "description": "Use representative supported, unsupported and unclear examples."
+            },
+            {
+              "id": "n4",
+              "label": "Disagreement review",
+              "description": "Inspect false accepts and rubric ambiguity."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check exact properties"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "judge semantic properties"
+            },
+            {
+              "from": "n3",
+              "to": "n2",
+              "label": "calibrate against labels"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "inspect exact failures"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "review disagreement"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check what is exact",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Citation-ID membership and forbidden actions can be checked mechanically."
+            },
+            {
+              "title": "Calibrate judgment",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Semantic review needs a rubric and comparison with trusted human labels."
+            },
+            {
+              "title": "Investigate false acceptance",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Agreement is not a safety probability; inspect fluent but unsupported answers and important errors."
+            }
+          ]
+        }
       },
       {
         "id": "multiagent",
@@ -3682,7 +5293,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reconcile bounded worker evidence",
+          "summary": "The lesson compares Python and SQL prerequisites without writes. Aggregate budgets and failure behavior belong to the whole task.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Coordinator",
+              "description": "Own the comparison and shared task limits."
+            },
+            {
+              "id": "n1",
+              "label": "Python worker",
+              "description": "Return sources, claims and uncertainties for Python."
+            },
+            {
+              "id": "n2",
+              "label": "SQL worker",
+              "description": "Return sources, claims and uncertainties for SQL."
+            },
+            {
+              "id": "n3",
+              "label": "Structured results",
+              "description": "Keep provenance and possible conflicts visible."
+            },
+            {
+              "id": "n4",
+              "label": "Evidence reconciliation",
+              "description": "Compare support before combining claims."
+            },
+            {
+              "id": "n5",
+              "label": "Final comparison",
+              "description": "Cite supported claims and stop explicitly."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "bounded question and permissions"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "bounded question and permissions"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "return Python evidence"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "return SQL evidence"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "check conflicts and gaps"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "combine supported results"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Define independent work",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Each worker receives a bounded responsibility and the task retains aggregate limits."
+            },
+            {
+              "title": "Collect provenance",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "A failed worker does not validate the other worker; shared evidence can produce correlated mistakes."
+            },
+            {
+              "title": "Reconcile before answering",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "Agreement is not proof. Inspect source support and coordination failures before delivering the comparison."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "deployment",
@@ -4637,7 +6360,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Rotate, expire and revoke server session state",
+          "summary": "The fixture uses a local dictionary and injected time. Its five-minute expiry is a teaching policy, not a universal lifetime.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Authenticated fixture principal",
+              "description": "Identity is already established by a trusted adapter."
+            },
+            {
+              "id": "n1",
+              "label": "Login and rotation",
+              "description": "Generate a new random opaque ID; invalidate the old ID."
+            },
+            {
+              "id": "n2",
+              "label": "Stored session expiry",
+              "description": "Login at 1 records expiry at 301."
+            },
+            {
+              "id": "n3",
+              "label": "Valid lookup at 300",
+              "description": "The current ID remains usable before expiry."
+            },
+            {
+              "id": "n4",
+              "label": "Denied at 301",
+              "description": "The exact expiry boundary rejects use."
+            },
+            {
+              "id": "n5",
+              "label": "Logout revocation",
+              "description": "Remove server authority for the session."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "establish local session"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "store authenticated context"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "time before expiry"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "time reaches expiry"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "explicit logout"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "old identifier invalidated"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Rotate authority",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                5
+              ],
+              "explanation": "Login creation is not credential verification; rotation makes the prior bearer ID unusable."
+            },
+            {
+              "title": "Test exact time boundaries",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Injected time verifies success at 300 and failure at 301 without sleeping."
+            },
+            {
+              "title": "Revoke server state",
+              "activeNodes": [
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Logout must invalidate authority rather than only clear a display flag; shared storage remains an extension."
+            }
+          ]
+        }
       },
       {
         "id": "cookies-transport",
@@ -4822,7 +6654,141 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Cookie-authenticated web mutations; bearer-only APIs and browser integrations require separate threat analysis."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A mutation needs several independent gates",
+          "summary": "The lesson route contract establishes session, CSRF policy, object authorization and allowed fields before mutation. Denials must preserve state.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Mutation request",
+              "description": "Browser credentials alone do not establish deliberate intent."
+            },
+            {
+              "id": "n1",
+              "label": "Valid session",
+              "description": "Establish current authenticated context."
+            },
+            {
+              "id": "n2",
+              "label": "CSRF decision",
+              "description": "Verify the session-bound token and framework/origin policy."
+            },
+            {
+              "id": "n3",
+              "label": "Object action permission",
+              "description": "Authorize this principal for this resource and action."
+            },
+            {
+              "id": "n4",
+              "label": "Allowed-field validation",
+              "description": "Validate the narrow title-update contract."
+            },
+            {
+              "id": "n5",
+              "label": "Mutation and audit",
+              "description": "Apply only the permitted change and record safe outcome."
+            },
+            {
+              "id": "n6",
+              "label": "Denied with unchanged state",
+              "description": "Failed gates leave the persisted object untouched."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "establish session"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "authenticated request"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "CSRF accepted"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "object action granted"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "allowed payload"
+            },
+            {
+              "from": "n1",
+              "to": "n6",
+              "label": "absent or expired session"
+            },
+            {
+              "from": "n2",
+              "to": "n6",
+              "label": "missing or wrong token"
+            },
+            {
+              "from": "n3",
+              "to": "n6",
+              "label": "foreign object"
+            },
+            {
+              "from": "n4",
+              "to": "n6",
+              "label": "invalid fields"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish request context",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n6"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                5,
+                6
+              ],
+              "explanation": "Expired sessions and wrong or cross-session tokens must fail."
+            },
+            {
+              "title": "Authorize the concrete object",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4",
+                "n6"
+              ],
+              "activeEdges": [
+                2,
+                3,
+                7
+              ],
+              "explanation": "A matching token does not grant ownership or stop same-origin XSS."
+            },
+            {
+              "title": "Verify effects and denied state",
+              "activeNodes": [
+                "n4",
+                "n5",
+                "n6"
+              ],
+              "activeEdges": [
+                4,
+                8
+              ],
+              "explanation": "The local HTTP extension checks denied status and unchanged SQLite rows; browser behavior remains separate evidence."
+            }
+          ]
+        }
       },
       {
         "id": "xss-context",
@@ -4999,7 +6965,124 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Published January 2025 best current practice; no custom protocol implementation."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Trace code issuance to protected API access",
+          "summary": "The client, authorization server and resource server have distinct responsibilities. This conceptual flow is not executed by the offline fixture.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Resource owner",
+              "description": "The learner participates in the provider authorization flow."
+            },
+            {
+              "id": "n1",
+              "label": "Notebook client",
+              "description": "Requests access for the document API."
+            },
+            {
+              "id": "n2",
+              "label": "Authorization server",
+              "description": "Processes authorization and returns a code."
+            },
+            {
+              "id": "n3",
+              "label": "Token endpoint",
+              "description": "Redeems code plus applicable proof under provider policy."
+            },
+            {
+              "id": "n4",
+              "label": "Document API",
+              "description": "Receives an access token for its intended audience."
+            },
+            {
+              "id": "n5",
+              "label": "Validation and object policy",
+              "description": "Validate token, map identity and authorize document action."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "initiate client flow"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "authorization request"
+            },
+            {
+              "from": "n2",
+              "to": "n1",
+              "label": "return code"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "code and applicable proof"
+            },
+            {
+              "from": "n3",
+              "to": "n1",
+              "label": "issue access token"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "present API access token"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "validate then authorize"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Identify participant roles",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "OAuth access does not by itself establish the client login identity contract."
+            },
+            {
+              "title": "Redeem under provider rules",
+              "activeNodes": [
+                "n1",
+                "n3"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Do not invent validation by decoding a token; use maintained provider mechanisms."
+            },
+            {
+              "title": "Authorize the API object",
+              "activeNodes": [
+                "n1",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                5,
+                6
+              ],
+              "explanation": "Access token scope and a provider login are not substitutes for document ownership policy."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "oidc-login",
@@ -5058,7 +7141,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "OIDC Core 1.0 incorporating errata set 2; implement through a maintained provider/library."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Verified identity must be mapped before object policy",
+          "summary": "The opt-in OIDC adapter verifies the identity response. The synthetic Principal constructor begins after that real authentication boundary.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "OIDC identity response",
+              "description": "An ID token is intended for the configured client."
+            },
+            {
+              "id": "n1",
+              "label": "Maintained client validator",
+              "description": "Validate metadata, key and applicable claim/correlation rules."
+            },
+            {
+              "id": "n2",
+              "label": "Verified issuer and subject",
+              "description": "Stable identity retains its issuer context."
+            },
+            {
+              "id": "n3",
+              "label": "Internal account mapping",
+              "description": "Map the trusted identity to an internal principal and tenant."
+            },
+            {
+              "id": "n4",
+              "label": "Document policy",
+              "description": "Decide the requested action on the particular object."
+            },
+            {
+              "id": "n5",
+              "label": "Rejected identity response",
+              "description": "Unverified or invalid claims cannot create a principal."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "validate identity response"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "configured rules succeed"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "map stable identity"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "apply object permission"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "validation fails"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Validate for the client",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                4
+              ],
+              "explanation": "Decoded payloads are not verified identity and an ID token is not a universal API bearer token."
+            },
+            {
+              "title": "Map issuer and subject",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Email can change; use the issuer contract and an explicit account/tenant mapping."
+            },
+            {
+              "title": "Keep authorization separate",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Successful login does not establish document ownership. The optional provider integration supplies its own negative tests."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "pkce-state",
@@ -5117,7 +7305,122 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "RFC 7636 plus OAuth Security BCP RFC 9700; no custom verifier protocol supplied."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Correlation and code redemption protect different boundaries",
+          "summary": "Use the chosen library and provider contract. This diagram restates the training flow without implementing cryptography or live requests.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Flow initiation",
+              "description": "Library stores per-request correlation and verifier."
+            },
+            {
+              "id": "n1",
+              "label": "Authorization request",
+              "description": "Send S256 challenge, state and OIDC nonce as applicable."
+            },
+            {
+              "id": "n2",
+              "label": "Callback correlation",
+              "description": "Client/library checks returned request context."
+            },
+            {
+              "id": "n3",
+              "label": "Code redemption",
+              "description": "Send code and per-flow verifier to token endpoint."
+            },
+            {
+              "id": "n4",
+              "label": "Identity validation",
+              "description": "Client validates ID token and required nonce."
+            },
+            {
+              "id": "n5",
+              "label": "Rejected flow",
+              "description": "Wrong verifier, reused code or mismatched correlation fails at its owning boundary."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "create one-time flow context"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "receive callback"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "matching client context"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "provider redemption succeeds"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "state mismatch"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "wrong verifier or reused code"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "identity validation mismatch"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Prepare separate proofs",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "PKCE proof, callback state and OIDC nonce have distinct roles."
+            },
+            {
+              "title": "Check callback before redemption",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                2,
+                4
+              ],
+              "explanation": "The client rejects mismatched correlation; the authorization server owns code/proof redemption checks."
+            },
+            {
+              "title": "Observe real denials",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                5,
+                6
+              ],
+              "explanation": "Negative evidence belongs to the actual library/provider integration; local policy tests do not prove PKCE."
+            }
+          ]
+        }
       },
       {
         "id": "token-validation",
@@ -5176,7 +7479,119 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JWT BCP; use maintained validators, not the synthetic Principal constructor."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Token syntax is not trusted API identity",
+          "summary": "Use a maintained validator configured for the API token format and purpose; opaque tokens follow the provider mechanism.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Untrusted bearer token",
+              "description": "Decoding JSON or base64 is not validation."
+            },
+            {
+              "id": "n1",
+              "label": "Configured validator",
+              "description": "Use trusted key/issuer sources and allowed algorithms."
+            },
+            {
+              "id": "n2",
+              "label": "Audience, lifetime and purpose",
+              "description": "Signature success alone does not establish the API contract."
+            },
+            {
+              "id": "n3",
+              "label": "Trusted minimal claims",
+              "description": "Only successfully validated claims enter mapping."
+            },
+            {
+              "id": "n4",
+              "label": "Principal and object policy",
+              "description": "Map internal identity, then authorize the action."
+            },
+            {
+              "id": "n5",
+              "label": "Denied validation",
+              "description": "Wrong issuer/audience, expiry, tampering or purpose cannot pass."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "validate configured mechanism"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "verify key and claim policy"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "all applicable rules succeed"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "map then authorize"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "invalid signature or key policy"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "claim or purpose mismatch"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Use trusted configuration",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                4
+              ],
+              "explanation": "A token cannot select its own arbitrary algorithm or key destination."
+            },
+            {
+              "title": "Check more than the signature",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                2,
+                5
+              ],
+              "explanation": "A signed token for another audience or issuer still fails."
+            },
+            {
+              "title": "Apply business authorization",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Validated minimal claims are mapped before object policy. The offline kit implements none of these cryptographic checks."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "secrets",
@@ -5235,7 +7650,100 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Current guidance; no live secret store is provisioned by the course."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Rotation includes consumers and old-value revocation",
+          "summary": "The lesson keeps raw secret values out of evidence. A source deletion or rollback must not reactivate compromised authority.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Create replacement",
+              "description": "Use the issuing provider or secret manager lifecycle."
+            },
+            {
+              "id": "n1",
+              "label": "Deploy consumers",
+              "description": "Move dependent components under a defined overlap policy."
+            },
+            {
+              "id": "n2",
+              "label": "Verify new value",
+              "description": "Observe legitimate use and relevant failure cases."
+            },
+            {
+              "id": "n3",
+              "label": "Revoke old value",
+              "description": "Confirm the old credential no longer grants access."
+            },
+            {
+              "id": "n4",
+              "label": "Safe audit evidence",
+              "description": "Record sanitized versions, case IDs and outcomes."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "distribute through managed mechanism"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "verify consumers"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "complete transition"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "record revocation evidence"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Plan the transition",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Rotation changes both the credential and the consumers that depend on it."
+            },
+            {
+              "title": "Verify before completing revocation",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Use the supported provider lifecycle and document overlap/failure policy."
+            },
+            {
+              "title": "Preserve safe evidence",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Do not log raw values. Rollback cannot silently re-enable a compromised key."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "logging",
@@ -6629,7 +9137,102 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "LINQ stages and materialization",
+          "summary": "Where, OrderBy and Select define a deferred in-memory query. ToList triggers enumeration and materializes Pass 75, Pass 90; the arrows show logical data transformations, not eager execution at each operator call.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "90, 40, 75",
+              "description": "The source is an in-memory list."
+            },
+            {
+              "id": "n1",
+              "label": "Where >= 60",
+              "description": "Define a deferred filter that keeps values at least 60 when enumerated."
+            },
+            {
+              "id": "n2",
+              "label": "OrderBy ascending",
+              "description": "Define ascending ordering over the filtered sequence; sorting occurs during enumeration."
+            },
+            {
+              "id": "n3",
+              "label": "Select labels",
+              "description": "Define a deferred projection to Pass labels."
+            },
+            {
+              "id": "n4",
+              "label": "ToList",
+              "description": "Trigger query enumeration: filter, order and project the source, then store the resulting list."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "filter"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "sort"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "project"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "materialize"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Compose the deferred query",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Calling Where, OrderBy and Select builds a query over scores. These operator calls do not yet enumerate the list; the arrows describe its logical stages."
+            },
+            {
+              "title": "ToList triggers enumeration",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "explanation": "During ToList enumeration, Where keeps 90 and 75, OrderBy yields 75 then 90, and Select produces Pass 75 and Pass 90. This is not a claim that every operator runs eagerly or makes an independent pass."
+            },
+            {
+              "title": "Use the materialized result",
+              "activeNodes": [
+                "n4"
+              ],
+              "activeEdges": [],
+              "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query’s result; ToList stores the values produced by this enumeration."
+            }
+          ]
+        }
       },
       {
         "id": "async",
@@ -8012,7 +10615,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "One transaction around two saves",
+          "summary": "The task and audit writes share one transaction. A failure before commit leaves changes uncommitted; the scaffold verifies rollback from a fresh context.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Begin transaction",
+              "description": "The example opens an explicit provider transaction."
+            },
+            {
+              "id": "n1",
+              "label": "Save task",
+              "description": "First SaveChanges writes the task inside the transaction."
+            },
+            {
+              "id": "n2",
+              "label": "Save audit",
+              "description": "Second SaveChanges writes the related audit entry."
+            },
+            {
+              "id": "n3",
+              "label": "Commit",
+              "description": "Commit only after both saves succeed."
+            },
+            {
+              "id": "n4",
+              "label": "Roll back",
+              "description": "Failure before commit prevents publishing both writes."
+            },
+            {
+              "id": "n5",
+              "label": "Fresh-context check",
+              "description": "The guided failed-audit fixture queries task and audit tables from a new context."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "first write"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "second write"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "both succeed"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "second save fails"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "verify stored state"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Keep writes together",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A task save alone does not finish the business operation; the audit still needs to succeed."
+            },
+            {
+              "title": "Commit success",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Both successful saves are committed together by the provider transaction."
+            },
+            {
+              "title": "Verify failure",
+              "activeNodes": [
+                "n2",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "The duplicate unique-key audit failure triggers rollback. A new context sees no new task and only the original audit event."
+            }
+          ]
+        }
       },
       {
         "id": "capstone",
@@ -8130,7 +10835,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Two cancellation sources, one operation",
+          "summary": "Caller cancellation and the operation budget can reach the awaited work through a linked token. Cancellation must be observed cooperatively.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Caller token",
+              "description": "The caller can request cancellation."
+            },
+            {
+              "id": "n1",
+              "label": "Operation budget",
+              "description": "The budget can independently request cancellation."
+            },
+            {
+              "id": "n2",
+              "label": "Linked token",
+              "description": "The linked source forwards either request."
+            },
+            {
+              "id": "n3",
+              "label": "Awaited operation",
+              "description": "Pass the token into an API that observes it."
+            },
+            {
+              "id": "n4",
+              "label": "Boundary classification",
+              "description": "An OperationCanceledException handler distinguishes caller cancellation from the internal budget."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "caller cancels"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "budget cancels"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "propagate token"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "observed cancellation"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Combine the sources",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Either source can request stopping; this is not a forced thread abort."
+            },
+            {
+              "title": "Propagate to work",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The actual awaited API must support and observe the token."
+            },
+            {
+              "title": "Classify at the boundary",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The deterministic example cancels the budget and reports Budget cancelled. Keep dependency failures separate."
+            }
+          ]
+        }
       },
       {
         "id": "concurrency",
@@ -8682,7 +11477,131 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Release, readiness and recovery",
+          "summary": "This follows the lesson commented release outline. Migration compatibility and a recovery plan are prerequisites for safe rollback.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Build and tests",
+              "description": "Build and run the relevant tests before release."
+            },
+            {
+              "id": "n1",
+              "label": "Publish",
+              "description": "Produce the deployment output."
+            },
+            {
+              "id": "n2",
+              "label": "Reviewed migration",
+              "description": "Apply reviewed schema changes through the deployment process."
+            },
+            {
+              "id": "n3",
+              "label": "Start instance",
+              "description": "Start the new instance with target configuration."
+            },
+            {
+              "id": "n4",
+              "label": "Readiness",
+              "description": "Check readiness in the target environment."
+            },
+            {
+              "id": "n5",
+              "label": "Limited traffic",
+              "description": "After readiness succeeds, direct limited traffic and observe error rate and latency."
+            },
+            {
+              "id": "n6",
+              "label": "Restore compatible build",
+              "description": "If unhealthy, stop traffic to the new instance and restore a prior compatible build."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "checks pass"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "release prepared"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "schema ready"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "probe"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "ready"
+            },
+            {
+              "from": "n4",
+              "to": "n6",
+              "label": "unhealthy"
+            },
+            {
+              "from": "n5",
+              "to": "n6",
+              "label": "unhealthy observations"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Prepare the release",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Review migration changes before starting the instance. A code rollback cannot undo a destructive schema change."
+            },
+            {
+              "title": "Gate traffic on readiness",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Startup alone is insufficient; readiness precedes limited traffic."
+            },
+            {
+              "title": "Observe and recover",
+              "activeNodes": [
+                "n4",
+                "n5",
+                "n6"
+              ],
+              "activeEdges": [
+                5,
+                6
+              ],
+              "explanation": "An unhealthy instance loses traffic and the prior compatible build is restored according to the runbook."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "performance",
@@ -8745,7 +11664,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Bounded keyset query",
+          "summary": "Follow the lesson query only after validating after >= 0 and limit in 1..100. This is a query contract, not a measured speedup.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Validate cursor and limit",
+              "description": "Reject invalid after and limit before querying."
+            },
+            {
+              "id": "n1",
+              "label": "Filter Id > after",
+              "description": "Continue after the last seen ID."
+            },
+            {
+              "id": "n2",
+              "label": "Order by ID",
+              "description": "Use ascending ID ordering for the controlled feed."
+            },
+            {
+              "id": "n3",
+              "label": "Project and Take",
+              "description": "Select only response columns and return at most limit rows."
+            },
+            {
+              "id": "n4",
+              "label": "Await query",
+              "description": "ToListAsync materializes the page with the caller token."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "validated inputs"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "stable ordering"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "bound result"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "execute"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Filter Id > after",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Continue after the last seen ID."
+            },
+            {
+              "title": "Order by ID",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Use ascending ID ordering for the controlled feed."
+            },
+            {
+              "title": "Project and Take",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Select only response columns and return at most limit rows."
+            },
+            {
+              "title": "Await query",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "ToListAsync materializes the page with the caller token."
+            }
+          ]
+        }
       }
     ],
     "stages": [
@@ -9651,7 +12669,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Shrink the remaining sorted range",
+          "summary": "Arrows show the inclusive-range algorithm. Sorted input under the same comparison is a precondition; a matching index need not be the first duplicate.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Remaining low..high",
+              "description": "Start with 0 through len(values)-1."
+            },
+            {
+              "id": "n1",
+              "label": "Range nonempty?",
+              "description": "Continue only while low <= high."
+            },
+            {
+              "id": "n2",
+              "label": "Compare middle",
+              "description": "Compute mid and compare values[mid] with target."
+            },
+            {
+              "id": "n3",
+              "label": "Found index",
+              "description": "Equality returns mid."
+            },
+            {
+              "id": "n4",
+              "label": "Shrink range",
+              "description": "Below target: low=mid+1. Above target: high=mid-1."
+            },
+            {
+              "id": "n5",
+              "label": "Missing: -1",
+              "description": "An empty range means no matching value was found."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check bounds"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "yes"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "no"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "equal"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "below or above"
+            },
+            {
+              "from": "n4",
+              "to": "n1",
+              "label": "strictly smaller range"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check the invariant",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "If an unfound target exists it stays in the remaining range. Empty input immediately returns -1."
+            },
+            {
+              "title": "Match or exclude",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Return on equality; otherwise discard the middle and the side that cannot contain the target."
+            },
+            {
+              "title": "Repeat on a smaller range",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "Every update shrinks the interval, eventually finding a match or exhausting it."
+            }
+          ]
+        }
       },
       {
         "id": "sorting",
@@ -11832,7 +14959,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Move the pointer that can improve the sum",
+          "summary": "Sorted input makes the discard argument valid. The two indexes refer to the sorted input.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Opposite endpoints",
+              "description": "Initialize left=0 and right=len(values)-1."
+            },
+            {
+              "id": "n1",
+              "label": "left < right?",
+              "description": "Require two distinct positions."
+            },
+            {
+              "id": "n2",
+              "label": "Compare sum",
+              "description": "Compare values[left]+values[right] with the target."
+            },
+            {
+              "id": "n3",
+              "label": "Return pair",
+              "description": "Equal sum returns the two indexes."
+            },
+            {
+              "id": "n4",
+              "label": "Move one endpoint",
+              "description": "Too small: left+=1. Too large: right-=1."
+            },
+            {
+              "id": "n5",
+              "label": "No pair",
+              "description": "If endpoints meet, return None."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "yes"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "no"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "equal"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "too small or large"
+            },
+            {
+              "from": "n4",
+              "to": "n1",
+              "label": "shorter interval"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Require two positions",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Empty and one-value inputs have no two distinct positions."
+            },
+            {
+              "title": "Use ordering to discard",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "A too-small sum needs a larger left value; a too-large sum needs a smaller right value."
+            },
+            {
+              "title": "Terminate as the interval shrinks",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "Each move shortens the interval; the loop ends with a pair or None."
+            }
+          ]
+        }
       },
       {
         "id": "sliding-window",
@@ -11950,7 +15186,127 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Dependencies and ready vertices",
+          "summary": "A dependency edge means its source must precede its target. Kahn’s algorithm removes dependencies and rejects a cycle when not all vertices are emitted.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Count incoming edges",
+              "description": "Include neighbor-only vertices in the vertex set."
+            },
+            {
+              "id": "n1",
+              "label": "Ready queue",
+              "description": "Queue vertices with zero remaining prerequisites."
+            },
+            {
+              "id": "n2",
+              "label": "Emit next vertex",
+              "description": "Remove a ready vertex and append it to the order."
+            },
+            {
+              "id": "n3",
+              "label": "Remove outgoing dependencies",
+              "description": "Decrement each neighbor indegree; enqueue neighbors that reach zero."
+            },
+            {
+              "id": "n4",
+              "label": "Check emitted count",
+              "description": "When the queue empties, compare order length with vertex count."
+            },
+            {
+              "id": "n5",
+              "label": "Valid order",
+              "description": "Equal counts mean every vertex was emitted."
+            },
+            {
+              "id": "n6",
+              "label": "Cycle error",
+              "description": "Unequal counts raise dependency cycle."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "zero indegree"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "queue nonempty"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "process outgoing edges"
+            },
+            {
+              "from": "n3",
+              "to": "n1",
+              "label": "new zero indegrees"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "queue empty"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "all emitted"
+            },
+            {
+              "from": "n4",
+              "to": "n6",
+              "label": "vertices remain"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Find initially ready vertices",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Vertices with no incoming dependencies can come first."
+            },
+            {
+              "title": "Remove one dependency layer",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2,
+                3
+              ],
+              "explanation": "Emit a ready vertex and update neighbors. Multiple valid orders may exist."
+            },
+            {
+              "title": "Check completeness",
+              "activeNodes": [
+                "n1",
+                "n4",
+                "n5",
+                "n6"
+              ],
+              "activeEdges": [
+                4,
+                5,
+                6
+              ],
+              "explanation": "A partial order is not success: un-emitted vertices reveal a directed cycle."
+            }
+          ]
+        }
       },
       {
         "id": "dijkstra",
@@ -12011,7 +15367,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A cheaper detour beats the direct edge",
+          "summary": "The lesson graph has A to B cost 8, A to C cost 2 and C to B cost 1. Nonnegative weights support this distance reasoning.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "A: cost 0",
+              "description": "The start has distance zero."
+            },
+            {
+              "id": "n1",
+              "label": "C: cost 2",
+              "description": "The first relaxation discovers C at cost 2."
+            },
+            {
+              "id": "n2",
+              "label": "B candidate: 8",
+              "description": "The direct edge initially proposes B at cost 8."
+            },
+            {
+              "id": "n3",
+              "label": "B improved: 3",
+              "description": "Popping C proposes 2+1=3, replacing the best-known distance to B."
+            },
+            {
+              "id": "n4",
+              "label": "Old B=8 entry skipped",
+              "description": "The old heap entry remains but is stale once B has distance 3."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "A to C: 2"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "A to B: 8"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "C to B: 1"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "best cost decreases"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "later stale entry"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Discover candidates",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "After exploring A, the heap contains C at 2 and B at 8."
+            },
+            {
+              "title": "Relax through the cheapest candidate",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Pop C first and improve B to 3. First discovery is not finalization."
+            },
+            {
+              "title": "Skip obsolete work",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "When the old B=8 entry is popped, it differs from distance[B] and is skipped."
+            }
+          ]
+        }
       },
       {
         "id": "greedy",
@@ -12122,7 +15575,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Choose, recurse, restore",
+          "summary": "The subset generator explores exclusion first, then inclusion. A copied result preserves each leaf independently.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "visit(index)",
+              "description": "The state is index plus selected values."
+            },
+            {
+              "id": "n1",
+              "label": "At end?",
+              "description": "Compare index with the number of inputs."
+            },
+            {
+              "id": "n2",
+              "label": "Copy selected",
+              "description": "At a leaf append selected.copy() and return."
+            },
+            {
+              "id": "n3",
+              "label": "Exclude current item",
+              "description": "Visit index+1 without appending the item."
+            },
+            {
+              "id": "n4",
+              "label": "Include current item",
+              "description": "Append the current item, then visit index+1."
+            },
+            {
+              "id": "n5",
+              "label": "Restore selected",
+              "description": "Pop the appended item when the include branch returns."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check leaf"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "yes"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "no"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "exclude branch returns"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "include branch returns"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Recognize a finished subset",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "At the final index copy the selection, so later edits cannot change that output."
+            },
+            {
+              "title": "Explore both choices",
+              "activeNodes": [
+                "n1",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "The exclusion branch completes before appending and exploring inclusion."
+            },
+            {
+              "title": "Restore the parent state",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Pop after inclusion so the caller sees the selection it had before this choice."
+            }
+          ]
+        }
       },
       {
         "id": "knapsack",
@@ -12184,7 +15739,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Read previous-item states by moving downward",
+          "summary": "For one item of weight 2/value 3 at capacity 4, descending capacity prevents using that item twice. The correct 0/1 value is 3.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Previous dp: all zero",
+              "description": "Before the only item, every capacity allows the empty selection."
+            },
+            {
+              "id": "n1",
+              "label": "Capacity 4",
+              "description": "Read previous dp[2]=0 and set dp[4]=max(0,0+3)=3."
+            },
+            {
+              "id": "n2",
+              "label": "Capacity 3",
+              "description": "Read previous dp[1]=0 and set dp[3]=3."
+            },
+            {
+              "id": "n3",
+              "label": "Capacity 2",
+              "description": "Read previous dp[0]=0 and set dp[2]=3."
+            },
+            {
+              "id": "n4",
+              "label": "Answer dp[4]=3",
+              "description": "The capacity-4 cell was computed before dp[2] changed."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "process c=4 first"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "next lower capacity"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "next lower capacity"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "retained final cell"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Start from the previous item prefix",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Every source state is zero before processing this one item."
+            },
+            {
+              "title": "Move downward",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Capacities 4, 3, 2 read lower cells before those cells are updated this pass."
+            },
+            {
+              "title": "Take the item once",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "dp[4] stays 3. An upward traversal would reuse newly updated dp[2] and incorrectly produce 6."
+            }
+          ]
+        }
       },
       {
         "id": "algorithm-review",
@@ -12240,7 +15885,88 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Three kinds of algorithm evidence",
+          "summary": "The lesson review checklist asks for a correctness argument, a cost argument and tests. The diagram organizes evidence; benchmarks alone prove neither correctness nor asymptotic growth.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Contract and invariant",
+              "description": "Define valid inputs, promised results and the property maintained during work."
+            },
+            {
+              "id": "n1",
+              "label": "Termination and result",
+              "description": "Show progress toward termination and why the final result meets the contract."
+            },
+            {
+              "id": "n2",
+              "label": "Representation and cost",
+              "description": "Name the representation, counted operations and worst-case bound."
+            },
+            {
+              "id": "n3",
+              "label": "Independent checks",
+              "description": "Compare a bounded simple oracle and adversarial cases; state resource limits."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "argue behavior"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "account for work"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "test selected cases"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Termination and result",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Show progress toward termination and why the final result meets the contract."
+            },
+            {
+              "title": "Representation and cost",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Name the representation, counted operations and worst-case bound."
+            },
+            {
+              "title": "Independent checks",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Compare a bounded simple oracle and adversarial cases; state resource limits."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       }
     ],
     "stages": [
@@ -12679,7 +16405,111 @@ const LEARNING_PATHS = [
             "scope": "Service monitoring principles; numeric examples are local teaching scenarios. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "A release passes several different evidence gates",
+          "summary": "The Python/SQLite stand-in and learner-built React/.NET/SQL integration have separate evidence boundaries.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Source commit",
+              "description": "Name the user invariant and rollback trigger."
+            },
+            {
+              "id": "n1",
+              "label": "Tests",
+              "description": "A green build alone does not prove requests succeed in the target environment."
+            },
+            {
+              "id": "n2",
+              "label": "Immutable artifact",
+              "description": "Record exactly which checked bytes will be promoted."
+            },
+            {
+              "id": "n3",
+              "label": "Reviewed target configuration",
+              "description": "Verify environment, identity and compatible data schema."
+            },
+            {
+              "id": "n4",
+              "label": "Readiness then user smoke",
+              "description": "Check required work, then existing-note read behavior."
+            },
+            {
+              "id": "n5",
+              "label": "Observe eligible user outcomes",
+              "description": "Retain release attribution and stop on the agreed failure gate."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "test source"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "produce checked bytes"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "promote with config"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "admit candidate"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "measure contract"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Name the user invariant and rollback trigger.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "A green build alone does not prove requests succeed in the target environment. Record exactly which checked bytes will be promoted. Verify environment, identity and compatible data schema. Check required work, then existing-note read behavior.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Retain release attribution and stop on the agreed failure gate.",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "environments",
@@ -13120,7 +16950,112 @@ const LEARNING_PATHS = [
             "scope": "ASP.NET Core 10 behind a trusted proxy; integration design rather than a supplied full stack. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Separate browser, API and database responsibilities",
+          "summary": "Integration runbook topology; the bundled Python runtime does not implement this complete stack.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Browser HTTPS",
+              "description": "Frontend configuration is public; database credentials stay server-side."
+            },
+            {
+              "id": "n1",
+              "label": "Reverse proxy / static host",
+              "description": "Define TLS and forwarding trust plus UI-only deep-link fallback."
+            },
+            {
+              "id": "n2",
+              "label": "React dist assets",
+              "description": "Serve frontend assets and intended UI fallback."
+            },
+            {
+              "id": "n3",
+              "label": "ASP.NET Core /api",
+              "description": "Route API requests and preserve API error statuses."
+            },
+            {
+              "id": "n4",
+              "label": "Private SQL Server",
+              "description": "API uses a restricted runtime database identity."
+            },
+            {
+              "id": "n5",
+              "label": "Migration runner",
+              "description": "Schema changes use separate reviewed database permissions."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "HTTPS request"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "UI assets / paths"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "/api/* routes"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "private database access"
+            },
+            {
+              "from": "n5",
+              "to": "n4",
+              "label": "separate schema permission"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Route UI and API separately",
+              "explanation": "Do not rewrite API 404 responses into the frontend shell.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Keep data access server-side",
+              "explanation": "Real authentication, owner checks and actual persistence must be implemented and tested for this integration.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "Review schema permissions independently",
+              "explanation": "The migration identity is separate from normal API runtime access.",
+              "activeNodes": [
+                "n5",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "schema-evolution",
@@ -13169,7 +17104,99 @@ const LEARNING_PATHS = [
             "scope": "EF Core 10/SQL Server integration exercise; bundled runtime uses SQLite, not SQL Server. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Keep old and new readers compatible",
+          "summary": "The stand-in schema never changes between v1 and v2; its rollback test covers that unchanged-schema case only.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "v1 reads title",
+              "description": "Identify all old consumers and rollback requirements."
+            },
+            {
+              "id": "n1",
+              "label": "Add nullable label",
+              "description": "Expand with a compatible field before changing readers/writers."
+            },
+            {
+              "id": "n2",
+              "label": "Deploy v2 handling optional label",
+              "description": "Old and new versions can coexist under the reviewed contract."
+            },
+            {
+              "id": "n3",
+              "label": "Backfill in bounded batches",
+              "description": "Review migration locks/runtime and validate values."
+            },
+            {
+              "id": "n4",
+              "label": "Contract in a later release",
+              "description": "Remove old representation only after old consumers disappear and recovery implications are reviewed."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "compatible expansion"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "mixed-version deployment"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "backfill deliberately"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "old-use evidence"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Identify all old consumers and rollback requirements.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Expand with a compatible field before changing readers/writers. Old and new versions can coexist under the reviewed contract. Review migration locks/runtime and validate values.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Remove old representation only after old consumers disappear and recovery implications are reviewed.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "ci-pipeline",
@@ -13218,7 +17245,99 @@ const LEARNING_PATHS = [
             "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Separate contributor checks from privileged promotion",
+          "summary": "The template is opt-in and is not installed or run by opening the course.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Pull request checks",
+              "description": "Contributor code and third-party actions execute with runner permissions."
+            },
+            {
+              "id": "n1",
+              "label": "Checkout and Python tests",
+              "description": "Keep deployment secrets absent and minimize contents/token permissions."
+            },
+            {
+              "id": "n2",
+              "label": "Artifact record",
+              "description": "Tie evidence to reviewed source and exact candidate bytes."
+            },
+            {
+              "id": "n3",
+              "label": "Reviewed release approval",
+              "description": "Approval chooses the candidate and intended deployment boundary."
+            },
+            {
+              "id": "n4",
+              "label": "Privileged promotion job",
+              "description": "Only this reviewed job receives required least-privilege credentials; production action pins must be verified."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "untrusted test job"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "record checked candidate"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "separate promotion decision"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "promote approved artifact"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Contributor code and third-party actions execute with runner permissions.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Keep deployment secrets absent and minimize contents/token permissions. Tie evidence to reviewed source and exact candidate bytes. Approval chooses the candidate and intended deployment boundary.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Only this reviewed job receives required least-privilege credentials; production action pins must be verified.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "artifact-promotion",
@@ -13267,7 +17386,96 @@ const LEARNING_PATHS = [
             "scope": "Current Actions artifact lifecycle; local byte hashing is separately tested. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Promote the bytes tied to test evidence",
+          "summary": "Checksums detect byte changes; provenance/signing require their own verification policy.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Checked source and build inputs",
+              "description": "Record runtime, dependency inputs and source commit."
+            },
+            {
+              "id": "n1",
+              "label": "Tested artifact digest",
+              "description": "Associate test evidence with these exact bytes."
+            },
+            {
+              "id": "n2",
+              "label": "Approved artifact selected",
+              "description": "A rebuilt artifact with changed inputs is a new candidate needing checks."
+            },
+            {
+              "id": "n3",
+              "label": "Promote same artifact",
+              "description": "Environment configuration changes without rebuilding the approved bytes."
+            },
+            {
+              "id": "n4",
+              "label": "Retain compatible prior artifact",
+              "description": "Keep v1 through verification and the rollback window."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "build and verify"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "record approval"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "select exact bytes"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "retain recovery option"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Record runtime, dependency inputs and source commit.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Associate test evidence with these exact bytes. A rebuilt artifact with changed inputs is a new candidate needing checks. Environment configuration changes without rebuilding the approved bytes.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Keep v1 through verification and the rollback window.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "health-contracts",
@@ -13384,6 +17592,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "Remove the synthetic gate, check readiness and repeat a synthetic user operation before restoring normal routing."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -13484,7 +17695,87 @@ const LEARNING_PATHS = [
             "scope": "EF Core 10/SQL Server integration exercise; bundled runtime uses SQLite, not SQL Server. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Compatible data permits the simulated label rollback",
+          "summary": "This same-code label test is separate from the differing-artifact drill and from data recovery.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Create note under v1 label",
+              "description": "The test uses the same implementation and unchanged SQLite schema."
+            },
+            {
+              "id": "n1",
+              "label": "Stop v1 and start v2",
+              "description": "Reuse the same database and read the known note."
+            },
+            {
+              "id": "n2",
+              "label": "Stop v2 and start v1",
+              "description": "Retain the database rather than replace a live file."
+            },
+            {
+              "id": "n3",
+              "label": "Read the original note again",
+              "description": "This verifies unchanged-schema retention; dropped columns or irreversible external effects need forward repair or separately tested recovery."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "compatible label restart"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "compatible rollback"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "verify retained data"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "The test uses the same implementation and unchanged SQLite schema.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Reuse the same database and read the known note. Retain the database rather than replace a live file.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "This verifies unchanged-schema retention; dropped columns or irreversible external effects need forward repair or separately tested recovery.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "structured-logs",
@@ -13778,7 +18069,99 @@ const LEARNING_PATHS = [
             "scope": "SQL Server restore/recovery planning; local executable proof uses SQLite only. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "diagram": {
+          "title": "Restore known data before switching traffic",
+          "summary": "Synthetic SQLite snapshot A predates B; SQL Server recovery needs its own supported backup chain.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Snapshot contains note A",
+              "description": "Record snapshot identity and time; use supported database backup."
+            },
+            {
+              "id": "n1",
+              "label": "Source later contains A + B",
+              "description": "Post-snapshot writes are not in the snapshot."
+            },
+            {
+              "id": "n2",
+              "label": "Restore independent location",
+              "description": "Do not replace a live database under running writers."
+            },
+            {
+              "id": "n3",
+              "label": "Verify A and expected missing B",
+              "description": "Check integrity, schema, known record values and compatible app; measure recovery time and loss interval."
+            },
+            {
+              "id": "n4",
+              "label": "Plan controlled cutover",
+              "description": "Stop writers and switch only after validation and missing-write reconciliation decisions."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "later source writes"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "recover earlier point"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "validate actual values"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "review switch"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Record snapshot identity and time; use supported database backup.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Post-snapshot writes are not in the snapshot. Do not replace a live database under running writers. Check integrity, schema, known record values and compatible app; measure recovery time and loss interval.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Stop writers and switch only after validation and missing-write reconciliation decisions.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "incident-response",
@@ -13827,7 +18210,99 @@ const LEARNING_PATHS = [
             "scope": "Incident coordination principles; local readiness drill is a synthetic exercise. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "diagram": {
+          "title": "Stabilize, investigate and verify recovery",
+          "summary": "Lesson timeline records an error increase after promotion without assuming the newest deploy is the cause.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "12:00 v2 promoted",
+              "description": "Record artifact/config/schema identity and timeline."
+            },
+            {
+              "id": "n1",
+              "label": "12:03 eligible errors increase",
+              "description": "Confirm user impact and distinguish observation from cause hypothesis."
+            },
+            {
+              "id": "n2",
+              "label": "12:04 stop promotion; assign lead",
+              "description": "Bound changes and separate incident operations from diagnosis."
+            },
+            {
+              "id": "n3",
+              "label": "12:06 inspect readiness and dependencies",
+              "description": "Correlate logs, health and recent changes before choosing mitigation."
+            },
+            {
+              "id": "n4",
+              "label": "12:08 verified rollback or dependency fix",
+              "description": "Use compatibility and failure evidence, then verify user smoke recovery and record follow-ups."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "observe symptoms"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "stabilize coordination"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "collect evidence"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "choose supported mitigation"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Record artifact/config/schema identity and timeline.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Confirm user impact and distinguish observation from cause hypothesis. Bound changes and separate incident operations from diagnosis. Correlate logs, health and recent changes before choosing mitigation.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Use compatibility and failure evidence, then verify user smoke recovery and record follow-ups.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "release-review",
@@ -14634,7 +19109,100 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Supply collaborators, then deliver a message",
+          "summary": "The lesson ASCII sketch describes dependencies and call order. In the runnable remind function the message formatting is inline, rather than a separate formatter object.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Entry point",
+              "description": "The application supplies title and a delivery callable."
+            },
+            {
+              "id": "n1",
+              "label": "remind",
+              "description": "The focused function coordinates this reminder."
+            },
+            {
+              "id": "n2",
+              "label": "Message formatting",
+              "description": "Build Review Patterns in the function."
+            },
+            {
+              "id": "n3",
+              "label": "Delivery callable",
+              "description": "sent.append is the supplied local delivery implementation."
+            },
+            {
+              "id": "n4",
+              "label": "Recorded message",
+              "description": "The local sent list contains Review Patterns."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "supply collaborators"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "format title"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "pass message"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "append"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Assemble the dependency",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The caller supplies delivery; remind does not locate a global service."
+            },
+            {
+              "title": "Build a message",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The runnable function formats its text inline and passes that text to delivery."
+            },
+            {
+              "title": "Observe delivery",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The assertion checks the recorded local message, not a real network delivery."
+            }
+          ],
+          "textExampleSections": [
+            3
+          ]
+        }
       },
       {
         "id": "solid",
@@ -15092,7 +19660,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Select one formatter at the boundary",
+          "summary": "This is the lesson simple factory. A selection function is not automatically the class-based Factory Method or Abstract Factory pattern.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Format name",
+              "description": "The caller supplies json or lines."
+            },
+            {
+              "id": "n1",
+              "label": "formatter_for",
+              "description": "The bounded selection function checks the format name."
+            },
+            {
+              "id": "n2",
+              "label": "JSON callable",
+              "description": "The json option returns a callable using json.dumps."
+            },
+            {
+              "id": "n3",
+              "label": "Lines callable",
+              "description": "The lines option returns a callable joining titles."
+            },
+            {
+              "id": "n4",
+              "label": "Unknown format error",
+              "description": "An unsupported name raises ValueError."
+            },
+            {
+              "id": "n5",
+              "label": "Consumer",
+              "description": "The caller invokes the selected callable with titles."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "select"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "json"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "lines"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "neither"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "use formatter"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "use formatter"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Name the variation",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Construction/selection chooses a formatter separately from using it."
+            },
+            {
+              "title": "Choose one supported option",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                1,
+                2,
+                3
+              ],
+              "explanation": "Known names return one compatible callable; unknown names fail explicitly."
+            },
+            {
+              "title": "Use the chosen implementation",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "The consumer supplies titles to that callable. Do not interpret format names as executable code."
+            }
+          ]
+        }
       },
       {
         "id": "builder",
@@ -15148,7 +19825,85 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Validate construction before freezing a snapshot",
+          "summary": "The mutable builder holds temporary choices. The finished Report receives a tuple snapshot so later builder edits do not change it.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Builder choices",
+              "description": "Builder().field(title) records a selected field in a mutable list."
+            },
+            {
+              "id": "n1",
+              "label": "build title",
+              "description": "build receives Progress with surrounding spaces."
+            },
+            {
+              "id": "n2",
+              "label": "Validate choices",
+              "description": "Reject blank titles, missing fields or blank field names."
+            },
+            {
+              "id": "n3",
+              "label": "Frozen Report",
+              "description": "Return a trimmed title and tuple(self.fields); later adding minutes to the builder does not alter r.fields."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "request build"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "check completeness"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "snapshot valid choices"
+            }
+          ],
+          "steps": [
+            {
+              "title": "build title",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "build receives Progress with surrounding spaces."
+            },
+            {
+              "title": "Validate choices",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Reject blank titles, missing fields or blank field names."
+            },
+            {
+              "title": "Frozen Report",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Return a trimmed title and tuple(self.fields); later adding minutes to the builder does not alter r.fields."
+            }
+          ]
+        }
       },
       {
         "id": "adapter",
@@ -15511,7 +20266,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Publish succeeds only after delivery",
+          "summary": "The facade offers one entry point across validation, formatting and delivery. It does not make these collaborators transactional.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "publish caller",
+              "description": "Supply titles plus formatting and delivery collaborators."
+            },
+            {
+              "id": "n1",
+              "label": "Validate all titles",
+              "description": "Reject invalid titles before invoking the formatter."
+            },
+            {
+              "id": "n2",
+              "label": "Format document",
+              "description": "The formatter returns a document."
+            },
+            {
+              "id": "n3",
+              "label": "Deliver document",
+              "description": "Call delivery; meaningful failure propagates."
+            },
+            {
+              "id": "n4",
+              "label": "Return count",
+              "description": "Return len(titles) only after delivery succeeds."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "coordinate"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "valid input"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "document ready"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "success"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Validate all titles",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Reject invalid titles before invoking the formatter."
+            },
+            {
+              "title": "Format document",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The formatter returns a document."
+            },
+            {
+              "title": "Deliver document",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Call delivery; meaningful failure propagates."
+            },
+            {
+              "title": "Return count",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Return len(titles) only after delivery succeeds."
+            }
+          ]
+        }
       },
       {
         "id": "decorator",
@@ -15874,7 +20728,110 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "One duration operation across leaves and groups",
+          "summary": "The lesson plan is a finite acyclic tree. Groups sum child durations; a shared node would be counted for each occurrence.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Root Module",
+              "description": "The root contains Lesson(10) and a nested Module."
+            },
+            {
+              "id": "n1",
+              "label": "Lesson: 10",
+              "description": "This leaf returns 10 minutes."
+            },
+            {
+              "id": "n2",
+              "label": "Nested Module",
+              "description": "The nested group sums its one child."
+            },
+            {
+              "id": "n3",
+              "label": "Lesson: 20",
+              "description": "This leaf returns 20 minutes."
+            },
+            {
+              "id": "n4",
+              "label": "Root result: 30",
+              "description": "The root sums 10+20."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "duration on child"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "duration on child"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "duration on child"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "10 minutes"
+            },
+            {
+              "from": "n3",
+              "to": "n2",
+              "label": "20 minutes"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "20 minutes"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Use the same operation",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "The root calls duration on both a leaf and a group."
+            },
+            {
+              "title": "Recurse through the group",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                4
+              ],
+              "explanation": "The nested Module obtains and sums its child duration."
+            },
+            {
+              "title": "Combine results",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                5
+              ],
+              "explanation": "The root receives 10 and 20 and returns 30. Empty modules sum to zero."
+            }
+          ]
+        }
       },
       {
         "id": "proxy",
@@ -15930,7 +20887,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Loaded is distinct from a cached None",
+          "summary": "The lesson local proxy caches a successful load once. A failed load leaves it unloaded; no invalidation or concurrency guarantee is supplied.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "get caller",
+              "description": "A caller requests the local document."
+            },
+            {
+              "id": "n1",
+              "label": "loaded flag?",
+              "description": "Check the separate flag rather than testing value truthiness."
+            },
+            {
+              "id": "n2",
+              "label": "Call loader",
+              "description": "If unloaded, invoke load; failure propagates before the flag changes."
+            },
+            {
+              "id": "n3",
+              "label": "Store value and flag",
+              "description": "After success, store even None and set loaded=True."
+            },
+            {
+              "id": "n4",
+              "label": "Return cached value",
+              "description": "Return value; later calls use it without loading again."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "request"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "false"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "success"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "return"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "true"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check loading status",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "The flag decides whether to call the loader."
+            },
+            {
+              "title": "Cache successful completion",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "The example loader returns None successfully, which is still a cacheable result."
+            },
+            {
+              "title": "Reuse the result",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "A later get sees loaded=True and returns None without another loader call."
+            }
+          ]
+        }
       },
       {
         "id": "observer",
@@ -16317,7 +21371,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "First non-None result wins",
+          "summary": "The lesson JSON request passes through ordered handlers. None declines; False and empty strings are valid accepted results. Exceptions propagate.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Request",
+              "description": "format=json and titles=[Patterns]."
+            },
+            {
+              "id": "n1",
+              "label": "Lines handler",
+              "description": "Declines this JSON request with None."
+            },
+            {
+              "id": "n2",
+              "label": "JSON handler",
+              "description": "Returns the JSON representation."
+            },
+            {
+              "id": "n3",
+              "label": "Accepted result",
+              "description": "Return immediately after a non-None result."
+            },
+            {
+              "id": "n4",
+              "label": "No accepting handler",
+              "description": "If every handler declines, raise LookupError."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "first handler"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "None: continue"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "non-None: stop"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "non-None: stop"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "None and chain exhausted"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Try handlers in order",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "For the example, lines declines and JSON is tried next."
+            },
+            {
+              "title": "Stop on explicit acceptance",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "A non-None result ends selection, even if it is False or an empty string. JSON succeeds here."
+            },
+            {
+              "title": "Keep failure explicit",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "If the whole chain declines, LookupError reports unhandled input. Handler exceptions never mean automatic fallback."
+            }
+          ]
+        }
       },
       {
         "id": "command",
@@ -16429,7 +21580,92 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Legal study-session transitions",
+          "summary": "Edges are legal action transitions from the lesson table. Other state/action pairs raise ValueError; this lifecycle supplies no concurrency control.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "draft",
+              "description": "The initial session state."
+            },
+            {
+              "id": "n1",
+              "label": "active",
+              "description": "start enters active; pause leaves it."
+            },
+            {
+              "id": "n2",
+              "label": "done",
+              "description": "finish from active enters done."
+            },
+            {
+              "id": "n3",
+              "label": "Illegal action",
+              "description": "A state/action pair missing from the table raises ValueError."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "start"
+            },
+            {
+              "from": "n1",
+              "to": "n0",
+              "label": "pause"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "finish"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "finish is not allowed"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Start a session",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "draft plus start returns active."
+            },
+            {
+              "title": "Pause or finish",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "active can pause back to draft or finish to done."
+            },
+            {
+              "title": "Reject an absent transition",
+              "activeNodes": [
+                "n0",
+                "n3"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Finishing from draft is illegal; the table supplies no outgoing transition from done."
+            }
+          ]
+        }
       },
       {
         "id": "mediator",
@@ -16485,7 +21721,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Validate before state and notification effects",
+          "summary": "CompletionMediator owns local collaboration rules. Failed prerequisites, missing IDs and repeated completion leave states and notifications unchanged.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Completion request",
+              "description": "The caller asks to complete a lesson."
+            },
+            {
+              "id": "n1",
+              "label": "Validate active and prerequisites",
+              "description": "Require a known active lesson and completed prerequisites."
+            },
+            {
+              "id": "n2",
+              "label": "Reject request",
+              "description": "Validation failure raises without changing local state or notifications."
+            },
+            {
+              "id": "n3",
+              "label": "Set done",
+              "description": "Successful validation permits the local state transition."
+            },
+            {
+              "id": "n4",
+              "label": "Record notification",
+              "description": "Append one local completed notification after the successful transition."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "coordinate"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "invalid"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "valid"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "local notification"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check before effects",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Trying next before intro fails and preserves both collections."
+            },
+            {
+              "title": "Apply a legal completion",
+              "activeNodes": [
+                "n1",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Completing intro, then next, passes their prerequisites and sets each done."
+            },
+            {
+              "title": "Record successful outcomes",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Each successful transition has one local notification. External delivery would need a separate contract."
+            }
+          ]
+        }
       },
       {
         "id": "template-method",
@@ -16660,7 +21986,85 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Assemble dependencies at the entry point",
+          "summary": "The lesson Progress service receives save and clock explicitly. These arrows describe supplied collaborators and calls, not inheritance.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Composition root",
+              "description": "Create Progress(records.append, fixed clock). The root supplies the implementations."
+            },
+            {
+              "id": "n1",
+              "label": "Progress.complete",
+              "description": "The service receives Patterns and uses its supplied clock."
+            },
+            {
+              "id": "n2",
+              "label": "Construct record",
+              "description": "Build title plus the clock value; the test clock makes time deterministic."
+            },
+            {
+              "id": "n3",
+              "label": "Save collaborator",
+              "description": "Call records.append with that record. The assertion checks the recorded time."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "inject save and clock"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "read time"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "save record"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Progress.complete",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The service receives Patterns and uses its supplied clock."
+            },
+            {
+              "title": "Construct record",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Build title plus the clock value; the test clock makes time deterministic."
+            },
+            {
+              "title": "Save collaborator",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Call records.append with that record. The assertion checks the recorded time."
+            }
+          ]
+        }
       },
       {
         "id": "repository",
@@ -16801,7 +22205,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Publish the working copy only on success",
+          "summary": "The lesson and workshop copy-on-write flow is local and sequential. Dictionary clear/update is not a database transaction, crash-safe commit or atomic concurrent operation.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Original store",
+              "description": "The original begins with completed=0."
+            },
+            {
+              "id": "n1",
+              "label": "Working copy",
+              "description": "Create an independent working representation."
+            },
+            {
+              "id": "n2",
+              "label": "Mutate working state",
+              "description": "Set completed=1 in the working copy."
+            },
+            {
+              "id": "n3",
+              "label": "Publish copy",
+              "description": "After normal body return, clear/update replaces original contents sequentially. Replacement itself has no crash-safe or concurrent atomicity guarantee."
+            },
+            {
+              "id": "n4",
+              "label": "Preserve original",
+              "description": "If the body raises, publishing is skipped; original stays completed=0."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "copy"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "body uses copy"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "body succeeds"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "body raises"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Isolate proposed changes",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Mutate the working copy rather than the original store."
+            },
+            {
+              "title": "Publish normal completion",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Only the successful body reaches clear/update and publishes completed=1. These two local dictionary operations are not an atomic storage commit; real persistence needs a transaction and conflict policy."
+            },
+            {
+              "title": "Keep failure unpublished",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "A ValueError raised in the body prevents those replacement statements from running."
+            }
+          ]
+        }
       },
       {
         "id": "refactoring",
@@ -16858,7 +22352,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Keep the same regression suite between extractions",
+          "summary": "The refactoring lab repeatedly checks observable output, failure timing and success-only measurement. The diagram is the sequence of learner edits.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Characterize starter",
+              "description": "Run test_refactoring.py against legacy behavior and create a scratch candidate."
+            },
+            {
+              "id": "n1",
+              "label": "Extract validation",
+              "description": "Retain validation-before-writer timing; run the same tests."
+            },
+            {
+              "id": "n2",
+              "label": "Extract formatters",
+              "description": "Move lines/JSON formatting and selection to the boundary; rerun tests."
+            },
+            {
+              "id": "n3",
+              "label": "Extract delivery and measurement",
+              "description": "Preserve writer exceptions and success-only measurement; rerun tests."
+            },
+            {
+              "id": "n4",
+              "label": "Add a tested format",
+              "description": "Add output and malformed-title checks; record the actual variation point."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "small edit"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "tests then next edit"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "tests then next edit"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "extend after preservation"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Extract validation",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Retain validation-before-writer timing; run the same tests."
+            },
+            {
+              "title": "Extract formatters",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Move lines/JSON formatting and selection to the boundary; rerun tests."
+            },
+            {
+              "title": "Extract delivery and measurement",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Preserve writer exceptions and success-only measurement; rerun tests."
+            },
+            {
+              "title": "Add a tested format",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Add output and malformed-title checks; record the actual variation point."
+            }
+          ]
+        }
       },
       {
         "id": "selection",
@@ -17866,7 +23459,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Read parent relationships separately from branch labels",
+          "summary": "The divergent fixture has a common base and a two-parent merge. Branch names move; timestamps do not prove ancestry.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Common base",
+              "description": "Shared committed snapshot before divergence."
+            },
+            {
+              "id": "n1",
+              "label": "Main tip",
+              "description": "Main adds its policy change."
+            },
+            {
+              "id": "n2",
+              "label": "Feature tip",
+              "description": "Feature preserves a different policy change."
+            },
+            {
+              "id": "n3",
+              "label": "Merge commit",
+              "description": "Resolved combined snapshot records both parents."
+            },
+            {
+              "id": "n4",
+              "label": "Branch and HEAD references",
+              "description": "Names identify current tips; commits retain their parent relationships."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "main development"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "feature development"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "first parent"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "second parent"
+            },
+            {
+              "from": "n4",
+              "to": "n3",
+              "label": "main and HEAD resolve to merge"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Find common ancestry",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Use parent relationships and merge-base rather than dates."
+            },
+            {
+              "title": "Inspect a two-parent merge",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "The merge snapshot combines changes; its two parents preserve both lines of history."
+            },
+            {
+              "title": "Distinguish names from objects",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "A branch is a movable reference. Useful detached work needs a named reference before leaving it."
+            }
+          ]
+        }
       },
       {
         "id": "branch-switch",
@@ -18074,7 +23764,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Resolve behavior or deliberately abort the merge",
+          "summary": "The fixture starts clean, aborts its first conflict, then repeats and resolves both illustrative intents. Real combined behavior still needs checks.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Clean starting state",
+              "description": "Preserve unrelated edits before beginning integration."
+            },
+            {
+              "id": "n1",
+              "label": "Unresolved merge",
+              "description": "Inspect base, ours and theirs in the index."
+            },
+            {
+              "id": "n2",
+              "label": "Deliberate resolution",
+              "description": "Choose content that meets the combined requirement."
+            },
+            {
+              "id": "n3",
+              "label": "Stage and complete",
+              "description": "Stage the resolved path and create the merge commit."
+            },
+            {
+              "id": "n4",
+              "label": "Review and test",
+              "description": "Verify the final combined contents and two-parent result."
+            },
+            {
+              "id": "n5",
+              "label": "Abort recovery",
+              "description": "Exit unresolved merge and verify restored main contents."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "begin conflicting merge"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "understand both intents"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "stage resolved path"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "verify combined candidate"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "choose merge abort"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect the three inputs",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Deleting markers alone is not a design decision; read each change and its purpose."
+            },
+            {
+              "title": "Complete a reviewed resolution",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Stage the actual resolution, then inspect and test the combined behavior."
+            },
+            {
+              "title": "Use the explicit abort lifecycle",
+              "activeNodes": [
+                "n1",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "The fixture verifies restoration after abort; clean preconditions make recovery more predictable."
+            }
+          ]
+        }
       },
       {
         "id": "remotes-fetch",
@@ -18126,7 +23918,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Fetch updates observations before integration changes HEAD",
+          "summary": "The local reviewer clone fetches from the owned source repository. It does not exercise network credentials, branch protection or push.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Source new commit",
+              "description": "The fixture source repository advances its main tip."
+            },
+            {
+              "id": "n1",
+              "label": "Reviewer HEAD",
+              "description": "Current branch and files remain at the old snapshot."
+            },
+            {
+              "id": "n2",
+              "label": "Fetch objects and refs",
+              "description": "Fetch records the source state locally."
+            },
+            {
+              "id": "n3",
+              "label": "Updated origin/main",
+              "description": "Remote-tracking reference now includes the descendant."
+            },
+            {
+              "id": "n4",
+              "label": "Review difference",
+              "description": "Inspect new commits and choose integration."
+            },
+            {
+              "id": "n5",
+              "label": "Fast-forward HEAD",
+              "description": "ff-only advances the reviewer branch if no divergence exists."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "retrieve source objects"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "update tracking ref"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "compare current snapshot"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "inspect fetched difference"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "explicit ff-only integration"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Record the source separately",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A remote-tracking ref is a local observation of the latest fetched state."
+            },
+            {
+              "title": "Inspect without changing HEAD",
+              "activeNodes": [
+                "n1",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Fetch alone leaves the current branch and working snapshot unchanged."
+            },
+            {
+              "title": "Choose integration deliberately",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "ff-only refuses unexpected divergence. Updating refs requires a separate integration choice."
+            }
+          ]
+        }
       },
       {
         "id": "pull-request-review",
@@ -18334,7 +24228,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Use one reliable predicate across historical candidates",
+          "summary": "Good and bad name the selected behavior. A candidate that cannot test it meaningfully may need skip.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Known good and bad",
+              "description": "Bound the search with observed behavior."
+            },
+            {
+              "id": "n1",
+              "label": "Historical candidate",
+              "description": "Bisect selects a revision within the range."
+            },
+            {
+              "id": "n2",
+              "label": "Repeatable predicate",
+              "description": "Evaluate the same precise regression on the candidate."
+            },
+            {
+              "id": "n3",
+              "label": "Classify observation",
+              "description": "Good, bad or skip for unrelated inability to test."
+            },
+            {
+              "id": "n4",
+              "label": "First bad candidate",
+              "description": "Search narrows to the regression candidate."
+            },
+            {
+              "id": "n5",
+              "label": "Reproduce and exit",
+              "description": "Test candidate and parent, then reset bisect state."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "start bounded search"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "run controlled test"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "record observed result"
+            },
+            {
+              "from": "n3",
+              "to": "n1",
+              "label": "narrow remaining range"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "search resolves"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "confirm condition and finish"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Define the behavior",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Pin relevant inputs/dependencies so the predicate means the same thing on each revision."
+            },
+            {
+              "title": "Classify honestly",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "A flaky predicate or unrelated build failure can misdirect the search; skip unevaluable candidates."
+            },
+            {
+              "title": "Confirm the boundary",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "Reproduce the candidate and its parent before concluding causation; leave bisect mode afterward."
+            }
+          ]
+        }
       },
       {
         "id": "cherry-pick",
@@ -18438,7 +24441,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A new base produces new commit identities",
+          "summary": "The owned private fixture replays its topic onto main and verifies ancestry and contents. Shared history needs coordination.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Original base",
+              "description": "Private topic began at this snapshot."
+            },
+            {
+              "id": "n1",
+              "label": "Old topic commit",
+              "description": "Existing commit has the old parent context."
+            },
+            {
+              "id": "n2",
+              "label": "Advanced main",
+              "description": "The new agreed base has additional changes."
+            },
+            {
+              "id": "n3",
+              "label": "Replayed topic commit",
+              "description": "Reapply selected change after main; identity changes."
+            },
+            {
+              "id": "n4",
+              "label": "Final verification",
+              "description": "Inspect new ancestry, dependencies and file contents."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "original topic parent"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "main advances independently"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "replay selected change"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "new parent context"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "review and test result"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect the original history",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "A private replay begins from known ownership and base; shared users may depend on old identities."
+            },
+            {
+              "title": "Change the parent context",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Rebase creates a different history, rather than merely changing how the log is displayed."
+            },
+            {
+              "title": "Verify the new candidate",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "New parent context needs fresh checks and review. Follow the operation continue/abort lifecycle for conflicts."
+            }
+          ]
+        }
       },
       {
         "id": "stash",
@@ -20199,7 +26299,115 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Derive the visible list from two inputs",
+          "summary": "The form lesson has one source for records and one for the search query. The filtered view is derived during rendering.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Input event",
+              "description": "Typing sends the new input value to setQuery."
+            },
+            {
+              "id": "n1",
+              "label": "Query state",
+              "description": "The controlled input receives its value from query."
+            },
+            {
+              "id": "n2",
+              "label": "Lesson records",
+              "description": "The records remain the source of lesson data."
+            },
+            {
+              "id": "n3",
+              "label": "Filter",
+              "description": "Compare lowercased titles with the lowercased query."
+            },
+            {
+              "id": "n4",
+              "label": "Visible list",
+              "description": "Render the filtered records; no extra result state is required."
+            },
+            {
+              "id": "n5",
+              "label": "Controlled input",
+              "description": "The rendered input displays query through its value prop. Typing invokes its change handler."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "update query"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "search text"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "records"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "derive view"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "controlled value"
+            },
+            {
+              "from": "n5",
+              "to": "n0",
+              "label": "typing invokes onChange"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Keep the input controlled",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                4,
+                5
+              ],
+              "explanation": "The input displays query and its change handler updates query."
+            },
+            {
+              "title": "Combine current inputs",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The next render filters current records using current query."
+            },
+            {
+              "title": "Render the derivation",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Visible results are calculated rather than independently stored and synchronized."
+            }
+          ]
+        }
       },
       {
         "id": "effects",
@@ -20646,7 +26854,85 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Synchronous work before the promise callback",
+          "summary": "The example logs A, schedules B through Promise.resolve().then, then logs C. The callback follows the current synchronous work.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Log A",
+              "description": "The first synchronous log writes A."
+            },
+            {
+              "id": "n1",
+              "label": "Schedule callback B",
+              "description": "Register the promise callback; this does not log B immediately."
+            },
+            {
+              "id": "n2",
+              "label": "Log C",
+              "description": "The next synchronous statement writes C."
+            },
+            {
+              "id": "n3",
+              "label": "Run callback B",
+              "description": "After the current synchronous work completes, the promise callback logs B."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "register then"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "continue synchronous code"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "callback runs later"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Schedule callback B",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Register the promise callback; this does not log B immediately."
+            },
+            {
+              "title": "Log C",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The next synchronous statement writes C."
+            },
+            {
+              "title": "Run callback B",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "After the current synchronous work completes, the promise callback logs B."
+            }
+          ]
+        }
       },
       {
         "id": "type-design",
@@ -20756,7 +27042,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Actions and previous state produce next state",
+          "summary": "The reducer is pure: event handlers create inputs and the reducer returns immutable next rows. Effects remain outside it.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Event handler",
+              "description": "The caller dispatches a toggle or remove action."
+            },
+            {
+              "id": "n1",
+              "label": "Action",
+              "description": "The action carries a type and record ID."
+            },
+            {
+              "id": "n2",
+              "label": "Previous rows",
+              "description": "The reducer receives the existing rows."
+            },
+            {
+              "id": "n3",
+              "label": "Reducer",
+              "description": "toggle maps to a changed object; remove filters the ID."
+            },
+            {
+              "id": "n4",
+              "label": "Next rows",
+              "description": "The returned array becomes next state and drives rendering."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "dispatch"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "action input"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "state input"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "return"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Describe the action",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Pass the intended operation and ID into the reducer."
+            },
+            {
+              "title": "Use both inputs",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The pure reducer applies that action to previous state without storage or network calls."
+            },
+            {
+              "title": "Return next state",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Create a new array and changed objects. Test invariants and the deliberately selected unknown-ID behavior."
+            }
+          ]
+        }
       },
       {
         "id": "context-hooks",
@@ -21525,7 +27901,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Release checks followed by browser journeys",
+          "summary": "The lesson arrow sequence separates compilation/test/build feedback from actual user journeys and release recovery.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Type-check",
+              "description": "Check static contracts; external values still need runtime validation."
+            },
+            {
+              "id": "n1",
+              "label": "Domain and UI tests",
+              "description": "Run the supplied deterministic domain and component checks."
+            },
+            {
+              "id": "n2",
+              "label": "Production build and preview",
+              "description": "Build and serve the output for review."
+            },
+            {
+              "id": "n3",
+              "label": "Browser journeys",
+              "description": "Exercise deep-link refresh, keyboard flow and error states in a browser."
+            },
+            {
+              "id": "n4",
+              "label": "Monitoring and rollback",
+              "description": "Record what was tested and prepare observation and rollback evidence."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check behavior"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "build output"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "exercise preview"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "prepare release recovery"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Domain and UI tests",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Run the supplied deterministic domain and component checks."
+            },
+            {
+              "title": "Production build and preview",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Build and serve the output for review."
+            },
+            {
+              "title": "Browser journeys",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Exercise deep-link refresh, keyboard flow and error states in a browser."
+            },
+            {
+              "title": "Monitoring and rollback",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Record what was tested and prepare observation and rollback evidence."
+            }
+          ]
+        }
       }
     ],
     "stages": [
@@ -22205,6 +28680,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "The Service selector and readiness must both match before requests reach a usable endpoint."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -22304,7 +28782,84 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "Selectors connect a Service to eligible Pods",
+          "summary": "A valid Service object can still have no useful backend when its selector misses the Pod-template labels.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Deployment selector app=release-demo",
+              "description": "Controller selector and template label must agree."
+            },
+            {
+              "id": "n1",
+              "label": "Pod-template app=release-demo",
+              "description": "Managed Pods carry the matching workload label."
+            },
+            {
+              "id": "n2",
+              "label": "Service selector app=release-demo",
+              "description": "Routing selects matching Pods rather than reading the object caption."
+            },
+            {
+              "id": "n3",
+              "label": "Ready EndpointSlices",
+              "description": "Inspect endpoints and readiness; a selector of app=wrong matches none of this workload."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "matches template"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "matches Pod labels"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "ready matching endpoints"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Controller selector and template label must agree.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Managed Pods carry the matching workload label. Routing selects matching Pods rather than reading the object caption.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Inspect endpoints and readiness; a selector of app=wrong matches none of this workload.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "pods",
@@ -22353,7 +28908,87 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "Pod replacement creates a new scratch lifetime",
+          "summary": "emptyDir survives container restart within the same Pod; Pod removal ends that volume lifetime.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Pod A with old UID",
+              "description": "The Pod is disposable; its emptyDir belongs to this Pod lifetime."
+            },
+            {
+              "id": "n1",
+              "label": "Container restart within A",
+              "description": "Scratch volume remains when only the container restarts."
+            },
+            {
+              "id": "n2",
+              "label": "Pod A removed",
+              "description": "Deleting/replacing the Pod removes its emptyDir contents."
+            },
+            {
+              "id": "n3",
+              "label": "Replacement B has new UID",
+              "description": "B has new scratch storage; replicas do not establish shared durable notes."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "same Pod lifetime"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "end Pod lifetime"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "new Pod and volume"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "The Pod is disposable; its emptyDir belongs to this Pod lifetime.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Scratch volume remains when only the container restarts. Deleting/replacing the Pod removes its emptyDir contents.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "B has new scratch storage; replicas do not establish shared durable notes.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "deployments",
@@ -23275,7 +29910,87 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "diagram": {
+          "title": "Environment config changes need new processes",
+          "summary": "The lab RELEASE_VERSION is a configuration label, not image identity.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "ConfigMap v1",
+              "description": "RELEASE_VERSION is injected through envFrom."
+            },
+            {
+              "id": "n1",
+              "label": "Pod starts with v1",
+              "description": "Environment values are captured when the container starts."
+            },
+            {
+              "id": "n2",
+              "label": "ConfigMap edited to v2",
+              "description": "Existing processes still report v1; mounted-file methods have a different lifecycle."
+            },
+            {
+              "id": "n3",
+              "label": "Controlled rollout starts new Pods",
+              "description": "New environment-injected processes receive v2; verify reported values separately from image digest."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "capture at start"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "update does not rewrite env"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "create new process instances"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "RELEASE_VERSION is injected through envFrom.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Environment values are captured when the container starts. Existing processes still report v1; mounted-file methods have a different lifecycle.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "New environment-injected processes receive v2; verify reported values separately from image digest.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "secrets",
@@ -23373,7 +30088,97 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Readiness and liveness choose different actions",
+          "summary": "The local gate case gives ready 503 and live 200; actual kubelet scheduling remains an optional cluster observation.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Startup /live",
+              "description": "Startup probe gives initialization time before other probes run."
+            },
+            {
+              "id": "n1",
+              "label": "Running HTTP process",
+              "description": "A responding process can still lack required schema/gate readiness."
+            },
+            {
+              "id": "n2",
+              "label": "Readiness /ready fails",
+              "description": "Not-ready gate returns 503."
+            },
+            {
+              "id": "n3",
+              "label": "Remove ready traffic eligibility",
+              "description": "Readiness controls service traffic, rather than restarting this healthy HTTP process."
+            },
+            {
+              "id": "n4",
+              "label": "Liveness /live fails repeatedly",
+              "description": "Repeated liveness failures can trigger a container restart."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "startup succeeds"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "required-work check fails"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "readiness transition"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "different process-health failure"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Allow initialization",
+              "explanation": "Configured period × threshold is an approximate budget, not an SLA.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "Remove traffic for dependency/gate failure",
+              "explanation": "The gate case remains live 200 and should not cause a liveness restart.",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Restart only at the liveness boundary",
+              "explanation": "A separate repeated /live failure targets container restart; measure actual thresholds in the optional drill.",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "resources",
@@ -23968,7 +30773,87 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "diagram": {
+          "title": "Bindings connect an API identity to scoped rules",
+          "summary": "The optional viewer grants observations, not secret reads or workload creation.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "viewer ServiceAccount",
+              "description": "Authentication establishes the API identity."
+            },
+            {
+              "id": "n1",
+              "label": "RoleBinding in notebook-lab",
+              "description": "The binding connects this subject to the selected Role in namespace scope."
+            },
+            {
+              "id": "n2",
+              "label": "pod-viewer Role",
+              "description": "Allows get/list/watch of Pods and Pod logs; avoid broad wildcards."
+            },
+            {
+              "id": "n3",
+              "label": "Allowed read and denied mutation/Secret tests",
+              "description": "Verify both cases; workload creation can enable indirect Secret access even without get Secrets."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "bind subject"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "select rules"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "evaluate verb/resource/scope"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Authentication establishes the API identity.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "The binding connects this subject to the selected Role in namespace scope. Allows get/list/watch of Pods and Pod logs; avoid broad wildcards.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Verify both cases; workload creation can enable indirect Secret access even without get Secrets.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "pod-security",
@@ -24066,7 +30951,87 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "diagram": {
+          "title": "Pod and claim deletion have different consequences",
+          "summary": "A bound PVC is not an off-node backup or proof of disaster recovery.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "PVC lab-data and storage-demo Pod",
+              "description": "Inspect StorageClass, access mode, driver permissions and reclaim policy."
+            },
+            {
+              "id": "n1",
+              "label": "Write a known synthetic message",
+              "description": "Verify actual content through the non-root writer."
+            },
+            {
+              "id": "n2",
+              "label": "Delete only Pod then reapply",
+              "description": "The message can remain if backing storage survives; test it rather than infer it from claim state."
+            },
+            {
+              "id": "n3",
+              "label": "Claim or namespace deletion",
+              "description": "Provider reclaim behavior may delete data; independent backup/restore remains a separate check."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "mount claim"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "reuse retained claim"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "separate storage lifecycle"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Inspect StorageClass, access mode, driver permissions and reclaim policy.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Verify actual content through the non-root writer. The message can remain if backing storage survives; test it rather than infer it from claim state.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Provider reclaim behavior may delete data; independent backup/restore remains a separate check.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "jobs",
@@ -24311,7 +31276,99 @@ const LEARNING_PATHS = [
             "scope": "GitOps reconciliation principles; no Flux controller installed by the lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "diagram": {
+          "title": "Repository desired state can overwrite manual drift",
+          "summary": "Paper timeline only: this lesson does not install a GitOps controller.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Git declares image v1",
+              "description": "Versioned desired state is the reconciliation source."
+            },
+            {
+              "id": "n1",
+              "label": "Controller applies v1",
+              "description": "The reconciler uses scoped permissions to update cluster objects."
+            },
+            {
+              "id": "n2",
+              "label": "Manual kubectl changes image to v2",
+              "description": "Cluster state now differs from the repository."
+            },
+            {
+              "id": "n3",
+              "label": "Next reconcile may restore v1",
+              "description": "A manual successful change does not alter the source of truth."
+            },
+            {
+              "id": "n4",
+              "label": "Reviewed Git promotion declares v2",
+              "description": "Change desired state deliberately and review pruning/data consequences."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "reconcile"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "manual drift"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "source of truth reapplied"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "promote desired revision"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Versioned desired state is the reconciliation source.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "The reconciler uses scoped permissions to update cluster objects. Cluster state now differs from the repository. A manual successful change does not alter the source of truth.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Change desired state deliberately and review pruning/data consequences.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "troubleshooting",
@@ -24409,7 +31466,99 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "diagram": {
+          "title": "Platform recovery and application data are distinct",
+          "summary": "Restoring etcd does not restore every external database byte or prove business correctness.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Inventory authoritative stores",
+              "description": "Include Git manifests, protected Secrets, etcd, volumes and external databases separately."
+            },
+            {
+              "id": "n1",
+              "label": "Rebuild platform",
+              "description": "Restore supported control-plane/configuration state with required keys and dependencies."
+            },
+            {
+              "id": "n2",
+              "label": "Restore application data",
+              "description": "Use supported database backups/logs and volume snapshots where supported."
+            },
+            {
+              "id": "n3",
+              "label": "Verify business records",
+              "description": "Read known notes through the compatible application and measure time/data loss."
+            },
+            {
+              "id": "n4",
+              "label": "Controlled traffic recovery",
+              "description": "Only after validation, plan writer ownership and routing; local kind evidence does not establish production resilience."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "supported platform recovery"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "separate data restoration"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "validate user invariants"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "verified cutover"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Include Git manifests, protected Secrets, etcd, volumes and external databases separately.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Restore supported control-plane/configuration state with required keys and dependencies. Use supported database backups/logs and volume snapshots where supported. Read known notes through the compatible application and measure time/data loss.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Only after validation, plan writer ownership and routing; local kind evidence does not establish production resilience.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       }
     ],
     "stages": [
@@ -25229,6 +32378,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "No TLS, browser authorization or public-service claim follows from this local result."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -25377,7 +32529,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "An exact TTL boundary requires fresh resolution",
+          "summary": "Offline injected-clock model only; no DNS query or connection migration is demonstrated.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Remember at t=10, TTL=5",
+              "description": "The stored answer expires at t=15."
+            },
+            {
+              "id": "n1",
+              "label": "Lookup at t=14.99",
+              "description": "The old address is still returned."
+            },
+            {
+              "id": "n2",
+              "label": "Lookup at t=15",
+              "description": "At or after expiry the model returns None."
+            },
+            {
+              "id": "n3",
+              "label": "Resolve again separately",
+              "description": "New resolution may return a changed address or fail; a short TTL does not migrate an open connection."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "before expiry"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "reach expiry boundary"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "cache miss requires resolution"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "The stored answer expires at t=15.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "The old address is still returned. At or after expiry the model returns None.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "New resolution may return a changed address or fail; a short TTL does not migrate an open connection.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "transport",
@@ -25825,7 +33057,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Synthetic cookie issuance and replay",
+          "summary": "This fixed, forgeable token demonstrates headers, not authenticated accounts.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "GET /cookie",
+              "description": "The local server issues a known synthetic cookie."
+            },
+            {
+              "id": "n1",
+              "label": "Set-Cookie session=synthetic",
+              "description": "Path=/, HttpOnly and SameSite=Lax are the lesson attributes; the HTTP lab makes no Secure-cookie claim."
+            },
+            {
+              "id": "n2",
+              "label": "Request /private with matching Cookie",
+              "description": "Without it the synthetic route returns 401; the known value can be supplied by any learner."
+            },
+            {
+              "id": "n3",
+              "label": "Local demonstration returns 200",
+              "description": "Production needs real authentication, unpredictable session identifiers and server-side authorization."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "issuance response"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "send scoped header"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "synthetic value matched"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "The local server issues a known synthetic cookie.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Path=/, HttpOnly and SameSite=Lax are the lesson attributes; the HTTP lab makes no Secure-cookie claim. Without it the synthetic route returns 401; the known value can be supplied by any learner.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Production needs real authentication, unpredictable session identifiers and server-side authorization.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "browser-boundaries",
@@ -25874,7 +33186,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "CORS controls browser response exposure",
+          "summary": "Python’s HTTP client does not enforce browser CORS; authorization is a separate server decision.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Browser page origin A",
+              "description": "A script requests an API at origin B."
+            },
+            {
+              "id": "n1",
+              "label": "Server response from B",
+              "description": "The server returns no appropriate CORS permission in the illustrated case."
+            },
+            {
+              "id": "n2",
+              "label": "Browser exposure check",
+              "description": "The script may be denied access to the response under browser rules."
+            },
+            {
+              "id": "n3",
+              "label": "Separate client and server evidence",
+              "description": "A Python read does not prove browser access; CORS permission does not authorize private data."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "cross-origin fetch"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "evaluate CORS"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "report actual boundary"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "A script requests an API at origin B.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "The server returns no appropriate CORS permission in the illustrated case. The script may be denied access to the response under browser rules.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "A Python read does not prove browser access; CORS permission does not authorize private data.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "cache",
@@ -25972,7 +33364,111 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "304 reuses an existing representation",
+          "summary": "The fixed ETag is an immutable sample teaching constant; 304 does not send a new lesson body.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Initial GET",
+              "description": "Client requests the lesson without a cached body."
+            },
+            {
+              "id": "n1",
+              "label": "200 + body + ETag",
+              "description": "Store a suitable representation with validator lesson-v1."
+            },
+            {
+              "id": "n2",
+              "label": "Conditional GET",
+              "description": "Send If-None-Match using that stored validator."
+            },
+            {
+              "id": "n3",
+              "label": "304 without body",
+              "description": "The matching validator says the stored representation may be reused under the contract."
+            },
+            {
+              "id": "n4",
+              "label": "Reuse stored lesson",
+              "description": "Do not parse the empty 304 content as a new JSON body."
+            },
+            {
+              "id": "n5",
+              "label": "Missing cached body",
+              "description": "Unexpected 304 without suitable local content requires recovery with an appropriate unconditional request."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "first representation"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "retain body and validator"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "validator matches"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "cached body available"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "local state insufficient"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Acquire representation and validator",
+              "explanation": "The body is needed later; an ETag alone is insufficient.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "Validate conditionally",
+              "explanation": "The conditional request receives 304 and no new lesson body.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Choose reuse or recovery",
+              "explanation": "Use the suitable stored body; otherwise recover under the application request policy.",
+              "activeNodes": [
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "redirects",
@@ -26021,7 +33517,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reapply policy at every redirect hop",
+          "summary": "The lab observes 307 with Location /lesson without automatically following it.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "GET /redirect",
+              "description": "Begin with an allowed destination."
+            },
+            {
+              "id": "n1",
+              "label": "307 + relative Location /lesson",
+              "description": "Record the redirect itself; method is preserved when following 307."
+            },
+            {
+              "id": "n2",
+              "label": "Resolve and validate next target",
+              "description": "Check hop count, destination origin and credential-forwarding policy again."
+            },
+            {
+              "id": "n3",
+              "label": "Follow allowed target or stop",
+              "description": "Reject loops/out-of-policy destinations; an allowed first target does not approve every later Location."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "observe response"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "consider optional follow"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "bounded policy decision"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Begin with an allowed destination.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Record the redirect itself; method is preserved when following 307. Check hop count, destination origin and credential-forwarding policy again.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Reject loops/out-of-policy destinations; an allowed first target does not approve every later Location.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "proxies",
@@ -26070,7 +33646,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Proxy timeout does not establish origin rollback",
+          "summary": "Conceptual topology; the supplied loopback reference contains no proxy.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Browser HTTPS request",
+              "description": "Begin with the browser’s observed request and deadline."
+            },
+            {
+              "id": "n1",
+              "label": "Edge proxy terminates TLS",
+              "description": "Define routing, forwarded-header trust and independent timeout behavior."
+            },
+            {
+              "id": "n2",
+              "label": "Origin HTTP work",
+              "description": "The origin receives the proxy connection and may still be computing."
+            },
+            {
+              "id": "n3",
+              "label": "Proxy returns 504 after waiting",
+              "description": "Correlate proxy and origin evidence; this response does not prove remote effects stopped."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "proxy boundary"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "forward request"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "proxy wait expires"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Begin with the browser’s observed request and deadline.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Define routing, forwarded-header trust and independent timeout behavior. The origin receives the proxy connection and may still be computing.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Correlate proxy and origin evidence; this response does not prove remote effects stopped.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "timeouts",
@@ -26207,6 +33863,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "Always release the handler and close the server, including failed assertions."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -26257,7 +33916,114 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Check attempt and time budgets before dispatch",
+          "summary": "The injected-clock GET helper is a policy model; callbacks need their own transport timeout and this helper has no backoff or jitter.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Before next GET",
+              "description": "Track total attempts including the first."
+            },
+            {
+              "id": "n1",
+              "label": "Attempts and deadline remain",
+              "description": "Check the injected overall deadline before dispatch."
+            },
+            {
+              "id": "n2",
+              "label": "Invoke bounded callback",
+              "description": "The helper cannot preempt a blocked callback."
+            },
+            {
+              "id": "n3",
+              "label": "Response status",
+              "description": "Selected gateway/unavailable failures can lead to another attempt."
+            },
+            {
+              "id": "n4",
+              "label": "Return final result / stop",
+              "description": "Exhausted deadline starts zero new calls; three failures stop after three calls."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check both budgets"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "both allow new call"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "either exhausted"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "receive status"
+            },
+            {
+              "from": "n3",
+              "to": "n0",
+              "label": "retryable status"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "success or final status"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Bound new dispatch",
+              "explanation": "Three attempts means at most three calls, not three retries after the first.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                0,
+                2
+              ]
+            },
+            {
+              "title": "Bound each callback separately",
+              "explanation": "The overall helper deadline cannot interrupt an unbounded transport callback.",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                3
+              ]
+            },
+            {
+              "title": "Account for added load",
+              "explanation": "503 then 200 succeeds on attempt two; coordinated retry ownership prevents multiplied deepest calls.",
+              "activeNodes": [
+                "n3",
+                "n0",
+                "n4"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "body-contracts",
@@ -26306,7 +34072,99 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Validate more than HTTP success",
+          "summary": "The decoder accepts only the declared lesson observation; malformed 200 responses remain failures.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "HTTP response received",
+              "description": "A 200 status alone is insufficient application evidence."
+            },
+            {
+              "id": "n1",
+              "label": "Bound body and media type",
+              "description": "Require intended JSON media type and the 4096-byte teaching limit."
+            },
+            {
+              "id": "n2",
+              "label": "Decode JSON syntax",
+              "description": "Malformed JSON or decoding failure raises ProtocolError."
+            },
+            {
+              "id": "n3",
+              "label": "Validate exact schema",
+              "description": "Require object fields lesson:string and version:exact integer; boolean version is rejected."
+            },
+            {
+              "id": "n4",
+              "label": "Publish validated observation",
+              "description": "Every rejected stage must prevent publishing a lesson; streaming extensions enforce size during reading."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "status is only first boundary"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "representation checks"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "syntax is not schema"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "only valid contract"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "A 200 status alone is insufficient application evidence.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Require intended JSON media type and the 4096-byte teaching limit. Malformed JSON or decoding failure raises ProtocolError. Require object fields lesson:string and version:exact integer; boolean version is rejected.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Every rejected stage must prevent publishing a lesson; streaming extensions enforce size during reading.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "diagnostics",
@@ -27157,7 +35015,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "First matching score branch",
+          "summary": "The score example tests the highest threshold first. A false test continues; a true test selects one result.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "score",
+              "description": "The example starts with score = 85."
+            },
+            {
+              "id": "n1",
+              "label": "score >= 80?",
+              "description": "Test the excellent threshold first."
+            },
+            {
+              "id": "n2",
+              "label": "excellent",
+              "description": "A score of 80 or above selects excellent."
+            },
+            {
+              "id": "n3",
+              "label": "score >= 50?",
+              "description": "Only test passing after the excellent test fails."
+            },
+            {
+              "id": "n4",
+              "label": "pass",
+              "description": "Scores from 50 through 79 select pass."
+            },
+            {
+              "id": "n5",
+              "label": "retry",
+              "description": "Scores below 50 select retry."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "test"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "true"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "false"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "true"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "false"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check the higher threshold",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "85 meets 80, so excellent is selected without evaluating elif."
+            },
+            {
+              "title": "Reach the lower threshold",
+              "activeNodes": [
+                "n1",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Only a score below 80 reaches the passing test; 50 is accepted."
+            },
+            {
+              "title": "Handle the remaining scores",
+              "activeNodes": [
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "A score below 50 reaches else and selects retry."
+            }
+          ]
+        }
       },
       {
         "id": "collections",
@@ -27541,7 +35501,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A JSON file round trip",
+          "summary": "Serialization, file I/O and decoding are separate operations. Decoding does not validate the record schema.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Python record",
+              "description": "The example starts with topic loops and minutes 25."
+            },
+            {
+              "id": "n1",
+              "label": "JSON text",
+              "description": "json.dumps serializes the supported values."
+            },
+            {
+              "id": "n2",
+              "label": "UTF-8 file",
+              "description": "write_text writes the serialized text to the temporary file."
+            },
+            {
+              "id": "n3",
+              "label": "Read text",
+              "description": "read_text recovers text using UTF-8."
+            },
+            {
+              "id": "n4",
+              "label": "Python values",
+              "description": "json.loads decodes the recovered text; the example then reads its fields."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "serialize"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "write"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "read"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "decode"
+            }
+          ],
+          "steps": [
+            {
+              "title": "JSON text",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "json.dumps serializes the supported values."
+            },
+            {
+              "title": "UTF-8 file",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "write_text writes the serialized text to the temporary file."
+            },
+            {
+              "title": "Read text",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "read_text recovers text using UTF-8."
+            },
+            {
+              "title": "Python values",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "json.loads decodes the recovered text; the example then reads its fields."
+            }
+          ]
+        }
       },
       {
         "id": "modules-and-environments",
@@ -27899,7 +35958,85 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A stream is consumed once",
+          "summary": "Follow the same generator object from creation through exhaustion; making a new generator is a separate operation.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Create stream",
+              "description": "valid_minutes([10, -1, 20]) creates a generator without eagerly running its body."
+            },
+            {
+              "id": "n1",
+              "label": "Consume with sum",
+              "description": "sum requests values; the generator yields 10 and 20 and skips -1."
+            },
+            {
+              "id": "n2",
+              "label": "Return 30",
+              "description": "The sum is 30 and the iterator has been exhausted."
+            },
+            {
+              "id": "n3",
+              "label": "Read again: []",
+              "description": "list on that same stream has no remaining values."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "request values"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "finish consumption"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "same exhausted iterator"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Consume with sum",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "sum requests values; the generator yields 10 and 20 and skips -1."
+            },
+            {
+              "title": "Return 30",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The sum is 30 and the iterator has been exhausted."
+            },
+            {
+              "title": "Read again: []",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "list on that same stream has no remaining values."
+            }
+          ]
+        }
       },
       {
         "id": "context-managers",
@@ -27957,7 +36094,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Cleanup precedes the outer handler",
+          "summary": "This is the lesson failing-body trace. finally performs cleanup before the original exception reaches the caller.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Acquire: open",
+              "description": "resource records open before yielding."
+            },
+            {
+              "id": "n1",
+              "label": "Body: handle",
+              "description": "The with body receives handle and records it."
+            },
+            {
+              "id": "n2",
+              "label": "Raise ValueError",
+              "description": "The body raises failed; normal body execution stops."
+            },
+            {
+              "id": "n3",
+              "label": "Finally: close",
+              "description": "The context manager records close without suppressing the error."
+            },
+            {
+              "id": "n4",
+              "label": "Outer handler: caught",
+              "description": "The outer except observes ValueError and records caught."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "yield"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "body fails"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "unwind"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "propagate"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Body: handle",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The with body receives handle and records it."
+            },
+            {
+              "title": "Raise ValueError",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The body raises failed; normal body execution stops."
+            },
+            {
+              "title": "Finally: close",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The context manager records close without suppressing the error."
+            },
+            {
+              "title": "Outer handler: caught",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The outer except observes ValueError and records caught."
+            }
+          ]
+        }
       },
       {
         "id": "packaging-and-cli",
@@ -28028,7 +36264,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Complete installed-wheel starter; local wheel build/install/CLI/resource test executed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27. Other runtime/backend combinations remain unverified."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Verify the wheel outside the checkout",
+          "summary": "The optional installed-package exercise checks the built artifact. Missing exact build tooling is a skip; nothing is published.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Generate package",
+              "description": "python_package_starter.py creates a complete src-layout package in an empty destination."
+            },
+            {
+              "id": "n1",
+              "label": "Build wheel",
+              "description": "The exercise builds with available pinned tooling without network dependency resolution."
+            },
+            {
+              "id": "n2",
+              "label": "Install cleanly",
+              "description": "Install the wheel into a second clean virtual environment using no-index and no-deps."
+            },
+            {
+              "id": "n3",
+              "label": "Run outside checkout",
+              "description": "The test changes working directory and removes inherited Python search paths."
+            },
+            {
+              "id": "n4",
+              "label": "Check installed behavior",
+              "description": "Assert installed module location, CLI/help/errors and packaged-resource access."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "build artifact"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "install artifact"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "isolate imports"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "execute assertions"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Build wheel",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The exercise builds with available pinned tooling without network dependency resolution."
+            },
+            {
+              "title": "Install cleanly",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Install the wheel into a second clean virtual environment using no-index and no-deps."
+            },
+            {
+              "title": "Run outside checkout",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The test changes working directory and removes inherited Python search paths."
+            },
+            {
+              "title": "Check installed behavior",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Assert installed module location, CLI/help/errors and packaged-resource access."
+            }
+          ]
+        }
       },
       {
         "id": "logging-and-test-design",
@@ -28324,7 +36659,116 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Prepare, replace, clean up",
+          "summary": "The same-directory temporary file is prepared and closed before replacing prior output. This is visibility protection, not a power-loss or multi-writer guarantee.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Validate data",
+              "description": "Validate before entering the write path."
+            },
+            {
+              "id": "n1",
+              "label": "Temporary file",
+              "description": "Write complete JSON into a same-directory temporary file."
+            },
+            {
+              "id": "n2",
+              "label": "Flush, fsync, close",
+              "description": "Flush and fsync contents; close before replacement, including on Windows."
+            },
+            {
+              "id": "n3",
+              "label": "os.replace",
+              "description": "Replace the destination only after preparation succeeds."
+            },
+            {
+              "id": "n4",
+              "label": "New output",
+              "description": "Successful replacement publishes the complete new file."
+            },
+            {
+              "id": "n5",
+              "label": "Failure cleanup",
+              "description": "On preparation or replacement failure, finally removes an abandoned temporary file."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "valid"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "write complete"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "closed"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "success"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "preparation fails"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "replacement fails"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Prepare new bytes",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Prepare a complete temporary file while prior output remains at the destination."
+            },
+            {
+              "title": "Publish once",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Close the prepared file, then replace; success exposes the complete new output."
+            },
+            {
+              "title": "Clean failed preparation or replacement",
+              "activeNodes": [
+                "n1",
+                "n3",
+                "n5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "The failure remains visible and finally removes an abandoned temporary file. The injected replacement failure test verifies old bytes survive."
+            }
+          ]
+        }
       },
       {
         "id": "robust-import-capstone",
@@ -28382,7 +36826,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Validate the whole batch before publishing",
+          "summary": "The full advanced importer bounds input and publishes once after every record and duplicate-ID check passes. Worker results are collected in input order.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Bound input",
+              "description": "The advanced project enforces byte and record limits before accepting the batch."
+            },
+            {
+              "id": "n1",
+              "label": "Parse and validate rows",
+              "description": "Workers return validated rows; a failing worker is not a forceful stop of other threads."
+            },
+            {
+              "id": "n2",
+              "label": "Check unique IDs",
+              "description": "Collect all results and reject duplicate IDs."
+            },
+            {
+              "id": "n3",
+              "label": "Prepare report",
+              "description": "Create the versioned report only after complete validation."
+            },
+            {
+              "id": "n4",
+              "label": "Replace output once",
+              "description": "Publish the prepared report once; failed validation does not publish partial results."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "accept bounded batch"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "collect results"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "all checks pass"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "commit"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Parse and validate rows",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Workers return validated rows; a failing worker is not a forceful stop of other threads."
+            },
+            {
+              "title": "Check unique IDs",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Collect all results and reject duplicate IDs."
+            },
+            {
+              "title": "Prepare report",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Create the versioned report only after complete validation."
+            },
+            {
+              "title": "Replace output once",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Publish the prepared report once; failed validation does not publish partial results."
+            }
+          ]
+        }
       }
     ],
     "stages": [
@@ -29814,7 +38357,84 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reduce payment grain before joining",
+          "summary": "The lesson preserves five orders while combining multiple payments into one total per OrderId.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Six payment observations",
+              "description": "Keep the orphan OrderId 999 visible for a separate exception query."
+            },
+            {
+              "id": "n1",
+              "label": "Aggregate by OrderId",
+              "description": "SUM creates one payment total per order key."
+            },
+            {
+              "id": "n2",
+              "label": "LEFT JOIN five orders",
+              "description": "Start from the required order population, preserving unpaid order 104."
+            },
+            {
+              "id": "n3",
+              "label": "Paid total plus missing indicator",
+              "description": "COALESCE supplies zero only for this calculation; a separate indicator preserves absence."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "group payments"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "join at order grain"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "apply explicit missing policy"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Keep the orphan OrderId 999 visible for a separate exception query.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "SUM creates one payment total per order key. Start from the required order population, preserving unpaid order 104.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "COALESCE supplies zero only for this calculation; a separate indicator preserves absence.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "window-functions",
@@ -30577,7 +39197,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reconcile orders without hiding orphans",
+          "summary": "Foundation fixture only: due 390, matched payments 265 and net outstanding 125.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Six payments: total 285",
+              "description": "Incoming total includes 20 for unknown OrderId 999."
+            },
+            {
+              "id": "n1",
+              "label": "Per-order payment totals",
+              "description": "Aggregate payments before attaching them to orders."
+            },
+            {
+              "id": "n2",
+              "label": "Five-order balance report",
+              "description": "LEFT JOIN retains all five orders; outstanding is due minus matched payments."
+            },
+            {
+              "id": "orphans",
+              "label": "Orphan payment observations",
+              "description": "A separate NOT EXISTS query against all raw payments finds PaymentId 206, OrderId 999, Amount 20 without inventing an order."
+            },
+            {
+              "id": "n3",
+              "label": "Report plus orphan list",
+              "description": "Net outstanding 125; orphan 206/999/20 remains a separate output."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "aggregate"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "preserve order population"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "order balances"
+            },
+            {
+              "from": "n0",
+              "to": "orphans",
+              "label": "NOT EXISTS matching order"
+            },
+            {
+              "from": "orphans",
+              "to": "n3",
+              "label": "separate exception output"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Incoming total includes 20 for unknown OrderId 999.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Aggregate payments before attaching them to orders. LEFT JOIN retains all five orders; outstanding is due minus matched payments.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Keep the orphan branch independent",
+              "explanation": "Query raw payments with NOT EXISTS against the order keys. The five-order LEFT JOIN report cannot recover unknown OrderId 999 after that observation is excluded from its result.",
+              "activeNodes": [
+                "n0",
+                "orphans"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Check both outputs: five order balances with net outstanding 125, plus orphan 206/999/20 from the independent exception query. Incoming payments total 285, while only 265 matches the order population.",
+              "activeNodes": [
+                "n2",
+                "orphans",
+                "n3"
+              ],
+              "activeEdges": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "schema-contracts",
@@ -31506,7 +40231,111 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Two sessions form a wait cycle",
+          "summary": "Reasoning schedule from the lesson; this graph is not an induced engine deadlock.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Session A holds order 101",
+              "description": "A requests order 102 next."
+            },
+            {
+              "id": "n1",
+              "label": "Session B holds order 102",
+              "description": "B requests order 101 next."
+            },
+            {
+              "id": "n2",
+              "label": "Deadlock cycle",
+              "description": "Neither participant can proceed while each waits on the other."
+            },
+            {
+              "id": "n3",
+              "label": "Victim rollback / error 1205",
+              "description": "SQL Server chooses a victim and rolls back its transaction."
+            },
+            {
+              "id": "n4",
+              "label": "Bounded whole-unit retry",
+              "description": "Retry the complete safe unit with cleanup and bounded backoff, not only its last statement."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "A waits for order 102"
+            },
+            {
+              "from": "n1",
+              "to": "n0",
+              "label": "B waits for order 101"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "wait dependency"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "wait dependency"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "victim selected"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "known rollback"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect held resources",
+              "explanation": "The sessions acquire the two resources in opposite order.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Find the cycle",
+              "explanation": "A waits for B and B waits for A.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "title": "Classify before retry",
+              "explanation": "Error 1205 differs from timeout or unknown commit outcome; connection loss needs operation-status reconciliation.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "least-privilege-dynamic-sql",
@@ -31627,7 +40456,96 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Expand before contracting a schema",
+          "summary": "The temporary CurrencyCode fixture demonstrates migration shape; real currency needs authoritative evidence.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Check preconditions",
+              "description": "Verify schema, supported application versions and recovery plan."
+            },
+            {
+              "id": "n1",
+              "label": "Add compatible nullable field",
+              "description": "Old and new application versions must remain supported."
+            },
+            {
+              "id": "n2",
+              "label": "Backfill with authoritative mapping",
+              "description": "USD is stipulated only for this synthetic fixture; real data cannot inherit that assumption."
+            },
+            {
+              "id": "n3",
+              "label": "Validate rows and totals",
+              "description": "Check null/invalid codes, business-key population and reconciled amounts."
+            },
+            {
+              "id": "n4",
+              "label": "Contract after compatibility evidence",
+              "description": "Remove obsolete structure only after readers/writers migrate and rollback implications are reviewed."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "preflight passes"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "compatible deployment"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "bounded backfill"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "verified old-use retirement"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Verify schema, supported application versions and recovery plan.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Old and new application versions must remain supported. USD is stipulated only for this synthetic fixture; real data cannot inherit that assumption. Check null/invalid codes, business-key population and reconciled amounts.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Remove obsolete structure only after readers/writers migrate and rollback implications are reviewed.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "advanced-import-capstone",
@@ -31704,7 +40622,109 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Classify raw events before ledger loading",
+          "summary": "The advanced six-row fixture differs from the foundation payments. Classification priority follows the supplied CASE expression.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Immutable raw rows",
+              "description": "Keep RawRowId, EventId and original amount text."
+            },
+            {
+              "id": "n1",
+              "label": "Parse and compare payloads",
+              "description": "TRY_CONVERT permits the declared decimal scale conversion; compare same-key raw payloads."
+            },
+            {
+              "id": "n2",
+              "label": "Conflict or exact duplicate",
+              "description": "Conflict takes priority; otherwise later exact copies are duplicate observations."
+            },
+            {
+              "id": "n3",
+              "label": "Invalid or orphan",
+              "description": "Remaining rows with invalid amounts or unknown orders are rejected with a traceable reason."
+            },
+            {
+              "id": "n4",
+              "label": "Accepted unseen event keys",
+              "description": "Check accepted payloads against the existing ledger before atomic insertion."
+            },
+            {
+              "id": "n5",
+              "label": "Ledger and reconciliation",
+              "description": "First run inserts 3 totaling 215; replay inserts 0. Five-order report has net outstanding 175."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "retain raw evidence"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "conflict first; duplicate second"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "otherwise validate amount and parent"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "otherwise accepted"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "insert unseen keys; preserve replay result"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Preserve source evidence",
+              "explanation": "Parsing does not erase original text or raw identity.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "Apply ordered dispositions",
+              "explanation": "Do not resolve conflicts by MAX(amount). Classification is conflict, duplicate, invalid, orphan, then accepted.",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "title": "Load and prove replay",
+              "explanation": "A local temporary-table replay is not proof of concurrent-writer safety or durable crash recovery.",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ]
+        }
       }
     ],
     "downloads": [
@@ -33147,7 +42167,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Cache-aside read and origin-load fallback",
+          "summary": "Public versioned lesson content can tolerate an explicit freshness policy; booking authority cannot rely on a cached seat count.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Public lesson read",
+              "description": "Use a lesson/version key; private data requires its own scope."
+            },
+            {
+              "id": "n1",
+              "label": "Cache lookup",
+              "description": "A hit returns reusable content under the declared policy."
+            },
+            {
+              "id": "n2",
+              "label": "Return cached content",
+              "description": "Hits still consume resources."
+            },
+            {
+              "id": "n3",
+              "label": "Origin load on miss",
+              "description": "Expiry or cache loss increases origin demand."
+            },
+            {
+              "id": "n4",
+              "label": "Populate cache and return",
+              "description": "Concurrent misses need deliberate stampede and consistency handling."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "lookup key"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "hit"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "miss / expiry"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "load then populate"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Choose cache scope",
+              "explanation": "Public lesson versions are the starting point, not private authorization or final-seat authority.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "Separate hit and miss",
+              "explanation": "At 1,000 reads/s and 90% hits, modeled origin reads are 100/s; full cache loss can send 1,000/s.",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Define freshness and recovery",
+              "explanation": "TTL alone does not solve write/reader races; choose versioned keys or a deliberate consistency policy.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "queues",
@@ -33519,7 +42629,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A follower can read an older saved version",
+          "summary": "Timeline from the asynchronous replication example; exact guarantees depend on the database configuration.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Both copies at version 8",
+              "description": "Leader and follower begin at the same version."
+            },
+            {
+              "id": "n1",
+              "label": "Leader acknowledges version 9",
+              "description": "The learner saves progress at the authoritative writer."
+            },
+            {
+              "id": "n2",
+              "label": "Follower still returns version 8",
+              "description": "A dependent read can appear to undo the save while replication lags."
+            },
+            {
+              "id": "n3",
+              "label": "Follower reaches version 9",
+              "description": "Replication catches up; a version-token or leader-read policy can handle the earlier interval."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "write accepted"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "read lagging copy"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "replication catches up"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Leader and follower begin at the same version.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "The learner saves progress at the authoritative writer. A dependent read can appear to undo the save while replication lags.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Replication catches up; a version-token or leader-read policy can handle the earlier interval.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "consistency-cap",
@@ -33684,7 +42874,84 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reserve the final seat in one atomic unit",
+          "summary": "Conceptual SQL needs chosen-engine concurrency verification; application checks alone do not establish exclusivity.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Begin transaction",
+              "description": "Capacity change and booking insert must share one boundary."
+            },
+            {
+              "id": "n1",
+              "label": "Conditional decrement",
+              "description": "Update only while remaining > 0; verify exactly one affected row."
+            },
+            {
+              "id": "n2",
+              "label": "Insert booking with uniqueness rule",
+              "description": "If this insert fails, rollback must restore the decrement."
+            },
+            {
+              "id": "n3",
+              "label": "Commit confirmed booking",
+              "description": "Concurrent final-seat attempts should produce one success and one documented sold-out/conflict outcome."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "enter atomic boundary"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "one affected row"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "all dependent writes succeed"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "Capacity change and booking insert must share one boundary.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Update only while remaining > 0; verify exactly one affected row. If this insert fails, rollback must restore the decrement.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Concurrent final-seat attempts should produce one success and one documented sold-out/conflict outcome.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "idempotency",
@@ -33913,6 +43180,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "The caller receives B9. Changed payloads must conflict; an expired key or an external side effect needs its own documented policy."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -34401,7 +43671,106 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Local transaction, relay and duplicate delivery",
+          "summary": "The outbox closes the domain-change/event-record atomicity gap; it does not establish exactly-once external effects.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Booking B9 + event E7",
+              "description": "One local transaction commits both the confirmed booking and outbox record."
+            },
+            {
+              "id": "n1",
+              "label": "Relay publishes E7",
+              "description": "Publish only committed pending records."
+            },
+            {
+              "id": "n2",
+              "label": "Crash before marking sent",
+              "description": "Publication may already have succeeded."
+            },
+            {
+              "id": "n3",
+              "label": "Relay republishes E7",
+              "description": "The same stable event identity can be delivered again."
+            },
+            {
+              "id": "n4",
+              "label": "Consumer deduplicates effects",
+              "description": "Durable consumer/provider contracts or reconciliation are still required."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "committed pending event"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "publish succeeded; receipt absent"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "restart sees pending"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "ordinary delivery"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "duplicate delivery"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Keep the local invariant atomic",
+              "explanation": "A delayed notification does not undo the confirmed booking.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "Locate the uncertainty",
+              "explanation": "A crash between publish and marking sent leaves a replay window.",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Handle duplicate effects",
+              "explanation": "An email already sent cannot be undone by database rollback; consumer crash windows remain a separate contract.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "observability",
@@ -34524,7 +43893,87 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Repeatable design worksheet; not security certification."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Evaluate record ownership at the server",
+          "summary": "Encryption and hidden UI controls do not establish object authorization.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "A requests B’s progress",
+              "description": "Treat the requested owner and record identifier as untrusted inputs."
+            },
+            {
+              "id": "n1",
+              "label": "Verified identity A",
+              "description": "Load identity from the verified session/token, not the request’s asserted owner."
+            },
+            {
+              "id": "n2",
+              "label": "Policy compares actor and resource",
+              "description": "Evaluate permission for resource owner B, including background/status/download paths."
+            },
+            {
+              "id": "n3",
+              "label": "Deny unauthorized private access",
+              "description": "Do not return private data; record approved audit fields without access tokens."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "authenticate"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "authorize resource"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "reject unauthorized action"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Treat the requested owner and record identifier as untrusted inputs.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Load identity from the verified session/token, not the request’s asserted owner. Evaluate permission for resource owner B, including background/status/download paths.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Do not return private data; record approved audit fields without access tokens.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "recovery",
@@ -34579,7 +44028,84 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Measure recovery point and service restoration separately",
+          "summary": "Toy timeline: RPO target 15 minutes fits; RTO target 30 minutes is missed by 5.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Recoverable point 10:00",
+              "description": "A backup must be intact and restorable, not merely listed."
+            },
+            {
+              "id": "n1",
+              "label": "Failure at 10:12",
+              "description": "Potential missing-write interval is 12 minutes."
+            },
+            {
+              "id": "n2",
+              "label": "Isolated restore and validation",
+              "description": "Check records, relationships, critical workflows and access controls."
+            },
+            {
+              "id": "n3",
+              "label": "Validated service at 10:47",
+              "description": "Recovery duration is 35 minutes; the RPO interval fits but RTO misses by 5 minutes."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "12-minute loss interval"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "restore required service"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "verify before claiming recovery"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the input",
+              "explanation": "A backup must be intact and restorable, not merely listed.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the transformation",
+              "explanation": "Potential missing-write interval is 12 minutes. Check records, relationships, critical workflows and access controls.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ]
+            },
+            {
+              "title": "Verify the outcome",
+              "explanation": "Recovery duration is 35 minutes; the RPO interval fits but RTO misses by 5 minutes.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "evolution",
@@ -34634,7 +44160,99 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Migrate readers and writers before removing fields",
+          "summary": "Expand-and-contract must account for mixed versions and newly written data.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Add optional preferred_name",
+              "description": "Keep the old name contract working."
+            },
+            {
+              "id": "n1",
+              "label": "Deploy dual readers",
+              "description": "Readers understand both old and new representations."
+            },
+            {
+              "id": "n2",
+              "label": "Restartable backfill",
+              "description": "Move existing records with an observable, restartable process."
+            },
+            {
+              "id": "n3",
+              "label": "Deploy new writers",
+              "description": "Observe whether any old consumers still use the previous representation."
+            },
+            {
+              "id": "n4",
+              "label": "Remove old field after criteria pass",
+              "description": "Binary rollback must account for data already written under the new contract."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "compatible read deployment"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "migrate existing data"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "new write contract"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "verified compatibility"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish the boundary",
+              "explanation": "Keep the old name contract working.",
+              "activeNodes": [
+                "n0"
+              ],
+              "activeEdges": []
+            },
+            {
+              "title": "Follow the mechanism",
+              "explanation": "Readers understand both old and new representations. Move existing records with an observable, restartable process. Observe whether any old consumers still use the previous representation.",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "title": "Verify the result and limits",
+              "explanation": "Binary rollback must account for data already written under the new contract.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "design-review",
@@ -35455,7 +45073,112 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Reduction must preserve the failure condition",
+          "summary": "The duplicate-ID example shrinks 1000 rows to two matching IDs. Removing a material row makes the failure disappear.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Recorded failure",
+              "description": "Exact command, runtime, expected result and observed failure."
+            },
+            {
+              "id": "n1",
+              "label": "Large input",
+              "description": "1000 synthetic rows reproduce the defect."
+            },
+            {
+              "id": "n2",
+              "label": "Two duplicate rows",
+              "description": "Reduce unrelated data while retaining ID a twice."
+            },
+            {
+              "id": "n3",
+              "label": "One row removed",
+              "description": "The duplicate condition is no longer present."
+            },
+            {
+              "id": "n4",
+              "label": "Failure disappears",
+              "description": "The changed observation identifies a material condition."
+            },
+            {
+              "id": "n5",
+              "label": "Minimal reproduction note",
+              "description": "Share the remaining fixture and explicit expected/observed outcomes."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "capture failing input"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "reduce unrelated rows"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "remove candidate condition"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "observe changed result"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "retain actual reproducer"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Capture before reducing",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Synthetic versioned input makes the failure repeatable without live private data."
+            },
+            {
+              "title": "Test what is material",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Failure disappearing after one duplicate row is removed supports a uniqueness-boundary hypothesis."
+            },
+            {
+              "title": "Keep the failing fixture",
+              "activeNodes": [
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "The final note preserves the two-row failure, command and runtime; it does not keep the nonfailing reduction as the reproducer."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "hypotheses",
@@ -35510,7 +45233,97 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Make a prediction that an observation can disprove",
+          "summary": "The guided diagnosis contract includes index stop. For [4,8,16] with stop 1, the expected sum is independently 12.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Contract and input",
+              "description": "Sum indexes zero through stop; expected 12."
+            },
+            {
+              "id": "n1",
+              "label": "Observed mutant result",
+              "description": "The deliberate mutant prints 4."
+            },
+            {
+              "id": "n2",
+              "label": "Boundary hypothesis",
+              "description": "Suspect an exclusive slice endpoint."
+            },
+            {
+              "id": "n3",
+              "label": "Debugger observation",
+              "description": "values[:stop] is [4], omitting the needed 8."
+            },
+            {
+              "id": "n4",
+              "label": "Correction and regression",
+              "description": "Include stop+1 and assert an independent expected result."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "compare expectation with output"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "state a falsifiable cause"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "inspect slice at boundary"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "correct and discriminate"
+            }
+          ],
+          "steps": [
+            {
+              "title": "State the mismatch",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Keep the agreed contract separate from current arithmetic."
+            },
+            {
+              "title": "Choose a discriminating observation",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "A breakpoint is useful when it answers a concrete question about input and chosen branch."
+            },
+            {
+              "title": "Preserve the corrected behavior",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "The regression distinguishes the mutant from the fix; changing only the printed message does not repair the function."
+            }
+          ]
+        }
       },
       {
         "id": "strategy",
@@ -35559,7 +45372,123 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Choose test scope for the observable risk",
+          "summary": "The importer example needs parser, filesystem and command-route evidence. A future browser interface introduces another boundary.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Risk: corrupt report",
+              "description": "Invalid rows must not replace the saved report."
+            },
+            {
+              "id": "n1",
+              "label": "Unit parser test",
+              "description": "Control input classes and assert rejection."
+            },
+            {
+              "id": "n2",
+              "label": "Integration file test",
+              "description": "Use real collaborators and verify old bytes survive."
+            },
+            {
+              "id": "n3",
+              "label": "Complete local CLI route",
+              "description": "Observe actual process output and exit status."
+            },
+            {
+              "id": "n4",
+              "label": "Future browser route",
+              "description": "UI effects need a component or browser test."
+            },
+            {
+              "id": "n5",
+              "label": "Evidence limits",
+              "description": "Each passing scope leaves other product boundaries unproved."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "check small input boundary"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "check real stored effect"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "check command entry point"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "browser evidence is separate"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "state unit limit"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "state local filesystem limit"
+            },
+            {
+              "from": "n3",
+              "to": "n5",
+              "label": "state process-route limit"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Test the small behavior",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n5"
+              ],
+              "activeEdges": [
+                0,
+                4
+              ],
+              "explanation": "Parser tests cover types quickly but cannot observe browser rendering or persisted output."
+            },
+            {
+              "title": "Cross real collaborators",
+              "activeNodes": [
+                "n0",
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                1,
+                5
+              ],
+              "explanation": "File readback checks storage effects; mocks need separate real-boundary checks."
+            },
+            {
+              "title": "Exercise the actual route",
+              "activeNodes": [
+                "n0",
+                "n3",
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                2,
+                3,
+                6
+              ],
+              "explanation": "A local subprocess verifies the command route, while a stale-response UI bug needs its actual component/browser boundary."
+            }
+          ]
+        }
       },
       {
         "id": "mocks",
@@ -35956,7 +45885,104 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "A reached line can still miss a discriminating boundary",
+          "summary": "The lesson changes <=1440 to <1440. Both tests execute the comparison, but only the endpoint reveals the altered contract.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Duration contract",
+              "description": "1440 is valid; 1441 is invalid."
+            },
+            {
+              "id": "n1",
+              "label": "Altered comparison",
+              "description": "Mutant rejects exactly 1440."
+            },
+            {
+              "id": "n2",
+              "label": "Ordinary case 30",
+              "description": "Passes both original and mutant."
+            },
+            {
+              "id": "n3",
+              "label": "Boundary case 1440",
+              "description": "Expected acceptance distinguishes the mutant."
+            },
+            {
+              "id": "n4",
+              "label": "Observed evidence",
+              "description": "Record which assertion fails; coverage alone reports execution."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "deliberately alter rule"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "exercise ordinary input"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "exercise endpoint"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "surviving mutant"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "discriminating failure"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Name the altered rule",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "A controlled mutation asks whether assertions protect the actual contract."
+            },
+            {
+              "title": "Compare the two cases",
+              "activeNodes": [
+                "n1",
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "30 reaches the comparison but misses the changed endpoint; 1440 exposes it."
+            },
+            {
+              "title": "Interpret evidence narrowly",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Line coverage cannot tell these tests apart. One caught mutant is not a universal quality score."
+            }
+          ]
+        }
       },
       {
         "id": "test-data",
@@ -36142,6 +46168,9 @@ const LEARNING_PATHS = [
               ],
               "explanation": "Assert one success, one conflict and version one; do not require a particular thread to win."
             }
+          ],
+          "textExampleSections": [
+            1
           ]
         }
       },
@@ -36247,7 +46276,136 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "diagram": {
+          "title": "Cancel after acquisition and observe cleanup",
+          "summary": "The guided kit uses an event to establish readiness. The timeout is a hang guard; it does not order the tasks.",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Resource acquired",
+              "description": "Child owns the synthetic resource."
+            },
+            {
+              "id": "n1",
+              "label": "Started event",
+              "description": "Signals acquisition before cancellation."
+            },
+            {
+              "id": "n2",
+              "label": "Parent cancels",
+              "description": "Cancel only after readiness is observed."
+            },
+            {
+              "id": "n3",
+              "label": "Cancellation cleanup",
+              "description": "The cancelled child’s finally appends released exactly once before cancellation propagates."
+            },
+            {
+              "id": "n4",
+              "label": "Caller observes cancellation",
+              "description": "Await propagates CancelledError and no commit."
+            },
+            {
+              "id": "n5",
+              "label": "Successful work commits",
+              "description": "Without cancellation, the child records committed before leaving the body."
+            },
+            {
+              "id": "n6",
+              "label": "Success cleanup",
+              "description": "The successful child’s finally also appends released exactly once."
+            },
+            {
+              "id": "n7",
+              "label": "Caller observes success",
+              "description": "Await finishes normally; assert both committed and released markers."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "signal actual readiness"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "parent waits then cancels"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "run finally cleanup"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "propagate cancellation after cleanup"
+            },
+            {
+              "from": "n1",
+              "to": "n5",
+              "label": "allow successful work"
+            },
+            {
+              "from": "n5",
+              "to": "n6",
+              "label": "normal body completion enters finally"
+            },
+            {
+              "from": "n6",
+              "to": "n7",
+              "label": "return normally after cleanup"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Establish acquisition",
+              "activeNodes": [
+                "n0",
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "The started event avoids racing cancellation against startup."
+            },
+            {
+              "title": "Observe cancellation and cleanup",
+              "activeNodes": [
+                "n2",
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Assert cancellation propagation, no committed marker and exactly one released marker."
+            },
+            {
+              "title": "Check the success path too",
+              "activeNodes": [
+                "n1",
+                "n5",
+                "n6",
+                "n7"
+              ],
+              "activeEdges": [
+                4,
+                5,
+                6
+              ],
+              "explanation": "The separate successful case records committed, runs finally to record released, then finishes normally. It does not raise CancelledError. This local resource test does not prove process-kill or repeated-cancellation cleanup."
+            }
+          ],
+          "textExampleSections": [
+            1
+          ]
+        }
       },
       {
         "id": "observability",

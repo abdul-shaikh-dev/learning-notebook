@@ -1,5 +1,8 @@
 # Harness operations runbook and incident exercise
 
+Visual companions in the notebook: [Lost-response and duplicate-effect handling](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/agent-harnesses/idempotent-effects) · [Operational recovery sequence](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/agent-harnesses/operations). The original text traces below remain available for offline use.
+
+
 This is a design exercise for a future service. The downloadable workshop runs locally with synthetic state; it does not deploy monitoring, authentication or durable storage.
 
 ## State triage

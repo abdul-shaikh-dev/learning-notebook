@@ -1,5 +1,8 @@
 # Release evidence workbook
 
+Visual companions in the notebook: [Source-to-user release checks](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/delivery-operations/release-contract). The original text traces below remain available for offline use.
+
+
 ## Foundation: observable local service
 Record Python/tool versions and the local test outcomes, including the bounded artifact-startup failure case. Draw source→tests→artifact→config→process→user request. List the loopback/data boundaries and one invariant. Capture /version, /live, /ready and a synthetic note create/read. Explain what the checksum does and does not prove.
 

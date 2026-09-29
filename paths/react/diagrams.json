@@ -94,5 +94,380 @@
         "explanation": "The button now shows Sessions: 1. The previous snapshot has not been rewritten; the UI reflects the newly rendered state."
       }
     ]
+  },
+  "forms": {
+    "title": "Derive the visible list from two inputs",
+    "summary": "The form lesson has one source for records and one for the search query. The filtered view is derived during rendering.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Input event",
+        "description": "Typing sends the new input value to setQuery."
+      },
+      {
+        "id": "n1",
+        "label": "Query state",
+        "description": "The controlled input receives its value from query."
+      },
+      {
+        "id": "n2",
+        "label": "Lesson records",
+        "description": "The records remain the source of lesson data."
+      },
+      {
+        "id": "n3",
+        "label": "Filter",
+        "description": "Compare lowercased titles with the lowercased query."
+      },
+      {
+        "id": "n4",
+        "label": "Visible list",
+        "description": "Render the filtered records; no extra result state is required."
+      },
+      {
+        "id": "n5",
+        "label": "Controlled input",
+        "description": "The rendered input displays query through its value prop. Typing invokes its change handler."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "update query"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "search text"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "records"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "derive view"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "controlled value"
+      },
+      {
+        "from": "n5",
+        "to": "n0",
+        "label": "typing invokes onChange"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Keep the input controlled",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n5"
+        ],
+        "activeEdges": [
+          0,
+          4,
+          5
+        ],
+        "explanation": "The input displays query and its change handler updates query."
+      },
+      {
+        "title": "Combine current inputs",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The next render filters current records using current query."
+      },
+      {
+        "title": "Render the derivation",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Visible results are calculated rather than independently stored and synchronized."
+      }
+    ]
+  },
+  "modules-closures": {
+    "title": "Synchronous work before the promise callback",
+    "summary": "The example logs A, schedules B through Promise.resolve().then, then logs C. The callback follows the current synchronous work.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Log A",
+        "description": "The first synchronous log writes A."
+      },
+      {
+        "id": "n1",
+        "label": "Schedule callback B",
+        "description": "Register the promise callback; this does not log B immediately."
+      },
+      {
+        "id": "n2",
+        "label": "Log C",
+        "description": "The next synchronous statement writes C."
+      },
+      {
+        "id": "n3",
+        "label": "Run callback B",
+        "description": "After the current synchronous work completes, the promise callback logs B."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "register then"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "continue synchronous code"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "callback runs later"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Schedule callback B",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Register the promise callback; this does not log B immediately."
+      },
+      {
+        "title": "Log C",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The next synchronous statement writes C."
+      },
+      {
+        "title": "Run callback B",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "After the current synchronous work completes, the promise callback logs B."
+      }
+    ]
+  },
+  "reducers": {
+    "title": "Actions and previous state produce next state",
+    "summary": "The reducer is pure: event handlers create inputs and the reducer returns immutable next rows. Effects remain outside it.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Event handler",
+        "description": "The caller dispatches a toggle or remove action."
+      },
+      {
+        "id": "n1",
+        "label": "Action",
+        "description": "The action carries a type and record ID."
+      },
+      {
+        "id": "n2",
+        "label": "Previous rows",
+        "description": "The reducer receives the existing rows."
+      },
+      {
+        "id": "n3",
+        "label": "Reducer",
+        "description": "toggle maps to a changed object; remove filters the ID."
+      },
+      {
+        "id": "n4",
+        "label": "Next rows",
+        "description": "The returned array becomes next state and drives rendering."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "dispatch"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "action input"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "state input"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "return"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Describe the action",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Pass the intended operation and ID into the reducer."
+      },
+      {
+        "title": "Use both inputs",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The pure reducer applies that action to previous state without storage or network calls."
+      },
+      {
+        "title": "Return next state",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Create a new array and changed objects. Test invariants and the deliberately selected unknown-ID behavior."
+      }
+    ]
+  },
+  "delivery": {
+    "title": "Release checks followed by browser journeys",
+    "summary": "The lesson arrow sequence separates compilation/test/build feedback from actual user journeys and release recovery.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Type-check",
+        "description": "Check static contracts; external values still need runtime validation."
+      },
+      {
+        "id": "n1",
+        "label": "Domain and UI tests",
+        "description": "Run the supplied deterministic domain and component checks."
+      },
+      {
+        "id": "n2",
+        "label": "Production build and preview",
+        "description": "Build and serve the output for review."
+      },
+      {
+        "id": "n3",
+        "label": "Browser journeys",
+        "description": "Exercise deep-link refresh, keyboard flow and error states in a browser."
+      },
+      {
+        "id": "n4",
+        "label": "Monitoring and rollback",
+        "description": "Record what was tested and prepare observation and rollback evidence."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "check behavior"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "build output"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "exercise preview"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "prepare release recovery"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Domain and UI tests",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Run the supplied deterministic domain and component checks."
+      },
+      {
+        "title": "Production build and preview",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Build and serve the output for review."
+      },
+      {
+        "title": "Browser journeys",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Exercise deep-link refresh, keyboard flow and error states in a browser."
+      },
+      {
+        "title": "Monitoring and rollback",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Record what was tested and prepare observation and rollback evidence."
+      }
+    ]
   }
 }

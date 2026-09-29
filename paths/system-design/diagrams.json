@@ -131,6 +131,604 @@
         ],
         "explanation": "The caller receives B9. Changed payloads must conflict; an expired key or an external side effect needs its own documented policy."
       }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "cache": {
+    "title": "Cache-aside read and origin-load fallback",
+    "summary": "Public versioned lesson content can tolerate an explicit freshness policy; booking authority cannot rely on a cached seat count.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Public lesson read",
+        "description": "Use a lesson/version key; private data requires its own scope."
+      },
+      {
+        "id": "n1",
+        "label": "Cache lookup",
+        "description": "A hit returns reusable content under the declared policy."
+      },
+      {
+        "id": "n2",
+        "label": "Return cached content",
+        "description": "Hits still consume resources."
+      },
+      {
+        "id": "n3",
+        "label": "Origin load on miss",
+        "description": "Expiry or cache loss increases origin demand."
+      },
+      {
+        "id": "n4",
+        "label": "Populate cache and return",
+        "description": "Concurrent misses need deliberate stampede and consistency handling."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "lookup key"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "hit"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "miss / expiry"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "load then populate"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Choose cache scope",
+        "explanation": "Public lesson versions are the starting point, not private authorization or final-seat authority.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "Separate hit and miss",
+        "explanation": "At 1,000 reads/s and 90% hits, modeled origin reads are 100/s; full cache loss can send 1,000/s.",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Define freshness and recovery",
+        "explanation": "TTL alone does not solve write/reader races; choose versioned keys or a deliberate consistency policy.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  },
+  "replication": {
+    "title": "A follower can read an older saved version",
+    "summary": "Timeline from the asynchronous replication example; exact guarantees depend on the database configuration.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Both copies at version 8",
+        "description": "Leader and follower begin at the same version."
+      },
+      {
+        "id": "n1",
+        "label": "Leader acknowledges version 9",
+        "description": "The learner saves progress at the authoritative writer."
+      },
+      {
+        "id": "n2",
+        "label": "Follower still returns version 8",
+        "description": "A dependent read can appear to undo the save while replication lags."
+      },
+      {
+        "id": "n3",
+        "label": "Follower reaches version 9",
+        "description": "Replication catches up; a version-token or leader-read policy can handle the earlier interval."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "write accepted"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "read lagging copy"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "replication catches up"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Leader and follower begin at the same version.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "The learner saves progress at the authoritative writer. A dependent read can appear to undo the save while replication lags.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Replication catches up; a version-token or leader-read policy can handle the earlier interval.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "transactions": {
+    "title": "Reserve the final seat in one atomic unit",
+    "summary": "Conceptual SQL needs chosen-engine concurrency verification; application checks alone do not establish exclusivity.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Begin transaction",
+        "description": "Capacity change and booking insert must share one boundary."
+      },
+      {
+        "id": "n1",
+        "label": "Conditional decrement",
+        "description": "Update only while remaining > 0; verify exactly one affected row."
+      },
+      {
+        "id": "n2",
+        "label": "Insert booking with uniqueness rule",
+        "description": "If this insert fails, rollback must restore the decrement."
+      },
+      {
+        "id": "n3",
+        "label": "Commit confirmed booking",
+        "description": "Concurrent final-seat attempts should produce one success and one documented sold-out/conflict outcome."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "enter atomic boundary"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "one affected row"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "all dependent writes succeed"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Capacity change and booking insert must share one boundary.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Update only while remaining > 0; verify exactly one affected row. If this insert fails, rollback must restore the decrement.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Concurrent final-seat attempts should produce one success and one documented sold-out/conflict outcome.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "outbox": {
+    "title": "Local transaction, relay and duplicate delivery",
+    "summary": "The outbox closes the domain-change/event-record atomicity gap; it does not establish exactly-once external effects.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Booking B9 + event E7",
+        "description": "One local transaction commits both the confirmed booking and outbox record."
+      },
+      {
+        "id": "n1",
+        "label": "Relay publishes E7",
+        "description": "Publish only committed pending records."
+      },
+      {
+        "id": "n2",
+        "label": "Crash before marking sent",
+        "description": "Publication may already have succeeded."
+      },
+      {
+        "id": "n3",
+        "label": "Relay republishes E7",
+        "description": "The same stable event identity can be delivered again."
+      },
+      {
+        "id": "n4",
+        "label": "Consumer deduplicates effects",
+        "description": "Durable consumer/provider contracts or reconciliation are still required."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "committed pending event"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "publish succeeded; receipt absent"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "restart sees pending"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "ordinary delivery"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "duplicate delivery"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Keep the local invariant atomic",
+        "explanation": "A delayed notification does not undo the confirmed booking.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "Locate the uncertainty",
+        "explanation": "A crash between publish and marking sent leaves a replay window.",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Handle duplicate effects",
+        "explanation": "An email already sent cannot be undone by database rollback; consumer crash windows remain a separate contract.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "recovery": {
+    "title": "Measure recovery point and service restoration separately",
+    "summary": "Toy timeline: RPO target 15 minutes fits; RTO target 30 minutes is missed by 5.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Recoverable point 10:00",
+        "description": "A backup must be intact and restorable, not merely listed."
+      },
+      {
+        "id": "n1",
+        "label": "Failure at 10:12",
+        "description": "Potential missing-write interval is 12 minutes."
+      },
+      {
+        "id": "n2",
+        "label": "Isolated restore and validation",
+        "description": "Check records, relationships, critical workflows and access controls."
+      },
+      {
+        "id": "n3",
+        "label": "Validated service at 10:47",
+        "description": "Recovery duration is 35 minutes; the RPO interval fits but RTO misses by 5 minutes."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "12-minute loss interval"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "restore required service"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "verify before claiming recovery"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "A backup must be intact and restorable, not merely listed.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Potential missing-write interval is 12 minutes. Check records, relationships, critical workflows and access controls.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Recovery duration is 35 minutes; the RPO interval fits but RTO misses by 5 minutes.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "security": {
+    "title": "Evaluate record ownership at the server",
+    "summary": "Encryption and hidden UI controls do not establish object authorization.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "A requests B’s progress",
+        "description": "Treat the requested owner and record identifier as untrusted inputs."
+      },
+      {
+        "id": "n1",
+        "label": "Verified identity A",
+        "description": "Load identity from the verified session/token, not the request’s asserted owner."
+      },
+      {
+        "id": "n2",
+        "label": "Policy compares actor and resource",
+        "description": "Evaluate permission for resource owner B, including background/status/download paths."
+      },
+      {
+        "id": "n3",
+        "label": "Deny unauthorized private access",
+        "description": "Do not return private data; record approved audit fields without access tokens."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "authenticate"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "authorize resource"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "reject unauthorized action"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Treat the requested owner and record identifier as untrusted inputs.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Load identity from the verified session/token, not the request’s asserted owner. Evaluate permission for resource owner B, including background/status/download paths.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Do not return private data; record approved audit fields without access tokens.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "evolution": {
+    "title": "Migrate readers and writers before removing fields",
+    "summary": "Expand-and-contract must account for mixed versions and newly written data.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Add optional preferred_name",
+        "description": "Keep the old name contract working."
+      },
+      {
+        "id": "n1",
+        "label": "Deploy dual readers",
+        "description": "Readers understand both old and new representations."
+      },
+      {
+        "id": "n2",
+        "label": "Restartable backfill",
+        "description": "Move existing records with an observable, restartable process."
+      },
+      {
+        "id": "n3",
+        "label": "Deploy new writers",
+        "description": "Observe whether any old consumers still use the previous representation."
+      },
+      {
+        "id": "n4",
+        "label": "Remove old field after criteria pass",
+        "description": "Binary rollback must account for data already written under the new contract."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "compatible read deployment"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "migrate existing data"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "new write contract"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "verified compatibility"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Keep the old name contract working.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Readers understand both old and new representations. Move existing records with an observable, restartable process. Observe whether any old consumers still use the previous representation.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Binary rollback must account for data already written under the new contract.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
     ]
   }
 }

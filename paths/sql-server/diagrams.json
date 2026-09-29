@@ -215,5 +215,482 @@
         "explanation": "The final SELECT returns 100, not 999. The demonstration catches the error for teaching; production code should usually propagate failure."
       }
     ]
+  },
+  "cte-and-subquery": {
+    "title": "Reduce payment grain before joining",
+    "summary": "The lesson preserves five orders while combining multiple payments into one total per OrderId.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Six payment observations",
+        "description": "Keep the orphan OrderId 999 visible for a separate exception query."
+      },
+      {
+        "id": "n1",
+        "label": "Aggregate by OrderId",
+        "description": "SUM creates one payment total per order key."
+      },
+      {
+        "id": "n2",
+        "label": "LEFT JOIN five orders",
+        "description": "Start from the required order population, preserving unpaid order 104."
+      },
+      {
+        "id": "n3",
+        "label": "Paid total plus missing indicator",
+        "description": "COALESCE supplies zero only for this calculation; a separate indicator preserves absence."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "group payments"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "join at order grain"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "apply explicit missing policy"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Keep the orphan OrderId 999 visible for a separate exception query.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "SUM creates one payment total per order key. Start from the required order population, preserving unpaid order 104.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "COALESCE supplies zero only for this calculation; a separate indicator preserves absence.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "reconciliation-capstone": {
+    "title": "Reconcile orders without hiding orphans",
+    "summary": "Foundation fixture only: due 390, matched payments 265 and net outstanding 125.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Six payments: total 285",
+        "description": "Incoming total includes 20 for unknown OrderId 999."
+      },
+      {
+        "id": "n1",
+        "label": "Per-order payment totals",
+        "description": "Aggregate payments before attaching them to orders."
+      },
+      {
+        "id": "n2",
+        "label": "Five-order balance report",
+        "description": "LEFT JOIN retains all five orders; outstanding is due minus matched payments."
+      },
+      {
+        "id": "orphans",
+        "label": "Orphan payment observations",
+        "description": "A separate NOT EXISTS query against all raw payments finds PaymentId 206, OrderId 999, Amount 20 without inventing an order."
+      },
+      {
+        "id": "n3",
+        "label": "Report plus orphan list",
+        "description": "Net outstanding 125; orphan 206/999/20 remains a separate output."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "aggregate"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "preserve order population"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "order balances"
+      },
+      {
+        "from": "n0",
+        "to": "orphans",
+        "label": "NOT EXISTS matching order"
+      },
+      {
+        "from": "orphans",
+        "to": "n3",
+        "label": "separate exception output"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Incoming total includes 20 for unknown OrderId 999.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Aggregate payments before attaching them to orders. LEFT JOIN retains all five orders; outstanding is due minus matched payments.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Keep the orphan branch independent",
+        "explanation": "Query raw payments with NOT EXISTS against the order keys. The five-order LEFT JOIN report cannot recover unknown OrderId 999 after that observation is excluded from its result.",
+        "activeNodes": [
+          "n0",
+          "orphans"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Check both outputs: five order balances with net outstanding 125, plus orphan 206/999/20 from the independent exception query. Incoming payments total 285, while only 265 matches the order population.",
+        "activeNodes": [
+          "n2",
+          "orphans",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          4
+        ]
+      }
+    ]
+  },
+  "deadlocks-retries": {
+    "title": "Two sessions form a wait cycle",
+    "summary": "Reasoning schedule from the lesson; this graph is not an induced engine deadlock.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Session A holds order 101",
+        "description": "A requests order 102 next."
+      },
+      {
+        "id": "n1",
+        "label": "Session B holds order 102",
+        "description": "B requests order 101 next."
+      },
+      {
+        "id": "n2",
+        "label": "Deadlock cycle",
+        "description": "Neither participant can proceed while each waits on the other."
+      },
+      {
+        "id": "n3",
+        "label": "Victim rollback / error 1205",
+        "description": "SQL Server chooses a victim and rolls back its transaction."
+      },
+      {
+        "id": "n4",
+        "label": "Bounded whole-unit retry",
+        "description": "Retry the complete safe unit with cleanup and bounded backoff, not only its last statement."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "A waits for order 102"
+      },
+      {
+        "from": "n1",
+        "to": "n0",
+        "label": "B waits for order 101"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "wait dependency"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "wait dependency"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "victim selected"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "known rollback"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect held resources",
+        "explanation": "The sessions acquire the two resources in opposite order.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Find the cycle",
+        "explanation": "A waits for B and B waits for A.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "title": "Classify before retry",
+        "explanation": "Error 1205 differs from timeout or unknown commit outcome; connection loss needs operation-status reconciliation.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "migrations-and-release": {
+    "title": "Expand before contracting a schema",
+    "summary": "The temporary CurrencyCode fixture demonstrates migration shape; real currency needs authoritative evidence.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Check preconditions",
+        "description": "Verify schema, supported application versions and recovery plan."
+      },
+      {
+        "id": "n1",
+        "label": "Add compatible nullable field",
+        "description": "Old and new application versions must remain supported."
+      },
+      {
+        "id": "n2",
+        "label": "Backfill with authoritative mapping",
+        "description": "USD is stipulated only for this synthetic fixture; real data cannot inherit that assumption."
+      },
+      {
+        "id": "n3",
+        "label": "Validate rows and totals",
+        "description": "Check null/invalid codes, business-key population and reconciled amounts."
+      },
+      {
+        "id": "n4",
+        "label": "Contract after compatibility evidence",
+        "description": "Remove obsolete structure only after readers/writers migrate and rollback implications are reviewed."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "preflight passes"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "compatible deployment"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "bounded backfill"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "verified old-use retirement"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Verify schema, supported application versions and recovery plan.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Old and new application versions must remain supported. USD is stipulated only for this synthetic fixture; real data cannot inherit that assumption. Check null/invalid codes, business-key population and reconciled amounts.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Remove obsolete structure only after readers/writers migrate and rollback implications are reviewed.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  },
+  "advanced-import-capstone": {
+    "title": "Classify raw events before ledger loading",
+    "summary": "The advanced six-row fixture differs from the foundation payments. Classification priority follows the supplied CASE expression.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Immutable raw rows",
+        "description": "Keep RawRowId, EventId and original amount text."
+      },
+      {
+        "id": "n1",
+        "label": "Parse and compare payloads",
+        "description": "TRY_CONVERT permits the declared decimal scale conversion; compare same-key raw payloads."
+      },
+      {
+        "id": "n2",
+        "label": "Conflict or exact duplicate",
+        "description": "Conflict takes priority; otherwise later exact copies are duplicate observations."
+      },
+      {
+        "id": "n3",
+        "label": "Invalid or orphan",
+        "description": "Remaining rows with invalid amounts or unknown orders are rejected with a traceable reason."
+      },
+      {
+        "id": "n4",
+        "label": "Accepted unseen event keys",
+        "description": "Check accepted payloads against the existing ledger before atomic insertion."
+      },
+      {
+        "id": "n5",
+        "label": "Ledger and reconciliation",
+        "description": "First run inserts 3 totaling 215; replay inserts 0. Five-order report has net outstanding 175."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "retain raw evidence"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "conflict first; duplicate second"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "otherwise validate amount and parent"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "otherwise accepted"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "insert unseen keys; preserve replay result"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Preserve source evidence",
+        "explanation": "Parsing does not erase original text or raw identity.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "Apply ordered dispositions",
+        "explanation": "Do not resolve conflicts by MAX(amount). Classification is conflict, duplicate, invalid, orphan, then accepted.",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "title": "Load and prove replay",
+        "explanation": "A local temporary-table replay is not proof of concurrent-writer safety or durable crash recovery.",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ]
   }
 }

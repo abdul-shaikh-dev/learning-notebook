@@ -75,6 +75,680 @@
         ],
         "explanation": "The Service selector and readiness must both match before requests reach a usable endpoint."
       }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "objects-labels": {
+    "title": "Selectors connect a Service to eligible Pods",
+    "summary": "A valid Service object can still have no useful backend when its selector misses the Pod-template labels.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Deployment selector app=release-demo",
+        "description": "Controller selector and template label must agree."
+      },
+      {
+        "id": "n1",
+        "label": "Pod-template app=release-demo",
+        "description": "Managed Pods carry the matching workload label."
+      },
+      {
+        "id": "n2",
+        "label": "Service selector app=release-demo",
+        "description": "Routing selects matching Pods rather than reading the object caption."
+      },
+      {
+        "id": "n3",
+        "label": "Ready EndpointSlices",
+        "description": "Inspect endpoints and readiness; a selector of app=wrong matches none of this workload."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "matches template"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "matches Pod labels"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "ready matching endpoints"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Controller selector and template label must agree.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Managed Pods carry the matching workload label. Routing selects matching Pods rather than reading the object caption.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Inspect endpoints and readiness; a selector of app=wrong matches none of this workload.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "configmaps": {
+    "title": "Environment config changes need new processes",
+    "summary": "The lab RELEASE_VERSION is a configuration label, not image identity.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "ConfigMap v1",
+        "description": "RELEASE_VERSION is injected through envFrom."
+      },
+      {
+        "id": "n1",
+        "label": "Pod starts with v1",
+        "description": "Environment values are captured when the container starts."
+      },
+      {
+        "id": "n2",
+        "label": "ConfigMap edited to v2",
+        "description": "Existing processes still report v1; mounted-file methods have a different lifecycle."
+      },
+      {
+        "id": "n3",
+        "label": "Controlled rollout starts new Pods",
+        "description": "New environment-injected processes receive v2; verify reported values separately from image digest."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "capture at start"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "update does not rewrite env"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "create new process instances"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "RELEASE_VERSION is injected through envFrom.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Environment values are captured when the container starts. Existing processes still report v1; mounted-file methods have a different lifecycle.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "New environment-injected processes receive v2; verify reported values separately from image digest.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "probes": {
+    "title": "Readiness and liveness choose different actions",
+    "summary": "The local gate case gives ready 503 and live 200; actual kubelet scheduling remains an optional cluster observation.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Startup /live",
+        "description": "Startup probe gives initialization time before other probes run."
+      },
+      {
+        "id": "n1",
+        "label": "Running HTTP process",
+        "description": "A responding process can still lack required schema/gate readiness."
+      },
+      {
+        "id": "n2",
+        "label": "Readiness /ready fails",
+        "description": "Not-ready gate returns 503."
+      },
+      {
+        "id": "n3",
+        "label": "Remove ready traffic eligibility",
+        "description": "Readiness controls service traffic, rather than restarting this healthy HTTP process."
+      },
+      {
+        "id": "n4",
+        "label": "Liveness /live fails repeatedly",
+        "description": "Repeated liveness failures can trigger a container restart."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "startup succeeds"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "required-work check fails"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "readiness transition"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "different process-health failure"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Allow initialization",
+        "explanation": "Configured period × threshold is an approximate budget, not an SLA.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "Remove traffic for dependency/gate failure",
+        "explanation": "The gate case remains live 200 and should not cause a liveness restart.",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Restart only at the liveness boundary",
+        "explanation": "A separate repeated /live failure targets container restart; measure actual thresholds in the optional drill.",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  },
+  "gitops": {
+    "title": "Repository desired state can overwrite manual drift",
+    "summary": "Paper timeline only: this lesson does not install a GitOps controller.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Git declares image v1",
+        "description": "Versioned desired state is the reconciliation source."
+      },
+      {
+        "id": "n1",
+        "label": "Controller applies v1",
+        "description": "The reconciler uses scoped permissions to update cluster objects."
+      },
+      {
+        "id": "n2",
+        "label": "Manual kubectl changes image to v2",
+        "description": "Cluster state now differs from the repository."
+      },
+      {
+        "id": "n3",
+        "label": "Next reconcile may restore v1",
+        "description": "A manual successful change does not alter the source of truth."
+      },
+      {
+        "id": "n4",
+        "label": "Reviewed Git promotion declares v2",
+        "description": "Change desired state deliberately and review pruning/data consequences."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "reconcile"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "manual drift"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "source of truth reapplied"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "promote desired revision"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Versioned desired state is the reconciliation source.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "The reconciler uses scoped permissions to update cluster objects. Cluster state now differs from the repository. A manual successful change does not alter the source of truth.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Change desired state deliberately and review pruning/data consequences.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "backup-production": {
+    "title": "Platform recovery and application data are distinct",
+    "summary": "Restoring etcd does not restore every external database byte or prove business correctness.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Inventory authoritative stores",
+        "description": "Include Git manifests, protected Secrets, etcd, volumes and external databases separately."
+      },
+      {
+        "id": "n1",
+        "label": "Rebuild platform",
+        "description": "Restore supported control-plane/configuration state with required keys and dependencies."
+      },
+      {
+        "id": "n2",
+        "label": "Restore application data",
+        "description": "Use supported database backups/logs and volume snapshots where supported."
+      },
+      {
+        "id": "n3",
+        "label": "Verify business records",
+        "description": "Read known notes through the compatible application and measure time/data loss."
+      },
+      {
+        "id": "n4",
+        "label": "Controlled traffic recovery",
+        "description": "Only after validation, plan writer ownership and routing; local kind evidence does not establish production resilience."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "supported platform recovery"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "separate data restoration"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "validate user invariants"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "verified cutover"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Include Git manifests, protected Secrets, etcd, volumes and external databases separately.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Restore supported control-plane/configuration state with required keys and dependencies. Use supported database backups/logs and volume snapshots where supported. Read known notes through the compatible application and measure time/data loss.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Only after validation, plan writer ownership and routing; local kind evidence does not establish production resilience.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "pods": {
+    "title": "Pod replacement creates a new scratch lifetime",
+    "summary": "emptyDir survives container restart within the same Pod; Pod removal ends that volume lifetime.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Pod A with old UID",
+        "description": "The Pod is disposable; its emptyDir belongs to this Pod lifetime."
+      },
+      {
+        "id": "n1",
+        "label": "Container restart within A",
+        "description": "Scratch volume remains when only the container restarts."
+      },
+      {
+        "id": "n2",
+        "label": "Pod A removed",
+        "description": "Deleting/replacing the Pod removes its emptyDir contents."
+      },
+      {
+        "id": "n3",
+        "label": "Replacement B has new UID",
+        "description": "B has new scratch storage; replicas do not establish shared durable notes."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "same Pod lifetime"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "end Pod lifetime"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "new Pod and volume"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "The Pod is disposable; its emptyDir belongs to this Pod lifetime.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Scratch volume remains when only the container restarts. Deleting/replacing the Pod removes its emptyDir contents.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "B has new scratch storage; replicas do not establish shared durable notes.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "rbac": {
+    "title": "Bindings connect an API identity to scoped rules",
+    "summary": "The optional viewer grants observations, not secret reads or workload creation.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "viewer ServiceAccount",
+        "description": "Authentication establishes the API identity."
+      },
+      {
+        "id": "n1",
+        "label": "RoleBinding in notebook-lab",
+        "description": "The binding connects this subject to the selected Role in namespace scope."
+      },
+      {
+        "id": "n2",
+        "label": "pod-viewer Role",
+        "description": "Allows get/list/watch of Pods and Pod logs; avoid broad wildcards."
+      },
+      {
+        "id": "n3",
+        "label": "Allowed read and denied mutation/Secret tests",
+        "description": "Verify both cases; workload creation can enable indirect Secret access even without get Secrets."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "bind subject"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "select rules"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "evaluate verb/resource/scope"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Authentication establishes the API identity.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "The binding connects this subject to the selected Role in namespace scope. Allows get/list/watch of Pods and Pod logs; avoid broad wildcards.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Verify both cases; workload creation can enable indirect Secret access even without get Secrets.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "persistent-storage": {
+    "title": "Pod and claim deletion have different consequences",
+    "summary": "A bound PVC is not an off-node backup or proof of disaster recovery.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "PVC lab-data and storage-demo Pod",
+        "description": "Inspect StorageClass, access mode, driver permissions and reclaim policy."
+      },
+      {
+        "id": "n1",
+        "label": "Write a known synthetic message",
+        "description": "Verify actual content through the non-root writer."
+      },
+      {
+        "id": "n2",
+        "label": "Delete only Pod then reapply",
+        "description": "The message can remain if backing storage survives; test it rather than infer it from claim state."
+      },
+      {
+        "id": "n3",
+        "label": "Claim or namespace deletion",
+        "description": "Provider reclaim behavior may delete data; independent backup/restore remains a separate check."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "mount claim"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "reuse retained claim"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "separate storage lifecycle"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Inspect StorageClass, access mode, driver permissions and reclaim policy.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Verify actual content through the non-root writer. The message can remain if backing storage survives; test it rather than infer it from claim state.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Provider reclaim behavior may delete data; independent backup/restore remains a separate check.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
     ]
   }
 }

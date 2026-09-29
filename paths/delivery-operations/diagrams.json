@@ -66,6 +66,755 @@
         ],
         "explanation": "Remove the synthetic gate, check readiness and repeat a synthetic user operation before restoring normal routing."
       }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "release-contract": {
+    "title": "A release passes several different evidence gates",
+    "summary": "The Python/SQLite stand-in and learner-built React/.NET/SQL integration have separate evidence boundaries.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Source commit",
+        "description": "Name the user invariant and rollback trigger."
+      },
+      {
+        "id": "n1",
+        "label": "Tests",
+        "description": "A green build alone does not prove requests succeed in the target environment."
+      },
+      {
+        "id": "n2",
+        "label": "Immutable artifact",
+        "description": "Record exactly which checked bytes will be promoted."
+      },
+      {
+        "id": "n3",
+        "label": "Reviewed target configuration",
+        "description": "Verify environment, identity and compatible data schema."
+      },
+      {
+        "id": "n4",
+        "label": "Readiness then user smoke",
+        "description": "Check required work, then existing-note read behavior."
+      },
+      {
+        "id": "n5",
+        "label": "Observe eligible user outcomes",
+        "description": "Retain release attribution and stop on the agreed failure gate."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "test source"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "produce checked bytes"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "promote with config"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "admit candidate"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "measure contract"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Name the user invariant and rollback trigger.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "A green build alone does not prove requests succeed in the target environment. Record exactly which checked bytes will be promoted. Verify environment, identity and compatible data schema. Check required work, then existing-note read behavior.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Retain release attribution and stop on the agreed failure gate.",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "web-topology": {
+    "title": "Separate browser, API and database responsibilities",
+    "summary": "Integration runbook topology; the bundled Python runtime does not implement this complete stack.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Browser HTTPS",
+        "description": "Frontend configuration is public; database credentials stay server-side."
+      },
+      {
+        "id": "n1",
+        "label": "Reverse proxy / static host",
+        "description": "Define TLS and forwarding trust plus UI-only deep-link fallback."
+      },
+      {
+        "id": "n2",
+        "label": "React dist assets",
+        "description": "Serve frontend assets and intended UI fallback."
+      },
+      {
+        "id": "n3",
+        "label": "ASP.NET Core /api",
+        "description": "Route API requests and preserve API error statuses."
+      },
+      {
+        "id": "n4",
+        "label": "Private SQL Server",
+        "description": "API uses a restricted runtime database identity."
+      },
+      {
+        "id": "n5",
+        "label": "Migration runner",
+        "description": "Schema changes use separate reviewed database permissions."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "HTTPS request"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "UI assets / paths"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "/api/* routes"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "private database access"
+      },
+      {
+        "from": "n5",
+        "to": "n4",
+        "label": "separate schema permission"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Route UI and API separately",
+        "explanation": "Do not rewrite API 404 responses into the frontend shell.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Keep data access server-side",
+        "explanation": "Real authentication, owner checks and actual persistence must be implemented and tested for this integration.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "Review schema permissions independently",
+        "explanation": "The migration identity is separate from normal API runtime access.",
+        "activeNodes": [
+          "n5",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "schema-evolution": {
+    "title": "Keep old and new readers compatible",
+    "summary": "The stand-in schema never changes between v1 and v2; its rollback test covers that unchanged-schema case only.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "v1 reads title",
+        "description": "Identify all old consumers and rollback requirements."
+      },
+      {
+        "id": "n1",
+        "label": "Add nullable label",
+        "description": "Expand with a compatible field before changing readers/writers."
+      },
+      {
+        "id": "n2",
+        "label": "Deploy v2 handling optional label",
+        "description": "Old and new versions can coexist under the reviewed contract."
+      },
+      {
+        "id": "n3",
+        "label": "Backfill in bounded batches",
+        "description": "Review migration locks/runtime and validate values."
+      },
+      {
+        "id": "n4",
+        "label": "Contract in a later release",
+        "description": "Remove old representation only after old consumers disappear and recovery implications are reviewed."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "compatible expansion"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "mixed-version deployment"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "backfill deliberately"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "old-use evidence"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Identify all old consumers and rollback requirements.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Expand with a compatible field before changing readers/writers. Old and new versions can coexist under the reviewed contract. Review migration locks/runtime and validate values.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Remove old representation only after old consumers disappear and recovery implications are reviewed.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "artifact-promotion": {
+    "title": "Promote the bytes tied to test evidence",
+    "summary": "Checksums detect byte changes; provenance/signing require their own verification policy.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Checked source and build inputs",
+        "description": "Record runtime, dependency inputs and source commit."
+      },
+      {
+        "id": "n1",
+        "label": "Tested artifact digest",
+        "description": "Associate test evidence with these exact bytes."
+      },
+      {
+        "id": "n2",
+        "label": "Approved artifact selected",
+        "description": "A rebuilt artifact with changed inputs is a new candidate needing checks."
+      },
+      {
+        "id": "n3",
+        "label": "Promote same artifact",
+        "description": "Environment configuration changes without rebuilding the approved bytes."
+      },
+      {
+        "id": "n4",
+        "label": "Retain compatible prior artifact",
+        "description": "Keep v1 through verification and the rollback window."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "build and verify"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "record approval"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "select exact bytes"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "retain recovery option"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Record runtime, dependency inputs and source commit.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Associate test evidence with these exact bytes. A rebuilt artifact with changed inputs is a new candidate needing checks. Environment configuration changes without rebuilding the approved bytes.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Keep v1 through verification and the rollback window.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  },
+  "restore-drill": {
+    "title": "Restore known data before switching traffic",
+    "summary": "Synthetic SQLite snapshot A predates B; SQL Server recovery needs its own supported backup chain.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Snapshot contains note A",
+        "description": "Record snapshot identity and time; use supported database backup."
+      },
+      {
+        "id": "n1",
+        "label": "Source later contains A + B",
+        "description": "Post-snapshot writes are not in the snapshot."
+      },
+      {
+        "id": "n2",
+        "label": "Restore independent location",
+        "description": "Do not replace a live database under running writers."
+      },
+      {
+        "id": "n3",
+        "label": "Verify A and expected missing B",
+        "description": "Check integrity, schema, known record values and compatible app; measure recovery time and loss interval."
+      },
+      {
+        "id": "n4",
+        "label": "Plan controlled cutover",
+        "description": "Stop writers and switch only after validation and missing-write reconciliation decisions."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "later source writes"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "recover earlier point"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "validate actual values"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "review switch"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the input",
+        "explanation": "Record snapshot identity and time; use supported database backup.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the transformation",
+        "explanation": "Post-snapshot writes are not in the snapshot. Do not replace a live database under running writers. Check integrity, schema, known record values and compatible app; measure recovery time and loss interval.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the outcome",
+        "explanation": "Stop writers and switch only after validation and missing-write reconciliation decisions.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "ci-pipeline": {
+    "title": "Separate contributor checks from privileged promotion",
+    "summary": "The template is opt-in and is not installed or run by opening the course.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Pull request checks",
+        "description": "Contributor code and third-party actions execute with runner permissions."
+      },
+      {
+        "id": "n1",
+        "label": "Checkout and Python tests",
+        "description": "Keep deployment secrets absent and minimize contents/token permissions."
+      },
+      {
+        "id": "n2",
+        "label": "Artifact record",
+        "description": "Tie evidence to reviewed source and exact candidate bytes."
+      },
+      {
+        "id": "n3",
+        "label": "Reviewed release approval",
+        "description": "Approval chooses the candidate and intended deployment boundary."
+      },
+      {
+        "id": "n4",
+        "label": "Privileged promotion job",
+        "description": "Only this reviewed job receives required least-privilege credentials; production action pins must be verified."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "untrusted test job"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "record checked candidate"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "separate promotion decision"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "promote approved artifact"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Contributor code and third-party actions execute with runner permissions.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Keep deployment secrets absent and minimize contents/token permissions. Tie evidence to reviewed source and exact candidate bytes. Approval chooses the candidate and intended deployment boundary.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Only this reviewed job receives required least-privilege credentials; production action pins must be verified.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "rollback": {
+    "title": "Compatible data permits the simulated label rollback",
+    "summary": "This same-code label test is separate from the differing-artifact drill and from data recovery.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Create note under v1 label",
+        "description": "The test uses the same implementation and unchanged SQLite schema."
+      },
+      {
+        "id": "n1",
+        "label": "Stop v1 and start v2",
+        "description": "Reuse the same database and read the known note."
+      },
+      {
+        "id": "n2",
+        "label": "Stop v2 and start v1",
+        "description": "Retain the database rather than replace a live file."
+      },
+      {
+        "id": "n3",
+        "label": "Read the original note again",
+        "description": "This verifies unchanged-schema retention; dropped columns or irreversible external effects need forward repair or separately tested recovery."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "compatible label restart"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "compatible rollback"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "verify retained data"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "The test uses the same implementation and unchanged SQLite schema.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Reuse the same database and read the known note. Retain the database rather than replace a live file.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "This verifies unchanged-schema retention; dropped columns or irreversible external effects need forward repair or separately tested recovery.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "incident-response": {
+    "title": "Stabilize, investigate and verify recovery",
+    "summary": "Lesson timeline records an error increase after promotion without assuming the newest deploy is the cause.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "12:00 v2 promoted",
+        "description": "Record artifact/config/schema identity and timeline."
+      },
+      {
+        "id": "n1",
+        "label": "12:03 eligible errors increase",
+        "description": "Confirm user impact and distinguish observation from cause hypothesis."
+      },
+      {
+        "id": "n2",
+        "label": "12:04 stop promotion; assign lead",
+        "description": "Bound changes and separate incident operations from diagnosis."
+      },
+      {
+        "id": "n3",
+        "label": "12:06 inspect readiness and dependencies",
+        "description": "Correlate logs, health and recent changes before choosing mitigation."
+      },
+      {
+        "id": "n4",
+        "label": "12:08 verified rollback or dependency fix",
+        "description": "Use compatibility and failure evidence, then verify user smoke recovery and record follow-ups."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "observe symptoms"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "stabilize coordination"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "collect evidence"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "choose supported mitigation"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish the boundary",
+        "explanation": "Record artifact/config/schema identity and timeline.",
+        "activeNodes": [
+          "n0"
+        ],
+        "activeEdges": []
+      },
+      {
+        "title": "Follow the mechanism",
+        "explanation": "Confirm user impact and distinguish observation from cause hypothesis. Bound changes and separate incident operations from diagnosis. Correlate logs, health and recent changes before choosing mitigation.",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "title": "Verify the result and limits",
+        "explanation": "Use compatibility and failure evidence, then verify user smoke recovery and record follow-ups.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ],
+    "textExampleSections": [
+      1
     ]
   }
 }

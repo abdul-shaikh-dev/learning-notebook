@@ -1,0 +1,985 @@
+{
+  "runtime-boundary": {
+    "title": "Keep proposal control separate from tool execution",
+    "summary": "The offline workshop uses scripted proposals and in-memory fake tools. A function registry is not a sandbox.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Trusted host",
+        "description": "Supplies subject, run identity, allowed resources and policy."
+      },
+      {
+        "id": "n1",
+        "label": "Harness state machine",
+        "description": "Owns counters, state and stopping rules."
+      },
+      {
+        "id": "n2",
+        "label": "Scripted proposal source",
+        "description": "Proposes the next step without executing it."
+      },
+      {
+        "id": "n3",
+        "label": "Validation and authority",
+        "description": "Check shape, resource policy and required approval."
+      },
+      {
+        "id": "n4",
+        "label": "Scoped fake adapter",
+        "description": "Run only an allowed reviewed handler."
+      },
+      {
+        "id": "n5",
+        "label": "Recorded outcome",
+        "description": "Update state from confirmed results or uncertainty."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "configure actual scope"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "request next proposal"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "submit proposal data"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "dispatch only after gates"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "record observed result"
+      },
+      {
+        "from": "n5",
+        "to": "n1",
+        "label": "next step or explicit stop"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Establish trusted scope",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Host identity and configuration are distinct from proposal text."
+      },
+      {
+        "title": "Gate execution",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "The harness checks the proposal before invoking a capability."
+      },
+      {
+        "title": "Record an outcome",
+        "activeNodes": [
+          "n1",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "An execution result updates runtime state; a generated completion sentence is not a receipt."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "state-machine": {
+    "title": "Waiting and uncertainty are separate run states",
+    "summary": "Read the allowed transitions as a lifecycle, not a claim that every operation ends successfully.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Ready",
+        "description": "May request the next proposal within current limits."
+      },
+      {
+        "id": "n1",
+        "label": "Waiting",
+        "description": "A valid write proposal awaits exact host approval."
+      },
+      {
+        "id": "n2",
+        "label": "Uncertain",
+        "description": "An effect may exist but no usable result is confirmed."
+      },
+      {
+        "id": "n3",
+        "label": "Done",
+        "description": "Accepted final step; ordinary execution stays terminal."
+      },
+      {
+        "id": "n4",
+        "label": "Stopped",
+        "description": "Denied, cancelled or limited outcomes stop normal dispatch."
+      },
+      {
+        "id": "n5",
+        "label": "Receipt reconciliation",
+        "description": "Trusted outcome lookup resolves the original effect."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n0",
+        "label": "valid read returns ready"
+      },
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "write needs review"
+      },
+      {
+        "from": "n1",
+        "to": "n0",
+        "label": "matching approval and current policy"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "denial or cancellation"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "response lost after effect"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "query original receipt"
+      },
+      {
+        "from": "n5",
+        "to": "n0",
+        "label": "confirmed recovery permits continuation"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "accepted final"
+      },
+      {
+        "from": "n0",
+        "to": "n4",
+        "label": "cancellation or budget stop"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Pause a proposed write",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "explanation": "Waiting is not successful completion. A cancelled run must not be revived by late approval."
+      },
+      {
+        "title": "Preserve ambiguous effects",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5,
+          6
+        ],
+        "explanation": "Uncertain means an effect may have happened; recovery needs trusted receipt evidence."
+      },
+      {
+        "title": "Stop explicitly",
+        "activeNodes": [
+          "n0",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          7,
+          8
+        ],
+        "explanation": "Done and other terminal outcomes prevent accidental ordinary execution afterward."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "approval": {
+    "title": "Review exact intent and recheck current authority",
+    "summary": "The toy fingerprint is an equality aid. It is not authentication, encryption or a production approval protocol.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Pending save",
+        "description": "save_note L1 with Review indexes text."
+      },
+      {
+        "id": "n1",
+        "label": "Canonical intent",
+        "description": "Bind run, subject, call ID, tool and arguments."
+      },
+      {
+        "id": "n2",
+        "label": "Trusted host review",
+        "description": "Approve the displayed pending fingerprint."
+      },
+      {
+        "id": "n3",
+        "label": "Current policy and intent",
+        "description": "Revalidate permissions and unchanged arguments."
+      },
+      {
+        "id": "n4",
+        "label": "One dispatch",
+        "description": "A successful dispatch consumes approval."
+      },
+      {
+        "id": "n5",
+        "label": "Mismatch or denial",
+        "description": "Changed text, restored review or revoked permission prevents reuse."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "prepare scoped fingerprint"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "show exact operation"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "trusted decision"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "match and current grant"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "changed intent or denied policy"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Show the concrete operation",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "The reviewer sees meaningful arguments and destination before the host decides."
+      },
+      {
+        "title": "Recheck after waiting",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Approval cannot override a current authorization denial."
+      },
+      {
+        "title": "Consume only matching approval",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Changed arguments invalidate the reviewed intent. Restored pending work requires fresh review in the toy."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "idempotent-effects": {
+    "title": "A lost response requires receipt reconciliation",
+    "summary": "The fake store commits a note and scoped receipt together in one local method. This does not establish distributed or crash-durable behavior.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Operation C2",
+        "description": "Stable subject/task identity and canonical payload."
+      },
+      {
+        "id": "n1",
+        "label": "Note plus receipt",
+        "description": "Fake store commits N1 and receipt C2 together."
+      },
+      {
+        "id": "n2",
+        "label": "Lost response",
+        "description": "Adapter cannot deliver a usable completion response."
+      },
+      {
+        "id": "n3",
+        "label": "Uncertain run",
+        "description": "Do not issue a blind second write."
+      },
+      {
+        "id": "n4",
+        "label": "Authoritative lookup",
+        "description": "Host queries the same store using C2."
+      },
+      {
+        "id": "n5",
+        "label": "Confirmed outcome",
+        "description": "Matching receipt establishes the original effect."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "submit same logical intent"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "simulate reply loss"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "preserve uncertainty"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "reconcile original identity"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "matching receipt found"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Commit the identity with the effect",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Operation identity is bound to its payload; changing arguments with the same ID conflicts."
+      },
+      {
+        "title": "Report uncertainty",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "A timeout is missing evidence, not proof of failure or success."
+      },
+      {
+        "title": "Confirm without a new save",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "The receipt resolves the original effect; new generated IDs are not proof of new user intent."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "checkpoints": {
+    "title": "Restore state without restoring approval authority",
+    "summary": "The workshop validates trusted checkpoint JSON and preserves spent budgets. Optional SQLite labs add a separate local persistence boundary.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Runtime checkpoint",
+        "description": "Run identity, state, cursor, pending proposal and used budgets."
+      },
+      {
+        "id": "n1",
+        "label": "Versioned JSON",
+        "description": "Schema v2 includes final text, stop reason and receipt references."
+      },
+      {
+        "id": "n2",
+        "label": "Restore validation",
+        "description": "Check version, script identity and expected host identity."
+      },
+      {
+        "id": "n3",
+        "label": "Preserved usage",
+        "description": "Spent proposal/elapsed usage remains spent."
+      },
+      {
+        "id": "n4",
+        "label": "Fresh pending review",
+        "description": "Approval authority is omitted; waiting writes need review."
+      },
+      {
+        "id": "n5",
+        "label": "Rejected checkpoint",
+        "description": "Unsupported or inconsistent state cannot dispatch."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "serialize trusted state"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "load through trusted host"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "valid counters and lifecycle"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "pending write restored"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "unknown or inconsistent schema"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Save explicit state",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Checkpoint data records observed state; JSON validation does not authenticate it."
+      },
+      {
+        "title": "Validate recovery inputs",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          1,
+          4
+        ],
+        "explanation": "Unknown schemas need rejection or an explicit tested migration."
+      },
+      {
+        "title": "Preserve budget and review",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Restore is not a new entitlement, and omitted approval must not be reconstructed from prose."
+      }
+    ]
+  },
+  "isolation": {
+    "title": "Draw a separate compute boundary",
+    "summary": "This is an architecture extension. The workshop executes reviewed in-memory functions and does not implement a sandbox.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Trusted host",
+        "description": "Own identity, policy, approval, receipts and secrets."
+      },
+      {
+        "id": "n1",
+        "label": "Scoped request",
+        "description": "Bounded inputs carry only needed task data."
+      },
+      {
+        "id": "n2",
+        "label": "Isolated compute",
+        "description": "Temporary workspace with explicit filesystem, network and resource controls."
+      },
+      {
+        "id": "n3",
+        "label": "Untrusted artifact",
+        "description": "Result or artifact is bounded and remains untrusted."
+      },
+      {
+        "id": "n4",
+        "label": "Host validation",
+        "description": "Validate the result and choose the next action."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "minimize authority and data"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "cross controlled boundary"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "produce bounded result"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "validate before use"
+      },
+      {
+        "from": "n4",
+        "to": "n0",
+        "label": "record and decide"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Keep authority with the host",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Raw host credentials are not copied into compute by default."
+      },
+      {
+        "title": "Constrain actual execution",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "A registry or container name alone does not establish configured isolation."
+      },
+      {
+        "title": "Validate returned artifacts",
+        "activeNodes": [
+          "n0",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Stopping a worker does not undo effects already sent; reconcile those separately."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "concurrency": {
+    "title": "Reject writes from a stale lease owner",
+    "summary": "This conceptual extension requires enforcement by protected storage. The single-worker workshop does not implement leases or fencing.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Worker A token 7",
+        "description": "A obtains the first lease and then pauses."
+      },
+      {
+        "id": "n1",
+        "label": "Lease expires",
+        "description": "A no longer has current ownership."
+      },
+      {
+        "id": "n2",
+        "label": "Worker B token 8",
+        "description": "B obtains a newer token and advances state."
+      },
+      {
+        "id": "n3",
+        "label": "A resumes token 7",
+        "description": "The old worker tries to write."
+      },
+      {
+        "id": "n4",
+        "label": "Protected storage",
+        "description": "Compare token 7 with the current token 8."
+      },
+      {
+        "id": "n5",
+        "label": "Stale write rejected",
+        "description": "Storage enforcement prevents the old overwrite."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "pause beyond ownership"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "grant newer ownership"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "resume old worker"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "establish latest token"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "submit stale write"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "7 is older than 8"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Observe ownership change",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A lease can expire while its old worker is paused."
+      },
+      {
+        "title": "Require receiver enforcement",
+        "activeNodes": [
+          "n0",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3,
+          4
+        ],
+        "explanation": "Logging a fencing token does not prevent a write; the protected receiver must check it."
+      },
+      {
+        "title": "Separate effects from checkpoints",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "Checkpoint CAS can reject stale state updates while external effects still need their own identity or fencing contract."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "replay": {
+    "title": "Historical replay and live resume have different effects",
+    "summary": "Recorded call C2 can be displayed offline. Pending live work requires current policy, receipt reconciliation and compatible contracts.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Versioned trace",
+        "description": "Retain proposals, results and schema/policy/adapter configuration."
+      },
+      {
+        "id": "n1",
+        "label": "Offline replay",
+        "description": "Use recorded C2 and recorded receipt R2."
+      },
+      {
+        "id": "n2",
+        "label": "No live effect",
+        "description": "Historical display must not execute fresh writes."
+      },
+      {
+        "id": "n3",
+        "label": "Live resume",
+        "description": "Continue pending C2 against current systems."
+      },
+      {
+        "id": "n4",
+        "label": "Current checks",
+        "description": "Reconcile receipts and validate policy and contract versions."
+      },
+      {
+        "id": "n5",
+        "label": "Migration or rejection",
+        "description": "Changed argument semantics require an explicit decision."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "select recorded path"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "display historical evidence"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "select unfinished live work"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "check current authority and outcome"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "contract meaning changed"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Replay recorded inputs",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Offline trace replay does not grant permission to repeat business effects."
+      },
+      {
+        "title": "Resume against current boundaries",
+        "activeNodes": [
+          "n0",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Old authorization and model configuration do not necessarily remain valid."
+      },
+      {
+        "title": "Reject silent reinterpretation",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "A field changing from minutes to hours requires explicit migration or rejection before live execution."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "operations": {
+    "title": "Investigate an uncertain save before another effect",
+    "summary": "The runbook preserves operation evidence. Its actions are design practice for a future service, not an executed incident response.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Freeze new effects",
+        "description": "Prevent another ordinary dispatch for the affected run."
+      },
+      {
+        "id": "n1",
+        "label": "Identify original operation",
+        "description": "Find subject, run/call ID, intent and adapter/policy versions."
+      },
+      {
+        "id": "n2",
+        "label": "Authorized receipt lookup",
+        "description": "Use a separately bounded recovery path."
+      },
+      {
+        "id": "n3",
+        "label": "Matching receipt",
+        "description": "Attach evidence and report the actual committed effect."
+      },
+      {
+        "id": "n4",
+        "label": "Unresolved result",
+        "description": "Retain uncertainty and assign escalation ownership."
+      },
+      {
+        "id": "n5",
+        "label": "Recovery decision",
+        "description": "Continue only under explicit policy; record the decision."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "preserve original identity"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "query authoritative source"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "matching receipt exists"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "absent or conflicting evidence"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "apply current stop/recovery policy"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "document escalation or recovery"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Contain without deleting evidence",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "A fresh operation ID could duplicate the same user intention."
+      },
+      {
+        "title": "Query authoritative outcomes",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          1,
+          2,
+          3
+        ],
+        "explanation": "A missing receipt in a real system may be incomplete evidence, not proof of no effect."
+      },
+      {
+        "title": "Apply recovery authority",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "A cancellation or consumed deadline still stops further ordinary work after a confirmed receipt."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  }
+}

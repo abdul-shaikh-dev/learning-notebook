@@ -1,5 +1,8 @@
 # Design Patterns workshop
 
+Visual companions in the notebook: [Export-preview collaboration](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/design-patterns/facade) · [Working-copy success and failure](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/design-patterns/unit-of-work). The original text traces below remain available for offline use.
+
+
 Read the 24-lesson path first or use this workshop beside its three stage projects.
 Basic functions, collections, exceptions and classes are prerequisites. Python
 3.11+ is sufficient; no packages, accounts or services are required.

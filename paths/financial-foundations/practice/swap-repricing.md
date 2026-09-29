@@ -2,6 +2,8 @@
 
 Optional extension after the curve investigation. Paper or spreadsheet first; Python 3.11+ is optional. Everything is synthetic. This example teaches input attribution, not a production pricing model or an instruction to post a correction.
 
+See the [visual map of forecast and discount dependencies](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#lesson/3) in the notebook. The text flow below remains a portable reference for readers without diagram rendering.
+
 ## Contract before calculation
 
 Our bank receives floating interest and pays 4% fixed on EUR 1,000,000. Two future payments each use a supplied half-year accrual fraction of 0.5. Both rates are still unfixed in the first scenario. The principal is **not exchanged**. There is no spread, fee, collateral cash flow or accrued-interest adjustment in this deliberately simplified contract.

@@ -1,5 +1,8 @@
 # AI Agents: offline practice
 
+Visual companions in the notebook: [Agent loop and execution boundary](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/ai-agents/loop). The original text traces below remain available for offline use.
+
+
 This 24-lesson path starts with AI vocabulary, then develops tool boundaries,
 state, grounding, failure handling and evaluation. It does not call a model.
 

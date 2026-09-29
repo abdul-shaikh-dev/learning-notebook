@@ -1,0 +1,1120 @@
+{
+  "composition": {
+    "title": "Supply collaborators, then deliver a message",
+    "summary": "The lesson ASCII sketch describes dependencies and call order. In the runnable remind function the message formatting is inline, rather than a separate formatter object.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Entry point",
+        "description": "The application supplies title and a delivery callable."
+      },
+      {
+        "id": "n1",
+        "label": "remind",
+        "description": "The focused function coordinates this reminder."
+      },
+      {
+        "id": "n2",
+        "label": "Message formatting",
+        "description": "Build Review Patterns in the function."
+      },
+      {
+        "id": "n3",
+        "label": "Delivery callable",
+        "description": "sent.append is the supplied local delivery implementation."
+      },
+      {
+        "id": "n4",
+        "label": "Recorded message",
+        "description": "The local sent list contains Review Patterns."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "supply collaborators"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "format title"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "pass message"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "append"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Assemble the dependency",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The caller supplies delivery; remind does not locate a global service."
+      },
+      {
+        "title": "Build a message",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The runnable function formats its text inline and passes that text to delivery."
+      },
+      {
+        "title": "Observe delivery",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The assertion checks the recorded local message, not a real network delivery."
+      }
+    ],
+    "textExampleSections": [
+      3
+    ]
+  },
+  "factories": {
+    "title": "Select one formatter at the boundary",
+    "summary": "This is the lesson simple factory. A selection function is not automatically the class-based Factory Method or Abstract Factory pattern.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Format name",
+        "description": "The caller supplies json or lines."
+      },
+      {
+        "id": "n1",
+        "label": "formatter_for",
+        "description": "The bounded selection function checks the format name."
+      },
+      {
+        "id": "n2",
+        "label": "JSON callable",
+        "description": "The json option returns a callable using json.dumps."
+      },
+      {
+        "id": "n3",
+        "label": "Lines callable",
+        "description": "The lines option returns a callable joining titles."
+      },
+      {
+        "id": "n4",
+        "label": "Unknown format error",
+        "description": "An unsupported name raises ValueError."
+      },
+      {
+        "id": "n5",
+        "label": "Consumer",
+        "description": "The caller invokes the selected callable with titles."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "select"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "json"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "lines"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "neither"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "use formatter"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "use formatter"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Name the variation",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Construction/selection chooses a formatter separately from using it."
+      },
+      {
+        "title": "Choose one supported option",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          1,
+          2,
+          3
+        ],
+        "explanation": "Known names return one compatible callable; unknown names fail explicitly."
+      },
+      {
+        "title": "Use the chosen implementation",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "The consumer supplies titles to that callable. Do not interpret format names as executable code."
+      }
+    ]
+  },
+  "builder": {
+    "title": "Validate construction before freezing a snapshot",
+    "summary": "The mutable builder holds temporary choices. The finished Report receives a tuple snapshot so later builder edits do not change it.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Builder choices",
+        "description": "Builder().field(title) records a selected field in a mutable list."
+      },
+      {
+        "id": "n1",
+        "label": "build title",
+        "description": "build receives Progress with surrounding spaces."
+      },
+      {
+        "id": "n2",
+        "label": "Validate choices",
+        "description": "Reject blank titles, missing fields or blank field names."
+      },
+      {
+        "id": "n3",
+        "label": "Frozen Report",
+        "description": "Return a trimmed title and tuple(self.fields); later adding minutes to the builder does not alter r.fields."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "request build"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "check completeness"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "snapshot valid choices"
+      }
+    ],
+    "steps": [
+      {
+        "title": "build title",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "build receives Progress with surrounding spaces."
+      },
+      {
+        "title": "Validate choices",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Reject blank titles, missing fields or blank field names."
+      },
+      {
+        "title": "Frozen Report",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Return a trimmed title and tuple(self.fields); later adding minutes to the builder does not alter r.fields."
+      }
+    ]
+  },
+  "facade": {
+    "title": "Publish succeeds only after delivery",
+    "summary": "The facade offers one entry point across validation, formatting and delivery. It does not make these collaborators transactional.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "publish caller",
+        "description": "Supply titles plus formatting and delivery collaborators."
+      },
+      {
+        "id": "n1",
+        "label": "Validate all titles",
+        "description": "Reject invalid titles before invoking the formatter."
+      },
+      {
+        "id": "n2",
+        "label": "Format document",
+        "description": "The formatter returns a document."
+      },
+      {
+        "id": "n3",
+        "label": "Deliver document",
+        "description": "Call delivery; meaningful failure propagates."
+      },
+      {
+        "id": "n4",
+        "label": "Return count",
+        "description": "Return len(titles) only after delivery succeeds."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "coordinate"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "valid input"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "document ready"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "success"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Validate all titles",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Reject invalid titles before invoking the formatter."
+      },
+      {
+        "title": "Format document",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The formatter returns a document."
+      },
+      {
+        "title": "Deliver document",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Call delivery; meaningful failure propagates."
+      },
+      {
+        "title": "Return count",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Return len(titles) only after delivery succeeds."
+      }
+    ]
+  },
+  "composite": {
+    "title": "One duration operation across leaves and groups",
+    "summary": "The lesson plan is a finite acyclic tree. Groups sum child durations; a shared node would be counted for each occurrence.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Root Module",
+        "description": "The root contains Lesson(10) and a nested Module."
+      },
+      {
+        "id": "n1",
+        "label": "Lesson: 10",
+        "description": "This leaf returns 10 minutes."
+      },
+      {
+        "id": "n2",
+        "label": "Nested Module",
+        "description": "The nested group sums its one child."
+      },
+      {
+        "id": "n3",
+        "label": "Lesson: 20",
+        "description": "This leaf returns 20 minutes."
+      },
+      {
+        "id": "n4",
+        "label": "Root result: 30",
+        "description": "The root sums 10+20."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "duration on child"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "duration on child"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "duration on child"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "10 minutes"
+      },
+      {
+        "from": "n3",
+        "to": "n2",
+        "label": "20 minutes"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "20 minutes"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Use the same operation",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "The root calls duration on both a leaf and a group."
+      },
+      {
+        "title": "Recurse through the group",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          4
+        ],
+        "explanation": "The nested Module obtains and sums its child duration."
+      },
+      {
+        "title": "Combine results",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          3,
+          5
+        ],
+        "explanation": "The root receives 10 and 20 and returns 30. Empty modules sum to zero."
+      }
+    ]
+  },
+  "proxy": {
+    "title": "Loaded is distinct from a cached None",
+    "summary": "The lesson local proxy caches a successful load once. A failed load leaves it unloaded; no invalidation or concurrency guarantee is supplied.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "get caller",
+        "description": "A caller requests the local document."
+      },
+      {
+        "id": "n1",
+        "label": "loaded flag?",
+        "description": "Check the separate flag rather than testing value truthiness."
+      },
+      {
+        "id": "n2",
+        "label": "Call loader",
+        "description": "If unloaded, invoke load; failure propagates before the flag changes."
+      },
+      {
+        "id": "n3",
+        "label": "Store value and flag",
+        "description": "After success, store even None and set loaded=True."
+      },
+      {
+        "id": "n4",
+        "label": "Return cached value",
+        "description": "Return value; later calls use it without loading again."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "request"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "false"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "success"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "return"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "true"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check loading status",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "The flag decides whether to call the loader."
+      },
+      {
+        "title": "Cache successful completion",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "The example loader returns None successfully, which is still a cacheable result."
+      },
+      {
+        "title": "Reuse the result",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "A later get sees loaded=True and returns None without another loader call."
+      }
+    ]
+  },
+  "chain-of-responsibility": {
+    "title": "First non-None result wins",
+    "summary": "The lesson JSON request passes through ordered handlers. None declines; False and empty strings are valid accepted results. Exceptions propagate.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Request",
+        "description": "format=json and titles=[Patterns]."
+      },
+      {
+        "id": "n1",
+        "label": "Lines handler",
+        "description": "Declines this JSON request with None."
+      },
+      {
+        "id": "n2",
+        "label": "JSON handler",
+        "description": "Returns the JSON representation."
+      },
+      {
+        "id": "n3",
+        "label": "Accepted result",
+        "description": "Return immediately after a non-None result."
+      },
+      {
+        "id": "n4",
+        "label": "No accepting handler",
+        "description": "If every handler declines, raise LookupError."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "first handler"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "None: continue"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "non-None: stop"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "non-None: stop"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "None and chain exhausted"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Try handlers in order",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "For the example, lines declines and JSON is tried next."
+      },
+      {
+        "title": "Stop on explicit acceptance",
+        "activeNodes": [
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "A non-None result ends selection, even if it is False or an empty string. JSON succeeds here."
+      },
+      {
+        "title": "Keep failure explicit",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "If the whole chain declines, LookupError reports unhandled input. Handler exceptions never mean automatic fallback."
+      }
+    ]
+  },
+  "state": {
+    "title": "Legal study-session transitions",
+    "summary": "Edges are legal action transitions from the lesson table. Other state/action pairs raise ValueError; this lifecycle supplies no concurrency control.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "draft",
+        "description": "The initial session state."
+      },
+      {
+        "id": "n1",
+        "label": "active",
+        "description": "start enters active; pause leaves it."
+      },
+      {
+        "id": "n2",
+        "label": "done",
+        "description": "finish from active enters done."
+      },
+      {
+        "id": "n3",
+        "label": "Illegal action",
+        "description": "A state/action pair missing from the table raises ValueError."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "start"
+      },
+      {
+        "from": "n1",
+        "to": "n0",
+        "label": "pause"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "finish"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "finish is not allowed"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Start a session",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "draft plus start returns active."
+      },
+      {
+        "title": "Pause or finish",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "active can pause back to draft or finish to done."
+      },
+      {
+        "title": "Reject an absent transition",
+        "activeNodes": [
+          "n0",
+          "n3"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Finishing from draft is illegal; the table supplies no outgoing transition from done."
+      }
+    ]
+  },
+  "mediator": {
+    "title": "Validate before state and notification effects",
+    "summary": "CompletionMediator owns local collaboration rules. Failed prerequisites, missing IDs and repeated completion leave states and notifications unchanged.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Completion request",
+        "description": "The caller asks to complete a lesson."
+      },
+      {
+        "id": "n1",
+        "label": "Validate active and prerequisites",
+        "description": "Require a known active lesson and completed prerequisites."
+      },
+      {
+        "id": "n2",
+        "label": "Reject request",
+        "description": "Validation failure raises without changing local state or notifications."
+      },
+      {
+        "id": "n3",
+        "label": "Set done",
+        "description": "Successful validation permits the local state transition."
+      },
+      {
+        "id": "n4",
+        "label": "Record notification",
+        "description": "Append one local completed notification after the successful transition."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "coordinate"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "invalid"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "valid"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "local notification"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check before effects",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Trying next before intro fails and preserves both collections."
+      },
+      {
+        "title": "Apply a legal completion",
+        "activeNodes": [
+          "n1",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Completing intro, then next, passes their prerequisites and sets each done."
+      },
+      {
+        "title": "Record successful outcomes",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Each successful transition has one local notification. External delivery would need a separate contract."
+      }
+    ]
+  },
+  "dependency-injection": {
+    "title": "Assemble dependencies at the entry point",
+    "summary": "The lesson Progress service receives save and clock explicitly. These arrows describe supplied collaborators and calls, not inheritance.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Composition root",
+        "description": "Create Progress(records.append, fixed clock). The root supplies the implementations."
+      },
+      {
+        "id": "n1",
+        "label": "Progress.complete",
+        "description": "The service receives Patterns and uses its supplied clock."
+      },
+      {
+        "id": "n2",
+        "label": "Construct record",
+        "description": "Build title plus the clock value; the test clock makes time deterministic."
+      },
+      {
+        "id": "n3",
+        "label": "Save collaborator",
+        "description": "Call records.append with that record. The assertion checks the recorded time."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "inject save and clock"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "read time"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "save record"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Progress.complete",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The service receives Patterns and uses its supplied clock."
+      },
+      {
+        "title": "Construct record",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Build title plus the clock value; the test clock makes time deterministic."
+      },
+      {
+        "title": "Save collaborator",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Call records.append with that record. The assertion checks the recorded time."
+      }
+    ]
+  },
+  "unit-of-work": {
+    "title": "Publish the working copy only on success",
+    "summary": "The lesson and workshop copy-on-write flow is local and sequential. Dictionary clear/update is not a database transaction, crash-safe commit or atomic concurrent operation.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Original store",
+        "description": "The original begins with completed=0."
+      },
+      {
+        "id": "n1",
+        "label": "Working copy",
+        "description": "Create an independent working representation."
+      },
+      {
+        "id": "n2",
+        "label": "Mutate working state",
+        "description": "Set completed=1 in the working copy."
+      },
+      {
+        "id": "n3",
+        "label": "Publish copy",
+        "description": "After normal body return, clear/update replaces original contents sequentially. Replacement itself has no crash-safe or concurrent atomicity guarantee."
+      },
+      {
+        "id": "n4",
+        "label": "Preserve original",
+        "description": "If the body raises, publishing is skipped; original stays completed=0."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "copy"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "body uses copy"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "body succeeds"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "body raises"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Isolate proposed changes",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Mutate the working copy rather than the original store."
+      },
+      {
+        "title": "Publish normal completion",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Only the successful body reaches clear/update and publishes completed=1. These two local dictionary operations are not an atomic storage commit; real persistence needs a transaction and conflict policy."
+      },
+      {
+        "title": "Keep failure unpublished",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "A ValueError raised in the body prevents those replacement statements from running."
+      }
+    ]
+  },
+  "refactoring": {
+    "title": "Keep the same regression suite between extractions",
+    "summary": "The refactoring lab repeatedly checks observable output, failure timing and success-only measurement. The diagram is the sequence of learner edits.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Characterize starter",
+        "description": "Run test_refactoring.py against legacy behavior and create a scratch candidate."
+      },
+      {
+        "id": "n1",
+        "label": "Extract validation",
+        "description": "Retain validation-before-writer timing; run the same tests."
+      },
+      {
+        "id": "n2",
+        "label": "Extract formatters",
+        "description": "Move lines/JSON formatting and selection to the boundary; rerun tests."
+      },
+      {
+        "id": "n3",
+        "label": "Extract delivery and measurement",
+        "description": "Preserve writer exceptions and success-only measurement; rerun tests."
+      },
+      {
+        "id": "n4",
+        "label": "Add a tested format",
+        "description": "Add output and malformed-title checks; record the actual variation point."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "small edit"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "tests then next edit"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "tests then next edit"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "extend after preservation"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Extract validation",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Retain validation-before-writer timing; run the same tests."
+      },
+      {
+        "title": "Extract formatters",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Move lines/JSON formatting and selection to the boundary; rerun tests."
+      },
+      {
+        "title": "Extract delivery and measurement",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Preserve writer exceptions and success-only measurement; rerun tests."
+      },
+      {
+        "title": "Add a tested format",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Add output and malformed-title checks; record the actual variation point."
+      }
+    ]
+  }
+}

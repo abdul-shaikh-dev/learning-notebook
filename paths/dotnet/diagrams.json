@@ -125,5 +125,515 @@
         "explanation": "For {\"title\":\"  \"}, the endpoint returns 400. There is no Add call, new item or consumed ID in that branch."
       }
     ]
+  },
+  "linq": {
+    "title": "LINQ stages and materialization",
+    "summary": "Where, OrderBy and Select define a deferred in-memory query. ToList triggers enumeration and materializes Pass 75, Pass 90; the arrows show logical data transformations, not eager execution at each operator call.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "90, 40, 75",
+        "description": "The source is an in-memory list."
+      },
+      {
+        "id": "n1",
+        "label": "Where >= 60",
+        "description": "Define a deferred filter that keeps values at least 60 when enumerated."
+      },
+      {
+        "id": "n2",
+        "label": "OrderBy ascending",
+        "description": "Define ascending ordering over the filtered sequence; sorting occurs during enumeration."
+      },
+      {
+        "id": "n3",
+        "label": "Select labels",
+        "description": "Define a deferred projection to Pass labels."
+      },
+      {
+        "id": "n4",
+        "label": "ToList",
+        "description": "Trigger query enumeration: filter, order and project the source, then store the resulting list."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "filter"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "sort"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "project"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "materialize"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Compose the deferred query",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "Calling Where, OrderBy and Select builds a query over scores. These operator calls do not yet enumerate the list; the arrows describe its logical stages."
+      },
+      {
+        "title": "ToList triggers enumeration",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "explanation": "During ToList enumeration, Where keeps 90 and 75, OrderBy yields 75 then 90, and Select produces Pass 75 and Pass 90. This is not a claim that every operator runs eagerly or makes an independent pass."
+      },
+      {
+        "title": "Use the materialized result",
+        "activeNodes": [
+          "n4"
+        ],
+        "activeEdges": [],
+        "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query’s result; ToList stores the values produced by this enumeration."
+      }
+    ]
+  },
+  "ef-evolution": {
+    "title": "One transaction around two saves",
+    "summary": "The task and audit writes share one transaction. A failure before commit leaves changes uncommitted; the scaffold verifies rollback from a fresh context.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Begin transaction",
+        "description": "The example opens an explicit provider transaction."
+      },
+      {
+        "id": "n1",
+        "label": "Save task",
+        "description": "First SaveChanges writes the task inside the transaction."
+      },
+      {
+        "id": "n2",
+        "label": "Save audit",
+        "description": "Second SaveChanges writes the related audit entry."
+      },
+      {
+        "id": "n3",
+        "label": "Commit",
+        "description": "Commit only after both saves succeed."
+      },
+      {
+        "id": "n4",
+        "label": "Roll back",
+        "description": "Failure before commit prevents publishing both writes."
+      },
+      {
+        "id": "n5",
+        "label": "Fresh-context check",
+        "description": "The guided failed-audit fixture queries task and audit tables from a new context."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "first write"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "second write"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "both succeed"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "second save fails"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "verify stored state"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Keep writes together",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "A task save alone does not finish the business operation; the audit still needs to succeed."
+      },
+      {
+        "title": "Commit success",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Both successful saves are committed together by the provider transaction."
+      },
+      {
+        "title": "Verify failure",
+        "activeNodes": [
+          "n2",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "The duplicate unique-key audit failure triggers rollback. A new context sees no new task and only the original audit event."
+      }
+    ]
+  },
+  "cancellation-budgets": {
+    "title": "Two cancellation sources, one operation",
+    "summary": "Caller cancellation and the operation budget can reach the awaited work through a linked token. Cancellation must be observed cooperatively.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Caller token",
+        "description": "The caller can request cancellation."
+      },
+      {
+        "id": "n1",
+        "label": "Operation budget",
+        "description": "The budget can independently request cancellation."
+      },
+      {
+        "id": "n2",
+        "label": "Linked token",
+        "description": "The linked source forwards either request."
+      },
+      {
+        "id": "n3",
+        "label": "Awaited operation",
+        "description": "Pass the token into an API that observes it."
+      },
+      {
+        "id": "n4",
+        "label": "Boundary classification",
+        "description": "An OperationCanceledException handler distinguishes caller cancellation from the internal budget."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "caller cancels"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "budget cancels"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "propagate token"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "observed cancellation"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Combine the sources",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Either source can request stopping; this is not a forced thread abort."
+      },
+      {
+        "title": "Propagate to work",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The actual awaited API must support and observe the token."
+      },
+      {
+        "title": "Classify at the boundary",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The deterministic example cancels the budget and reports Budget cancelled. Keep dependency failures separate."
+      }
+    ]
+  },
+  "deploy-operations": {
+    "title": "Release, readiness and recovery",
+    "summary": "This follows the lesson commented release outline. Migration compatibility and a recovery plan are prerequisites for safe rollback.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Build and tests",
+        "description": "Build and run the relevant tests before release."
+      },
+      {
+        "id": "n1",
+        "label": "Publish",
+        "description": "Produce the deployment output."
+      },
+      {
+        "id": "n2",
+        "label": "Reviewed migration",
+        "description": "Apply reviewed schema changes through the deployment process."
+      },
+      {
+        "id": "n3",
+        "label": "Start instance",
+        "description": "Start the new instance with target configuration."
+      },
+      {
+        "id": "n4",
+        "label": "Readiness",
+        "description": "Check readiness in the target environment."
+      },
+      {
+        "id": "n5",
+        "label": "Limited traffic",
+        "description": "After readiness succeeds, direct limited traffic and observe error rate and latency."
+      },
+      {
+        "id": "n6",
+        "label": "Restore compatible build",
+        "description": "If unhealthy, stop traffic to the new instance and restore a prior compatible build."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "checks pass"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "release prepared"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "schema ready"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "probe"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "ready"
+      },
+      {
+        "from": "n4",
+        "to": "n6",
+        "label": "unhealthy"
+      },
+      {
+        "from": "n5",
+        "to": "n6",
+        "label": "unhealthy observations"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare the release",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "Review migration changes before starting the instance. A code rollback cannot undo a destructive schema change."
+      },
+      {
+        "title": "Gate traffic on readiness",
+        "activeNodes": [
+          "n3",
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Startup alone is insufficient; readiness precedes limited traffic."
+      },
+      {
+        "title": "Observe and recover",
+        "activeNodes": [
+          "n4",
+          "n5",
+          "n6"
+        ],
+        "activeEdges": [
+          5,
+          6
+        ],
+        "explanation": "An unhealthy instance loses traffic and the prior compatible build is restored according to the runbook."
+      }
+    ],
+    "textExampleSections": [
+      1
+    ]
+  },
+  "performance": {
+    "title": "Bounded keyset query",
+    "summary": "Follow the lesson query only after validating after >= 0 and limit in 1..100. This is a query contract, not a measured speedup.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Validate cursor and limit",
+        "description": "Reject invalid after and limit before querying."
+      },
+      {
+        "id": "n1",
+        "label": "Filter Id > after",
+        "description": "Continue after the last seen ID."
+      },
+      {
+        "id": "n2",
+        "label": "Order by ID",
+        "description": "Use ascending ID ordering for the controlled feed."
+      },
+      {
+        "id": "n3",
+        "label": "Project and Take",
+        "description": "Select only response columns and return at most limit rows."
+      },
+      {
+        "id": "n4",
+        "label": "Await query",
+        "description": "ToListAsync materializes the page with the caller token."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "validated inputs"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "stable ordering"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "bound result"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "execute"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Filter Id > after",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Continue after the last seen ID."
+      },
+      {
+        "title": "Order by ID",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Use ascending ID ordering for the controlled feed."
+      },
+      {
+        "title": "Project and Take",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Select only response columns and return at most limit rows."
+      },
+      {
+        "title": "Await query",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "ToListAsync materializes the page with the caller token."
+      }
+    ]
   }
 }

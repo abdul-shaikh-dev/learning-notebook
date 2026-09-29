@@ -1,5 +1,8 @@
 # Observe, explain, then repair
 
+Visual companion: [Cancellation and cleanup outcomes](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/testing-debugging/async-debugging). The text trace remains available offline.
+
+
 Python 3.11+. Download the complete kit and run commands from its extracted folder. All examples use synthetic data. Work through the predictions before opening the references.
 
 ## 1. Step through a real defect

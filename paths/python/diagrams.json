@@ -196,5 +196,690 @@
         "explanation": "The outer print displays 75. The next example, study_minutes(2, length=15), is a separate call with result 30."
       }
     ]
+  },
+  "conditions": {
+    "title": "First matching score branch",
+    "summary": "The score example tests the highest threshold first. A false test continues; a true test selects one result.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "score",
+        "description": "The example starts with score = 85."
+      },
+      {
+        "id": "n1",
+        "label": "score >= 80?",
+        "description": "Test the excellent threshold first."
+      },
+      {
+        "id": "n2",
+        "label": "excellent",
+        "description": "A score of 80 or above selects excellent."
+      },
+      {
+        "id": "n3",
+        "label": "score >= 50?",
+        "description": "Only test passing after the excellent test fails."
+      },
+      {
+        "id": "n4",
+        "label": "pass",
+        "description": "Scores from 50 through 79 select pass."
+      },
+      {
+        "id": "n5",
+        "label": "retry",
+        "description": "Scores below 50 select retry."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "test"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "true"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "false"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "true"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "false"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check the higher threshold",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "85 meets 80, so excellent is selected without evaluating elif."
+      },
+      {
+        "title": "Reach the lower threshold",
+        "activeNodes": [
+          "n1",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Only a score below 80 reaches the passing test; 50 is accepted."
+      },
+      {
+        "title": "Handle the remaining scores",
+        "activeNodes": [
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "A score below 50 reaches else and selects retry."
+      }
+    ]
+  },
+  "files-and-json": {
+    "title": "A JSON file round trip",
+    "summary": "Serialization, file I/O and decoding are separate operations. Decoding does not validate the record schema.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Python record",
+        "description": "The example starts with topic loops and minutes 25."
+      },
+      {
+        "id": "n1",
+        "label": "JSON text",
+        "description": "json.dumps serializes the supported values."
+      },
+      {
+        "id": "n2",
+        "label": "UTF-8 file",
+        "description": "write_text writes the serialized text to the temporary file."
+      },
+      {
+        "id": "n3",
+        "label": "Read text",
+        "description": "read_text recovers text using UTF-8."
+      },
+      {
+        "id": "n4",
+        "label": "Python values",
+        "description": "json.loads decodes the recovered text; the example then reads its fields."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "serialize"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "write"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "read"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "decode"
+      }
+    ],
+    "steps": [
+      {
+        "title": "JSON text",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "json.dumps serializes the supported values."
+      },
+      {
+        "title": "UTF-8 file",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "write_text writes the serialized text to the temporary file."
+      },
+      {
+        "title": "Read text",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "read_text recovers text using UTF-8."
+      },
+      {
+        "title": "Python values",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "json.loads decodes the recovered text; the example then reads its fields."
+      }
+    ]
+  },
+  "iterators-and-generators": {
+    "title": "A stream is consumed once",
+    "summary": "Follow the same generator object from creation through exhaustion; making a new generator is a separate operation.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Create stream",
+        "description": "valid_minutes([10, -1, 20]) creates a generator without eagerly running its body."
+      },
+      {
+        "id": "n1",
+        "label": "Consume with sum",
+        "description": "sum requests values; the generator yields 10 and 20 and skips -1."
+      },
+      {
+        "id": "n2",
+        "label": "Return 30",
+        "description": "The sum is 30 and the iterator has been exhausted."
+      },
+      {
+        "id": "n3",
+        "label": "Read again: []",
+        "description": "list on that same stream has no remaining values."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "request values"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "finish consumption"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "same exhausted iterator"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Consume with sum",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "sum requests values; the generator yields 10 and 20 and skips -1."
+      },
+      {
+        "title": "Return 30",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The sum is 30 and the iterator has been exhausted."
+      },
+      {
+        "title": "Read again: []",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "list on that same stream has no remaining values."
+      }
+    ]
+  },
+  "context-managers": {
+    "title": "Cleanup precedes the outer handler",
+    "summary": "This is the lesson failing-body trace. finally performs cleanup before the original exception reaches the caller.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Acquire: open",
+        "description": "resource records open before yielding."
+      },
+      {
+        "id": "n1",
+        "label": "Body: handle",
+        "description": "The with body receives handle and records it."
+      },
+      {
+        "id": "n2",
+        "label": "Raise ValueError",
+        "description": "The body raises failed; normal body execution stops."
+      },
+      {
+        "id": "n3",
+        "label": "Finally: close",
+        "description": "The context manager records close without suppressing the error."
+      },
+      {
+        "id": "n4",
+        "label": "Outer handler: caught",
+        "description": "The outer except observes ValueError and records caught."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "yield"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "body fails"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "unwind"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "propagate"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Body: handle",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The with body receives handle and records it."
+      },
+      {
+        "title": "Raise ValueError",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The body raises failed; normal body execution stops."
+      },
+      {
+        "title": "Finally: close",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The context manager records close without suppressing the error."
+      },
+      {
+        "title": "Outer handler: caught",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "The outer except observes ValueError and records caught."
+      }
+    ]
+  },
+  "packaging-and-cli": {
+    "title": "Verify the wheel outside the checkout",
+    "summary": "The optional installed-package exercise checks the built artifact. Missing exact build tooling is a skip; nothing is published.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Generate package",
+        "description": "python_package_starter.py creates a complete src-layout package in an empty destination."
+      },
+      {
+        "id": "n1",
+        "label": "Build wheel",
+        "description": "The exercise builds with available pinned tooling without network dependency resolution."
+      },
+      {
+        "id": "n2",
+        "label": "Install cleanly",
+        "description": "Install the wheel into a second clean virtual environment using no-index and no-deps."
+      },
+      {
+        "id": "n3",
+        "label": "Run outside checkout",
+        "description": "The test changes working directory and removes inherited Python search paths."
+      },
+      {
+        "id": "n4",
+        "label": "Check installed behavior",
+        "description": "Assert installed module location, CLI/help/errors and packaged-resource access."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "build artifact"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "install artifact"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "isolate imports"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "execute assertions"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Build wheel",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The exercise builds with available pinned tooling without network dependency resolution."
+      },
+      {
+        "title": "Install cleanly",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Install the wheel into a second clean virtual environment using no-index and no-deps."
+      },
+      {
+        "title": "Run outside checkout",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The test changes working directory and removes inherited Python search paths."
+      },
+      {
+        "title": "Check installed behavior",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Assert installed module location, CLI/help/errors and packaged-resource access."
+      }
+    ]
+  },
+  "robust-storage": {
+    "title": "Prepare, replace, clean up",
+    "summary": "The same-directory temporary file is prepared and closed before replacing prior output. This is visibility protection, not a power-loss or multi-writer guarantee.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Validate data",
+        "description": "Validate before entering the write path."
+      },
+      {
+        "id": "n1",
+        "label": "Temporary file",
+        "description": "Write complete JSON into a same-directory temporary file."
+      },
+      {
+        "id": "n2",
+        "label": "Flush, fsync, close",
+        "description": "Flush and fsync contents; close before replacement, including on Windows."
+      },
+      {
+        "id": "n3",
+        "label": "os.replace",
+        "description": "Replace the destination only after preparation succeeds."
+      },
+      {
+        "id": "n4",
+        "label": "New output",
+        "description": "Successful replacement publishes the complete new file."
+      },
+      {
+        "id": "n5",
+        "label": "Failure cleanup",
+        "description": "On preparation or replacement failure, finally removes an abandoned temporary file."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "valid"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "write complete"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "closed"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "success"
+      },
+      {
+        "from": "n1",
+        "to": "n5",
+        "label": "preparation fails"
+      },
+      {
+        "from": "n3",
+        "to": "n5",
+        "label": "replacement fails"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Prepare new bytes",
+        "activeNodes": [
+          "n0",
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Prepare a complete temporary file while prior output remains at the destination."
+      },
+      {
+        "title": "Publish once",
+        "activeNodes": [
+          "n2",
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Close the prepared file, then replace; success exposes the complete new output."
+      },
+      {
+        "title": "Clean failed preparation or replacement",
+        "activeNodes": [
+          "n1",
+          "n3",
+          "n5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "The failure remains visible and finally removes an abandoned temporary file. The injected replacement failure test verifies old bytes survive."
+      }
+    ]
+  },
+  "robust-import-capstone": {
+    "title": "Validate the whole batch before publishing",
+    "summary": "The full advanced importer bounds input and publishes once after every record and duplicate-ID check passes. Worker results are collected in input order.",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Bound input",
+        "description": "The advanced project enforces byte and record limits before accepting the batch."
+      },
+      {
+        "id": "n1",
+        "label": "Parse and validate rows",
+        "description": "Workers return validated rows; a failing worker is not a forceful stop of other threads."
+      },
+      {
+        "id": "n2",
+        "label": "Check unique IDs",
+        "description": "Collect all results and reject duplicate IDs."
+      },
+      {
+        "id": "n3",
+        "label": "Prepare report",
+        "description": "Create the versioned report only after complete validation."
+      },
+      {
+        "id": "n4",
+        "label": "Replace output once",
+        "description": "Publish the prepared report once; failed validation does not publish partial results."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "accept bounded batch"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "collect results"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "all checks pass"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "commit"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Parse and validate rows",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Workers return validated rows; a failing worker is not a forceful stop of other threads."
+      },
+      {
+        "title": "Check unique IDs",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Collect all results and reject duplicate IDs."
+      },
+      {
+        "title": "Prepare report",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Create the versioned report only after complete validation."
+      },
+      {
+        "title": "Replace output once",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Publish the prepared report once; failed validation does not publish partial results."
+      }
+    ]
   }
 }
