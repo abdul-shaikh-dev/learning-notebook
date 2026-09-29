@@ -25,3 +25,4 @@ require('./assessment-sources.cjs');
 require('./concept-explorers.cjs');
 
 require('./code-panels.cjs');
+require('./visual-playback.cjs');

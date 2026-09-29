@@ -9721,7 +9721,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-4"
                     },
                     {
                       "id": "1",
@@ -9729,7 +9730,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "2",
@@ -9737,7 +9739,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "3",
@@ -9745,7 +9748,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-1"
                     }
                   ],
                   "edges": []
@@ -9760,7 +9764,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "1",
@@ -9768,7 +9773,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     },
                     {
                       "id": "2",
@@ -9776,7 +9782,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "3",
@@ -9784,7 +9791,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-1"
                     }
                   ],
                   "edges": []
@@ -9799,7 +9807,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "1",
@@ -9807,7 +9816,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "2",
@@ -9815,7 +9825,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     },
                     {
                       "id": "3",
@@ -9823,7 +9834,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-1"
                     }
                   ],
                   "edges": []
@@ -9838,7 +9850,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-1"
                     },
                     {
                       "id": "1",
@@ -9846,7 +9859,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "2",
@@ -9854,7 +9868,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "3",
@@ -9862,7 +9877,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     }
                   ],
                   "edges": []
@@ -9883,7 +9899,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-1"
                     },
                     {
                       "id": "1",
@@ -9891,7 +9908,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "2",
@@ -9899,7 +9917,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "3",
@@ -9907,7 +9926,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     }
                   ],
                   "edges": []
@@ -9922,7 +9942,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-1"
                     },
                     {
                       "id": "1",
@@ -9930,7 +9951,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "2",
@@ -9938,7 +9960,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "3",
@@ -9946,7 +9969,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     }
                   ],
                   "edges": []
@@ -9961,7 +9985,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-1"
                     },
                     {
                       "id": "1",
@@ -9969,7 +9994,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "2",
@@ -9977,7 +10003,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "3",
@@ -9985,7 +10012,8 @@ const LEARNING_PATHS = [
                       "detail": "unprocessed",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     }
                   ],
                   "edges": []
@@ -10000,7 +10028,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 40,
-                      "tone": "active"
+                      "tone": "active",
+                      "motionKey": "value-1"
                     },
                     {
                       "id": "1",
@@ -10008,7 +10037,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 370,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-2"
                     },
                     {
                       "id": "2",
@@ -10016,7 +10046,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 700,
                       "y": 40,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-3"
                     },
                     {
                       "id": "3",
@@ -10024,7 +10055,8 @@ const LEARNING_PATHS = [
                       "detail": "sorted prefix",
                       "x": 40,
                       "y": 270,
-                      "tone": "neutral"
+                      "tone": "neutral",
+                      "motionKey": "value-4"
                     }
                   ],
                   "edges": []
