@@ -1,11 +1,11 @@
 /* Local-only syntax highlighting. Plain examples stay plain; explicit metadata wins. */
 (function(root){
  'use strict';
- const labels={python:'Python',csharp:'C#',javascript:'JavaScript',typescript:'TypeScript',sql:'SQL',bash:'Terminal',powershell:'PowerShell',yaml:'YAML',json:'JSON',xml:'HTML / XML',css:'CSS',dockerfile:'Dockerfile',ini:'TOML / INI',plaintext:'Plain text'};
- const aliases={py:'python',cs:'csharp','c#':'csharp',js:'javascript',ts:'typescript',tsx:'typescript',jsx:'javascript',sh:'bash',shell:'bash',console:'bash',ps1:'powershell',yml:'yaml',html:'xml',toml:'ini',text:'plaintext',none:'plaintext'};
+ const labels={python:'Python',csharp:'C#',javascript:'JavaScript',typescript:'TypeScript',jsx:'JavaScript / JSX',tsx:'TypeScript / TSX',sql:'SQL',bash:'Terminal',powershell:'PowerShell',yaml:'YAML',json:'JSON',xml:'HTML / XML',css:'CSS',dockerfile:'Dockerfile',ini:'TOML / INI',plaintext:'Plain text'};
+ const aliases={py:'python',cs:'csharp','c#':'csharp',js:'javascript',ts:'typescript',sh:'bash',shell:'bash',console:'bash',ps1:'powershell',yml:'yaml',html:'xml',toml:'ini',text:'plaintext',none:'plaintext'};
  const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function languageFor(source,context='',explicit=''){
-  const requested=aliases[explicit.toLowerCase()]||explicit.toLowerCase();
+  const requested=aliases[explicit.trim().toLowerCase()]||explicit.trim().toLowerCase();
   if(requested)return Object.hasOwn(labels,requested)?requested:'plaintext';
   const s=source.trim();
   if(!s)return 'plaintext';
@@ -15,11 +15,17 @@
   if(/^(?:FROM\s+\S+|RUN\s+\S+|COPY\s+\S+\s+\S+|ENTRYPOINT\s+\[)/m.test(s))return 'dockerfile';
   if(/^(?:apiVersion:|kind:\s*(?:Deployment|Service|Pod|ConfigMap|Secret|Job)|services:|name:\s*[^\n]+\non:)/m.test(s))return 'yaml';
   if(/^[\[{]/.test(s)){try{JSON.parse(s);return 'json';}catch{}}
+  // Detect JSX before generic markup, but keep real HTML documents as HTML.
+  const typed=/\b(?:interface|type)\s+\w+\s*(?:=|\{)|:\s*(?:string|number|boolean)\b/.test(s)&&/\b(?:const|let|interface|type|function|export)\b/.test(s);
+  const markup=/<(?:[A-Za-z][\w.:-]*(?:\s|\/?>)|>)/.test(s);
+  const jsxAttribute=/\b(?:className|htmlFor)\s*=|\b[\w]+\s*=\s*\{/.test(s);
+  const jsLeading=/^(?:(?:\/\/[^\n]*\n|\/\*[\s\S]*?\*\/)\s*)*(?:import\s|export\s|(?:async\s+)?function\s|(?:const|let|type|interface)\s|return\s*[(<])/.test(s);
+  if(markup&&!/^<(?:!doctype|\?xml|html\b)/i.test(s)&&(jsxAttribute||jsLeading||context==='react'&&/^<>/.test(s)))return typed?'tsx':'jsx';
   if(/^\s*<(?:!doctype|\?xml|[A-Za-z][\w:-]*(?:\s+[\w:-]+=|>))/im.test(s))return 'xml';
   if(/^(?:\$\s+)?(?:python(?:3)?|py|pip|npm|npx|node|dotnet|git|kubectl|docker|helm|kind|curl|pytest|cd|mkdir|ls|echo)\s+\S/m.test(s))return 'bash';
   if(/\b(?:public|private|internal)\s+(?:static\s+|sealed\s+|async\s+)*(?:class|record|interface|Task|void|int|string)\b|\bConsole\.Write|\bapp\.Map(?:Get|Post|Put|Delete|Patch|Group)\s*\(|\busing\s+System\b|\b(?:var|await)\s+\w+[\s\S]*;/.test(s)&&context==='dotnet')return 'csharp';
   if(/^\s*(?:async\s+)?def\s+\w+\s*\(|^\s*class\s+\w+(?:\([^\n]*\))?\s*:|^from\s+[\w.]+\s+import\s|^import\s+[\w.]+\s*$|\bprint\s*\(/m.test(s))return 'python';
-  if(/\b(?:interface|type)\s+\w+\s*(?:=|\{)|:\s*(?:string|number|boolean)\b/.test(s)&&/\b(?:const|let|interface|type|function|export)\b/.test(s))return 'typescript';
+  if(typed)return 'typescript';
   if(/\b(?:const|let|function)\s+\w+|\b(?:useState|useEffect|console\.log)\s*\(|^import\s+.*\s+from\s+['"]/m.test(s))return 'javascript';
   if(/^[.#]?[\w-]+\s*\{\s*(?:color|display|margin|padding|font|background)[\w-]*\s*:/m.test(s))return 'css';
   // Restrict fallback to the course's language, and require actual syntax evidence.
@@ -27,7 +33,7 @@
   if(candidate&&/[=;{}]|\w\(/.test(s)&&root.hljs){const hit=root.hljs.highlightAuto(s,[candidate]);if(hit.language&&hit.relevance>=3)return candidate;}
   return 'plaintext';
  }
- function highlight(source,language){return root.hljs&&language!=='plaintext'?root.hljs.highlight(source,{language,ignoreIllegals:true}).value:escape(source);}
+ function highlight(source,language){return root.hljs&&language!=='plaintext'?root.hljs.highlight(source,{language:({jsx:'javascript',tsx:'typescript'})[language]||language,ignoreIllegals:true}).value:escape(source);}
  function enhance(main,context=''){
   main.querySelectorAll('pre').forEach((pre,index)=>{
    if(pre.classList.contains('folder-tree')){pre.tabIndex=0;pre.setAttribute('role','region');pre.setAttribute('aria-label','Folder layout; scroll horizontally if needed');return;}

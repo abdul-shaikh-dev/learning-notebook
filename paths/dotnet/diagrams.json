@@ -219,7 +219,8 @@
         "activeEdges": [],
         "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query’s result; ToList stores the values produced by this enumeration."
       }
-    ]
+    ],
+    "direction": "LR"
   },
   "ef-evolution": {
     "title": "One transaction around two saves",

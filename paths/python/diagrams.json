@@ -209,7 +209,8 @@
       {
         "id": "n1",
         "label": "score >= 80?",
-        "description": "Test the excellent threshold first."
+        "description": "Test the excellent threshold first.",
+        "shape": "decision"
       },
       {
         "id": "n2",
@@ -219,7 +220,8 @@
       {
         "id": "n3",
         "label": "score >= 50?",
-        "description": "Only test passing after the excellent test fails."
+        "description": "Only test passing after the excellent test fails.",
+        "shape": "decision"
       },
       {
         "id": "n4",

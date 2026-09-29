@@ -4,6 +4,6 @@ Shared code panels use locally bundled Highlight.js 11.11.1 (BSD-3-Clause). The 
 
 The renderer preserves pre.textContent verbatim for copying and highlights escaped tokens. A conservative syntax classifier distinguishes source, terminal commands and structured data from prose/calculations. Plain text remains a labelled, copyable example. Folder layouts retain their existing presentation.
 
-Authors can override detection with data-language on pre/code or a language-python (etc.) class on code. Supported labels include Python, C#, JavaScript, TypeScript, SQL, Terminal, PowerShell, YAML, JSON, HTML/XML, CSS, Dockerfile and TOML/INI. Use language-plaintext for explanatory output or pseudocode.
+Authors can override detection with data-language on pre/code or a language-python (etc.) class on code. Supported labels include Python, C#, JavaScript, TypeScript, JavaScript/JSX, TypeScript/TSX, SQL, Terminal, PowerShell, YAML, JSON, HTML/XML, CSS, Dockerfile and TOML/INI. Use language-plaintext for explanatory output or pseudocode.
 
 The panel provides keyboard scrolling, an optional Wrap lines toggle, copy status and a readable print layout. Use node tests/code-panels.cjs for highlighting, escaping, content preservation and classification checks.

@@ -16,12 +16,14 @@
       {
         "id": "tenant",
         "label": "Tenant match",
-        "description": "Object must belong to red."
+        "description": "Object must belong to red.",
+        "shape": "decision"
       },
       {
         "id": "owner",
         "label": "Owner/action policy",
-        "description": "Owner read/update or reader read only."
+        "description": "Owner read/update or reader read only.",
+        "shape": "decision"
       },
       {
         "id": "deny",
@@ -397,7 +399,8 @@
       {
         "from": "n2",
         "to": "n1",
-        "label": "return code"
+        "label": "return code",
+        "reply": true
       },
       {
         "from": "n1",
@@ -407,7 +410,8 @@
       {
         "from": "n3",
         "to": "n1",
-        "label": "issue access token"
+        "label": "issue access token",
+        "reply": true
       },
       {
         "from": "n1",
@@ -463,6 +467,16 @@
     ],
     "textExampleSections": [
       1
+    ],
+    "type": "sequence",
+    "sequenceOrder": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
     ]
   },
   "oidc-login": {

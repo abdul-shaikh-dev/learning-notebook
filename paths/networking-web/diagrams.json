@@ -271,7 +271,8 @@
     ],
     "textExampleSections": [
       1
-    ]
+    ],
+    "direction": "LR"
   },
   "validators": {
     "title": "304 reuses an existing representation",
@@ -561,7 +562,8 @@
       {
         "id": "n1",
         "label": "Attempts and deadline remain",
-        "description": "Check the injected overall deadline before dispatch."
+        "description": "Check the injected overall deadline before dispatch.",
+        "shape": "decision"
       },
       {
         "id": "n2",
@@ -571,7 +573,8 @@
       {
         "id": "n3",
         "label": "Response status",
-        "description": "Selected gateway/unavailable failures can lead to another attempt."
+        "description": "Selected gateway/unavailable failures can lead to another attempt.",
+        "shape": "decision"
       },
       {
         "id": "n4",

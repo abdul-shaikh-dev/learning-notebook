@@ -148,7 +148,8 @@
       {
         "id": "n1",
         "label": "Cache lookup",
-        "description": "A hit returns reusable content under the declared policy."
+        "description": "A hit returns reusable content under the declared policy.",
+        "shape": "decision"
       },
       {
         "id": "n2",
@@ -304,7 +305,8 @@
     ],
     "textExampleSections": [
       1
-    ]
+    ],
+    "direction": "LR"
   },
   "transactions": {
     "title": "Reserve the final seat in one atomic unit",
@@ -557,7 +559,8 @@
           2
         ]
       }
-    ]
+    ],
+    "direction": "LR"
   },
   "security": {
     "title": "Evaluate record ownership at the server",

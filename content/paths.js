@@ -6168,12 +6168,14 @@ const LEARNING_PATHS = [
             {
               "id": "tenant",
               "label": "Tenant match",
-              "description": "Object must belong to red."
+              "description": "Object must belong to red.",
+              "shape": "decision"
             },
             {
               "id": "owner",
               "label": "Owner/action policy",
-              "description": "Owner read/update or reader read only."
+              "description": "Owner read/update or reader read only.",
+              "shape": "decision"
             },
             {
               "id": "deny",
@@ -7015,7 +7017,8 @@ const LEARNING_PATHS = [
             {
               "from": "n2",
               "to": "n1",
-              "label": "return code"
+              "label": "return code",
+              "reply": true
             },
             {
               "from": "n1",
@@ -7025,7 +7028,8 @@ const LEARNING_PATHS = [
             {
               "from": "n3",
               "to": "n1",
-              "label": "issue access token"
+              "label": "issue access token",
+              "reply": true
             },
             {
               "from": "n1",
@@ -7081,6 +7085,16 @@ const LEARNING_PATHS = [
           ],
           "textExampleSections": [
             1
+          ],
+          "type": "sequence",
+          "sequenceOrder": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
           ]
         }
       },
@@ -9231,7 +9245,8 @@ const LEARNING_PATHS = [
               "activeEdges": [],
               "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query’s result; ToList stores the values produced by this enumeration."
             }
-          ]
+          ],
+          "direction": "LR"
         }
       },
       {
@@ -23250,7 +23265,8 @@ const LEARNING_PATHS = [
                 2
               ]
             }
-          ]
+          ],
+          "direction": "LR"
         }
       },
       {
@@ -32608,7 +32624,8 @@ const LEARNING_PATHS = [
           ],
           "textExampleSections": [
             1
-          ]
+          ],
+          "direction": "LR"
         }
       },
       {
@@ -33929,7 +33946,8 @@ const LEARNING_PATHS = [
             {
               "id": "n1",
               "label": "Attempts and deadline remain",
-              "description": "Check the injected overall deadline before dispatch."
+              "description": "Check the injected overall deadline before dispatch.",
+              "shape": "decision"
             },
             {
               "id": "n2",
@@ -33939,7 +33957,8 @@ const LEARNING_PATHS = [
             {
               "id": "n3",
               "label": "Response status",
-              "description": "Selected gateway/unavailable failures can lead to another attempt."
+              "description": "Selected gateway/unavailable failures can lead to another attempt.",
+              "shape": "decision"
             },
             {
               "id": "n4",
@@ -35028,7 +35047,8 @@ const LEARNING_PATHS = [
             {
               "id": "n1",
               "label": "score >= 80?",
-              "description": "Test the excellent threshold first."
+              "description": "Test the excellent threshold first.",
+              "shape": "decision"
             },
             {
               "id": "n2",
@@ -35038,7 +35058,8 @@ const LEARNING_PATHS = [
             {
               "id": "n3",
               "label": "score >= 50?",
-              "description": "Only test passing after the excellent test fails."
+              "description": "Only test passing after the excellent test fails.",
+              "shape": "decision"
             },
             {
               "id": "n4",
@@ -42180,7 +42201,8 @@ const LEARNING_PATHS = [
             {
               "id": "n1",
               "label": "Cache lookup",
-              "description": "A hit returns reusable content under the declared policy."
+              "description": "A hit returns reusable content under the declared policy.",
+              "shape": "decision"
             },
             {
               "id": "n2",
@@ -42708,7 +42730,8 @@ const LEARNING_PATHS = [
           ],
           "textExampleSections": [
             1
-          ]
+          ],
+          "direction": "LR"
         }
       },
       {
@@ -44104,7 +44127,8 @@ const LEARNING_PATHS = [
                 2
               ]
             }
-          ]
+          ],
+          "direction": "LR"
         }
       },
       {

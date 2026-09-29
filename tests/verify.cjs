@@ -29,3 +29,4 @@ require('./visual-playback.cjs');
 require('./mermaid-diagrams.cjs');
 require('./concrete-scenes.cjs');
 require('./flow-audit.cjs');
+require('./lazy-loading.cjs');

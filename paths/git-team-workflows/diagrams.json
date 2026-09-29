@@ -77,7 +77,8 @@
           2
         ]
       }
-    ]
+    ],
+    "direction": "LR"
   },
   "history-refs": {
     "title": "Read parent relationships separately from branch labels",
