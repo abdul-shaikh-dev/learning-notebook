@@ -1,0 +1,166 @@
+{
+  "folder": "messaging-events-practice",
+  "files": [
+    {
+      "id": "event_lab-py",
+      "href": "paths/messaging-events/practice/event_lab.py",
+      "role": "reference",
+      "description": "Reference implementation or clearly labeled training configuration."
+    },
+    {
+      "id": "test_event_lab-py",
+      "href": "paths/messaging-events/practice/test_event_lab.py",
+      "role": "test",
+      "description": "Locally runnable regression tests."
+    },
+    {
+      "id": "README-md",
+      "href": "paths/messaging-events/practice/README.md",
+      "role": "guide",
+      "description": "Runtime, exact commands, expected results, cleanup and execution boundaries."
+    },
+    {
+      "id": "workbook-md",
+      "href": "paths/messaging-events/practice/workbook.md",
+      "role": "guide",
+      "description": "Three projects, exercises, evidence ledger and reference reasoning."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Message contract map",
+      "goal": "Design the notebook export workflow and identify its honest status transitions.",
+      "fileIds": [
+        "event_lab-py",
+        "test_event_lab-py",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Classify commands, facts and queries.",
+        "Sketch queue and independent subscriber responsibilities.",
+        "Draw three acknowledgement crash windows.",
+        "Define event, job and correlation identifiers.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python event_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_event_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Crash-safe export projection",
+      "goal": "Run the SQLite reference and extend its duplicate-safe workflow.",
+      "fileIds": [
+        "event_lab-py",
+        "test_event_lab-py",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Execute the provided tests and record Python/SQLite versions.",
+        "Explain atomic outbox and inbox transactions.",
+        "Inject a failure before consumer commit.",
+        "Write finite retry and quarantine policies.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python event_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_event_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Failure-aware messaging launch",
+      "goal": "Prepare a broker selection and recovery portfolio without provisioning one.",
+      "fileIds": [
+        "event_lab-py",
+        "test_event_lab-py",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Write a broker ADR and workload estimate.",
+        "Design schema compatibility, security and replay tests.",
+        "Define backlog age, dead-letter ownership and stop criteria.",
+        "Reconcile outbox/inbox/broker backup timelines.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python event_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_event_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "messages-events": "foundation",
+    "topologies": "foundation",
+    "envelopes": "foundation",
+    "acceptance": "foundation",
+    "delivery-semantics": "foundation",
+    "consumer-lifecycle": "foundation",
+    "durability": "foundation",
+    "routing": "foundation",
+    "idempotent-consumers": "intermediate",
+    "transactional-outbox": "intermediate",
+    "retry-budget": "intermediate",
+    "dead-letter-replay": "intermediate",
+    "ordering": "intermediate",
+    "schemas": "intermediate",
+    "backpressure": "intermediate",
+    "stream-replay": "intermediate",
+    "sagas": "advanced",
+    "security": "advanced",
+    "observability": "advanced",
+    "failure-tests": "advanced",
+    "broker-choice": "advanced",
+    "launch-review": "advanced"
+  },
+  "bundle": {
+    "href": "paths/messaging-events/practice-bundle.zip"
+  }
+}

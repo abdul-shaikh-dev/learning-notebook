@@ -1,0 +1,185 @@
+{
+  "folder": "linux-operating-systems-practice",
+  "files": [
+    {
+      "id": "README-md",
+      "href": "paths/linux-operating-systems/practice/README.md",
+      "role": "guide",
+      "description": "Course-owned README.md"
+    },
+    {
+      "id": "diagnostic_lab-py",
+      "href": "paths/linux-operating-systems/practice/diagnostic_lab.py",
+      "role": "reference",
+      "description": "Course-owned diagnostic_lab.py"
+    },
+    {
+      "id": "test_os_labs-py",
+      "href": "paths/linux-operating-systems/practice/test_os_labs.py",
+      "role": "test",
+      "description": "Course-owned test_os_labs.py"
+    },
+    {
+      "id": "linux-observation-md",
+      "href": "paths/linux-operating-systems/practice/linux-observation.md",
+      "role": "guide",
+      "description": "Course-owned linux-observation.md"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "File and command evidence notebook",
+      "goal": "Build a small evidence notebook explaining paths, argument boundaries, streams, permission bits and exit statuses. Complete portable examples first; add Linux command observations only in an existing disposable environment.",
+      "fileIds": [
+        "README-md",
+        "diagnostic_lab-py",
+        "test_os_labs-py",
+        "linux-observation-md"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Record working directory, interpreter path/version and source of configuration.",
+        "Demonstrate one literal argument containing spaces and shell-like text.",
+        "Keep structured stdout separate from diagnostic stderr.",
+        "Decode 600 and 640 and explain directory traversal."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python diagnostic_lab.py",
+          "expected": "Diagnostic categories printed; only direct Python children launched."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_os_labs.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Meet the operating system",
+          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Trusted child-process runner",
+      "goal": "Independently implement a runner for fixed trusted Python snippets with explicit arguments, separated streams, status capture and a deadline. Compare the downloaded reference after attempting it.",
+      "fileIds": [
+        "README-md",
+        "diagnostic_lab-py",
+        "test_os_labs-py",
+        "linux-observation-md"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Use the current absolute interpreter with a list of arguments and shell=False.",
+        "Reject invalid timeout and teaching-input bounds before launching.",
+        "Return stdout, stderr and exact child status; preserve nonzero status.",
+        "Test direct-child timeout and explain descendant/output limitations."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python diagnostic_lab.py",
+          "expected": "Diagnostic categories printed; only direct Python children launched."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_os_labs.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Meet the operating system",
+          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Importer incident portfolio",
+      "goal": "Build an incident report that distinguishes path configuration, access, child lifecycle and application validation. Include one bounded recovery test and optionally actual Linux namespace/cgroup observations.",
+      "fileIds": [
+        "README-md",
+        "diagnostic_lab-py",
+        "test_os_labs-py",
+        "linux-observation-md"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Record symptom, timeline, hypothesis, exact observation and minimal fix.",
+        "Demonstrate model backlog growth 120 and drain to zero under stated constant rates.",
+        "Explain why virtual size, RSS and container limits answer different questions.",
+        "Explain how durable work identity survives abrupt shutdown.",
+        "Separate constructed exceptions from actual Linux observations."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python diagnostic_lab.py",
+          "expected": "Diagnostic categories printed; only direct Python children launched."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_os_labs.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Meet the operating system",
+          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "kernel-and-user-space": "foundation",
+    "paths-and-working-directory": "foundation",
+    "safe-file-operations": "foundation",
+    "shell-quoting": "foundation",
+    "streams-and-pipelines": "foundation",
+    "permissions-and-identities": "foundation",
+    "processes-and-exit-status": "foundation",
+    "environment-and-path": "foundation",
+    "process-lifetimes": "intermediate",
+    "signals-and-shutdown": "intermediate",
+    "memory-and-virtual-addresses": "intermediate",
+    "threads-scheduling-and-races": "intermediate",
+    "file-descriptors-and-leaks": "intermediate",
+    "storage-and-durability": "intermediate",
+    "network-observation": "intermediate",
+    "services-and-supervision": "intermediate",
+    "logs-and-evidence": "advanced",
+    "resource-limits": "advanced",
+    "namespaces-and-cgroups": "advanced",
+    "security-and-packages": "advanced",
+    "incident-diagnosis": "advanced",
+    "operating-systems-capstone": "advanced"
+  },
+  "bundle": {
+    "href": "paths/linux-operating-systems/practice-bundle.zip"
+  }
+}

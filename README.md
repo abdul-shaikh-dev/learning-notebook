@@ -6,7 +6,7 @@ A static, extensible learning library. [Open the live site](https://abdul-shaikh
 
 Open `index.html` locally or use the website on a phone. The financial path contains six introductions, 18 main lessons, six foundation explainers, seven labs, five applied practice modules, six mixed revision tasks and a complete printable study pack. AI Agents and Agent Harnesses have staged lessons and offline practice workshops.
 
-Reading, practising and self-checking are separate activities. Progress stays in the current browser and origin; it does not automatically sync between a PC and phone. The financial course offers JSON backup/import. Old lesson URLs and existing financial progress remain compatible. Save the full handbook as PDF through its Print button for a portable offline reference; the hosted site itself is not an offline-cached app.
+Reading, practising and self-checking are separate activities. Progress stays in the current browser and origin; it does not automatically sync between a PC and phone. The financial course offers JSON backup/import. Old lesson URLs and existing financial progress remain compatible. Save the full handbook as PDF through its Print button for a portable offline reference; the hosted site supports installation and per-course offline downloads through Offline & install. Browser storage can be evicted; verify download status before going offline.
 
 ## Repository map
 
@@ -164,3 +164,27 @@ relevant lessons, so learners need not browse the repository for dependencies.
 Python-based checks exercise local models, HTTP services and temporary Git
 repositories. Docker execution, Kubernetes cluster behaviour and real identity
 provider integration have separate opt-in instructions and verification limits.
+
+## Connected practice paths
+
+Linux & Operating Systems, Data Engineering, UI Design & Accessibility,
+Observability & Performance, Messaging & Event-Driven Systems, and Cloud &
+Infrastructure as Code each include three stages, task kits, diagrams,
+lesson exercises, knowledge checks and dated primary references.
+
+The Full-Stack Project Journey connects React, .NET and SQL Server through a
+working local study planner. Its complete flat practice kit contains the frontend,
+API, SQL schema, decoder checks, real HTTP acceptance tests and milestone workbook.
+The reference implements local creation, completion, validation, optimistic
+concurrency and SQL persistence. Login, idempotent creation, public deployment
+and restore drills are explicit assessed extensions.
+
+Run `python scripts/verify-fullstack.py` with .NET 10 and Node 24. For local
+compatibility testing only, `--framework net9.0` uses an installed older SDK.
+On Windows, `--sql-server '.\SQLEXPRESS'` additionally creates an isolated
+uniquely named learning database, tests SQL concurrency/restart persistence and
+removes only that test database. The Pages workflow runs the .NET 10/React build
+and HTTP checks before publishing; SQL integration remains a local opt-in check.
+
+All new paths participate in shared search, printable packs, progress backups,
+the learning map and per-course PWA downloads through their manifests.

@@ -1,0 +1,196 @@
+{
+  "folder": "data-engineering-practice",
+  "files": [
+    {
+      "id": "README-md",
+      "href": "paths/data-engineering/practice/README.md",
+      "role": "guide",
+      "description": "Course-owned README.md"
+    },
+    {
+      "id": "pipeline_lab-py",
+      "href": "paths/data-engineering/practice/pipeline_lab.py",
+      "role": "reference",
+      "description": "Course-owned pipeline_lab.py"
+    },
+    {
+      "id": "test_pipeline_lab-py",
+      "href": "paths/data-engineering/practice/test_pipeline_lab.py",
+      "role": "test",
+      "description": "Course-owned test_pipeline_lab.py"
+    },
+    {
+      "id": "sample_orders-csv",
+      "href": "paths/data-engineering/practice/sample_orders.csv",
+      "role": "reference",
+      "description": "Course-owned sample_orders.csv"
+    },
+    {
+      "id": "sql-server-bridge-sql",
+      "href": "paths/data-engineering/practice/sql-server-bridge.sql",
+      "role": "reference",
+      "description": "Course-owned sql-server-bridge.sql"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Validated CSV contract",
+      "goal": "Define the order grain, exact CSV headers, UTC timestamp format and single-currency integer-cent semantics. Write a bounded parser independently before comparing read_batch in the bundle.",
+      "fileIds": [
+        "README-md",
+        "pipeline_lab-py",
+        "test_pipeline_lab-py",
+        "sample_orders-csv",
+        "sql-server-bridge-sql"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Document order grain, uniqueness, UTC-day calendar and monetary unit.",
+        "Bound input to 256 KiB and 1000 records before unbounded materialization.",
+        "Use csv parsing and reject wrong/missing/duplicate headers and bad field count.",
+        "Reject invalid IDs, duplicate order IDs, invalid timestamps and negative/decimal amount text.",
+        "Test a header-only empty batch and quoted valid fields."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python pipeline_lab.py --demo",
+          "expected": "committed, replay, orders=2 total_cents=2000."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_pipeline_lab.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Define a data product and its grain",
+          "href": "#topic/data-engineering/data-products-and-grain"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Transactional replayable importer",
+      "goal": "Build a local importer that coordinates a batch fingerprint, new order rows and its completed run marker. Demonstrate conflict and rollback after an earlier row would otherwise have been inserted.",
+      "fileIds": [
+        "README-md",
+        "pipeline_lab-py",
+        "test_pipeline_lab-py",
+        "sample_orders-csv",
+        "sql-server-bridge-sql"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Use parameterized values and explicit transaction ownership.",
+        "Commit business rows and completed run identity together.",
+        "Same ID/same exact bytes replays without adding rows.",
+        "Same ID/different bytes conflicts and retains prior data.",
+        "A later duplicate order rolls back earlier new rows and the failed run marker."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python pipeline_lab.py --demo",
+          "expected": "committed, replay, orders=2 total_cents=2000."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_pipeline_lab.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Define a data product and its grain",
+          "href": "#topic/data-engineering/data-products-and-grain"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Reconciliation and recovery portfolio",
+      "goal": "Extend the baseline with one independently implemented policy: late-event revisions, currency-version migration or historical dimension matching. Reconcile the extension and document a recovery procedure.",
+      "fileIds": [
+        "README-md",
+        "pipeline_lab-py",
+        "test_pipeline_lab-py",
+        "sample_orders-csv",
+        "sql-server-bridge-sql"
+      ],
+      "steps": [
+        "Download and extract the bundle; all files are at the named folder root.",
+        "Read README.md and run the baseline.",
+        "Attempt the stage brief independently and record evidence before comparing references.",
+        "Compare input/stored keys, counts and exact sums, including an offsetting-error case.",
+        "Specify event-time versus ingestion-time meaning and a late-data policy.",
+        "Document task dependencies and checkpoint advancement only after commit.",
+        "Add normal, boundary and failure tests for your chosen extension.",
+        "Document a SQL Server integration test plan without claiming an unexecuted adapter works."
+      ],
+      "commands": [
+        {
+          "label": "Run the bounded local reference",
+          "command": "python pipeline_lab.py --demo",
+          "expected": "committed, replay, orders=2 total_cents=2000."
+        },
+        {
+          "label": "Run baseline failure checks",
+          "command": "python -m unittest -v test_pipeline_lab.py",
+          "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Define a data product and its grain",
+          "href": "#topic/data-engineering/data-products-and-grain"
+        }
+      ],
+      "notes": [
+        "Python 3.11+ standard library only.",
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "data-products-and-grain": "foundation",
+    "etl-and-elt": "foundation",
+    "csv-and-encoding": "foundation",
+    "schema-and-contracts": "foundation",
+    "validation-and-quarantine": "foundation",
+    "time-and-business-days": "foundation",
+    "money-and-numeric-precision": "foundation",
+    "batch-loading": "foundation",
+    "idempotency-and-replay": "intermediate",
+    "incremental-watermarks": "intermediate",
+    "cdc-and-deletions": "intermediate",
+    "joins-and-dimensional-models": "intermediate",
+    "slowly-changing-dimensions": "intermediate",
+    "dag-and-orchestration": "intermediate",
+    "late-data-and-windows": "intermediate",
+    "partitioning-and-formats": "intermediate",
+    "schema-evolution": "advanced",
+    "reconciliation-and-lineage": "advanced",
+    "privacy-and-data-governance": "advanced",
+    "sql-server-bridge": "advanced",
+    "failure-recovery": "advanced",
+    "data-engineering-capstone": "advanced"
+  },
+  "bundle": {
+    "href": "paths/data-engineering/practice-bundle.zip"
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "folder": "ui-accessibility-practice",
+  "files": [
+    {
+      "id": "contrast-cjs",
+      "href": "paths/ui-accessibility/practice/contrast.cjs",
+      "role": "reference",
+      "description": "contrast.cjs"
+    },
+    {
+      "id": "contrast-test-cjs",
+      "href": "paths/ui-accessibility/practice/contrast.test.cjs",
+      "role": "test",
+      "description": "contrast.test.cjs"
+    },
+    {
+      "id": "demo-html",
+      "href": "paths/ui-accessibility/practice/demo.html",
+      "role": "reference",
+      "description": "demo.html"
+    },
+    {
+      "id": "demo-css",
+      "href": "paths/ui-accessibility/practice/demo.css",
+      "role": "reference",
+      "description": "demo.css"
+    },
+    {
+      "id": "demo-js",
+      "href": "paths/ui-accessibility/practice/demo.js",
+      "role": "reference",
+      "description": "demo.js"
+    },
+    {
+      "id": "semantics-test-cjs",
+      "href": "paths/ui-accessibility/practice/semantics.test.cjs",
+      "role": "test",
+      "description": "semantics.test.cjs"
+    },
+    {
+      "id": "audit-checklist-md",
+      "href": "paths/ui-accessibility/practice/audit-checklist.md",
+      "role": "guide",
+      "description": "audit-checklist.md"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/ui-accessibility/practice/README.md",
+      "role": "guide",
+      "description": "README.md"
+    },
+    {
+      "id": "verification-md",
+      "href": "paths/ui-accessibility/practice/verification.md",
+      "role": "guide",
+      "description": "Actual local execution evidence and unverified boundaries"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Explainable course overview",
+      "goal": "Design a course overview whose hierarchy and controls support a realistic learner task.",
+      "fileIds": [
+        "contrast-cjs",
+        "contrast-test-cjs",
+        "demo-html",
+        "demo-css",
+        "demo-js",
+        "semantics-test-cjs",
+        "audit-checklist-md",
+        "README-md",
+        "verification-md"
+      ],
+      "steps": [
+        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Read README.md and run the baseline commands.",
+        "Write two realistic task scenarios.",
+        "Create semantic headings/navigation/actions.",
+        "Measure proposed contrast pairs.",
+        "Test the overview with a keyboard.",
+        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+      ],
+      "commands": [
+        {
+          "label": "Run local reference checks",
+          "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "1. Start with a person and a task",
+          "href": "#topic/ui-accessibility/user-goals"
+        }
+      ],
+      "notes": [
+        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "No credentials, external providers or paid services are required for the baseline."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Inclusive study dashboard",
+      "goal": "Extend the runnable dashboard and document complete task behaviour.",
+      "fileIds": [
+        "contrast-cjs",
+        "contrast-test-cjs",
+        "demo-html",
+        "demo-css",
+        "demo-js",
+        "semantics-test-cjs",
+        "audit-checklist-md",
+        "README-md",
+        "verification-md"
+      ],
+      "steps": [
+        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Read README.md and run the baseline commands.",
+        "Preserve labels and help/error associations.",
+        "Test blank and valid submission.",
+        "Verify preview focus entry, containment and return.",
+        "Test narrow layout, zoom and reduced motion.",
+        "Provide structured alternatives for one diagram.",
+        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+      ],
+      "commands": [
+        {
+          "label": "Run local reference checks",
+          "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+        },
+        {
+          "label": "Open the browser lab",
+          "command": "python -m http.server 8890 --bind 127.0.0.1\n# Open http://127.0.0.1:8890/demo.html",
+          "expected": "Accessible study form and native preview dialog are served locally. Stop with Ctrl+C."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "8. Responsive layout and reflow",
+          "href": "#topic/ui-accessibility/responsive-reflow"
+        }
+      ],
+      "notes": [
+        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "No credentials, external providers or paid services are required for the baseline."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Accessibility release review",
+      "goal": "Create and verify a maintainable inclusive dashboard release.",
+      "fileIds": [
+        "contrast-cjs",
+        "contrast-test-cjs",
+        "demo-html",
+        "demo-css",
+        "demo-js",
+        "semantics-test-cjs",
+        "audit-checklist-md",
+        "README-md",
+        "verification-md"
+      ],
+      "steps": [
+        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Read README.md and run the baseline commands.",
+        "Add non-drag reordering.",
+        "Design localisation and long-text cases.",
+        "Review authentication and destructive-action flows.",
+        "Run a task test with another person.",
+        "Record assistive-technology checks or mark them unexecuted.",
+        "Create component regression and manual retest triggers.",
+        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+      ],
+      "commands": [
+        {
+          "label": "Run local reference checks",
+          "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "15. Design tokens and reusable components",
+          "href": "#topic/ui-accessibility/design-tokens"
+        }
+      ],
+      "notes": [
+        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "No credentials, external providers or paid services are required for the baseline."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "user-goals": "foundation",
+    "information-architecture": "foundation",
+    "hierarchy-layout": "foundation",
+    "semantic-html": "foundation",
+    "keyboard-focus": "foundation",
+    "contrast-colour": "foundation",
+    "type-content": "foundation",
+    "responsive-reflow": "intermediate",
+    "forms-validation": "intermediate",
+    "states-feedback": "intermediate",
+    "dialog-pattern": "intermediate",
+    "images-diagrams": "intermediate",
+    "tables-charts": "intermediate",
+    "motion-media": "intermediate",
+    "design-tokens": "advanced",
+    "accessible-data-entry": "advanced",
+    "internationalisation": "advanced",
+    "accessible-auth": "advanced",
+    "manual-evaluation": "advanced",
+    "usability-testing": "advanced",
+    "inclusive-release": "advanced"
+  },
+  "bundle": {
+    "href": "paths/ui-accessibility/practice-bundle.zip"
+  }
+}

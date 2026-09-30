@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inclusive study dashboard lab</title><link rel="stylesheet" href="demo.css"></head>
+<body><a class="skip" href="#main">Skip to main content</a>
+<header><p class="eyebrow">UI practice</p><h1>Make room for learning.</h1><p>A small dashboard with labels, error recovery and keyboard-friendly preview.</p></header>
+<main id="main" tabindex="-1"><section aria-labelledby="add-heading"><h2 id="add-heading">Add a lesson</h2>
+<form id="lesson-form" novalidate><label for="lesson-title">Lesson title</label><p id="title-help">Required. Use a meaningful name.</p>
+<input id="lesson-title" name="title" required aria-describedby="title-help title-error" autocomplete="off">
+<p id="title-error" class="error" role="alert"></p><button type="submit">Add lesson</button></form>
+<p id="status" role="status" aria-live="polite">No lessons added yet. This lab stores records in memory only.</p></section>
+<section aria-labelledby="list-heading"><h2 id="list-heading">Your study list</h2><ul id="lessons"></ul>
+<button id="preview" type="button">Preview study plan</button></section>
+<section aria-labelledby="audit-heading"><h2 id="audit-heading">Test the whole task</h2><p>Try blank input, keyboard navigation, 320px width, zoom and reduced motion. Static tests cannot establish screen-reader usability.</p>
+<a href="audit-checklist.md">Open manual audit checklist</a></section></main>
+<dialog id="preview-dialog" aria-labelledby="dialog-title"><h2 id="dialog-title" tabindex="-1">Study plan preview</h2><p id="preview-summary"></p>
+<form method="dialog"><button>Close preview</button></form></dialog>
+<script src="demo.js"></script></body></html>

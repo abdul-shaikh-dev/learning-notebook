@@ -1,0 +1,487 @@
+{
+  "networking": {
+    "title": "Three independent access gates",
+    "summary": "A private endpoint or route is insufficient without DNS and authorization.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Application",
+        "description": "Starts an intended storage request."
+      },
+      {
+        "id": "1",
+        "label": "DNS",
+        "description": "Resolves the intended endpoint."
+      },
+      {
+        "id": "2",
+        "label": "Network path",
+        "description": "Routes and filters must permit traffic."
+      },
+      {
+        "id": "3",
+        "label": "Authorization",
+        "description": "Valid identity must have data action rights.",
+        "shape": "decision"
+      },
+      {
+        "id": "4",
+        "label": "Storage data",
+        "description": "Accessible only after all required gates.",
+        "shape": "database"
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "resolve"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "connect"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "present identity"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "authorized action"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. resolve",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Resolves the intended endpoint."
+      },
+      {
+        "title": "2. connect",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Routes and filters must permit traffic."
+      },
+      {
+        "title": "3. present identity",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Valid identity must have data action rights."
+      },
+      {
+        "title": "4. authorized action",
+        "activeNodes": [
+          "3",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Accessible only after all required gates."
+      }
+    ],
+    "direction": "LR"
+  },
+  "dependencies": {
+    "title": "Configuration dependencies",
+    "summary": "Resource references produce a partial order, not a runtime request trace.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Typed inputs",
+        "description": "Explicit subscription, location and naming."
+      },
+      {
+        "id": "1",
+        "label": "Resource group",
+        "description": "Azure grouping and lifecycle scope."
+      },
+      {
+        "id": "2",
+        "label": "Storage account",
+        "description": "References group name and location; private access is not supplied.",
+        "shape": "database"
+      },
+      {
+        "id": "3",
+        "label": "Output",
+        "description": "Exposes resource-group ID, not a credential."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "configure"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "reference dependency"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "expose selected ID"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. configure",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Azure grouping and lifecycle scope."
+      },
+      {
+        "title": "2. reference dependency",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "References group name and location; private access is not supplied."
+      },
+      {
+        "title": "3. expose selected ID",
+        "activeNodes": [
+          "1",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Exposes resource-group ID, not a credential."
+      }
+    ],
+    "direction": "LR"
+  },
+  "state": {
+    "title": "State association and data are different",
+    "summary": "Protected state maps configuration addresses; it does not contain a backup of application rows.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Configuration",
+        "description": "Desired resources and reviewed parameters."
+      },
+      {
+        "id": "1",
+        "label": "State",
+        "description": "Sensitive resource identity association.",
+        "shape": "database"
+      },
+      {
+        "id": "2",
+        "label": "Provider",
+        "description": "Calls selected remote APIs."
+      },
+      {
+        "id": "3",
+        "label": "Cloud resources",
+        "description": "Real observed infrastructure."
+      },
+      {
+        "id": "4",
+        "label": "Application backups",
+        "description": "Separate recovery responsibility.",
+        "shape": "database"
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "2",
+        "label": "desired operations"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "existing identity"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "planned and executed changes"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "protect actual data separately"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. desired operations",
+        "activeNodes": [
+          "0",
+          "2"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Calls selected remote APIs."
+      },
+      {
+        "title": "2. existing identity",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Calls selected remote APIs."
+      },
+      {
+        "title": "3. planned and executed changes",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Real observed infrastructure."
+      },
+      {
+        "title": "4. protect actual data separately",
+        "activeNodes": [
+          "3",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Separate recovery responsibility."
+      }
+    ],
+    "direction": "LR"
+  },
+  "plan-review": {
+    "title": "Plan is an evidence gate",
+    "summary": "A successful proposed change is not proof of deployment.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Validation",
+        "description": "Check configuration and selected contracts."
+      },
+      {
+        "id": "1",
+        "label": "Plan",
+        "description": "Inspect create/update/replace/destroy."
+      },
+      {
+        "id": "2",
+        "label": "Review",
+        "description": "Confirm scope, data migration and cost.",
+        "shape": "decision"
+      },
+      {
+        "id": "3",
+        "label": "Optional deliberate apply",
+        "description": "Only after independently choosing real work."
+      },
+      {
+        "id": "4",
+        "label": "Observe and recover",
+        "description": "Check service behavior and retain teardown evidence."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "prepare"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "inspect"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "approved real operation"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "verify actual outcome"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. prepare",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Inspect create/update/replace/destroy."
+      },
+      {
+        "title": "2. inspect",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Confirm scope, data migration and cost."
+      },
+      {
+        "title": "3. approved real operation",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Only after independently choosing real work."
+      },
+      {
+        "title": "4. verify actual outcome",
+        "activeNodes": [
+          "3",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Check service behavior and retain teardown evidence."
+      }
+    ],
+    "direction": "LR"
+  },
+  "deployment-pipeline": {
+    "title": "Untrusted checks and privileged release",
+    "summary": "Identity becomes available only inside the reviewed release boundary.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Pull request",
+        "description": "Potentially untrusted source."
+      },
+      {
+        "id": "1",
+        "label": "Offline checks",
+        "description": "No Azure credentials."
+      },
+      {
+        "id": "2",
+        "label": "Reviewed release artifact",
+        "description": "Bind reviewed commit and environment."
+      },
+      {
+        "id": "3",
+        "label": "Scoped deployment identity",
+        "description": "Short-lived authorized release access."
+      },
+      {
+        "id": "4",
+        "label": "Target scope",
+        "description": "Only the chosen environment."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "validate unprivileged"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "review and promote"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "trusted release boundary"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "scoped operation"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. validate unprivileged",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "No Azure credentials."
+      },
+      {
+        "title": "2. review and promote",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Bind reviewed commit and environment."
+      },
+      {
+        "title": "3. trusted release boundary",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Short-lived authorized release access."
+      },
+      {
+        "title": "4. scoped operation",
+        "activeNodes": [
+          "3",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Only the chosen environment."
+      }
+    ],
+    "direction": "LR"
+  }
+}

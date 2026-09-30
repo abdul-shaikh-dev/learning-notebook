@@ -1,0 +1,11 @@
+const fs=require("node:fs"),assert=require("node:assert/strict");
+const html=fs.readFileSync("demo.html","utf8"),js=fs.readFileSync("demo.js","utf8"),css=fs.readFileSync("demo.css","utf8");
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
+assert.equal(new Set(ids).size,ids.length,"IDs must be unique");
+for(const match of html.matchAll(/(?:for|aria-labelledby|aria-describedby)="([^"]+)"/g))for(const id of match[1].split(" "))assert.ok(ids.includes(id),"Missing associated target "+id);
+assert.match(html,/<html lang="en">/);assert.match(html,/<label for="lesson-title">/);
+assert.match(html,/<dialog[^>]*aria-labelledby=/);assert.match(html,/role="status"/);
+assert.ok(!/tabindex="[1-9]/.test(html));assert.ok(!/innerHTML/.test(js));
+assert.match(js,/showModal/);assert.match(js,/addEventListener\("close"/);
+assert.match(css,/prefers-reduced-motion/);assert.match(css,/:focus-visible/);
+console.log("PASS: static semantic guardrails only; manual/browser/assistive-technology checks still required");

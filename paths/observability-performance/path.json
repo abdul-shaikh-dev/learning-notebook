@@ -1,0 +1,1348 @@
+{
+  "id": "observability-performance",
+  "title": "Observability & Performance",
+  "category": "Engineering practice",
+  "status": "ready",
+  "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
+  "level": "Foundations → intermediate → advanced practice",
+  "prerequisites": [
+    "Basic file editing and running a terminal command. No prior specialist knowledge required.",
+    "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+  ],
+  "outcomes": [
+    "Choose signals that answer concrete operational questions.",
+    "Interpret percentiles, labels, spans and instrumentation limits.",
+    "Calculate SLO error budgets and burn rates.",
+    "Run local latency/failure experiments and correctness-preserving benchmarks.",
+    "Write evidence-based runbooks and distinguish local verification from production operation."
+  ],
+  "setup": [
+    "Python 3.10+ standard library is sufficient; no packages or external services are required.",
+    "Extract the flat observability-performance-practice bundle and run python telemetry.test.py, python integration.test.py and python benchmark.py.",
+    "For interactive measurements start python service.py, then run python load.py --profile healthy, slow or fail in another terminal. Stop with Ctrl+C.",
+    "The lab uses fixed loopback port 8891, four closed-loop workers and 20 requests. Do not run integration.test.py while an interactive server occupies that port."
+  ],
+  "nextSteps": [
+    "Instrument the full-stack project with a selected OpenTelemetry SDK and collector as a separately tested extension.",
+    "Use SQL Server query plans and React profiling for real cross-layer investigations.",
+    "Evaluate real retention, data access, costs and alert delivery before production use."
+  ],
+  "sources": [
+    {
+      "title": "OpenTelemetry signals",
+      "url": "https://opentelemetry.io/docs/concepts/signals/"
+    },
+    {
+      "title": "Python time module",
+      "url": "https://docs.python.org/3/library/time.html"
+    },
+    {
+      "title": "OpenTelemetry security",
+      "url": "https://opentelemetry.io/docs/security/"
+    },
+    {
+      "title": "Prometheus metric naming",
+      "url": "https://prometheus.io/docs/practices/naming/"
+    },
+    {
+      "title": "Prometheus histograms and summaries",
+      "url": "https://prometheus.io/docs/practices/histograms/"
+    },
+    {
+      "title": "Google SRE monitoring distributed systems",
+      "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+    },
+    {
+      "title": "OpenTelemetry context propagation",
+      "url": "https://opentelemetry.io/docs/concepts/context-propagation/"
+    },
+    {
+      "title": "Google SRE implementing SLOs",
+      "url": "https://sre.google/workbook/implementing-slos/"
+    },
+    {
+      "title": "Google SRE alerting on SLOs",
+      "url": "https://sre.google/workbook/alerting-on-slos/"
+    },
+    {
+      "title": "OpenTelemetry sampling",
+      "url": "https://opentelemetry.io/docs/concepts/sampling/"
+    },
+    {
+      "title": "Python allocation tracing",
+      "url": "https://docs.python.org/3/library/tracemalloc.html"
+    },
+    {
+      "title": "MDN understanding latency",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency"
+    },
+    {
+      "title": "Python deterministic profilers",
+      "url": "https://docs.python.org/3/library/profile.html"
+    },
+    {
+      "title": "Google SRE handling overload",
+      "url": "https://sre.google/sre-book/handling-overload/"
+    },
+    {
+      "title": "MIT Urban Operations Research — Little’s formula",
+      "url": "https://web.mit.edu/urban_or_book/www/book/chapter4/4.4.html"
+    },
+    {
+      "title": "wrk2 load-generation design",
+      "url": "https://github.com/giltene/wrk2"
+    },
+    {
+      "title": "Python http.server documentation",
+      "url": "https://docs.python.org/3/library/http.server.html"
+    }
+  ],
+  "publicFiles": [
+    "practice/telemetry.py",
+    "practice/telemetry.test.py",
+    "practice/benchmark.py",
+    "practice/service.py",
+    "practice/load.py",
+    "practice/integration.test.py",
+    "practice/runbook.md",
+    "practice/README.md",
+    "practice/verification.md"
+  ],
+  "downloads": [
+    {
+      "title": "telemetry.py",
+      "href": "paths/observability-performance/practice/telemetry.py"
+    },
+    {
+      "title": "telemetry.test.py",
+      "href": "paths/observability-performance/practice/telemetry.test.py"
+    },
+    {
+      "title": "benchmark.py",
+      "href": "paths/observability-performance/practice/benchmark.py"
+    },
+    {
+      "title": "service.py",
+      "href": "paths/observability-performance/practice/service.py"
+    },
+    {
+      "title": "load.py",
+      "href": "paths/observability-performance/practice/load.py"
+    },
+    {
+      "title": "integration.test.py",
+      "href": "paths/observability-performance/practice/integration.test.py"
+    },
+    {
+      "title": "runbook.md",
+      "href": "paths/observability-performance/practice/runbook.md"
+    },
+    {
+      "title": "README.md",
+      "href": "paths/observability-performance/practice/README.md"
+    },
+    {
+      "title": "Local verification evidence and limits",
+      "href": "paths/observability-performance/practice/verification.md"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundation — interpretable signals",
+      "description": "Define boundaries and distinguish events, aggregates and related work.",
+      "exitCriteria": [
+        "Every metric has a population and unit.",
+        "Percentile estimator and sample size are stated.",
+        "No sensitive payload is logged.",
+        "Parent/child elapsed time is not double-counted."
+      ],
+      "project": {
+        "title": "Telemetry analysis notebook",
+        "brief": "Explain a measured request population without hiding assumptions.",
+        "requirements": [
+          "Define measurement boundaries and units.",
+          "Classify counters, gauges and distributions.",
+          "Calculate nearest-rank percentiles.",
+          "Write safe structured log fields.",
+          "Interpret golden signals and nested spans."
+        ],
+        "rubric": [
+          "Every metric has a population and unit.",
+          "Percentile estimator and sample size are stated.",
+          "No sensitive payload is logged.",
+          "Parent/child elapsed time is not double-counted."
+        ],
+        "solution": "Run telemetry.test.py, create a small observation set and calculate counts, good-event ratio and percentiles. Attach boundaries, sample size and safe correlation fields; distinguish missing observations from success."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate — objectives and experiments",
+      "description": "Connect signals to reliability objectives and controlled comparisons.",
+      "exitCriteria": [
+        "Commands and environment are recorded.",
+        "No-data remains unknown.",
+        "The injected fault appears in measured outcomes.",
+        "The benchmark claim matches its timed boundary."
+      ],
+      "project": {
+        "title": "Measured loopback service",
+        "brief": "Investigate local latency and error injection with a defined SLO.",
+        "requirements": [
+          "Run healthy, slow and fail profiles.",
+          "Compare counts, errors and latency.",
+          "Define good and eligible events.",
+          "Calculate error budget and burn rate.",
+          "Design bounded labels and sampling policy.",
+          "Benchmark equivalent lookup implementations."
+        ],
+        "rubric": [
+          "Commands and environment are recorded.",
+          "No-data remains unknown.",
+          "The injected fault appears in measured outcomes.",
+          "The benchmark claim matches its timed boundary."
+        ],
+        "solution": "Run the service and bounded client in separate terminals. Record actual outputs for each profile; fail should show four HTTP failures of 20, while slow should raise the tail. Keep this closed-loop evidence separate from production load and collector integration."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced — diagnosis and operating evidence",
+      "description": "Investigate bottlenecks, memory, load models and telemetry failure boundaries.",
+      "exitCriteria": [
+        "One change is justified by measured evidence.",
+        "Measurements include environment and boundaries.",
+        "Recovery is confirmed with the same task.",
+        "Production and external-service limits remain explicit."
+      ],
+      "project": {
+        "title": "Performance investigation report",
+        "brief": "Produce a reproducible investigation with a measured change and a safe runbook.",
+        "requirements": [
+          "Profile a representative workload.",
+          "Measure one change while preserving correctness.",
+          "Document memory measurement domain.",
+          "Explain load-generator limitations.",
+          "Write recovery and retest steps.",
+          "Create a telemetry release/security evidence matrix."
+        ],
+        "rubric": [
+          "One change is justified by measured evidence.",
+          "Measurements include environment and boundaries.",
+          "Recovery is confirmed with the same task.",
+          "Production and external-service limits remain explicit."
+        ],
+        "solution": "Use cProfile to locate lookup cost, benchmark without profiler overhead and compare equivalent output. Design a memory retention experiment, record the loopback runbook and document all unexecuted collector/backend/paging checks. Avoid universal speedup or capacity claims."
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": "questions-signals",
+      "title": "1. Ask a question before adding telemetry",
+      "takeaway": "Telemetry should help answer a concrete operational question.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Observability is the ability to investigate a system using the outputs it exposes. Monitoring checks known conditions, while exploratory investigation asks new questions. Neither is created by collecting everything. Start with a user symptom such as Imports are slow, then identify which measurements distinguish network waiting, parsing, database work and queue delay.",
+            "Logs describe events, metrics aggregate measurements and traces connect work across boundaries. A request count can show traffic growth without identifying one request. A trace can identify the slow segment but may be sampled. Combine evidence instead of expecting one signal to answer every question."
+          ],
+          "example": "Question: why did import request R take 900 ms?\nMetric: latency distribution changed\nTrace: database span consumed 700 ms\nLog: database retry occurred for R"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A dashboard full of CPU gauges can miss a broken user task. Start with outcomes and use internal metrics to explain them."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose telemetry for a failed study-record import. Give one question each for logs, metrics and traces.",
+        "solution": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Every signal has a question.",
+          "Aggregates and individual events are distinguished.",
+          "Sensitive payloads are excluded."
+        ]
+      },
+      "quiz": {
+        "question": "Which signal naturally connects work across services?",
+        "options": [
+          "A distributed trace with related spans.",
+          "A single average CPU gauge.",
+          "An unlabeled screenshot of a dashboard."
+        ],
+        "correct": 0,
+        "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry signals",
+          "url": "https://opentelemetry.io/docs/concepts/signals/",
+          "section": "Logs, metrics and traces",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "measurement-contract",
+      "title": "2. Define a measurement contract",
+      "takeaway": "A value needs units, a boundary and a population to be interpretable.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Latency is elapsed time between defined start and end points. Server processing time differs from browser-visible completion time because transport, rendering and queueing may sit outside the measurement. Name the boundary explicitly. A duration of 50 has no meaning without units; a count of errors needs a denominator and time window.",
+            "Choose a monotonic clock for elapsed durations so wall-clock adjustments do not create negative times. Wall-clock timestamps help relate events in time, but clocks across machines can disagree. Record clock type, sample count, warmup and environment alongside a benchmark."
+          ],
+          "example": "duration_ms = (perf_counter() - start) * 1000\nBoundary: HTTP handler entry → response creation\nExcluded: client network and rendering"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Do not subtract timestamps from different machines to infer a precise network duration without considering clock uncertainty. Prefer durations measured locally and a trace showing relationships."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Define three latency boundaries for a React → API → database request. Choose which one supports a user-facing objective.",
+        "solution": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Units are explicit.",
+          "Start and end events are named.",
+          "Clock and exclusions are documented."
+        ]
+      },
+      "quiz": {
+        "question": "Which clock is suitable for elapsed benchmarking?",
+        "options": [
+          "A monotonic elapsed-time clock such as perf_counter.",
+          "A display string formatted in local time.",
+          "Two unsynchronised host timestamps."
+        ],
+        "correct": 0,
+        "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Python time module",
+          "url": "https://docs.python.org/3/library/time.html",
+          "section": "time.perf_counter and monotonic clocks",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "structured-logs",
+      "title": "3. Structured logs and correlation",
+      "takeaway": "Logs should preserve event meaning without exposing unnecessary data.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A structured log records named fields such as event, severity, request_id, route and duration_ms. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for import_rejected should identify the reason category, not dump the entire uploaded document.",
+            "Correlate related events through a request or trace identifier. Use bounded route templates rather than raw URLs that may contain personal identifiers or secrets. Apply retention, access controls and redaction at the source as well as the collection layer. Debug verbosity should be a deliberate temporary decision."
+          ],
+          "example": "{\"event\":\"import_rejected\",\"reason\":\"invalid_schema\",\"request_id\":\"demo-17\",\"route\":\"/imports\",\"status\":400}"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Logging passwords, tokens or complete financial records creates a second uncontrolled data store. Redaction rules should fail safely and be tested, not added only after an incident."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Replace a log containing an email, bearer token and full JSON body with a minimal event. Keep enough information to investigate schema failures.",
+        "solution": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Fields have stable meanings.",
+          "Correlation survives redaction.",
+          "Secrets and raw payloads are absent."
+        ]
+      },
+      "quiz": {
+        "question": "What belongs in an import rejection log?",
+        "options": [
+          "A safe reason category and correlation ID.",
+          "The complete bearer token.",
+          "Every raw user field copied into the message."
+        ],
+        "correct": 0,
+        "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry security",
+          "url": "https://opentelemetry.io/docs/security/",
+          "section": "Protecting sensitive data; telemetry security",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "metrics-types",
+      "title": "4. Counters, gauges and distributions",
+      "takeaway": "Choose the measurement type according to how the value behaves.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A counter accumulates events, such as completed requests, and normally increases until process restart. A gauge represents a current value such as in-flight requests and may rise or fall. A distribution records many observations such as request duration; a single gauge overwritten by each request loses the population.",
+            "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as duration_seconds and requests_total, so dashboards do not mix milliseconds and seconds silently."
+          ],
+          "example": "requests_total: counter\ninflight_requests: gauge\nrequest_duration_seconds: histogram\nCPU utilisation: ratio gauge"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A counter of errors alone can be misleading when traffic changes. Divide by eligible requests in the same scope and time window to obtain an error ratio."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Classify queued jobs, completed jobs and job duration. Define the failure ratio for 8 failures among 200 eligible attempts.",
+        "solution": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Current state differs from accumulated events.",
+          "Duration retains a distribution.",
+          "The denominator matches the numerator scope."
+        ]
+      },
+      "quiz": {
+        "question": "Which type suits current queue depth?",
+        "options": [
+          "A gauge.",
+          "A counter that increments on every poll.",
+          "A log containing the last queue item only."
+        ],
+        "correct": 0,
+        "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Prometheus metric naming",
+          "url": "https://prometheus.io/docs/practices/naming/",
+          "section": "Metric names, base units and type suffixes",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "latency-percentiles",
+      "title": "5. Percentiles and the slow tail",
+      "takeaway": "An average can conceal the requests that users experience as unusually slow.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index ceil(p*n)-1.",
+            "A tiny sample cannot support precise tail claims. For 20 values the nearest-rank p99 is the maximum, not a stable estimate of a broad population. Do not average p95 values from different hosts to obtain a global p95; combine compatible distributions or histogram buckets instead."
+          ],
+          "example": "Durations: 10, 10, 10, 10, 100 ms\nMean = 28 ms; median = 10 ms\nNearest-rank p95 = 100 ms (5 observations)"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Always show sample size, time range and estimator beside percentile claims. A lower average with a worse slow tail may be a regression for the people affected by the tail."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Calculate mean, median and nearest-rank p95 for 1, 2, 3, 4, 100. Explain why the p95 is uncertain.",
+        "solution": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The estimator is stated.",
+          "Sample size accompanies tail values.",
+          "Host percentiles are not averaged into a global percentile."
+        ]
+      },
+      "quiz": {
+        "question": "How should global p95 be obtained?",
+        "options": [
+          "From the combined compatible distribution, not an average of host p95s.",
+          "By averaging host p95 values without weights.",
+          "By taking the smallest host median."
+        ],
+        "correct": 0,
+        "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Prometheus histograms and summaries",
+          "url": "https://prometheus.io/docs/practices/histograms/",
+          "section": "Quantiles; aggregation and estimation error",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "golden-signals",
+      "title": "6. Traffic, errors, latency and saturation",
+      "takeaway": "User symptoms and capacity pressure should be visible together.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "The four golden signals describe traffic, errors, latency and saturation. Traffic is demand, errors are failed outcomes, latency is elapsed completion time and saturation describes how close a resource is to its effective limit. The useful resource may be threads, connections, queue capacity or memory rather than CPU.",
+            "Separate successful and failed request latency because fast failures can make an aggregate look healthy. Inspect dependency and endpoint differences before concluding a global trend explains every user. Saturation often predicts trouble: a growing queue can precede timeouts even when CPU is moderate."
+          ],
+          "example": "200 requests/s; 3% failures; success p95 180 ms; connection pool 19/20 occupied\nInterpretation: investigate database concurrency pressure rather than only CPU."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A resource at 80% is not automatically an incident. Relate it to latency, errors, workload and known capacity limits before setting an alert threshold."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "For a database-backed importer, name one metric per golden signal and state which saturation indicator might warn before errors rise.",
+        "solution": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt.",
+        "solutionFormat": "prose",
+        "checks": [
+          "All four signals have a useful definition.",
+          "Success and failure latency can be separated.",
+          "Saturation names an actual constrained resource."
+        ]
+      },
+      "quiz": {
+        "question": "Which is a saturation signal?",
+        "options": [
+          "Database connection pool occupancy and wait.",
+          "The name of the latest release.",
+          "A count of documentation pages."
+        ],
+        "correct": 0,
+        "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Google SRE monitoring distributed systems",
+          "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+          "section": "The four golden signals",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "trace-spans",
+      "title": "7. Traces, spans and the critical path",
+      "takeaway": "Nested timing describes dependency relationships, not an additive bill.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent’s elapsed time; adding parent and child durations double-counts.",
+            "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
+          ],
+          "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Draw a 150 ms request with parsing, two parallel calls and rendering. Identify the critical path and uninstrumented gaps.",
+        "solution": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Parent/child timing is not double-counted.",
+          "Overlap is represented.",
+          "Unknown intervals remain unknown."
+        ]
+      },
+      "quiz": {
+        "question": "Why should parent and child durations not simply be added?",
+        "options": [
+          "Child elapsed time is already inside the parent and may overlap other children.",
+          "Every span always lasts the same amount.",
+          "Traces contain only counter values."
+        ],
+        "correct": 0,
+        "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry signals",
+          "url": "https://opentelemetry.io/docs/concepts/signals/",
+          "section": "Traces and spans",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "context-propagation",
+      "title": "8. Propagate context across boundaries",
+      "takeaway": "Correlation survives service boundaries only when context is carried and extracted.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Context propagation carries trace identity and related state from caller to callee. Instrumentation injects context into a supported carrier such as HTTP headers, and the receiver extracts it before creating related spans. Thread-local or async context storage avoids manually passing identifiers through every function but must preserve the correct request ownership.",
+            "Treat incoming context as untrusted data. Validate supported formats, avoid recording sensitive baggage and consider trust boundaries between organisations. A trace ID is correlation metadata, not proof that a caller is authorised. Background jobs may require a link to the submitting operation rather than one long request span."
+          ],
+          "example": "Caller: create span → inject trace context into request\nReceiver: extract supported context → create child span → perform work\nAuthorisation remains a separate check."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Global mutable current_trace_id leaks one request’s identity into another under concurrency. Use the runtime or SDK’s context model and test concurrent requests."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain where a trace header belongs in a React → API → worker journey. Identify which security checks it cannot replace.",
+        "solution": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Injection and extraction are both named.",
+          "Concurrent request ownership is preserved.",
+          "Trace metadata is not authorisation."
+        ]
+      },
+      "quiz": {
+        "question": "What does a trace ID establish?",
+        "options": [
+          "Correlation between recorded work.",
+          "The caller’s permission to read records.",
+          "The authenticity of every HTTP header."
+        ],
+        "correct": 0,
+        "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry context propagation",
+          "url": "https://opentelemetry.io/docs/concepts/context-propagation/",
+          "section": "Context propagation; W3C Trace Context; baggage",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "cardinality",
+      "title": "9. Cardinality, labels and cost",
+      "takeaway": "A metric label multiplies time series rather than attaching free context.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Every unique label combination creates a series in many metric systems. Three routes, five status classes and four instances can create up to 60 combinations before adding more labels. Adding a user ID with thousands of values creates a far larger and continuously changing set.",
+            "Prefer bounded route templates, service names and coarse approved outcomes for metrics. Keep high-cardinality request identifiers in traces or logs with appropriate access and retention. Estimate the product of label cardinalities and consider churn, bucket count and scrape frequency when budgeting storage."
+          ],
+          "example": "3 route templates × 5 status classes × 4 instances = up to 60 label combinations\nAn extra 10,000 user IDs could multiply that to 600,000."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Hashing a user ID does not reduce cardinality; unique hashes still create unique series. It may also remain personal data depending on the context."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Estimate the series combinations for 8 routes, 6 instances and 4 outcomes. Propose a safe way to investigate one request.",
+        "solution": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The cardinality product is calculated.",
+          "Unbounded identifiers are excluded from metrics.",
+          "Histogram bucket multiplication is considered."
+        ]
+      },
+      "quiz": {
+        "question": "Does hashing a unique ID solve metric cardinality?",
+        "options": [
+          "No; unique hashes still create distinct label values.",
+          "Yes; all hashes become one time series.",
+          "Only if the hash is printed in hexadecimal."
+        ],
+        "correct": 0,
+        "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Prometheus metric naming",
+          "url": "https://prometheus.io/docs/practices/naming/",
+          "section": "Labels; avoid high-cardinality labels",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "histogram-buckets",
+      "title": "10. Histogram buckets and aggregation",
+      "takeaway": "Bucket boundaries determine which questions a histogram can answer.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A classic histogram counts observations in cumulative buckets. If the objective is completion under 300 ms, a bucket at 0.3 seconds can directly support that threshold ratio. Buckets too coarse around the boundary make quantile estimates less precise. More buckets consume more series and processing resources.",
+            "Aggregate compatible bucket counts across instances before deriving a service-level quantile. Keep units and boundaries consistent; mixing seconds and milliseconds creates meaningless results. Different systems also offer native histograms, whose representation and configuration should be studied separately rather than assumed identical."
+          ],
+          "example": "Buckets seconds: 0.05, 0.1, 0.3, 1.0, +Inf\nCount at <=0.3 divided by total count estimates the observed threshold success fraction."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A p95 derived from buckets is an estimate bounded by the available bucket resolution. Do not present it with unjustified decimal precision."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose buckets for a 200 ms objective with occasional 2 s requests. Explain the tradeoff between resolution and cost.",
+        "solution": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The objective boundary is represented.",
+          "Units are consistent.",
+          "Aggregation precedes quantile derivation."
+        ]
+      },
+      "quiz": {
+        "question": "Why include a bucket at the SLO latency boundary?",
+        "options": [
+          "It directly counts observations meeting that threshold.",
+          "It removes every sampling bias.",
+          "It guarantees that every request is successful."
+        ],
+        "correct": 0,
+        "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Prometheus histograms and summaries",
+          "url": "https://prometheus.io/docs/practices/histograms/",
+          "section": "Histograms; errors of quantile estimation; aggregation",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "sli-slo-budget",
+      "title": "11. SLIs, SLOs and error budgets",
+      "takeaway": "A reliability target starts with an eligible user event and a good outcome.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A service-level indicator measures reliability, for example good requests divided by eligible requests. A service-level objective sets a target over a defined window, such as 99% of eligible imports completing successfully within 300 ms over 30 days. Define exclusions and what a success means before looking at the result.",
+            "The error budget is the permitted bad fraction: a 99% target allows 1% bad events in that window. At 10,000 eligible events, that is 100 bad events. Availability and latency objectives may be separate or combined; state the choice. A contractual SLA adds consequences and is not synonymous with an internal SLO."
+          ],
+          "example": "10,000 eligible events; 130 bad events\nSLI = 98.7%; allowed bad = 100 at 99% SLO\nBudget consumption = 130/100 = 130%"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Do not silently exclude inconvenient failures to meet a target. Exclusions need a documented user-focused rationale and consistent denominator."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Define an import SLO and calculate budget use for 20,000 events, 60 bad events and a 99.5% target.",
+        "solution": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Good and eligible are defined.",
+          "Window and target are explicit.",
+          "Budget arithmetic uses matching events."
+        ]
+      },
+      "quiz": {
+        "question": "At a 99.5% target, what bad fraction is allowed?",
+        "options": [
+          "0.5%.",
+          "99.5%.",
+          "5%."
+        ],
+        "correct": 0,
+        "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Google SRE implementing SLOs",
+          "url": "https://sre.google/workbook/implementing-slos/",
+          "section": "Choosing SLIs; SLOs and error budgets",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "burn-rate-alerts",
+      "title": "12. Alerts that correspond to action",
+      "takeaway": "An alert should indicate user impact and name a useful response.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Burn rate compares the observed bad-event fraction with the permitted fraction. At a 99% target, a 5% bad fraction burns budget at five times the allowed rate. Short windows detect rapid impact; longer windows reduce noise and reveal sustained degradation. Multi-window approaches can require both to avoid paging on a tiny transient spike.",
+            "A page should demand an immediate response and have an owner and runbook. A ticket can address slower trends. Record low-traffic behaviour, missing telemetry and maintenance handling. An alert that nobody can act on trains people to ignore it, so review alert usefulness after incidents."
+          ],
+          "example": "SLO bad allowance = 1%; observed bad = 5%\nBurn rate = 5\nResponse: check affected route and release, then dependency saturation; rollback if supported by evidence."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Threshold arithmetic alone does not prove a paging policy is good. Test it against historical or synthetic windows, including zero traffic and missing data."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design one page and one ticket for an import service. Include a response owner and zero-traffic behaviour.",
+        "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Each alert has an action and owner.",
+          "Low traffic and missing data are distinct.",
+          "Windows match urgency."
+        ]
+      },
+      "quiz": {
+        "question": "What is burn rate when 4% is bad against a 1% allowance?",
+        "options": [
+          "4.",
+          "0.25.",
+          "400 requests per second."
+        ],
+        "correct": 0,
+        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Google SRE alerting on SLOs",
+          "url": "https://sre.google/workbook/alerting-on-slos/",
+          "section": "Burn rate; multiple windows; low-traffic services",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "sampling-retention",
+      "title": "13. Sampling and retention limits",
+      "takeaway": "Reduced data volume changes which questions remain answerable.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Head sampling decides whether to retain a trace early, usually before its outcome is known. Tail sampling can examine completed traces and keep interesting results such as errors, but needs buffering and coordination. Both choices have cost and bias implications. Metrics are often aggregated independently of trace sampling.",
+            "Record sampling policy, retention and export loss before interpreting absence. No error trace does not prove no errors occurred. A small sample may miss rare slow requests. Avoid multiplying one unusual sampled trace into a precise error-rate claim; use appropriately scoped aggregate measurements for rates."
+          ],
+          "example": "10% head sample: a rare failure may be omitted\nTail policy: retain errors plus selected normal traces\nMetrics: independent eligible-event counter remains the denominator"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A tail sampler cannot retain a trace it never receives. Upstream head sampling or export drops can limit it before the policy runs."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose a trace policy for a busy service while preserving reliable failure-rate measurement. State what absence of a trace means.",
+        "solution": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Sampling policy is visible.",
+          "Metrics and trace evidence are not conflated.",
+          "Retention and dropped data are considered."
+        ]
+      },
+      "quiz": {
+        "question": "What does no retained error trace prove?",
+        "options": [
+          "Only that none was found in the retained trace data.",
+          "That the service had no errors.",
+          "That all clients received responses."
+        ],
+        "correct": 0,
+        "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry sampling",
+          "url": "https://opentelemetry.io/docs/concepts/sampling/",
+          "section": "Head sampling and tail sampling",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "benchmark-design",
+      "title": "14. Benchmark a hypothesis rather than a favourite optimisation",
+      "takeaway": "A useful benchmark holds correctness and workload constant.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "State a hypothesis such as A dictionary lookup reduces repeated record-search time for this workload. Define input size, operation mix and what counts as a correct answer. Compare implementations on identical input and verify results before timing. Warm up both paths, repeat measurements and report distributions rather than one best run.",
+            "Use a monotonic timer and separate setup from the measured operation when the question concerns lookup time. Also measure end-to-end cost if index construction occurs for every request. Run one variable change at a time and record runtime, machine, background load and command. Local measurements describe that environment."
+          ],
+          "example": "Lookup-only question: time searches after index exists\nEnd-to-end question: time index construction plus searches\nBoth implementations must return identical results."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A benchmark that omits new setup costs can make a slower real workflow look faster. Keep the claim tied to the boundary actually measured."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Run benchmark.py and compare linear and indexed lookups. Explain when including index construction might change the conclusion.",
+        "solution": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Correctness is verified before timing.",
+          "Measured boundaries are stated.",
+          "Results are environment-specific."
+        ]
+      },
+      "quiz": {
+        "question": "What must be checked before comparing timings?",
+        "options": [
+          "Both implementations produce equivalent correct results.",
+          "The faster code has fewer characters.",
+          "Only the best run from one implementation."
+        ],
+        "correct": 0,
+        "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Python time module",
+          "url": "https://docs.python.org/3/library/time.html",
+          "section": "perf_counter; elapsed wall-clock measurement",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "profiling",
+      "title": "15. Profiling CPU work and waiting",
+      "takeaway": "A profile locates cost within a workload; it does not replace workload definition.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool’s overhead.",
+            "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than a individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
+          ],
+          "example": "python -m cProfile -s cumulative benchmark.py\nInspect total vs cumulative attribution and call counts.\nDo not add cumulative times of parents and children."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Instrumentation can perturb timing. Use the profiler to locate candidates, then benchmark the change without profiling overhead for the performance claim."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Profile the supplied benchmark. Identify which function dominates the linear path and propose one measurement to validate a change.",
+        "solution": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately.",
+        "solutionFormat": "prose",
+        "checks": [
+          "CPU and elapsed waiting are distinguished.",
+          "Parent/child attribution is not summed.",
+          "A candidate change is remeasured."
+        ]
+      },
+      "quiz": {
+        "question": "Why benchmark after profiling?",
+        "options": [
+          "To evaluate the change without confusing profiler overhead with application cost.",
+          "Because profiles prove correctness automatically.",
+          "Because the slowest single call is always the best target."
+        ],
+        "correct": 0,
+        "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Python time module",
+          "url": "https://docs.python.org/3/library/time.html",
+          "section": "perf_counter; local elapsed measurement (profiling command is a lab extension)",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        },
+        {
+          "title": "Python deterministic profilers",
+          "url": "https://docs.python.org/3/library/profile.html",
+          "section": "Instant User Manual; profiler overhead note",
+          "reviewed": "2026-09-30",
+          "scope": "Python standard-library cProfile; profiling and benchmark boundaries differ. Primary page checked; local commands executed separately."
+        }
+      ]
+    },
+    {
+      "id": "memory-diagnostics",
+      "title": "16. Memory allocation, retention and leaks",
+      "takeaway": "Allocation volume differs from memory that remains retained.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A program may allocate many temporary objects without leaking them. A leak-like problem occurs when objects remain reachable beyond their intended lifetime, or external resources are not released. Compare snapshots across a controlled workload and inspect retained references rather than assuming every peak increase is a leak.",
+            "Python tracemalloc tracks allocations in Python’s managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
+          ],
+          "example": "tracemalloc.start()\nbefore = tracemalloc.take_snapshot()\n# execute controlled workload\nafter = tracemalloc.take_snapshot()\n# compare by source location; explain tracked-domain limits"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "RSS, managed heap size and tracemalloc totals describe different boundaries. Do not compare them as if they were the same metric or call a one-time high-water mark a proven leak."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design a repeated import memory experiment with and without retaining processed rows. Specify the limitations of tracemalloc.",
+        "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Retained and temporary memory are distinguished.",
+          "Comparable workloads are repeated.",
+          "The measurement domain is stated."
+        ]
+      },
+      "quiz": {
+        "question": "Does tracemalloc measure all process memory?",
+        "options": [
+          "No; its tracked allocations are not a complete RSS measurement.",
+          "Yes; it includes all operating-system caches.",
+          "Only when output is formatted as JSON."
+        ],
+        "correct": 0,
+        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Python allocation tracing",
+          "url": "https://docs.python.org/3/library/tracemalloc.html",
+          "section": "Snapshot comparison; tracked allocations; current and peak size",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "load-models",
+      "title": "17. Load tests, concurrency and coordinated omission",
+      "takeaway": "The load generator is part of the experiment and can distort it.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator’s capacity. Neither is automatically representative; choose according to the real workload.",
+            "Coordinated omission occurs when delays suppress observations that would have arrived during the delay. Record offered and achieved rate, concurrency, client errors and latency. Do not run uncontrolled tests against systems you do not own or have permission to test. The supplied lab targets loopback only and has bounded counts and timeouts."
+          ],
+          "example": "Closed loop: 4 workers wait for each response before sending next\nReport: completed count / elapsed seconds, errors, percentile estimator\nThis is not a constant-arrival-rate production capacity test."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "A local test can reveal concurrency and waiting behaviour, but cannot establish internet performance, distributed scale or production safety. The generator can become the bottleneck."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Run the loopback service and load.py for both healthy and injected-slow profiles. Explain why achieved rate may fall.",
+        "solution": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Load model is named.",
+          "Offered and achieved demand are distinguished.",
+          "Only the documented local target is used."
+        ]
+      },
+      "quiz": {
+        "question": "What happens to offered rate in a fixed-worker closed-loop test as responses slow?",
+        "options": [
+          "It generally decreases because workers wait longer.",
+          "It remains a guaranteed constant arrival rate.",
+          "It automatically proves infinite capacity."
+        ],
+        "correct": 0,
+        "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "MDN understanding latency",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
+          "section": "Network and processing latency; lab closed-loop model",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        },
+        {
+          "title": "wrk2 load-generation design",
+          "url": "https://github.com/giltene/wrk2",
+          "section": "Correcting coordinated omission; constant throughput",
+          "reviewed": "2026-09-30",
+          "scope": "Primary implementation documentation explains constant-throughput and coordinated-omission concerns. This kit uses a bounded closed-loop client, not wrk2."
+        }
+      ]
+    },
+    {
+      "id": "queues-capacity",
+      "title": "18. Queues, backpressure and capacity",
+      "takeaway": "A growing queue means work arrives faster than it is being completed.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "A queue absorbs temporary bursts but also creates waiting time and memory pressure. If arrival rate exceeds completion capacity for long enough, backlog grows until a limit is reached. Bound queues, reject or defer work deliberately, and expose queue depth, age and waiting time rather than only worker CPU.",
+            "Little’s law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
+          ],
+          "example": "Stable average arrival 20 jobs/s × average time in system 0.5 s = 10 jobs in system\nIf service falls below arrivals persistently, do not treat this stable relation as a capacity guarantee."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Increasing worker count can saturate the database and worsen latency. Measure the downstream limit and use backpressure rather than adding concurrency blindly."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A queue receives 30 jobs/s while workers finish 25 jobs/s. Calculate backlog growth over one minute before limits or changing rates.",
+        "solution": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Rate units and boundaries match.",
+          "Queue limits and overflow are explicit.",
+          "Downstream capacity is considered."
+        ]
+      },
+      "quiz": {
+        "question": "What does a persistent arrival rate above completion rate imply?",
+        "options": [
+          "Backlog growth until rates change or a limit intervenes.",
+          "Guaranteed low latency because a queue exists.",
+          "Automatic improvement from more client retries."
+        ],
+        "correct": 0,
+        "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Google SRE monitoring distributed systems",
+          "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+          "section": "Saturation; latency and traffic interpretation",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        },
+        {
+          "title": "Google SRE handling overload",
+          "url": "https://sre.google/sre-book/handling-overload/",
+          "section": "Queue management; load shedding",
+          "reviewed": "2026-09-30",
+          "scope": "Conceptual overload and queue policy guidance; no production capacity claim."
+        },
+        {
+          "title": "MIT Urban Operations Research — Little’s formula",
+          "url": "https://web.mit.edu/urban_or_book/www/book/chapter4/4.4.html",
+          "section": "Section 4.4, equations 4.8–4.10",
+          "reviewed": "2026-09-30",
+          "scope": "Average queueing quantities require corresponding boundaries and existence of long-run limits; not a transient capacity guarantee."
+        }
+      ]
+    },
+    {
+      "id": "frontend-database",
+      "title": "19. Follow performance across browser and database",
+      "takeaway": "A slow user journey can cross several independently measured boundaries.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Browser performance includes transport, parsing, rendering and interaction response. A fast API does not guarantee a fast visible result if the browser renders thousands of rows. Database work can include connection wait, query execution, result transfer and application decoding; instrument those boundaries where possible.",
+            "Use a correlation ID to connect user-visible timing with the API trace. Inspect the query plan and data volume in the SQL path, and profile React rendering in the frontend path. Optimisations such as pagination or indexes can change correctness, ordering and memory behaviour, so validate functional results alongside timing."
+          ],
+          "example": "User action 600 ms = network + API processing + browser update (overlap possible)\nAPI query span 80 ms does not explain an extra 400 ms render by itself."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Do not optimise the database simply because it is familiar. Locate the observed delay first, then make one change and compare the same task and data set."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design evidence to distinguish slow query execution from slow table rendering in a study dashboard.",
+        "solution": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The user-visible boundary is measured.",
+          "Related evidence uses a correlation ID.",
+          "Correctness is checked after optimisation."
+        ]
+      },
+      "quiz": {
+        "question": "What should guide the first optimisation?",
+        "options": [
+          "The measured bottleneck in the actual user journey.",
+          "The team’s favourite subsystem.",
+          "The shortest function in the codebase."
+        ],
+        "correct": 0,
+        "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "MDN understanding latency",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
+          "section": "Latency contributors and processing boundaries",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "incident-runbook",
+      "title": "20. Incident investigation and recovery",
+      "takeaway": "Recovery decisions should use a timeline, user impact and testable hypotheses.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "During an incident, first establish impact, start time and affected operations. Compare the change timeline with traffic, errors, latency and saturation. Form hypotheses that predict evidence, such as A release changed query shape, and test them against traces, logs and dependency measurements.",
+            "A runbook names owner, dashboards, safe checks, rollback conditions and escalation. Preserve a timeline of decisions and evidence. Recovery can precede complete root-cause analysis; record why the action was chosen and confirm user outcomes improved. A post-incident review should identify contributing conditions and prevention work rather than blaming one person."
+          ],
+          "example": "12:00 release deployed\n12:03 import p95 rises; pool waits rise\n12:06 rollback selected after comparing query spans\n12:09 latency and failures recover; verify backlog drains"
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "Correlation with a release is a clue, not proof. Unrelated traffic growth or a dependency incident may coincide; inspect discriminating evidence and test recovery effects."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a runbook for the injected-slow lab profile and a short evidence timeline. Name one unsupported conclusion to avoid.",
+        "solution": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Actions have evidence and owners.",
+          "Recovery is remeasured.",
+          "The simulated cause is not presented as production proof."
+        ]
+      },
+      "quiz": {
+        "question": "What makes a hypothesis useful during investigation?",
+        "options": [
+          "It predicts evidence that can distinguish it from alternatives.",
+          "It sounds confident.",
+          "It always blames the most recent author."
+        ],
+        "correct": 0,
+        "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "Google SRE monitoring distributed systems",
+          "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+          "section": "Monitoring causes and symptoms; useful monitoring",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        }
+      ]
+    },
+    {
+      "id": "telemetry-release",
+      "title": "21. Telemetry pipelines, reliability and release evidence",
+      "takeaway": "Observability has its own failure modes and operating costs.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the mechanism",
+          "paragraphs": [
+            "Instrumentation emits data, a collector or agent processes it, and a backend stores and queries it. Export can fail, queues can overflow and backends can lag. Monitor dropped telemetry, pipeline delay and resource use. Choose whether failures block application work or degrade telemetry, and document that policy.",
+            "Before release, verify safe field handling, signal boundaries, correlation, alert actions and storage costs. Run a known fault and confirm it appears in the intended signals. Preserve evidence of which paths were executed. The included standard-library lab emits local JSON records and duration summaries; it does not install a collector, exporter or real paging system."
+          ],
+          "example": "Application → telemetry processing → storage → query/alert\nFailure branch: export timeout → bounded buffer or drop policy → loss metric\nApplication user path must remain explicitly designed."
+        },
+        {
+          "title": "Apply it deliberately",
+          "paragraphs": [
+            "More instrumentation can increase overhead and expose data. Measure the cost of the chosen instrumentation and verify that failure handling does not silently change user outcomes."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a release evidence matrix separating local lab checks, collector integration and production operation.",
+        "solution": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Telemetry failure behaviour is explicit.",
+          "Executed checks are separated from extensions.",
+          "Data and cost limits are documented."
+        ]
+      },
+      "quiz": {
+        "question": "What does the bundled loopback lab prove?",
+        "options": [
+          "Its local timing and analysis behaviour under the tested workload.",
+          "A production OpenTelemetry pipeline is operating correctly.",
+          "Every real alert reaches an on-call engineer."
+        ],
+        "correct": 0,
+        "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan. The other choices miss the decision or assumption described above."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry security",
+          "url": "https://opentelemetry.io/docs/security/",
+          "section": "Security of telemetry pipelines and components",
+          "reviewed": "2026-09-30",
+          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        },
+        {
+          "title": "Python http.server documentation",
+          "url": "https://docs.python.org/3/library/http.server.html",
+          "section": "Security considerations; ThreadingHTTPServer",
+          "reviewed": "2026-09-30",
+          "scope": "Standard-library HTTP server for local teaching only; not recommended for production."
+        }
+      ]
+    }
+  ]
+}

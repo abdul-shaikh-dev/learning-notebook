@@ -1,0 +1,383 @@
+{
+  "etl-and-elt": {
+    "title": "From source evidence to a useful report",
+    "summary": "The local baseline validates a bounded source before transactional loading and reconciliation. Publishing depends on the correctness checks.",
+    "nodes": [
+      {
+        "id": "source",
+        "label": "Fictional CSV",
+        "description": "Raw source bytes and contract."
+      },
+      {
+        "id": "valid",
+        "label": "Contract checks",
+        "description": "Headers, types, limits and UTC instants."
+      },
+      {
+        "id": "target",
+        "label": "Transactional orders",
+        "description": "Business effects plus batch identity."
+      },
+      {
+        "id": "check",
+        "label": "Reconciliation",
+        "description": "Keys, counts and integer totals."
+      },
+      {
+        "id": "report",
+        "label": "Daily report",
+        "description": "UTC-day totals with stated scope."
+      }
+    ],
+    "edges": [
+      {
+        "from": "source",
+        "to": "valid",
+        "label": "parse"
+      },
+      {
+        "from": "valid",
+        "to": "target",
+        "label": "accepted batch"
+      },
+      {
+        "from": "target",
+        "to": "check",
+        "label": "query"
+      },
+      {
+        "from": "check",
+        "to": "report",
+        "label": "verified output"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Parse",
+        "activeNodes": [
+          "source",
+          "valid"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Raw source bytes and contract. Headers, types, limits and UTC instants."
+      },
+      {
+        "title": "Accepted batch",
+        "activeNodes": [
+          "valid",
+          "target"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Headers, types, limits and UTC instants. Business effects plus batch identity."
+      },
+      {
+        "title": "Query",
+        "activeNodes": [
+          "target",
+          "check"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Business effects plus batch identity. Keys, counts and integer totals."
+      },
+      {
+        "title": "Verified output",
+        "activeNodes": [
+          "check",
+          "report"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Keys, counts and integer totals. UTC-day totals with stated scope."
+      }
+    ],
+    "direction": "LR"
+  },
+  "idempotency-and-replay": {
+    "title": "One batch identity, one intended effect",
+    "summary": "Same ID plus same byte fingerprint reuses the completed result; changed payload conflicts. Marker and orders commit together.",
+    "nodes": [
+      {
+        "id": "batch",
+        "label": "Batch ID + fingerprint",
+        "description": "Identifies the exact intended input."
+      },
+      {
+        "id": "lookup",
+        "label": "Stored run",
+        "description": "Lookup within transactional boundary.",
+        "shape": "decision"
+      },
+      {
+        "id": "commit",
+        "label": "Commit orders + marker",
+        "description": "New batch writes both effects.",
+        "shape": "database"
+      },
+      {
+        "id": "reuse",
+        "label": "Replay result",
+        "description": "Identical completed intent does not add orders."
+      },
+      {
+        "id": "conflict",
+        "label": "Conflict",
+        "description": "Different content under same ID is rejected."
+      }
+    ],
+    "edges": [
+      {
+        "from": "batch",
+        "to": "lookup",
+        "label": "check identity"
+      },
+      {
+        "from": "lookup",
+        "to": "commit",
+        "label": "new ID"
+      },
+      {
+        "from": "lookup",
+        "to": "reuse",
+        "label": "same fingerprint"
+      },
+      {
+        "from": "lookup",
+        "to": "conflict",
+        "label": "different fingerprint"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Check identity",
+        "activeNodes": [
+          "batch",
+          "lookup"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Identifies the exact intended input. Lookup within transactional boundary."
+      },
+      {
+        "title": "New id",
+        "activeNodes": [
+          "lookup",
+          "commit"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Lookup within transactional boundary. New batch writes both effects."
+      },
+      {
+        "title": "Same fingerprint",
+        "activeNodes": [
+          "lookup",
+          "reuse"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Lookup within transactional boundary. Identical completed intent does not add orders."
+      },
+      {
+        "title": "Different fingerprint",
+        "activeNodes": [
+          "lookup",
+          "conflict"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Lookup within transactional boundary. Different content under same ID is rejected."
+      }
+    ],
+    "direction": "TB"
+  },
+  "joins-and-dimensional-models": {
+    "title": "A nonunique dimension multiplies facts",
+    "summary": "Two orders joined to two customer matches create four joined rows. Validate cardinality before aggregation.",
+    "nodes": [
+      {
+        "id": "orders",
+        "label": "2 order facts",
+        "description": "Amounts 1250 and 750 cents."
+      },
+      {
+        "id": "dimension",
+        "label": "2 c1 dimension matches",
+        "description": "Join key is incorrectly nonunique for this rule."
+      },
+      {
+        "id": "joined",
+        "label": "4 joined rows",
+        "description": "Each order matches twice."
+      },
+      {
+        "id": "sum",
+        "label": "Incorrect total 4000",
+        "description": "Expected source total remains 2000 cents."
+      }
+    ],
+    "edges": [
+      {
+        "from": "orders",
+        "to": "joined",
+        "label": "facts"
+      },
+      {
+        "from": "dimension",
+        "to": "joined",
+        "label": "multiple matches"
+      },
+      {
+        "from": "joined",
+        "to": "sum",
+        "label": "sum duplicated amounts"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Facts",
+        "activeNodes": [
+          "orders",
+          "joined"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Amounts 1250 and 750 cents. Each order matches twice."
+      },
+      {
+        "title": "Multiple matches",
+        "activeNodes": [
+          "dimension",
+          "joined"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Join key is incorrectly nonunique for this rule. Each order matches twice."
+      },
+      {
+        "title": "Sum duplicated amounts",
+        "activeNodes": [
+          "joined",
+          "sum"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Each order matches twice. Expected source total remains 2000 cents."
+      }
+    ],
+    "direction": "TB"
+  },
+  "dag-and-orchestration": {
+    "title": "Publication waits for reconciliation",
+    "summary": "Dependencies specify eligibility, not cross-task atomicity. Each task must handle retries according to its effects.",
+    "nodes": [
+      {
+        "id": "extract",
+        "label": "Extract",
+        "description": "Acquire bounded source."
+      },
+      {
+        "id": "validate",
+        "label": "Validate",
+        "description": "Apply the contract."
+      },
+      {
+        "id": "load",
+        "label": "Load",
+        "description": "Commit target transaction."
+      },
+      {
+        "id": "reconcile",
+        "label": "Reconcile",
+        "description": "Compare keys/counts/totals."
+      },
+      {
+        "id": "publish",
+        "label": "Publish",
+        "description": "Expose accepted output."
+      }
+    ],
+    "edges": [
+      {
+        "from": "extract",
+        "to": "validate",
+        "label": "source ready"
+      },
+      {
+        "from": "validate",
+        "to": "load",
+        "label": "contract satisfied"
+      },
+      {
+        "from": "load",
+        "to": "reconcile",
+        "label": "commit complete"
+      },
+      {
+        "from": "reconcile",
+        "to": "publish",
+        "label": "checks pass"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Source ready",
+        "activeNodes": [
+          "extract",
+          "validate"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Acquire bounded source. Apply the contract."
+      },
+      {
+        "title": "Contract satisfied",
+        "activeNodes": [
+          "validate",
+          "load"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Apply the contract. Commit target transaction."
+      },
+      {
+        "title": "Commit complete",
+        "activeNodes": [
+          "load",
+          "reconcile"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Commit target transaction. Compare keys/counts/totals."
+      },
+      {
+        "title": "Checks pass",
+        "activeNodes": [
+          "reconcile",
+          "publish"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Compare keys/counts/totals. Expose accepted output."
+      }
+    ],
+    "direction": "TB"
+  }
+}

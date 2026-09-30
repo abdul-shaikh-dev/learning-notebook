@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {decodeTask,request} from './planner-api.ts';
+const valid={id:'aabbccdd-1234-1234-1234-123456789abc',title:'SQL',minutes:0,done:false,version:1};
+assert.deepEqual(decodeTask(valid),valid);
+for(const change of [{minutes:true},{minutes:1.5},{minutes:1441},{title:' '},{version:0},{done:0},{id:'bad'}])assert.throws(()=>decodeTask({...valid,...change}));
+globalThis.fetch=async()=>new Response('{}',{status:409,headers:{'Content-Type':'application/json'}});
+await assert.rejects(request(''),/Another edit won/);
+globalThis.fetch=async()=>new Response('<html>',{status:200,headers:{'Content-Type':'text/html'}});
+await assert.rejects(request(''),/Expected JSON/);
+console.log('PASS: response types, boundaries, conflicts and media type');

@@ -1,0 +1,1146 @@
+{
+  "id": "full-stack-journey",
+  "title": "Full-Stack Project Journey",
+  "category": "Applied projects",
+  "status": "ready",
+  "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
+  "level": "Guided foundation project → intermediate integration → advanced extensions",
+  "prerequisites": [
+    "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
+    "Install .NET 10 SDK, Node 24/npm and Python 3.11+; SQL Server/SSMS is required for the persistence milestone."
+  ],
+  "setup": [
+    "Open the complete task bundle beside any lesson; extract into a new directory and keep all files together.",
+    "Follow README.md for separate API/frontend terminals and the optional owned SQL database.",
+    "Use synthetic data on loopback; the baseline has no authentication and is not a public hosting artifact."
+  ],
+  "outcomes": [
+    "Create an accessible form, HTTP contract and complete memory-backed feature.",
+    "Use SQL Server, atomic expected-version updates and a tested retry design.",
+    "Assemble tests, diagnostics, a release plan and recovery evidence."
+  ],
+  "nextSteps": [
+    "Build the filtering, idempotency and verified ownership extensions in milestones.md with new tests.",
+    "Use the UI, observability, messaging and cloud paths to extend the same application after the baseline is understood."
+  ],
+  "sources": [
+    {
+      "title": "ASP.NET Core Minimal APIs",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0"
+    },
+    {
+      "title": "React: managing state",
+      "url": "https://react.dev/learn/managing-state"
+    },
+    {
+      "title": "React: synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects"
+    },
+    {
+      "title": "Microsoft.Data.SqlClient",
+      "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17"
+    },
+    {
+      "title": "EF Core: concurrency conflicts",
+      "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency"
+    },
+    {
+      "title": "ASP.NET Core: protect user data",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-10.0"
+    },
+    {
+      "title": "ASP.NET Core integration tests",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0"
+    },
+    {
+      "title": "ASP.NET Core CORS",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0"
+    },
+    {
+      "title": "OpenTelemetry signals",
+      "url": "https://opentelemetry.io/docs/concepts/signals/"
+    },
+    {
+      "title": "Google SRE: release engineering",
+      "url": "https://sre.google/sre-book/release-engineering/"
+    },
+    {
+      "title": "SQL Server backup and restore",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases?view=sql-server-ver17"
+    },
+    {
+      "title": "WAI: form instructions",
+      "url": "https://www.w3.org/WAI/tutorials/forms/instructions/"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Build one vertical slice",
+      "description": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+      "exitCriteria": [
+        "Demonstrate a valid add and completion through React and .NET.",
+        "Reject malformed data while preserving the draft.",
+        "Explain refresh versus process restart."
+      ],
+      "project": {
+        "title": "Build one vertical slice — study planner",
+        "brief": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+        "requirements": [
+          "Demonstrate a valid add and completion through React and .NET.",
+          "Reject malformed data while preserving the draft.",
+          "Explain refresh versus process restart.",
+          "Use the milestone workbook and record the observed result before comparing the reference."
+        ],
+        "rubric": [
+          "Demonstrate a valid add and completion through React and .NET.",
+          "Reject malformed data while preserving the draft.",
+          "Explain refresh versus process restart.",
+          "Explain each remaining boundary and identify the exact task files."
+        ],
+        "solution": "Start the supplied API in memory mode and the Vite frontend. Observe POST 201, PUT 200/version 2, rejected malformed inputs and retained drafts. Add your own filtering behavior and independent tests."
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Persist and resolve conflicts",
+      "description": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+      "exitCriteria": [
+        "Show persisted IDs after API restart.",
+        "Prove one winner and one stale conflict.",
+        "Specify atomic idempotent creation and ownership boundaries."
+      ],
+      "project": {
+        "title": "Persist and resolve conflicts — study planner",
+        "brief": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+        "requirements": [
+          "Show persisted IDs after API restart.",
+          "Prove one winner and one stale conflict.",
+          "Specify atomic idempotent creation and ownership boundaries.",
+          "Use the milestone workbook and record the observed result before comparing the reference."
+        ],
+        "rubric": [
+          "Show persisted IDs after API restart.",
+          "Prove one winner and one stale conflict.",
+          "Specify atomic idempotent creation and ownership boundaries.",
+          "Explain each remaining boundary and identify the exact task files."
+        ],
+        "solution": "Run schema.sql in an owned database; configure PlannerConnection and verify sql-server mode. Exercise two competing expected-version writes, read back version 2 and prove restart persistence. Implement idempotency as a separate atomic transaction with new tests."
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Verify, operate and defend",
+      "description": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+      "exitCriteria": [
+        "Separate browser, HTTP and SQL evidence.",
+        "Explain authentication and deployment extensions honestly.",
+        "Defend a recovery plan with measured results where executed."
+      ],
+      "project": {
+        "title": "Verify, operate and defend — study planner",
+        "brief": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+        "requirements": [
+          "Separate browser, HTTP and SQL evidence.",
+          "Explain authentication and deployment extensions honestly.",
+          "Defend a recovery plan with measured results where executed.",
+          "Use the milestone workbook and record the observed result before comparing the reference."
+        ],
+        "rubric": [
+          "Separate browser, HTTP and SQL evidence.",
+          "Explain authentication and deployment extensions honestly.",
+          "Defend a recovery plan with measured results where executed.",
+          "Explain each remaining boundary and identify the exact task files."
+        ],
+        "solution": "Run decoder and real HTTP checks, record manual keyboard/browser results and optional SQL restore evidence. Add verified identity/owner predicates before public exposure; package a reproducible release and state unexecuted provider/deployment checks."
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": "scope",
+      "title": "1. Define the product and its boundaries",
+      "stage": "foundation",
+      "takeaway": "A journey starts with a user outcome, not a list of frameworks.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "A learner wants to plan a study session, see it after refresh and mark it complete. A session is one record with a title, planned minutes, completion flag and version. Keep scheduling, payments, AI suggestions and multi-user sharing out of the first slice so success can be observed in minutes."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime. Name these boundaries before running anything."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write three acceptance statements for adding and completing a session. Include a rejected input and state what the local reference does not promise.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which statement is directly testable?",
+        "options": [
+          "A learner can create a 25-minute session and see it listed.",
+          "The application is enterprise ready.",
+          "The architecture uses modern tools."
+        ],
+        "correct": 0,
+        "explanation": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core Minimal APIs",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+          "section": "Route handlers, parameter binding and responses",
+          "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "workspace",
+      "title": "2. Make the downloaded project reproducible",
+      "stage": "foundation",
+      "takeaway": "Keep the files together and check tool versions before debugging application behavior.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "The complete practice ZIP is flat: Planner.csproj and Program.cs form the API, App.tsx and main.tsx form the UI, and schema.sql is the database migration. package-lock.json pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Create a setup note that distinguishes the notebook host, UI development server and API process.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which tool uses the lockfile for a repeatable install?",
+        "options": [
+          "npm ci",
+          "A browser refresh",
+          "SQL Server Management Studio"
+        ],
+        "correct": 0,
+        "explanation": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md."
+      },
+      "references": [
+        {
+          "title": "Google SRE: release engineering",
+          "url": "https://sre.google/sre-book/release-engineering/",
+          "section": "Reproducible builds and release process",
+          "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "3. Follow one request through the stack",
+      "stage": "foundation",
+      "takeaway": "A click changes visible state only after the application has understood its result.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a CreateTask, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "The UI checks HTTP status, media type and response fields before appending the returned task. A 200 HTML error page is not valid task data. The database is behind the API and never receives browser credentials or direct browser SQL. Walk this path in the network panel and explain each observation."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Locate the failure when a reverse proxy returns status 200 with text/html instead of JSON.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Should React connect directly to SQL Server?",
+        "options": [
+          "No; an API owns the data and authorization boundary.",
+          "Yes; the browser can keep the database password private.",
+          "Only when the title field is validated."
+        ],
+        "correct": 0,
+        "explanation": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core Minimal APIs",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+          "section": "Route handlers, parameter binding and responses",
+          "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "contract",
+      "title": "4. Specify the API and its errors",
+      "stage": "foundation",
+      "takeaway": "Types must describe both allowed data and observable failure.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "POST accepts title and minutes. title is trimmed and must contain 1–120 characters; minutes is an integer from 0 through 1440. Server-generated id, done=false and version=1 appear in the result. Unknown request fields are rejected. PUT requires title, minutes, done and expected version; missing done is not silently interpreted as false."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Use 201 for creation, 200 for a successful update/list, 400 for invalid input, 404 for a missing record and 409 for a stale expected version. These choices are the project contract, not universal status rules. Nullable request fields distinguish omitted values from meaningful zero and false."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Predict the result of minutes=0, minutes=true, missing minutes and done=false on a valid PUT.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Why use nullable request fields?",
+        "options": [
+          "To distinguish omission from valid zero or false.",
+          "To skip validation automatically.",
+          "To accept arbitrary JSON types."
+        ],
+        "correct": 0,
+        "explanation": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core Minimal APIs",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+          "section": "Route handlers, parameter binding and responses",
+          "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "data-model",
+      "title": "5. Model a session without ambiguous state",
+      "stage": "foundation",
+      "takeaway": "Database constraints reinforce the contract at the persistence boundary.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "StudyTasks uses a uniqueidentifier primary key, nvarchar(120) title, bounded int minutes, bit done and positive int Version. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server rowversion."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "schema.sql creates the table only if absent in an owned learning database. It never creates or selects a database automatically. CHECK constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why a UI-only minutes check is insufficient and name a check enforced in SQL.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does Version represent here?",
+        "options": [
+          "An application-managed optimistic update counter.",
+          "The current Unix timestamp.",
+          "A database login identifier."
+        ],
+        "correct": 0,
+        "explanation": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express."
+      },
+      "references": [
+        {
+          "title": "Microsoft.Data.SqlClient",
+          "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+          "section": "Provider namespace and compatibility",
+          "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "ui-state",
+      "title": "6. Build an accessible form and honest states",
+      "stage": "foundation",
+      "takeaway": "A retained draft lets a learner recover from failure.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "App.tsx owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and role=status announces asynchronous outcomes without moving focus."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "A failed request leaves the draft unchanged. Clear title only after a decoded creation result. Disable mutation controls while a save is pending, but still handle server rejection because a second client can write. An empty list gets an explicit first-session invitation rather than a blank panel."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Stop the API, submit a valid draft, then inspect what remains in the form.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "When should the title draft be cleared?",
+        "options": [
+          "After a successful, validated create response.",
+          "As soon as the user clicks Add.",
+          "Whenever loading starts."
+        ],
+        "correct": 0,
+        "explanation": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension."
+      },
+      "references": [
+        {
+          "title": "WAI: form instructions",
+          "url": "https://www.w3.org/WAI/tutorials/forms/instructions/",
+          "section": "Labels and instructions",
+          "scope": "Reference form uses native labels and controls; manual keyboard/screen-reader tests still matter.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "first-slice",
+      "title": "7. Run the first complete vertical slice",
+      "stage": "foundation",
+      "takeaway": "Prove one feature across the real browser and API before adding abstractions.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with version=2 and done=true. The reference renders the returned task rather than guessing a server-generated ID."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. This is a useful foundation boundary: the UI is integrated, while durability is intentionally not yet established. Record both behaviors instead of calling refresh a persistence test."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Compare browser refresh with API restart in memory mode.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Does a surviving browser refresh prove SQL persistence?",
+        "options": [
+          "No; process memory can survive a page refresh.",
+          "Yes; browsers only load database-backed values.",
+          "Yes, if the response status is 200."
+        ],
+        "correct": 0,
+        "explanation": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core integration tests",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+          "section": "Test host and integration-test boundary",
+          "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "response-validation",
+      "title": "8. Validate observations at the frontend boundary",
+      "stage": "foundation",
+      "takeaway": "A TypeScript assertion cannot validate unknown network data.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "request returns unknown. decodeTask checks a GUID-shaped ID, title, integer minutes, boolean done and positive integer version before producing a StudyTask. A list additionally checks duplicate IDs because React keys and update targeting assume identity is unique."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run planner-api.test.ts to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Why is response.json() as StudyTask[] insufficient? Write two invalid payloads it could hide.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What performs runtime validation?",
+        "options": [
+          "Explicit decoder checks over unknown values.",
+          "A TypeScript type assertion.",
+          "Naming the variable StudyTask."
+        ],
+        "correct": 0,
+        "explanation": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape."
+      },
+      "references": [
+        {
+          "title": "React: managing state",
+          "url": "https://react.dev/learn/managing-state",
+          "section": "State structure, controlled inputs and reducers",
+          "scope": "React 19 reference UI; state ownership principles apply independently of the build tool.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "title": "9. Load data without publishing obsolete results",
+      "stage": "intermediate",
+      "takeaway": "Effect cleanup bounds which request may update the current screen.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "The initial effect creates an AbortController, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Aborting a fetch is a client-side cancellation signal. It does not prove the server cancelled work, and it cannot undo a committed mutation. Future filter-dependent requests also need stale-result protection when parameters change. Keep GET loading separate from POST submission triggered by a user action."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why POST should not run merely because a component mounted.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What does aborting a mutation guarantee?",
+        "options": [
+          "The client stops awaiting it; server effects may already exist.",
+          "The SQL transaction is rolled back.",
+          "The record can never have been created."
+        ],
+        "correct": 0,
+        "explanation": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears."
+      },
+      "references": [
+        {
+          "title": "React: synchronizing with Effects",
+          "url": "https://react.dev/learn/synchronizing-with-effects",
+          "section": "Fetching data and cleanup",
+          "scope": "Cleanup prevents obsolete observations being published; cancellation cannot guarantee a server mutation was undone.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "sql-setup",
+      "title": "10. Move to an owned SQL Server database",
+      "stage": "intermediate",
+      "takeaway": "Changing storage requires explicit setup and observable confirmation.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Create NotebookPlannerLab as a new dedicated database in SSMS and run schema.sql there. Set PlannerConnection only in the API shell, then restart. /health must report sql-server. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local TrustServerCertificate option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write an observation that proves the UI is using SQL instead of memory.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Where should a database connection string live?",
+        "options": [
+          "Server-side configuration or secret storage.",
+          "A React source constant.",
+          "A URL query parameter sent to every browser."
+        ],
+        "correct": 0,
+        "explanation": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior."
+      },
+      "references": [
+        {
+          "title": "Microsoft.Data.SqlClient",
+          "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+          "section": "Provider namespace and compatibility",
+          "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "parameters",
+      "title": "11. Keep SQL structure separate from values",
+      "stage": "intermediate",
+      "takeaway": "Bind title as data even when it contains SQL-looking text.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "SqlPlanner uses fixed SQL statements and explicitly typed parameters. @title is nvarchar(120), @minutes is int and @id is uniqueidentifier. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user’s records."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Store a title containing an apostrophe and explain why concatenating it into SQL would be risky.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Does parameterization enforce record ownership?",
+        "options": [
+          "No; authorization needs its own trusted principal and predicate.",
+          "Yes; the provider knows the current browser user.",
+          "Only for uniqueidentifier IDs."
+        ],
+        "correct": 0,
+        "explanation": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values."
+      },
+      "references": [
+        {
+          "title": "Microsoft.Data.SqlClient",
+          "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+          "section": "Provider namespace and compatibility",
+          "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "conflicts",
+      "title": "12. Prevent a stale tab from overwriting newer state",
+      "stage": "intermediate",
+      "takeaway": "Expected-version comparison belongs in the atomic write.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; UPDATE WHERE Id=@id AND Version=@version affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "The in-memory adapter locks compare-and-replace; SQL performs the comparison in the update predicate. The UI retains the displayed row and explains Reload and compare. It does not automatically retry with version 2 because that would overwrite another decision without the learner reviewing it."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Run acceptance.py and explain why its two competing writers must produce exactly one 200 and one 409.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which SQL pattern closes the stale-write race?",
+        "options": [
+          "UPDATE with ID and expected version in the same predicate.",
+          "SELECT version, wait, then unconditional UPDATE.",
+          "Disabling the button in one tab."
+        ],
+        "correct": 0,
+        "explanation": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation."
+      },
+      "references": [
+        {
+          "title": "EF Core: concurrency conflicts",
+          "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency",
+          "section": "Optimistic concurrency and SQL predicates",
+          "scope": "Explains expected-version comparison; this lab uses explicit SQL, not EF Core or a SQL rowversion column.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "transactions",
+      "title": "13. Define what must commit together",
+      "stage": "intermediate",
+      "takeaway": "An invariant determines a transaction boundary.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Creating one session is one SQL INSERT, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Use a database transaction around the required writes and test a deliberate failure between them. Keep slow remote calls outside that transaction. SQL rollback can undo SQL writes, but it cannot recall an email already sent. Reliable external effects need a durable outbox and an idempotent consumer."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design an added task-created event without a task/event mismatch.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Can SQL rollback undo an already sent email?",
+        "options": [
+          "No; coordinate external effects through durable workflow design.",
+          "Yes; all application effects belong to the connection.",
+          "Only when XACT_ABORT is enabled."
+        ],
+        "correct": 0,
+        "explanation": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment."
+      },
+      "references": [
+        {
+          "title": "Microsoft.Data.SqlClient",
+          "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+          "section": "Provider namespace and compatibility",
+          "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "retries",
+      "title": "14. Make uncertain creation outcomes explicit",
+      "stage": "intermediate",
+      "takeaway": "A transport failure is not evidence that a write failed.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "The reference POST generates a new ID each time and does not implement idempotency. If SQL commits and the connection breaks before 201 reaches the browser, an automatic retry can create a second session. Keeping a draft is good recovery UX, but it does not solve effect uncertainty."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "For the assessed extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Specify two tests for idempotent creation before implementing it.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What is safe to infer from a timed-out POST?",
+        "options": [
+          "The outcome is uncertain until reconciled.",
+          "No task exists.",
+          "Retry must produce exactly one task without extra design."
+        ],
+        "correct": 0,
+        "explanation": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core integration tests",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+          "section": "Test host and integration-test boundary",
+          "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "identity",
+      "title": "15. Add verified identity and ownership",
+      "stage": "intermediate",
+      "takeaway": "An authenticated caller still needs authorization for each record.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an OwnerId column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Use the Application Security path for OIDC/session validation, token audience/issuer checks and cookie CSRF boundaries. Choose whether foreign IDs return 403 or are concealed as 404, then test that policy with two real accounts. A GUID is a locator, not a permission grant."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Describe the negative test that a happy-path login demo misses.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "May the API trust OwnerId from the request body?",
+        "options": [
+          "No; derive ownership from verified identity.",
+          "Yes; React hides that field.",
+          "Yes; GUIDs are hard to guess."
+        ],
+        "correct": 0,
+        "explanation": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core: protect user data",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-10.0",
+          "section": "Authorization based on ownership",
+          "scope": "Identity/ownership is an assessed extension; anonymous loopback baseline has no authentication.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "browser-boundaries",
+      "title": "16. Separate CORS, sessions and CSRF",
+      "stage": "advanced",
+      "takeaway": "Browser policy is not API authorization.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Vite forwards /api on the UI origin to the API, so the baseline browser request is same-origin. Direct requests from a different origin require an explicitly allowed CORS policy. The API permits only the local development origin, methods and Content-Type header. This does not prevent non-browser clients calling the endpoint."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "If a later deployment uses cookie authentication, consider credentialed origins, SameSite cookie behavior and CSRF tokens for unsafe methods. If using bearer tokens, document token storage and XSS exposure. Avoid allowing every origin with credentials. Test browser behavior separately from curl or Python HTTP behavior."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why acceptance.py cannot prove the frontend CORS policy works.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Does an allowed CORS origin authenticate a caller?",
+        "options": [
+          "No; origin access and caller identity are separate.",
+          "Yes; origins identify users.",
+          "Yes, when the request is JSON."
+        ],
+        "correct": 0,
+        "explanation": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core CORS",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0",
+          "section": "Same-origin policy and middleware",
+          "scope": "Vite proxy baseline is browser same-origin; allowed direct origins are narrow and do not authenticate callers.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "tests",
+      "title": "17. Build evidence across the complete feature",
+      "stage": "advanced",
+      "takeaway": "Choose tests by the boundary they can actually observe.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "planner-api.test.ts tests decoding and HTTP error interpretation without a server. acceptance.py calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "None substitutes for all others. A mocked response cannot establish a SQL predicate, and a server test cannot prove a keyboard user can submit the form. Add independently expected results for your extensions. Keep acceptance fixtures in an isolated learning database because they create synthetic records."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Build an evidence matrix for decoder, HTTP contract, SQL persistence and keyboard access.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Which test proves response decoder boundaries?",
+        "options": [
+          "A malformed response fixture passed through decodeTask.",
+          "A screenshot of a valid list.",
+          "A SQL SELECT count alone."
+        ],
+        "correct": 0,
+        "explanation": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately."
+      },
+      "references": [
+        {
+          "title": "ASP.NET Core integration tests",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+          "section": "Test host and integration-test boundary",
+          "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "observability",
+      "title": "18. Explain a slow or failed request with bounded evidence",
+      "stage": "advanced",
+      "takeaway": "Record useful metadata without leaking drafts or credentials.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "The API logs method, path, status, elapsed milliseconds and a request trace identifier. It deliberately avoids request bodies and connection strings. These local logs help identify an error boundary; they are not a distributed trace because browser/proxy/database spans are not yet correlated."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Extend the project with OpenTelemetry instrumentation and trace context propagation. Define a workload and measure request latency plus successful completion rate. Do not average percentiles from different runs, and do not label planned minutes as measured CPU time. Keep high-cardinality identifiers out of metric labels."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Design a diagnostic record for a failed SQL-backed update.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What should a routine request log exclude?",
+        "options": [
+          "Tokens and complete request bodies.",
+          "A bounded status code.",
+          "Elapsed time units."
+        ],
+        "correct": 0,
+        "explanation": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line."
+      },
+      "references": [
+        {
+          "title": "OpenTelemetry signals",
+          "url": "https://opentelemetry.io/docs/concepts/signals/",
+          "section": "Logs, metrics and traces",
+          "scope": "Baseline logs metadata; distributed tracing and exporters are assessed extensions.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "delivery",
+      "title": "19. Package and promote a tested release",
+      "stage": "advanced",
+      "takeaway": "Build identity connects verification to what actually runs.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Configuration and secrets are supplied at runtime."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "The practice dev proxy is not a production hosting plan. Serve the frontend under a known origin and route /api through a configured proxy or a deliberate CORS boundary. GitHub Pages cannot execute .NET or SQL. Deployment, managed identity and public HTTPS are optional exercises requiring owned infrastructure."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a release checklist with a rollback compatibility question.",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Why promote the same artifact after testing?",
+        "options": [
+          "Its identity preserves the link between tests and deployed bytes.",
+          "It removes the need for configuration.",
+          "It makes database migrations reversible automatically."
+        ],
+        "correct": 0,
+        "explanation": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained."
+      },
+      "references": [
+        {
+          "title": "Google SRE: release engineering",
+          "url": "https://sre.google/sre-book/release-engineering/",
+          "section": "Reproducible builds and release process",
+          "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "title": "20. Recover data and defend the finished project",
+      "stage": "advanced",
+      "takeaway": "A backup becomes recovery evidence only after a successful restore.",
+      "sections": [
+        {
+          "title": "Understand the boundary",
+          "paragraphs": [
+            "In SQL mode, stop/restart persistence is the first durability demonstration. A recovery drill goes further: back up the dedicated database, restore into a new learning database and verify IDs, titles, counts and versions. Measure actual elapsed recovery time and compare with a stated recovery objective."
+          ]
+        },
+        {
+          "title": "Apply it to the study planner",
+          "paragraphs": [
+            "Finish with a review explaining the complete feature and its remaining boundaries. Show a valid add, rejected input, stale conflict, retained draft, SQL restart and tested restore if performed. Distinguish the baseline from your identity/idempotency/release extensions and link each claim to recorded evidence."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "What evidence would support a ten-minute recovery objective?",
+        "checks": [
+          "State your prediction before running or inspecting the reference.",
+          "Compare the actual result with the stated contract and explain any difference."
+        ],
+        "solution": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested.",
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "What is the strongest backup evidence?",
+        "options": [
+          "A tested restore with verified application data.",
+          "A file named backup.bak.",
+          "A green UI screenshot from before the failure."
+        ],
+        "correct": 0,
+        "explanation": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested."
+      },
+      "references": [
+        {
+          "title": "SQL Server backup and restore",
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases?view=sql-server-ver17",
+          "section": "Backup, restore and recovery",
+          "scope": "Owned dedicated learning database only; recovery must be demonstrated by a restore drill.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    }
+  ],
+  "publicFiles": [
+    "practice/acceptance.py",
+    "practice/App.tsx",
+    "practice/index.html",
+    "practice/main.tsx",
+    "practice/milestones.md",
+    "practice/package-lock.json",
+    "practice/package.json",
+    "practice/planner-api.test.ts",
+    "practice/planner-api.ts",
+    "practice/Planner.csproj",
+    "practice/planner.css",
+    "practice/Program.cs",
+    "practice/README.md",
+    "practice/schema.sql",
+    "practice/tsconfig.json",
+    "practice/vite.config.ts",
+    "practice/planner-ui.test.tsx"
+  ],
+  "downloads": [
+    {
+      "title": "Complete full-stack practice kit",
+      "href": "paths/full-stack-journey/practice-bundle.zip"
+    }
+  ]
+}

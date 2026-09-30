@@ -1,0 +1,378 @@
+{
+  "forms-validation": {
+    "title": "Recover from invalid input",
+    "summary": "A one-field form keeps the person\u2019s work and provides a useful correction path.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Entered title",
+        "description": "Read the field value without discarding it."
+      },
+      {
+        "id": "1",
+        "label": "Validate required text",
+        "description": "Trim for validation; whitespace alone is invalid."
+      },
+      {
+        "id": "2",
+        "label": "Show field error",
+        "description": "Keep the text, expose invalid state and focus the field."
+      },
+      {
+        "id": "3",
+        "label": "Add lesson",
+        "description": "Create a text node for valid input and update the list."
+      },
+      {
+        "id": "4",
+        "label": "Announce result",
+        "description": "Report the actual in-memory change through a status region."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "submit"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "invalid"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "valid"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "completed"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Entered title",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Read the field value without discarding it."
+      },
+      {
+        "title": "Validate required text",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Trim for validation; whitespace alone is invalid."
+      },
+      {
+        "title": "Show field error",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Keep the text, expose invalid state and focus the field."
+      },
+      {
+        "title": "Add lesson",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Create a text node for valid input and update the list."
+      },
+      {
+        "title": "Announce result",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Report the actual in-memory change through a status region."
+      }
+    ]
+  },
+  "dialog-pattern": {
+    "title": "Borrow and return focus",
+    "summary": "The preview modal owns interaction temporarily and returns focus when dismissed.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Preview button",
+        "description": "The invoking control is the return point."
+      },
+      {
+        "id": "1",
+        "label": "Named modal opens",
+        "description": "showModal makes the background inert."
+      },
+      {
+        "id": "2",
+        "label": "Focus inside modal",
+        "description": "Focus the heading or appropriate first control; contain Tab navigation."
+      },
+      {
+        "id": "3",
+        "label": "Close or Escape",
+        "description": "Dismiss through a visible control or keyboard."
+      },
+      {
+        "id": "4",
+        "label": "Focus returns",
+        "description": "Restore the surviving opener or a logical replacement."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "activate"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "initial focus"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "dismiss"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "return"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Preview button",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The invoking control is the return point."
+      },
+      {
+        "title": "Named modal opens",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "showModal makes the background inert."
+      },
+      {
+        "title": "Focus inside modal",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Focus the heading or appropriate first control; contain Tab navigation."
+      },
+      {
+        "title": "Close or Escape",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Dismiss through a visible control or keyboard."
+      },
+      {
+        "title": "Focus returns",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Restore the surviving opener or a logical replacement."
+      }
+    ]
+  },
+  "information-architecture": {
+    "title": "Find the exercise and its files",
+    "summary": "Browsing and search both lead to a task with nearby resources.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Course catalogue",
+        "description": "Choose a learning goal or search by task."
+      },
+      {
+        "id": "1",
+        "label": "Course overview",
+        "description": "Understand stages and the next lesson."
+      },
+      {
+        "id": "2",
+        "label": "Lesson task",
+        "description": "Read the exercise and its requirements."
+      },
+      {
+        "id": "3",
+        "label": "Practice kit",
+        "description": "Download the exact files needed for that task."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "browse course"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "open lesson"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "search task"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "nearby resource link"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Course catalogue",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Choose a learning goal or search by task."
+      },
+      {
+        "title": "Course overview",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Understand stages and the next lesson."
+      },
+      {
+        "title": "Lesson task",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Read the exercise and its requirements."
+      },
+      {
+        "title": "Practice kit",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Download the exact files needed for that task."
+      }
+    ]
+  },
+  "manual-evaluation": {
+    "title": "Evidence grows through different checks",
+    "summary": "Automated checks and human task evidence are complementary, not a certification pipeline.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Static guardrails",
+        "description": "Check IDs, explicit associations and contrast arithmetic."
+      },
+      {
+        "id": "1",
+        "label": "Keyboard and layout tasks",
+        "description": "Check real focus, zoom, narrow states and recovery."
+      },
+      {
+        "id": "2",
+        "label": "Assistive-technology evaluation",
+        "description": "Record actual announcements and navigation in a named environment."
+      },
+      {
+        "id": "3",
+        "label": "Scoped findings",
+        "description": "Combine results, user impact, untested limits and retest evidence."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "3",
+        "label": "limited checks"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "task evidence"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "environment evidence"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Static guardrails",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Check IDs, explicit associations and contrast arithmetic."
+      },
+      {
+        "title": "Keyboard and layout tasks",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [],
+        "explanation": "Check real focus, zoom, narrow states and recovery."
+      },
+      {
+        "title": "Assistive-technology evaluation",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [],
+        "explanation": "Record actual announcements and navigation in a named environment."
+      },
+      {
+        "title": "Scoped findings",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "Combine results, user impact, untested limits and retest evidence."
+      }
+    ]
+  }
+}

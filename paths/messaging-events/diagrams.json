@@ -1,0 +1,479 @@
+{
+  "topologies": {
+    "title": "Work sharing versus independent subscribers",
+    "summary": "Workers share one job responsibility; audit and notification need separate event copies.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Publisher",
+        "description": "Publishes a completion fact with stable event identity."
+      },
+      {
+        "id": "1",
+        "label": "Audit subscription",
+        "description": "Owns audit delivery history."
+      },
+      {
+        "id": "2",
+        "label": "Notification subscription",
+        "description": "Owns notification delivery history."
+      },
+      {
+        "id": "3",
+        "label": "Notification worker A",
+        "description": "Competes for notification work."
+      },
+      {
+        "id": "4",
+        "label": "Notification worker B",
+        "description": "Competes for notification work."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "independent copy"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "independent copy"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "assign work"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "assign other work"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. independent copy",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Owns audit delivery history."
+      },
+      {
+        "title": "2. independent copy",
+        "activeNodes": [
+          "0",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Owns notification delivery history."
+      },
+      {
+        "title": "3. assign work",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Competes for notification work."
+      },
+      {
+        "title": "4. assign other work",
+        "activeNodes": [
+          "2",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Competes for notification work."
+      }
+    ],
+    "direction": "LR"
+  },
+  "acceptance": {
+    "title": "Two acknowledgements, two boundaries",
+    "summary": "Acceptance is distinct from business completion.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Producer",
+        "description": "Keeps stable event ID on uncertain retry."
+      },
+      {
+        "id": "1",
+        "label": "Broker",
+        "description": "Acceptance depends on configured broker semantics."
+      },
+      {
+        "id": "2",
+        "label": "Consumer",
+        "description": "Commits local effect before acknowledging."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "publish"
+      },
+      {
+        "from": "1",
+        "to": "0",
+        "label": "publisher confirm"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "deliver"
+      },
+      {
+        "from": "2",
+        "to": "1",
+        "label": "consumer ack after commit"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. publish",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Acceptance depends on configured broker semantics."
+      },
+      {
+        "title": "2. publisher confirm",
+        "activeNodes": [
+          "1",
+          "0"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Keeps stable event ID on uncertain retry."
+      },
+      {
+        "title": "3. deliver",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Commits local effect before acknowledging."
+      },
+      {
+        "title": "4. consumer ack after commit",
+        "activeNodes": [
+          "2",
+          "1"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Acceptance depends on configured broker semantics."
+      }
+    ],
+    "type": "sequence",
+    "sequenceOrder": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "transactional-outbox": {
+    "title": "One local commit, uncertain relay",
+    "summary": "An outbox prevents local dual-write loss; consumer deduplication handles relay replay.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Business transaction",
+        "description": "Writes job and pending event atomically.",
+        "shape": "database"
+      },
+      {
+        "id": "1",
+        "label": "Outbox relay",
+        "description": "Reads committed pending events."
+      },
+      {
+        "id": "2",
+        "label": "Broker",
+        "description": "Accepts a published event; lost reply can cause retry."
+      },
+      {
+        "id": "3",
+        "label": "Consumer inbox + effect",
+        "description": "Commits dedupe key and projection together.",
+        "shape": "database"
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "committed intent"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "publish stable ID"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "possible repeated delivery"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. committed intent",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Reads committed pending events."
+      },
+      {
+        "title": "2. publish stable ID",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Accepts a published event; lost reply can cause retry."
+      },
+      {
+        "title": "3. possible repeated delivery",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Commits dedupe key and projection together."
+      }
+    ],
+    "direction": "LR"
+  },
+  "consumer-lifecycle": {
+    "title": "Commit before acknowledgement",
+    "summary": "Replay after a lost acknowledgement detects the durable inbox.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Delivery",
+        "description": "Validate stable ID and schema."
+      },
+      {
+        "id": "1",
+        "label": "Already committed?",
+        "description": "Look up consumer/event unique key.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Commit inbox + projection",
+        "description": "Atomic SQLite transaction.",
+        "shape": "database"
+      },
+      {
+        "id": "3",
+        "label": "Acknowledge",
+        "description": "After a known local commit; duplicates skip repeated effect.",
+        "shape": "terminal"
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "validate"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "no: do work"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "commit succeeded"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "yes: skip effect"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. validate",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Look up consumer/event unique key."
+      },
+      {
+        "title": "2. no: do work",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Atomic SQLite transaction."
+      },
+      {
+        "title": "3. commit succeeded",
+        "activeNodes": [
+          "2",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "After a known local commit; duplicates skip repeated effect."
+      },
+      {
+        "title": "4. yes: skip effect",
+        "activeNodes": [
+          "1",
+          "3"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "After a known local commit; duplicates skip repeated effect."
+      }
+    ],
+    "direction": "LR"
+  },
+  "dead-letter-replay": {
+    "title": "Repair before replay",
+    "summary": "A quarantine store preserves evidence; replay is bounded and observable.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Failure",
+        "description": "Record ID, attempts and error."
+      },
+      {
+        "id": "1",
+        "label": "Retry useful?",
+        "description": "Classify transient error and deadline.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Finite retry",
+        "description": "Apply backoff under the budget."
+      },
+      {
+        "id": "3",
+        "label": "Quarantine",
+        "description": "Retain failure evidence.",
+        "shape": "database"
+      },
+      {
+        "id": "4",
+        "label": "Controlled replay",
+        "description": "Repair cause, test sample, watch stop criteria."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "classify"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "yes"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "no"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "owner repairs and reviews"
+      }
+    ],
+    "steps": [
+      {
+        "title": "1. classify",
+        "activeNodes": [
+          "0",
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Classify transient error and deadline."
+      },
+      {
+        "title": "2. yes",
+        "activeNodes": [
+          "1",
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Apply backoff under the budget."
+      },
+      {
+        "title": "3. no",
+        "activeNodes": [
+          "1",
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Retain failure evidence."
+      },
+      {
+        "title": "4. owner repairs and reviews",
+        "activeNodes": [
+          "3",
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Repair cause, test sample, watch stop criteria."
+      }
+    ],
+    "direction": "LR"
+  }
+}

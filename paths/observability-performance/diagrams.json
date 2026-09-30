@@ -1,0 +1,431 @@
+{
+  "trace-spans": {
+    "title": "Related timing boundaries",
+    "summary": "A parent contains child work; overlapping child elapsed durations are not added to the parent.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Request span 150 ms",
+        "description": "Parent boundary: user operation on the API."
+      },
+      {
+        "id": "1",
+        "label": "Parse 0\u201310 ms",
+        "description": "First child prepares input."
+      },
+      {
+        "id": "2",
+        "label": "Call A 10\u2013100 ms",
+        "description": "One parallel dependency finishes earlier."
+      },
+      {
+        "id": "3",
+        "label": "Call B 10\u2013130 ms",
+        "description": "The slower parallel dependency determines readiness."
+      },
+      {
+        "id": "4",
+        "label": "Assembly 130\u2013150 ms",
+        "description": "Finish after both required calls; the path through B dominates."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "contains"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "contains parallel work"
+      },
+      {
+        "from": "0",
+        "to": "3",
+        "label": "contains parallel work"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "determines earliest start"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "also required"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Request span 150 ms",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Parent boundary: user operation on the API."
+      },
+      {
+        "title": "Parse 0\u201310 ms",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "First child prepares input."
+      },
+      {
+        "title": "Call A 10\u2013100 ms",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "One parallel dependency finishes earlier."
+      },
+      {
+        "title": "Call B 10\u2013130 ms",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The slower parallel dependency determines readiness."
+      },
+      {
+        "title": "Assembly 130\u2013150 ms",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Finish after both required calls; the path through B dominates."
+      }
+    ]
+  },
+  "context-propagation": {
+    "title": "Carry correlation across a boundary",
+    "summary": "Injection and extraction establish related telemetry while authorisation remains separate.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Caller span",
+        "description": "Create context for the outgoing operation."
+      },
+      {
+        "id": "1",
+        "label": "Request carrier",
+        "description": "Inject supported trace context into headers."
+      },
+      {
+        "id": "2",
+        "label": "Receiver extracts",
+        "description": "Validate and extract context before creating related work."
+      },
+      {
+        "id": "3",
+        "label": "Receiver span",
+        "description": "Record the receiver operation with the chosen parent relationship."
+      },
+      {
+        "id": "4",
+        "label": "Permission check",
+        "description": "Check identity and access independently of trace metadata."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "inject"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "transport"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "create related span"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "perform separate access checks"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Caller span",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Create context for the outgoing operation."
+      },
+      {
+        "title": "Request carrier",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Inject supported trace context into headers."
+      },
+      {
+        "title": "Receiver extracts",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Validate and extract context before creating related work."
+      },
+      {
+        "title": "Receiver span",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Record the receiver operation with the chosen parent relationship."
+      },
+      {
+        "title": "Permission check",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Check identity and access independently of trace metadata."
+      }
+    ]
+  },
+  "sli-slo-budget": {
+    "title": "From events to an error budget",
+    "summary": "Good and eligible events must share the same scope and window.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Eligible user events",
+        "description": "Define operation, population, window and exclusions."
+      },
+      {
+        "id": "1",
+        "label": "Good events",
+        "description": "Apply correctness and latency criteria consistently."
+      },
+      {
+        "id": "2",
+        "label": "Observed SLI",
+        "description": "Good divided by eligible; no data is unknown."
+      },
+      {
+        "id": "3",
+        "label": "Target allowance",
+        "description": "Allowed bad fraction equals one minus SLO target."
+      },
+      {
+        "id": "4",
+        "label": "Budget use",
+        "description": "Compare observed bad events with allowed bad events for the window."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "evaluate"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "denominator"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "numerator"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "observed bad"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "allowed bad"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Eligible user events",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Define operation, population, window and exclusions."
+      },
+      {
+        "title": "Good events",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Apply correctness and latency criteria consistently."
+      },
+      {
+        "title": "Observed SLI",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Good divided by eligible; no data is unknown."
+      },
+      {
+        "title": "Target allowance",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [],
+        "explanation": "Allowed bad fraction equals one minus SLO target."
+      },
+      {
+        "title": "Budget use",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Compare observed bad events with allowed bad events for the window."
+      }
+    ]
+  },
+  "incident-runbook": {
+    "title": "Investigate and confirm recovery",
+    "summary": "Each hypothesis predicts evidence, and recovery is verified through the same user outcome.",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "User impact",
+        "description": "Establish affected operations and start time."
+      },
+      {
+        "id": "1",
+        "label": "Signals and timeline",
+        "description": "Compare releases, latency, errors and saturation."
+      },
+      {
+        "id": "2",
+        "label": "Test a hypothesis",
+        "description": "Choose evidence that distinguishes a possible cause."
+      },
+      {
+        "id": "3",
+        "label": "Recovery action",
+        "description": "Use the runbook to mitigate or roll back with an owner."
+      },
+      {
+        "id": "4",
+        "label": "Verify outcome",
+        "description": "Repeat the task and check that backlog and failures recover."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "scope investigation"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "form hypothesis"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "evidence supports action"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "remeasure"
+      },
+      {
+        "from": "4",
+        "to": "2",
+        "label": "if still failing"
+      }
+    ],
+    "steps": [
+      {
+        "title": "User impact",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Establish affected operations and start time."
+      },
+      {
+        "title": "Signals and timeline",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Compare releases, latency, errors and saturation."
+      },
+      {
+        "title": "Test a hypothesis",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1,
+          4
+        ],
+        "explanation": "Choose evidence that distinguishes a possible cause."
+      },
+      {
+        "title": "Recovery action",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Use the runbook to mitigate or roll back with an owner."
+      },
+      {
+        "title": "Verify outcome",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Repeat the task and check that backlog and failures recover."
+      }
+    ]
+  }
+}

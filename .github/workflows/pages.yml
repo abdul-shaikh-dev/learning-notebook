@@ -88,9 +88,26 @@ jobs:
       - name: Build C# downloads and run HTTP acceptance checks
         run: python scripts/verify-dotnet.py
 
+  fullstack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build the full-stack journey and run real HTTP checks
+        run: python scripts/verify-fullstack.py
+
   deploy:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
-    needs: [build, python, react, dotnet]
+    needs: [build, python, react, dotnet, fullstack]
     runs-on: ubuntu-latest
     permissions:
       pages: write

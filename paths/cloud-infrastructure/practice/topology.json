@@ -1,0 +1,26 @@
+{
+  "scope": "fictional-training-subscription-no-cloud-target",
+  "resources": [
+    {
+      "id": "group",
+      "kind": "resource-group",
+      "name": "notebook-learning-only",
+      "tags": {
+        "owner": "learner",
+        "purpose": "offline-training",
+        "expires": "2099-01-01"
+      }
+    },
+    {
+      "id": "store",
+      "kind": "storage",
+      "name": "fictionalnotebookstore",
+      "public_network": false,
+      "tags": {
+        "owner": "learner",
+        "purpose": "offline-training",
+        "expires": "2099-01-01"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+const assert=require("node:assert/strict");
+const {contrast,luminance}=require("./contrast.cjs");
+assert.equal(contrast("000000","ffffff"),21);
+assert.equal(contrast("abcdef","abcdef"),1);
+assert.equal(contrast("595959","ffffff"),contrast("ffffff","595959"));
+assert.ok(contrast("777777","ffffff")<4.5);
+assert.ok(contrast("595959","ffffff")>4.5);
+assert.equal(luminance("000000"),0);
+assert.throws(()=>contrast("bad","ffffff"));
+console.log("PASS: contrast boundaries, symmetry and invalid input");

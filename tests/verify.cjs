@@ -32,3 +32,5 @@ require('./flow-audit.cjs');
 require('./lazy-loading.cjs');
 
 require('./pwa.cjs');
+
+require('./new-learning-paths.cjs');

@@ -1,0 +1,184 @@
+{
+  "folder": "cloud-infrastructure-practice",
+  "files": [
+    {
+      "id": "infra_lab-py",
+      "href": "paths/cloud-infrastructure/practice/infra_lab.py",
+      "role": "reference",
+      "description": "Reference implementation or clearly labeled training configuration."
+    },
+    {
+      "id": "test_infra_lab-py",
+      "href": "paths/cloud-infrastructure/practice/test_infra_lab.py",
+      "role": "test",
+      "description": "Locally runnable regression tests."
+    },
+    {
+      "id": "topology-json",
+      "href": "paths/cloud-infrastructure/practice/topology.json",
+      "role": "reference",
+      "description": "Reference implementation or clearly labeled training configuration."
+    },
+    {
+      "id": "main-tf-json",
+      "href": "paths/cloud-infrastructure/practice/main.tf.json",
+      "role": "reference",
+      "description": "Reference implementation or clearly labeled training configuration."
+    },
+    {
+      "id": "README-md",
+      "href": "paths/cloud-infrastructure/practice/README.md",
+      "role": "guide",
+      "description": "Runtime, exact commands, expected results, cleanup and execution boundaries."
+    },
+    {
+      "id": "workbook-md",
+      "href": "paths/cloud-infrastructure/practice/workbook.md",
+      "role": "guide",
+      "description": "Three projects, exercises, evidence ledger and reference reasoning."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Cloud responsibility and scope map",
+      "goal": "Design a small hypothetical private notebook without creating resources.",
+      "fileIds": [
+        "infra_lab-py",
+        "test_infra_lab-py",
+        "topology-json",
+        "main-tf-json",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Compare static and managed app responsibilities.",
+        "Name tenant, subscription, region and disposable scope.",
+        "Draw network and identity gates.",
+        "List cost categories and data owners.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python infra_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_infra_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Reviewed infrastructure plan",
+      "goal": "Run the offline planner and inspect the optional Azure Terraform JSON.",
+      "fileIds": [
+        "infra_lab-py",
+        "test_infra_lab-py",
+        "topology-json",
+        "main-tf-json",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Run positive and negative tests.",
+        "Classify create/update/replace/destroy.",
+        "Review typed inputs, state handling and dependencies.",
+        "Optionally init/validate in a separate empty folder; record results.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python infra_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_infra_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Cloud launch and teardown review",
+      "goal": "Prepare an evidence portfolio for a future full-stack deployment.",
+      "fileIds": [
+        "infra_lab-py",
+        "test_infra_lab-py",
+        "topology-json",
+        "main-tf-json",
+        "README-md",
+        "workbook-md"
+      ],
+      "steps": [
+        "Extract the flat files and read README.md.",
+        "Separate PR checks from privileged release steps.",
+        "Design state, identity and data recovery.",
+        "Create cost, expiry and cleanup checklists.",
+        "Specify real denied-access, restore and smoke tests still needed.",
+        "Compare your findings with workbook.md and the stage rubric."
+      ],
+      "commands": [
+        {
+          "label": "Run local demonstration",
+          "command": "python infra_lab.py",
+          "expected": "Deterministic JSON teaching results; no network or external resource creation."
+        },
+        {
+          "label": "Run local tests",
+          "command": "python -m unittest -v test_infra_lab.py",
+          "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Python 3.11+ and standard library only.",
+        "Optional external tools are separately documented and not included in the local verification claim."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "cloud-contract": "foundation",
+    "azure-scope": "foundation",
+    "requirements": "foundation",
+    "networking": "foundation",
+    "identity": "foundation",
+    "iac-model": "foundation",
+    "provider-init": "foundation",
+    "variables": "foundation",
+    "dependencies": "intermediate",
+    "state": "intermediate",
+    "plan-review": "intermediate",
+    "lifecycle": "intermediate",
+    "modules": "intermediate",
+    "drift-import": "intermediate",
+    "policy": "intermediate",
+    "secrets": "intermediate",
+    "cost-control": "advanced",
+    "deployment-pipeline": "advanced",
+    "infra-tests": "advanced",
+    "resilience": "advanced",
+    "cleanup": "advanced",
+    "launch-review": "advanced"
+  },
+  "bundle": {
+    "href": "paths/cloud-infrastructure/practice-bundle.zip"
+  }
+}

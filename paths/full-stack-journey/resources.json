@@ -1,0 +1,362 @@
+{
+  "folder": "full-stack-practice",
+  "files": [
+    {
+      "id": "acceptance-py",
+      "href": "paths/full-stack-journey/practice/acceptance.py",
+      "role": "test",
+      "description": "acceptance.py"
+    },
+    {
+      "id": "App-tsx",
+      "href": "paths/full-stack-journey/practice/App.tsx",
+      "role": "reference",
+      "description": "Integrated React study planner"
+    },
+    {
+      "id": "index-html",
+      "href": "paths/full-stack-journey/practice/index.html",
+      "role": "reference",
+      "description": "index.html"
+    },
+    {
+      "id": "main-tsx",
+      "href": "paths/full-stack-journey/practice/main.tsx",
+      "role": "reference",
+      "description": "main.tsx"
+    },
+    {
+      "id": "milestones-md",
+      "href": "paths/full-stack-journey/practice/milestones.md",
+      "role": "guide",
+      "description": "Project checkpoints and independent evidence"
+    },
+    {
+      "id": "package-lock-json",
+      "href": "paths/full-stack-journey/practice/package-lock.json",
+      "role": "reference",
+      "description": "package-lock.json"
+    },
+    {
+      "id": "package-json",
+      "href": "paths/full-stack-journey/practice/package.json",
+      "role": "reference",
+      "description": "package.json"
+    },
+    {
+      "id": "planner-api-test-ts",
+      "href": "paths/full-stack-journey/practice/planner-api.test.ts",
+      "role": "test",
+      "description": "planner-api.test.ts"
+    },
+    {
+      "id": "planner-api-ts",
+      "href": "paths/full-stack-journey/practice/planner-api.ts",
+      "role": "reference",
+      "description": "planner-api.ts"
+    },
+    {
+      "id": "Planner-csproj",
+      "href": "paths/full-stack-journey/practice/Planner.csproj",
+      "role": "reference",
+      "description": "Planner.csproj"
+    },
+    {
+      "id": "planner-css",
+      "href": "paths/full-stack-journey/practice/planner.css",
+      "role": "reference",
+      "description": "planner.css"
+    },
+    {
+      "id": "Program-cs",
+      "href": "paths/full-stack-journey/practice/Program.cs",
+      "role": "reference",
+      "description": "Runnable .NET HTTP API with memory and SQL adapters"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/full-stack-journey/practice/README.md",
+      "role": "guide",
+      "description": "Setup, scope, run commands and cleanup"
+    },
+    {
+      "id": "schema-sql",
+      "href": "paths/full-stack-journey/practice/schema.sql",
+      "role": "reference",
+      "description": "SQL Server learning schema"
+    },
+    {
+      "id": "tsconfig-json",
+      "href": "paths/full-stack-journey/practice/tsconfig.json",
+      "role": "reference",
+      "description": "tsconfig.json"
+    },
+    {
+      "id": "vite-config-ts",
+      "href": "paths/full-stack-journey/practice/vite.config.ts",
+      "role": "reference",
+      "description": "vite.config.ts"
+    },
+    {
+      "id": "planner-ui-test-tsx",
+      "href": "paths/full-stack-journey/practice/planner-ui.test.tsx",
+      "role": "test",
+      "description": "Real React component tests for loading, pending drafts, failure recovery and stale conflicts"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Build one vertical slice",
+      "goal": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+      "fileIds": [
+        "acceptance-py",
+        "App-tsx",
+        "index-html",
+        "main-tsx",
+        "milestones-md",
+        "package-lock-json",
+        "package-json",
+        "planner-api-test-ts",
+        "planner-api-ts",
+        "Planner-csproj",
+        "planner-css",
+        "Program-cs",
+        "README-md",
+        "schema-sql",
+        "tsconfig-json",
+        "vite-config-ts",
+        "planner-ui-test-tsx"
+      ],
+      "steps": [
+        "Extract the complete kit into a new practice folder.",
+        "Read README.md and milestones.md.",
+        "Demonstrate a valid add and completion through React and .NET.",
+        "Reject malformed data while preserving the draft.",
+        "Explain refresh versus process restart."
+      ],
+      "commands": [
+        {
+          "label": "Start owned API in terminal A",
+          "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+          "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+        },
+        {
+          "label": "Install frontend dependencies",
+          "command": "npm ci --ignore-scripts",
+          "expected": "Pinned dependencies installed; network is required for first install."
+        },
+        {
+          "label": "Validate and build frontend",
+          "command": "npm test && npm run build",
+          "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+        },
+        {
+          "label": "Start UI in terminal B",
+          "command": "npm run dev",
+          "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+        },
+        {
+          "label": "Run real HTTP checks in terminal C",
+          "command": "python acceptance.py http://127.0.0.1:5087",
+          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "React course",
+          "href": "#path/react"
+        },
+        {
+          "label": "C# & .NET course",
+          "href": "#path/dotnet"
+        },
+        {
+          "label": "SQL Server course",
+          "href": "#path/sql-server"
+        }
+      ],
+      "notes": [
+        "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Persist and resolve conflicts",
+      "goal": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+      "fileIds": [
+        "acceptance-py",
+        "App-tsx",
+        "index-html",
+        "main-tsx",
+        "milestones-md",
+        "package-lock-json",
+        "package-json",
+        "planner-api-test-ts",
+        "planner-api-ts",
+        "Planner-csproj",
+        "planner-css",
+        "Program-cs",
+        "README-md",
+        "schema-sql",
+        "tsconfig-json",
+        "vite-config-ts",
+        "planner-ui-test-tsx"
+      ],
+      "steps": [
+        "Extract the complete kit into a new practice folder.",
+        "Read README.md and milestones.md.",
+        "Show persisted IDs after API restart.",
+        "Prove one winner and one stale conflict.",
+        "Specify atomic idempotent creation and ownership boundaries."
+      ],
+      "commands": [
+        {
+          "label": "Start owned API in terminal A",
+          "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+          "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+        },
+        {
+          "label": "Install frontend dependencies",
+          "command": "npm ci --ignore-scripts",
+          "expected": "Pinned dependencies installed; network is required for first install."
+        },
+        {
+          "label": "Validate and build frontend",
+          "command": "npm test && npm run build",
+          "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+        },
+        {
+          "label": "Start UI in terminal B",
+          "command": "npm run dev",
+          "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+        },
+        {
+          "label": "Run real HTTP checks in terminal C",
+          "command": "python acceptance.py http://127.0.0.1:5087",
+          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "React course",
+          "href": "#path/react"
+        },
+        {
+          "label": "C# & .NET course",
+          "href": "#path/dotnet"
+        },
+        {
+          "label": "SQL Server course",
+          "href": "#path/sql-server"
+        }
+      ],
+      "notes": [
+        "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Verify, operate and defend",
+      "goal": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+      "fileIds": [
+        "acceptance-py",
+        "App-tsx",
+        "index-html",
+        "main-tsx",
+        "milestones-md",
+        "package-lock-json",
+        "package-json",
+        "planner-api-test-ts",
+        "planner-api-ts",
+        "Planner-csproj",
+        "planner-css",
+        "Program-cs",
+        "README-md",
+        "schema-sql",
+        "tsconfig-json",
+        "vite-config-ts",
+        "planner-ui-test-tsx"
+      ],
+      "steps": [
+        "Extract the complete kit into a new practice folder.",
+        "Read README.md and milestones.md.",
+        "Separate browser, HTTP and SQL evidence.",
+        "Explain authentication and deployment extensions honestly.",
+        "Defend a recovery plan with measured results where executed."
+      ],
+      "commands": [
+        {
+          "label": "Start owned API in terminal A",
+          "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+          "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+        },
+        {
+          "label": "Install frontend dependencies",
+          "command": "npm ci --ignore-scripts",
+          "expected": "Pinned dependencies installed; network is required for first install."
+        },
+        {
+          "label": "Validate and build frontend",
+          "command": "npm test && npm run build",
+          "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+        },
+        {
+          "label": "Start UI in terminal B",
+          "command": "npm run dev",
+          "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+        },
+        {
+          "label": "Run real HTTP checks in terminal C",
+          "command": "python acceptance.py http://127.0.0.1:5087",
+          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "React course",
+          "href": "#path/react"
+        },
+        {
+          "label": "C# & .NET course",
+          "href": "#path/dotnet"
+        },
+        {
+          "label": "SQL Server course",
+          "href": "#path/sql-server"
+        }
+      ],
+      "notes": [
+        "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "scope": "foundation",
+    "workspace": "foundation",
+    "architecture": "foundation",
+    "contract": "foundation",
+    "data-model": "foundation",
+    "ui-state": "foundation",
+    "first-slice": "foundation",
+    "response-validation": "foundation",
+    "effects": "intermediate",
+    "sql-setup": "intermediate",
+    "parameters": "intermediate",
+    "conflicts": "intermediate",
+    "transactions": "intermediate",
+    "retries": "intermediate",
+    "identity": "intermediate",
+    "browser-boundaries": "advanced",
+    "tests": "advanced",
+    "observability": "advanced",
+    "delivery": "advanced",
+    "recovery": "advanced"
+  },
+  "bundle": {
+    "href": "paths/full-stack-journey/practice-bundle.zip"
+  }
+}

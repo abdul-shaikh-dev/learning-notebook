@@ -1,0 +1,308 @@
+{
+  "kernel-and-user-space": {
+    "title": "Opening a CSV crosses a controlled boundary",
+    "summary": "An application requests I/O; the kernel mediates access to the filesystem. This relationship is not a literal performance trace.",
+    "nodes": [
+      {
+        "id": "app",
+        "label": "Python importer",
+        "description": "User-space application requests file data."
+      },
+      {
+        "id": "kernel",
+        "label": "Kernel",
+        "description": "Checks access and mediates filesystem/device operations."
+      },
+      {
+        "id": "file",
+        "label": "CSV file",
+        "description": "Persistent bytes reached through a filesystem."
+      }
+    ],
+    "edges": [
+      {
+        "from": "app",
+        "to": "kernel",
+        "label": "read request"
+      },
+      {
+        "from": "kernel",
+        "to": "file",
+        "label": "filesystem access"
+      },
+      {
+        "from": "file",
+        "to": "app",
+        "label": "returned bytes through kernel"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Read request",
+        "activeNodes": [
+          "app",
+          "kernel"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "User-space application requests file data. Checks access and mediates filesystem/device operations."
+      },
+      {
+        "title": "Filesystem access",
+        "activeNodes": [
+          "kernel",
+          "file"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Checks access and mediates filesystem/device operations. Persistent bytes reached through a filesystem."
+      },
+      {
+        "title": "Returned bytes through kernel",
+        "activeNodes": [
+          "file",
+          "app"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Persistent bytes reached through a filesystem. User-space application requests file data."
+      }
+    ],
+    "direction": "TB"
+  },
+  "streams-and-pipelines": {
+    "title": "Keep the report separate from diagnostics",
+    "summary": "Standard output carries report data while standard error carries diagnostic evidence. A pipe joins stdout to the next program stdin.",
+    "nodes": [
+      {
+        "id": "tool",
+        "label": "Importer",
+        "description": "Produces structured data and separate errors."
+      },
+      {
+        "id": "report",
+        "label": "Report stream",
+        "description": "Consumer reads only valid data."
+      },
+      {
+        "id": "log",
+        "label": "Diagnostic log",
+        "description": "Failure category stays outside the report."
+      }
+    ],
+    "edges": [
+      {
+        "from": "tool",
+        "to": "report",
+        "label": "stdout"
+      },
+      {
+        "from": "tool",
+        "to": "log",
+        "label": "stderr"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Stdout",
+        "activeNodes": [
+          "tool",
+          "report"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Produces structured data and separate errors. Consumer reads only valid data."
+      },
+      {
+        "title": "Stderr",
+        "activeNodes": [
+          "tool",
+          "log"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Produces structured data and separate errors. Failure category stays outside the report."
+      }
+    ],
+    "direction": "LR"
+  },
+  "process-lifetimes": {
+    "title": "A parent owns the child lifetime",
+    "summary": "A launched child either completes within the bound or hits a timeout. Direct-child cleanup does not prove descendant cleanup.",
+    "nodes": [
+      {
+        "id": "parent",
+        "label": "Parent runner",
+        "description": "Launches an explicit argument list."
+      },
+      {
+        "id": "child",
+        "label": "Python child",
+        "description": "Produces bounded example output."
+      },
+      {
+        "id": "done",
+        "label": "Completion",
+        "description": "Status and streams collected."
+      },
+      {
+        "id": "timeout",
+        "label": "Deadline exceeded",
+        "description": "Timeout requires cleanup and a failure result."
+      }
+    ],
+    "edges": [
+      {
+        "from": "parent",
+        "to": "child",
+        "label": "launch"
+      },
+      {
+        "from": "child",
+        "to": "done",
+        "label": "finishes"
+      },
+      {
+        "from": "child",
+        "to": "timeout",
+        "label": "deadline reached"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Launch",
+        "activeNodes": [
+          "parent",
+          "child"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Launches an explicit argument list. Produces bounded example output."
+      },
+      {
+        "title": "Finishes",
+        "activeNodes": [
+          "child",
+          "done"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Produces bounded example output. Status and streams collected."
+      },
+      {
+        "title": "Deadline reached",
+        "activeNodes": [
+          "child",
+          "timeout"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Produces bounded example output. Timeout requires cleanup and a failure result."
+      }
+    ],
+    "direction": "TB"
+  },
+  "namespaces-and-cgroups": {
+    "title": "Resource view and resource budget are different",
+    "summary": "A container process sees namespace-specific resources and belongs to an accounting/limit hierarchy. Neither alone establishes full security.",
+    "nodes": [
+      {
+        "id": "process",
+        "label": "Container process",
+        "description": "Executes using host kernel mechanisms."
+      },
+      {
+        "id": "view",
+        "label": "Namespaces",
+        "description": "Control selected resource views."
+      },
+      {
+        "id": "budget",
+        "label": "cgroups",
+        "description": "Account for and constrain resources."
+      },
+      {
+        "id": "kernel",
+        "label": "Host kernel",
+        "description": "Enforces applicable mechanisms and policies."
+      }
+    ],
+    "edges": [
+      {
+        "from": "process",
+        "to": "view",
+        "label": "resource visibility"
+      },
+      {
+        "from": "process",
+        "to": "budget",
+        "label": "resource accounting"
+      },
+      {
+        "from": "view",
+        "to": "kernel",
+        "label": "kernel mechanism"
+      },
+      {
+        "from": "budget",
+        "to": "kernel",
+        "label": "kernel mechanism"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Resource visibility",
+        "activeNodes": [
+          "process",
+          "view"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Executes using host kernel mechanisms. Control selected resource views."
+      },
+      {
+        "title": "Resource accounting",
+        "activeNodes": [
+          "process",
+          "budget"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Executes using host kernel mechanisms. Account for and constrain resources."
+      },
+      {
+        "title": "Kernel mechanism",
+        "activeNodes": [
+          "view",
+          "kernel"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Control selected resource views. Enforces applicable mechanisms and policies."
+      },
+      {
+        "title": "Kernel mechanism",
+        "activeNodes": [
+          "budget",
+          "kernel"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Account for and constrain resources. Enforces applicable mechanisms and policies."
+      }
+    ],
+    "direction": "TB"
+  }
+}

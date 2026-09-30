@@ -12113,6 +12113,4099 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "cloud-infrastructure",
+    "title": "Cloud & Infrastructure as Code",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "22 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
+    "level": "Foundations → intermediate → selected advanced practice",
+    "prerequisites": [
+      "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
+      "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+    ],
+    "outcomes": [
+      "Map Azure scope, identity and network responsibilities.",
+      "Review infrastructure desired state, dependencies and protected state.",
+      "Classify create/update/replacement/deletion and model cost arithmetic.",
+      "Run offline policy tests and inspect optional Azure Terraform schema validation.",
+      "Design credentialed delivery, data restoration, cost controls and verified teardown."
+    ],
+    "setup": [
+      "Download the practice bundle and extract its flat files together.",
+      "From its folder run python infra_lab.py, then python -m unittest -v test_infra_lab.py.",
+      "Read README.md and workbook.md before optional external tooling. The verified baseline is local only."
+    ],
+    "nextSteps": [
+      "Choose a disposable subscription scope deliberately; review costs, identity and cleanup before optional real cloud work.",
+      "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+    ],
+    "sources": [
+      {
+        "title": "Terraform on Azure overview",
+        "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview"
+      },
+      {
+        "title": "Azure Well-Architected Framework",
+        "url": "https://learn.microsoft.com/en-us/azure/well-architected/"
+      },
+      {
+        "title": "Azure role-based access control",
+        "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview"
+      },
+      {
+        "title": "Azure Virtual Network",
+        "url": "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview"
+      },
+      {
+        "title": "Azure Terraform managed identity authentication",
+        "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure-with-managed-identity-for-azure-services"
+      },
+      {
+        "title": "Terraform state",
+        "url": "https://developer.hashicorp.com/terraform/language/state"
+      },
+      {
+        "title": "Terraform modules",
+        "url": "https://developer.hashicorp.com/terraform/language/modules"
+      },
+      {
+        "title": "Terraform variables",
+        "url": "https://developer.hashicorp.com/terraform/language/values/variables"
+      },
+      {
+        "title": "Terraform state locking",
+        "url": "https://developer.hashicorp.com/terraform/language/state/locking"
+      },
+      {
+        "title": "Terraform lifecycle",
+        "url": "https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle"
+      },
+      {
+        "title": "Terraform import",
+        "url": "https://developer.hashicorp.com/terraform/language/import"
+      },
+      {
+        "title": "Azure budgets",
+        "url": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets"
+      },
+      {
+        "title": "Terraform tests",
+        "url": "https://developer.hashicorp.com/terraform/language/tests"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "cloud-contract",
+        "title": "1. Cloud is a responsibility boundary",
+        "takeaway": "Managed infrastructure still needs an application owner.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Cloud services rent compute, storage, networking and managed capabilities through provider APIs. A service model determines which operating tasks the provider performs and which remain yours. Running an application on managed compute does not automatically configure authorization, protect application data, establish backups or enforce cost limits."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The notebook can remain a static GitHub Pages site. A future private full-stack notebook needs an API, identity, data store and operational owner. Choosing managed services changes the work required; it does not justify adding a cloud service to every feature."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Managed infrastructure still needs an application owner. Which decision follows?",
+          "options": [
+            "Assign an owner to application security, data recovery and spending.",
+            "Assume a managed service makes the entire workload secure automatically.",
+            "Assume the provider's infrastructure backup proves the application's point-in-time recovery target."
+          ],
+          "correct": 0,
+          "explanation": "Managed infrastructure shifts particular responsibilities rather than removing workload ownership."
+        },
+        "references": [
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          },
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "List responsibilities for static hosting, a VM and a managed database. Name who patches the guest OS, grants application access, validates restores and responds to a leak. Treat the offline kit as design practice only.",
+          "checks": [
+            "Compare guest OS responsibility for a VM versus managed service.",
+            "Name owners for application access and restore verification."
+          ],
+          "solution": "Static hosting owns web asset delivery while the learner owns content and browser behavior. A VM adds guest OS patching and service operations. Managed databases reduce selected engine operations but retain application access, backup configuration and restore verification responsibilities. Assign an owner to leaks, identity and recovery instead of assuming a service model solves them.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "azure-scope",
+        "title": "2. Azure tenant, subscription and resource group",
+        "takeaway": "Verify identity, billing scope and ownership before a plan.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A tenant is an identity directory; a subscription is a resource and billing scope; a resource group organizes related resources. Region determines resource placement subject to service support. Names and labels cannot substitute for checking the actual subscription ID. Resource groups should have a lifecycle owner, purpose and expiry for temporary learning work."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and creates only a named training resource group if separately applied."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Verify identity, billing scope and ownership before a plan. Which decision follows?",
+          "options": [
+            "Require explicit scope and lifecycle metadata before real provisioning.",
+            "Infer the target subscription from the current CLI default.",
+            "Use matching resource-group names as proof that two plans target the same subscription."
+          ],
+          "correct": 0,
+          "explanation": "Ambient account defaults can drift; a deliberate scope check is a deployment prerequisite."
+        },
+        "references": [
+          {
+            "title": "Azure role-based access control",
+            "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+            "section": "Principal; role definition; scope; additive assignments",
+            "reviewed": "2026-09-30",
+            "scope": "Azure management and supported data-plane authorization; notebook simulations do not authenticate to Azure."
+          },
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Write a preflight sheet with tenant, subscription, region, resource group, purpose, owner and expiry. Do not paste tokens into the workbook. Review the offline topology.json to see how its fake subscription is clearly marked.",
+          "checks": [
+            "Record explicit identity and subscription scope.",
+            "Distinguish a fictional fixture from a verified real deployment target."
+          ],
+          "solution": "The preflight records tenant and subscription IDs, chosen region, isolated resource-group name, owner, purpose and expiry. Verify both identity and billing scope before real actions; the fixture's fake subscription has no cloud target. Do not record tokens. A familiar name or current CLI default is insufficient scope evidence.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "requirements",
+        "title": "3. Workload requirements and service selection",
+        "takeaway": "Select services from workload constraints and reversible tradeoffs.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Start with users, data sensitivity, request pattern, recovery targets and deployment frequency. Compare static hosting, managed application compute and VMs. A container orchestrator is useful for some workloads but introduces extra operations. Define what must be measured rather than claiming a provider icon guarantees performance or availability."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A personal notebook needs mostly cached static assets. A collaborative project adds authenticated writes and a database. For a training API, managed application compute can reduce OS work; Kubernetes can be a learning choice, but its cluster lifecycle is an additional responsibility."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Select services from workload constraints and reversible tradeoffs. Which decision follows?",
+          "options": [
+            "Document constraints and compare two viable service models.",
+            "Use Kubernetes for every workload because it appears advanced.",
+            "Select the cheapest compute line item and ignore database, egress and monitoring responsibilities."
+          ],
+          "correct": 0,
+          "explanation": "Architecture should address stated needs and make its operational and financial costs visible."
+        },
+        "references": [
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          },
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Write a two-option ADR for your full-stack project. Include baseline monthly cost categories without claiming current prices, and name the trigger that would justify changing the architecture.",
+          "checks": [
+            "Compare two options against stated workload constraints.",
+            "Include a measurable decision trigger and avoid invented current pricing."
+          ],
+          "solution": "Compare managed application compute with a VM against authenticated writes, sensitive data, operational ownership, recovery and deployment requirements. Keep static hosting for read-only needs. Record cost categories and current-pricing lookup instead of fixed fictional rates. Define a measurable trigger such as required OS customization that could justify switching models.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "networking",
+        "title": "4. Networks, DNS and traffic boundaries",
+        "takeaway": "Connectivity requires routing, name resolution and permitted access.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A virtual network provides address space and subnets for supported services. Routes determine where traffic goes; filters determine whether traffic is permitted; DNS resolves names. A private endpoint alone is not enough if the client resolves a public address or lacks access to the connected network. Overlapping address ranges complicate later peering."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A training API calls private storage. Draw client, API, resolver and storage endpoint. Mark which paths are public, which are private and which identity authorizes data access. The supplied Azure storage template disables public networking and supplies no private endpoint, so it is intentionally not an accessible application backend."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Connectivity requires routing, name resolution and permitted access. Which decision follows?",
+          "options": [
+            "Check DNS, network path and authorization as separate gates.",
+            "Assume private networking automatically grants permission to read data.",
+            "Create a private endpoint and assume every client automatically resolves and reaches it."
+          ],
+          "correct": 0,
+          "explanation": "Network reachability and data authorization are independent controls."
+        },
+        "references": [
+          {
+            "title": "Azure Virtual Network",
+            "url": "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
+            "section": "Communication; filtering; routing",
+            "reviewed": "2026-09-30",
+            "scope": "Azure networking overview; actual private connectivity also requires DNS and identity configuration."
+          },
+          {
+            "title": "Azure role-based access control",
+            "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+            "section": "Principal; role definition; scope; additive assignments",
+            "reviewed": "2026-09-30",
+            "scope": "Azure management and supported data-plane authorization; notebook simulations do not authenticate to Azure."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "In the offline topology change storage to public and run policy tests. Restore the fixture. On paper diagnose three failures separately: wrong DNS result, blocked route, and valid connection with denied identity.",
+          "checks": [
+            "Diagnose DNS, routing/filter and authorization failures separately.",
+            "State the template's missing private-connectivity prerequisites."
+          ],
+          "solution": "The request needs intended DNS resolution, a reachable route/filter path and authorized data action. Public storage should fail the training policy. A private endpoint does not itself grant identity permission. The supplied template disables public networking but creates no private endpoint or connected application network, so it is not a complete usable backend.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Three independent access gates",
+          "summary": "A private endpoint or route is insufficient without DNS and authorization.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Application",
+              "description": "Starts an intended storage request."
+            },
+            {
+              "id": "1",
+              "label": "DNS",
+              "description": "Resolves the intended endpoint."
+            },
+            {
+              "id": "2",
+              "label": "Network path",
+              "description": "Routes and filters must permit traffic."
+            },
+            {
+              "id": "3",
+              "label": "Authorization",
+              "description": "Valid identity must have data action rights.",
+              "shape": "decision"
+            },
+            {
+              "id": "4",
+              "label": "Storage data",
+              "description": "Accessible only after all required gates.",
+              "shape": "database"
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "resolve"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "connect"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "present identity"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "authorized action"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. resolve",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Resolves the intended endpoint."
+            },
+            {
+              "title": "2. connect",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Routes and filters must permit traffic."
+            },
+            {
+              "title": "3. present identity",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Valid identity must have data action rights."
+            },
+            {
+              "title": "4. authorized action",
+              "activeNodes": [
+                "3",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Accessible only after all required gates."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "identity",
+        "title": "5. Identity and least privilege",
+        "takeaway": "Choose a principal, role and scope for each responsibility.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Azure RBAC assignments combine principal, role definition and scope. Management-plane rights and supported data-plane rights are distinct. Roles are generally additive; a narrow assignment does not erase a broader assignment elsewhere. Managed identity can avoid stored client secrets for compatible Azure-hosted workloads, but local workstations do not automatically have that identity."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The API needs to read one storage container, while the deployment identity creates a storage account in one resource group. These are different responsibilities and should not both receive subscription Owner. The optional template deliberately creates no role assignments because granting a real principal requires an explicit reviewed identity choice."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Choose a principal, role and scope for each responsibility. Which decision follows?",
+          "options": [
+            "Grant separate narrowly scoped deployment and runtime permissions.",
+            "Give every component subscription Owner to avoid troubleshooting.",
+            "Add a resource-level Reader assignment and assume it removes an existing subscription Owner grant."
+          ],
+          "correct": 0,
+          "explanation": "Least privilege and negative tests reduce impact while keeping distinct management and data responsibilities visible."
+        },
+        "references": [
+          {
+            "title": "Azure role-based access control",
+            "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+            "section": "Principal; role definition; scope; additive assignments",
+            "reviewed": "2026-09-30",
+            "scope": "Azure management and supported data-plane authorization; notebook simulations do not authenticate to Azure."
+          },
+          {
+            "title": "Azure Terraform managed identity authentication",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure-with-managed-identity-for-azure-services",
+            "section": "Configure and authenticate managed identity",
+            "reviewed": "2026-09-30",
+            "scope": "Azure-hosted identity workflow; a local workstation does not automatically receive managed identity."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Write allowed and denied actions for deployment, API and reviewer. Include the broader-assignment check. Local policy tests exercise a simplified matrix, not Azure token acquisition or real RBAC enforcement.",
+          "checks": [
+            "Separate deployment management rights from runtime data rights.",
+            "Include a broader/inherited-role check and denied example."
+          ],
+          "solution": "The deployment identity can manage the isolated resource-group resources while the runtime identity gets only required data actions. Review broader inherited assignments because adding a narrow role does not remove wider rights. Test actual allowed/denied access in a separately chosen environment; the local matrix is only design evidence.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "iac-model",
+        "title": "6. Desired state and infrastructure as code",
+        "takeaway": "Version configuration, inspect differences and review changes.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Infrastructure as code expresses desired resources and parameters so changes can be reviewed and reproduced. Terraform uses providers to interact with remote APIs and state to associate addresses with existing objects. Configuration is not the entire deployed system: manual drift, data contents and provider defaults also matter."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Changing an owner tag should update metadata; changing a resource name may force replacement depending on provider schema. The offline planner models these cases using a small JSON inventory. It does not parse HCL or implement Terraform provider semantics.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "from infra_lab import plan\nimport json\nfrom pathlib import Path\n\ndesired = json.loads(Path('topology.json').read_text())['resources']\nprint(plan([], desired))  # create group; create store\nprint(plan(desired, desired))  # no-op for both"
+          }
+        ],
+        "quiz": {
+          "question": "Version configuration, inspect differences and review changes. Which decision follows?",
+          "options": [
+            "Review the difference between desired configuration, state association and real resources.",
+            "Treat committed JSON as proof the cloud already matches it.",
+            "Replace the state file with desired JSON and consider the remote resources reconciled."
+          ],
+          "correct": 0,
+          "explanation": "Desired state becomes reality only through provider operations and observed verification."
+        },
+        "references": [
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Run python infra_lab.py and compare create/update/replace actions. Identify which configuration property caused each action. Keep simulated results clearly separate from terraform plan output.",
+          "checks": [
+            "Classify create, tag update and identity replacement in the model.",
+            "Label inventory model results separately from real Terraform output."
+          ],
+          "solution": "The configuration expresses desired inventory while state associates addresses and observed resources may drift. The teaching plan creates absent IDs, updates changed tags and replaces changed identity/name. Its output is a local model, not Terraform provider output. A reviewed plan still requires executed operations and observation before describing a deployed result.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "provider-init",
+        "title": "7. Providers, versions and initialization",
+        "takeaway": "Pin compatible dependencies and verify the tool boundary.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Terraform core and provider plugins evolve separately. required_version constrains core; required_providers identifies sources and version constraints. terraform init initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The Azure JSON template targets Terraform >=1.6 and <2 with AzureRM ~>4.0. That allows compatible 4.x provider selections; the learner must retain their generated lock file and record actual versions. Init needs internet or a configured plugin mirror; it is not an offline test."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Pin compatible dependencies and verify the tool boundary. Which decision follows?",
+          "options": [
+            "Record actual tool versions and preserve the generated provider lock selection.",
+            "Assume a version constraint is the same as a committed lock file.",
+            "Delete the provider lock file before every release so all environments select their own newest version."
+          ],
+          "correct": 0,
+          "explanation": "Constraints allow a range; the lock selection records the dependency actually chosen."
+        },
+        "references": [
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          },
+          {
+            "title": "Terraform modules",
+            "url": "https://developer.hashicorp.com/terraform/language/modules",
+            "section": "Module structure; using modules",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x module concepts; provider-specific schemas need validation."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Optional in a separate empty folder: copy main.tf.json, run terraform init -backend=false, then terraform validate. Record core and selected provider versions. No Azure apply is required and validation is not an account availability test.",
+          "checks": [
+            "Record actual core and locked provider selections.",
+            "Distinguish dependency initialization from cloud provisioning and validation."
+          ],
+          "solution": "Copy only the Azure template into a separate folder, initialize without a backend and validate using the selected provider. Record core and provider versions and preserve the generated lock selection. A compatible range can select different versions; initialization requires network/mirror and schema validation does not deploy or prove account availability.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "variables",
+        "title": "8. Variables, validation and outputs",
+        "takeaway": "Define typed inputs and avoid secrets in state or examples.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Inputs let one configuration express several intentional environments. Use type constraints and validation for names, location and acceptable values. Outputs expose selected results, but marking a value sensitive masks presentation rather than encrypting state. Secrets can enter configuration, state, plans and logs; protect all of them."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The template validates a lower-case storage name and requires subscription_id rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "{\n  \"variable\": {\n    \"storage_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account name; full validation appears in main.tf.json.\"\n    }\n  }\n}"
+          }
+        ],
+        "quiz": {
+          "question": "Define typed inputs and avoid secrets in state or examples. Which decision follows?",
+          "options": [
+            "Validate public inputs and protect state even when values are marked sensitive.",
+            "Commit secrets after adding a sensitive=true display flag.",
+            "Output an access key marked sensitive and assume saved state no longer contains it."
+          ],
+          "correct": 0,
+          "explanation": "Sensitive masking is not confidentiality for stored plans, state or repository history."
+        },
+        "references": [
+          {
+            "title": "Terraform variables",
+            "url": "https://developer.hashicorp.com/terraform/language/values/variables",
+            "section": "Type constraints; validation; sensitive values",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x input contracts; sensitive display masking is not encryption."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Compare a bad storage name containing hyphens with a valid lower-case alphanumeric one. Trace where a hypothetical connection secret could appear and choose a runtime secret-delivery mechanism instead of putting it in a sample variable file.",
+          "checks": [
+            "Identify why a hyphenated name fails and a valid name passes.",
+            "Trace secret exposure beyond display masking."
+          ],
+          "solution": "A hyphenated storage name fails the full template's lower-case alphanumeric 3-24 character validation. Explicit typed inputs are public configuration contracts. A sensitive flag masks output but secrets may remain in state, saved plans and logs; use an appropriate runtime identity/secret mechanism and protect those artifacts.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "dependencies",
+        "title": "9. Dependency graph and outputs",
+        "takeaway": "References describe dependency without requiring a universal sequence.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. depends_on can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The template storage account uses the created resource-group name and location through references. The graph has group before account, not group before every resource in every environment. A private endpoint would add further dependencies if intentionally designed."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "References describe dependency without requiring a universal sequence. Which decision follows?",
+          "options": [
+            "Use resource references for actual dependencies and avoid artificial total ordering.",
+            "Add depends_on from every resource to every other resource.",
+            "Serialize all resources with blanket depends_on to make every unknown value known before planning."
+          ],
+          "correct": 0,
+          "explanation": "A dependency graph expresses necessary constraints; unrelated resources need not be serialized."
+        },
+        "references": [
+          {
+            "title": "Terraform modules",
+            "url": "https://developer.hashicorp.com/terraform/language/modules",
+            "section": "Module structure; using modules",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x module concepts; provider-specific schemas need validation."
+          },
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Inspect main.tf.json and draw only real dependencies. Distinguish a dependency edge from a request at runtime. Do not interpret the diagram as proof that the configured storage data endpoint is reachable.",
+          "checks": [
+            "Draw only the resource reference relationships in the supplied template.",
+            "Distinguish dependency graph edges from runtime request sequence."
+          ],
+          "solution": "The storage account references the group's name/location, establishing group-before-account; the selected output references the group's ID. These are configuration dependencies, not runtime storage calls. Independent resources can proceed concurrently. Private endpoint/DNS dependencies would need explicit design if added later.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Configuration dependencies",
+          "summary": "Resource references produce a partial order, not a runtime request trace.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Typed inputs",
+              "description": "Explicit subscription, location and naming."
+            },
+            {
+              "id": "1",
+              "label": "Resource group",
+              "description": "Azure grouping and lifecycle scope."
+            },
+            {
+              "id": "2",
+              "label": "Storage account",
+              "description": "References group name and location; private access is not supplied.",
+              "shape": "database"
+            },
+            {
+              "id": "3",
+              "label": "Output",
+              "description": "Exposes resource-group ID, not a credential."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "configure"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "reference dependency"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "expose selected ID"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. configure",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Azure grouping and lifecycle scope."
+            },
+            {
+              "title": "2. reference dependency",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "References group name and location; private access is not supplied."
+            },
+            {
+              "title": "3. expose selected ID",
+              "activeNodes": [
+                "1",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Exposes resource-group ID, not a credential."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "state",
+        "title": "10. State, remote backends and locks",
+        "takeaway": "State is sensitive coordination data, not an application backup.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "State maps Terraform addresses to remote resource identities and stores attributes. It can contain secrets. A remote backend can centralize access and versioning; locking depends on backend support. Application rows and blob contents require their own backups. Deleting state does not safely delete resources and can make future plans propose duplicates."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Two engineers applying different changes against separate state files can overwrite assumptions about the same real object. A shared lock-capable backend limits concurrent state writes, while protected state backups support recovery. The optional template uses local state unless the learner intentionally designs a remote backend."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "State is sensitive coordination data, not an application backup. Which decision follows?",
+          "options": [
+            "Protect shared state and handle active locks deliberately.",
+            "Delete the lock whenever a deployment appears slow.",
+            "Restore application rows by restoring only the Terraform state snapshot."
+          ],
+          "correct": 0,
+          "explanation": "A live operation may still own the lock; bypassing it can permit conflicting state writes."
+        },
+        "references": [
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          },
+          {
+            "title": "Terraform state locking",
+            "url": "https://developer.hashicorp.com/terraform/language/state/locking",
+            "section": "State locking; force-unlock",
+            "reviewed": "2026-09-30",
+            "scope": "Lock support depends on backend; local lab tests no real distributed lock."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Describe state access, encryption, version recovery and lock ownership. Explain why force-unlock is only appropriate after confirming no live operation owns the lock. Do not commit *.tfstate, saved plans or credentials.",
+          "checks": [
+            "Separate state recovery from application-data restoration.",
+            "Explain the active-owner check required before force-unlock."
+          ],
+          "solution": "Protect state access, encryption and versioned recovery with a compatible lock-capable backend if collaborating. A lock owner may still be active even during a slow operation; force-unlock needs proof that no live owner remains. Application rows/blobs need separate backups. Local state in this optional template is not an automatically configured remote backend.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "State association and data are different",
+          "summary": "Protected state maps configuration addresses; it does not contain a backup of application rows.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Configuration",
+              "description": "Desired resources and reviewed parameters."
+            },
+            {
+              "id": "1",
+              "label": "State",
+              "description": "Sensitive resource identity association.",
+              "shape": "database"
+            },
+            {
+              "id": "2",
+              "label": "Provider",
+              "description": "Calls selected remote APIs."
+            },
+            {
+              "id": "3",
+              "label": "Cloud resources",
+              "description": "Real observed infrastructure."
+            },
+            {
+              "id": "4",
+              "label": "Application backups",
+              "description": "Separate recovery responsibility.",
+              "shape": "database"
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "2",
+              "label": "desired operations"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "existing identity"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "planned and executed changes"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "protect actual data separately"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. desired operations",
+              "activeNodes": [
+                "0",
+                "2"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Calls selected remote APIs."
+            },
+            {
+              "title": "2. existing identity",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Calls selected remote APIs."
+            },
+            {
+              "title": "3. planned and executed changes",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Real observed infrastructure."
+            },
+            {
+              "title": "4. protect actual data separately",
+              "activeNodes": [
+                "3",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Separate recovery responsibility."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "plan-review",
+        "title": "11. Plan review and change classification",
+        "takeaway": "A plan is a proposed operation set, not a successful deployment.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Read additions, in-place changes, replacements and deletions resource by resource. Unknown-after-apply values may be legitimate but deserve attention where they affect safety. A saved plan contains sensitive information and can become inappropriate if surrounding conditions change. Review identity, scope, provider selection and destructive actions before applying."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "from infra_lab import plan, simulate_apply\nimport json\nfrom pathlib import Path\n\ncurrent = json.loads(Path('topology.json').read_text())['resources']\nprint(plan(current, []))  # two destroy operations in the MODEL\n# simulate_apply(current, []) raises ValueError\nprint(simulate_apply(current, [], allow_destroy=True))  # []\n# No cloud or filesystem resource is created/deleted."
+          }
+        ],
+        "quiz": {
+          "question": "A plan is a proposed operation set, not a successful deployment. Which decision follows?",
+          "options": [
+            "Review replacement and deletion effects, then verify after any separately chosen deployment.",
+            "Treat a successful plan as evidence that resources were created.",
+            "Treat every in-place update as operationally safe because it is not labeled destroy."
+          ],
+          "correct": 0,
+          "explanation": "Planning predicts operations; only executed operations and observed results establish deployed state."
+        },
+        "references": [
+          {
+            "title": "Terraform lifecycle",
+            "url": "https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle",
+            "section": "create_before_destroy; prevent_destroy; ignore_changes",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform lifecycle behavior, including limitations; no resource lifecycle operation is executed here."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Run the planner tests for create, no-op, update, replace and destroy. In workbook.md explain which actions need a data migration or backup. No command in the supplied kit invokes terraform apply.",
+          "checks": [
+            "Classify all five model actions, including no-op.",
+            "Name the data consequences of replace/destroy and the unexecuted cloud boundary."
+          ],
+          "solution": "The model reports create for absent IDs, update for changed tags, replace for changed kind/name and destroy for removed desired IDs. Replacements/deletions require explicit local opt-in. Review data migration and recovery before real destructive operations. No supplied operation invokes Terraform apply, and model output cannot prove cloud creation.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Plan is an evidence gate",
+          "summary": "A successful proposed change is not proof of deployment.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Validation",
+              "description": "Check configuration and selected contracts."
+            },
+            {
+              "id": "1",
+              "label": "Plan",
+              "description": "Inspect create/update/replace/destroy."
+            },
+            {
+              "id": "2",
+              "label": "Review",
+              "description": "Confirm scope, data migration and cost.",
+              "shape": "decision"
+            },
+            {
+              "id": "3",
+              "label": "Optional deliberate apply",
+              "description": "Only after independently choosing real work."
+            },
+            {
+              "id": "4",
+              "label": "Observe and recover",
+              "description": "Check service behavior and retain teardown evidence."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "prepare"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "inspect"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "approved real operation"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "verify actual outcome"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. prepare",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Inspect create/update/replace/destroy."
+            },
+            {
+              "title": "2. inspect",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Confirm scope, data migration and cost."
+            },
+            {
+              "title": "3. approved real operation",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Only after independently choosing real work."
+            },
+            {
+              "title": "4. verify actual outcome",
+              "activeNodes": [
+                "3",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Check service behavior and retain teardown evidence."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "lifecycle",
+        "title": "12. Replacement and lifecycle safeguards",
+        "takeaway": "Protect data across resource identity changes.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "create_before_destroy can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. prevent_destroy blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. ignore_changes intentionally delegates selected drift and can conceal unexpected changes if used broadly."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Renaming a storage account is not equivalent to editing an owner tag. The provider may require a new account while data remains in the old one. The learner must copy and validate data, switch clients and retain recovery options rather than assuming replacement migrates contents."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Protect data across resource identity changes. Which decision follows?",
+          "options": [
+            "Review replacement data movement and the limits of lifecycle guards.",
+            "Assume create_before_destroy automatically copies stored data.",
+            "Set ignore_changes on all attributes so future drift cannot threaten availability."
+          ],
+          "correct": 0,
+          "explanation": "Lifecycle ordering manages resource operations; application data migration remains a separate task."
+        },
+        "references": [
+          {
+            "title": "Terraform lifecycle",
+            "url": "https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle",
+            "section": "create_before_destroy; prevent_destroy; ignore_changes",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform lifecycle behavior, including limitations; no resource lifecycle operation is executed here."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Write a rename migration with copy verification, switch criterion and rollback deadline. Explain why deleting a resource block should still be reviewed even if prevent_destroy once appeared in it.",
+          "checks": [
+            "Include copy verification, switch criterion and rollback deadline.",
+            "Describe the limits of create_before_destroy and removed prevent_destroy configuration."
+          ],
+          "solution": "For storage rename, create a permitted new account, copy synthetic data with integrity checks, switch clients under an explicit criterion and retain rollback until the deadline. create_before_destroy does not copy data or bypass unique-name/quota constraints. Removing a block removes its prevent_destroy configuration; deletion still needs review.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "modules",
+        "title": "13. Modules and environment boundaries",
+        "takeaway": "Reuse a contract without hiding ownership or mixing environments.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A module packages resources with typed inputs and outputs. Keep contracts small and avoid passing every provider field through without design. Development and production need distinct state, access and lifecycle policies. Terraform workspaces provide multiple states for one configuration but are not complete isolation of credentials, policy or organizational boundaries."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A storage module could accept name, region and approved tags, and expose its ID. It should state networking prerequisites. The supplied single-file template is intentionally a readable foundation; turning it into a module is a learner extension, not a hidden generated abstraction."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Reuse a contract without hiding ownership or mixing environments. Which decision follows?",
+          "options": [
+            "Separate reuse from access and state isolation.",
+            "Assume a workspace name alone prevents production access.",
+            "Embed production credentials in the reusable module so all environments share its behavior."
+          ],
+          "correct": 0,
+          "explanation": "Workspace selection does not replace separate credentials, permissions and organizational controls."
+        },
+        "references": [
+          {
+            "title": "Terraform modules",
+            "url": "https://developer.hashicorp.com/terraform/language/modules",
+            "section": "Module structure; using modules",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x module concepts; provider-specific schemas need validation."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Design a module interface with three essential inputs and one useful output. Explain how production credentials and state remain inaccessible to a development runner even if both use the same module source.",
+          "checks": [
+            "Define a small typed module contract and useful output.",
+            "Explain how a development runner is denied production identity/state access."
+          ],
+          "solution": "A small storage module can accept approved name, region and tags and return its resource ID while documenting connectivity prerequisites. Development and production need distinct credentials, state permissions and lifecycle ownership. Reusing module source is compatible with isolation; workspace names alone cannot enforce that access boundary.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "drift-import",
+        "title": "14. Drift detection and adopting existing resources",
+        "takeaway": "Import associates identity; review configuration before changing it.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Manual cloud changes can cause drift from configuration. A normal refreshed plan may propose restoring configured values. Decide whether an emergency change should be codified or reverted. Import associates an existing object with an address but does not automatically document every intended property or prove the next plan is safe."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "An operator temporarily enables public storage access during troubleshooting. The next plan should reveal the divergence; the security owner decides a controlled remediation. Importing an existing account needs exactly one intended state owner to avoid competing management."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Import associates identity; review configuration before changing it. Which decision follows?",
+          "options": [
+            "Review drift and adoption under a single explicit resource owner.",
+            "Import an existing object and apply immediately without inspecting the plan.",
+            "Manage the same imported resource from two state files to gain deployment redundancy."
+          ],
+          "correct": 0,
+          "explanation": "State association is only the start of adoption; configuration can still propose destructive or unsafe changes."
+        },
+        "references": [
+          {
+            "title": "Terraform import",
+            "url": "https://developer.hashicorp.com/terraform/language/import",
+            "section": "Import existing resources",
+            "reviewed": "2026-09-30",
+            "scope": "Import establishes a state association; adoption still requires configuration and a reviewed plan."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Use the offline model to change a tag and compare drift. Draft an adoption checklist: scope, identity, one owner, backup, matching configuration, non-destructive reviewed plan. Do not import a shared resource for this exercise.",
+          "checks": [
+            "Identify a deliberate decision for manual drift.",
+            "List scope, one owner and reviewed plan as adoption gates."
+          ],
+          "solution": "A tag drift changes observed inventory and should be deliberately codified or reverted by its owner. For adoption verify scope, resource ID and a single state owner, protect data, write matching configuration and inspect a non-destructive refreshed plan before mutation. Import only establishes an association; it is not automatic safe reconciliation.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "policy",
+        "title": "15. Policy checks and evidence limits",
+        "takeaway": "Static checks catch selected mistakes without proving real enforcement.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Policy checks can reject missing owner/expiry tags, public endpoints or overbroad roles. Such checks are useful before a plan but can be bypassed if the real deployment path ignores them. Full authorization and network enforcement require tests against actual services. A locally passing JSON contract is evidence about that JSON only."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "infra_lab.py rejects public storage, wildcard roles and incomplete metadata in topology.json. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "from infra_lab import validate\nimport json\nfrom pathlib import Path\n\nresources = json.loads(Path('topology.json').read_text())['resources']\nresources[1]['public_network'] = True\ntry:\n    validate(resources)\nexcept ValueError as error:\n    print(error)  # public storage forbidden by training policy"
+          }
+        ],
+        "quiz": {
+          "question": "Static checks catch selected mistakes without proving real enforcement. Which decision follows?",
+          "options": [
+            "Combine static policies with actual enforcement tests at the target boundary.",
+            "Claim the real cloud is secure after mock policy tests pass.",
+            "Assume a local policy result prevents manual portal changes made by another authorized user."
+          ],
+          "correct": 0,
+          "explanation": "Selected fixture checks cannot establish account configuration or live enforcement."
+        },
+        "references": [
+          {
+            "title": "Azure role-based access control",
+            "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+            "section": "Principal; role definition; scope; additive assignments",
+            "reviewed": "2026-09-30",
+            "scope": "Azure management and supported data-plane authorization; notebook simulations do not authenticate to Azure."
+          },
+          {
+            "title": "Azure Virtual Network",
+            "url": "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
+            "section": "Communication; filtering; routing",
+            "reviewed": "2026-09-30",
+            "scope": "Azure networking overview; actual private connectivity also requires DNS and identity configuration."
+          },
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Modify each forbidden property in a copy and run the negative tests. Identify an unmodeled risk, such as a broader inherited role assignment. Name the real control and observable denied test required to evaluate it.",
+          "checks": [
+            "Demonstrate each selected negative fixture case.",
+            "Name an unmodeled inherited-access risk and actual denied test."
+          ],
+          "solution": "Changing public networking, omitting required tags or using Owner/wildcard roles must fail the selected local policy tests. An inherited Azure role or real network configuration remains outside this fixture model. Name actual provider-enforced controls and test allowed/denied behavior separately before claiming real enforcement.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "secrets",
+        "title": "16. Secret lifecycle and workload identity",
+        "takeaway": "Reduce credential storage and test rotation and revocation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Prefer short-lived or federated identity where supported. Managed identity is for compatible Azure-hosted resources; local developer login and CI federation have different flows. Do not print credentials in CI logs or embed them in Terraform examples. Secret rotation should include consumers, overlapping validity where needed and proof that revoked credentials fail."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A CI deployment exchanges a trusted workflow identity for a narrow Azure identity, while an application uses its own runtime identity. These identities must not be interchangeable. The optional template accepts no password or client secret and performs no real authentication in the offline lab."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Reduce credential storage and test rotation and revocation. Which decision follows?",
+          "options": [
+            "Use distinct short-lived deployment and runtime identities with revocation tests.",
+            "Reuse one long-lived secret across developers, CI and the application.",
+            "Revoke a secret in a worksheet and assume all existing sessions and cached tokens instantly stop working."
+          ],
+          "correct": 0,
+          "explanation": "Separate identities improve attribution, expiry control and the scope of compromised access."
+        },
+        "references": [
+          {
+            "title": "Azure Terraform managed identity authentication",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure-with-managed-identity-for-azure-services",
+            "section": "Configure and authenticate managed identity",
+            "reviewed": "2026-09-30",
+            "scope": "Azure-hosted identity workflow; a local workstation does not automatically receive managed identity."
+          },
+          {
+            "title": "Azure role-based access control",
+            "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+            "section": "Principal; role definition; scope; additive assignments",
+            "reviewed": "2026-09-30",
+            "scope": "Azure management and supported data-plane authorization; notebook simulations do not authenticate to Azure."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Draw credential issuance, use, expiry and revocation. Define positive and denied tests. Label a localhost/mock token exercise as simulation rather than claiming that an identity provider was exercised.",
+          "checks": [
+            "Separate deployment and runtime credential flows.",
+            "Include expiry/revocation plus a negative test and its real execution boundary."
+          ],
+          "solution": "Separate developer login, trusted CI federation and compatible hosted runtime identity. Document issuance, permitted use, expiry and revocation; test both positive access and denied revoked identity in the real environment. A localhost mock token does not exercise Azure identity enforcement, and no credential is supplied by this kit.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "cost-control",
+        "title": "17. Cost estimation, budgets and cleanup",
+        "takeaway": "Budget alerts are not automatic spending caps.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Include compute uptime, storage, transactions, egress, monitoring retention and idle resources in estimates. Provider prices vary by region and date, so use the current calculator when considering real spend. Azure budgets can notify and connect automation but do not by themselves stop charges. Set an owner, expiry and teardown verification."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB = 4\n# Not Azure pricing or a bill forecast."
+          }
+        ],
+        "quiz": {
+          "question": "Budget alerts are not automatic spending caps. Which decision follows?",
+          "options": [
+            "Track all cost categories and verify resource removal instead of relying on alerts.",
+            "Assume an Azure budget automatically prevents overspending.",
+            "Set an expires tag and assume Azure automatically deletes the resources on that date."
+          ],
+          "correct": 0,
+          "explanation": "A budget is a monitoring and notification mechanism unless separately integrated with controlled automation."
+        },
+        "references": [
+          {
+            "title": "Azure budgets",
+            "url": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets",
+            "section": "Create budgets; configure alerts",
+            "reviewed": "2026-09-30",
+            "scope": "Budgets notify and can integrate automation; a budget by itself does not cap or stop resource spending."
+          },
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Run the cost arithmetic test. Write a budget threshold plus an explicit response owner and cleanup inventory. For optional real work, confirm current regional prices and choose a tiny time-boxed isolated scope before provisioning anything.",
+          "checks": [
+            "Compute 24 fictional units without labeling them Azure prices.",
+            "Name cost categories, alert owner and observed cleanup checks."
+          ],
+          "solution": "The invented teaching estimate is 20 compute units plus 4 storage units, total 24. Real review includes current regional compute, storage, transactions, egress, monitoring and idle costs. A budget needs an alert owner and response plan; it does not cap spending. Set expiry and verify teardown inventory instead of relying on tags alone.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "deployment-pipeline",
+        "title": "18. CI planning and reviewed deployment",
+        "takeaway": "Separate untrusted validation from credentialed mutation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Run formatting, validation and policy checks before credentialed actions. Pull-request code may be untrusted and should not receive deployment secrets. Review plan artifacts, commit identity, environment and provider selection. Promotion should bind the reviewed code and configuration to the target environment and permit a deliberate rollback or recovery path."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A pull request runs offline Python checks with no Azure identity. A trusted release job can obtain scoped identity and generate a target-specific plan, with protected review before deployment. The supplied kit has no CI cloud credentials or auto-apply pipeline."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Separate untrusted validation from credentialed mutation. Which decision follows?",
+          "options": [
+            "Keep untrusted checks unprivileged and bind deployment to a reviewed artifact.",
+            "Expose cloud credentials to every PR so plan checks are convenient.",
+            "Approve only the plan summary while letting an unreviewed release script choose the actual account and resources."
+          ],
+          "correct": 0,
+          "explanation": "Untrusted executable code must not gain the privilege to mutate a real environment or exfiltrate its identity."
+        },
+        "references": [
+          {
+            "title": "Azure Terraform managed identity authentication",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure-with-managed-identity-for-azure-services",
+            "section": "Configure and authenticate managed identity",
+            "reviewed": "2026-09-30",
+            "scope": "Azure-hosted identity workflow; a local workstation does not automatically receive managed identity."
+          },
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Create a pipeline sketch showing where secrets become available and what code can access them. Explain why reusing an unreviewed PR script in a privileged release step widens the trust boundary.",
+          "checks": [
+            "Mark exactly where cloud identity becomes available.",
+            "Explain how unreviewed executable code is kept out of privileged release steps."
+          ],
+          "solution": "Untrusted PR code runs offline checks without cloud identity. A trusted release uses reviewed artifacts and a deliberately scoped short-lived identity under protected environment rules. Review where executable code can access that identity; invoking an unreviewed PR script inside a privileged job crosses the trust boundary.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Untrusted checks and privileged release",
+          "summary": "Identity becomes available only inside the reviewed release boundary.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Pull request",
+              "description": "Potentially untrusted source."
+            },
+            {
+              "id": "1",
+              "label": "Offline checks",
+              "description": "No Azure credentials."
+            },
+            {
+              "id": "2",
+              "label": "Reviewed release artifact",
+              "description": "Bind reviewed commit and environment."
+            },
+            {
+              "id": "3",
+              "label": "Scoped deployment identity",
+              "description": "Short-lived authorized release access."
+            },
+            {
+              "id": "4",
+              "label": "Target scope",
+              "description": "Only the chosen environment."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "validate unprivileged"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "review and promote"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "trusted release boundary"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "scoped operation"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. validate unprivileged",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "No Azure credentials."
+            },
+            {
+              "title": "2. review and promote",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Bind reviewed commit and environment."
+            },
+            {
+              "title": "3. trusted release boundary",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Short-lived authorized release access."
+            },
+            {
+              "title": "4. scoped operation",
+              "activeNodes": [
+                "3",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Only the chosen environment."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "infra-tests",
+        "title": "19. Infrastructure tests and mock boundaries",
+        "takeaway": "Distinguish syntax, model, provider and deployed-service tests.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. terraform validate checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The supplied suite executes only local Python/SQLite-free inventory modeling, while optional init/validate checks the AzureRM schema without apply. Mock Terraform tests are discussed as an extension requiring Terraform 1.7+; they do not establish real service reachability.",
+              "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            ],
+            "example": "python infra_lab.py\npython -m unittest -v test_infra_lab.py"
+          }
+        ],
+        "quiz": {
+          "question": "Distinguish syntax, model, provider and deployed-service tests. Which decision follows?",
+          "options": [
+            "Name the exact execution boundary for each passing check.",
+            "Assume terraform test is always safe and offline by default.",
+            "Treat Terraform validate as a test of current subscription permissions and resource name availability."
+          ],
+          "correct": 0,
+          "explanation": "Terraform test can provision resources; explicit run and provider choices determine behavior and potential cost."
+        },
+        "references": [
+          {
+            "title": "Terraform tests",
+            "url": "https://developer.hashicorp.com/terraform/language/tests",
+            "section": "Tests; run blocks; mocked providers",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform testing can use real resources by default; mock provider support requires compatible Terraform, introduced in 1.7."
+          },
+          {
+            "title": "Terraform on Azure overview",
+            "url": "https://learn.microsoft.com/en-us/azure/developer/terraform/overview",
+            "section": "Terraform on Azure",
+            "reviewed": "2026-09-30",
+            "scope": "Azure Terraform introduction; provider releases and resource availability remain changeable."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Build an evidence table with syntax, static policy, provider validation and deployed positive/negative tests. Mark the latter as not executed. Do not equate a mocked provider result with a successful live deployment.",
+          "checks": [
+            "Create distinct syntax, model, provider and deployed-service evidence rows.",
+            "Mark unexecuted live tests honestly and explain Terraform-test cost behavior."
+          ],
+          "solution": "JSON parsing establishes syntax; local Python tests establish this inventory model's rules; initialized Terraform validate checks language/provider schema. A real plan/deployment and allowed/denied endpoint tests require a chosen environment. Terraform test can provision by default unless explicitly configured for planned/mocked behavior with compatible versions.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "resilience",
+        "title": "20. Recovery, backups and failure domains",
+        "takeaway": "Infrastructure reconstruction and data restoration are separate plans.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A region, zone, account or identity failure can affect different parts of a workload. Rebuilding infrastructure from code does not restore database rows or blob contents. Define recovery point and time objectives, protect backups separately, and rehearse isolated restoration with real synthetic verification when choosing a live environment."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "If an export file store is lost, Terraform can create another account but cannot invent its missing files. If state is lost while the cloud survives, preserve resource identity and adopt carefully rather than creating duplicates. A rollback can also fail if data migrations are incompatible."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Infrastructure reconstruction and data restoration are separate plans. Which decision follows?",
+          "options": [
+            "Restore infrastructure identity and application data through separate verified steps.",
+            "Claim RPO is zero because configuration is committed to Git.",
+            "Reapply the same configuration after data deletion and assume the recreated account contains its previous blobs."
+          ],
+          "correct": 0,
+          "explanation": "Git configuration preserves intended topology, not necessarily application state or completed writes."
+        },
+        "references": [
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          },
+          {
+            "title": "Terraform state",
+            "url": "https://developer.hashicorp.com/terraform/language/state",
+            "section": "Purpose of Terraform state",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Write separate runbooks for lost state, deleted storage and compromised identity. For each, name the evidence required before resuming user traffic. Offline plan tests do not measure real RTO or backup integrity.",
+          "checks": [
+            "Separate state loss, data loss and identity compromise recovery.",
+            "Name evidence before resuming traffic and avoid invented RPO/RTO."
+          ],
+          "solution": "Lost state with surviving resources needs protected state recovery or careful adoption of their identities. Deleted storage needs application-data backups and verified restore, not just new resource definitions. Compromised identity needs revocation, rotated access and investigation before traffic resumes. Each runbook names owners and observed validation.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "cleanup",
+        "title": "21. Teardown and leftover resources",
+        "takeaway": "Deletion needs scope checks and post-deletion verification.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Review destroy plans as carefully as creates. Confirm subscription and resource identity, preserve needed data, and inspect provider-dependent order and deletion protections. Destroy may fail partway, leave soft-deleted objects or retain resources outside the managed state. Cost and data-retention cleanup need observed verification, not merely a command exit."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review terraform plan -destroy before any terraform destroy, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Deletion needs scope checks and post-deletion verification. Which decision follows?",
+          "options": [
+            "Confirm disposable ownership, review destruction and check leftovers afterward.",
+            "Assume a successful destroy means every related charge and copy of data is gone.",
+            "Delete the resource group as a shortcut even when it contains unrelated resources absent from Terraform state."
+          ],
+          "correct": 0,
+          "explanation": "State ownership, soft deletion and external resources can leave costs or retained data beyond the managed deletion."
+        },
+        "references": [
+          {
+            "title": "Terraform lifecycle",
+            "url": "https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle",
+            "section": "create_before_destroy; prevent_destroy; ignore_changes",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform lifecycle behavior, including limitations; no resource lifecycle operation is executed here."
+          },
+          {
+            "title": "Azure budgets",
+            "url": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets",
+            "section": "Create budgets; configure alerts",
+            "reviewed": "2026-09-30",
+            "scope": "Budgets notify and can integrate automation; a budget by itself does not cap or stop resource spending."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Complete the teardown checklist in workbook.md. List resources excluded from Terraform ownership, monitoring exports and backups. Never run a resource-group deletion against a computed or unverified shared scope.",
+          "checks": [
+            "Verify ownership/scope before destructive work.",
+            "List external/retained objects and observable post-deletion checks."
+          ],
+          "solution": "Check exact subscription and disposable resource ownership, preserve required synthetic evidence/data, review the destroy plan and deliberately delete only owned learning resources. Verify state, portal inventory, retained/soft-deleted objects and external monitoring/backups afterward. An operation exit cannot establish that every cost source or retained copy disappeared.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "launch-review",
+        "title": "22. Infrastructure launch decision",
+        "takeaway": "Use an evidence portfolio to separate design confidence from production readiness.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A reviewable portfolio has an ADR, scope and identity map, resource graph, plan classification, data restore plan, cost categories, cleanup procedure and evidence ledger. Record which local tests passed, which provider checks ran and which real deployment questions remain. A complete course is bounded learning rather than a certification of an operated cloud system."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The advanced project designs a private full-stack notebook and reviews public networking, state exposure, replacement and credentialed CI risks. It keeps the static notebook unchanged and does not provision cloud resources. Optional live work needs an explicit chosen account, cost limit, ownership and teardown."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Use an evidence portfolio to separate design confidence from production readiness. Which decision follows?",
+          "options": [
+            "Tie readiness claims to actual evidence and name remaining live experiments.",
+            "Declare production-ready after finishing all reading and quizzes.",
+            "Interpret provider-schema validation as proof that the complete full-stack application is production-ready."
+          ],
+          "correct": 0,
+          "explanation": "Reading and local tests build a foundation, while operated systems need evidence at their real service boundaries."
+        },
+        "references": [
+          {
+            "title": "Azure Well-Architected Framework",
+            "url": "https://learn.microsoft.com/en-us/azure/well-architected/",
+            "section": "Reliability; security; cost; operations; performance pillars",
+            "reviewed": "2026-09-30",
+            "scope": "Azure architecture guidance; mock checks do not establish production readiness."
+          },
+          {
+            "title": "Terraform tests",
+            "url": "https://developer.hashicorp.com/terraform/language/tests",
+            "section": "Tests; run blocks; mocked providers",
+            "reviewed": "2026-09-30",
+            "scope": "Terraform testing can use real resources by default; mock provider support requires compatible Terraform, introduced in 1.7."
+          },
+          {
+            "title": "Azure budgets",
+            "url": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets",
+            "section": "Create budgets; configure alerts",
+            "reviewed": "2026-09-30",
+            "scope": "Budgets notify and can integrate automation; a budget by itself does not cap or stop resource spending."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Present a go/no-go decision with three unresolved risks and a concrete next experiment for each. Reject any claim based solely on a mock test when it requires actual network, identity, data or cost evidence.",
+          "checks": [
+            "Bind each readiness claim to actual observed or explicitly missing evidence.",
+            "Provide three unresolved risks with a next experiment and decision trigger."
+          ],
+          "solution": "Present an ADR and identity/network graph, protected state design, plan classification, data recovery, cost categories and verified-cleanup proposal. Record local executed tests, optional provider validation and unexecuted live claims separately. Three go/no-go risks can be denied-access evidence, restore integrity and private-connectivity checks, each with a concrete next experiment.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Cloud responsibility and scope map",
+        "description": "Design a small hypothetical private notebook without creating resources.",
+        "exitCriteria": [
+          "Every operational responsibility has an owner.",
+          "Network reachability and permission are distinct.",
+          "Current cloud prices are not invented."
+        ],
+        "project": {
+          "title": "Cloud responsibility and scope map",
+          "brief": "Design a small hypothetical private notebook without creating resources.",
+          "requirements": [
+            "Compare static and managed app responsibilities.",
+            "Name tenant, subscription, region and disposable scope.",
+            "Draw network and identity gates.",
+            "List cost categories and data owners."
+          ],
+          "rubric": [
+            "Every operational responsibility has an owner.",
+            "Network reachability and permission are distinct.",
+            "Current cloud prices are not invented."
+          ],
+          "solution": "Retain static hosting until authenticated writes are needed. Map client/API/storage identities and routes, and choose an isolated learning scope with owner and expiry. Estimate categories, then consult current regional pricing before real spend.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Reviewed infrastructure plan",
+        "description": "Run the offline planner and inspect the optional Azure Terraform JSON.",
+        "exitCriteria": [
+          "Model output is not presented as Terraform output.",
+          "Destruction and replacement include data consequences.",
+          "Provider validation is distinct from deployment."
+        ],
+        "project": {
+          "title": "Reviewed infrastructure plan",
+          "brief": "Run the offline planner and inspect the optional Azure Terraform JSON.",
+          "requirements": [
+            "Run positive and negative tests.",
+            "Classify create/update/replace/destroy.",
+            "Review typed inputs, state handling and dependencies.",
+            "Optionally init/validate in a separate empty folder; record results."
+          ],
+          "rubric": [
+            "Model output is not presented as Terraform output.",
+            "Destruction and replacement include data consequences.",
+            "Provider validation is distinct from deployment."
+          ],
+          "solution": "Use the teaching planner to prove its explicit policy and operation contract. The optional provider-backed template needs Terraform initialization, an actual locked AzureRM selection and validate; it does not provide private application connectivity or perform a deployment.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Cloud launch and teardown review",
+        "description": "Prepare an evidence portfolio for a future full-stack deployment.",
+        "exitCriteria": [
+          "No mock result becomes a real cloud claim.",
+          "State and application data recovery are separate.",
+          "Cleanup checks ownership and leftovers."
+        ],
+        "project": {
+          "title": "Cloud launch and teardown review",
+          "brief": "Prepare an evidence portfolio for a future full-stack deployment.",
+          "requirements": [
+            "Separate PR checks from privileged release steps.",
+            "Design state, identity and data recovery.",
+            "Create cost, expiry and cleanup checklists.",
+            "Specify real denied-access, restore and smoke tests still needed."
+          ],
+          "rubric": [
+            "No mock result becomes a real cloud claim.",
+            "State and application data recovery are separate.",
+            "Cleanup checks ownership and leftovers."
+          ],
+          "solution": "Review the exact resource graph and identity scopes, protected state and credential boundaries; rehearse data recovery in an independently chosen environment. Confirm budget alerts are not a cap. Scope-check and review every deletion, then verify retained objects and cost sources.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete runnable practice kit",
+        "href": "paths/cloud-infrastructure/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "cloud-infrastructure-practice",
+      "files": [
+        {
+          "id": "infra_lab-py",
+          "href": "paths/cloud-infrastructure/practice/infra_lab.py",
+          "role": "reference",
+          "description": "Reference implementation or clearly labeled training configuration."
+        },
+        {
+          "id": "test_infra_lab-py",
+          "href": "paths/cloud-infrastructure/practice/test_infra_lab.py",
+          "role": "test",
+          "description": "Locally runnable regression tests."
+        },
+        {
+          "id": "topology-json",
+          "href": "paths/cloud-infrastructure/practice/topology.json",
+          "role": "reference",
+          "description": "Reference implementation or clearly labeled training configuration."
+        },
+        {
+          "id": "main-tf-json",
+          "href": "paths/cloud-infrastructure/practice/main.tf.json",
+          "role": "reference",
+          "description": "Reference implementation or clearly labeled training configuration."
+        },
+        {
+          "id": "README-md",
+          "href": "paths/cloud-infrastructure/practice/README.md",
+          "role": "guide",
+          "description": "Runtime, exact commands, expected results, cleanup and execution boundaries."
+        },
+        {
+          "id": "workbook-md",
+          "href": "paths/cloud-infrastructure/practice/workbook.md",
+          "role": "guide",
+          "description": "Three projects, exercises, evidence ledger and reference reasoning."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Cloud responsibility and scope map",
+          "goal": "Design a small hypothetical private notebook without creating resources.",
+          "fileIds": [
+            "infra_lab-py",
+            "test_infra_lab-py",
+            "topology-json",
+            "main-tf-json",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Compare static and managed app responsibilities.",
+            "Name tenant, subscription, region and disposable scope.",
+            "Draw network and identity gates.",
+            "List cost categories and data owners.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python infra_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_infra_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Reviewed infrastructure plan",
+          "goal": "Run the offline planner and inspect the optional Azure Terraform JSON.",
+          "fileIds": [
+            "infra_lab-py",
+            "test_infra_lab-py",
+            "topology-json",
+            "main-tf-json",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Run positive and negative tests.",
+            "Classify create/update/replace/destroy.",
+            "Review typed inputs, state handling and dependencies.",
+            "Optionally init/validate in a separate empty folder; record results.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python infra_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_infra_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Cloud launch and teardown review",
+          "goal": "Prepare an evidence portfolio for a future full-stack deployment.",
+          "fileIds": [
+            "infra_lab-py",
+            "test_infra_lab-py",
+            "topology-json",
+            "main-tf-json",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Separate PR checks from privileged release steps.",
+            "Design state, identity and data recovery.",
+            "Create cost, expiry and cleanup checklists.",
+            "Specify real denied-access, restore and smoke tests still needed.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python infra_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_infra_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "cloud-contract": "foundation",
+        "azure-scope": "foundation",
+        "requirements": "foundation",
+        "networking": "foundation",
+        "identity": "foundation",
+        "iac-model": "foundation",
+        "provider-init": "foundation",
+        "variables": "foundation",
+        "dependencies": "intermediate",
+        "state": "intermediate",
+        "plan-review": "intermediate",
+        "lifecycle": "intermediate",
+        "modules": "intermediate",
+        "drift-import": "intermediate",
+        "policy": "intermediate",
+        "secrets": "intermediate",
+        "cost-control": "advanced",
+        "deployment-pipeline": "advanced",
+        "infra-tests": "advanced",
+        "resilience": "advanced",
+        "cleanup": "advanced",
+        "launch-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/cloud-infrastructure/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "data-engineering",
+    "title": "Data Engineering",
+    "category": "Data and databases",
+    "status": "ready",
+    "description": "Follow 22 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Comfort creating files and opening a terminal.",
+      "Python 3.11+ for the portable practice kit; no external packages.",
+      "Basic Python functions and SQL SELECT are helpful; introductory lessons explain the data vocabulary."
+    ],
+    "outcomes": [
+      "Define row grain, quality, time and money before loading.",
+      "Coordinate batch identity and business effects in one transaction.",
+      "Defend lineage, recovery, schema evolution and target integration limits."
+    ],
+    "setup": [
+      "Download the practice bundle and extract its named folder.",
+      "Run the README baseline commands before attempting independent extensions.",
+      "No credentials, cloud accounts or administrator actions are required for the local baseline."
+    ],
+    "nextSteps": [
+      "Complete the staged projects and explain failure evidence.",
+      "Cross-reference the existing Python, SQL Server, networking and Kubernetes paths where relevant.",
+      "Run optional platform integration separately and record actual versions and results."
+    ],
+    "sources": [
+      {
+        "title": "DictReader field mapping",
+        "url": "https://docs.python.org/3/library/csv.html"
+      },
+      {
+        "title": "Tutorial and transactions",
+        "url": "https://docs.python.org/3/library/sqlite3.html"
+      },
+      {
+        "title": "Aware and naive objects",
+        "url": "https://docs.python.org/3/library/datetime.html"
+      },
+      {
+        "title": "SQL Server CDC overview",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17"
+      },
+      {
+        "title": "SQL Server CREATE TABLE constraints",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17"
+      },
+      {
+        "title": "Airflow DAG concepts",
+        "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html"
+      },
+      {
+        "title": "Microsoft ETL architecture guide",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/etl"
+      },
+      {
+        "title": "Python decimal reference",
+        "url": "https://docs.python.org/3/library/decimal.html"
+      },
+      {
+        "title": "Microsoft incremental copy overview",
+        "url": "https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-overview"
+      },
+      {
+        "title": "Microsoft dimensional modeling",
+        "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables"
+      },
+      {
+        "title": "Microsoft security architecture guide",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/security/security-get-started"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "data-products-and-grain",
+        "title": "1. Define a data product and its grain",
+        "stage": "foundation",
+        "takeaway": "A data pipeline moves and transforms records for an identifiable consumer.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A data pipeline moves and transforms records for an identifiable consumer. Define the question, owner, refresh interval and acceptable errors before choosing tools. Grain means what one row represents; a unique order, order line and daily total have different grains."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "For a learning-sales dataset, one row is one order identified by order_id. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
+            ],
+            "example": "order_id,customer_id,occurred_at,amount_cents\no1,c1,2026-09-01T10:00:00Z,1250\no2,c1,2026-09-01T11:00:00Z,750\n# Two orders; total 2000 cents for the day."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "More rows do not imply better data. Document whether cancelled orders, refunds and test transactions belong. A schema cannot substitute for a business definition."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define order count, customer count and revenue for these rows and write their grains.",
+          "solution": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Define row grain first",
+            "A joined row always equals one order",
+            "Column names settle business meaning"
+          ],
+          "correct": 0,
+          "explanation": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "DictReader field mapping",
+            "url": "https://docs.python.org/3/library/csv.html",
+            "section": "DictReader field mapping",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "etl-and-elt",
+        "title": "2. ETL, ELT and pipeline boundaries",
+        "stage": "foundation",
+        "takeaway": "ETL extracts data, transforms it and loads a target.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "ETL extracts data, transforms it and loads a target. ELT extracts and loads before target-side transformation. Both require contracts, lineage and quality checks. A raw zone preserves source evidence; a curated zone carries validated, consumer-specific meaning."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Our small reference reads a CSV, validates fields and loads SQLite within one transaction, so it is a bounded ETL exercise. A warehouse approach might land source rows first, then transform with SQL. Choose based on governance, scale, target capability and recovery needs."
+            ],
+            "example": "# Logical layers, not shell commands:\nsource CSV -> contract validation -> transactional orders table\norders table -> UTC-day aggregate -> consumer report"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Raw does not mean unrestricted permanent retention. Sensitive data needs appropriate storage, access and deletion policies. The lab uses fictional records and no cloud service."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose where to reject malformed timestamps in ETL and ELT and explain how rejected evidence is retained safely.",
+          "solution": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Both need quality and ownership",
+            "ELT makes validation unnecessary",
+            "Raw data should always be public"
+          ],
+          "correct": 0,
+          "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Microsoft ETL architecture guide",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/etl",
+            "section": "Extract, transform and load; ELT",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "Tutorial and transactions",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Tutorial and transactions",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ],
+        "diagram": {
+          "title": "From source evidence to a useful report",
+          "summary": "The local baseline validates a bounded source before transactional loading and reconciliation. Publishing depends on the correctness checks.",
+          "nodes": [
+            {
+              "id": "source",
+              "label": "Fictional CSV",
+              "description": "Raw source bytes and contract."
+            },
+            {
+              "id": "valid",
+              "label": "Contract checks",
+              "description": "Headers, types, limits and UTC instants."
+            },
+            {
+              "id": "target",
+              "label": "Transactional orders",
+              "description": "Business effects plus batch identity."
+            },
+            {
+              "id": "check",
+              "label": "Reconciliation",
+              "description": "Keys, counts and integer totals."
+            },
+            {
+              "id": "report",
+              "label": "Daily report",
+              "description": "UTC-day totals with stated scope."
+            }
+          ],
+          "edges": [
+            {
+              "from": "source",
+              "to": "valid",
+              "label": "parse"
+            },
+            {
+              "from": "valid",
+              "to": "target",
+              "label": "accepted batch"
+            },
+            {
+              "from": "target",
+              "to": "check",
+              "label": "query"
+            },
+            {
+              "from": "check",
+              "to": "report",
+              "label": "verified output"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Parse",
+              "activeNodes": [
+                "source",
+                "valid"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Raw source bytes and contract. Headers, types, limits and UTC instants."
+            },
+            {
+              "title": "Accepted batch",
+              "activeNodes": [
+                "valid",
+                "target"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Headers, types, limits and UTC instants. Business effects plus batch identity."
+            },
+            {
+              "title": "Query",
+              "activeNodes": [
+                "target",
+                "check"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Business effects plus batch identity. Keys, counts and integer totals."
+            },
+            {
+              "title": "Verified output",
+              "activeNodes": [
+                "check",
+                "report"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Keys, counts and integer totals. UTC-day totals with stated scope."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "csv-and-encoding",
+        "title": "3. Parse files without inventing a parser",
+        "stage": "foundation",
+        "takeaway": "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python csv.DictReader maps named fields; open(..., newline=\"\", encoding=\"utf-8\") supports its newline handling."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A customer label \"North, Team\" is one value, not two columns. A strict contract should reject missing, duplicate or unexpected headers rather than silently shifting fields. Bound file size before materializing its contents."
+            ],
+            "example": "import csv, io\nrows = list(csv.DictReader(io.StringIO('id,label\\n1,\"North, Team\"\\n')))\nprint(rows[0][\"label\"])\n# Expected: North, Team"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A byte-order mark can affect the first header; choose utf-8-sig only when it is part of the producer contract. Malformed encoding and extra fields should fail visibly, not turn into silent replacement characters."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Give three reasons a CSV importer should reject a file before writing the destination.",
+          "solution": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Use a parser with an explicit contract",
+            "split comma handles quoted fields",
+            "Ignore unexpected fields silently"
+          ],
+          "correct": 0,
+          "explanation": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Reader objects and newline handling",
+            "url": "https://docs.python.org/3/library/csv.html",
+            "section": "Reader objects and newline handling",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "schema-and-contracts",
+        "title": "4. Types, nulls and schema contracts",
+        "stage": "foundation",
+        "takeaway": "A contract specifies fields, types, limits and meaning.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A contract specifies fields, types, limits and meaning. Text files carry strings even when a column means integer cents. Convert deliberately and reject invalid representations. Distinguish absent, unknown, empty and zero instead of mapping every missing value to zero."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "amount_cents=\"1250\" becomes integer 1250; \"12.50\" violates this cents contract. customer_id must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
+            ],
+            "example": "def cents(value):\n    if not value.isascii() or not value.isdigit():\n        raise ValueError(\"expected nonnegative integer cents\")\n    return int(value)\nprint(cents(\"1250\"))\n# Expected 1250; cents(\"12.50\") raises ValueError."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A database affinity/type alone may accept values you did not intend. Validate at the application boundary and use database constraints as a second layer. Schema evolution requires a versioned compatibility policy."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define whether an unknown customer ID may be blank and what should happen to a missing amount.",
+          "solution": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Unknown is different from zero",
+            "Every empty value means zero",
+            "A column label enforces its type"
+          ],
+          "correct": 0,
+          "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "SQLite and Python types",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "SQLite and Python types",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "validation-and-quarantine",
+        "title": "5. Quality checks and rejection policy",
+        "stage": "foundation",
+        "takeaway": "Quality includes completeness, validity, uniqueness, consistency and timeliness.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Quality includes completeness, validity, uniqueness, consistency and timeliness. Decide whether a single invalid row rejects the whole batch or moves to quarantine. Publishing good rows while hiding rejected rows can make totals look deceptively complete."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "For a three-row batch with one negative amount, our reference rejects the entire batch before commit. It reports a category and row number without printing customer details. A partial-success design would need accepted/rejected counts and a consumer-visible completeness rule."
+            ],
+            "example": "# Quality report example:\n{\"input_rows\": 3, \"accepted_rows\": 0,\n \"rejected_batch\": true, \"reason\": \"amount contract\"}\n# Atomic policy: previous curated state remains unchanged."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Do not log whole sensitive rows by default. A quarantine store needs retention and access controls. The reference uses small synthetic inputs and tests state preservation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare all-or-nothing and partial-success import for a financial total.",
+          "solution": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Publish completeness alongside totals",
+            "Rejected rows never affect interpretation",
+            "A quarantine needs no access policy"
+          ],
+          "correct": 0,
+          "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Error handling",
+            "url": "https://docs.python.org/3/library/csv.html",
+            "section": "Error handling",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "time-and-business-days",
+        "title": "6. Event time, ingestion time and UTC",
+        "stage": "foundation",
+        "takeaway": "Event time records when an event occurred; ingestion time records when your system received it.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Event time records when an event occurred; ingestion time records when your system received it. Aware timestamps include a timezone offset. Normalize instants before comparing them, then choose an explicit business calendar for daily aggregation."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "An order at 23:30 UTC can belong to the next calendar day in another timezone. Our reference groups UTC days and requires a Z suffix; it does not imply every business should use UTC-day reporting. The choice belongs in the data contract."
+            ],
+            "example": "from datetime import datetime, timezone\ninstant = datetime.fromisoformat(\"2026-09-01T23:30:00+00:00\")\nprint(instant.astimezone(timezone.utc).date())\n# Expected: 2026-09-01"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Naive timestamps cannot identify a unique instant without a timezone policy. Daylight-saving transitions can repeat or skip local times. Never attach a timezone arbitrarily to fix ambiguous historical data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why might ingestion-date totals disagree with event-date totals even if every row is valid?",
+          "solution": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Event time differs from ingestion time",
+            "A naive timestamp identifies UTC automatically",
+            "Every business day is a UTC day"
+          ],
+          "correct": 0,
+          "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Aware and naive objects",
+            "url": "https://docs.python.org/3/library/datetime.html",
+            "section": "Aware and naive objects",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "money-and-numeric-precision",
+        "title": "7. Exact amounts and numeric meaning",
+        "stage": "foundation",
+        "takeaway": "Money requires a unit, currency and rounding policy.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Money requires a unit, currency and rounding policy. Binary floating point does not represent every decimal fraction exactly. The small lab stores nonnegative integer cents for a single fictional currency; other domains may require Decimal and currency-specific scale."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Two orders 1250 and 750 cents total 2000 cents exactly. A foreign-currency conversion cannot simply add cents from different currencies. Define exchange-rate date and rounding before conversion, and retain source units for reconciliation."
+            ],
+            "example": "amounts_cents = [1250, 750]\nprint(sum(amounts_cents))\n# Expected: 2000\n# Display: 20.00 in the stated single-currency, two-decimal contract."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Integer cents do not support every currency or financial instrument. Refunds and adjustments need a signed-event contract or separate model; this reference deliberately rejects negative input amounts."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain how adding a refund changes the contract and regression tests.",
+          "solution": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Units and rounding belong in the contract",
+            "All currencies use two decimals",
+            "Floating point is exact for every decimal"
+          ],
+          "correct": 0,
+          "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Python decimal reference",
+            "url": "https://docs.python.org/3/library/decimal.html",
+            "section": "Decimal arithmetic and exact representation",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "Python integer binding",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Python integer binding",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "batch-loading",
+        "title": "8. Batch loads and transactions",
+        "stage": "foundation",
+        "takeaway": "A transaction groups changes that should succeed or fail together.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A transaction groups changes that should succeed or fail together. Parse and validate the bounded batch, begin a transaction, write rows and commit only when required work succeeds. On failure rollback prevents partial application of that transaction."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally."
+            ],
+            "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Context commits on success or rolls back on exception.\n# close the connection separately; context does not close it."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A transaction boundary does not include arbitrary external files or HTTP calls. Database durability depends on engine configuration and storage. SQLite is a local baseline, not evidence that SQL Server execution was tested."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why must the run marker and data writes share the same transaction?",
+          "solution": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Commit marker and effect together",
+            "A connection context always closes the connection",
+            "Transactions automatically include HTTP calls"
+          ],
+          "correct": 0,
+          "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Connection context manager",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Connection context manager",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "idempotency-and-replay",
+        "title": "9. Safe replay and batch identity",
+        "stage": "intermediate",
+        "takeaway": "An idempotent operation can be repeated without an additional intended effect.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An idempotent operation can be repeated without an additional intended effect. Scope a batch identity and bind it to a payload fingerprint. Repeating the same ID and same payload can reuse the prior result; repeating the ID with different content should conflict."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Batch sept-01 with two orders commits once. Running it again returns replay without adding rows. A different CSV under sept-01 is rejected. Order IDs remain globally unique in the sample, so another batch cannot silently duplicate a business order."
+            ],
+            "example": "first = import_csv(\"sample_orders.csv\", \"practice.db\", \"sept-01\")\nsecond = import_csv(\"sample_orders.csv\", \"practice.db\", \"sept-01\")\n# Expected first=\"committed\", second=\"replay\"; still two orders."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "The sample hashes exact bytes: equivalent CSV formatting produces a different fingerprint. A production canonicalization policy may differ and must be stable/versioned. Retention and concurrency must be considered when using replay keys."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe the failure when an ID is checked outside the write transaction and two workers race.",
+          "solution": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "A replay key must bind to content",
+            "Same ID should accept different payload silently",
+            "Pre-checking avoids every race"
+          ],
+          "correct": 0,
+          "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Transaction control",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Transaction control",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ],
+        "diagram": {
+          "title": "One batch identity, one intended effect",
+          "summary": "Same ID plus same byte fingerprint reuses the completed result; changed payload conflicts. Marker and orders commit together.",
+          "nodes": [
+            {
+              "id": "batch",
+              "label": "Batch ID + fingerprint",
+              "description": "Identifies the exact intended input."
+            },
+            {
+              "id": "lookup",
+              "label": "Stored run",
+              "description": "Lookup within transactional boundary.",
+              "shape": "decision"
+            },
+            {
+              "id": "commit",
+              "label": "Commit orders + marker",
+              "description": "New batch writes both effects.",
+              "shape": "database"
+            },
+            {
+              "id": "reuse",
+              "label": "Replay result",
+              "description": "Identical completed intent does not add orders."
+            },
+            {
+              "id": "conflict",
+              "label": "Conflict",
+              "description": "Different content under same ID is rejected."
+            }
+          ],
+          "edges": [
+            {
+              "from": "batch",
+              "to": "lookup",
+              "label": "check identity"
+            },
+            {
+              "from": "lookup",
+              "to": "commit",
+              "label": "new ID"
+            },
+            {
+              "from": "lookup",
+              "to": "reuse",
+              "label": "same fingerprint"
+            },
+            {
+              "from": "lookup",
+              "to": "conflict",
+              "label": "different fingerprint"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Check identity",
+              "activeNodes": [
+                "batch",
+                "lookup"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Identifies the exact intended input. Lookup within transactional boundary."
+            },
+            {
+              "title": "New id",
+              "activeNodes": [
+                "lookup",
+                "commit"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Lookup within transactional boundary. New batch writes both effects."
+            },
+            {
+              "title": "Same fingerprint",
+              "activeNodes": [
+                "lookup",
+                "reuse"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Lookup within transactional boundary. Identical completed intent does not add orders."
+            },
+            {
+              "title": "Different fingerprint",
+              "activeNodes": [
+                "lookup",
+                "conflict"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Lookup within transactional boundary. Different content under same ID is rejected."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "incremental-watermarks",
+        "title": "10. Incremental extraction and watermarks",
+        "stage": "intermediate",
+        "takeaway": "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple. Persist it only after downstream commit succeeds. Timestamp-only comparisons can miss tied rows; ordering and a tie-breaker must be part of the contract."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Two rows share updated_at=10:00. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
+            ],
+            "example": "# Composite cursor example:\nlast = (\"2026-09-01T10:00:00Z\", \"o1\")\nnext_row = (\"2026-09-01T10:00:00Z\", \"o2\")\nprint(next_row > last)\n# True under the specified lexicographic ordering."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A watermark does not solve deletions, mutable timestamps or records arriving with older times. Choose source change tracking, tombstones or periodic reconciliation where needed. The reference lab models replay, not a live incremental connector."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "When should an extraction watermark advance if target writes fail after half the batch?",
+          "solution": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Advance only after committed downstream success",
+            "Advance before writing for speed",
+            "Timestamps cannot tie"
+          ],
+          "correct": 0,
+          "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Microsoft incremental copy overview",
+            "url": "https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-overview",
+            "section": "Delta data loading and watermark",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "Commit and rollback",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Commit and rollback",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "cdc-and-deletions",
+        "title": "11. Change data capture and deletion events",
+        "stage": "intermediate",
+        "takeaway": "CDC exposes changes rather than only current rows.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "CDC exposes changes rather than only current rows. Consumers need operation type, ordering boundary, retention and a schema. A deletion is a meaningful change; a snapshot-only append importer cannot infer it from an absent row without a defined comparison policy."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "SQL Server CDC can capture insert, update and delete changes into change tables. A consumer persists its committed position, processes a bounded range and accounts for cleanup retention. This path explains the connector boundary without enabling CDC on your server."
+            ],
+            "example": "# Illustrative change envelope:\n{\"operation\":\"delete\", \"order_id\":\"o1\", \"sequence\":1042}\n# A consumer applies the tombstone and commits its checkpoint together."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Availability, setup and permissions vary by SQL Server edition/service. An expired retained range may require a new snapshot and reconciliation. CDC processing is not automatically exactly-once business processing."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain what a consumer should do when its checkpoint predates the retained change range.",
+          "solution": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Deletion and retention are explicit concerns",
+            "CDC retains every event forever",
+            "CDC automatically proves exactly-once effects"
+          ],
+          "correct": 0,
+          "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "SQL Server CDC overview",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
+            "section": "SQL Server CDC overview",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "joins-and-dimensional-models",
+        "title": "12. Facts, dimensions and join cardinality",
+        "stage": "intermediate",
+        "takeaway": "A fact table represents a measurable event at a stated grain; a dimension provides descriptive context.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A fact table represents a measurable event at a stated grain; a dimension provides descriptive context. Joins can change row counts when a key is not unique. Test uniqueness and unmatched references before aggregating a joined dataset."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Two orders total 2000 cents. If customer c1 occurs twice in a dimension, joining both orders to both customer rows yields four rows and 4000 apparent cents. The source amount has not changed; the join multiplied it."
+            ],
+            "example": "SELECT SUM(o.amount_cents)\nFROM orders AS o\nJOIN customers AS c ON c.customer_id = o.customer_id;\n-- Correct only when this join cardinality matches the declared grain."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A surrogate key can identify a dimension version, but does not by itself enforce a correct temporal join. Define unknown members and history semantics rather than dropping unmatched facts silently."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write two checks that guard the join before a revenue report is published.",
+          "solution": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Check join cardinality before totals",
+            "Every join preserves row count",
+            "Surrogate keys eliminate history rules"
+          ],
+          "correct": 0,
+          "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Microsoft dimensional modeling",
+            "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
+            "section": "Dimension keys and relationships",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "SQL Server CREATE TABLE constraints",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+            "section": "SQL Server CREATE TABLE constraints",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ],
+        "diagram": {
+          "title": "A nonunique dimension multiplies facts",
+          "summary": "Two orders joined to two customer matches create four joined rows. Validate cardinality before aggregation.",
+          "nodes": [
+            {
+              "id": "orders",
+              "label": "2 order facts",
+              "description": "Amounts 1250 and 750 cents."
+            },
+            {
+              "id": "dimension",
+              "label": "2 c1 dimension matches",
+              "description": "Join key is incorrectly nonunique for this rule."
+            },
+            {
+              "id": "joined",
+              "label": "4 joined rows",
+              "description": "Each order matches twice."
+            },
+            {
+              "id": "sum",
+              "label": "Incorrect total 4000",
+              "description": "Expected source total remains 2000 cents."
+            }
+          ],
+          "edges": [
+            {
+              "from": "orders",
+              "to": "joined",
+              "label": "facts"
+            },
+            {
+              "from": "dimension",
+              "to": "joined",
+              "label": "multiple matches"
+            },
+            {
+              "from": "joined",
+              "to": "sum",
+              "label": "sum duplicated amounts"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Facts",
+              "activeNodes": [
+                "orders",
+                "joined"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Amounts 1250 and 750 cents. Each order matches twice."
+            },
+            {
+              "title": "Multiple matches",
+              "activeNodes": [
+                "dimension",
+                "joined"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Join key is incorrectly nonunique for this rule. Each order matches twice."
+            },
+            {
+              "title": "Sum duplicated amounts",
+              "activeNodes": [
+                "joined",
+                "sum"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Each order matches twice. Expected source total remains 2000 cents."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "slowly-changing-dimensions",
+        "title": "13. Represent changing business attributes",
+        "stage": "intermediate",
+        "takeaway": "A slowly changing dimension models descriptive changes over time.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A slowly changing dimension models descriptive changes over time. Type 1 overwrites an attribute; Type 2 stores distinct historical versions with effective intervals. Choose based on whether consumers need current context or context at event time."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Customer c1 moves region on September 10. A Type 1 report may show all sales in the new region. A Type 2 event-time join attaches early orders to the old region and later orders to the new one. Define interval endpoints consistently, commonly [start, end)."
+            ],
+            "example": "# Example interval contract:\nold: [2026-09-01, 2026-09-10)\nnew: [2026-09-10, infinity)\n# An event on Sep 10 belongs to new, never both."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Overlapping or gapped intervals can multiply or lose facts. Late corrections require a policy for rebuilding impacted joins. The supplied SQLite lab does not implement a full historical dimension."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Give tests for a boundary event and overlapping dimension intervals.",
+          "solution": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "History needs interval rules",
+            "Type 1 preserves every prior attribute",
+            "Overlapping intervals never affect sums"
+          ],
+          "correct": 0,
+          "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Microsoft dimensional modeling",
+            "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
+            "section": "Slowly changing dimension types",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "SQL Server table constraints",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+            "section": "SQL Server table constraints",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "dag-and-orchestration",
+        "title": "14. Dependencies, DAGs and scheduling",
+        "stage": "intermediate",
+        "takeaway": "A directed acyclic graph expresses task dependencies.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A directed acyclic graph expresses task dependencies. An orchestrator schedules eligible tasks, records outcomes and retries according to policy. A DAG describes dependencies, not a promise of simultaneous execution or atomicity across all tasks."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Extract feeds validate; validate feeds load; load feeds reconcile and publish. Publish must depend on successful reconciliation. A failed optional notification should not necessarily roll back already committed data, but its failure must be visible."
+            ],
+            "example": "# Dependency contract:\nextract -> validate -> load -> reconcile -> publish\n# A separate notification task observes published status."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Retries can rerun tasks, so each task needs idempotent or compensatable effects. Airflow has version-specific APIs and deployment requirements; no orchestrator is installed or executed by this local bundle."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Should publication depend on reconciliation? Explain whether a failed email should undo the database commit.",
+          "solution": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Dependencies do not establish cross-task atomicity",
+            "A DAG prevents every retry duplicate",
+            "A scheduled task always finishes on time"
+          ],
+          "correct": 0,
+          "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Airflow DAG concepts",
+            "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html",
+            "section": "Airflow DAG concepts",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ],
+        "diagram": {
+          "title": "Publication waits for reconciliation",
+          "summary": "Dependencies specify eligibility, not cross-task atomicity. Each task must handle retries according to its effects.",
+          "nodes": [
+            {
+              "id": "extract",
+              "label": "Extract",
+              "description": "Acquire bounded source."
+            },
+            {
+              "id": "validate",
+              "label": "Validate",
+              "description": "Apply the contract."
+            },
+            {
+              "id": "load",
+              "label": "Load",
+              "description": "Commit target transaction."
+            },
+            {
+              "id": "reconcile",
+              "label": "Reconcile",
+              "description": "Compare keys/counts/totals."
+            },
+            {
+              "id": "publish",
+              "label": "Publish",
+              "description": "Expose accepted output."
+            }
+          ],
+          "edges": [
+            {
+              "from": "extract",
+              "to": "validate",
+              "label": "source ready"
+            },
+            {
+              "from": "validate",
+              "to": "load",
+              "label": "contract satisfied"
+            },
+            {
+              "from": "load",
+              "to": "reconcile",
+              "label": "commit complete"
+            },
+            {
+              "from": "reconcile",
+              "to": "publish",
+              "label": "checks pass"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Source ready",
+              "activeNodes": [
+                "extract",
+                "validate"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Acquire bounded source. Apply the contract."
+            },
+            {
+              "title": "Contract satisfied",
+              "activeNodes": [
+                "validate",
+                "load"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Apply the contract. Commit target transaction."
+            },
+            {
+              "title": "Commit complete",
+              "activeNodes": [
+                "load",
+                "reconcile"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Commit target transaction. Compare keys/counts/totals."
+            },
+            {
+              "title": "Checks pass",
+              "activeNodes": [
+                "reconcile",
+                "publish"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Compare keys/counts/totals. Expose accepted output."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "late-data-and-windows",
+        "title": "15. Late data, windows and corrections",
+        "stage": "intermediate",
+        "takeaway": "Windowed reporting groups events by an explicit time interval.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Windowed reporting groups events by an explicit time interval. Out-of-order delivery means an event may arrive after a window was first published. Define allowed lateness and whether late arrivals update results, enter correction reports or are rejected."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A September 1 order arrives on September 3. Under event-date accounting it belongs to September 1, so a previously published total may need a revision. Record both event time and ingestion evidence to explain the change."
+            ],
+            "example": "# Consumer-visible revision example:\n{\"day\":\"2026-09-01\", \"revision\":2, \"total_cents\":2250}\n# Revision 1 was 2000; late accepted order added 250."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A watermark in stream processing is a progress estimate under a system policy, not proof that no earlier event exists. Our batch lab makes late-data reasoning explicit but does not execute a streaming engine."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a policy for late sales and specify what a dashboard user should see.",
+          "solution": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Late data requires a correction policy",
+            "Published means no earlier event can arrive",
+            "Ingestion date always equals event date"
+          ],
+          "correct": 0,
+          "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Time comparisons",
+            "url": "https://docs.python.org/3/library/datetime.html",
+            "section": "Time comparisons",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "partitioning-and-formats",
+        "title": "16. Partitions, formats and bounded reads",
+        "stage": "intermediate",
+        "takeaway": "Partitioning organizes data by a useful key, often event date, so consumers can scan relevant subsets.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Partitioning organizes data by a useful key, often event date, so consumers can scan relevant subsets. CSV is portable text; columnar formats support different compression and projection patterns. Choose based on access patterns and ecosystem support, not a universal best format."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A daily report for September 1 can select that date partition rather than scan an entire year. Too many tiny files add metadata overhead; too few enormous partitions reduce selective reads. A changed partition scheme requires migration and consumer compatibility."
+            ],
+            "example": "MAX_BYTES = 262144\nwith open(\"sample_orders.csv\", \"rb\") as stream:\n    raw = stream.read(MAX_BYTES + 1)\nif len(raw) > MAX_BYTES:\n    raise ValueError(\"batch exceeds byte limit\")"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "The reference bounds bytes and rows before loading. It does not implement Parquet, object storage or distributed partition pruning. A file extension does not establish format validity."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why should a limit be checked before a complete unbounded read? State two partition tradeoffs.",
+          "solution": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Bound input before materializing it",
+            "File extensions validate content",
+            "More partitions are always better"
+          ],
+          "correct": 0,
+          "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "File reading contract",
+            "url": "https://docs.python.org/3/library/csv.html",
+            "section": "File reading contract",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "schema-evolution",
+        "title": "17. Evolve schemas without silent breakage",
+        "stage": "advanced",
+        "takeaway": "A compatible change preserves existing consumers under a stated contract.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A compatible change preserves existing consumers under a stated contract. Adding a nullable field can still break strict header validation; renaming or changing units is often a breaking change. Version producers and consumers and test representative old/new payloads."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Our CSV contract has exactly four columns. Adding currency requires a new version with currency validation and new aggregation rules, because sums must not mix units. Do not merely loosen extra-column rejection and claim the report remains correct."
+            ],
+            "example": "# Proposed v2 fields:\norder_id,customer_id,occurred_at,amount_minor,currency\n# Consumer rule: group/convert explicitly by currency.\n# v1 parser rejects this until migrated."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Defaults can invent meaning, especially for monetary or timezone fields. Migration needs rollback/replay decisions and retention of source evidence. A schema registry is helpful only when enforcement and ownership are clear."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a migration checklist for cents to amount_minor plus currency.",
+          "solution": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Compatibility includes meaning and consumers",
+            "Extra columns can always be ignored",
+            "A default currency is universally valid"
+          ],
+          "correct": 0,
+          "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "SQL Server CREATE TABLE column definitions",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+            "section": "SQL Server CREATE TABLE column definitions",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "reconciliation-and-lineage",
+        "title": "18. Reconcile counts, totals and lineage",
+        "stage": "advanced",
+        "takeaway": "Reconciliation compares expected and actual records/effects with an explicit tolerance policy.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Reconciliation compares expected and actual records/effects with an explicit tolerance policy. Lineage identifies source, transformation version and run identity. A green execution status establishes that code ran, not that the correct business result was produced."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "For two input orders, expect two stored order IDs and 2000 total cents. Count alone misses changed amounts; sum alone can hide offsetting errors. Compare identifiers and field-level evidence when correctness requires it."
+            ],
+            "example": "SELECT COUNT(*), SUM(amount_cents) FROM orders;\n-- Sample expected: 2, 2000\nSELECT order_id FROM orders ORDER BY order_id;\n-- Sample expected: o1, o2"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Hashes detect byte changes but do not prove business truth. Keep provenance free of unnecessary personal data and document whether totals cover all accepted events or only a filtered subset."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Give a pair of errors that preserve a total but change the result incorrectly.",
+          "solution": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Reconcile keys and measures",
+            "A correct sum proves every row is correct",
+            "Successful execution proves source truth"
+          ],
+          "correct": 0,
+          "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Query result iteration",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Query result iteration",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "privacy-and-data-governance",
+        "title": "19. Privacy, ownership and retention",
+        "stage": "advanced",
+        "takeaway": "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate. Minimize data collected for the learning goal. Separate sensitive source records from aggregate outputs and restrict debugging artifacts."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Our fixtures contain fictional IDs and no email addresses. A production customer import should not dump entire rejected rows into shared logs. A deletion request may need propagation into raw zones, curated tables, backups and downstream exports according to the applicable policy."
+            ],
+            "example": "# Proposed data inventory:\norders: owner=analytics; purpose=daily sales\nfields: fictional order/customer IDs, UTC instant, cents\nlogs: run ID, counts, error category; no complete source rows"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "This is general engineering guidance, not jurisdiction-specific legal advice. Encryption alone does not determine access authorization or retention. Do not add real personal data to the public notebook repository."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a minimal diagnostic record for a rejected batch and identify its owner.",
+          "solution": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Ownership and retention need explicit rules",
+            "Encryption replaces authorization",
+            "Debug logs should contain every row"
+          ],
+          "correct": 0,
+          "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Microsoft security architecture guide",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/security/security-get-started",
+            "section": "Security design and identity",
+            "reviewed": "2026-09-30",
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          },
+          {
+            "title": "SQL Server CDC capture and cleanup roles",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
+            "section": "SQL Server CDC capture and cleanup roles",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "sql-server-bridge",
+        "title": "20. Bridge the local lab to SQL Server",
+        "stage": "advanced",
+        "takeaway": "SQLite makes the baseline runnable with the Python standard library.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "SQLite makes the baseline runnable with the Python standard library. SQL Server uses different type rules, drivers, transactions and operational configuration. Porting requires an explicit target contract and actual integration tests; equivalent-looking SQL is not execution evidence."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "The bundle includes an optional T-SQL table definition with primary keys, BIGINT cents and DATETIME2 UTC-by-contract values. Use an isolated notebook database only after reviewing the script. An external driver and connection configuration are learner prerequisites; no credentials are embedded."
+            ],
+            "example": "-- Illustrative target constraint:\namount_cents BIGINT NOT NULL CHECK (amount_cents >= 0)\n-- Parameterize inserts using the chosen driver.\n-- Coordinate run marker and orders in one target transaction."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "DATETIME2 has no timezone offset; the application must normalize and enforce UTC or choose DATETIMEOFFSET intentionally. The SQL script is a design companion and was not executed against SQL Server in this task."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "List the integration evidence needed before claiming the SQL Server adapter works.",
+          "solution": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Porting needs target-specific execution tests",
+            "SQLite proves SQL Server integration",
+            "DATETIME2 enforces UTC itself"
+          ],
+          "correct": 0,
+          "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "SQL Server CREATE TABLE types and constraints",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
+            "section": "SQL Server CREATE TABLE types and constraints",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "failure-recovery",
+        "title": "21. Failures, retries and backfills",
+        "stage": "advanced",
+        "takeaway": "Classify failures before retrying.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Classify failures before retrying. Invalid schema is usually permanent until corrected; a transient connection failure may be retryable within a bounded policy. Backfill processes historical data and can change published results, so isolate its scope and reconcile effects."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A batch conflict cannot be repaired by repeated retries under the same ID. Inspect payload identity and run metadata. After a transient failure, replay the same intended batch; atomic commit and deduplication should prevent duplicated effects."
+            ],
+            "example": "# Recovery decision:\ninvalid contract -> fix source, new reviewed attempt\nunknown commit -> query run identity, then safe replay\nbackfill -> declared range, reconciliation, publish revision"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Network timeouts can leave an uncertain outcome. Query the committed run identity instead of assuming failure means no effect. The local tests inject validation/constraint failures, not real network partitions or failover."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain how to handle a timeout immediately after a server commit.",
+          "solution": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "A timeout can leave an uncertain outcome",
+            "Every error should retry forever",
+            "Backfill never changes published totals"
+          ],
+          "correct": 0,
+          "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Transaction commit and rollback",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Transaction commit and rollback",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      },
+      {
+        "id": "data-engineering-capstone",
+        "title": "22. Build a replayable import portfolio",
+        "stage": "advanced",
+        "takeaway": "Combine a bounded file contract, exact amount units, timezone policy, transactional target and replay identity.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Combine a bounded file contract, exact amount units, timezone policy, transactional target and replay identity. Run the supplied baseline, then rebuild from the brief and add a documented extension. Your evidence should include failure preservation and reconciliation, not only a happy-path screenshot."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Run the demo: two orders commit, the same batch replays, and the total remains 2000 cents. Run the suite to exercise malformed schema, byte limits, duplicate orders, conflicting payloads and rollback. Then add a late-data revision or versioned currency contract with new tests."
+            ],
+            "example": "python pipeline_lab.py --demo\npython -m unittest -v test_pipeline_lab.py\n# Expected demo: committed, replay, orders=2 total_cents=2000."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "The baseline is single-process local SQLite practice. It does not establish distributed orchestration, SQL Server adapter readiness, streaming watermark behavior or production-scale capacity. Label those extensions separately."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Deliver contract.md, the runnable importer, test results, lineage/reconciliation note and one independently implemented extension.",
+          "solution": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Evidence includes failure and reconciliation tests",
+            "A green demo proves distributed readiness",
+            "Copying the reference completes every extension"
+          ],
+          "correct": 0,
+          "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Transactions and parameter binding",
+            "url": "https://docs.python.org/3/library/sqlite3.html",
+            "section": "Transactions and parameter binding",
+            "reviewed": "2026-09-30",
+            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation",
+        "description": "Define row grain, quality, time and money before loading.",
+        "exitCriteria": [
+          "Document order grain, uniqueness, UTC-day calendar and monetary unit.",
+          "Bound input to 256 KiB and 1000 records before unbounded materialization.",
+          "Use csv parsing and reject wrong/missing/duplicate headers and bad field count.",
+          "Reject invalid IDs, duplicate order IDs, invalid timestamps and negative/decimal amount text.",
+          "Test a header-only empty batch and quoted valid fields."
+        ],
+        "project": {
+          "title": "Validated CSV contract",
+          "brief": "Define the order grain, exact CSV headers, UTC timestamp format and single-currency integer-cent semantics. Write a bounded parser independently before comparing read_batch in the bundle.",
+          "requirements": [
+            "Document order grain, uniqueness, UTC-day calendar and monetary unit.",
+            "Bound input to 256 KiB and 1000 records before unbounded materialization.",
+            "Use csv parsing and reject wrong/missing/duplicate headers and bad field count.",
+            "Reject invalid IDs, duplicate order IDs, invalid timestamps and negative/decimal amount text.",
+            "Test a header-only empty batch and quoted valid fields."
+          ],
+          "rubric": [
+            "Sample parses to two orders and 2000 exact cents.",
+            "Invalid input never mutates the target.",
+            "Unknown/missing amounts are not silently replaced with zero."
+          ],
+          "solution": "from pathlib import Path\nfrom pipeline_lab import read_batch\nrows, fingerprint = read_batch(Path(\"sample_orders.csv\"))\nassert len(rows) == 2\nassert sum(row[3] for row in rows) == 2000\n# Compare read_batch only after writing your independent parser."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate",
+        "description": "Coordinate batch identity and business effects in one transaction.",
+        "exitCriteria": [
+          "Use parameterized values and explicit transaction ownership.",
+          "Commit business rows and completed run identity together.",
+          "Same ID/same exact bytes replays without adding rows.",
+          "Same ID/different bytes conflicts and retains prior data.",
+          "A later duplicate order rolls back earlier new rows and the failed run marker."
+        ],
+        "project": {
+          "title": "Transactional replayable importer",
+          "brief": "Build a local importer that coordinates a batch fingerprint, new order rows and its completed run marker. Demonstrate conflict and rollback after an earlier row would otherwise have been inserted.",
+          "requirements": [
+            "Use parameterized values and explicit transaction ownership.",
+            "Commit business rows and completed run identity together.",
+            "Same ID/same exact bytes replays without adding rows.",
+            "Same ID/different bytes conflicts and retains prior data.",
+            "A later duplicate order rolls back earlier new rows and the failed run marker."
+          ],
+          "rubric": [
+            "Real SQLite happy/replay/conflict/failure tests pass.",
+            "Stored IDs, count and exact sum are reconciled after failure.",
+            "Explains exact-byte fingerprint and single-process trusted-database assumptions."
+          ],
+          "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.11+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Defend lineage, recovery, schema evolution and target integration limits.",
+        "exitCriteria": [
+          "Compare input/stored keys, counts and exact sums, including an offsetting-error case.",
+          "Specify event-time versus ingestion-time meaning and a late-data policy.",
+          "Document task dependencies and checkpoint advancement only after commit.",
+          "Add normal, boundary and failure tests for your chosen extension.",
+          "Document a SQL Server integration test plan without claiming an unexecuted adapter works."
+        ],
+        "project": {
+          "title": "Reconciliation and recovery portfolio",
+          "brief": "Extend the baseline with one independently implemented policy: late-event revisions, currency-version migration or historical dimension matching. Reconcile the extension and document a recovery procedure.",
+          "requirements": [
+            "Compare input/stored keys, counts and exact sums, including an offsetting-error case.",
+            "Specify event-time versus ingestion-time meaning and a late-data policy.",
+            "Document task dependencies and checkpoint advancement only after commit.",
+            "Add normal, boundary and failure tests for your chosen extension.",
+            "Document a SQL Server integration test plan without claiming an unexecuted adapter works."
+          ],
+          "rubric": [
+            "Extension uses an explicit new contract and does not silently relax v1 validation.",
+            "Failed attempt preserves prior accepted results or has a documented compensating policy.",
+            "Actual SQLite evidence is separate from optional orchestration/CDC/SQL Server work."
+          ],
+          "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nfrom pipeline_lab import import_csv, reconcile\nwith TemporaryDirectory() as folder:\n    db = Path(folder) / \"portfolio.db\"\n    import_csv(Path(\"sample_orders.csv\"), db, \"portfolio-1\")\n    result = reconcile(db)\n    assert result[\"ids\"] == [\"o1\", \"o2\"]\n    assert result[\"orders\"] == 2 and result[\"total_cents\"] == 2000\n# Reference establishes baseline reconciliation. Implement extension separately."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete practice bundle",
+        "href": "paths/data-engineering/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "data-engineering-practice",
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/data-engineering/practice/README.md",
+          "role": "guide",
+          "description": "Course-owned README.md"
+        },
+        {
+          "id": "pipeline_lab-py",
+          "href": "paths/data-engineering/practice/pipeline_lab.py",
+          "role": "reference",
+          "description": "Course-owned pipeline_lab.py"
+        },
+        {
+          "id": "test_pipeline_lab-py",
+          "href": "paths/data-engineering/practice/test_pipeline_lab.py",
+          "role": "test",
+          "description": "Course-owned test_pipeline_lab.py"
+        },
+        {
+          "id": "sample_orders-csv",
+          "href": "paths/data-engineering/practice/sample_orders.csv",
+          "role": "reference",
+          "description": "Course-owned sample_orders.csv"
+        },
+        {
+          "id": "sql-server-bridge-sql",
+          "href": "paths/data-engineering/practice/sql-server-bridge.sql",
+          "role": "reference",
+          "description": "Course-owned sql-server-bridge.sql"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Validated CSV contract",
+          "goal": "Define the order grain, exact CSV headers, UTC timestamp format and single-currency integer-cent semantics. Write a bounded parser independently before comparing read_batch in the bundle.",
+          "fileIds": [
+            "README-md",
+            "pipeline_lab-py",
+            "test_pipeline_lab-py",
+            "sample_orders-csv",
+            "sql-server-bridge-sql"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Document order grain, uniqueness, UTC-day calendar and monetary unit.",
+            "Bound input to 256 KiB and 1000 records before unbounded materialization.",
+            "Use csv parsing and reject wrong/missing/duplicate headers and bad field count.",
+            "Reject invalid IDs, duplicate order IDs, invalid timestamps and negative/decimal amount text.",
+            "Test a header-only empty batch and quoted valid fields."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python pipeline_lab.py --demo",
+              "expected": "committed, replay, orders=2 total_cents=2000."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_pipeline_lab.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Define a data product and its grain",
+              "href": "#topic/data-engineering/data-products-and-grain"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Transactional replayable importer",
+          "goal": "Build a local importer that coordinates a batch fingerprint, new order rows and its completed run marker. Demonstrate conflict and rollback after an earlier row would otherwise have been inserted.",
+          "fileIds": [
+            "README-md",
+            "pipeline_lab-py",
+            "test_pipeline_lab-py",
+            "sample_orders-csv",
+            "sql-server-bridge-sql"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Use parameterized values and explicit transaction ownership.",
+            "Commit business rows and completed run identity together.",
+            "Same ID/same exact bytes replays without adding rows.",
+            "Same ID/different bytes conflicts and retains prior data.",
+            "A later duplicate order rolls back earlier new rows and the failed run marker."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python pipeline_lab.py --demo",
+              "expected": "committed, replay, orders=2 total_cents=2000."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_pipeline_lab.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Define a data product and its grain",
+              "href": "#topic/data-engineering/data-products-and-grain"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Reconciliation and recovery portfolio",
+          "goal": "Extend the baseline with one independently implemented policy: late-event revisions, currency-version migration or historical dimension matching. Reconcile the extension and document a recovery procedure.",
+          "fileIds": [
+            "README-md",
+            "pipeline_lab-py",
+            "test_pipeline_lab-py",
+            "sample_orders-csv",
+            "sql-server-bridge-sql"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Compare input/stored keys, counts and exact sums, including an offsetting-error case.",
+            "Specify event-time versus ingestion-time meaning and a late-data policy.",
+            "Document task dependencies and checkpoint advancement only after commit.",
+            "Add normal, boundary and failure tests for your chosen extension.",
+            "Document a SQL Server integration test plan without claiming an unexecuted adapter works."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python pipeline_lab.py --demo",
+              "expected": "committed, replay, orders=2 total_cents=2000."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_pipeline_lab.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Define a data product and its grain",
+              "href": "#topic/data-engineering/data-products-and-grain"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "data-products-and-grain": "foundation",
+        "etl-and-elt": "foundation",
+        "csv-and-encoding": "foundation",
+        "schema-and-contracts": "foundation",
+        "validation-and-quarantine": "foundation",
+        "time-and-business-days": "foundation",
+        "money-and-numeric-precision": "foundation",
+        "batch-loading": "foundation",
+        "idempotency-and-replay": "intermediate",
+        "incremental-watermarks": "intermediate",
+        "cdc-and-deletions": "intermediate",
+        "joins-and-dimensional-models": "intermediate",
+        "slowly-changing-dimensions": "intermediate",
+        "dag-and-orchestration": "intermediate",
+        "late-data-and-windows": "intermediate",
+        "partitioning-and-formats": "intermediate",
+        "schema-evolution": "advanced",
+        "reconciliation-and-lineage": "advanced",
+        "privacy-and-data-governance": "advanced",
+        "sql-server-bridge": "advanced",
+        "failure-recovery": "advanced",
+        "data-engineering-capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/data-engineering/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "data-structures-algorithms",
     "title": "Data Structures & Algorithms",
     "category": "Computer science",
@@ -22973,6 +27066,2005 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "full-stack-journey",
+    "title": "Full-Stack Project Journey",
+    "category": "Applied projects",
+    "status": "ready",
+    "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
+    "level": "Guided foundation project → intermediate integration → advanced extensions",
+    "prerequisites": [
+      "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
+      "Install .NET 10 SDK, Node 24/npm and Python 3.11+; SQL Server/SSMS is required for the persistence milestone."
+    ],
+    "setup": [
+      "Open the complete task bundle beside any lesson; extract into a new directory and keep all files together.",
+      "Follow README.md for separate API/frontend terminals and the optional owned SQL database.",
+      "Use synthetic data on loopback; the baseline has no authentication and is not a public hosting artifact."
+    ],
+    "outcomes": [
+      "Create an accessible form, HTTP contract and complete memory-backed feature.",
+      "Use SQL Server, atomic expected-version updates and a tested retry design.",
+      "Assemble tests, diagnostics, a release plan and recovery evidence."
+    ],
+    "nextSteps": [
+      "Build the filtering, idempotency and verified ownership extensions in milestones.md with new tests.",
+      "Use the UI, observability, messaging and cloud paths to extend the same application after the baseline is understood."
+    ],
+    "sources": [
+      {
+        "title": "ASP.NET Core Minimal APIs",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0"
+      },
+      {
+        "title": "React: managing state",
+        "url": "https://react.dev/learn/managing-state"
+      },
+      {
+        "title": "React: synchronizing with Effects",
+        "url": "https://react.dev/learn/synchronizing-with-effects"
+      },
+      {
+        "title": "Microsoft.Data.SqlClient",
+        "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17"
+      },
+      {
+        "title": "EF Core: concurrency conflicts",
+        "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency"
+      },
+      {
+        "title": "ASP.NET Core: protect user data",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-10.0"
+      },
+      {
+        "title": "ASP.NET Core integration tests",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0"
+      },
+      {
+        "title": "ASP.NET Core CORS",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0"
+      },
+      {
+        "title": "OpenTelemetry signals",
+        "url": "https://opentelemetry.io/docs/concepts/signals/"
+      },
+      {
+        "title": "Google SRE: release engineering",
+        "url": "https://sre.google/sre-book/release-engineering/"
+      },
+      {
+        "title": "SQL Server backup and restore",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases?view=sql-server-ver17"
+      },
+      {
+        "title": "WAI: form instructions",
+        "url": "https://www.w3.org/WAI/tutorials/forms/instructions/"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Build one vertical slice",
+        "description": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+        "exitCriteria": [
+          "Demonstrate a valid add and completion through React and .NET.",
+          "Reject malformed data while preserving the draft.",
+          "Explain refresh versus process restart."
+        ],
+        "project": {
+          "title": "Build one vertical slice — study planner",
+          "brief": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+          "requirements": [
+            "Demonstrate a valid add and completion through React and .NET.",
+            "Reject malformed data while preserving the draft.",
+            "Explain refresh versus process restart.",
+            "Use the milestone workbook and record the observed result before comparing the reference."
+          ],
+          "rubric": [
+            "Demonstrate a valid add and completion through React and .NET.",
+            "Reject malformed data while preserving the draft.",
+            "Explain refresh versus process restart.",
+            "Explain each remaining boundary and identify the exact task files."
+          ],
+          "solution": "Start the supplied API in memory mode and the Vite frontend. Observe POST 201, PUT 200/version 2, rejected malformed inputs and retained drafts. Add your own filtering behavior and independent tests."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Persist and resolve conflicts",
+        "description": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+        "exitCriteria": [
+          "Show persisted IDs after API restart.",
+          "Prove one winner and one stale conflict.",
+          "Specify atomic idempotent creation and ownership boundaries."
+        ],
+        "project": {
+          "title": "Persist and resolve conflicts — study planner",
+          "brief": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+          "requirements": [
+            "Show persisted IDs after API restart.",
+            "Prove one winner and one stale conflict.",
+            "Specify atomic idempotent creation and ownership boundaries.",
+            "Use the milestone workbook and record the observed result before comparing the reference."
+          ],
+          "rubric": [
+            "Show persisted IDs after API restart.",
+            "Prove one winner and one stale conflict.",
+            "Specify atomic idempotent creation and ownership boundaries.",
+            "Explain each remaining boundary and identify the exact task files."
+          ],
+          "solution": "Run schema.sql in an owned database; configure PlannerConnection and verify sql-server mode. Exercise two competing expected-version writes, read back version 2 and prove restart persistence. Implement idempotency as a separate atomic transaction with new tests."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Verify, operate and defend",
+        "description": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+        "exitCriteria": [
+          "Separate browser, HTTP and SQL evidence.",
+          "Explain authentication and deployment extensions honestly.",
+          "Defend a recovery plan with measured results where executed."
+        ],
+        "project": {
+          "title": "Verify, operate and defend — study planner",
+          "brief": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+          "requirements": [
+            "Separate browser, HTTP and SQL evidence.",
+            "Explain authentication and deployment extensions honestly.",
+            "Defend a recovery plan with measured results where executed.",
+            "Use the milestone workbook and record the observed result before comparing the reference."
+          ],
+          "rubric": [
+            "Separate browser, HTTP and SQL evidence.",
+            "Explain authentication and deployment extensions honestly.",
+            "Defend a recovery plan with measured results where executed.",
+            "Explain each remaining boundary and identify the exact task files."
+          ],
+          "solution": "Run decoder and real HTTP checks, record manual keyboard/browser results and optional SQL restore evidence. Add verified identity/owner predicates before public exposure; package a reproducible release and state unexecuted provider/deployment checks."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "scope",
+        "title": "1. Define the product and its boundaries",
+        "stage": "foundation",
+        "takeaway": "A journey starts with a user outcome, not a list of frameworks.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "A learner wants to plan a study session, see it after refresh and mark it complete. A session is one record with a title, planned minutes, completion flag and version. Keep scheduling, payments, AI suggestions and multi-user sharing out of the first slice so success can be observed in minutes."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime. Name these boundaries before running anything."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write three acceptance statements for adding and completing a session. Include a rejected input and state what the local reference does not promise.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement is directly testable?",
+          "options": [
+            "A learner can create a 25-minute session and see it listed.",
+            "The application is enterprise ready.",
+            "The architecture uses modern tools."
+          ],
+          "correct": 0,
+          "explanation": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core Minimal APIs",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+            "section": "Route handlers, parameter binding and responses",
+            "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "workspace",
+        "title": "2. Make the downloaded project reproducible",
+        "stage": "foundation",
+        "takeaway": "Keep the files together and check tool versions before debugging application behavior.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The complete practice ZIP is flat: Planner.csproj and Program.cs form the API, App.tsx and main.tsx form the UI, and schema.sql is the database migration. package-lock.json pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a setup note that distinguishes the notebook host, UI development server and API process.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which tool uses the lockfile for a repeatable install?",
+          "options": [
+            "npm ci",
+            "A browser refresh",
+            "SQL Server Management Studio"
+          ],
+          "correct": 0,
+          "explanation": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md."
+        },
+        "references": [
+          {
+            "title": "Google SRE: release engineering",
+            "url": "https://sre.google/sre-book/release-engineering/",
+            "section": "Reproducible builds and release process",
+            "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "architecture",
+        "title": "3. Follow one request through the stack",
+        "stage": "foundation",
+        "takeaway": "A click changes visible state only after the application has understood its result.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a CreateTask, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "The UI checks HTTP status, media type and response fields before appending the returned task. A 200 HTML error page is not valid task data. The database is behind the API and never receives browser credentials or direct browser SQL. Walk this path in the network panel and explain each observation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Locate the failure when a reverse proxy returns status 200 with text/html instead of JSON.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Should React connect directly to SQL Server?",
+          "options": [
+            "No; an API owns the data and authorization boundary.",
+            "Yes; the browser can keep the database password private.",
+            "Only when the title field is validated."
+          ],
+          "correct": 0,
+          "explanation": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core Minimal APIs",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+            "section": "Route handlers, parameter binding and responses",
+            "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Follow a study-session request",
+          "summary": "A vertical slice crosses browser, HTTP and storage boundaries.",
+          "nodes": [
+            {
+              "id": "ui",
+              "label": "React form",
+              "description": "Owns the draft and renders only validated observations."
+            },
+            {
+              "id": "proxy",
+              "label": "Vite proxy",
+              "description": "Routes same-origin /api requests to the loopback API."
+            },
+            {
+              "id": "api",
+              "label": " .NET endpoint",
+              "description": "Binds input, validates fields and invokes an adapter."
+            },
+            {
+              "id": "db",
+              "label": "Task store",
+              "description": "Memory first, then dedicated SQL Server persistence.",
+              "shape": "database"
+            },
+            {
+              "id": "result",
+              "label": "Validated UI result",
+              "description": "HTTP status and task shape are checked before publishing."
+            }
+          ],
+          "edges": [
+            {
+              "from": "ui",
+              "to": "proxy",
+              "label": "submit JSON"
+            },
+            {
+              "from": "proxy",
+              "to": "api",
+              "label": "forward request"
+            },
+            {
+              "from": "api",
+              "to": "db",
+              "label": "apply allowed write"
+            },
+            {
+              "from": "db",
+              "to": "api",
+              "label": "return saved record"
+            },
+            {
+              "from": "api",
+              "to": "result",
+              "label": "201 and task JSON"
+            }
+          ],
+          "steps": [
+            {
+              "title": "submit JSON",
+              "activeNodes": [
+                "ui",
+                "proxy"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Routes same-origin /api requests to the loopback API."
+            },
+            {
+              "title": "forward request",
+              "activeNodes": [
+                "proxy",
+                "api"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Binds input, validates fields and invokes an adapter."
+            },
+            {
+              "title": "apply allowed write",
+              "activeNodes": [
+                "api",
+                "db"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Memory first, then dedicated SQL Server persistence."
+            },
+            {
+              "title": "return saved record",
+              "activeNodes": [
+                "db",
+                "api"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Binds input, validates fields and invokes an adapter."
+            },
+            {
+              "title": "201 and task JSON",
+              "activeNodes": [
+                "api",
+                "result"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "HTTP status and task shape are checked before publishing."
+            }
+          ]
+        }
+      },
+      {
+        "id": "contract",
+        "title": "4. Specify the API and its errors",
+        "stage": "foundation",
+        "takeaway": "Types must describe both allowed data and observable failure.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "POST accepts title and minutes. title is trimmed and must contain 1–120 characters; minutes is an integer from 0 through 1440. Server-generated id, done=false and version=1 appear in the result. Unknown request fields are rejected. PUT requires title, minutes, done and expected version; missing done is not silently interpreted as false."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Use 201 for creation, 200 for a successful update/list, 400 for invalid input, 404 for a missing record and 409 for a stale expected version. These choices are the project contract, not universal status rules. Nullable request fields distinguish omitted values from meaningful zero and false."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict the result of minutes=0, minutes=true, missing minutes and done=false on a valid PUT.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why use nullable request fields?",
+          "options": [
+            "To distinguish omission from valid zero or false.",
+            "To skip validation automatically.",
+            "To accept arbitrary JSON types."
+          ],
+          "correct": 0,
+          "explanation": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core Minimal APIs",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-10.0",
+            "section": "Route handlers, parameter binding and responses",
+            "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "data-model",
+        "title": "5. Model a session without ambiguous state",
+        "stage": "foundation",
+        "takeaway": "Database constraints reinforce the contract at the persistence boundary.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "StudyTasks uses a uniqueidentifier primary key, nvarchar(120) title, bounded int minutes, bit done and positive int Version. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server rowversion."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "schema.sql creates the table only if absent in an owned learning database. It never creates or selects a database automatically. CHECK constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why a UI-only minutes check is insufficient and name a check enforced in SQL.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does Version represent here?",
+          "options": [
+            "An application-managed optimistic update counter.",
+            "The current Unix timestamp.",
+            "A database login identifier."
+          ],
+          "correct": 0,
+          "explanation": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express."
+        },
+        "references": [
+          {
+            "title": "Microsoft.Data.SqlClient",
+            "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+            "section": "Provider namespace and compatibility",
+            "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "ui-state",
+        "title": "6. Build an accessible form and honest states",
+        "stage": "foundation",
+        "takeaway": "A retained draft lets a learner recover from failure.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "App.tsx owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and role=status announces asynchronous outcomes without moving focus."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "A failed request leaves the draft unchanged. Clear title only after a decoded creation result. Disable mutation controls while a save is pending, but still handle server rejection because a second client can write. An empty list gets an explicit first-session invitation rather than a blank panel."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Stop the API, submit a valid draft, then inspect what remains in the form.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "When should the title draft be cleared?",
+          "options": [
+            "After a successful, validated create response.",
+            "As soon as the user clicks Add.",
+            "Whenever loading starts."
+          ],
+          "correct": 0,
+          "explanation": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension."
+        },
+        "references": [
+          {
+            "title": "WAI: form instructions",
+            "url": "https://www.w3.org/WAI/tutorials/forms/instructions/",
+            "section": "Labels and instructions",
+            "scope": "Reference form uses native labels and controls; manual keyboard/screen-reader tests still matter.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "first-slice",
+        "title": "7. Run the first complete vertical slice",
+        "stage": "foundation",
+        "takeaway": "Prove one feature across the real browser and API before adding abstractions.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with version=2 and done=true. The reference renders the returned task rather than guessing a server-generated ID."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. This is a useful foundation boundary: the UI is integrated, while durability is intentionally not yet established. Record both behaviors instead of calling refresh a persistence test."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare browser refresh with API restart in memory mode.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Does a surviving browser refresh prove SQL persistence?",
+          "options": [
+            "No; process memory can survive a page refresh.",
+            "Yes; browsers only load database-backed values.",
+            "Yes, if the response status is 200."
+          ],
+          "correct": 0,
+          "explanation": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core integration tests",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+            "section": "Test host and integration-test boundary",
+            "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "response-validation",
+        "title": "8. Validate observations at the frontend boundary",
+        "stage": "foundation",
+        "takeaway": "A TypeScript assertion cannot validate unknown network data.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "request returns unknown. decodeTask checks a GUID-shaped ID, title, integer minutes, boolean done and positive integer version before producing a StudyTask. A list additionally checks duplicate IDs because React keys and update targeting assume identity is unique."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run planner-api.test.ts to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Why is response.json() as StudyTask[] insufficient? Write two invalid payloads it could hide.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What performs runtime validation?",
+          "options": [
+            "Explicit decoder checks over unknown values.",
+            "A TypeScript type assertion.",
+            "Naming the variable StudyTask."
+          ],
+          "correct": 0,
+          "explanation": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape."
+        },
+        "references": [
+          {
+            "title": "React: managing state",
+            "url": "https://react.dev/learn/managing-state",
+            "section": "State structure, controlled inputs and reducers",
+            "scope": "React 19 reference UI; state ownership principles apply independently of the build tool.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "effects",
+        "title": "9. Load data without publishing obsolete results",
+        "stage": "intermediate",
+        "takeaway": "Effect cleanup bounds which request may update the current screen.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The initial effect creates an AbortController, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Aborting a fetch is a client-side cancellation signal. It does not prove the server cancelled work, and it cannot undo a committed mutation. Future filter-dependent requests also need stale-result protection when parameters change. Keep GET loading separate from POST submission triggered by a user action."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why POST should not run merely because a component mounted.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What does aborting a mutation guarantee?",
+          "options": [
+            "The client stops awaiting it; server effects may already exist.",
+            "The SQL transaction is rolled back.",
+            "The record can never have been created."
+          ],
+          "correct": 0,
+          "explanation": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears."
+        },
+        "references": [
+          {
+            "title": "React: synchronizing with Effects",
+            "url": "https://react.dev/learn/synchronizing-with-effects",
+            "section": "Fetching data and cleanup",
+            "scope": "Cleanup prevents obsolete observations being published; cancellation cannot guarantee a server mutation was undone.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "sql-setup",
+        "title": "10. Move to an owned SQL Server database",
+        "stage": "intermediate",
+        "takeaway": "Changing storage requires explicit setup and observable confirmation.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Create NotebookPlannerLab as a new dedicated database in SSMS and run schema.sql there. Set PlannerConnection only in the API shell, then restart. /health must report sql-server. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local TrustServerCertificate option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an observation that proves the UI is using SQL instead of memory.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Where should a database connection string live?",
+          "options": [
+            "Server-side configuration or secret storage.",
+            "A React source constant.",
+            "A URL query parameter sent to every browser."
+          ],
+          "correct": 0,
+          "explanation": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior."
+        },
+        "references": [
+          {
+            "title": "Microsoft.Data.SqlClient",
+            "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+            "section": "Provider namespace and compatibility",
+            "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "parameters",
+        "title": "11. Keep SQL structure separate from values",
+        "stage": "intermediate",
+        "takeaway": "Bind title as data even when it contains SQL-looking text.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "SqlPlanner uses fixed SQL statements and explicitly typed parameters. @title is nvarchar(120), @minutes is int and @id is uniqueidentifier. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user’s records."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Store a title containing an apostrophe and explain why concatenating it into SQL would be risky.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Does parameterization enforce record ownership?",
+          "options": [
+            "No; authorization needs its own trusted principal and predicate.",
+            "Yes; the provider knows the current browser user.",
+            "Only for uniqueidentifier IDs."
+          ],
+          "correct": 0,
+          "explanation": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values."
+        },
+        "references": [
+          {
+            "title": "Microsoft.Data.SqlClient",
+            "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+            "section": "Provider namespace and compatibility",
+            "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "conflicts",
+        "title": "12. Prevent a stale tab from overwriting newer state",
+        "stage": "intermediate",
+        "takeaway": "Expected-version comparison belongs in the atomic write.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; UPDATE WHERE Id=@id AND Version=@version affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "The in-memory adapter locks compare-and-replace; SQL performs the comparison in the update predicate. The UI retains the displayed row and explains Reload and compare. It does not automatically retry with version 2 because that would overwrite another decision without the learner reviewing it."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Run acceptance.py and explain why its two competing writers must produce exactly one 200 and one 409.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which SQL pattern closes the stale-write race?",
+          "options": [
+            "UPDATE with ID and expected version in the same predicate.",
+            "SELECT version, wait, then unconditional UPDATE.",
+            "Disabling the button in one tab."
+          ],
+          "correct": 0,
+          "explanation": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation."
+        },
+        "references": [
+          {
+            "title": "EF Core: concurrency conflicts",
+            "url": "https://learn.microsoft.com/en-us/ef/core/saving/concurrency",
+            "section": "Optimistic concurrency and SQL predicates",
+            "scope": "Explains expected-version comparison; this lab uses explicit SQL, not EF Core or a SQL rowversion column.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Two tabs, one accepted update",
+          "summary": "The expected version is compared inside the atomic write.",
+          "nodes": [
+            {
+              "id": "a",
+              "label": "Tab A: version 1",
+              "description": "First writer submits expected version 1."
+            },
+            {
+              "id": "b",
+              "label": "Tab B: version 1",
+              "description": "Second writer also submits stale version 1."
+            },
+            {
+              "id": "db",
+              "label": "Stored version",
+              "description": "The first matching write changes version 1 to 2.",
+              "shape": "database"
+            },
+            {
+              "id": "ok",
+              "label": "200: version 2",
+              "description": "Successful writer receives the accepted state."
+            },
+            {
+              "id": "conflict",
+              "label": "409: reload and compare",
+              "description": "Second write cannot match version 1; it does not overwrite version 2."
+            }
+          ],
+          "edges": [
+            {
+              "from": "a",
+              "to": "db",
+              "label": "compare and update"
+            },
+            {
+              "from": "db",
+              "to": "ok",
+              "label": "one winner"
+            },
+            {
+              "from": "b",
+              "to": "db",
+              "label": "compare stale version"
+            },
+            {
+              "from": "db",
+              "to": "conflict",
+              "label": "no matching expected version"
+            }
+          ],
+          "steps": [
+            {
+              "title": "compare and update",
+              "activeNodes": [
+                "a",
+                "db"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The first matching write changes version 1 to 2."
+            },
+            {
+              "title": "one winner",
+              "activeNodes": [
+                "db",
+                "ok"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Successful writer receives the accepted state."
+            },
+            {
+              "title": "compare stale version",
+              "activeNodes": [
+                "b",
+                "db"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The first matching write changes version 1 to 2."
+            },
+            {
+              "title": "no matching expected version",
+              "activeNodes": [
+                "db",
+                "conflict"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Second write cannot match version 1; it does not overwrite version 2."
+            }
+          ]
+        }
+      },
+      {
+        "id": "transactions",
+        "title": "13. Define what must commit together",
+        "stage": "intermediate",
+        "takeaway": "An invariant determines a transaction boundary.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Creating one session is one SQL INSERT, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Use a database transaction around the required writes and test a deliberate failure between them. Keep slow remote calls outside that transaction. SQL rollback can undo SQL writes, but it cannot recall an email already sent. Reliable external effects need a durable outbox and an idempotent consumer."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design an added task-created event without a task/event mismatch.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Can SQL rollback undo an already sent email?",
+          "options": [
+            "No; coordinate external effects through durable workflow design.",
+            "Yes; all application effects belong to the connection.",
+            "Only when XACT_ABORT is enabled."
+          ],
+          "correct": 0,
+          "explanation": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment."
+        },
+        "references": [
+          {
+            "title": "Microsoft.Data.SqlClient",
+            "url": "https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace?view=sql-server-ver17",
+            "section": "Provider namespace and compatibility",
+            "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "retries",
+        "title": "14. Make uncertain creation outcomes explicit",
+        "stage": "intermediate",
+        "takeaway": "A transport failure is not evidence that a write failed.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The reference POST generates a new ID each time and does not implement idempotency. If SQL commits and the connection breaks before 201 reaches the browser, an automatic retry can create a second session. Keeping a draft is good recovery UX, but it does not solve effect uncertainty."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "For the assessed extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify two tests for idempotent creation before implementing it.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What is safe to infer from a timed-out POST?",
+          "options": [
+            "The outcome is uncertain until reconciled.",
+            "No task exists.",
+            "Retry must produce exactly one task without extra design."
+          ],
+          "correct": 0,
+          "explanation": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core integration tests",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+            "section": "Test host and integration-test boundary",
+            "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "A lost response leaves an uncertain effect",
+          "summary": "The idempotency extension records an operation and its result atomically.",
+          "nodes": [
+            {
+              "id": "ui",
+              "label": "Submit operation key",
+              "description": "A stable key identifies one intended create."
+            },
+            {
+              "id": "db",
+              "label": "Task + key record",
+              "description": "Commit task and key/result in the same transaction.",
+              "shape": "database"
+            },
+            {
+              "id": "lost",
+              "label": "Response lost",
+              "description": "Client cannot infer whether commit happened."
+            },
+            {
+              "id": "retry",
+              "label": "Retry same key + payload",
+              "description": "Server consults persisted operation evidence."
+            },
+            {
+              "id": "result",
+              "label": "Replay original result",
+              "description": "Return the same task, with no duplicate creation."
+            }
+          ],
+          "edges": [
+            {
+              "from": "ui",
+              "to": "db",
+              "label": "commit operation"
+            },
+            {
+              "from": "db",
+              "to": "lost",
+              "label": "connection breaks"
+            },
+            {
+              "from": "lost",
+              "to": "retry",
+              "label": "reconcile intent"
+            },
+            {
+              "from": "retry",
+              "to": "db",
+              "label": "look up evidence"
+            },
+            {
+              "from": "db",
+              "to": "result",
+              "label": "same recorded result"
+            }
+          ],
+          "steps": [
+            {
+              "title": "commit operation",
+              "activeNodes": [
+                "ui",
+                "db"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Commit task and key/result in the same transaction."
+            },
+            {
+              "title": "connection breaks",
+              "activeNodes": [
+                "db",
+                "lost"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Client cannot infer whether commit happened."
+            },
+            {
+              "title": "reconcile intent",
+              "activeNodes": [
+                "lost",
+                "retry"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Server consults persisted operation evidence."
+            },
+            {
+              "title": "look up evidence",
+              "activeNodes": [
+                "retry",
+                "db"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Commit task and key/result in the same transaction."
+            },
+            {
+              "title": "same recorded result",
+              "activeNodes": [
+                "db",
+                "result"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Return the same task, with no duplicate creation."
+            }
+          ]
+        }
+      },
+      {
+        "id": "identity",
+        "title": "15. Add verified identity and ownership",
+        "stage": "intermediate",
+        "takeaway": "An authenticated caller still needs authorization for each record.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an OwnerId column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Use the Application Security path for OIDC/session validation, token audience/issuer checks and cookie CSRF boundaries. Choose whether foreign IDs return 403 or are concealed as 404, then test that policy with two real accounts. A GUID is a locator, not a permission grant."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Describe the negative test that a happy-path login demo misses.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "May the API trust OwnerId from the request body?",
+          "options": [
+            "No; derive ownership from verified identity.",
+            "Yes; React hides that field.",
+            "Yes; GUIDs are hard to guess."
+          ],
+          "correct": 0,
+          "explanation": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core: protect user data",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-10.0",
+            "section": "Authorization based on ownership",
+            "scope": "Identity/ownership is an assessed extension; anonymous loopback baseline has no authentication.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Identity and ownership checks",
+          "summary": "This is a later extension; the local reference has no login.",
+          "nodes": [
+            {
+              "id": "identity",
+              "label": "Verified identity",
+              "description": "Validate the trusted authentication mechanism."
+            },
+            {
+              "id": "owner",
+              "label": "Ownership predicate",
+              "description": "Derive owner from verified claims, never client payload."
+            },
+            {
+              "id": "db",
+              "label": "Owned task query",
+              "description": "Match ID and owner together at the data boundary.",
+              "shape": "database"
+            },
+            {
+              "id": "result",
+              "label": "Allowed result",
+              "description": "Only authorized data leaves the API."
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "owner",
+              "label": "derive principal"
+            },
+            {
+              "from": "owner",
+              "to": "db",
+              "label": "scope query"
+            },
+            {
+              "from": "db",
+              "to": "result",
+              "label": "return allowed data"
+            }
+          ],
+          "steps": [
+            {
+              "title": "derive principal",
+              "activeNodes": [
+                "identity",
+                "owner"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Derive owner from verified claims, never client payload."
+            },
+            {
+              "title": "scope query",
+              "activeNodes": [
+                "owner",
+                "db"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Match ID and owner together at the data boundary."
+            },
+            {
+              "title": "return allowed data",
+              "activeNodes": [
+                "db",
+                "result"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Only authorized data leaves the API."
+            }
+          ]
+        }
+      },
+      {
+        "id": "browser-boundaries",
+        "title": "16. Separate CORS, sessions and CSRF",
+        "stage": "advanced",
+        "takeaway": "Browser policy is not API authorization.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Vite forwards /api on the UI origin to the API, so the baseline browser request is same-origin. Direct requests from a different origin require an explicitly allowed CORS policy. The API permits only the local development origin, methods and Content-Type header. This does not prevent non-browser clients calling the endpoint."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "If a later deployment uses cookie authentication, consider credentialed origins, SameSite cookie behavior and CSRF tokens for unsafe methods. If using bearer tokens, document token storage and XSS exposure. Avoid allowing every origin with credentials. Test browser behavior separately from curl or Python HTTP behavior."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why acceptance.py cannot prove the frontend CORS policy works.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Does an allowed CORS origin authenticate a caller?",
+          "options": [
+            "No; origin access and caller identity are separate.",
+            "Yes; origins identify users.",
+            "Yes, when the request is JSON."
+          ],
+          "correct": 0,
+          "explanation": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core CORS",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0",
+            "section": "Same-origin policy and middleware",
+            "scope": "Vite proxy baseline is browser same-origin; allowed direct origins are narrow and do not authenticate callers.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "tests",
+        "title": "17. Build evidence across the complete feature",
+        "stage": "advanced",
+        "takeaway": "Choose tests by the boundary they can actually observe.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "planner-api.test.ts tests decoding and HTTP error interpretation without a server. acceptance.py calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "None substitutes for all others. A mocked response cannot establish a SQL predicate, and a server test cannot prove a keyboard user can submit the form. Add independently expected results for your extensions. Keep acceptance fixtures in an isolated learning database because they create synthetic records."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Build an evidence matrix for decoder, HTTP contract, SQL persistence and keyboard access.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which test proves response decoder boundaries?",
+          "options": [
+            "A malformed response fixture passed through decodeTask.",
+            "A screenshot of a valid list.",
+            "A SQL SELECT count alone."
+          ],
+          "correct": 0,
+          "explanation": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately."
+        },
+        "references": [
+          {
+            "title": "ASP.NET Core integration tests",
+            "url": "https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0",
+            "section": "Test host and integration-test boundary",
+            "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "observability",
+        "title": "18. Explain a slow or failed request with bounded evidence",
+        "stage": "advanced",
+        "takeaway": "Record useful metadata without leaking drafts or credentials.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "The API logs method, path, status, elapsed milliseconds and a request trace identifier. It deliberately avoids request bodies and connection strings. These local logs help identify an error boundary; they are not a distributed trace because browser/proxy/database spans are not yet correlated."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Extend the project with OpenTelemetry instrumentation and trace context propagation. Define a workload and measure request latency plus successful completion rate. Do not average percentiles from different runs, and do not label planned minutes as measured CPU time. Keep high-cardinality identifiers out of metric labels."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a diagnostic record for a failed SQL-backed update.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What should a routine request log exclude?",
+          "options": [
+            "Tokens and complete request bodies.",
+            "A bounded status code.",
+            "Elapsed time units."
+          ],
+          "correct": 0,
+          "explanation": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry signals",
+            "url": "https://opentelemetry.io/docs/concepts/signals/",
+            "section": "Logs, metrics and traces",
+            "scope": "Baseline logs metadata; distributed tracing and exporters are assessed extensions.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "delivery",
+        "title": "19. Package and promote a tested release",
+        "stage": "advanced",
+        "takeaway": "Build identity connects verification to what actually runs.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Configuration and secrets are supplied at runtime."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "The practice dev proxy is not a production hosting plan. Serve the frontend under a known origin and route /api through a configured proxy or a deliberate CORS boundary. GitHub Pages cannot execute .NET or SQL. Deployment, managed identity and public HTTPS are optional exercises requiring owned infrastructure."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a release checklist with a rollback compatibility question.",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why promote the same artifact after testing?",
+          "options": [
+            "Its identity preserves the link between tests and deployed bytes.",
+            "It removes the need for configuration.",
+            "It makes database migrations reversible automatically."
+          ],
+          "correct": 0,
+          "explanation": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained."
+        },
+        "references": [
+          {
+            "title": "Google SRE: release engineering",
+            "url": "https://sre.google/sre-book/release-engineering/",
+            "section": "Reproducible builds and release process",
+            "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Test and promote the same release",
+          "summary": "An artifact identity links verification to deployed bytes.",
+          "nodes": [
+            {
+              "id": "build",
+              "label": "Build once",
+              "description": "Compile frontend and API from a recorded source revision."
+            },
+            {
+              "id": "test",
+              "label": "Verify artifact",
+              "description": "Run contract/browser checks on the built outputs."
+            },
+            {
+              "id": "artifact",
+              "label": "Immutable release",
+              "description": "Record checksums and runtime configuration contract."
+            },
+            {
+              "id": "deploy",
+              "label": "Owned environment",
+              "description": "Promote verified bytes and apply compatible schema changes."
+            },
+            {
+              "id": "observe",
+              "label": "Observe and recover",
+              "description": "Check user outcomes and use a reviewed rollback/recovery plan."
+            }
+          ],
+          "edges": [
+            {
+              "from": "build",
+              "to": "test",
+              "label": "built outputs"
+            },
+            {
+              "from": "test",
+              "to": "artifact",
+              "label": "retain identity"
+            },
+            {
+              "from": "artifact",
+              "to": "deploy",
+              "label": "promote same bytes"
+            },
+            {
+              "from": "deploy",
+              "to": "observe",
+              "label": "check outcomes"
+            }
+          ],
+          "steps": [
+            {
+              "title": "built outputs",
+              "activeNodes": [
+                "build",
+                "test"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Run contract/browser checks on the built outputs."
+            },
+            {
+              "title": "retain identity",
+              "activeNodes": [
+                "test",
+                "artifact"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Record checksums and runtime configuration contract."
+            },
+            {
+              "title": "promote same bytes",
+              "activeNodes": [
+                "artifact",
+                "deploy"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Promote verified bytes and apply compatible schema changes."
+            },
+            {
+              "title": "check outcomes",
+              "activeNodes": [
+                "deploy",
+                "observe"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Check user outcomes and use a reviewed rollback/recovery plan."
+            }
+          ]
+        }
+      },
+      {
+        "id": "recovery",
+        "title": "20. Recover data and defend the finished project",
+        "stage": "advanced",
+        "takeaway": "A backup becomes recovery evidence only after a successful restore.",
+        "sections": [
+          {
+            "title": "Understand the boundary",
+            "paragraphs": [
+              "In SQL mode, stop/restart persistence is the first durability demonstration. A recovery drill goes further: back up the dedicated database, restore into a new learning database and verify IDs, titles, counts and versions. Measure actual elapsed recovery time and compare with a stated recovery objective."
+            ]
+          },
+          {
+            "title": "Apply it to the study planner",
+            "paragraphs": [
+              "Finish with a review explaining the complete feature and its remaining boundaries. Show a valid add, rejected input, stale conflict, retained draft, SQL restart and tested restore if performed. Distinguish the baseline from your identity/idempotency/release extensions and link each claim to recorded evidence."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "What evidence would support a ten-minute recovery objective?",
+          "checks": [
+            "State your prediction before running or inspecting the reference.",
+            "Compare the actual result with the stated contract and explain any difference."
+          ],
+          "solution": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested.",
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What is the strongest backup evidence?",
+          "options": [
+            "A tested restore with verified application data.",
+            "A file named backup.bak.",
+            "A green UI screenshot from before the failure."
+          ],
+          "correct": 0,
+          "explanation": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested."
+        },
+        "references": [
+          {
+            "title": "SQL Server backup and restore",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases?view=sql-server-ver17",
+            "section": "Backup, restore and recovery",
+            "scope": "Owned dedicated learning database only; recovery must be demonstrated by a restore drill.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete full-stack practice kit",
+        "href": "paths/full-stack-journey/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "full-stack-practice",
+      "files": [
+        {
+          "id": "acceptance-py",
+          "href": "paths/full-stack-journey/practice/acceptance.py",
+          "role": "test",
+          "description": "acceptance.py"
+        },
+        {
+          "id": "App-tsx",
+          "href": "paths/full-stack-journey/practice/App.tsx",
+          "role": "reference",
+          "description": "Integrated React study planner"
+        },
+        {
+          "id": "index-html",
+          "href": "paths/full-stack-journey/practice/index.html",
+          "role": "reference",
+          "description": "index.html"
+        },
+        {
+          "id": "main-tsx",
+          "href": "paths/full-stack-journey/practice/main.tsx",
+          "role": "reference",
+          "description": "main.tsx"
+        },
+        {
+          "id": "milestones-md",
+          "href": "paths/full-stack-journey/practice/milestones.md",
+          "role": "guide",
+          "description": "Project checkpoints and independent evidence"
+        },
+        {
+          "id": "package-lock-json",
+          "href": "paths/full-stack-journey/practice/package-lock.json",
+          "role": "reference",
+          "description": "package-lock.json"
+        },
+        {
+          "id": "package-json",
+          "href": "paths/full-stack-journey/practice/package.json",
+          "role": "reference",
+          "description": "package.json"
+        },
+        {
+          "id": "planner-api-test-ts",
+          "href": "paths/full-stack-journey/practice/planner-api.test.ts",
+          "role": "test",
+          "description": "planner-api.test.ts"
+        },
+        {
+          "id": "planner-api-ts",
+          "href": "paths/full-stack-journey/practice/planner-api.ts",
+          "role": "reference",
+          "description": "planner-api.ts"
+        },
+        {
+          "id": "Planner-csproj",
+          "href": "paths/full-stack-journey/practice/Planner.csproj",
+          "role": "reference",
+          "description": "Planner.csproj"
+        },
+        {
+          "id": "planner-css",
+          "href": "paths/full-stack-journey/practice/planner.css",
+          "role": "reference",
+          "description": "planner.css"
+        },
+        {
+          "id": "Program-cs",
+          "href": "paths/full-stack-journey/practice/Program.cs",
+          "role": "reference",
+          "description": "Runnable .NET HTTP API with memory and SQL adapters"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/full-stack-journey/practice/README.md",
+          "role": "guide",
+          "description": "Setup, scope, run commands and cleanup"
+        },
+        {
+          "id": "schema-sql",
+          "href": "paths/full-stack-journey/practice/schema.sql",
+          "role": "reference",
+          "description": "SQL Server learning schema"
+        },
+        {
+          "id": "tsconfig-json",
+          "href": "paths/full-stack-journey/practice/tsconfig.json",
+          "role": "reference",
+          "description": "tsconfig.json"
+        },
+        {
+          "id": "vite-config-ts",
+          "href": "paths/full-stack-journey/practice/vite.config.ts",
+          "role": "reference",
+          "description": "vite.config.ts"
+        },
+        {
+          "id": "planner-ui-test-tsx",
+          "href": "paths/full-stack-journey/practice/planner-ui.test.tsx",
+          "role": "test",
+          "description": "Real React component tests for loading, pending drafts, failure recovery and stale conflicts"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Build one vertical slice",
+          "goal": "Create an accessible form, HTTP contract and complete memory-backed feature.",
+          "fileIds": [
+            "acceptance-py",
+            "App-tsx",
+            "index-html",
+            "main-tsx",
+            "milestones-md",
+            "package-lock-json",
+            "package-json",
+            "planner-api-test-ts",
+            "planner-api-ts",
+            "Planner-csproj",
+            "planner-css",
+            "Program-cs",
+            "README-md",
+            "schema-sql",
+            "tsconfig-json",
+            "vite-config-ts",
+            "planner-ui-test-tsx"
+          ],
+          "steps": [
+            "Extract the complete kit into a new practice folder.",
+            "Read README.md and milestones.md.",
+            "Demonstrate a valid add and completion through React and .NET.",
+            "Reject malformed data while preserving the draft.",
+            "Explain refresh versus process restart."
+          ],
+          "commands": [
+            {
+              "label": "Start owned API in terminal A",
+              "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+              "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+            },
+            {
+              "label": "Install frontend dependencies",
+              "command": "npm ci --ignore-scripts",
+              "expected": "Pinned dependencies installed; network is required for first install."
+            },
+            {
+              "label": "Validate and build frontend",
+              "command": "npm test && npm run build",
+              "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+            },
+            {
+              "label": "Start UI in terminal B",
+              "command": "npm run dev",
+              "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+            },
+            {
+              "label": "Run real HTTP checks in terminal C",
+              "command": "python acceptance.py http://127.0.0.1:5087",
+              "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "React course",
+              "href": "#path/react"
+            },
+            {
+              "label": "C# & .NET course",
+              "href": "#path/dotnet"
+            },
+            {
+              "label": "SQL Server course",
+              "href": "#path/sql-server"
+            }
+          ],
+          "notes": [
+            "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+            "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Persist and resolve conflicts",
+          "goal": "Use SQL Server, atomic expected-version updates and a tested retry design.",
+          "fileIds": [
+            "acceptance-py",
+            "App-tsx",
+            "index-html",
+            "main-tsx",
+            "milestones-md",
+            "package-lock-json",
+            "package-json",
+            "planner-api-test-ts",
+            "planner-api-ts",
+            "Planner-csproj",
+            "planner-css",
+            "Program-cs",
+            "README-md",
+            "schema-sql",
+            "tsconfig-json",
+            "vite-config-ts",
+            "planner-ui-test-tsx"
+          ],
+          "steps": [
+            "Extract the complete kit into a new practice folder.",
+            "Read README.md and milestones.md.",
+            "Show persisted IDs after API restart.",
+            "Prove one winner and one stale conflict.",
+            "Specify atomic idempotent creation and ownership boundaries."
+          ],
+          "commands": [
+            {
+              "label": "Start owned API in terminal A",
+              "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+              "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+            },
+            {
+              "label": "Install frontend dependencies",
+              "command": "npm ci --ignore-scripts",
+              "expected": "Pinned dependencies installed; network is required for first install."
+            },
+            {
+              "label": "Validate and build frontend",
+              "command": "npm test && npm run build",
+              "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+            },
+            {
+              "label": "Start UI in terminal B",
+              "command": "npm run dev",
+              "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+            },
+            {
+              "label": "Run real HTTP checks in terminal C",
+              "command": "python acceptance.py http://127.0.0.1:5087",
+              "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "React course",
+              "href": "#path/react"
+            },
+            {
+              "label": "C# & .NET course",
+              "href": "#path/dotnet"
+            },
+            {
+              "label": "SQL Server course",
+              "href": "#path/sql-server"
+            }
+          ],
+          "notes": [
+            "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+            "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Verify, operate and defend",
+          "goal": "Assemble tests, diagnostics, a release plan and recovery evidence.",
+          "fileIds": [
+            "acceptance-py",
+            "App-tsx",
+            "index-html",
+            "main-tsx",
+            "milestones-md",
+            "package-lock-json",
+            "package-json",
+            "planner-api-test-ts",
+            "planner-api-ts",
+            "Planner-csproj",
+            "planner-css",
+            "Program-cs",
+            "README-md",
+            "schema-sql",
+            "tsconfig-json",
+            "vite-config-ts",
+            "planner-ui-test-tsx"
+          ],
+          "steps": [
+            "Extract the complete kit into a new practice folder.",
+            "Read README.md and milestones.md.",
+            "Separate browser, HTTP and SQL evidence.",
+            "Explain authentication and deployment extensions honestly.",
+            "Defend a recovery plan with measured results where executed."
+          ],
+          "commands": [
+            {
+              "label": "Start owned API in terminal A",
+              "command": "dotnet run --project Planner.csproj --urls http://127.0.0.1:5087",
+              "expected": "Kestrel listens on loopback; /health reports memory or configured sql-server."
+            },
+            {
+              "label": "Install frontend dependencies",
+              "command": "npm ci --ignore-scripts",
+              "expected": "Pinned dependencies installed; network is required for first install."
+            },
+            {
+              "label": "Validate and build frontend",
+              "command": "npm test && npm run build",
+              "expected": "Decoder checks pass and Vite creates dist; use separate commands if your shell does not support &&."
+            },
+            {
+              "label": "Start UI in terminal B",
+              "command": "npm run dev",
+              "expected": "Open http://127.0.0.1:5173; add and complete a study session."
+            },
+            {
+              "label": "Run real HTTP checks in terminal C",
+              "command": "python acceptance.py http://127.0.0.1:5087",
+              "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "React course",
+              "href": "#path/react"
+            },
+            {
+              "label": "C# & .NET course",
+              "href": "#path/dotnet"
+            },
+            {
+              "label": "SQL Server course",
+              "href": "#path/sql-server"
+            }
+          ],
+          "notes": [
+            "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
+            "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "scope": "foundation",
+        "workspace": "foundation",
+        "architecture": "foundation",
+        "contract": "foundation",
+        "data-model": "foundation",
+        "ui-state": "foundation",
+        "first-slice": "foundation",
+        "response-validation": "foundation",
+        "effects": "intermediate",
+        "sql-setup": "intermediate",
+        "parameters": "intermediate",
+        "conflicts": "intermediate",
+        "transactions": "intermediate",
+        "retries": "intermediate",
+        "identity": "intermediate",
+        "browser-boundaries": "advanced",
+        "tests": "advanced",
+        "observability": "advanced",
+        "delivery": "advanced",
+        "recovery": "advanced"
+      },
+      "bundle": {
+        "href": "paths/full-stack-journey/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "git-team-workflows",
     "title": "Git & Team Workflows",
     "category": "Engineering practice",
@@ -32085,6 +38177,4013 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "linux-operating-systems",
+    "title": "Linux & Operating Systems",
+    "category": "Systems and operations",
+    "status": "ready",
+    "description": "Follow 22 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Comfort creating files and opening a terminal.",
+      "Python 3.11+ for the portable practice kit; no external packages.",
+      "Optional Linux observations require an existing disposable Linux/WSL environment."
+    ],
+    "outcomes": [
+      "Observe paths, streams, identities and process statuses without modifying the host.",
+      "Explain resource lifetimes, shutdown and bounded child execution.",
+      "Diagnose a failure and distinguish modeled results from Linux observations."
+    ],
+    "setup": [
+      "On Windows run the portable Python kit in PowerShell. For Linux-only commands, open your existing WSL distribution with wsl (if already installed), then run commands in that Linux Bash terminal. PowerShell and Bash syntax differ. Installing WSL is optional and outside this baseline.",
+      "If no Linux environment is installed, complete the portable kit first; keep Linux observation tasks marked unexecuted. If choosing WSL later, use the official Microsoft installation guide and a disposable user practice folder.",
+      "Download the practice bundle and extract its named folder.",
+      "Run the README baseline commands before attempting independent extensions.",
+      "No credentials, cloud accounts or administrator actions are required for the local baseline."
+    ],
+    "nextSteps": [
+      "Complete the staged projects and explain failure evidence.",
+      "Cross-reference the existing Python, SQL Server, networking and Kubernetes paths where relevant.",
+      "Run optional platform integration separately and record actual versions and results."
+    ],
+    "sources": [
+      {
+        "title": "Overview",
+        "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+      },
+      {
+        "title": "Start of resolution",
+        "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html"
+      },
+      {
+        "title": "subprocess argument sequences",
+        "url": "https://docs.python.org/3/library/subprocess.html"
+      },
+      {
+        "title": "File descriptors",
+        "url": "https://man7.org/linux/man-pages/man2/open.2.html"
+      },
+      {
+        "title": "Process credentials",
+        "url": "https://man7.org/linux/man-pages/man7/credentials.7.html"
+      },
+      {
+        "title": "Signal dispositions",
+        "url": "https://man7.org/linux/man-pages/man7/signal.7.html"
+      },
+      {
+        "title": "Shared process resources",
+        "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html"
+      },
+      {
+        "title": "Process inspection",
+        "url": "https://man7.org/linux/man-pages/man5/proc.5.html"
+      },
+      {
+        "title": "Microsoft WSL installation guide (optional)",
+        "url": "https://learn.microsoft.com/en-us/windows/wsl/install"
+      },
+      {
+        "title": "Bash manual",
+        "url": "https://man7.org/linux/man-pages/man1/bash.1.html"
+      },
+      {
+        "title": "procps ps manual",
+        "url": "https://man7.org/linux/man-pages/man1/ps.1.html"
+      },
+      {
+        "title": "Python os reference",
+        "url": "https://docs.python.org/3/library/os.html"
+      },
+      {
+        "title": "iproute2 ss manual",
+        "url": "https://man7.org/linux/man-pages/man8/ss.8.html"
+      },
+      {
+        "title": "systemctl manual",
+        "url": "https://www.man7.org/linux/man-pages/man1/systemctl.1.html"
+      },
+      {
+        "title": "Python time reference",
+        "url": "https://docs.python.org/3/library/time.html"
+      },
+      {
+        "title": "Linux cgroup v2 documentation",
+        "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "kernel-and-user-space",
+        "title": "1. Meet the operating system",
+        "stage": "foundation",
+        "takeaway": "An operating system coordinates hardware and programs.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An operating system coordinates hardware and programs. The kernel mediates memory, CPU time, devices and system calls; user-space programs include shells, browsers and service managers. A Linux distribution combines the kernel with utilities and packages. A terminal displays interaction; a shell interprets commands."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Imagine a notebook importer opening a CSV. Its Python code requests a file read through a library; the kernel checks access and supplies bytes from the filesystem. A missing file is an operating-system error that the application should report, not proof that Python is broken."
+            ],
+            "example": "# Run inside Linux or WSL, not PowerShell\nuname -s\ncat /etc/os-release\n# Expect Linux and distribution-specific metadata."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A container normally shares its host kernel. A virtual machine has a guest kernel. Windows commands in PowerShell are not interchangeable with Bash syntax even when their names look alike."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Draw where Python, Bash and a filesystem driver belong. Explain how a container differs from a VM.",
+          "solution": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Kernel mediates resource access",
+            "Every application contains its own kernel",
+            "A terminal and kernel are the same"
+          ],
+          "correct": 0,
+          "explanation": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Overview",
+            "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
+            "section": "Overview",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ],
+        "diagram": {
+          "title": "Opening a CSV crosses a controlled boundary",
+          "summary": "An application requests I/O; the kernel mediates access to the filesystem. This relationship is not a literal performance trace.",
+          "nodes": [
+            {
+              "id": "app",
+              "label": "Python importer",
+              "description": "User-space application requests file data."
+            },
+            {
+              "id": "kernel",
+              "label": "Kernel",
+              "description": "Checks access and mediates filesystem/device operations."
+            },
+            {
+              "id": "file",
+              "label": "CSV file",
+              "description": "Persistent bytes reached through a filesystem."
+            }
+          ],
+          "edges": [
+            {
+              "from": "app",
+              "to": "kernel",
+              "label": "read request"
+            },
+            {
+              "from": "kernel",
+              "to": "file",
+              "label": "filesystem access"
+            },
+            {
+              "from": "file",
+              "to": "app",
+              "label": "returned bytes through kernel"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Read request",
+              "activeNodes": [
+                "app",
+                "kernel"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "User-space application requests file data. Checks access and mediates filesystem/device operations."
+            },
+            {
+              "title": "Filesystem access",
+              "activeNodes": [
+                "kernel",
+                "file"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Checks access and mediates filesystem/device operations. Persistent bytes reached through a filesystem."
+            },
+            {
+              "title": "Returned bytes through kernel",
+              "activeNodes": [
+                "file",
+                "app"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Persistent bytes reached through a filesystem. User-space application requests file data."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "paths-and-working-directory",
+        "title": "2. Find your way through files",
+        "stage": "foundation",
+        "takeaway": "An absolute Linux path starts at /.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An absolute Linux path starts at /. A relative path starts at the process working directory. The home directory is a user-specific location; ~ is expanded by the shell. Case matters on typical Linux filesystems, so Report.csv and report.csv may be different names."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A service launched from / reads ./data.csv there, even if the script is stored in /home/learner/app. Locate both the working directory and the configured data path before changing code. .. moves to the parent; . names the current directory."
+            ],
+            "example": "pwd\nmkdir -p notebook-lab/input\ncd notebook-lab\nprintf \"id,name\\n1,Asha\\n\" > input/sample.csv\nls -l input\n# All changes stay in notebook-lab."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Resolving a path is not an authorization check. Symlinks can redirect lookup, and another process can change filesystem state between checking and opening a path."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "From notebook-lab, explain input/sample.csv and ../notebook-lab/input/sample.csv. Predict what happens after cd input.",
+          "solution": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Relative paths depend on working directory",
+            "Relative paths depend only on script location",
+            "Linux ignores filename case"
+          ],
+          "correct": 0,
+          "explanation": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Start of resolution",
+            "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
+            "section": "Start of resolution",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "safe-file-operations",
+        "title": "3. Read, copy and inspect safely",
+        "stage": "foundation",
+        "takeaway": "Before modifying a file, inspect its name, contents and parent directory.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Before modifying a file, inspect its name, contents and parent directory. cp copies, mv renames or moves, and rm removes directory entries. Shell wildcards can match more files than expected. Practice in a dedicated folder and use literal names for destructive operations."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Copy the sample into backup.csv, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
+            ],
+            "example": "cp input/sample.csv backup.csv\ncat backup.csv\nwc -l backup.csv\n# Expect 2 lines; inspect with ls before any removal."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "An overwrite can happen without a recycle-bin recovery path. Do not use recursive deletion against a computed or unreviewed directory. The lab needs no sudo and no changes to system directories."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a three-step checklist before overwriting backup.csv; distinguish local copy from recovery backup.",
+          "solution": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Inspect targets and preserve prior data",
+            "Use sudo for every copy",
+            "A same-disk copy survives every disaster"
+          ],
+          "correct": 0,
+          "explanation": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Pathname lookup",
+            "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
+            "section": "Pathname lookup",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "shell-quoting",
+        "title": "4. Arguments, quoting and expansion",
+        "stage": "foundation",
+        "takeaway": "A command receives an argument vector.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A command receives an argument vector. Bash performs expansion before launching it: unquoted variables can undergo word splitting and filename expansion. Double quotes preserve spaces while allowing variable expansion; single quotes generally preserve literal text. User input should be data rather than shell source."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "The filename quarterly report.csv contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
+            ],
+            "example": "name=\"quarterly report.csv\"\nprintf \"%s\\n\" \"$name\"\n# One line containing the complete name.\n# Application equivalent: subprocess.run([\"tool\", name], shell=False)"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Quoting is shell-specific. Bash syntax does not secure SQL, HTML or another shell automatically. Avoid constructing a shell command from untrusted text and avoid eval for this exercise."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why subprocess.run([\"echo\", name]) differs from joining strings into a shell command.",
+          "solution": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "An argument list preserves boundaries",
+            "Joining input into shell source is always safe",
+            "Double quotes work identically in every shell"
+          ],
+          "correct": 0,
+          "explanation": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Bash manual",
+            "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+            "section": "QUOTING and EXPANSION",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "subprocess argument sequences",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess argument sequences",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "streams-and-pipelines",
+        "title": "5. Follow standard input, output and errors",
+        "stage": "foundation",
+        "takeaway": "Programs conventionally receive input on descriptor 0, write normal output on 1 and diagnostics on 2.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Programs conventionally receive input on descriptor 0, write normal output on 1 and diagnostics on 2. A pipe connects one process output to another process input. Redirection sends a stream to a file. > replaces file contents; >> appends."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A log filter may emit matching lines on stdout but write a missing-file message on stderr. Capturing stdout alone can hide the diagnosis. A pipeline transforms a stream, but a downstream success does not necessarily establish that all upstream stages succeeded."
+            ],
+            "example": "printf \"INFO ready\\nERROR invalid row\\n\" | grep ERROR\n# Expect ERROR invalid row\n# Bash only:\nset -o pipefail\nfalse | cat\nprintf \"status=%s\\n\" \"$?\"\n# Expect status=1"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Bash pipeline status normally follows the last command. set -o pipefail changes that rule. Binary data and CSV quoting require suitable parsers; a simple grep pipeline is not a CSV importer."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design separate destinations for a report and diagnostic log. Explain why merging stderr into CSV can corrupt it.",
+          "solution": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Separate diagnostics from structured data",
+            "All output is always CSV",
+            "A successful last stage proves upstream success"
+          ],
+          "correct": 0,
+          "explanation": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Bash manual",
+            "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+            "section": "Pipelines and REDIRECTION",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "File descriptors",
+            "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+            "section": "File descriptors",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ],
+        "diagram": {
+          "title": "Keep the report separate from diagnostics",
+          "summary": "Standard output carries report data while standard error carries diagnostic evidence. A pipe joins stdout to the next program stdin.",
+          "nodes": [
+            {
+              "id": "tool",
+              "label": "Importer",
+              "description": "Produces structured data and separate errors."
+            },
+            {
+              "id": "report",
+              "label": "Report stream",
+              "description": "Consumer reads only valid data."
+            },
+            {
+              "id": "log",
+              "label": "Diagnostic log",
+              "description": "Failure category stays outside the report."
+            }
+          ],
+          "edges": [
+            {
+              "from": "tool",
+              "to": "report",
+              "label": "stdout"
+            },
+            {
+              "from": "tool",
+              "to": "log",
+              "label": "stderr"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Stdout",
+              "activeNodes": [
+                "tool",
+                "report"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Produces structured data and separate errors. Consumer reads only valid data."
+            },
+            {
+              "title": "Stderr",
+              "activeNodes": [
+                "tool",
+                "log"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Produces structured data and separate errors. Failure category stays outside the report."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "permissions-and-identities",
+        "title": "6. Users, groups and permission bits",
+        "stage": "foundation",
+        "takeaway": "Each process has identities used in access decisions.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Each process has identities used in access decisions. Traditional file mode bits separate owner, group and others with read, write and execute permissions. For a directory, execute allows traversal, read lists names, and write concerns entries. ACLs and capabilities add rules beyond the basic bits."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A private report can use mode 600: owner read/write, no group/other bits. An application still needs traversal permission on every parent directory. Fixing the final file alone may leave Permission denied unchanged."
+            ],
+            "example": "# Linux lab only, own file:\nchmod 600 backup.csv\nls -l backup.csv\nid\n# Expect owner rw bits, plus your actual identity."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "chmod 777 is not a diagnosis. An effective identity, parent access, ACL, mount option or security policy can explain a failure. Windows NTFS permissions and WSL-mounted directories may behave differently."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Decode 640 and explain why a readable file inside a non-traversable parent remains inaccessible.",
+          "solution": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Parent traversal also matters",
+            "chmod 777 is the recommended default",
+            "Read permission implies write permission"
+          ],
+          "correct": 0,
+          "explanation": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Process credentials",
+            "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
+            "section": "Process credentials",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "processes-and-exit-status",
+        "title": "7. Processes and exit status",
+        "stage": "foundation",
+        "takeaway": "A process is an executing program with a PID, resources and execution state.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A process is an executing program with a PID, resources and execution state. Its parent launches it and eventually collects completion status. A conventional zero status indicates success; nonzero statuses communicate failure categories. Program-specific documentation defines their meanings."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "The importer prints a helpful message but exits 1 when validation fails. Automation should inspect the exit status as well as output. A shell command not found is different from an application rejecting input."
+            ],
+            "example": "python3 -c \"import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)\"\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "PIDs are reusable. Do not act on an old PID without confirming identity. A status alone does not prove a business effect was rolled back; transaction design establishes that guarantee."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define success and invalid-input exit statuses for a CLI, then identify which stream should carry the failure explanation.",
+          "solution": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Nonzero can communicate expected failure",
+            "Printed text determines exit status automatically",
+            "A PID never gets reused"
+          ],
+          "correct": 0,
+          "explanation": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "subprocess returncode",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess returncode",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "environment-and-path",
+        "title": "8. Environment, PATH and configuration",
+        "stage": "foundation",
+        "takeaway": "A child normally inherits an environment snapshot from its parent.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A child normally inherits an environment snapshot from its parent. PATH lists directories searched for command names. Environment variables are strings; applications must validate them. Working directory, interpreter version and explicit configuration together explain many laptop-versus-service differences."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A service might find a different python than your interactive shell. Record the absolute interpreter path and configuration source. A DATABASE_URL in an environment is configuration, but still sensitive and should not be printed into a troubleshooting report."
+            ],
+            "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c \"import os; print(os.environ[\"NOTEBOOK_MODE\"])\"\n# Expect practice, without permanent shell modification."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Changing a variable in one shell does not retroactively update already-running children. Avoid placing untrusted directories at the front of PATH and do not include secrets in committed .env files."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "List three facts to capture when a scheduled command works interactively but fails as a service.",
+          "solution": "Capture effective user, absolute executable/version, and working directory/configuration source. Redact secret values.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Children inherit a snapshot",
+            "PATH determines data-file paths",
+            "Environment values are automatically typed"
+          ],
+          "correct": 0,
+          "explanation": "Capture effective user, absolute executable/version, and working directory/configuration source. Redact secret values. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Bash manual",
+            "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+            "section": "ENVIRONMENT and COMMAND EXECUTION",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "subprocess env",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess env",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "process-lifetimes",
+        "title": "9. Launch, wait and time out",
+        "stage": "intermediate",
+        "takeaway": "A parent must manage child completion, bounded output and cleanup.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A parent must manage child completion, bounded output and cleanup. Waiting indefinitely can stall a workflow. A timeout is a local deadline; terminating one process does not necessarily terminate grandchildren. Argument lists and controlled executable paths reduce shell-related surprises."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses subprocess.run with a timeout and tests the resulting TimeoutExpired. It launches only the current Python interpreter and never scans or kills unrelated processes."
+            ],
+            "example": "import subprocess, sys\nresult = subprocess.run([sys.executable, \"-c\", \"print(42)\"],\n                        capture_output=True, text=True, timeout=2)\nprint(result.returncode, result.stdout.strip())\n# Expected: 0 42"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "The portable lab verifies direct-child behavior, not Linux process groups or a production supervisor. Output capture in memory needs a bound for potentially large output. For streaming tools consume output incrementally."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain how you would contain an untrusted tool that creates grandchildren and unlimited output.",
+          "solution": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Timeout needs a cleanup policy",
+            "Timeout proves no child effects happened",
+            "capture_output has unlimited safe capacity"
+          ],
+          "correct": 0,
+          "explanation": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "subprocess timeouts",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess timeouts",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ],
+        "diagram": {
+          "title": "A parent owns the child lifetime",
+          "summary": "A launched child either completes within the bound or hits a timeout. Direct-child cleanup does not prove descendant cleanup.",
+          "nodes": [
+            {
+              "id": "parent",
+              "label": "Parent runner",
+              "description": "Launches an explicit argument list."
+            },
+            {
+              "id": "child",
+              "label": "Python child",
+              "description": "Produces bounded example output."
+            },
+            {
+              "id": "done",
+              "label": "Completion",
+              "description": "Status and streams collected."
+            },
+            {
+              "id": "timeout",
+              "label": "Deadline exceeded",
+              "description": "Timeout requires cleanup and a failure result."
+            }
+          ],
+          "edges": [
+            {
+              "from": "parent",
+              "to": "child",
+              "label": "launch"
+            },
+            {
+              "from": "child",
+              "to": "done",
+              "label": "finishes"
+            },
+            {
+              "from": "child",
+              "to": "timeout",
+              "label": "deadline reached"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Launch",
+              "activeNodes": [
+                "parent",
+                "child"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Launches an explicit argument list. Produces bounded example output."
+            },
+            {
+              "title": "Finishes",
+              "activeNodes": [
+                "child",
+                "done"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Produces bounded example output. Status and streams collected."
+            },
+            {
+              "title": "Deadline reached",
+              "activeNodes": [
+                "child",
+                "timeout"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Produces bounded example output. Timeout requires cleanup and a failure result."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "signals-and-shutdown",
+        "title": "10. Graceful shutdown and signals",
+        "stage": "intermediate",
+        "takeaway": "A signal is an OS notification to a process or thread.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A signal is an OS notification to a process or thread. A service can respond to a termination request by stopping new work, finishing or cancelling bounded work, flushing state and exiting. SIGKILL cannot be caught, so cleanup must tolerate interruption."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A worker with a 30-second shutdown budget should stop accepting tasks first, allow current work up to the remaining deadline, then record incomplete tasks for retry. Signal handlers should do minimal safe work; ordinary cleanup can happen in the main execution flow."
+            ],
+            "example": "# Linux observation of your own shell process only:\nps -p $$ -o pid,stat,comm\n# Design note: SIGTERM requests shutdown; SIGKILL prevents cleanup."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Signals differ on Windows. Never send kill commands to arbitrary PIDs in this notebook. The Linux observation guide restricts actions to a process that you launched in a disposable user session."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Sketch shutdown when one task finishes and a second exceeds the deadline. Which state must survive abrupt termination?",
+          "solution": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "SIGKILL cannot be caught",
+            "Every signal allows cleanup",
+            "Shutdown can wait forever without consequence"
+          ],
+          "correct": 0,
+          "explanation": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Signal dispositions",
+            "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
+            "section": "Signal dispositions",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "memory-and-virtual-addresses",
+        "title": "11. Virtual memory and resident memory",
+        "stage": "intermediate",
+        "takeaway": "Each process works with a virtual address space.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Each process works with a virtual address space. Mappings may refer to physical pages, shared libraries or files; reserved address space is different from resident physical memory. Page faults can bring data into memory or report invalid access. Resident memory and virtual size answer different questions."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A process maps a large file but touches only a small part. Virtual size can be large while resident memory stays lower. Conversely, a growing Python list can increase resident usage. Diagnose trends alongside workload rather than comparing one number to a different metric."
+            ],
+            "example": "# Linux read-only observation:\nps -p $$ -o pid,vsz,rss,comm\n# VSZ and RSS typically appear in KiB; confirm your ps manual."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A memory limit applies in a resource-accounting context. Host free memory does not imply a constrained container can allocate more. The course does not induce out-of-memory failures on your PC."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why VSZ=2 GiB and RSS=120 MiB is not evidence of a 2 GiB physical leak.",
+          "solution": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Virtual size differs from resident use",
+            "All mapped bytes are resident",
+            "Host free memory overrides container limits"
+          ],
+          "correct": 0,
+          "explanation": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "procps ps manual",
+            "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
+            "section": "STANDARD FORMAT SPECIFIERS: rss and vsz",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Shared process resources",
+            "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
+            "section": "Shared process resources",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "threads-scheduling-and-races",
+        "title": "12. Threads, scheduling and shared state",
+        "stage": "intermediate",
+        "takeaway": "Threads within a process share resources such as address space but have separate execution contexts.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Threads within a process share resources such as address space but have separate execution contexts. Scheduling can interleave operations. A read-modify-write sequence is not automatically atomic, and more workers can increase contention rather than useful throughput."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Two workers both read count=5 and both write 6; one increment is lost. A lock around the entire operation can protect a local invariant. Separate processes need an appropriate shared coordination boundary, not just an in-process lock."
+            ],
+            "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A language runtime lock is not a complete application correctness guarantee. CPU-bound and I/O-bound workloads benefit from different models. Measure useful throughput and tail latency with a fixed workload."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "State the smallest critical section needed to preserve count += 1 and why locking just the final write fails.",
+          "solution": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Protect the complete invariant",
+            "Lock only printing",
+            "More threads always improve throughput"
+          ],
+          "correct": 0,
+          "explanation": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Process resources shared by threads",
+            "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
+            "section": "Process resources shared by threads",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "file-descriptors-and-leaks",
+        "title": "13. File descriptors and resource lifetimes",
+        "stage": "intermediate",
+        "takeaway": "A descriptor is a process-local handle to an open resource.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A descriptor is a process-local handle to an open resource. Multiple descriptors can refer to the same underlying open file description. Opening many files without closing them eventually exhausts a limit. Closing resources promptly is a correctness concern as well as a performance concern."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Use a with block around a report file so normal completion and exceptions both close it. A Linux process may continue reading an open file after its pathname is unlinked; the name and the open object have distinct lifetimes."
+            ],
+            "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: id,name then True"
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Removing a log pathname does not necessarily reclaim disk usage while a process holds it open. Never delete active logs to diagnose a production server. A context manager closes handles but does not guarantee committed business data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why 1,000 successful opens followed by a failure can indicate a leak rather than a corrupt file.",
+          "solution": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Close handles on every path",
+            "Removing a name always closes open handles",
+            "Handles have no resource limit"
+          ],
+          "correct": 0,
+          "explanation": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Open file descriptions",
+            "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+            "section": "Open file descriptions",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "storage-and-durability",
+        "title": "14. Filesystems, caching and durability",
+        "stage": "intermediate",
+        "takeaway": "Writing data may update userspace buffers, kernel caches and finally storage at different times.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Writing data may update userspace buffers, kernel caches and finally storage at different times. Atomic rename/replacement changes which complete object a name refers to; durability concerns survival after a crash or power loss. These are separate properties."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A report writer creates a temporary file in the same directory, writes and flushes it, synchronizes file contents and replaces the prior name. This prevents a reader from observing a half-written report under the stated filesystem assumptions. Full durability may also require directory synchronization and storage guarantees."
+            ],
+            "example": "# Design sketch, not a crash-durability proof:\nwrite temporary in target directory\nflush application buffer; fsync temporary\nreplace target name\n# Directory durability requires platform-specific consideration."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Cross-filesystem moves need not have atomic rename semantics. Network filesystems and hardware caches change assumptions. The practice lab does not certify power-loss behavior or concurrent writers."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify partial-write prevention, concurrent-writer serialization and power-loss survival as three separate requirements.",
+          "solution": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Atomic visibility differs from durability",
+            "rename proves power-loss survival everywhere",
+            "Cross-device copy is always atomic"
+          ],
+          "correct": 0,
+          "explanation": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Python os reference",
+            "url": "https://docs.python.org/3/library/os.html",
+            "section": "os.fsync and os.replace",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Synchronized I/O",
+            "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+            "section": "Synchronized I/O",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "network-observation",
+        "title": "15. Inspect listeners and connections",
+        "stage": "intermediate",
+        "takeaway": "A network service binds an address and port.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A network service binds an address and port. Loopback accepts local communication; a wildcard bind may expose the service on available interfaces. Connection failures can arise from resolution, routing, filtering, listener state or application protocol."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A local notebook server on 127.0.0.1 is reachable only on that computer through loopback. A phone needs a reachable host address and appropriate network policy. First establish whether the expected process is listening before changing the application."
+            ],
+            "example": "# Linux read-only inspection:\nss -ltn\n# Look for the exact local port you deliberately started.\n# -l listeners; -t TCP; -n numeric addresses."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Listening is not proof of a healthy HTTP response, TLS configuration or authorization. Do not expose practice services to public networks. ss availability and output fields vary by Linux environment."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Order checks for a refused local connection: hostname, listener, HTTP response, business authorization.",
+          "solution": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Listener and application health are separate",
+            "A port proves authentication works",
+            "Loopback is your public internet address"
+          ],
+          "correct": 0,
+          "explanation": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "iproute2 ss manual",
+            "url": "https://man7.org/linux/man-pages/man8/ss.8.html",
+            "section": "OPTIONS: --listening, --tcp, --numeric",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Network namespaces",
+            "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
+            "section": "Network namespaces",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "services-and-supervision",
+        "title": "16. Services and supervision",
+        "stage": "intermediate",
+        "takeaway": "A supervisor starts a long-running process and manages its lifecycle.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A supervisor starts a long-running process and manages its lifecycle. On many Linux distributions systemd units describe the executable, identity, working directory, dependencies and restart policy. A running process is distinct from an application ready to accept work."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "An importer service repeatedly exits because its working directory differs from a terminal. Inspect unit configuration, current state and recent logs together. Restarting indefinitely without fixing an input/configuration failure can create a noisy loop."
+            ],
+            "example": "# Linux with systemd, read-only:\nsystemctl --user --failed\n# No user manager? Record that limitation; do not use sudo as a workaround."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "WSL and containers may not run systemd as PID 1. Commands are observational and can fail with an explanatory unavailable message. Do not edit or enable system units as part of this notebook."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify executable, identity, working directory and restart conditions for a practice importer. Which failures should not retry rapidly?",
+          "solution": "Use an absolute executable, unprivileged account and explicit working directory. Invalid permanent configuration should stop/alert rather than rapidly repeat.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Supervisor lifecycle differs from readiness",
+            "Restart loops repair malformed configuration",
+            "Every Linux environment runs systemd"
+          ],
+          "correct": 0,
+          "explanation": "Use an absolute executable, unprivileged account and explicit working directory. Invalid permanent configuration should stop/alert rather than rapidly repeat. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "systemctl manual",
+            "url": "https://www.man7.org/linux/man-pages/man1/systemctl.1.html",
+            "section": "Unit Commands and --user",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Process inspection",
+            "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
+            "section": "Process inspection",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "logs-and-evidence",
+        "title": "17. Logs, clocks and incident evidence",
+        "stage": "advanced",
+        "takeaway": "A useful incident record includes observation time, affected scope, exact command, relevant output and a testable hypothesis.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A useful incident record includes observation time, affected scope, exact command, relevant output and a testable hypothesis. Logs should identify events and correlation IDs without disclosing secrets. Wall-clock timestamps can jump; elapsed measurements should use a monotonic clock."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A report says permission denied at 10:05. Record the service identity, path and parent modes before adjusting access. Test one change at a time so evidence can explain the result. Copy only necessary sanitized diagnostics into your learning notes."
+            ],
+            "example": "import time\nstart = time.monotonic()\n# perform bounded work\nprint(time.monotonic() - start)\n# Nonnegative elapsed seconds; actual value varies."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Absence of a log is not proof that an event did not occur. Buffered output, sampling, clock skew and unavailable storage can create gaps. Preserve originals and document transformations."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an evidence note for an importer failure without including the database password or entire customer file.",
+          "solution": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Evidence needs context and redaction",
+            "A missing log proves no event occurred",
+            "Wall time can never move backwards"
+          ],
+          "correct": 0,
+          "explanation": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Python time reference",
+            "url": "https://docs.python.org/3/library/time.html",
+            "section": "time.monotonic",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "subprocess diagnostics",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess diagnostics",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "resource-limits",
+        "title": "18. Resource limits and overload",
+        "stage": "advanced",
+        "takeaway": "Finite CPU, memory, handles and storage impose capacity limits.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Finite CPU, memory, handles and storage impose capacity limits. Queueing increases when arrivals exceed service capacity. Limits protect a host but can also make failures surprising if applications assume unrestricted resources. Capacity planning needs workload and concurrency assumptions."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A worker processing 10 jobs/second receives 14/second for 30 seconds. Ignoring initial backlog and variance, backlog grows by 120 jobs. Increasing workers may help only if the bottleneck is parallelizable and downstream capacity permits it."
+            ],
+            "example": "arrival = 14\nservice = 10\nduration = 30\nprint(max(0, arrival - service) * duration)\n# Expected: 120 queued jobs in a simplified constant-rate model."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Do not stress your computer with unbounded allocations or fork loops. The provided lab is an arithmetic model and does not exercise kernel limits or reproduce load-test evidence."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Predict backlog after arrival returns to 8/second for 60 seconds. State the model assumptions.",
+          "solution": "Spare capacity is 2/second, clearing 120 in 60 seconds. Rates are constant, service remains 10 and there are no retries or size differences.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Backlog grows when arrivals exceed service",
+            "A queue creates unlimited capacity",
+            "Every additional worker adds full throughput"
+          ],
+          "correct": 0,
+          "explanation": "Spare capacity is 2/second, clearing 120 in 60 seconds. Rates are constant, service remains 10 and there are no retries or size differences. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Linux cgroup v2 documentation",
+            "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+            "section": "Controllers: CPU and memory",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Bounded child process timeout",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "Bounded child process timeout",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "namespaces-and-cgroups",
+        "title": "19. Containers through an OS lens",
+        "stage": "advanced",
+        "takeaway": "Namespaces give processes distinct views of selected OS resources such as process IDs, mounts and networking.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Namespaces give processes distinct views of selected OS resources such as process IDs, mounts and networking. cgroups account for and constrain resource use. These mechanisms solve different problems; together with other controls they support container runtimes."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "Inside a container, a process may see PID 1 while the host sees another PID. Its memory limit can be lower than host RAM. A missing file may come from a different mount view rather than a missing host file."
+            ],
+            "example": "# Linux read-only observations; names and access vary:\ncat /proc/self/cgroup\nls -l /proc/self/ns\n# Compare observations, without modifying controls."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Isolation is not complete security by itself. Capabilities, user identities, seccomp, filesystem access and runtime policy still matter. This lesson uses read-only inspection; it does not create namespaces or change cgroup controls."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Match PID visibility and memory budget to their mechanisms. Explain why seeing PID 1 is not proof of host administrator access.",
+          "solution": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Namespaces and cgroups solve different problems",
+            "PID 1 always means host root",
+            "A namespace automatically grants more memory"
+          ],
+          "correct": 0,
+          "explanation": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Linux cgroup v2 documentation",
+            "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+            "section": "What is cgroup?",
+            "reviewed": "2026-09-30",
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          },
+          {
+            "title": "Namespace types",
+            "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
+            "section": "Namespace types",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ],
+        "diagram": {
+          "title": "Resource view and resource budget are different",
+          "summary": "A container process sees namespace-specific resources and belongs to an accounting/limit hierarchy. Neither alone establishes full security.",
+          "nodes": [
+            {
+              "id": "process",
+              "label": "Container process",
+              "description": "Executes using host kernel mechanisms."
+            },
+            {
+              "id": "view",
+              "label": "Namespaces",
+              "description": "Control selected resource views."
+            },
+            {
+              "id": "budget",
+              "label": "cgroups",
+              "description": "Account for and constrain resources."
+            },
+            {
+              "id": "kernel",
+              "label": "Host kernel",
+              "description": "Enforces applicable mechanisms and policies."
+            }
+          ],
+          "edges": [
+            {
+              "from": "process",
+              "to": "view",
+              "label": "resource visibility"
+            },
+            {
+              "from": "process",
+              "to": "budget",
+              "label": "resource accounting"
+            },
+            {
+              "from": "view",
+              "to": "kernel",
+              "label": "kernel mechanism"
+            },
+            {
+              "from": "budget",
+              "to": "kernel",
+              "label": "kernel mechanism"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Resource visibility",
+              "activeNodes": [
+                "process",
+                "view"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Executes using host kernel mechanisms. Control selected resource views."
+            },
+            {
+              "title": "Resource accounting",
+              "activeNodes": [
+                "process",
+                "budget"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Executes using host kernel mechanisms. Account for and constrain resources."
+            },
+            {
+              "title": "Kernel mechanism",
+              "activeNodes": [
+                "view",
+                "kernel"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Control selected resource views. Enforces applicable mechanisms and policies."
+            },
+            {
+              "title": "Kernel mechanism",
+              "activeNodes": [
+                "budget",
+                "kernel"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Account for and constrain resources. Enforces applicable mechanisms and policies."
+            }
+          ],
+          "direction": "TB"
+        }
+      },
+      {
+        "id": "security-and-packages",
+        "title": "20. Least privilege and package hygiene",
+        "stage": "advanced",
+        "takeaway": "Least privilege grants only required operations to an application identity.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Least privilege grants only required operations to an application identity. Package management tracks installed software and updates; distributions have differing release policies and commands. Verify origin and compatibility before adding a dependency."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "A report reader needs read access to input and write access to a dedicated output directory, not permission to modify executables. Separate deployment/configuration responsibilities from runtime rights. Record versions so a reproduction can explain environment differences."
+            ],
+            "example": "# Observation only:\nid\ncommand -v python3\npython3 --version\n# Record distribution from /etc/os-release separately."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Piping a remote script into a privileged shell hides review and expands authority. Do not install packages or change users as part of this notebook; optional Linux exercises use an existing disposable VM/WSL environment."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a permission matrix for input CSV, report directory and application code.",
+          "solution": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Grant task-specific rights",
+            "Every app needs root",
+            "Package updates never change behavior"
+          ],
+          "correct": 0,
+          "explanation": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "Permission checks",
+            "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
+            "section": "Permission checks",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "incident-diagnosis",
+        "title": "21. Diagnose a failed importer",
+        "stage": "advanced",
+        "takeaway": "Start with a symptom and a bounded hypothesis rather than a broad fix.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Start with a symptom and a bounded hypothesis rather than a broad fix. Separate executable lookup, configuration, file access, resource constraints and application validation. Prefer read-only evidence first, then a minimal reversible change in a practice environment."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "If a service fails to open data.csv, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
+            ],
+            "example": "python diagnostic_lab.py\n# Expected: path -> configuration; permission -> access;\n# timeout -> lifecycle; bad-row -> application validation."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "A simulation trains reasoning but is not a real Linux incident investigation. Production diagnosis needs authorization, change records and safe evidence handling. The reference never reads arbitrary system files or changes permissions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a decision table separating FileNotFoundError, PermissionError, TimeoutExpired and ValueError. Give each a next observation.",
+          "solution": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Match evidence to a failure layer",
+            "Every failure is a permission problem",
+            "Restarting proves the root cause"
+          ],
+          "correct": 0,
+          "explanation": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "subprocess exceptions",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess exceptions",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      },
+      {
+        "id": "operating-systems-capstone",
+        "title": "22. Build your diagnosis portfolio",
+        "stage": "advanced",
+        "takeaway": "A portfolio should show reproducible observations, an explanation of mechanisms and a tested recovery procedure.",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A portfolio should show reproducible observations, an explanation of mechanisms and a tested recovery procedure. Complete the portable child-process lab first, then optionally gather Linux-only evidence in a disposable environment. Label simulated outcomes and actual command output separately."
+            ]
+          },
+          {
+            "title": "Work through a concrete case",
+            "paragraphs": [
+              "The final case combines an explicit interpreter, validated configuration, a bounded child lifetime, correct output/error separation and an incident note. Evaluate whether your recovery addresses the cause and whether it preserves prior report data."
+            ],
+            "example": "python -m unittest -v test_os_labs.py\n# Expected: portable lifecycle, argument and model tests pass.\n# Optional Linux observations are documented in linux-observation.md."
+          },
+          {
+            "title": "Boundary and common mistake",
+            "paragraphs": [
+              "Passing a portable suite does not prove scheduler knowledge, live service management, namespace isolation or performance under load. List the Linux observations you have actually completed and unanswered hypotheses."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Produce a one-page report with reproducible commands, failure timeline, safe fix and recovery verification.",
+          "solution": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries.",
+          "checks": [
+            "Address the stated scenario with explicit assumptions.",
+            "Explain the failure or boundary case, not only the happy path.",
+            "Compare your own reasoning with the reference and document any different valid policy."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which statement correctly describes this lesson?",
+          "options": [
+            "Separate actual evidence from modeled behavior",
+            "A unit suite certifies production mastery",
+            "Hide environment differences from the report"
+          ],
+          "correct": 0,
+          "explanation": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries. The other options ignore the mechanism or its stated boundary."
+        },
+        "references": [
+          {
+            "title": "subprocess testing boundary",
+            "url": "https://docs.python.org/3/library/subprocess.html",
+            "section": "subprocess testing boundary",
+            "reviewed": "2026-09-30",
+            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation",
+        "description": "Observe paths, streams, identities and process statuses without modifying the host.",
+        "exitCriteria": [
+          "Record working directory, interpreter path/version and source of configuration.",
+          "Demonstrate one literal argument containing spaces and shell-like text.",
+          "Keep structured stdout separate from diagnostic stderr.",
+          "Decode 600 and 640 and explain directory traversal."
+        ],
+        "project": {
+          "title": "File and command evidence notebook",
+          "brief": "Build a small evidence notebook explaining paths, argument boundaries, streams, permission bits and exit statuses. Complete portable examples first; add Linux command observations only in an existing disposable environment.",
+          "requirements": [
+            "Record working directory, interpreter path/version and source of configuration.",
+            "Demonstrate one literal argument containing spaces and shell-like text.",
+            "Keep structured stdout separate from diagnostic stderr.",
+            "Decode 600 and 640 and explain directory traversal."
+          ],
+          "rubric": [
+            "Predict before executing; actual output and expectation are distinct.",
+            "No administrator changes or broad recursive cleanup.",
+            "Explains PowerShell/Bash and file-path differences."
+          ],
+          "solution": "python diagnostic_lab.py\n# path -> configuration; permission -> access\n# timeout -> lifecycle; bad-row -> application validation\n# Follow linux-observation.md only in an existing Linux session.\n# Keep exact sanitized commands/output in your own evidence.md."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate",
+        "description": "Explain resource lifetimes, shutdown and bounded child execution.",
+        "exitCriteria": [
+          "Use the current absolute interpreter with a list of arguments and shell=False.",
+          "Reject invalid timeout and teaching-input bounds before launching.",
+          "Return stdout, stderr and exact child status; preserve nonzero status.",
+          "Test direct-child timeout and explain descendant/output limitations."
+        ],
+        "project": {
+          "title": "Trusted child-process runner",
+          "brief": "Independently implement a runner for fixed trusted Python snippets with explicit arguments, separated streams, status capture and a deadline. Compare the downloaded reference after attempting it.",
+          "requirements": [
+            "Use the current absolute interpreter with a list of arguments and shell=False.",
+            "Reject invalid timeout and teaching-input bounds before launching.",
+            "Return stdout, stderr and exact child status; preserve nonzero status.",
+            "Test direct-child timeout and explain descendant/output limitations."
+          ],
+          "rubric": [
+            "Successful child prints 42; failed child status/diagnostics remain distinct.",
+            "A string with spaces and shell-like characters arrives as one literal argument.",
+            "Timeout test completes promptly and no unrelated process is terminated.",
+            "Does not label trusted execution as an untrusted-code sandbox."
+          ],
+          "solution": "\"\"\"Portable OS reasoning lab. No host changes, arbitrary commands or real load.\"\"\"\nfrom dataclasses import dataclass\nimport subprocess\nimport sys\n\n@dataclass(frozen=True)\nclass Result:\n    status: int\n    stdout: str\n    stderr: str\n\ndef run_python(source, arguments=(), timeout=2):\n    \"\"\"Trusted teaching snippets only, direct Python child, bounded example output.\n\n    This is NOT a sandbox: never pass untrusted source. The test snippets emit\n    bounded output; arbitrary source could emit unbounded output or descendants.\n    \"\"\"\n    if not isinstance(source, str) or len(source) > 4096:\n        raise ValueError('source must be a bounded trusted string')\n    if not 0 < timeout <= 10:\n        raise ValueError('timeout must be positive and at most 10 seconds')\n    if len(arguments) > 10 or any(not isinstance(a, str) or len(a) > 256 for a in arguments):\n        raise ValueError('arguments exceed teaching bounds')\n    value = subprocess.run([sys.executable, '-c', source, *arguments],\n                           capture_output=True, text=True, timeout=timeout)\n    return Result(value.returncode, value.stdout, value.stderr)\n\ndef classify(error):\n    if isinstance(error, FileNotFoundError): return 'configuration'\n    if isinstance(error, PermissionError): return 'access'\n    if isinstance(error, subprocess.TimeoutExpired): return 'lifecycle'\n    if isinstance(error, ValueError): return 'application validation'\n    return 'unclassified; inspect evidence'\n\ndef backlog(arrival_per_second, service_per_second, duration_seconds, initial=0):\n    values = (arrival_per_second, service_per_second, duration_seconds, initial)\n    if any(type(v) not in (int, float) or v < 0 for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    import math\n    if not all(math.isfinite(v) for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    return max(0, initial + (arrival_per_second - service_per_second) * duration_seconds)\n\ndef demo():\n    examples = [('path', FileNotFoundError()), ('permission', PermissionError()),\n                ('timeout', subprocess.TimeoutExpired('trusted-child', 0.1)),\n                ('bad-row', ValueError())]\n    for label, error in examples: print(f'{label} -> {classify(error)}')\n    result = run_python('print(42)')\n    print(f'child status={result.status} output={result.stdout.strip()}')\n    print(f'modeled backlog={backlog(14, 10, 30)}')\n\nif __name__ == '__main__': demo()\n"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced practice",
+        "description": "Diagnose a failure and distinguish modeled results from Linux observations.",
+        "exitCriteria": [
+          "Record symptom, timeline, hypothesis, exact observation and minimal fix.",
+          "Demonstrate model backlog growth 120 and drain to zero under stated constant rates.",
+          "Explain why virtual size, RSS and container limits answer different questions.",
+          "Explain how durable work identity survives abrupt shutdown.",
+          "Separate constructed exceptions from actual Linux observations."
+        ],
+        "project": {
+          "title": "Importer incident portfolio",
+          "brief": "Build an incident report that distinguishes path configuration, access, child lifecycle and application validation. Include one bounded recovery test and optionally actual Linux namespace/cgroup observations.",
+          "requirements": [
+            "Record symptom, timeline, hypothesis, exact observation and minimal fix.",
+            "Demonstrate model backlog growth 120 and drain to zero under stated constant rates.",
+            "Explain why virtual size, RSS and container limits answer different questions.",
+            "Explain how durable work identity survives abrupt shutdown.",
+            "Separate constructed exceptions from actual Linux observations."
+          ],
+          "rubric": [
+            "Root-cause explanation addresses the observed layer.",
+            "Recovery verification checks output/state, not only a process restart.",
+            "Report redacts secrets and names its untested platform/production boundaries."
+          ],
+          "solution": "from diagnostic_lab import backlog, classify\nprint(backlog(14, 10, 30))  # 120 modeled queued jobs\nprint(backlog(8, 10, 60, 120))  # 0 after drain\nprint(classify(FileNotFoundError()))  # configuration\n# Add an independent failure/recovery case and sanitized evidence note."
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete practice bundle",
+        "href": "paths/linux-operating-systems/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "linux-operating-systems-practice",
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/linux-operating-systems/practice/README.md",
+          "role": "guide",
+          "description": "Course-owned README.md"
+        },
+        {
+          "id": "diagnostic_lab-py",
+          "href": "paths/linux-operating-systems/practice/diagnostic_lab.py",
+          "role": "reference",
+          "description": "Course-owned diagnostic_lab.py"
+        },
+        {
+          "id": "test_os_labs-py",
+          "href": "paths/linux-operating-systems/practice/test_os_labs.py",
+          "role": "test",
+          "description": "Course-owned test_os_labs.py"
+        },
+        {
+          "id": "linux-observation-md",
+          "href": "paths/linux-operating-systems/practice/linux-observation.md",
+          "role": "guide",
+          "description": "Course-owned linux-observation.md"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "File and command evidence notebook",
+          "goal": "Build a small evidence notebook explaining paths, argument boundaries, streams, permission bits and exit statuses. Complete portable examples first; add Linux command observations only in an existing disposable environment.",
+          "fileIds": [
+            "README-md",
+            "diagnostic_lab-py",
+            "test_os_labs-py",
+            "linux-observation-md"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Record working directory, interpreter path/version and source of configuration.",
+            "Demonstrate one literal argument containing spaces and shell-like text.",
+            "Keep structured stdout separate from diagnostic stderr.",
+            "Decode 600 and 640 and explain directory traversal."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python diagnostic_lab.py",
+              "expected": "Diagnostic categories printed; only direct Python children launched."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_os_labs.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Meet the operating system",
+              "href": "#topic/linux-operating-systems/kernel-and-user-space"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Trusted child-process runner",
+          "goal": "Independently implement a runner for fixed trusted Python snippets with explicit arguments, separated streams, status capture and a deadline. Compare the downloaded reference after attempting it.",
+          "fileIds": [
+            "README-md",
+            "diagnostic_lab-py",
+            "test_os_labs-py",
+            "linux-observation-md"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Use the current absolute interpreter with a list of arguments and shell=False.",
+            "Reject invalid timeout and teaching-input bounds before launching.",
+            "Return stdout, stderr and exact child status; preserve nonzero status.",
+            "Test direct-child timeout and explain descendant/output limitations."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python diagnostic_lab.py",
+              "expected": "Diagnostic categories printed; only direct Python children launched."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_os_labs.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Meet the operating system",
+              "href": "#topic/linux-operating-systems/kernel-and-user-space"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Importer incident portfolio",
+          "goal": "Build an incident report that distinguishes path configuration, access, child lifecycle and application validation. Include one bounded recovery test and optionally actual Linux namespace/cgroup observations.",
+          "fileIds": [
+            "README-md",
+            "diagnostic_lab-py",
+            "test_os_labs-py",
+            "linux-observation-md"
+          ],
+          "steps": [
+            "Download and extract the bundle; all files are at the named folder root.",
+            "Read README.md and run the baseline.",
+            "Attempt the stage brief independently and record evidence before comparing references.",
+            "Record symptom, timeline, hypothesis, exact observation and minimal fix.",
+            "Demonstrate model backlog growth 120 and drain to zero under stated constant rates.",
+            "Explain why virtual size, RSS and container limits answer different questions.",
+            "Explain how durable work identity survives abrupt shutdown.",
+            "Separate constructed exceptions from actual Linux observations."
+          ],
+          "commands": [
+            {
+              "label": "Run the bounded local reference",
+              "command": "python diagnostic_lab.py",
+              "expected": "Diagnostic categories printed; only direct Python children launched."
+            },
+            {
+              "label": "Run baseline failure checks",
+              "command": "python -m unittest -v test_os_labs.py",
+              "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Meet the operating system",
+              "href": "#topic/linux-operating-systems/kernel-and-user-space"
+            }
+          ],
+          "notes": [
+            "Python 3.11+ standard library only.",
+            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "kernel-and-user-space": "foundation",
+        "paths-and-working-directory": "foundation",
+        "safe-file-operations": "foundation",
+        "shell-quoting": "foundation",
+        "streams-and-pipelines": "foundation",
+        "permissions-and-identities": "foundation",
+        "processes-and-exit-status": "foundation",
+        "environment-and-path": "foundation",
+        "process-lifetimes": "intermediate",
+        "signals-and-shutdown": "intermediate",
+        "memory-and-virtual-addresses": "intermediate",
+        "threads-scheduling-and-races": "intermediate",
+        "file-descriptors-and-leaks": "intermediate",
+        "storage-and-durability": "intermediate",
+        "network-observation": "intermediate",
+        "services-and-supervision": "intermediate",
+        "logs-and-evidence": "advanced",
+        "resource-limits": "advanced",
+        "namespaces-and-cgroups": "advanced",
+        "security-and-packages": "advanced",
+        "incident-diagnosis": "advanced",
+        "operating-systems-capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/linux-operating-systems/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "messaging-events",
+    "title": "Messaging & Event-Driven Systems",
+    "category": "Software engineering",
+    "status": "ready",
+    "description": "22 lessons, three stage projects and a locally runnable practice kit covering reliable asynchronous workflows from messages to recovery.",
+    "level": "Foundations → intermediate → selected advanced practice",
+    "prerequisites": [
+      "Basic Python and SQL transactions for the local exercises.",
+      "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+    ],
+    "outcomes": [
+      "Choose queues, subscriptions and logs from delivery requirements.",
+      "Explain publisher confirms, consumer acknowledgements and uncertain outcomes.",
+      "Implement transactional outbox and durable duplicate-safe projections locally.",
+      "Design bounded retry, quarantine, ordering and compatible schema contracts.",
+      "Review replay, authorization, observability and multi-store recovery boundaries."
+    ],
+    "setup": [
+      "Download the practice bundle and extract its flat files together.",
+      "From its folder run python event_lab.py, then python -m unittest -v test_event_lab.py.",
+      "Read README.md and workbook.md before optional external tooling. The verified baseline is local only."
+    ],
+    "nextSteps": [
+      "Connect one real broker and test reconnect, persistence and denied access with synthetic data.",
+      "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+    ],
+    "sources": [
+      {
+        "title": "Azure publisher-subscriber",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber"
+      },
+      {
+        "title": "CloudEvents specification",
+        "url": "https://cloudevents.io/"
+      },
+      {
+        "title": "Azure competing consumers",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
+      },
+      {
+        "title": "Apache Kafka design",
+        "url": "https://kafka.apache.org/41/design/design/"
+      },
+      {
+        "title": "RabbitMQ acknowledgements and confirms",
+        "url": "https://www.rabbitmq.com/docs/confirms"
+      },
+      {
+        "title": "RabbitMQ reliability guide",
+        "url": "https://www.rabbitmq.com/docs/reliability"
+      },
+      {
+        "title": "Azure transactional outbox",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos"
+      },
+      {
+        "title": "RabbitMQ dead-letter exchanges",
+        "url": "https://www.rabbitmq.com/docs/dlx"
+      },
+      {
+        "title": "Azure saga pattern",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/saga"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "messages-events",
+        "title": "1. Messages, commands and events",
+        "takeaway": "Name whether you request work or report a fact.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A message is a transported payload. A command requests an action, such as GenerateExport, and needs an owner that can accept or reject it. An event reports something that already happened, such as ExportRequested. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Our notebook export example accepts a job, records its identifier, and later produces a file. ExportRequested and ExportCompleted are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Name whether you request work or report a fact. Which decision follows?",
+          "options": [
+            "Keep accepted, running, completed and failed as separate observable states.",
+            "Treat the send operation as proof that the export exists.",
+            "Rename every request as a past-tense event to make it asynchronous."
+          ],
+          "correct": 0,
+          "explanation": "A transport acknowledgement cannot establish the business outcome; only the responsible workflow can publish that fact."
+        },
+        "references": [
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "CloudEvents specification",
+            "url": "https://cloudevents.io/",
+            "section": "Specification; context attributes",
+            "reviewed": "2026-09-30",
+            "scope": "CloudEvents standard landing page; teaching envelopes are inspired by its vocabulary, not claimed as a conformant transport implementation."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Classify CancelExport, ExportFailed and GetExportStatus. Write who owns each action and which event can truthfully follow a durable commit.",
+          "checks": [
+            "Classify all three names as command, event or query.",
+            "Name the export workflow owner and a truthful commit boundary for each fact."
+          ],
+          "solution": "CancelExport requests cancellation and belongs to the export workflow owner; ExportFailed reports an observed failure; GetExportStatus queries that owner's recorded status. ExportRequested may follow a committed accepted job, while ExportCompleted follows durable completion. Cancellation can be rejected when the job has already completed.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "topologies",
+        "title": "2. Queue, pub/sub and retained log",
+        "takeaway": "Choose a topology from who must receive the message.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A work queue distributes jobs among competing workers. Pub/sub delivers a copy to each logical subscription. A retained log lets consumers track positions and reread records while retention permits. These are distinct contracts even if one product supports several. Multiple workers on one subscription normally share work; they do not create independent audit and email subscribers."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of ExportCompleted. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Choose a topology from who must receive the message. Which decision follows?",
+          "options": [
+            "Use independent subscriptions for independent side effects.",
+            "Add an audit consumer to the same work queue and expect every event.",
+            "Use one shared consumer group for audit and notifications because both need every event."
+          ],
+          "correct": 0,
+          "explanation": "Competing consumers divide work; independent subscriptions provide separate delivery histories."
+        },
+        "references": [
+          {
+            "title": "Azure competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "Logical queue consumer pattern; not a guarantee for every broker."
+          },
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Sketch one export queue with two workers plus two completion subscriptions. Count expected deliveries for three jobs: three successful work executions, and three completion deliveries per subscription before considering redelivery.",
+          "checks": [
+            "Show one queue shared by two workers.",
+            "Count three deliveries per independent completion subscription and explain redelivery separately."
+          ],
+          "solution": "One export queue distributes the three jobs between two workers, yielding three successful business executions. Two independent completion subscriptions each receive three facts before redelivery. Adding a second notification worker shares that subscription's work rather than producing another independent copy.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Work sharing versus independent subscribers",
+          "summary": "Workers share one job responsibility; audit and notification need separate event copies.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Publisher",
+              "description": "Publishes a completion fact with stable event identity."
+            },
+            {
+              "id": "1",
+              "label": "Audit subscription",
+              "description": "Owns audit delivery history."
+            },
+            {
+              "id": "2",
+              "label": "Notification subscription",
+              "description": "Owns notification delivery history."
+            },
+            {
+              "id": "3",
+              "label": "Notification worker A",
+              "description": "Competes for notification work."
+            },
+            {
+              "id": "4",
+              "label": "Notification worker B",
+              "description": "Competes for notification work."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "independent copy"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "independent copy"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "assign work"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "assign other work"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. independent copy",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Owns audit delivery history."
+            },
+            {
+              "title": "2. independent copy",
+              "activeNodes": [
+                "0",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Owns notification delivery history."
+            },
+            {
+              "title": "3. assign work",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Competes for notification work."
+            },
+            {
+              "title": "4. assign other work",
+              "activeNodes": [
+                "2",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Competes for notification work."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "envelopes",
+        "title": "3. Envelope identity and correlation",
+        "takeaway": "Separate event identity from business identity and tracing.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Give an event a stable ID, type, schema version, occurred time and source. A job ID identifies the export; an event ID identifies a particular fact; a correlation ID connects the user request and later work. Retrying publication must reuse the same event ID for that fact. A new correction is a new event, even if its business key matches."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard ExportCompleted after ExportRequested. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "{\n  \"id\": \"e-17\",\n  \"job_id\": \"j-4\",\n  \"type\": \"ExportRequested\",\n  \"version\": 1,\n  \"value\": 7\n}"
+          }
+        ],
+        "quiz": {
+          "question": "Separate event identity from business identity and tracing. Which decision follows?",
+          "options": [
+            "Deduplicate the event ID within a named consumer.",
+            "Use a new random event ID each time the same event is retried.",
+            "Deduplicate on correlation ID so an entire workflow produces only one stored event."
+          ],
+          "correct": 0,
+          "explanation": "Stable identity makes redelivery recognizable; correlation and business keys answer different questions."
+        },
+        "references": [
+          {
+            "title": "CloudEvents specification",
+            "url": "https://cloudevents.io/",
+            "section": "Specification; context attributes",
+            "reviewed": "2026-09-30",
+            "scope": "CloudEvents standard landing page; teaching envelopes are inspired by its vocabulary, not claimed as a conformant transport implementation."
+          },
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Create two events for one job and one duplicate delivery. Identify the stable IDs and show which record your inbox suppresses. Keep real user emails and tokens out of the envelope and sample logs.",
+          "checks": [
+            "Different facts for one job have different event IDs.",
+            "Retrying the same fact preserves its event ID and consumer scope."
+          ],
+          "solution": "Use job j-4 with event e-17 for ExportRequested and a different stable event ID for ExportCompleted. Repeated e-17 delivery is suppressed within the same consumer, while the new completion fact is retained. Correlation links both facts to the original request; it is not the deduplication key.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "acceptance",
+        "title": "4. Publish confirmation versus completion",
+        "takeaway": "Publisher confirmation and consumer acknowledgement protect different hops.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A publisher confirm tells the sender about broker acceptance under configured broker semantics. A consumer acknowledgement tells the broker a delivery was handled. Neither automatically tells the original browser that its export is complete. The producer can lose a confirm even when the broker accepted the message, so retry must tolerate uncertainty and duplicates."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Suppose the broker accepts e-17, then the producer connection drops before its confirm arrives. The sender cannot distinguish this from non-acceptance. Republishing the same e-17 is reasonable with deduplication. The export worker must commit its own effect before acknowledging; receipt alone is insufficient."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Publisher confirmation and consumer acknowledgement protect different hops. Which decision follows?",
+          "options": [
+            "Retry uncertain publication with stable identity and durable consumer handling.",
+            "Assume a missing confirmation proves the broker did not receive it.",
+            "Interpret the publisher confirm as confirmation that all subscribers completed their effects."
+          ],
+          "correct": 0,
+          "explanation": "A missing reply leaves an uncertain outcome; confirmations and acknowledgements describe separate relationships."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ acknowledgements and confirms",
+            "url": "https://www.rabbitmq.com/docs/confirms",
+            "section": "Consumer acknowledgements; publisher confirms; prefetch",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Draw three crash windows: before broker acceptance, after acceptance before confirm, and after consumer commit before acknowledgement. State what each participant knows at that point.",
+          "checks": [
+            "Describe the uncertainty caused by a lost publisher confirm.",
+            "Place consumer acknowledgement after the durable effect and explain duplicate handling."
+          ],
+          "solution": "Before broker acceptance the sender lacks a confirmed delivery. After acceptance with a lost confirm the sender cannot distinguish accepted from absent and retries the stable ID. After consumer commit with a lost acknowledgement replay must consult the durable inbox. Only the consumer owns knowledge of its committed effect.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Two acknowledgements, two boundaries",
+          "summary": "Acceptance is distinct from business completion.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Producer",
+              "description": "Keeps stable event ID on uncertain retry."
+            },
+            {
+              "id": "1",
+              "label": "Broker",
+              "description": "Acceptance depends on configured broker semantics."
+            },
+            {
+              "id": "2",
+              "label": "Consumer",
+              "description": "Commits local effect before acknowledging."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "publish"
+            },
+            {
+              "from": "1",
+              "to": "0",
+              "label": "publisher confirm"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "deliver"
+            },
+            {
+              "from": "2",
+              "to": "1",
+              "label": "consumer ack after commit"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. publish",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Acceptance depends on configured broker semantics."
+            },
+            {
+              "title": "2. publisher confirm",
+              "activeNodes": [
+                "1",
+                "0"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Keeps stable event ID on uncertain retry."
+            },
+            {
+              "title": "3. deliver",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Commits local effect before acknowledging."
+            },
+            {
+              "title": "4. consumer ack after commit",
+              "activeNodes": [
+                "2",
+                "1"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Acceptance depends on configured broker semantics."
+            }
+          ],
+          "type": "sequence",
+          "sequenceOrder": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "id": "delivery-semantics",
+        "title": "5. Delivery guarantees and effect boundaries",
+        "takeaway": "At-least-once delivery demands duplicate-safe effects.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "At-most-once processing can lose work when acknowledgement precedes the effect. At-least-once delivery permits retries and duplicate deliveries. Exactly-once claims must state their boundary: a broker or stream transaction is not automatically an exactly-once email, payment or external API call. Local atomic transactions can make one database effect effectively once for a stable key."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The practice lab commits an inbox row and projection update together in SQLite. A replay sees the inbox key and avoids a second projection update. An external email sent between those statements would fall outside SQLite rollback; it needs a provider idempotency key or reconciliation strategy."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "At-least-once delivery demands duplicate-safe effects. Which decision follows?",
+          "options": [
+            "Describe which local effect is deduplicated and which external effect remains uncertain.",
+            "Label the whole workflow exactly once because it has an inbox table.",
+            "Rely on broker exactly-once delivery to eliminate duplicate calls to any external payment API."
+          ],
+          "correct": 0,
+          "explanation": "A guarantee is only meaningful inside the mechanism that enforces it."
+        },
+        "references": [
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          },
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Run the duplicate test. Then propose how an email provider without idempotency would be handled.",
+          "checks": [
+            "Scope the proven guarantee to the local database effect.",
+            "Identify an external-email uncertainty and a reconciliation strategy."
+          ],
+          "solution": "The SQLite inbox/projection transaction establishes one committed local effect per consumer/event key across repeated delivery. Sending an email is outside that transaction. Use a provider idempotency key or retained receipts and reconciliation; if those are unavailable, preserve the uncertain state and acknowledge that duplicates cannot be eliminated by the local inbox alone.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "consumer-lifecycle",
+        "title": "6. Receive, commit and acknowledge",
+        "takeaway": "Acknowledge only after durable work succeeds.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A worker receives a delivery, validates it, performs durable work, commits, and then acknowledges. If its channel closes before acknowledgement, brokers can redeliver. Delivery tags may be channel-scoped, while application event IDs survive channels. These identifiers must not be substituted for each other."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Crash before commit: database changes roll back and replay must do the work. Crash after commit before acknowledgement: replay must detect the committed inbox entry and skip the effect. The lab injects a failure during a transaction to prove both inbox and projection remain unchanged."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Acknowledge only after durable work succeeds. Which decision follows?",
+          "options": [
+            "Commit inbox and effect together, then acknowledge at the transport boundary.",
+            "Insert the inbox marker first in a separate committed transaction.",
+            "Acknowledge before the transaction commits to reduce the chance of duplicate delivery."
+          ],
+          "correct": 0,
+          "explanation": "A separate inbox commit can suppress replay even when the business effect never committed."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ acknowledgements and confirms",
+            "url": "https://www.rabbitmq.com/docs/confirms",
+            "section": "Consumer acknowledgements; publisher confirms; prefetch",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          },
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Read consume() in event_lab.py. Move the inbox insert out of the transaction in a copy, inject a crash, and predict lost work. Restore the reference and run the rollback test.",
+          "checks": [
+            "Explain the before-commit and after-commit crash outcomes.",
+            "Identify why a separately committed inbox marker can lose work."
+          ],
+          "solution": "The transaction encloses inbox insertion and projection update. A pre-commit crash rolls both back, permitting replay. A post-commit pre-acknowledgement crash replays into the existing inbox key and skips the effect. Committing the inbox separately first risks suppressing work that never completed.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Commit before acknowledgement",
+          "summary": "Replay after a lost acknowledgement detects the durable inbox.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Delivery",
+              "description": "Validate stable ID and schema."
+            },
+            {
+              "id": "1",
+              "label": "Already committed?",
+              "description": "Look up consumer/event unique key.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Commit inbox + projection",
+              "description": "Atomic SQLite transaction.",
+              "shape": "database"
+            },
+            {
+              "id": "3",
+              "label": "Acknowledge",
+              "description": "After a known local commit; duplicates skip repeated effect.",
+              "shape": "terminal"
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "validate"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "no: do work"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "commit succeeded"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "yes: skip effect"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. validate",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Look up consumer/event unique key."
+            },
+            {
+              "title": "2. no: do work",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Atomic SQLite transaction."
+            },
+            {
+              "title": "3. commit succeeded",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "After a known local commit; duplicates skip repeated effect."
+            },
+            {
+              "title": "4. yes: skip effect",
+              "activeNodes": [
+                "1",
+                "3"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "After a known local commit; duplicates skip repeated effect."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "durability",
+        "title": "7. Durability and queue lifetime",
+        "takeaway": "Persistence, replication and retention are separate decisions.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A durable queue definition, persistent message flag, publisher confirm and replicated broker storage protect different failure windows. Temporary or exclusive queue lifetimes may remove queues when connections end. No single adjective guarantees survival of host loss, operator deletion or expired retention. Consumer acknowledgements do not back up the broker."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "An export request must survive worker restart, but a transient UI notification may be disposable. Record retention and maximum queue age explicitly. The SQLite lab is durable on one file-backed database but does not simulate a replicated broker or prove disk-failure survival."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Persistence, replication and retention are separate decisions. Which decision follows?",
+          "options": [
+            "Test the specific failure mode behind a durability claim.",
+            "Assume a persistent flag survives every failure and operator action.",
+            "Treat replicated broker storage as a replacement for separately protected deletion recovery."
+          ],
+          "correct": 0,
+          "explanation": "Durability is a combination of configured storage behavior and independently tested recovery."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "Write a failure matrix for process restart, host loss and accidental deletion. For each, name the actual protection and a recovery test. Do not mark the lab test as evidence for replication.",
+          "checks": [
+            "Name different protections for process restart, host loss and deletion.",
+            "Mark replicated broker and backup claims as requiring real experiments."
+          ],
+          "solution": "Process restart requires durable local state and broker definitions/messages appropriate to the product. Host loss may additionally require replicated durable storage and a tested failover path. Operator deletion needs separately protected backup/recovery and ownership controls. The local SQLite suite proves none of the broker replication or deletion recovery rows.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "routing",
+        "title": "8. Routing and subscription ownership",
+        "takeaway": "Routes must express ownership and isolate subscriber failures.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Route by a documented event type or routing key. Avoid routing directly from untrusted arbitrary strings. Give each logical subscriber a separately owned delivery history, retry budget and retention policy. A catch-all subscription is useful for an audit reader but can become an accidental source of sensitive data exposure."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "ExportCompleted feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Routes must express ownership and isolate subscriber failures. Which decision follows?",
+          "options": [
+            "Define routes, independent subscription ownership and unroutable-message evidence.",
+            "Use a service hostname as the permanent business event type.",
+            "Give every subscriber a catch-all route to avoid maintaining routing contracts."
+          ],
+          "correct": 0,
+          "explanation": "Business contracts should survive topology changes and failures should be visible to an owner."
+        },
+        "references": [
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "Azure competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "Logical queue consumer pattern; not a guarantee for every broker."
+          }
+        ],
+        "stage": "foundation",
+        "exercise": {
+          "prompt": "List three event types and authorized subscribers. Explain what happens to an unroutable event and how a publisher observes that condition in the selected broker; do not silently discard a business-critical message.",
+          "checks": [
+            "List allowed event-type/subscriber pairs.",
+            "State how the chosen broker exposes an unroutable critical message."
+          ],
+          "solution": "Use ExportRequested for the authorized export worker and ExportCompleted for independent audit and notification subscribers. Document routing keys, subscriber owners and retry/retention policies. An unroutable critical event needs a visible return/error or equivalent broker-specific observation; it cannot silently disappear while the UI reports success.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "idempotent-consumers",
+        "title": "9. Durable inbox and idempotency",
+        "takeaway": "Deduplication must survive restarts and be scoped to each consumer.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An inbox uses a unique key such as consumer name plus event ID. Combine insert-or-detect with the business update in one transaction. An in-memory set disappears on restart and cannot coordinate multiple processes. Retention of inbox keys must cover expected redelivery and replay windows; pruning too early permits effects again."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Audit and notifications can each process e-17 once, so their inbox keys differ. The lab consumes an event into a SQL projection and counts the effect once across repeated delivery and reopened connections. It rejects reuse of an ID with a different job/value payload instead of pretending that a collision is a valid replay.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "from contextlib import closing\nfrom event_lab import connect, create_job, consume, total\n\nwith closing(connect(':memory:')) as db:\n    event = create_job(db, 'j-4', 'e-17', 7)\n    print(consume(db, 'audit', event))  # True\n    print(consume(db, 'audit', event))  # False\n    print(total(db, 'audit', 'j-4'))   # 7"
+          }
+        ],
+        "quiz": {
+          "question": "Deduplication must survive restarts and be scoped to each consumer. Which decision follows?",
+          "options": [
+            "Use a durable unique key and atomic effect, with an explicit retention window.",
+            "Keep only the last ten IDs in worker memory.",
+            "Deduplicate all subscribers using one global event-ID row, preventing other subscribers from processing it."
+          ],
+          "correct": 0,
+          "explanation": "Restart, concurrency and replay all require durable deduplication beyond a short process-local history."
+        },
+        "references": [
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Run duplicate and identity-collision tests. Design a retention rule if events can replay for thirty days, and identify what happens after keys expire. The reference keeps keys indefinitely only because the training dataset is small.",
+          "checks": [
+            "Verify duplicate and reopen tests preserve one local effect.",
+            "State what can happen after a deduplication key is pruned."
+          ],
+          "solution": "The unique inbox key combines consumer and event identity and commits with its effect. Separate consumers can each process the same fact. Retain keys for at least the promised redelivery/replay window plus an explicit margin; after expiry a replay may apply again. Identity collisions with changed content fail rather than masquerading as duplicates.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "transactional-outbox",
+        "title": "10. Transactional outbox",
+        "takeaway": "Write the business change and pending event in one local transaction.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A database update followed by a separate publish is a dual write. A crash between them leaves a committed business change without its event. Reversing the order can publish a fact whose business transaction later fails. An outbox stores the business change and publication record in one transaction; a relay later publishes pending records."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "from contextlib import closing\nfrom event_lab import connect, create_job, pending\n\nwith closing(connect(':memory:')) as db:\n    create_job(db, 'j-4', 'e-17', 7)\n    print(len(pending(db)))  # 1 committed pending event"
+          }
+        ],
+        "quiz": {
+          "question": "Write the business change and pending event in one local transaction. Which decision follows?",
+          "options": [
+            "Commit business data and outbox atomically; deduplicate eventual deliveries.",
+            "Mark the outbox sent before attempting publication.",
+            "Delete the outbox row immediately after starting an asynchronous publish call."
+          ],
+          "correct": 0,
+          "explanation": "An outbox prevents lost intent at a local boundary; relay uncertainty remains and demands duplicate-safe consumers."
+        },
+        "references": [
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          },
+          {
+            "title": "RabbitMQ acknowledgements and confirms",
+            "url": "https://www.rabbitmq.com/docs/confirms",
+            "section": "Consumer acknowledgements; publisher confirms; prefetch",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Run the creation rollback test and relay redelivery test. Explain why marking sent before publication risks loss.",
+          "checks": [
+            "Locate the atomic job/outbox transaction.",
+            "Explain why publish-before-mark can duplicate and mark-before-publish can lose."
+          ],
+          "solution": "Commit the job and outbox event together. The relay publishes with a stable ID and the chosen broker confirmation behavior, then marks the row sent. A crash after publish before marking can duplicate delivery; the durable consumer inbox handles it. Marking sent first can lose publication permanently.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "One local commit, uncertain relay",
+          "summary": "An outbox prevents local dual-write loss; consumer deduplication handles relay replay.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Business transaction",
+              "description": "Writes job and pending event atomically.",
+              "shape": "database"
+            },
+            {
+              "id": "1",
+              "label": "Outbox relay",
+              "description": "Reads committed pending events."
+            },
+            {
+              "id": "2",
+              "label": "Broker",
+              "description": "Accepts a published event; lost reply can cause retry."
+            },
+            {
+              "id": "3",
+              "label": "Consumer inbox + effect",
+              "description": "Commits dedupe key and projection together.",
+              "shape": "database"
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "committed intent"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "publish stable ID"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "possible repeated delivery"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. committed intent",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Reads committed pending events."
+            },
+            {
+              "title": "2. publish stable ID",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Accepts a published event; lost reply can cause retry."
+            },
+            {
+              "title": "3. possible repeated delivery",
+              "activeNodes": [
+                "2",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Commits dedupe key and projection together."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "retry-budget",
+        "title": "11. Bounded retries and poison messages",
+        "takeaway": "Retry transient failures without creating an endless hot loop.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Classify retryable dependency failures separately from malformed messages and permanent authorization failures. Backoff spreads attempts; jitter reduces synchronized bursts. Limit attempts or total elapsed time and move exhausted work to quarantine with its original ID, failure reason and attempt count. Do not keep immediately requeuing an invalid payload forever."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "With attempt delays of 1, 2 and 4 seconds, three retry waits total 7 seconds before considering handler time. If a job expires after 5 seconds, that schedule already exceeds its usefulness. The lab models retry classification deterministically rather than sleeping or invoking a real broker.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine"
+          }
+        ],
+        "quiz": {
+          "question": "Retry transient failures without creating an endless hot loop. Which decision follows?",
+          "options": [
+            "Classify failure and cap retry work by attempts and usefulness deadline.",
+            "Retry every failure forever because eventual delivery is desirable.",
+            "Reset the attempt counter on each reconnect so transient jobs eventually always succeed."
+          ],
+          "correct": 0,
+          "explanation": "Permanent payload errors are not repaired by repetition, and transient failures still consume finite capacity."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ dead-letter exchanges",
+            "url": "https://www.rabbitmq.com/docs/dlx",
+            "section": "What is a dead letter exchange; configuring; safety",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Use retry_decision() with attempt counts 1 through 4. Decide whether a missing required field should ever retry unchanged. Record a reference answer: quarantine invalid payload immediately; retry a temporary dependency only inside a finite budget.",
+          "checks": [
+            "Separate permanent input failure from transient dependency failure.",
+            "Record the exact reference decisions and distinguish classification from scheduling."
+          ],
+          "solution": "An invalid required field is permanent for that unchanged payload and should quarantine immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "dead-letter-replay",
+        "title": "12. Quarantine and controlled replay",
+        "takeaway": "A dead-letter store needs an owner and a repair workflow.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A dead-letter queue is a holding area, not an automatic fix. Preserve original identity and failure details, restrict access, alert on age and growth, and define who repairs the producer or consumer. Blindly copying messages back can recreate an outage. Broker dead-letter transfer has its own durability and configuration limits."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "A version-2 payload reaches a version-1-only consumer and is quarantined. First deploy a compatible consumer and run a sample in isolation. Then replay a bounded batch while checking duplicates and side effects. Do not edit the event ID merely to bypass inbox handling."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "A dead-letter store needs an owner and a repair workflow. Which decision follows?",
+          "options": [
+            "Repair the cause and replay a bounded observable batch.",
+            "Clear the dead-letter queue to make the alert green.",
+            "Assign new IDs to dead-lettered messages so old inbox entries cannot block replay."
+          ],
+          "correct": 0,
+          "explanation": "Moving or deleting messages does not establish completed business work or prevent recurrence."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ dead-letter exchanges",
+            "url": "https://www.rabbitmq.com/docs/dlx",
+            "section": "What is a dead letter exchange; configuring; safety",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "In workbook.md write a replay approval checklist: cause corrected, payload access authorized, dry sample checked, batch bounded, metrics watched, stop trigger defined. Explain what evidence marks a message repaired versus simply moved.",
+          "checks": [
+            "Preserve original IDs and error evidence during replay.",
+            "Define a repair criterion and a batch stop trigger."
+          ],
+          "solution": "Repair the compatibility failure before replaying. Check authorized payload access, validate a sample, preserve event identity, bound batch size and monitor outcomes and stop criteria. Mark repaired only when the required effect and deduplication behavior are verified; merely moving the record is not a business completion.",
+          "solutionFormat": "prose"
+        },
+        "diagram": {
+          "title": "Repair before replay",
+          "summary": "A quarantine store preserves evidence; replay is bounded and observable.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Failure",
+              "description": "Record ID, attempts and error."
+            },
+            {
+              "id": "1",
+              "label": "Retry useful?",
+              "description": "Classify transient error and deadline.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Finite retry",
+              "description": "Apply backoff under the budget."
+            },
+            {
+              "id": "3",
+              "label": "Quarantine",
+              "description": "Retain failure evidence.",
+              "shape": "database"
+            },
+            {
+              "id": "4",
+              "label": "Controlled replay",
+              "description": "Repair cause, test sample, watch stop criteria."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "classify"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "yes"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "no"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "owner repairs and reviews"
+            }
+          ],
+          "steps": [
+            {
+              "title": "1. classify",
+              "activeNodes": [
+                "0",
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Classify transient error and deadline."
+            },
+            {
+              "title": "2. yes",
+              "activeNodes": [
+                "1",
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Apply backoff under the budget."
+            },
+            {
+              "title": "3. no",
+              "activeNodes": [
+                "1",
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Retain failure evidence."
+            },
+            {
+              "title": "4. owner repairs and reviews",
+              "activeNodes": [
+                "3",
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Repair cause, test sample, watch stop criteria."
+            }
+          ],
+          "direction": "LR"
+        }
+      },
+      {
+        "id": "ordering",
+        "title": "13. Ordering, keys and stale events",
+        "takeaway": "Ordering is scoped and consumers must detect stale changes.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Partition or session keys can serialize related work within a selected scope, but not across all entities or subscribers. Concurrent workers and retries can alter completion order even if delivery order was FIFO. A version number lets a projection detect missing or stale changes. A timestamp alone is weaker because clocks can disagree."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Progress version 4 arrives before version 3. A last-value projection can ignore the stale version if its contract allows that; an incrementing ledger cannot simply drop version 3. State transitions may require buffering or querying authoritative state to close gaps."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Ordering is scoped and consumers must detect stale changes. Which decision follows?",
+          "options": [
+            "Choose the aggregate ordering scope and explicitly handle gaps or stale versions.",
+            "Assume a queue name guarantees global business completion order.",
+            "Sort by wall-clock timestamp and infer a total order across every producer."
+          ],
+          "correct": 0,
+          "explanation": "Delivery, processing completion and application state order are separate and need scoped contracts."
+        },
+        "references": [
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          },
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Compare two aggregates A and B: A1, B1, A2, B2. Which order matters within each aggregate, and which can be parallel? State why changing the partition count can require careful ordering assumptions.",
+          "checks": [
+            "Distinguish per-aggregate order from cross-aggregate concurrency.",
+            "Explain a gap/stale policy appropriate to a state projection versus a ledger."
+          ],
+          "solution": "A1 before A2 and B1 before B2 are per-aggregate constraints; A and B can usually process concurrently. Arrival and completion ordering differ under retry or multiple workers. Version checks can detect gaps/stale state, but increment ledgers cannot arbitrarily discard an earlier operation. Partition changes require reviewing how keys remain consistently ordered.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "schemas",
+        "title": "14. Schema evolution and compatibility",
+        "takeaway": "Deploy producers and consumers independently with compatible contracts.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "An additive optional field is often easier to evolve than a renamed required field. Compatibility depends on actual serializer behavior: some readers reject unknown fields, some supply defaults, and some silently coerce types. Specify schema version, validation and deprecation windows; test old/new payloads against both supported consumers."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Add display_name to ExportCompleted while retaining job_id and event_id. Old consumers should still work if their parser accepts additional fields. Changing job_id from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "from event_lab import validate\n\nevent = {'id': 'e-17', 'job_id': 'j-4',\n         'type': 'ExportRequested', 'version': 1, 'value': 7}\nprint(validate(event))  # canonical JSON for this local Python reference\n# validate(event | {'display_name': 'Example'}) raises ValueError:\n# the supplied v1 parser deliberately rejects unknown fields."
+          }
+        ],
+        "quiz": {
+          "question": "Deploy producers and consumers independently with compatible contracts. Which decision follows?",
+          "options": [
+            "Test a compatibility matrix and retain stable identity semantics.",
+            "Assume every added field is automatically backward compatible.",
+            "Rename required identifiers and rely on consumers to infer the old names."
+          ],
+          "correct": 0,
+          "explanation": "Compatibility is determined by real reader behavior and identity contracts, not just whether a JSON field was added."
+        },
+        "references": [
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "CloudEvents specification",
+            "url": "https://cloudevents.io/",
+            "section": "Specification; context attributes",
+            "reviewed": "2026-09-30",
+            "scope": "CloudEvents standard landing page; teaching envelopes are inspired by its vocabulary, not claimed as a conformant transport implementation."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Create a compatibility matrix with producer v1/v2 and consumer v1/v2. Add a malformed payload and confirm it is quarantined rather than coerced. Keep producer schema tests separate from transport delivery tests.",
+          "checks": [
+            "Include all four supported-version combinations.",
+            "Show that the supplied strict parser needs an explicit change for optional fields."
+          ],
+          "solution": "Test all producer-v1/v2 and consumer-v1/v2 combinations actually supported. Retain job/event identity types. A malformed payload quarantines rather than coercing. The supplied strict v1 parser rejects unknown fields, so adding display_name requires a parser/contract change and tests before its producer is released.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "backpressure",
+        "title": "15. Backpressure, prefetch and backlog",
+        "takeaway": "Bound in-flight work and measure queue age.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Prefetch limits outstanding unacknowledged deliveries for relevant broker consumers. It is not a complete memory or request-rate limit. Worker concurrency, payload size and downstream capacity also matter. A queue absorbs a temporary mismatch but cannot solve a permanent arrival rate above processing capacity. Oldest-message age often communicates user delay more clearly than depth alone."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "If arrivals are 120 jobs/s and workers complete 100/s for 60 seconds, backlog grows by 1,200 jobs. With arrivals later at 80/s, net drain is 20/s and ideal drain time is 60 seconds. These deterministic estimates ignore variable service time and retries.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "arrival_rate, service_rate, burst_seconds = 120, 100, 60\nbacklog = (arrival_rate - service_rate) * burst_seconds\nsteady_arrivals = 80\nprint(backlog)  # 1200\nprint(backlog / (service_rate - steady_arrivals))  # 60.0 seconds"
+          }
+        ],
+        "quiz": {
+          "question": "Bound in-flight work and measure queue age. Which decision follows?",
+          "options": [
+            "Limit concurrency and admit work from measured capacity and age.",
+            "Increase queue capacity and claim the system now handles unlimited load.",
+            "Raise prefetch without limit whenever the queue grows, because fetching more messages increases downstream capacity."
+          ],
+          "correct": 0,
+          "explanation": "Storage delays overload consequences; it does not raise sustainable processing throughput."
+        },
+        "references": [
+          {
+            "title": "RabbitMQ acknowledgements and confirms",
+            "url": "https://www.rabbitmq.com/docs/confirms",
+            "section": "Consumer acknowledgements; publisher confirms; prefetch",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          },
+          {
+            "title": "Azure competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "Logical queue consumer pattern; not a guarantee for every broker."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Calculate drain time for the 1,200-job backlog when arrivals fall to 95/s and processing stays at 100/s. Define an admission policy when queue age approaches the export expiry. Compare rejecting new work with accepting work that will inevitably expire.",
+          "checks": [
+            "Compute 1200 divided by 5 as 240 seconds.",
+            "Name a queue-age admission or stop policy and its capacity assumptions."
+          ],
+          "solution": "The burst adds 1200 jobs. At 95 arrivals/s and 100 completions/s, net drain is 5/s and ideal drain time is 240 seconds. Bound worker concurrency and outstanding deliveries against downstream limits. If queue age approaches expiry, reject/defer new work under an explicit policy rather than accept inevitable failure.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "stream-replay",
+        "title": "16. Log offsets, retention and replay",
+        "takeaway": "A retained log separates stored records from consumer position.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "A log stores records by partition and offset; each consumer group tracks progress. Committing an offset before the effect risks skipping unfinished work after restart. Committing after the effect permits replay and requires duplicate-safe effects. Retention can remove old records even if a slow consumer has not processed them."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "An analytics projection rebuilds from offset zero into a new database, then switches readers after checks. Email notifications should not be replayed into the real provider during that rebuild. Use a new projection consumer identity and disable external effects for historical processing."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "A retained log separates stored records from consumer position. Which decision follows?",
+          "options": [
+            "Verify retained history and isolate side effects before rebuilding a projection.",
+            "Reset offsets and resend every historical email as part of rebuilding analytics.",
+            "Assume an uncommitted consumer offset prevents retention from deleting its unread records."
+          ],
+          "correct": 0,
+          "explanation": "Replay is a data-processing operation whose effects must be explicitly scoped and whose history must still exist."
+        },
+        "references": [
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          }
+        ],
+        "stage": "intermediate",
+        "exercise": {
+          "prompt": "Explain how a consumer 10 days behind behaves when retention is 7 days.",
+          "checks": [
+            "Identify the missing-history interval.",
+            "Keep historical analytics rebuild isolated from real notifications."
+          ],
+          "solution": "A consumer ten days behind a seven-day retained log cannot read already expired history. Recover from a protected snapshot or authoritative source, then reconcile the retained tail. Build the new analytics projection with a separate identity and suppressed external effects; offset reset alone cannot recover deleted records.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "sagas",
+        "title": "17. Distributed workflow and compensation",
+        "takeaway": "A saga coordinates local steps without pretending they are one transaction.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "When booking, charging and notification belong to different durable systems, one SQL transaction cannot roll back them all. A saga tracks steps and compensations. A refund compensates a charge but does not erase its historical occurrence or guarantee instant success. Some actions, such as sending email, have no true inverse."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "Reserve a workshop seat, charge through a provider, then confirm. If charging fails permanently, release the reservation. If charge outcome is uncertain, reconcile before issuing another charge or declaring failure. An orchestrator stores decisions durably; choreography spreads them among services and can obscure overall state."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "A saga coordinates local steps without pretending they are one transaction. Which decision follows?",
+          "options": [
+            "Track uncertain steps and compensations as durable workflow states.",
+            "Treat compensation as an atomic rollback across all services.",
+            "Retry the entire booking saga from its first step when any reply times out."
+          ],
+          "correct": 0,
+          "explanation": "Compensations are new fallible actions and need retries, ownership and reconciliation."
+        },
+        "references": [
+          {
+            "title": "Azure saga pattern",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/saga",
+            "section": "Solution; choreography and orchestration; considerations",
+            "reviewed": "2026-09-30",
+            "scope": "Conceptual distributed workflow guidance; compensation is not atomic rollback."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Write a state machine with reservation expiry, payment uncertainty and failed compensation. Name the manual intervention state. Keep a local saga sketch distinct from proof that a payment provider was exercised.",
+          "checks": [
+            "Include explicit payment-uncertain and compensation-failed states.",
+            "Identify manual intervention and distinguish compensation from rollback."
+          ],
+          "solution": "Track reservation, payment pending/uncertain, confirmed, release pending and manual-intervention states durably. Reconcile uncertain charges before charging again or releasing as failed. A permanent charge failure can trigger reservation release; failed release/refund requires an owner and retry/reconciliation. An email has no true transactional inverse.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "security",
+        "title": "18. Messaging security and tenancy",
+        "takeaway": "Authenticate identities and authorize each messaging responsibility.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Limit who may publish, consume, inspect and replay each channel. Validate payload size and schema even for authenticated producers. Shared broker credentials erase attribution and widen impact. Tenant ID inside a message is data that must be checked against trusted context; it is not authorization by itself."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "An export worker should not be able to publish arbitrary billing events. The audit reader may view sanitized completion metadata but not credential-bearing payloads. Dead-letter stores can retain personal data long after the originating job, so include deletion and retention policies."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Authenticate identities and authorize each messaging responsibility. Which decision follows?",
+          "options": [
+            "Grant narrow channel actions and test denied access on the actual broker.",
+            "Trust all payloads because the producer authenticated once.",
+            "Use the tenant ID inside each message as sufficient proof the producer owns that tenant."
+          ],
+          "correct": 0,
+          "explanation": "Authentication identifies the sender; authorization and payload validation remain separate controls."
+        },
+        "references": [
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Prepare a principal/action/channel matrix with explicit denied examples. Exercise negative authorization cases on an optional real broker; local Python tests do not verify TLS, certificates or broker ACL enforcement.",
+          "checks": [
+            "Provide principal/action/channel pairs and denied examples.",
+            "Separate payload validation and tenant authorization from sender authentication."
+          ],
+          "solution": "Grant the exporter only its request consumption and completion publication actions, audit only sanitized completion reads, and replay operators separately reviewed access. Check tenant data against trusted ownership. Plan actual broker allowed/denied tests and TLS evidence; the Python suite does not authenticate a broker principal.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "observability",
+        "title": "19. Tracing an asynchronous workflow",
+        "takeaway": "Observe acceptance, attempts and business completion separately.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Carry correlation and trace context without embedding secrets. Measure accepted jobs, completed jobs, failures, retries, oldest pending age and dead-letter age. A high publish rate alone can mask a stalled consumer. Logs should say which event and attempt reached which state, while avoiding full sensitive payload dumps."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "At 10:00 an export is accepted. At 10:01 its consumer retries. At 10:03 it completes. The user-perceived duration includes queue wait and processing, not just API acceptance latency. A duplicate delivery can increment delivery count without incrementing business completion count."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Observe acceptance, attempts and business completion separately. Which decision follows?",
+          "options": [
+            "Monitor end-to-end completion and age alongside transport counters.",
+            "Use successful publish count as the sole business health signal.",
+            "Count every redelivery as a completed job so throughput reflects broker activity."
+          ],
+          "correct": 0,
+          "explanation": "Transport success can coexist with stalled or repeatedly failing business work."
+        },
+        "references": [
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Write one incident query connecting job ID, event ID and attempt. Define an alert on oldest pending age plus a runbook step; distinguish a backlog caused by unavailable workers from malformed poison messages.",
+          "checks": [
+            "Separate transport deliveries from completed business jobs.",
+            "Include queue waiting in the end-to-end duration and define an age alert."
+          ],
+          "solution": "Correlate job ID, event ID and attempt through accepted, retried and completed states. Completion latency includes queue wait plus processing. Alert on oldest pending age and dead-letter age with an owner/runbook. Compare worker availability and error classes to distinguish unavailable capacity from poison messages.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "failure-tests",
+        "title": "20. Failure injection and concurrency evidence",
+        "takeaway": "Make crash windows reproducible and test invariant preservation.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Inject failures before commit, after commit and before publication bookkeeping. Assert durable state after reopening the database, not just an in-memory return value. Duplicate and malformed tests are necessary but do not establish broker failover, cross-process lease behavior or ordering under real parallel load."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The local lab verifies that a crash during consume rolls back both inbox and projection. It also deliberately relays the same outbox event twice and confirms one projection effect. This is actual SQLite transaction evidence; it is not evidence about RabbitMQ quorum failover.",
+              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            ],
+            "example": "python event_lab.py\npython -m unittest -v test_event_lab.py"
+          }
+        ],
+        "quiz": {
+          "question": "Make crash windows reproducible and test invariant preservation. Which decision follows?",
+          "options": [
+            "Match each invariant to the actual failure boundary exercised.",
+            "Claim replicated broker reliability after a Python unit suite passes.",
+            "Inject exceptions only after acknowledgement and treat that as coverage of every crash window."
+          ],
+          "correct": 0,
+          "explanation": "The test result covers its own implementation and fault model, so evidence must name that boundary."
+        },
+        "references": [
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Run all tests and retain output plus runtime version. Add a learner-owned test for restart after publish-before-mark. Describe the real broker experiment needed to test connection-loss redelivery and durable queue recovery.",
+          "checks": [
+            "Assert reopened durable state, not just a return value.",
+            "Name the real connection-loss experiment still needed."
+          ],
+          "solution": "Run the supplied suite and retain actual runtime/output. Add a replay after reopening the database between consumption and sent marking; one projection effect must remain. For a real broker, close the consumer connection before and after commit, inspect redelivery and test configured durable queue recovery. These are different execution boundaries.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "broker-choice",
+        "title": "21. Selecting a broker and owning tradeoffs",
+        "takeaway": "Choose from required semantics and operational responsibilities.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Compare routing, retained replay, ordering scope, payload limits, throughput, latency, transaction support, cost and team operations. RabbitMQ queues, Kafka retained logs and managed messaging services solve overlapping but different problems. Product names are not architecture requirements. Consider whether a database-backed job worker is sufficient before introducing a separate broker."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The notebook needs a small export queue, independent audit events and no historical stream analytics. A managed queue or conventional broker may fit; a partitioned log can be appropriate later if replayable event feeds become central. Capture what evidence would reverse that decision."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "Choose from required semantics and operational responsibilities. Which decision follows?",
+          "options": [
+            "Choose a system from explicit contracts and a reversible decision record.",
+            "Choose the most popular broker and infer its guarantees from its name.",
+            "Choose from a published throughput headline without testing the actual payload and reliability settings."
+          ],
+          "correct": 0,
+          "explanation": "Requirements and operational evidence determine suitability; popularity alone supplies neither."
+        },
+        "references": [
+          {
+            "title": "Azure competing consumers",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "Logical queue consumer pattern; not a guarantee for every broker."
+          },
+          {
+            "title": "Azure publisher-subscriber",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber",
+            "section": "Solution; problems and considerations",
+            "reviewed": "2026-09-30",
+            "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Write an ADR with two alternatives, required delivery boundary, failure ownership, access model and deletion rules. Avoid fabricated benchmark numbers; define a test workload instead.",
+          "checks": [
+            "Compare two alternatives against named contracts.",
+            "Include a falsifiable decision-reversal experiment."
+          ],
+          "solution": "Write an ADR comparing a conventional or managed work queue with a retained log. State required routing, replay window, ordering scope, workload assumptions, access control and operations owner. Define a representative measured experiment that could reverse the choice; do not invent benchmark throughput or cost.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "launch-review",
+        "title": "22. Messaging launch and recovery review",
+        "takeaway": "A complete workflow includes replay, retention and recovery ownership.",
+        "sections": [
+          {
+            "title": "Understand the contract",
+            "paragraphs": [
+              "Before release, enumerate durable stores: business database, outbox, inbox, broker and projections. Their backups and retention may differ. A restored database can regress an inbox and allow old effects again; a restored outbox can republish work. Recovery needs an epoch or reconciliation plan and an isolated replay mode before external effects resume."
+            ]
+          },
+          {
+            "title": "Work through the example",
+            "paragraphs": [
+              "The stage-three review package lists crash timelines, maximum retry budget, permitted replay effects and who owns dead-letter repair. It compares locally verified SQLite behavior with optional live broker experiments. Passing the course means completing bounded practice, not proving production expertise."
+            ]
+          }
+        ],
+        "quiz": {
+          "question": "A complete workflow includes replay, retention and recovery ownership. Which decision follows?",
+          "options": [
+            "Review recovery across all stores and distinguish local tests from live evidence.",
+            "Restore one database and assume every messaging component is now consistent.",
+            "Resume relay immediately after any one database restore because event IDs were originally unique."
+          ],
+          "correct": 0,
+          "explanation": "Independent durability timelines create recovery mismatches that require explicit reconciliation."
+        },
+        "references": [
+          {
+            "title": "Azure transactional outbox",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos",
+            "section": "Transactional outbox architecture and message processing",
+            "reviewed": "2026-09-30",
+            "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+          },
+          {
+            "title": "RabbitMQ reliability guide",
+            "url": "https://www.rabbitmq.com/docs/reliability",
+            "section": "Acknowledgements; data safety; consumer reliability",
+            "reviewed": "2026-09-30",
+            "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          },
+          {
+            "title": "Apache Kafka design",
+            "url": "https://kafka.apache.org/41/design/design/",
+            "section": "Consumer position; delivery semantics; transactions; log compaction",
+            "reviewed": "2026-09-30",
+            "scope": "Explicit Kafka 4.1 conceptual reference, not a claim this is the newest Kafka release. No Kafka cluster is exercised."
+          }
+        ],
+        "stage": "advanced",
+        "exercise": {
+          "prompt": "Complete the advanced workbook project. Simulate a restore with older inbox state on paper and explain how a payment/email effect would be reconciled. State a go/no-go trigger for queue age, duplicate effects and unresolved poison records.",
+          "checks": [
+            "Show a mismatch caused by restoring older inbox/outbox state.",
+            "State a go/no-go trigger and a recovery owner."
+          ],
+          "solution": "Inventory business database, outbox, inbox, broker and projection recovery points. Restoring an older inbox can repeat previously committed external effects, so compare durable receipts and reconcile uncertainty before resuming relay. Define stop criteria for duplicate effects, oldest-job age and poison records; distinguish local tests from live broker evidence.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Message contract map",
+        "description": "Design the notebook export workflow and identify its honest status transitions.",
+        "exitCriteria": [
+          "Acceptance is not completion.",
+          "Every participant owns a specific responsibility.",
+          "Crash windows name what is known and uncertain."
+        ],
+        "project": {
+          "title": "Message contract map",
+          "brief": "Design the notebook export workflow and identify its honest status transitions.",
+          "requirements": [
+            "Classify commands, facts and queries.",
+            "Sketch queue and independent subscriber responsibilities.",
+            "Draw three acknowledgement crash windows.",
+            "Define event, job and correlation identifiers."
+          ],
+          "rubric": [
+            "Acceptance is not completion.",
+            "Every participant owns a specific responsibility.",
+            "Crash windows name what is known and uncertain."
+          ],
+          "solution": "Use GenerateExport to request work; commit ExportRequested with a job; worker commits completion before acknowledging; ExportCompleted reaches independent audit and notification subscribers. Stable event IDs make uncertain delivery replay recognizable.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Crash-safe export projection",
+        "description": "Run the SQLite reference and extend its duplicate-safe workflow.",
+        "exitCriteria": [
+          "Restart and duplicate effects are considered.",
+          "The injected failure preserves the invariant.",
+          "External side effects remain explicitly outside the local transaction."
+        ],
+        "project": {
+          "title": "Crash-safe export projection",
+          "brief": "Run the SQLite reference and extend its duplicate-safe workflow.",
+          "requirements": [
+            "Execute the provided tests and record Python/SQLite versions.",
+            "Explain atomic outbox and inbox transactions.",
+            "Inject a failure before consumer commit.",
+            "Write finite retry and quarantine policies."
+          ],
+          "rubric": [
+            "Restart and duplicate effects are considered.",
+            "The injected failure preserves the invariant.",
+            "External side effects remain explicitly outside the local transaction."
+          ],
+          "solution": "Commit job/outbox together and relay stable IDs; commit inbox/projection together. On a post-commit pre-ack crash, replay reads the inbox and skips the effect. Invalid schema goes to quarantine; transient failure retries inside a finite usefulness budget.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Failure-aware messaging launch",
+        "description": "Prepare a broker selection and recovery portfolio without provisioning one.",
+        "exitCriteria": [
+          "Evidence names the actual tested boundary.",
+          "Replay cannot silently repeat external effects.",
+          "Recovery has owners and go/no-go triggers."
+        ],
+        "project": {
+          "title": "Failure-aware messaging launch",
+          "brief": "Prepare a broker selection and recovery portfolio without provisioning one.",
+          "requirements": [
+            "Write a broker ADR and workload estimate.",
+            "Design schema compatibility, security and replay tests.",
+            "Define backlog age, dead-letter ownership and stop criteria.",
+            "Reconcile outbox/inbox/broker backup timelines."
+          ],
+          "rubric": [
+            "Evidence names the actual tested boundary.",
+            "Replay cannot silently repeat external effects.",
+            "Recovery has owners and go/no-go triggers."
+          ],
+          "solution": "Separate the locally proven SQLite transaction from optional real broker durability, ACL and connection-loss tests. Rebuild projections in isolated mode; reconcile uncertain external effects; inspect restored inbox/outbox histories before resuming relay.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete runnable practice kit",
+        "href": "paths/messaging-events/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "messaging-events-practice",
+      "files": [
+        {
+          "id": "event_lab-py",
+          "href": "paths/messaging-events/practice/event_lab.py",
+          "role": "reference",
+          "description": "Reference implementation or clearly labeled training configuration."
+        },
+        {
+          "id": "test_event_lab-py",
+          "href": "paths/messaging-events/practice/test_event_lab.py",
+          "role": "test",
+          "description": "Locally runnable regression tests."
+        },
+        {
+          "id": "README-md",
+          "href": "paths/messaging-events/practice/README.md",
+          "role": "guide",
+          "description": "Runtime, exact commands, expected results, cleanup and execution boundaries."
+        },
+        {
+          "id": "workbook-md",
+          "href": "paths/messaging-events/practice/workbook.md",
+          "role": "guide",
+          "description": "Three projects, exercises, evidence ledger and reference reasoning."
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Message contract map",
+          "goal": "Design the notebook export workflow and identify its honest status transitions.",
+          "fileIds": [
+            "event_lab-py",
+            "test_event_lab-py",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Classify commands, facts and queries.",
+            "Sketch queue and independent subscriber responsibilities.",
+            "Draw three acknowledgement crash windows.",
+            "Define event, job and correlation identifiers.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python event_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_event_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Crash-safe export projection",
+          "goal": "Run the SQLite reference and extend its duplicate-safe workflow.",
+          "fileIds": [
+            "event_lab-py",
+            "test_event_lab-py",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Execute the provided tests and record Python/SQLite versions.",
+            "Explain atomic outbox and inbox transactions.",
+            "Inject a failure before consumer commit.",
+            "Write finite retry and quarantine policies.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python event_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_event_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Failure-aware messaging launch",
+          "goal": "Prepare a broker selection and recovery portfolio without provisioning one.",
+          "fileIds": [
+            "event_lab-py",
+            "test_event_lab-py",
+            "README-md",
+            "workbook-md"
+          ],
+          "steps": [
+            "Extract the flat files and read README.md.",
+            "Write a broker ADR and workload estimate.",
+            "Design schema compatibility, security and replay tests.",
+            "Define backlog age, dead-letter ownership and stop criteria.",
+            "Reconcile outbox/inbox/broker backup timelines.",
+            "Compare your findings with workbook.md and the stage rubric."
+          ],
+          "commands": [
+            {
+              "label": "Run local demonstration",
+              "command": "python event_lab.py",
+              "expected": "Deterministic JSON teaching results; no network or external resource creation."
+            },
+            {
+              "label": "Run local tests",
+              "command": "python -m unittest -v test_event_lab.py",
+              "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Python 3.11+ and standard library only.",
+            "Optional external tools are separately documented and not included in the local verification claim."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "messages-events": "foundation",
+        "topologies": "foundation",
+        "envelopes": "foundation",
+        "acceptance": "foundation",
+        "delivery-semantics": "foundation",
+        "consumer-lifecycle": "foundation",
+        "durability": "foundation",
+        "routing": "foundation",
+        "idempotent-consumers": "intermediate",
+        "transactional-outbox": "intermediate",
+        "retry-budget": "intermediate",
+        "dead-letter-replay": "intermediate",
+        "ordering": "intermediate",
+        "schemas": "intermediate",
+        "backpressure": "intermediate",
+        "stream-replay": "intermediate",
+        "sagas": "advanced",
+        "security": "advanced",
+        "observability": "advanced",
+        "failure-tests": "advanced",
+        "broker-choice": "advanced",
+        "launch-review": "advanced"
+      },
+      "bundle": {
+        "href": "paths/messaging-events/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "networking-web",
     "title": "Networking & the Web",
     "category": "Software engineering",
@@ -34600,6 +44699,1995 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/networking-web/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "observability-performance",
+    "title": "Observability & Performance",
+    "category": "Engineering practice",
+    "status": "ready",
+    "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic file editing and running a terminal command. No prior specialist knowledge required.",
+      "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+    ],
+    "outcomes": [
+      "Choose signals that answer concrete operational questions.",
+      "Interpret percentiles, labels, spans and instrumentation limits.",
+      "Calculate SLO error budgets and burn rates.",
+      "Run local latency/failure experiments and correctness-preserving benchmarks.",
+      "Write evidence-based runbooks and distinguish local verification from production operation."
+    ],
+    "setup": [
+      "Python 3.10+ standard library is sufficient; no packages or external services are required.",
+      "Extract the flat observability-performance-practice bundle and run python telemetry.test.py, python integration.test.py and python benchmark.py.",
+      "For interactive measurements start python service.py, then run python load.py --profile healthy, slow or fail in another terminal. Stop with Ctrl+C.",
+      "The lab uses fixed loopback port 8891, four closed-loop workers and 20 requests. Do not run integration.test.py while an interactive server occupies that port."
+    ],
+    "nextSteps": [
+      "Instrument the full-stack project with a selected OpenTelemetry SDK and collector as a separately tested extension.",
+      "Use SQL Server query plans and React profiling for real cross-layer investigations.",
+      "Evaluate real retention, data access, costs and alert delivery before production use."
+    ],
+    "sources": [
+      {
+        "title": "OpenTelemetry signals",
+        "url": "https://opentelemetry.io/docs/concepts/signals/"
+      },
+      {
+        "title": "Python time module",
+        "url": "https://docs.python.org/3/library/time.html"
+      },
+      {
+        "title": "OpenTelemetry security",
+        "url": "https://opentelemetry.io/docs/security/"
+      },
+      {
+        "title": "Prometheus metric naming",
+        "url": "https://prometheus.io/docs/practices/naming/"
+      },
+      {
+        "title": "Prometheus histograms and summaries",
+        "url": "https://prometheus.io/docs/practices/histograms/"
+      },
+      {
+        "title": "Google SRE monitoring distributed systems",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "title": "OpenTelemetry context propagation",
+        "url": "https://opentelemetry.io/docs/concepts/context-propagation/"
+      },
+      {
+        "title": "Google SRE implementing SLOs",
+        "url": "https://sre.google/workbook/implementing-slos/"
+      },
+      {
+        "title": "Google SRE alerting on SLOs",
+        "url": "https://sre.google/workbook/alerting-on-slos/"
+      },
+      {
+        "title": "OpenTelemetry sampling",
+        "url": "https://opentelemetry.io/docs/concepts/sampling/"
+      },
+      {
+        "title": "Python allocation tracing",
+        "url": "https://docs.python.org/3/library/tracemalloc.html"
+      },
+      {
+        "title": "MDN understanding latency",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency"
+      },
+      {
+        "title": "Python deterministic profilers",
+        "url": "https://docs.python.org/3/library/profile.html"
+      },
+      {
+        "title": "Google SRE handling overload",
+        "url": "https://sre.google/sre-book/handling-overload/"
+      },
+      {
+        "title": "MIT Urban Operations Research — Little’s formula",
+        "url": "https://web.mit.edu/urban_or_book/www/book/chapter4/4.4.html"
+      },
+      {
+        "title": "wrk2 load-generation design",
+        "url": "https://github.com/giltene/wrk2"
+      },
+      {
+        "title": "Python http.server documentation",
+        "url": "https://docs.python.org/3/library/http.server.html"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "telemetry.py",
+        "href": "paths/observability-performance/practice/telemetry.py"
+      },
+      {
+        "title": "telemetry.test.py",
+        "href": "paths/observability-performance/practice/telemetry.test.py"
+      },
+      {
+        "title": "benchmark.py",
+        "href": "paths/observability-performance/practice/benchmark.py"
+      },
+      {
+        "title": "service.py",
+        "href": "paths/observability-performance/practice/service.py"
+      },
+      {
+        "title": "load.py",
+        "href": "paths/observability-performance/practice/load.py"
+      },
+      {
+        "title": "integration.test.py",
+        "href": "paths/observability-performance/practice/integration.test.py"
+      },
+      {
+        "title": "runbook.md",
+        "href": "paths/observability-performance/practice/runbook.md"
+      },
+      {
+        "title": "README.md",
+        "href": "paths/observability-performance/practice/README.md"
+      },
+      {
+        "title": "Local verification evidence and limits",
+        "href": "paths/observability-performance/practice/verification.md"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation — interpretable signals",
+        "description": "Define boundaries and distinguish events, aggregates and related work.",
+        "exitCriteria": [
+          "Every metric has a population and unit.",
+          "Percentile estimator and sample size are stated.",
+          "No sensitive payload is logged.",
+          "Parent/child elapsed time is not double-counted."
+        ],
+        "project": {
+          "title": "Telemetry analysis notebook",
+          "brief": "Explain a measured request population without hiding assumptions.",
+          "requirements": [
+            "Define measurement boundaries and units.",
+            "Classify counters, gauges and distributions.",
+            "Calculate nearest-rank percentiles.",
+            "Write safe structured log fields.",
+            "Interpret golden signals and nested spans."
+          ],
+          "rubric": [
+            "Every metric has a population and unit.",
+            "Percentile estimator and sample size are stated.",
+            "No sensitive payload is logged.",
+            "Parent/child elapsed time is not double-counted."
+          ],
+          "solution": "Run telemetry.test.py, create a small observation set and calculate counts, good-event ratio and percentiles. Attach boundaries, sample size and safe correlation fields; distinguish missing observations from success."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate — objectives and experiments",
+        "description": "Connect signals to reliability objectives and controlled comparisons.",
+        "exitCriteria": [
+          "Commands and environment are recorded.",
+          "No-data remains unknown.",
+          "The injected fault appears in measured outcomes.",
+          "The benchmark claim matches its timed boundary."
+        ],
+        "project": {
+          "title": "Measured loopback service",
+          "brief": "Investigate local latency and error injection with a defined SLO.",
+          "requirements": [
+            "Run healthy, slow and fail profiles.",
+            "Compare counts, errors and latency.",
+            "Define good and eligible events.",
+            "Calculate error budget and burn rate.",
+            "Design bounded labels and sampling policy.",
+            "Benchmark equivalent lookup implementations."
+          ],
+          "rubric": [
+            "Commands and environment are recorded.",
+            "No-data remains unknown.",
+            "The injected fault appears in measured outcomes.",
+            "The benchmark claim matches its timed boundary."
+          ],
+          "solution": "Run the service and bounded client in separate terminals. Record actual outputs for each profile; fail should show four HTTP failures of 20, while slow should raise the tail. Keep this closed-loop evidence separate from production load and collector integration."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced — diagnosis and operating evidence",
+        "description": "Investigate bottlenecks, memory, load models and telemetry failure boundaries.",
+        "exitCriteria": [
+          "One change is justified by measured evidence.",
+          "Measurements include environment and boundaries.",
+          "Recovery is confirmed with the same task.",
+          "Production and external-service limits remain explicit."
+        ],
+        "project": {
+          "title": "Performance investigation report",
+          "brief": "Produce a reproducible investigation with a measured change and a safe runbook.",
+          "requirements": [
+            "Profile a representative workload.",
+            "Measure one change while preserving correctness.",
+            "Document memory measurement domain.",
+            "Explain load-generator limitations.",
+            "Write recovery and retest steps.",
+            "Create a telemetry release/security evidence matrix."
+          ],
+          "rubric": [
+            "One change is justified by measured evidence.",
+            "Measurements include environment and boundaries.",
+            "Recovery is confirmed with the same task.",
+            "Production and external-service limits remain explicit."
+          ],
+          "solution": "Use cProfile to locate lookup cost, benchmark without profiler overhead and compare equivalent output. Design a memory retention experiment, record the loopback runbook and document all unexecuted collector/backend/paging checks. Avoid universal speedup or capacity claims."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "questions-signals",
+        "title": "1. Ask a question before adding telemetry",
+        "takeaway": "Telemetry should help answer a concrete operational question.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Observability is the ability to investigate a system using the outputs it exposes. Monitoring checks known conditions, while exploratory investigation asks new questions. Neither is created by collecting everything. Start with a user symptom such as Imports are slow, then identify which measurements distinguish network waiting, parsing, database work and queue delay.",
+              "Logs describe events, metrics aggregate measurements and traces connect work across boundaries. A request count can show traffic growth without identifying one request. A trace can identify the slow segment but may be sampled. Combine evidence instead of expecting one signal to answer every question."
+            ],
+            "example": "Question: why did import request R take 900 ms?\nMetric: latency distribution changed\nTrace: database span consumed 700 ms\nLog: database retry occurred for R"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A dashboard full of CPU gauges can miss a broken user task. Start with outcomes and use internal metrics to explain them."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose telemetry for a failed study-record import. Give one question each for logs, metrics and traces.",
+          "solution": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Every signal has a question.",
+            "Aggregates and individual events are distinguished.",
+            "Sensitive payloads are excluded."
+          ]
+        },
+        "quiz": {
+          "question": "Which signal naturally connects work across services?",
+          "options": [
+            "A distributed trace with related spans.",
+            "A single average CPU gauge.",
+            "An unlabeled screenshot of a dashboard."
+          ],
+          "correct": 0,
+          "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry signals",
+            "url": "https://opentelemetry.io/docs/concepts/signals/",
+            "section": "Logs, metrics and traces",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "measurement-contract",
+        "title": "2. Define a measurement contract",
+        "takeaway": "A value needs units, a boundary and a population to be interpretable.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Latency is elapsed time between defined start and end points. Server processing time differs from browser-visible completion time because transport, rendering and queueing may sit outside the measurement. Name the boundary explicitly. A duration of 50 has no meaning without units; a count of errors needs a denominator and time window.",
+              "Choose a monotonic clock for elapsed durations so wall-clock adjustments do not create negative times. Wall-clock timestamps help relate events in time, but clocks across machines can disagree. Record clock type, sample count, warmup and environment alongside a benchmark."
+            ],
+            "example": "duration_ms = (perf_counter() - start) * 1000\nBoundary: HTTP handler entry → response creation\nExcluded: client network and rendering"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not subtract timestamps from different machines to infer a precise network duration without considering clock uncertainty. Prefer durations measured locally and a trace showing relationships."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define three latency boundaries for a React → API → database request. Choose which one supports a user-facing objective.",
+          "solution": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Units are explicit.",
+            "Start and end events are named.",
+            "Clock and exclusions are documented."
+          ]
+        },
+        "quiz": {
+          "question": "Which clock is suitable for elapsed benchmarking?",
+          "options": [
+            "A monotonic elapsed-time clock such as perf_counter.",
+            "A display string formatted in local time.",
+            "Two unsynchronised host timestamps."
+          ],
+          "correct": 0,
+          "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Python time module",
+            "url": "https://docs.python.org/3/library/time.html",
+            "section": "time.perf_counter and monotonic clocks",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "structured-logs",
+        "title": "3. Structured logs and correlation",
+        "takeaway": "Logs should preserve event meaning without exposing unnecessary data.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A structured log records named fields such as event, severity, request_id, route and duration_ms. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for import_rejected should identify the reason category, not dump the entire uploaded document.",
+              "Correlate related events through a request or trace identifier. Use bounded route templates rather than raw URLs that may contain personal identifiers or secrets. Apply retention, access controls and redaction at the source as well as the collection layer. Debug verbosity should be a deliberate temporary decision."
+            ],
+            "example": "{\"event\":\"import_rejected\",\"reason\":\"invalid_schema\",\"request_id\":\"demo-17\",\"route\":\"/imports\",\"status\":400}"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Logging passwords, tokens or complete financial records creates a second uncontrolled data store. Redaction rules should fail safely and be tested, not added only after an incident."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Replace a log containing an email, bearer token and full JSON body with a minimal event. Keep enough information to investigate schema failures.",
+          "solution": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Fields have stable meanings.",
+            "Correlation survives redaction.",
+            "Secrets and raw payloads are absent."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in an import rejection log?",
+          "options": [
+            "A safe reason category and correlation ID.",
+            "The complete bearer token.",
+            "Every raw user field copied into the message."
+          ],
+          "correct": 0,
+          "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry security",
+            "url": "https://opentelemetry.io/docs/security/",
+            "section": "Protecting sensitive data; telemetry security",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "metrics-types",
+        "title": "4. Counters, gauges and distributions",
+        "takeaway": "Choose the measurement type according to how the value behaves.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A counter accumulates events, such as completed requests, and normally increases until process restart. A gauge represents a current value such as in-flight requests and may rise or fall. A distribution records many observations such as request duration; a single gauge overwritten by each request loses the population.",
+              "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as duration_seconds and requests_total, so dashboards do not mix milliseconds and seconds silently."
+            ],
+            "example": "requests_total: counter\ninflight_requests: gauge\nrequest_duration_seconds: histogram\nCPU utilisation: ratio gauge"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A counter of errors alone can be misleading when traffic changes. Divide by eligible requests in the same scope and time window to obtain an error ratio."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify queued jobs, completed jobs and job duration. Define the failure ratio for 8 failures among 200 eligible attempts.",
+          "solution": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Current state differs from accumulated events.",
+            "Duration retains a distribution.",
+            "The denominator matches the numerator scope."
+          ]
+        },
+        "quiz": {
+          "question": "Which type suits current queue depth?",
+          "options": [
+            "A gauge.",
+            "A counter that increments on every poll.",
+            "A log containing the last queue item only."
+          ],
+          "correct": 0,
+          "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Prometheus metric naming",
+            "url": "https://prometheus.io/docs/practices/naming/",
+            "section": "Metric names, base units and type suffixes",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "latency-percentiles",
+        "title": "5. Percentiles and the slow tail",
+        "takeaway": "An average can conceal the requests that users experience as unusually slow.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index ceil(p*n)-1.",
+              "A tiny sample cannot support precise tail claims. For 20 values the nearest-rank p99 is the maximum, not a stable estimate of a broad population. Do not average p95 values from different hosts to obtain a global p95; combine compatible distributions or histogram buckets instead."
+            ],
+            "example": "Durations: 10, 10, 10, 10, 100 ms\nMean = 28 ms; median = 10 ms\nNearest-rank p95 = 100 ms (5 observations)"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Always show sample size, time range and estimator beside percentile claims. A lower average with a worse slow tail may be a regression for the people affected by the tail."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate mean, median and nearest-rank p95 for 1, 2, 3, 4, 100. Explain why the p95 is uncertain.",
+          "solution": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The estimator is stated.",
+            "Sample size accompanies tail values.",
+            "Host percentiles are not averaged into a global percentile."
+          ]
+        },
+        "quiz": {
+          "question": "How should global p95 be obtained?",
+          "options": [
+            "From the combined compatible distribution, not an average of host p95s.",
+            "By averaging host p95 values without weights.",
+            "By taking the smallest host median."
+          ],
+          "correct": 0,
+          "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Prometheus histograms and summaries",
+            "url": "https://prometheus.io/docs/practices/histograms/",
+            "section": "Quantiles; aggregation and estimation error",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "golden-signals",
+        "title": "6. Traffic, errors, latency and saturation",
+        "takeaway": "User symptoms and capacity pressure should be visible together.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "The four golden signals describe traffic, errors, latency and saturation. Traffic is demand, errors are failed outcomes, latency is elapsed completion time and saturation describes how close a resource is to its effective limit. The useful resource may be threads, connections, queue capacity or memory rather than CPU.",
+              "Separate successful and failed request latency because fast failures can make an aggregate look healthy. Inspect dependency and endpoint differences before concluding a global trend explains every user. Saturation often predicts trouble: a growing queue can precede timeouts even when CPU is moderate."
+            ],
+            "example": "200 requests/s; 3% failures; success p95 180 ms; connection pool 19/20 occupied\nInterpretation: investigate database concurrency pressure rather than only CPU."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A resource at 80% is not automatically an incident. Relate it to latency, errors, workload and known capacity limits before setting an alert threshold."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "For a database-backed importer, name one metric per golden signal and state which saturation indicator might warn before errors rise.",
+          "solution": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt.",
+          "solutionFormat": "prose",
+          "checks": [
+            "All four signals have a useful definition.",
+            "Success and failure latency can be separated.",
+            "Saturation names an actual constrained resource."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a saturation signal?",
+          "options": [
+            "Database connection pool occupancy and wait.",
+            "The name of the latest release.",
+            "A count of documentation pages."
+          ],
+          "correct": 0,
+          "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring distributed systems",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "The four golden signals",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "trace-spans",
+        "title": "7. Traces, spans and the critical path",
+        "takeaway": "Nested timing describes dependency relationships, not an additive bill.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent’s elapsed time; adding parent and child durations double-counts.",
+              "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
+            ],
+            "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Draw a 150 ms request with parsing, two parallel calls and rendering. Identify the critical path and uninstrumented gaps.",
+          "solution": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Parent/child timing is not double-counted.",
+            "Overlap is represented.",
+            "Unknown intervals remain unknown."
+          ]
+        },
+        "quiz": {
+          "question": "Why should parent and child durations not simply be added?",
+          "options": [
+            "Child elapsed time is already inside the parent and may overlap other children.",
+            "Every span always lasts the same amount.",
+            "Traces contain only counter values."
+          ],
+          "correct": 0,
+          "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry signals",
+            "url": "https://opentelemetry.io/docs/concepts/signals/",
+            "section": "Traces and spans",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ],
+        "diagram": {
+          "title": "Related timing boundaries",
+          "summary": "A parent contains child work; overlapping child elapsed durations are not added to the parent.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Request span 150 ms",
+              "description": "Parent boundary: user operation on the API."
+            },
+            {
+              "id": "1",
+              "label": "Parse 0–10 ms",
+              "description": "First child prepares input."
+            },
+            {
+              "id": "2",
+              "label": "Call A 10–100 ms",
+              "description": "One parallel dependency finishes earlier."
+            },
+            {
+              "id": "3",
+              "label": "Call B 10–130 ms",
+              "description": "The slower parallel dependency determines readiness."
+            },
+            {
+              "id": "4",
+              "label": "Assembly 130–150 ms",
+              "description": "Finish after both required calls; the path through B dominates."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "contains"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "contains parallel work"
+            },
+            {
+              "from": "0",
+              "to": "3",
+              "label": "contains parallel work"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "determines earliest start"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "also required"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Request span 150 ms",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Parent boundary: user operation on the API."
+            },
+            {
+              "title": "Parse 0–10 ms",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "First child prepares input."
+            },
+            {
+              "title": "Call A 10–100 ms",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "One parallel dependency finishes earlier."
+            },
+            {
+              "title": "Call B 10–130 ms",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "The slower parallel dependency determines readiness."
+            },
+            {
+              "title": "Assembly 130–150 ms",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Finish after both required calls; the path through B dominates."
+            }
+          ]
+        }
+      },
+      {
+        "id": "context-propagation",
+        "title": "8. Propagate context across boundaries",
+        "takeaway": "Correlation survives service boundaries only when context is carried and extracted.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Context propagation carries trace identity and related state from caller to callee. Instrumentation injects context into a supported carrier such as HTTP headers, and the receiver extracts it before creating related spans. Thread-local or async context storage avoids manually passing identifiers through every function but must preserve the correct request ownership.",
+              "Treat incoming context as untrusted data. Validate supported formats, avoid recording sensitive baggage and consider trust boundaries between organisations. A trace ID is correlation metadata, not proof that a caller is authorised. Background jobs may require a link to the submitting operation rather than one long request span."
+            ],
+            "example": "Caller: create span → inject trace context into request\nReceiver: extract supported context → create child span → perform work\nAuthorisation remains a separate check."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Global mutable current_trace_id leaks one request’s identity into another under concurrency. Use the runtime or SDK’s context model and test concurrent requests."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain where a trace header belongs in a React → API → worker journey. Identify which security checks it cannot replace.",
+          "solution": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Injection and extraction are both named.",
+            "Concurrent request ownership is preserved.",
+            "Trace metadata is not authorisation."
+          ]
+        },
+        "quiz": {
+          "question": "What does a trace ID establish?",
+          "options": [
+            "Correlation between recorded work.",
+            "The caller’s permission to read records.",
+            "The authenticity of every HTTP header."
+          ],
+          "correct": 0,
+          "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry context propagation",
+            "url": "https://opentelemetry.io/docs/concepts/context-propagation/",
+            "section": "Context propagation; W3C Trace Context; baggage",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ],
+        "diagram": {
+          "title": "Carry correlation across a boundary",
+          "summary": "Injection and extraction establish related telemetry while authorisation remains separate.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Caller span",
+              "description": "Create context for the outgoing operation."
+            },
+            {
+              "id": "1",
+              "label": "Request carrier",
+              "description": "Inject supported trace context into headers."
+            },
+            {
+              "id": "2",
+              "label": "Receiver extracts",
+              "description": "Validate and extract context before creating related work."
+            },
+            {
+              "id": "3",
+              "label": "Receiver span",
+              "description": "Record the receiver operation with the chosen parent relationship."
+            },
+            {
+              "id": "4",
+              "label": "Permission check",
+              "description": "Check identity and access independently of trace metadata."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "inject"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "transport"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "create related span"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "perform separate access checks"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Caller span",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Create context for the outgoing operation."
+            },
+            {
+              "title": "Request carrier",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Inject supported trace context into headers."
+            },
+            {
+              "title": "Receiver extracts",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Validate and extract context before creating related work."
+            },
+            {
+              "title": "Receiver span",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Record the receiver operation with the chosen parent relationship."
+            },
+            {
+              "title": "Permission check",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Check identity and access independently of trace metadata."
+            }
+          ]
+        }
+      },
+      {
+        "id": "cardinality",
+        "title": "9. Cardinality, labels and cost",
+        "takeaway": "A metric label multiplies time series rather than attaching free context.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Every unique label combination creates a series in many metric systems. Three routes, five status classes and four instances can create up to 60 combinations before adding more labels. Adding a user ID with thousands of values creates a far larger and continuously changing set.",
+              "Prefer bounded route templates, service names and coarse approved outcomes for metrics. Keep high-cardinality request identifiers in traces or logs with appropriate access and retention. Estimate the product of label cardinalities and consider churn, bucket count and scrape frequency when budgeting storage."
+            ],
+            "example": "3 route templates × 5 status classes × 4 instances = up to 60 label combinations\nAn extra 10,000 user IDs could multiply that to 600,000."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Hashing a user ID does not reduce cardinality; unique hashes still create unique series. It may also remain personal data depending on the context."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Estimate the series combinations for 8 routes, 6 instances and 4 outcomes. Propose a safe way to investigate one request.",
+          "solution": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The cardinality product is calculated.",
+            "Unbounded identifiers are excluded from metrics.",
+            "Histogram bucket multiplication is considered."
+          ]
+        },
+        "quiz": {
+          "question": "Does hashing a unique ID solve metric cardinality?",
+          "options": [
+            "No; unique hashes still create distinct label values.",
+            "Yes; all hashes become one time series.",
+            "Only if the hash is printed in hexadecimal."
+          ],
+          "correct": 0,
+          "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Prometheus metric naming",
+            "url": "https://prometheus.io/docs/practices/naming/",
+            "section": "Labels; avoid high-cardinality labels",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "histogram-buckets",
+        "title": "10. Histogram buckets and aggregation",
+        "takeaway": "Bucket boundaries determine which questions a histogram can answer.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A classic histogram counts observations in cumulative buckets. If the objective is completion under 300 ms, a bucket at 0.3 seconds can directly support that threshold ratio. Buckets too coarse around the boundary make quantile estimates less precise. More buckets consume more series and processing resources.",
+              "Aggregate compatible bucket counts across instances before deriving a service-level quantile. Keep units and boundaries consistent; mixing seconds and milliseconds creates meaningless results. Different systems also offer native histograms, whose representation and configuration should be studied separately rather than assumed identical."
+            ],
+            "example": "Buckets seconds: 0.05, 0.1, 0.3, 1.0, +Inf\nCount at <=0.3 divided by total count estimates the observed threshold success fraction."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A p95 derived from buckets is an estimate bounded by the available bucket resolution. Do not present it with unjustified decimal precision."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose buckets for a 200 ms objective with occasional 2 s requests. Explain the tradeoff between resolution and cost.",
+          "solution": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The objective boundary is represented.",
+            "Units are consistent.",
+            "Aggregation precedes quantile derivation."
+          ]
+        },
+        "quiz": {
+          "question": "Why include a bucket at the SLO latency boundary?",
+          "options": [
+            "It directly counts observations meeting that threshold.",
+            "It removes every sampling bias.",
+            "It guarantees that every request is successful."
+          ],
+          "correct": 0,
+          "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Prometheus histograms and summaries",
+            "url": "https://prometheus.io/docs/practices/histograms/",
+            "section": "Histograms; errors of quantile estimation; aggregation",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "sli-slo-budget",
+        "title": "11. SLIs, SLOs and error budgets",
+        "takeaway": "A reliability target starts with an eligible user event and a good outcome.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A service-level indicator measures reliability, for example good requests divided by eligible requests. A service-level objective sets a target over a defined window, such as 99% of eligible imports completing successfully within 300 ms over 30 days. Define exclusions and what a success means before looking at the result.",
+              "The error budget is the permitted bad fraction: a 99% target allows 1% bad events in that window. At 10,000 eligible events, that is 100 bad events. Availability and latency objectives may be separate or combined; state the choice. A contractual SLA adds consequences and is not synonymous with an internal SLO."
+            ],
+            "example": "10,000 eligible events; 130 bad events\nSLI = 98.7%; allowed bad = 100 at 99% SLO\nBudget consumption = 130/100 = 130%"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not silently exclude inconvenient failures to meet a target. Exclusions need a documented user-focused rationale and consistent denominator."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define an import SLO and calculate budget use for 20,000 events, 60 bad events and a 99.5% target.",
+          "solution": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Good and eligible are defined.",
+            "Window and target are explicit.",
+            "Budget arithmetic uses matching events."
+          ]
+        },
+        "quiz": {
+          "question": "At a 99.5% target, what bad fraction is allowed?",
+          "options": [
+            "0.5%.",
+            "99.5%.",
+            "5%."
+          ],
+          "correct": 0,
+          "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Google SRE implementing SLOs",
+            "url": "https://sre.google/workbook/implementing-slos/",
+            "section": "Choosing SLIs; SLOs and error budgets",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ],
+        "diagram": {
+          "title": "From events to an error budget",
+          "summary": "Good and eligible events must share the same scope and window.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Eligible user events",
+              "description": "Define operation, population, window and exclusions."
+            },
+            {
+              "id": "1",
+              "label": "Good events",
+              "description": "Apply correctness and latency criteria consistently."
+            },
+            {
+              "id": "2",
+              "label": "Observed SLI",
+              "description": "Good divided by eligible; no data is unknown."
+            },
+            {
+              "id": "3",
+              "label": "Target allowance",
+              "description": "Allowed bad fraction equals one minus SLO target."
+            },
+            {
+              "id": "4",
+              "label": "Budget use",
+              "description": "Compare observed bad events with allowed bad events for the window."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "evaluate"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "denominator"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "numerator"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "observed bad"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "allowed bad"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Eligible user events",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Define operation, population, window and exclusions."
+            },
+            {
+              "title": "Good events",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Apply correctness and latency criteria consistently."
+            },
+            {
+              "title": "Observed SLI",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Good divided by eligible; no data is unknown."
+            },
+            {
+              "title": "Target allowance",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [],
+              "explanation": "Allowed bad fraction equals one minus SLO target."
+            },
+            {
+              "title": "Budget use",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Compare observed bad events with allowed bad events for the window."
+            }
+          ]
+        }
+      },
+      {
+        "id": "burn-rate-alerts",
+        "title": "12. Alerts that correspond to action",
+        "takeaway": "An alert should indicate user impact and name a useful response.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Burn rate compares the observed bad-event fraction with the permitted fraction. At a 99% target, a 5% bad fraction burns budget at five times the allowed rate. Short windows detect rapid impact; longer windows reduce noise and reveal sustained degradation. Multi-window approaches can require both to avoid paging on a tiny transient spike.",
+              "A page should demand an immediate response and have an owner and runbook. A ticket can address slower trends. Record low-traffic behaviour, missing telemetry and maintenance handling. An alert that nobody can act on trains people to ignore it, so review alert usefulness after incidents."
+            ],
+            "example": "SLO bad allowance = 1%; observed bad = 5%\nBurn rate = 5\nResponse: check affected route and release, then dependency saturation; rollback if supported by evidence."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Threshold arithmetic alone does not prove a paging policy is good. Test it against historical or synthetic windows, including zero traffic and missing data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design one page and one ticket for an import service. Include a response owner and zero-traffic behaviour.",
+          "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Each alert has an action and owner.",
+            "Low traffic and missing data are distinct.",
+            "Windows match urgency."
+          ]
+        },
+        "quiz": {
+          "question": "What is burn rate when 4% is bad against a 1% allowance?",
+          "options": [
+            "4.",
+            "0.25.",
+            "400 requests per second."
+          ],
+          "correct": 0,
+          "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Google SRE alerting on SLOs",
+            "url": "https://sre.google/workbook/alerting-on-slos/",
+            "section": "Burn rate; multiple windows; low-traffic services",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "sampling-retention",
+        "title": "13. Sampling and retention limits",
+        "takeaway": "Reduced data volume changes which questions remain answerable.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Head sampling decides whether to retain a trace early, usually before its outcome is known. Tail sampling can examine completed traces and keep interesting results such as errors, but needs buffering and coordination. Both choices have cost and bias implications. Metrics are often aggregated independently of trace sampling.",
+              "Record sampling policy, retention and export loss before interpreting absence. No error trace does not prove no errors occurred. A small sample may miss rare slow requests. Avoid multiplying one unusual sampled trace into a precise error-rate claim; use appropriately scoped aggregate measurements for rates."
+            ],
+            "example": "10% head sample: a rare failure may be omitted\nTail policy: retain errors plus selected normal traces\nMetrics: independent eligible-event counter remains the denominator"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A tail sampler cannot retain a trace it never receives. Upstream head sampling or export drops can limit it before the policy runs."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a trace policy for a busy service while preserving reliable failure-rate measurement. State what absence of a trace means.",
+          "solution": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Sampling policy is visible.",
+            "Metrics and trace evidence are not conflated.",
+            "Retention and dropped data are considered."
+          ]
+        },
+        "quiz": {
+          "question": "What does no retained error trace prove?",
+          "options": [
+            "Only that none was found in the retained trace data.",
+            "That the service had no errors.",
+            "That all clients received responses."
+          ],
+          "correct": 0,
+          "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry sampling",
+            "url": "https://opentelemetry.io/docs/concepts/sampling/",
+            "section": "Head sampling and tail sampling",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "benchmark-design",
+        "title": "14. Benchmark a hypothesis rather than a favourite optimisation",
+        "takeaway": "A useful benchmark holds correctness and workload constant.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "State a hypothesis such as A dictionary lookup reduces repeated record-search time for this workload. Define input size, operation mix and what counts as a correct answer. Compare implementations on identical input and verify results before timing. Warm up both paths, repeat measurements and report distributions rather than one best run.",
+              "Use a monotonic timer and separate setup from the measured operation when the question concerns lookup time. Also measure end-to-end cost if index construction occurs for every request. Run one variable change at a time and record runtime, machine, background load and command. Local measurements describe that environment."
+            ],
+            "example": "Lookup-only question: time searches after index exists\nEnd-to-end question: time index construction plus searches\nBoth implementations must return identical results."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A benchmark that omits new setup costs can make a slower real workflow look faster. Keep the claim tied to the boundary actually measured."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Run benchmark.py and compare linear and indexed lookups. Explain when including index construction might change the conclusion.",
+          "solution": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Correctness is verified before timing.",
+            "Measured boundaries are stated.",
+            "Results are environment-specific."
+          ]
+        },
+        "quiz": {
+          "question": "What must be checked before comparing timings?",
+          "options": [
+            "Both implementations produce equivalent correct results.",
+            "The faster code has fewer characters.",
+            "Only the best run from one implementation."
+          ],
+          "correct": 0,
+          "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Python time module",
+            "url": "https://docs.python.org/3/library/time.html",
+            "section": "perf_counter; elapsed wall-clock measurement",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "profiling",
+        "title": "15. Profiling CPU work and waiting",
+        "takeaway": "A profile locates cost within a workload; it does not replace workload definition.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool’s overhead.",
+              "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than a individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
+            ],
+            "example": "python -m cProfile -s cumulative benchmark.py\nInspect total vs cumulative attribution and call counts.\nDo not add cumulative times of parents and children."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Instrumentation can perturb timing. Use the profiler to locate candidates, then benchmark the change without profiling overhead for the performance claim."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Profile the supplied benchmark. Identify which function dominates the linear path and propose one measurement to validate a change.",
+          "solution": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately.",
+          "solutionFormat": "prose",
+          "checks": [
+            "CPU and elapsed waiting are distinguished.",
+            "Parent/child attribution is not summed.",
+            "A candidate change is remeasured."
+          ]
+        },
+        "quiz": {
+          "question": "Why benchmark after profiling?",
+          "options": [
+            "To evaluate the change without confusing profiler overhead with application cost.",
+            "Because profiles prove correctness automatically.",
+            "Because the slowest single call is always the best target."
+          ],
+          "correct": 0,
+          "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Python time module",
+            "url": "https://docs.python.org/3/library/time.html",
+            "section": "perf_counter; local elapsed measurement (profiling command is a lab extension)",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          },
+          {
+            "title": "Python deterministic profilers",
+            "url": "https://docs.python.org/3/library/profile.html",
+            "section": "Instant User Manual; profiler overhead note",
+            "reviewed": "2026-09-30",
+            "scope": "Python standard-library cProfile; profiling and benchmark boundaries differ. Primary page checked; local commands executed separately."
+          }
+        ]
+      },
+      {
+        "id": "memory-diagnostics",
+        "title": "16. Memory allocation, retention and leaks",
+        "takeaway": "Allocation volume differs from memory that remains retained.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A program may allocate many temporary objects without leaking them. A leak-like problem occurs when objects remain reachable beyond their intended lifetime, or external resources are not released. Compare snapshots across a controlled workload and inspect retained references rather than assuming every peak increase is a leak.",
+              "Python tracemalloc tracks allocations in Python’s managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
+            ],
+            "example": "tracemalloc.start()\nbefore = tracemalloc.take_snapshot()\n# execute controlled workload\nafter = tracemalloc.take_snapshot()\n# compare by source location; explain tracked-domain limits"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "RSS, managed heap size and tracemalloc totals describe different boundaries. Do not compare them as if they were the same metric or call a one-time high-water mark a proven leak."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a repeated import memory experiment with and without retaining processed rows. Specify the limitations of tracemalloc.",
+          "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Retained and temporary memory are distinguished.",
+            "Comparable workloads are repeated.",
+            "The measurement domain is stated."
+          ]
+        },
+        "quiz": {
+          "question": "Does tracemalloc measure all process memory?",
+          "options": [
+            "No; its tracked allocations are not a complete RSS measurement.",
+            "Yes; it includes all operating-system caches.",
+            "Only when output is formatted as JSON."
+          ],
+          "correct": 0,
+          "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Python allocation tracing",
+            "url": "https://docs.python.org/3/library/tracemalloc.html",
+            "section": "Snapshot comparison; tracked allocations; current and peak size",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "load-models",
+        "title": "17. Load tests, concurrency and coordinated omission",
+        "takeaway": "The load generator is part of the experiment and can distort it.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator’s capacity. Neither is automatically representative; choose according to the real workload.",
+              "Coordinated omission occurs when delays suppress observations that would have arrived during the delay. Record offered and achieved rate, concurrency, client errors and latency. Do not run uncontrolled tests against systems you do not own or have permission to test. The supplied lab targets loopback only and has bounded counts and timeouts."
+            ],
+            "example": "Closed loop: 4 workers wait for each response before sending next\nReport: completed count / elapsed seconds, errors, percentile estimator\nThis is not a constant-arrival-rate production capacity test."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A local test can reveal concurrency and waiting behaviour, but cannot establish internet performance, distributed scale or production safety. The generator can become the bottleneck."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Run the loopback service and load.py for both healthy and injected-slow profiles. Explain why achieved rate may fall.",
+          "solution": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Load model is named.",
+            "Offered and achieved demand are distinguished.",
+            "Only the documented local target is used."
+          ]
+        },
+        "quiz": {
+          "question": "What happens to offered rate in a fixed-worker closed-loop test as responses slow?",
+          "options": [
+            "It generally decreases because workers wait longer.",
+            "It remains a guaranteed constant arrival rate.",
+            "It automatically proves infinite capacity."
+          ],
+          "correct": 0,
+          "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "MDN understanding latency",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
+            "section": "Network and processing latency; lab closed-loop model",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          },
+          {
+            "title": "wrk2 load-generation design",
+            "url": "https://github.com/giltene/wrk2",
+            "section": "Correcting coordinated omission; constant throughput",
+            "reviewed": "2026-09-30",
+            "scope": "Primary implementation documentation explains constant-throughput and coordinated-omission concerns. This kit uses a bounded closed-loop client, not wrk2."
+          }
+        ]
+      },
+      {
+        "id": "queues-capacity",
+        "title": "18. Queues, backpressure and capacity",
+        "takeaway": "A growing queue means work arrives faster than it is being completed.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A queue absorbs temporary bursts but also creates waiting time and memory pressure. If arrival rate exceeds completion capacity for long enough, backlog grows until a limit is reached. Bound queues, reject or defer work deliberately, and expose queue depth, age and waiting time rather than only worker CPU.",
+              "Little’s law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
+            ],
+            "example": "Stable average arrival 20 jobs/s × average time in system 0.5 s = 10 jobs in system\nIf service falls below arrivals persistently, do not treat this stable relation as a capacity guarantee."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Increasing worker count can saturate the database and worsen latency. Measure the downstream limit and use backpressure rather than adding concurrency blindly."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A queue receives 30 jobs/s while workers finish 25 jobs/s. Calculate backlog growth over one minute before limits or changing rates.",
+          "solution": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Rate units and boundaries match.",
+            "Queue limits and overflow are explicit.",
+            "Downstream capacity is considered."
+          ]
+        },
+        "quiz": {
+          "question": "What does a persistent arrival rate above completion rate imply?",
+          "options": [
+            "Backlog growth until rates change or a limit intervenes.",
+            "Guaranteed low latency because a queue exists.",
+            "Automatic improvement from more client retries."
+          ],
+          "correct": 0,
+          "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring distributed systems",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "Saturation; latency and traffic interpretation",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          },
+          {
+            "title": "Google SRE handling overload",
+            "url": "https://sre.google/sre-book/handling-overload/",
+            "section": "Queue management; load shedding",
+            "reviewed": "2026-09-30",
+            "scope": "Conceptual overload and queue policy guidance; no production capacity claim."
+          },
+          {
+            "title": "MIT Urban Operations Research — Little’s formula",
+            "url": "https://web.mit.edu/urban_or_book/www/book/chapter4/4.4.html",
+            "section": "Section 4.4, equations 4.8–4.10",
+            "reviewed": "2026-09-30",
+            "scope": "Average queueing quantities require corresponding boundaries and existence of long-run limits; not a transient capacity guarantee."
+          }
+        ]
+      },
+      {
+        "id": "frontend-database",
+        "title": "19. Follow performance across browser and database",
+        "takeaway": "A slow user journey can cross several independently measured boundaries.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Browser performance includes transport, parsing, rendering and interaction response. A fast API does not guarantee a fast visible result if the browser renders thousands of rows. Database work can include connection wait, query execution, result transfer and application decoding; instrument those boundaries where possible.",
+              "Use a correlation ID to connect user-visible timing with the API trace. Inspect the query plan and data volume in the SQL path, and profile React rendering in the frontend path. Optimisations such as pagination or indexes can change correctness, ordering and memory behaviour, so validate functional results alongside timing."
+            ],
+            "example": "User action 600 ms = network + API processing + browser update (overlap possible)\nAPI query span 80 ms does not explain an extra 400 ms render by itself."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not optimise the database simply because it is familiar. Locate the observed delay first, then make one change and compare the same task and data set."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design evidence to distinguish slow query execution from slow table rendering in a study dashboard.",
+          "solution": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The user-visible boundary is measured.",
+            "Related evidence uses a correlation ID.",
+            "Correctness is checked after optimisation."
+          ]
+        },
+        "quiz": {
+          "question": "What should guide the first optimisation?",
+          "options": [
+            "The measured bottleneck in the actual user journey.",
+            "The team’s favourite subsystem.",
+            "The shortest function in the codebase."
+          ],
+          "correct": 0,
+          "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "MDN understanding latency",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
+            "section": "Latency contributors and processing boundaries",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ]
+      },
+      {
+        "id": "incident-runbook",
+        "title": "20. Incident investigation and recovery",
+        "takeaway": "Recovery decisions should use a timeline, user impact and testable hypotheses.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "During an incident, first establish impact, start time and affected operations. Compare the change timeline with traffic, errors, latency and saturation. Form hypotheses that predict evidence, such as A release changed query shape, and test them against traces, logs and dependency measurements.",
+              "A runbook names owner, dashboards, safe checks, rollback conditions and escalation. Preserve a timeline of decisions and evidence. Recovery can precede complete root-cause analysis; record why the action was chosen and confirm user outcomes improved. A post-incident review should identify contributing conditions and prevention work rather than blaming one person."
+            ],
+            "example": "12:00 release deployed\n12:03 import p95 rises; pool waits rise\n12:06 rollback selected after comparing query spans\n12:09 latency and failures recover; verify backlog drains"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Correlation with a release is a clue, not proof. Unrelated traffic growth or a dependency incident may coincide; inspect discriminating evidence and test recovery effects."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a runbook for the injected-slow lab profile and a short evidence timeline. Name one unsupported conclusion to avoid.",
+          "solution": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Actions have evidence and owners.",
+            "Recovery is remeasured.",
+            "The simulated cause is not presented as production proof."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a hypothesis useful during investigation?",
+          "options": [
+            "It predicts evidence that can distinguish it from alternatives.",
+            "It sounds confident.",
+            "It always blames the most recent author."
+          ],
+          "correct": 0,
+          "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "Google SRE monitoring distributed systems",
+            "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+            "section": "Monitoring causes and symptoms; useful monitoring",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          }
+        ],
+        "diagram": {
+          "title": "Investigate and confirm recovery",
+          "summary": "Each hypothesis predicts evidence, and recovery is verified through the same user outcome.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "User impact",
+              "description": "Establish affected operations and start time."
+            },
+            {
+              "id": "1",
+              "label": "Signals and timeline",
+              "description": "Compare releases, latency, errors and saturation."
+            },
+            {
+              "id": "2",
+              "label": "Test a hypothesis",
+              "description": "Choose evidence that distinguishes a possible cause."
+            },
+            {
+              "id": "3",
+              "label": "Recovery action",
+              "description": "Use the runbook to mitigate or roll back with an owner."
+            },
+            {
+              "id": "4",
+              "label": "Verify outcome",
+              "description": "Repeat the task and check that backlog and failures recover."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "scope investigation"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "form hypothesis"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "evidence supports action"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "remeasure"
+            },
+            {
+              "from": "4",
+              "to": "2",
+              "label": "if still failing"
+            }
+          ],
+          "steps": [
+            {
+              "title": "User impact",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Establish affected operations and start time."
+            },
+            {
+              "title": "Signals and timeline",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Compare releases, latency, errors and saturation."
+            },
+            {
+              "title": "Test a hypothesis",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1,
+                4
+              ],
+              "explanation": "Choose evidence that distinguishes a possible cause."
+            },
+            {
+              "title": "Recovery action",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Use the runbook to mitigate or roll back with an owner."
+            },
+            {
+              "title": "Verify outcome",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Repeat the task and check that backlog and failures recover."
+            }
+          ]
+        }
+      },
+      {
+        "id": "telemetry-release",
+        "title": "21. Telemetry pipelines, reliability and release evidence",
+        "takeaway": "Observability has its own failure modes and operating costs.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Instrumentation emits data, a collector or agent processes it, and a backend stores and queries it. Export can fail, queues can overflow and backends can lag. Monitor dropped telemetry, pipeline delay and resource use. Choose whether failures block application work or degrade telemetry, and document that policy.",
+              "Before release, verify safe field handling, signal boundaries, correlation, alert actions and storage costs. Run a known fault and confirm it appears in the intended signals. Preserve evidence of which paths were executed. The included standard-library lab emits local JSON records and duration summaries; it does not install a collector, exporter or real paging system."
+            ],
+            "example": "Application → telemetry processing → storage → query/alert\nFailure branch: export timeout → bounded buffer or drop policy → loss metric\nApplication user path must remain explicitly designed."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "More instrumentation can increase overhead and expose data. Measure the cost of the chosen instrumentation and verify that failure handling does not silently change user outcomes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a release evidence matrix separating local lab checks, collector integration and production operation.",
+          "solution": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Telemetry failure behaviour is explicit.",
+            "Executed checks are separated from extensions.",
+            "Data and cost limits are documented."
+          ]
+        },
+        "quiz": {
+          "question": "What does the bundled loopback lab prove?",
+          "options": [
+            "Its local timing and analysis behaviour under the tested workload.",
+            "A production OpenTelemetry pipeline is operating correctly.",
+            "Every real alert reaches an on-call engineer."
+          ],
+          "correct": 0,
+          "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "OpenTelemetry security",
+            "url": "https://opentelemetry.io/docs/security/",
+            "section": "Security of telemetry pipelines and components",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          },
+          {
+            "title": "Python http.server documentation",
+            "url": "https://docs.python.org/3/library/http.server.html",
+            "section": "Security considerations; ThreadingHTTPServer",
+            "reviewed": "2026-09-30",
+            "scope": "Standard-library HTTP server for local teaching only; not recommended for production."
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "folder": "observability-performance-practice",
+      "files": [
+        {
+          "id": "telemetry",
+          "href": "paths/observability-performance/practice/telemetry.py",
+          "role": "reference",
+          "description": "telemetry.py"
+        },
+        {
+          "id": "telemetry-test",
+          "href": "paths/observability-performance/practice/telemetry.test.py",
+          "role": "test",
+          "description": "telemetry.test.py"
+        },
+        {
+          "id": "benchmark",
+          "href": "paths/observability-performance/practice/benchmark.py",
+          "role": "reference",
+          "description": "benchmark.py"
+        },
+        {
+          "id": "service",
+          "href": "paths/observability-performance/practice/service.py",
+          "role": "reference",
+          "description": "service.py"
+        },
+        {
+          "id": "load",
+          "href": "paths/observability-performance/practice/load.py",
+          "role": "reference",
+          "description": "load.py"
+        },
+        {
+          "id": "integration-test",
+          "href": "paths/observability-performance/practice/integration.test.py",
+          "role": "test",
+          "description": "integration.test.py"
+        },
+        {
+          "id": "runbook",
+          "href": "paths/observability-performance/practice/runbook.md",
+          "role": "guide",
+          "description": "runbook.md"
+        },
+        {
+          "id": "README",
+          "href": "paths/observability-performance/practice/README.md",
+          "role": "guide",
+          "description": "README.md"
+        },
+        {
+          "id": "verification",
+          "href": "paths/observability-performance/practice/verification.md",
+          "role": "guide",
+          "description": "Actual local execution evidence and unverified boundaries"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Telemetry analysis notebook",
+          "goal": "Explain a measured request population without hiding assumptions.",
+          "fileIds": [
+            "telemetry",
+            "telemetry-test",
+            "benchmark",
+            "service",
+            "load",
+            "integration-test",
+            "runbook",
+            "README",
+            "verification"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Define measurement boundaries and units.",
+            "Classify counters, gauges and distributions.",
+            "Calculate nearest-rank percentiles.",
+            "Write safe structured log fields.",
+            "Interpret golden signals and nested spans.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
+              "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Ask a question before adding telemetry",
+              "href": "#topic/observability-performance/questions-signals"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Measured loopback service",
+          "goal": "Investigate local latency and error injection with a defined SLO.",
+          "fileIds": [
+            "telemetry",
+            "telemetry-test",
+            "benchmark",
+            "service",
+            "load",
+            "integration-test",
+            "runbook",
+            "README",
+            "verification"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Run healthy, slow and fail profiles.",
+            "Compare counts, errors and latency.",
+            "Define good and eligible events.",
+            "Calculate error budget and burn rate.",
+            "Design bounded labels and sampling policy.",
+            "Benchmark equivalent lookup implementations.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
+              "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+            },
+            {
+              "label": "Run bounded loopback experiment",
+              "command": "python service.py\n# In a second terminal: python load.py --profile healthy\npython load.py --profile slow",
+              "expected": "Each run records 20 requests, response durations and status codes; the slow profile raises tail latency. Stop service with Ctrl+C."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "8. Propagate context across boundaries",
+              "href": "#topic/observability-performance/context-propagation"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Performance investigation report",
+          "goal": "Produce a reproducible investigation with a measured change and a safe runbook.",
+          "fileIds": [
+            "telemetry",
+            "telemetry-test",
+            "benchmark",
+            "service",
+            "load",
+            "integration-test",
+            "runbook",
+            "README",
+            "verification"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Profile a representative workload.",
+            "Measure one change while preserving correctness.",
+            "Document memory measurement domain.",
+            "Explain load-generator limitations.",
+            "Write recovery and retest steps.",
+            "Create a telemetry release/security evidence matrix.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
+              "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "15. Profiling CPU work and waiting",
+              "href": "#topic/observability-performance/profiling"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "questions-signals": "foundation",
+        "measurement-contract": "foundation",
+        "structured-logs": "foundation",
+        "metrics-types": "foundation",
+        "latency-percentiles": "foundation",
+        "golden-signals": "foundation",
+        "trace-spans": "foundation",
+        "context-propagation": "intermediate",
+        "cardinality": "intermediate",
+        "histogram-buckets": "intermediate",
+        "sli-slo-budget": "intermediate",
+        "burn-rate-alerts": "intermediate",
+        "sampling-retention": "intermediate",
+        "benchmark-design": "intermediate",
+        "profiling": "advanced",
+        "memory-diagnostics": "advanced",
+        "load-models": "advanced",
+        "queues-capacity": "advanced",
+        "frontend-database": "advanced",
+        "incident-runbook": "advanced",
+        "telemetry-release": "advanced"
+      },
+      "bundle": {
+        "href": "paths/observability-performance/practice-bundle.zip"
       }
     }
   },
@@ -47006,6 +59094,1927 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/testing-debugging/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "ui-accessibility",
+    "title": "UI Design & Accessibility",
+    "category": "Product design",
+    "status": "ready",
+    "description": "Create clear, responsive interfaces and verify keyboard, semantic, contrast and recovery behaviour with honest evidence.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "Basic file editing and running a terminal command. No prior specialist knowledge required.",
+      "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+    ],
+    "outcomes": [
+      "Organise content around user tasks and clear hierarchy.",
+      "Implement native semantics, visible focus and understandable form recovery.",
+      "Measure colour contrast and preserve meaning without colour or motion.",
+      "Evaluate responsive layouts, diagrams and complex interactions.",
+      "Produce reproducible accessibility and usability evidence."
+    ],
+    "setup": [
+      "Download the practice bundle; files are flat in ui-accessibility-practice.",
+      "Node.js runs contrast and semantic guardrails; Python 3 optionally serves demo.html locally.",
+      "Run node contrast.test.cjs and node semantics.test.cjs, then python -m http.server 8890 --bind 127.0.0.1 and open /demo.html. Stop with Ctrl+C.",
+      "Use audit-checklist.md for keyboard, zoom, motion and assistive-technology checks. Automated source checks do not establish conformance."
+    ],
+    "nextSteps": [
+      "Apply these checks to the React path and full-stack project.",
+      "Evaluate with disabled users and real assistive technology.",
+      "Build a small component system with regression evidence."
+    ],
+    "sources": [
+      {
+        "title": "WAI designing for accessibility",
+        "url": "https://www.w3.org/WAI/tips/designing/"
+      },
+      {
+        "title": "WCAG 2.2 quick reference",
+        "url": "https://www.w3.org/WAI/WCAG22/quickref/"
+      },
+      {
+        "title": "MDN responsive web design",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design"
+      },
+      {
+        "title": "WAI Forms Tutorial",
+        "url": "https://www.w3.org/WAI/tutorials/forms/"
+      },
+      {
+        "title": "WAI ARIA modal dialog pattern",
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+      },
+      {
+        "title": "WAI Images Tutorial",
+        "url": "https://www.w3.org/WAI/tutorials/images/"
+      },
+      {
+        "title": "WAI Tables Tutorial",
+        "url": "https://www.w3.org/WAI/tutorials/tables/"
+      },
+      {
+        "title": "MDN reduced motion",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion"
+      },
+      {
+        "title": "WAI accessibility evaluation",
+        "url": "https://www.w3.org/WAI/test-evaluate/"
+      },
+      {
+        "title": "WCAG Understanding Contrast (Minimum)",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+      },
+      {
+        "title": "WCAG Understanding Reflow",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+      },
+      {
+        "title": "WCAG Understanding Dragging Movements",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
+      },
+      {
+        "title": "WCAG Understanding Target Size (Minimum)",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+      },
+      {
+        "title": "WCAG Understanding Accessible Authentication (Minimum)",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "audit-checklist.md",
+        "href": "paths/ui-accessibility/practice/audit-checklist.md"
+      },
+      {
+        "title": "contrast.cjs",
+        "href": "paths/ui-accessibility/practice/contrast.cjs"
+      },
+      {
+        "title": "contrast.test.cjs",
+        "href": "paths/ui-accessibility/practice/contrast.test.cjs"
+      },
+      {
+        "title": "demo.css",
+        "href": "paths/ui-accessibility/practice/demo.css"
+      },
+      {
+        "title": "demo.html",
+        "href": "paths/ui-accessibility/practice/demo.html"
+      },
+      {
+        "title": "demo.js",
+        "href": "paths/ui-accessibility/practice/demo.js"
+      },
+      {
+        "title": "README.md",
+        "href": "paths/ui-accessibility/practice/README.md"
+      },
+      {
+        "title": "semantics.test.cjs",
+        "href": "paths/ui-accessibility/practice/semantics.test.cjs"
+      },
+      {
+        "title": "Local verification evidence and limits",
+        "href": "paths/ui-accessibility/practice/verification.md"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation — task and meaning",
+        "description": "Understand the person, structure, HTML semantics and visual rules.",
+        "exitCriteria": [
+          "The task and outcome are explicit.",
+          "Meaning survives removal of colour.",
+          "Focus remains visible.",
+          "Labels explain actions."
+        ],
+        "project": {
+          "title": "Explainable course overview",
+          "brief": "Design a course overview whose hierarchy and controls support a realistic learner task.",
+          "requirements": [
+            "Write two realistic task scenarios.",
+            "Create semantic headings/navigation/actions.",
+            "Measure proposed contrast pairs.",
+            "Test the overview with a keyboard."
+          ],
+          "rubric": [
+            "The task and outcome are explicit.",
+            "Meaning survives removal of colour.",
+            "Focus remains visible.",
+            "Labels explain actions."
+          ],
+          "solution": "Start from the task, sketch hierarchy, implement native controls, calculate actual colour pairs and record a keyboard journey. Use contrast.cjs as arithmetic evidence and preserve a separate manual record."
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate — resilient interaction",
+        "description": "Build usable form, dialog, responsive and visual explanation states.",
+        "exitCriteria": [
+          "Errors explain recovery without losing work.",
+          "All actions work by keyboard.",
+          "No essential content clips at narrow widths.",
+          "Motion has a meaningful still alternative."
+        ],
+        "project": {
+          "title": "Inclusive study dashboard",
+          "brief": "Extend the runnable dashboard and document complete task behaviour.",
+          "requirements": [
+            "Preserve labels and help/error associations.",
+            "Test blank and valid submission.",
+            "Verify preview focus entry, containment and return.",
+            "Test narrow layout, zoom and reduced motion.",
+            "Provide structured alternatives for one diagram."
+          ],
+          "rubric": [
+            "Errors explain recovery without losing work.",
+            "All actions work by keyboard.",
+            "No essential content clips at narrow widths.",
+            "Motion has a meaningful still alternative."
+          ],
+          "solution": "Use the native form/dialog demo as a reference, then add one useful state such as filtering. Run semantic guardrails, complete the manual checklist and document the actual browser. Do not infer screen-reader results from source checks."
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced — maintained inclusive journeys",
+        "description": "Evaluate complex interactions and produce bounded release evidence.",
+        "exitCriteria": [
+          "The same task works through equivalent input routes.",
+          "Evidence distinguishes executed and untested scope.",
+          "Known issues have impact and recovery notes.",
+          "Release claims match the evaluation performed."
+        ],
+        "project": {
+          "title": "Accessibility release review",
+          "brief": "Create and verify a maintainable inclusive dashboard release.",
+          "requirements": [
+            "Add non-drag reordering.",
+            "Design localisation and long-text cases.",
+            "Review authentication and destructive-action flows.",
+            "Run a task test with another person.",
+            "Record assistive-technology checks or mark them unexecuted.",
+            "Create component regression and manual retest triggers."
+          ],
+          "rubric": [
+            "The same task works through equivalent input routes.",
+            "Evidence distinguishes executed and untested scope.",
+            "Known issues have impact and recovery notes.",
+            "Release claims match the evaluation performed."
+          ],
+          "solution": "Use semantic components with stable IDs, preserve focus during reorder, and record realistic task outcomes. Combine arithmetic/static guardrails with human browser and assistive-technology evidence. Publish scoped results and maintenance triggers rather than a generic accessibility score."
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "user-goals",
+        "title": "1. Start with a person and a task",
+        "takeaway": "A useful interface helps someone complete a specific task under real constraints.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Design begins with what a person is trying to do. For a learning notebook, the task might be finding the next SQL exercise on a phone during a short break. A catalogue of technologies is only one way to support that task. Identify the starting point, desired result, information needed and possible interruptions before drawing screens.",
+              "Temporary constraints matter alongside permanent disabilities: sunlight reduces contrast, an injured wrist changes input, and a noisy train limits audio. Document a task as observable behaviour rather than a stereotype. A short conversation and watching someone attempt the task can expose assumptions that a polished mockup hides."
+            ],
+            "example": "Task: return to the unfinished lesson\nStarting point: home page on a phone\nSuccess: open the correct lesson and its practice files\nConstraint: one hand, intermittent connection"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not invent user preferences and call them research. Label hypotheses explicitly, then test them with people. A task completion time is useful evidence only if the task and assistance given are recorded."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write two task scenarios for a study dashboard, including one interruption. Choose an observable success criterion for each.",
+          "solution": "Scenario A: return to an unfinished lesson after closing the browser; success means the same lesson and progress are visible. Scenario B: locate and download the relevant kit using keyboard navigation; success means the named files are found without help. Record the start, expected end and observed obstacles separately.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The scenario names an action and outcome.",
+            "The constraint changes a design choice.",
+            "Observations are separated from assumptions."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a useful design goal?",
+          "options": [
+            "A learner can locate the next exercise without help.",
+            "Use many animated cards.",
+            "Make every element look identical."
+          ],
+          "correct": 0,
+          "explanation": "Scenario A: return to an unfinished lesson after closing the browser; success means the same lesson and progress are visible. Scenario B: locate and download the relevant kit using keyboard navigation; success means the named files are found without help. Record the start, expected end and observed obstacles separately. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI designing for accessibility",
+            "url": "https://www.w3.org/WAI/tips/designing/",
+            "section": "Clear navigation, feedback and different viewport sizes",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "information-architecture",
+        "title": "2. Organise information around decisions",
+        "takeaway": "Navigation labels and grouping should explain where to go next.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Information architecture describes how content is named, grouped and connected. Separate the global catalogue, course overview, lesson and practice task because they answer different questions. Reuse familiar labels such as Lessons and Practice files. A breadcrumb communicates location; a Next lesson control communicates sequence.",
+              "Provide more than one route to a large collection: browsing by topic and searching by task complement each other. Avoid forcing users to remember a filename or internal lesson ID. Put the appropriate files beside the exercise, and identify runtime requirements before download. Stable URLs also support sharing and resuming."
+            ],
+            "example": "Home → Python course → Parsing lesson → Import practice kit\nBreadcrumb answers: where am I?\nNext lesson answers: what follows this?"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A visual map alone may hide the sequence from keyboard or screen-reader users. Preserve a meaningful ordered list of destinations alongside any graphical navigation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Reorganise 12 mixed lesson and file links into a course outline. Show how someone reaches a lab from both search and a lesson.",
+          "solution": "Group lessons by stage, keep the practice kit beside the exercise, and add a search result with course title and task context. The breadcrumb leads back to course overview. Use the same label and URL for a resource wherever it appears, rather than introducing multiple names for one download.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Groups explain their purpose.",
+            "Every task has a nearby resource link.",
+            "Search and browse lead to the same destination."
+          ]
+        },
+        "quiz": {
+          "question": "What should a breadcrumb primarily communicate?",
+          "options": [
+            "The current location within the content hierarchy.",
+            "The amount of memory the browser uses.",
+            "A replacement for every task action."
+          ],
+          "correct": 0,
+          "explanation": "Group lessons by stage, keep the practice kit beside the exercise, and add a search result with course title and task context. The breadcrumb leads back to course overview. Use the same label and URL for a resource wherever it appears, rather than introducing multiple names for one download. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI designing for accessibility",
+            "url": "https://www.w3.org/WAI/tips/designing/",
+            "section": "Provide clear and consistent navigation options",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "diagram": {
+          "title": "Find the exercise and its files",
+          "summary": "Browsing and search both lead to a task with nearby resources.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Course catalogue",
+              "description": "Choose a learning goal or search by task."
+            },
+            {
+              "id": "1",
+              "label": "Course overview",
+              "description": "Understand stages and the next lesson."
+            },
+            {
+              "id": "2",
+              "label": "Lesson task",
+              "description": "Read the exercise and its requirements."
+            },
+            {
+              "id": "3",
+              "label": "Practice kit",
+              "description": "Download the exact files needed for that task."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "browse course"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "open lesson"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "search task"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "nearby resource link"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Course catalogue",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Choose a learning goal or search by task."
+            },
+            {
+              "title": "Course overview",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Understand stages and the next lesson."
+            },
+            {
+              "title": "Lesson task",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Read the exercise and its requirements."
+            },
+            {
+              "title": "Practice kit",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Download the exact files needed for that task."
+            }
+          ]
+        }
+      },
+      {
+        "id": "hierarchy-layout",
+        "title": "3. Visual hierarchy, spacing and alignment",
+        "takeaway": "A small set of visual rules makes priority visible.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Hierarchy lets someone scan a screen and distinguish the main task, supporting information and secondary actions. Use a clear heading, concise introduction and one dominant action when the task has a primary next step. Group related elements through proximity and shared alignment rather than enclosing every sentence in a card.",
+              "Choose a spacing scale, for example 4, 8, 16, 24 and 32 pixels, and use it consistently. Larger gaps should separate sections; smaller gaps connect a label to its field. Balance visual emphasis with semantic structure: a large bold paragraph does not become a heading for assistive technology."
+            ],
+            "example": "Course title\n  What you will build\n  [Start first lesson]\n\nLessons by stage\nPractice kit and requirements"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not make every button a primary button. If three equally loud actions compete, the user has to infer their relative importance. Document which action advances the current task."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Sketch a course overview with title, progress, continue action and resources. Annotate the spacing and emphasis choices.",
+          "solution": "Place the title and outcome together, then a dominant Continue lesson action. Put progress nearby as supporting information and list resources under a separate heading. Align text and controls on a shared edge. Use a smaller gap inside a group and a larger gap between groups, then compare scanning at narrow width.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The primary action is recognisable.",
+            "Heading levels preserve structure.",
+            "Spacing groups related content."
+          ]
+        },
+        "quiz": {
+          "question": "Why use a spacing scale?",
+          "options": [
+            "To give grouping and separation consistent meaning.",
+            "To guarantee accessibility by itself.",
+            "To force every element to have the same margin."
+          ],
+          "correct": 0,
+          "explanation": "Place the title and outcome together, then a dominant Continue lesson action. Put progress nearby as supporting information and list resources under a separate heading. Align text and controls on a shared edge. Use a smaller gap inside a group and a larger gap between groups, then compare scanning at narrow width. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI designing for accessibility",
+            "url": "https://www.w3.org/WAI/tips/designing/",
+            "section": "Use headings and spacing to group related content",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "semantic-html",
+        "title": "4. HTML meaning and the accessibility tree",
+        "takeaway": "Native elements provide relationships and behaviour that appearance alone cannot.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "The browser exposes an accessibility tree derived from the document, styling and ARIA. A button has a role and keyboard activation; a link navigates; a heading identifies a section. Use those elements for their purpose. A clickable div may look like a button while lacking its name, focusability and activation behaviour.",
+              "Use one main landmark for the main content, a nav for navigation and a logical heading hierarchy. Name multiple navigation regions when their purpose differs. Source order should remain sensible without layout styling. ARIA can repair missing semantics when appropriate, but it does not implement the interaction described by a role."
+            ],
+            "example": "<nav aria-label=\"Course\"><a href=\"#lessons\">Lessons</a></nav>\n<main id=\"main\"><h1>Study dashboard</h1>\n<button type=\"button\">Save progress</button></main>"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not add role=\"button\" to a div and stop there. Prefer the native button unless a real constraint justifies recreating its focus and keyboard behaviour."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Replace a clickable div and styled paragraph heading with native elements. Explain the difference between navigation and an action.",
+          "solution": "Use an anchor with href for moving to the practice page, a button for toggling a filter, and an h2 for a subsection. Keep a real text name inside each control. Inspect the browser accessibility tree and confirm the computed role and name; visual similarity alone is insufficient.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Navigation uses a link.",
+            "Actions use buttons.",
+            "The accessibility tree exposes meaningful names."
+          ]
+        },
+        "quiz": {
+          "question": "What does role=\"button\" supply on its own?",
+          "options": [
+            "A role, without implementing full button behaviour.",
+            "Automatic Space activation and form semantics.",
+            "A guaranteed accessible name."
+          ],
+          "correct": 0,
+          "explanation": "Use an anchor with href for moving to the practice page, a button for toggling a filter, and an h2 for a subsection. Keep a real text name inside each control. Inspect the browser accessibility tree and confirm the computed role and name; visual similarity alone is insufficient. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "1.3.1 Info and Relationships; 4.1.2 Name, Role, Value",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "keyboard-focus",
+        "title": "5. Keyboard navigation and visible focus",
+        "takeaway": "Focus should follow the task and remain visible.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Tab usually moves between interactive controls in document order; Shift+Tab moves backwards. Enter activates links and native buttons, and Space activates a focused native button. Provide a skip link to bypass repeated navigation. Keep the focused element visible and avoid sticky headers obscuring it.",
+              "Use :focus-visible for a clear focus indicator without relying on hover. Avoid positive tabindex values because they create a second ordering system that becomes fragile as content changes. When an action removes its own control, move focus to a sensible surviving control or heading rather than leaving the user at the document start."
+            ],
+            "example": "<a class=\"skip\" href=\"#main\">Skip to content</a>\n<style>button:focus-visible,a:focus-visible { outline:3px solid #155e75; outline-offset:3px; }</style>"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A mouse-only smoke test misses keyboard traps and disappearing focus. Test forward and backward navigation, activation, dismissal and route changes with the mouse untouched."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Navigate the downloadable demo using only Tab, Shift+Tab, Enter and Escape. Record the focus destination after closing the dialog.",
+          "solution": "The skip link reaches main; the form fields and buttons follow source order. Opening Preview moves focus into the dialog; Escape closes it and restores focus to Preview. Any invisible focus or unreachable control is a defect to reproduce and fix, even if the pointer interaction works.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Every action is reachable.",
+            "Focus is visible and not obscured.",
+            "Closing a temporary surface restores a sensible position."
+          ]
+        },
+        "quiz": {
+          "question": "Which is the safer default focus order?",
+          "options": [
+            "Meaningful document order without positive tabindex.",
+            "Alphabetical order of CSS class names.",
+            "A manually numbered tabindex on every control."
+          ],
+          "correct": 0,
+          "explanation": "The skip link reaches main; the form fields and buttons follow source order. Opening Preview moves focus into the dialog; Escape closes it and restores focus to Preview. Any invisible focus or unreachable control is a defect to reproduce and fix, even if the pointer interaction works. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "2.1.1 Keyboard; 2.4.3 Focus Order; 2.4.7 Focus Visible; 2.4.11 Focus Not Obscured",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "contrast-colour",
+        "title": "6. Contrast and meaning beyond colour",
+        "takeaway": "Measure contrast, then preserve meaning when colour is unavailable.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Contrast compares the relative luminance of foreground and background. WCAG 2.2 AA requires at least 4.5:1 for ordinary text, with 3:1 for qualifying large text. Some controls and meaningful graphics require 3:1 under the non-text contrast criterion. These are specific criteria with exceptions, not one universal number for every pixel.",
+              "Use the supplied contrast utility to calculate two solid sRGB colours. A gradient or image background needs checking at the actual text location. Pair status colour with text or another cue: Completed and Not started are still understandable in grayscale. Check hover, focus, disabled and error states separately."
+            ],
+            "example": "#000000 against #ffffff = 21:1\nError: icon + \"Title is required\" + border\nChart series: label + line pattern + colour"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not round a ratio below the threshold up to a passing number. Translucency, anti-aliasing and different backgrounds can invalidate a token-only calculation; inspect the final state too."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Run contrast.cjs for a proposed text pair. If it fails, propose a replacement and explain how an error remains recognisable in grayscale.",
+          "solution": "Run node contrast.cjs 777777 ffffff; its ratio is below 4.5:1 for ordinary text. Use a darker foreground such as 595959 and rerun. Add visible error text linked to the field, retaining colour as reinforcement rather than the sole signal. Record exact ratios, intended text size and tested state.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The unrounded value determines passing.",
+            "The background is the actual displayed background.",
+            "Meaning survives removal of colour."
+          ]
+        },
+        "quiz": {
+          "question": "A 4.49:1 ordinary text ratio at AA should be classified as what?",
+          "options": [
+            "Below the 4.5:1 threshold.",
+            "Passing after rounding to one decimal.",
+            "Always passing because the font is bold."
+          ],
+          "correct": 0,
+          "explanation": "Run node contrast.cjs 777777 ffffff; its ratio is below 4.5:1 for ordinary text. Use a darker foreground such as 595959 and rerun. Add visible error text linked to the field, retaining colour as reinforcement rather than the sole signal. Record exact ratios, intended text size and tested state. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "1.4.1 Use of Color; 1.4.3 Contrast (Minimum); 1.4.11 Non-text Contrast",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          },
+          {
+            "title": "WCAG Understanding Contrast (Minimum)",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+            "section": "Large-scale text, thresholds and rationale",
+            "reviewed": "2026-09-30",
+            "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "type-content",
+        "title": "7. Typography and understandable writing",
+        "takeaway": "Readable text depends on structure, wording and user adjustment.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Choose a readable base size, a comfortable line height and a bounded measure so lines do not stretch across a large monitor. Use relative units for typography and leave room for text expansion. Distinguish a heading from a caption without making the caption too faint. Avoid embedding essential text in images.",
+              "Write labels that describe the action or destination. Download practice kit is clearer than Click here. Explain abbreviations at first use, and put the most useful instruction before secondary details. Preserve user text spacing adjustments without clipping controls or hiding content. A fixed-height card often fails when a title wraps or text spacing increases."
+            ],
+            "example": "Less useful: \"Invalid input\"\nMore useful: \"Enter a title with at least one non-space character.\"\nLess useful link: \"Here\"\nMore useful link: \"Download Python practice kit\""
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Plain language is not achieved by deleting necessary constraints. Explain the rule with an example and keep technical details near the decision where they matter."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite three ambiguous control labels and test the demo at 200% text zoom. Identify a container that must grow.",
+          "solution": "Replace Here with Open practice files, Submit with Add lesson and Bad data with Title cannot be blank. Let the input row wrap and the error paragraph grow. Check that the action still matches its label and that no instruction is cut off after zoom or text-spacing changes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Labels communicate the action.",
+            "Text enlargement preserves content.",
+            "Error wording explains recovery."
+          ]
+        },
+        "quiz": {
+          "question": "Which label best identifies a download?",
+          "options": [
+            "Download SQL Server practice kit.",
+            "Click here.",
+            "More."
+          ],
+          "correct": 0,
+          "explanation": "Replace Here with Open practice files, Submit with Add lesson and Bad data with Title cannot be blank. Let the input row wrap and the error paragraph grow. Check that the action still matches its label and that no instruction is cut off after zoom or text-spacing changes. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "1.4.4 Resize Text; 1.4.12 Text Spacing; 2.4.4 Link Purpose; 3.3.3 Error Suggestion",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "responsive-reflow",
+        "title": "8. Responsive layout and reflow",
+        "takeaway": "Content should adapt to available space rather than shrink into unreadable miniatures.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Responsive design uses fluid sizing and content-driven breakpoints. Start with a single-column task flow, then introduce additional columns when they fit. A viewport meta tag enables sensible mobile layout. Use minmax and flexible widths while allowing children to shrink; a long filename can otherwise force an entire page wider than the viewport.",
+              "WCAG reflow asks that content be usable without two-dimensional scrolling at the specified equivalent narrow width, with exceptions for content that intrinsically requires it such as complex data tables. Preserve readable text and task order when a sidebar becomes stacked navigation. A horizontally scrollable diagram should have an accessible name and keyboard access."
+            ],
+            "example": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr)); }\n.card { min-width:0; overflow-wrap:anywhere; }"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Desktop screenshots do not establish mobile usability. Test long labels, zoom, keyboard focus and error states at narrow widths rather than only the happy-state layout."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Resize the demo to 320 CSS pixels and test browser zoom. Document any exceptional table or diagram scrolling separately.",
+          "solution": "The form becomes stacked, buttons remain readable and text wraps without whole-page horizontal scrolling. If a data table requires a scroll area, label that region, keep headers understandable and provide a summary. Record viewport width and zoom so the result can be reproduced.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Task order is preserved.",
+            "No essential text is clipped.",
+            "Exceptional scrolling is contained and explained."
+          ]
+        },
+        "quiz": {
+          "question": "What is a useful breakpoint basis?",
+          "options": [
+            "Where the content no longer fits comfortably.",
+            "A fixed list of every phone brand.",
+            "The number of components in the application."
+          ],
+          "correct": 0,
+          "explanation": "The form becomes stacked, buttons remain readable and text wraps without whole-page horizontal scrolling. If a data table requires a scroll area, label that region, keep headers understandable and provide a summary. Record viewport width and zoom so the result can be reproduced. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "MDN responsive web design",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design",
+            "section": "Responsive layout, media queries and fluid grids",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          },
+          {
+            "title": "WCAG Understanding Reflow",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+            "section": "320 CSS pixel width and intrinsic two-dimensional content exceptions",
+            "reviewed": "2026-09-30",
+            "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "forms-validation",
+        "title": "9. Form labels, instructions and recovery",
+        "takeaway": "Validation should explain what failed while preserving the person’s work.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A visible label identifies a field; a placeholder disappears during entry and is not a substitute. Associate label and input through for and id. Put requirements before input and connect help text with aria-describedby. Identify required fields with text as well as machine-readable semantics.",
+              "On validation failure, preserve entered values and show a specific error beside the field. Mark the invalid field with aria-invalid and reference its error. For several errors, offer a summary linking to each field. For the one-field demo, focus the invalid input and announce the message; avoid simultaneously moving focus to a summary and an input."
+            ],
+            "example": "<label for=\"title\">Lesson title</label>\n<input id=\"title\" aria-describedby=\"title-help title-error\">\n<p id=\"title-help\">Use a meaningful name.</p>\n<p id=\"title-error\"></p>"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Client validation improves recovery but is not a server security boundary. Repeat validation on the server and map server failures back to useful field or form messages."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Submit the demo with spaces, then a valid title. Inspect the invalid state and recovery without a mouse.",
+          "solution": "Whitespace is rejected with visible Title is required text; the input receives focus, aria-invalid=true and a described error. After valid input, the error clears and a status message confirms the change. The implementation never inserts learner input using innerHTML.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Errors name the field and fix.",
+            "Typed values survive failure.",
+            "Invalid state clears when resolved."
+          ]
+        },
+        "quiz": {
+          "question": "Why is a placeholder insufficient as the only label?",
+          "options": [
+            "It disappears and does not reliably communicate a persistent field name.",
+            "It always prevents input validation.",
+            "It is the same as an associated label element."
+          ],
+          "correct": 0,
+          "explanation": "Whitespace is rejected with visible Title is required text; the input receives focus, aria-invalid=true and a described error. After valid input, the error clears and a status message confirms the change. The implementation never inserts learner input using innerHTML. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI Forms Tutorial",
+            "url": "https://www.w3.org/WAI/tutorials/forms/",
+            "section": "Labeling Controls; Instructions; Validating Input; User Notifications",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "diagram": {
+          "title": "Recover from invalid input",
+          "summary": "A one-field form keeps the person’s work and provides a useful correction path.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Entered title",
+              "description": "Read the field value without discarding it."
+            },
+            {
+              "id": "1",
+              "label": "Validate required text",
+              "description": "Trim for validation; whitespace alone is invalid."
+            },
+            {
+              "id": "2",
+              "label": "Show field error",
+              "description": "Keep the text, expose invalid state and focus the field."
+            },
+            {
+              "id": "3",
+              "label": "Add lesson",
+              "description": "Create a text node for valid input and update the list."
+            },
+            {
+              "id": "4",
+              "label": "Announce result",
+              "description": "Report the actual in-memory change through a status region."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "submit"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "invalid"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "valid"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "completed"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Entered title",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Read the field value without discarding it."
+            },
+            {
+              "title": "Validate required text",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Trim for validation; whitespace alone is invalid."
+            },
+            {
+              "title": "Show field error",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Keep the text, expose invalid state and focus the field."
+            },
+            {
+              "title": "Add lesson",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Create a text node for valid input and update the list."
+            },
+            {
+              "title": "Announce result",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Report the actual in-memory change through a status region."
+            }
+          ]
+        }
+      },
+      {
+        "id": "states-feedback",
+        "title": "10. Loading, empty, error and success states",
+        "takeaway": "Every operation needs a coherent story before, during and after completion.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Represent operation states explicitly instead of treating success as the only designed screen. Loading tells a person what is happening; empty tells them how to begin; error explains recovery; success confirms the result. A pending action should prevent unintended duplicates while leaving a path to cancel when that is part of the task.",
+              "Use a polite live status region for non-urgent changes that occur without moving focus. Do not announce every keystroke or replace the entire page with a live region. An urgent error can justify an alert, but repeated alerts become disruptive. Keep feedback visible as well as announced, and distinguish Not saved from Saved locally."
+            ],
+            "example": "Idle → validating → saving → success\n                      ↘ error → retry\nEmpty search: \"No matching lessons. Clear filters.\""
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Make persistent consequences inspectable after the announcement."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design four states for importing a practice file, including malformed data and a valid file with zero rows.",
+          "solution": "Before import, explain accepted format. During parsing, show Reading file. Malformed input leaves existing data unchanged and gives a retry action. A valid empty file reports 0 records imported rather than an error. Successful imports state the count and where data was stored; announce only the final meaningful change.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Empty differs from failed.",
+            "Old data survives failed import.",
+            "Feedback states the actual storage scope."
+          ]
+        },
+        "quiz": {
+          "question": "What should a valid empty search show?",
+          "options": [
+            "A clear no-results message and a way to change filters.",
+            "A generic server error.",
+            "An endless spinner."
+          ],
+          "correct": 0,
+          "explanation": "Before import, explain accepted format. During parsing, show Reading file. Malformed input leaves existing data unchanged and gives a retry action. A valid empty file reports 0 records imported rather than an error. Successful imports state the count and where data was stored; announce only the final meaningful change. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "4.1.3 Status Messages; 3.3.1 Error Identification",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "dialog-pattern",
+        "title": "11. Dialogs and focus ownership",
+        "takeaway": "A modal temporarily owns interaction and must return it predictably.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "A modal blocks interaction with the rest of the page. Use a native dialog with showModal for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with tabindex=-1.",
+              "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a surface that still permits background interaction."
+            ],
+            "example": "const opener = document.activeElement;\ndialog.showModal();\ndialog.addEventListener(\"close\", () => opener.focus(), {once:true});"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Opening every preview in a modal is not automatically better. A separate page can be clearer for long content, shareable resources or complex navigation. Choose the pattern according to the task."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Open and dismiss the demo preview with keyboard controls. Specify what should happen if its opener is removed.",
+          "solution": "Focus enters the Preview dialog; Escape or Close dismisses it and returns to Preview. If that opener no longer exists, choose the next logical control or page heading and check it is connected before focusing. The dialog title is its accessible name; background interaction is inert while open.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The dialog has an accessible name.",
+            "Escape and a visible close control work.",
+            "Focus returns to a surviving logical target."
+          ]
+        },
+        "quiz": {
+          "question": "When may aria-modal=true be used?",
+          "options": [
+            "When interaction outside the dialog is actually blocked.",
+            "Whenever a box has a dark background.",
+            "To make any tooltip keyboard accessible."
+          ],
+          "correct": 0,
+          "explanation": "Focus enters the Preview dialog; Escape or Close dismisses it and returns to Preview. If that opener no longer exists, choose the next logical control or page heading and check it is connected before focusing. The dialog title is its accessible name; background interaction is inert while open. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI ARIA modal dialog pattern",
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+            "section": "Keyboard Interaction; WAI-ARIA Roles, States, and Properties",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "diagram": {
+          "title": "Borrow and return focus",
+          "summary": "The preview modal owns interaction temporarily and returns focus when dismissed.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Preview button",
+              "description": "The invoking control is the return point."
+            },
+            {
+              "id": "1",
+              "label": "Named modal opens",
+              "description": "showModal makes the background inert."
+            },
+            {
+              "id": "2",
+              "label": "Focus inside modal",
+              "description": "Focus the heading or appropriate first control; contain Tab navigation."
+            },
+            {
+              "id": "3",
+              "label": "Close or Escape",
+              "description": "Dismiss through a visible control or keyboard."
+            },
+            {
+              "id": "4",
+              "label": "Focus returns",
+              "description": "Restore the surviving opener or a logical replacement."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "activate"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "initial focus"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "dismiss"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "return"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Preview button",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The invoking control is the return point."
+            },
+            {
+              "title": "Named modal opens",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "showModal makes the background inert."
+            },
+            {
+              "title": "Focus inside modal",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Focus the heading or appropriate first control; contain Tab navigation."
+            },
+            {
+              "title": "Close or Escape",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Dismiss through a visible control or keyboard."
+            },
+            {
+              "title": "Focus returns",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Restore the surviving opener or a logical replacement."
+            }
+          ]
+        }
+      },
+      {
+        "id": "images-diagrams",
+        "title": "12. Images and diagrams that explain",
+        "takeaway": "Alternatives should communicate the image’s purpose in this context.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "An informative image needs an equivalent description of the information it conveys. A decorative image can use an empty alt so it does not add noise. A functional image needs the action or destination as its alternative. The same picture can need different treatment depending on why it appears on the page.",
+              "Complex diagrams need a short identification plus a nearby structured explanation. Define each important node and relationship, explain arrow meaning and preserve the reading sequence. Avoid tiny labels and colour-only categories. An SVG title is useful, but it does not replace a full explanation of a multi-step architecture."
+            ],
+            "example": "Diagram: browser → API → database\nText alternative: browser sends a request to the API; the API checks permission before querying the database. The browser does not connect directly to the database."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A literal inventory of shapes such as Three blue boxes misses the concept. Explain the mechanism and assumptions, including whether an arrow means data, dependency or chronology."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write alternatives for a decorative notebook icon, a download icon button and an API diagram.",
+          "solution": "Use empty alt for an icon beside an already complete heading. Name the icon button Download practice kit. Give the architecture diagram a concise title and a structured description of request, permission check and database query. Add an exception path if it teaches failure handling.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Alternatives match purpose.",
+            "Complex relationships have structured text.",
+            "Arrow direction has a stated meaning."
+          ]
+        },
+        "quiz": {
+          "question": "What should a functional image alternative describe?",
+          "options": [
+            "Its action or destination.",
+            "Every pixel colour.",
+            "Only the word image."
+          ],
+          "correct": 0,
+          "explanation": "Use empty alt for an icon beside an already complete heading. Name the icon button Download practice kit. Give the architecture diagram a concise title and a structured description of request, permission check and database query. Add an exception path if it teaches failure handling. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI Images Tutorial",
+            "url": "https://www.w3.org/WAI/tutorials/images/",
+            "section": "Decorative, Functional and Complex Images",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "tables-charts",
+        "title": "13. Tables and charts with inspectable data",
+        "takeaway": "Visual summaries need explicit labels and a route to the underlying values.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Use a table for data whose row and column relationships matter. Provide a caption, header cells and appropriate scope for simple row and column headers. Do not use tables solely to position unrelated interface elements. For complex headers, explicit relationships may be required; simplifying the table can be the better design.",
+              "Charts communicate trends efficiently, but precise values and series names must remain discoverable without hover or colour. Include units, axis meaning, time range and an accessible summary. Offer a table when values matter for a decision. A chart of 95% completion hides the denominator unless you also report 19 of 20."
+            ],
+            "example": "<table><caption>Practice time by week</caption>\n<tr><th scope=\"col\">Week</th><th scope=\"col\">Minutes</th></tr>\n<tr><th scope=\"row\">1</th><td>40</td></tr></table>"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A screenshot of a chart cannot provide sortable or selectable data. If the chart is interactive, design keyboard access and focus feedback for the interaction rather than merely adding a description."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a completion chart for three courses. Supply its title, units, summary and data table.",
+          "solution": "Label the chart Completed lessons, state the snapshot date, and report completed/total for each course. Use direct series labels and patterns as well as colour. The summary identifies the largest unfinished workload, while the table preserves exact values and denominators for comparison.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Units and denominator are visible.",
+            "Series identification survives grayscale.",
+            "Exact values are available without hover."
+          ]
+        },
+        "quiz": {
+          "question": "Why include a denominator with a percentage?",
+          "options": [
+            "It shows the scale of the underlying workload.",
+            "It guarantees an accessible chart.",
+            "It changes the mathematical percentage."
+          ],
+          "correct": 0,
+          "explanation": "Label the chart Completed lessons, state the snapshot date, and report completed/total for each course. Use direct series labels and patterns as well as colour. The summary identifies the largest unfinished workload, while the table preserves exact values and denominators for comparison. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI Tables Tutorial",
+            "url": "https://www.w3.org/WAI/tutorials/tables/",
+            "section": "Caption & Summary; One Header and Two Headers",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "motion-media",
+        "title": "14. Motion, reduced motion and media alternatives",
+        "takeaway": "Motion should teach a change while respecting a person’s control.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Use motion to reveal a relationship that is hard to understand in a static view, such as which request is currently waiting. Provide pause and step controls where timing matters. A static labelled snapshot is a useful alternative. Avoid decorative continuous movement that competes with reading.",
+              "Respect prefers-reduced-motion by disabling non-essential animation or replacing it with an immediate state change. Essential information must survive that replacement. Audio and video need appropriate captions, transcripts and descriptions of meaningful visual information; auto-generated captions require review for terminology and timing."
+            ],
+            "example": "@media (prefers-reduced-motion: reduce) {\n  .teaching-animation { animation:none; transition:none; }\n}\n/* Keep state labels and manual step controls visible. */"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Reducing a four-second animation to 0.01 seconds can cause flashing or remove the explanation. Design a purposeful still-state alternative and avoid automatic audio."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Specify an animated request journey with pause, step and a reduced-motion version. Describe the media alternatives if narrated.",
+          "solution": "Animate a labelled request token between browser and API only after Start. Pause freezes the teaching step; Next advances with text narration. Reduced motion changes the highlighted participant immediately while preserving narration. Narrated video includes checked captions and a transcript describing information carried only by visuals.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The learner controls playback.",
+            "Reduced motion preserves meaning.",
+            "Media alternatives are reviewed."
+          ]
+        },
+        "quiz": {
+          "question": "What should reduced motion preserve?",
+          "options": [
+            "The concept and controls through a calmer representation.",
+            "Only the decorative animation colour.",
+            "An automatic rapid flash of every frame."
+          ],
+          "correct": 0,
+          "explanation": "Animate a labelled request token between browser and API only after Start. Pause freezes the teaching step; Next advances with text narration. Reduced motion changes the highlighted participant immediately while preserving narration. Narrated video includes checked captions and a transcript describing information carried only by visuals. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "MDN reduced motion",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion",
+            "section": "prefers-reduced-motion: reducing animation; WAI media alternatives",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "design-tokens",
+        "title": "15. Design tokens and reusable components",
+        "takeaway": "Reuse decisions as well as colours and spacing values.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Tokens name reusable decisions such as text colour, surface colour, spacing and focus outline. Components combine those decisions with behaviour: a form field has a label, help, input, invalid state and error relationship. Start with a small system and add variants when actual use cases justify them.",
+              "A token named colour-danger says why it exists; red-500 says only how it looks. Validate semantic combinations such as text on danger background and focus on both light and dark surfaces. A reusable component should expose a stable accessible name and avoid duplicate IDs when rendered several times."
+            ],
+            "example": ":root { --text:#17392f; --surface:#ffffff; --gap:1rem; --focus:#155e75; }\n/* A field component owns label/help/error associations, not just its border. */"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A component library does not guarantee accessibility in every composition. Test disabled, pending, error, narrow and long-text states where the component is actually used."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define five semantic tokens and a field component contract. List states that need regression checks.",
+          "solution": "Define text, muted-text, surface, focus and spacing tokens. The field contract accepts id, label, help, error and value; it associates descriptions and exposes invalid state. Test two instances for unique IDs, then blank, long-label, invalid, disabled and zoomed states. Document which colour pairs were measured.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Token names communicate purpose.",
+            "Component IDs remain unique.",
+            "Behaviour is part of the contract."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in a form field component contract?",
+          "options": [
+            "Label, description, invalid state and recovery behaviour.",
+            "Only a border colour.",
+            "A fixed height for every possible error."
+          ],
+          "correct": 0,
+          "explanation": "Define text, muted-text, surface, focus and spacing tokens. The field contract accepts id, label, help, error and value; it associates descriptions and exposes invalid state. Test two instances for unique IDs, then blank, long-label, invalid, disabled and zoomed states. Document which colour pairs were measured. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI designing for accessibility",
+            "url": "https://www.w3.org/WAI/tips/designing/",
+            "section": "Associated labels, feedback, grouping and contrast",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "accessible-data-entry",
+        "title": "16. Complex interactions and alternatives",
+        "takeaway": "A richer interaction must retain a simpler way to complete the task.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates.",
+              "Custom tabs, menus and comboboxes need a defined keyboard model and ARIA relationships. Prefer native controls when they satisfy the task. Do not use a menu role for ordinary site links merely because the design calls it a menu; application menus have specialised interaction expectations."
+            ],
+            "example": "Task: move \"SQL joins\" from position 3 to 2\nPointer route: drag item\nKeyboard route: focus item → Move up\nFeedback: \"SQL joins moved to position 2 of 5\""
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Adding tabindex to every item makes it focusable but does not implement selection, ordering or announcements. Define the state and keyboard transitions before choosing roles.",
+              "WCAG 2.2 AA Target Size (Minimum) generally uses a 24 by 24 CSS pixel target or specified spacing, with exceptions. The demo chooses at least 44px-high buttons as a comfortable design target; that preference is not a statement that AA universally requires 44px."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design keyboard and touch alternatives for a reorderable lesson list. Decide where focus stays after a move.",
+          "solution": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson’s control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "All drag results have non-drag equivalents.",
+            "Boundary actions are clear.",
+            "Focus and feedback follow the moved item."
+          ]
+        },
+        "quiz": {
+          "question": "What is the key accessibility requirement for dragging?",
+          "options": [
+            "An alternative that achieves the same result without dragging.",
+            "A larger decorative cursor.",
+            "Making every item tabindex=1."
+          ],
+          "correct": 0,
+          "explanation": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson’s control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "2.5.7 Dragging Movements; 2.5.8 Target Size (Minimum)",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          },
+          {
+            "title": "WCAG Understanding Dragging Movements",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html",
+            "section": "Single-pointer alternative without dragging",
+            "reviewed": "2026-09-30",
+            "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          },
+          {
+            "title": "WCAG Understanding Target Size (Minimum)",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+            "section": "24 CSS pixel target or spacing criterion and exceptions",
+            "reviewed": "2026-09-30",
+            "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "internationalisation",
+        "title": "17. Language, localisation and content expansion",
+        "takeaway": "Treat language and direction as layout and meaning requirements.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Declare the page language so speech tools use appropriate pronunciation. Mark passages in another language when needed. Localisation includes dates, number formats, plural forms and text direction, not merely translating labels. Use explicit units and time zones when ambiguity changes a decision.",
+              "Expect translated text to expand and avoid concatenating fragments that assume English grammar. Logical CSS properties such as margin-inline adapt more naturally to right-to-left layouts. Keep reading and focus order meaningful when the layout direction changes, and ensure icons with directional meaning are reviewed."
+            ],
+            "example": "<html lang=\"en\">\n<p lang=\"fr\">Bonjour</p>\n.card { padding-inline:1rem; }\n// Prefer a complete translatable sentence to stitched fragments."
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person’s current task when switching."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Prepare a lesson card for a longer translation and an RTL layout. Specify an unambiguous deadline label.",
+          "solution": "Let title and action text wrap, use logical spacing and inspect focus order. Translate complete phrases with plural support. A deadline includes the full date and stated zone rather than 03/04 at 9. Mark the page and changed-language passages correctly, then test actual translations rather than only pseudo-text.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Language metadata is correct.",
+            "Expanded text does not clip.",
+            "Date and direction assumptions are explicit."
+          ]
+        },
+        "quiz": {
+          "question": "What does page lang primarily enable?",
+          "options": [
+            "Correct interpretation and pronunciation of the content language.",
+            "Automatic translation of all text.",
+            "Automatic RTL layout for every language."
+          ],
+          "correct": 0,
+          "explanation": "Let title and action text wrap, use logical spacing and inspect focus order. Translate complete phrases with plural support. A deadline includes the full date and stated zone rather than 03/04 at 9. Mark the page and changed-language passages correctly, then test actual translations rather than only pseudo-text. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "3.1.1 Language of Page; 3.1.2 Language of Parts",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "accessible-auth",
+        "title": "18. Authentication, sensitive actions and cognitive load",
+        "takeaway": "Security flows should support recovery without imposing avoidable memory tasks.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Authentication is an interaction design problem as well as a security mechanism. Allow password managers and paste where appropriate; do not force people to memorise or transcribe a code when an accessible alternative can satisfy the security requirement. Explain expiration and recovery without exposing secrets in status messages.",
+              "For consequential actions, show the target and effect before confirmation. Give a chance to review or undo where possible. Repeated entry of information already supplied in the same process can impose unnecessary cognitive load; reuse validated information unless a stated exception applies."
+            ],
+            "example": "Delete course data\nTarget: local progress for Python\nConsequence: reading marks will be removed\n[Cancel] [Delete progress]\n/* Do not conflate this with deleting an offline download. */"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "An attractive login form does not prove secure authentication. The identity path must also review server checks, session handling and abuse controls; this lesson covers the understandable user journey."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a password-manager-friendly sign-in and a progress deletion confirmation. Identify the least destructive default.",
+          "solution": "Use labelled fields with appropriate autocomplete values, permit paste and provide clear recovery routes. The deletion prompt names exactly which progress will be removed and defaults focus to Cancel when opening is potentially destructive. Offline-file removal and progress deletion are distinct actions with distinct labels.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Password managers are supported.",
+            "Consequences are specific.",
+            "Recovery and cancellation are available."
+          ]
+        },
+        "quiz": {
+          "question": "Why should a deletion confirmation name the exact target?",
+          "options": [
+            "So the person can verify the consequence before committing.",
+            "To replace server authorisation.",
+            "To eliminate the need for an accessible button."
+          ],
+          "correct": 0,
+          "explanation": "Use labelled fields with appropriate autocomplete values, permit paste and provide clear recovery routes. The deletion prompt names exactly which progress will be removed and defaults focus to Cancel when opening is potentially destructive. Offline-file removal and progress deletion are distinct actions with distinct labels. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WCAG 2.2 quick reference",
+            "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+            "section": "3.3.4 Error Prevention; 3.3.7 Redundant Entry; 3.3.8 Accessible Authentication (Minimum)",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          },
+          {
+            "title": "WCAG Understanding Accessible Authentication (Minimum)",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html",
+            "section": "Cognitive function tests, alternatives and assistance",
+            "reviewed": "2026-09-30",
+            "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "manual-evaluation",
+        "title": "19. Evaluate with keyboard, zoom and assistive technology",
+        "takeaway": "Accessibility evaluation combines automated checks and human task evidence.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Automated tools can detect some missing names and relationships, but cannot establish whether a description communicates the right meaning or a workflow is usable. Use a repeatable manual plan: keyboard-only actions, visible focus, narrow layout, zoom, text spacing, reduced motion and error recovery.",
+              "Screen-reader testing checks how the accessibility tree behaves in a real browser and assistive-technology combination. Record the tools and versions, task, expected result and actual result. Invite disabled users into evaluation where possible; do not assume one tester or one tool represents all needs."
+            ],
+            "example": "Evidence row: task | environment | expected | observed | severity | reproduction | fix | retest\nExample: close preview | browser + keyboard | focus returns to Preview | focus disappeared | task blocked"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "The bundled static checks are guardrails, not a WCAG conformance report. A page can pass those checks and still have a keyboard trap, confusing labels or inaccessible dynamic content."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete the supplied audit checklist for the demo. Produce one reproducible issue and one confirmed passing task.",
+          "solution": "Record the tested browser, viewport, input method and exact steps. For a defect, state the user impact and attach the failing state rather than a vague rating. After fixing it, repeat the same steps and record the result. Mark screen-reader checks not executed if no screen reader was available.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Evidence is reproducible.",
+            "Untested cases remain explicitly untested.",
+            "Retest uses the same task."
+          ]
+        },
+        "quiz": {
+          "question": "What does a passing automated accessibility scan prove?",
+          "options": [
+            "Only the checks that tool actually performed.",
+            "Full WCAG conformance.",
+            "Usability for every disabled person."
+          ],
+          "correct": 0,
+          "explanation": "Record the tested browser, viewport, input method and exact steps. For a defect, state the user impact and attach the failing state rather than a vague rating. After fixing it, repeat the same steps and record the result. Mark screen-reader checks not executed if no screen reader was available. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI accessibility evaluation",
+            "url": "https://www.w3.org/WAI/test-evaluate/",
+            "section": "Easy Checks; Tools; Conformance evaluation and involving users",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "diagram": {
+          "title": "Evidence grows through different checks",
+          "summary": "Automated checks and human task evidence are complementary, not a certification pipeline.",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Static guardrails",
+              "description": "Check IDs, explicit associations and contrast arithmetic."
+            },
+            {
+              "id": "1",
+              "label": "Keyboard and layout tasks",
+              "description": "Check real focus, zoom, narrow states and recovery."
+            },
+            {
+              "id": "2",
+              "label": "Assistive-technology evaluation",
+              "description": "Record actual announcements and navigation in a named environment."
+            },
+            {
+              "id": "3",
+              "label": "Scoped findings",
+              "description": "Combine results, user impact, untested limits and retest evidence."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "3",
+              "label": "limited checks"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "task evidence"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "environment evidence"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Static guardrails",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Check IDs, explicit associations and contrast arithmetic."
+            },
+            {
+              "title": "Keyboard and layout tasks",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [],
+              "explanation": "Check real focus, zoom, narrow states and recovery."
+            },
+            {
+              "title": "Assistive-technology evaluation",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [],
+              "explanation": "Record actual announcements and navigation in a named environment."
+            },
+            {
+              "title": "Scoped findings",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Combine results, user impact, untested limits and retest evidence."
+            }
+          ]
+        }
+      },
+      {
+        "id": "usability-testing",
+        "title": "20. Test whether a person can actually complete the task",
+        "takeaway": "Task observation turns a visual opinion into actionable evidence.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Give a realistic task without telling the participant which control to use. Ask them to think aloud if appropriate, while avoiding hints that change the result. Track completion, major wrong turns and requests for help. A quick session with a few people can reveal obvious friction, but it does not establish population-level statistics.",
+              "Separate usability findings from visual preference. A participant may dislike a colour while completing the task easily; another may like the page while missing the download. Prioritise defects by impact, frequency in your evidence and cost of recovery. Keep the tested scenario constant when comparing designs."
+            ],
+            "example": "Prompt: \"Find the files needed for the next form-validation exercise.\"\nAvoid: \"Click the green download button beside lesson 9.\"\nMeasure: completion, wrong turns, help requested"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Do not convert a sample of three participants into a precise claim about all users. Preserve observations, quotations with consent, and the limits of the sample."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a five-minute test plan for finding and running a practice task. Include an interruption and an error state.",
+          "solution": "Start from course overview, ask the participant to locate the kit and requirements, then resume after closing the page. Introduce a malformed file and observe recovery. Record whether each goal is reached independently, what was misunderstood and whether any hint was supplied. Prioritise blocked tasks before decorative changes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Prompts avoid revealing the answer.",
+            "Assistance is recorded.",
+            "Findings distinguish behaviour from preference."
+          ]
+        },
+        "quiz": {
+          "question": "Which task prompt is least leading?",
+          "options": [
+            "Find the practice files for the form exercise.",
+            "Click the download button in the third card.",
+            "Tell me that the design is intuitive."
+          ],
+          "correct": 0,
+          "explanation": "Start from course overview, ask the participant to locate the kit and requirements, then resume after closing the page. Introduce a malformed file and observe recovery. Record whether each goal is reached independently, what was misunderstood and whether any hint was supplied. Prioritise blocked tasks before decorative changes. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI accessibility evaluation",
+            "url": "https://www.w3.org/WAI/test-evaluate/",
+            "section": "Involving users in evaluation; evaluation approaches",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      },
+      {
+        "id": "inclusive-release",
+        "title": "21. Release evidence and accessibility maintenance",
+        "takeaway": "Accessibility is a maintained property of the complete journey.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the mechanism",
+            "paragraphs": [
+              "Before release, define the supported environments and scope of the review. Include actual paths through forms, navigation, resources and dialogs rather than only representative components. Record known issues and alternatives. A conformance claim needs a defined scope and the appropriate evaluation process; this course does not issue one.",
+              "Keep regression checks close to components and supplement them with scheduled human checks when behaviour changes. A new sticky header can obscure focus, a renamed label can break a task and a data-table redesign can destroy header relationships. Release notes should state what was executed, what was reviewed and what remains untested."
+            ],
+            "example": "Release evidence: semantic guardrails + contrast checks + keyboard tasks + narrow/zoom checks + assistive-technology results + known limits"
+          },
+          {
+            "title": "Apply it deliberately",
+            "paragraphs": [
+              "Passing the demo checks is evidence about that demo at that time. It is not evidence about a production React application, every browser or every future content change."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create a release checklist for your dashboard and a maintenance trigger list. Identify two changes requiring a manual retest.",
+          "solution": "List browser/device combinations, core task journeys, automated checks, manual keyboard and assistive-technology results and known defects. A modal rewrite and a navigation layout change trigger manual retesting. Token updates rerun contrast combinations, while content changes check long titles, meaningful alternatives and resource discoverability.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The tested scope is explicit.",
+            "Each claim has corresponding evidence.",
+            "Future changes have retest triggers."
+          ]
+        },
+        "quiz": {
+          "question": "What should an accessibility release statement include?",
+          "options": [
+            "Tested scope, evidence, known issues and untested limits.",
+            "Only a percentage score from one tool.",
+            "A promise that future content will always be accessible."
+          ],
+          "correct": 0,
+          "explanation": "List browser/device combinations, core task journeys, automated checks, manual keyboard and assistive-technology results and known defects. A modal rewrite and a navigation layout change trigger manual retesting. Token updates rerun contrast combinations, while content changes check long titles, meaningful alternatives and resource discoverability. The other choices miss the decision or assumption described above."
+        },
+        "references": [
+          {
+            "title": "WAI accessibility evaluation",
+            "url": "https://www.w3.org/WAI/test-evaluate/",
+            "section": "Conformance evaluation; monitoring accessibility",
+            "reviewed": "2026-09-30",
+            "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "folder": "ui-accessibility-practice",
+      "files": [
+        {
+          "id": "contrast-cjs",
+          "href": "paths/ui-accessibility/practice/contrast.cjs",
+          "role": "reference",
+          "description": "contrast.cjs"
+        },
+        {
+          "id": "contrast-test-cjs",
+          "href": "paths/ui-accessibility/practice/contrast.test.cjs",
+          "role": "test",
+          "description": "contrast.test.cjs"
+        },
+        {
+          "id": "demo-html",
+          "href": "paths/ui-accessibility/practice/demo.html",
+          "role": "reference",
+          "description": "demo.html"
+        },
+        {
+          "id": "demo-css",
+          "href": "paths/ui-accessibility/practice/demo.css",
+          "role": "reference",
+          "description": "demo.css"
+        },
+        {
+          "id": "demo-js",
+          "href": "paths/ui-accessibility/practice/demo.js",
+          "role": "reference",
+          "description": "demo.js"
+        },
+        {
+          "id": "semantics-test-cjs",
+          "href": "paths/ui-accessibility/practice/semantics.test.cjs",
+          "role": "test",
+          "description": "semantics.test.cjs"
+        },
+        {
+          "id": "audit-checklist-md",
+          "href": "paths/ui-accessibility/practice/audit-checklist.md",
+          "role": "guide",
+          "description": "audit-checklist.md"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/ui-accessibility/practice/README.md",
+          "role": "guide",
+          "description": "README.md"
+        },
+        {
+          "id": "verification-md",
+          "href": "paths/ui-accessibility/practice/verification.md",
+          "role": "guide",
+          "description": "Actual local execution evidence and unverified boundaries"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Explainable course overview",
+          "goal": "Design a course overview whose hierarchy and controls support a realistic learner task.",
+          "fileIds": [
+            "contrast-cjs",
+            "contrast-test-cjs",
+            "demo-html",
+            "demo-css",
+            "demo-js",
+            "semantics-test-cjs",
+            "audit-checklist-md",
+            "README-md",
+            "verification-md"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Write two realistic task scenarios.",
+            "Create semantic headings/navigation/actions.",
+            "Measure proposed contrast pairs.",
+            "Test the overview with a keyboard.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+              "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "1. Start with a person and a task",
+              "href": "#topic/ui-accessibility/user-goals"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Inclusive study dashboard",
+          "goal": "Extend the runnable dashboard and document complete task behaviour.",
+          "fileIds": [
+            "contrast-cjs",
+            "contrast-test-cjs",
+            "demo-html",
+            "demo-css",
+            "demo-js",
+            "semantics-test-cjs",
+            "audit-checklist-md",
+            "README-md",
+            "verification-md"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Preserve labels and help/error associations.",
+            "Test blank and valid submission.",
+            "Verify preview focus entry, containment and return.",
+            "Test narrow layout, zoom and reduced motion.",
+            "Provide structured alternatives for one diagram.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+              "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+            },
+            {
+              "label": "Open the browser lab",
+              "command": "python -m http.server 8890 --bind 127.0.0.1\n# Open http://127.0.0.1:8890/demo.html",
+              "expected": "Accessible study form and native preview dialog are served locally. Stop with Ctrl+C."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "8. Responsive layout and reflow",
+              "href": "#topic/ui-accessibility/responsive-reflow"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Accessibility release review",
+          "goal": "Create and verify a maintainable inclusive dashboard release.",
+          "fileIds": [
+            "contrast-cjs",
+            "contrast-test-cjs",
+            "demo-html",
+            "demo-css",
+            "demo-js",
+            "semantics-test-cjs",
+            "audit-checklist-md",
+            "README-md",
+            "verification-md"
+          ],
+          "steps": [
+            "Extract the bundle; all files are flat inside the named practice folder.",
+            "Read README.md and run the baseline commands.",
+            "Add non-drag reordering.",
+            "Design localisation and long-text cases.",
+            "Review authentication and destructive-action flows.",
+            "Run a task test with another person.",
+            "Record assistive-technology checks or mark them unexecuted.",
+            "Create component regression and manual retest triggers.",
+            "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+          ],
+          "commands": [
+            {
+              "label": "Run local reference checks",
+              "command": "node contrast.test.cjs\nnode semantics.test.cjs",
+              "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "15. Design tokens and reusable components",
+              "href": "#topic/ui-accessibility/design-tokens"
+            }
+          ],
+          "notes": [
+            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "No credentials, external providers or paid services are required for the baseline."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "user-goals": "foundation",
+        "information-architecture": "foundation",
+        "hierarchy-layout": "foundation",
+        "semantic-html": "foundation",
+        "keyboard-focus": "foundation",
+        "contrast-colour": "foundation",
+        "type-content": "foundation",
+        "responsive-reflow": "intermediate",
+        "forms-validation": "intermediate",
+        "states-feedback": "intermediate",
+        "dialog-pattern": "intermediate",
+        "images-diagrams": "intermediate",
+        "tables-charts": "intermediate",
+        "motion-media": "intermediate",
+        "design-tokens": "advanced",
+        "accessible-data-entry": "advanced",
+        "internationalisation": "advanced",
+        "accessible-auth": "advanced",
+        "manual-evaluation": "advanced",
+        "usability-testing": "advanced",
+        "inclusive-release": "advanced"
+      },
+      "bundle": {
+        "href": "paths/ui-accessibility/practice-bundle.zip"
       }
     }
   }

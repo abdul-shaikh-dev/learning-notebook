@@ -1,0 +1,512 @@
+{
+  "architecture": {
+    "title": "Follow a study-session request",
+    "summary": "A vertical slice crosses browser, HTTP and storage boundaries.",
+    "nodes": [
+      {
+        "id": "ui",
+        "label": "React form",
+        "description": "Owns the draft and renders only validated observations."
+      },
+      {
+        "id": "proxy",
+        "label": "Vite proxy",
+        "description": "Routes same-origin /api requests to the loopback API."
+      },
+      {
+        "id": "api",
+        "label": " .NET endpoint",
+        "description": "Binds input, validates fields and invokes an adapter."
+      },
+      {
+        "id": "db",
+        "label": "Task store",
+        "description": "Memory first, then dedicated SQL Server persistence.",
+        "shape": "database"
+      },
+      {
+        "id": "result",
+        "label": "Validated UI result",
+        "description": "HTTP status and task shape are checked before publishing."
+      }
+    ],
+    "edges": [
+      {
+        "from": "ui",
+        "to": "proxy",
+        "label": "submit JSON"
+      },
+      {
+        "from": "proxy",
+        "to": "api",
+        "label": "forward request"
+      },
+      {
+        "from": "api",
+        "to": "db",
+        "label": "apply allowed write"
+      },
+      {
+        "from": "db",
+        "to": "api",
+        "label": "return saved record"
+      },
+      {
+        "from": "api",
+        "to": "result",
+        "label": "201 and task JSON"
+      }
+    ],
+    "steps": [
+      {
+        "title": "submit JSON",
+        "activeNodes": [
+          "ui",
+          "proxy"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Routes same-origin /api requests to the loopback API."
+      },
+      {
+        "title": "forward request",
+        "activeNodes": [
+          "proxy",
+          "api"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Binds input, validates fields and invokes an adapter."
+      },
+      {
+        "title": "apply allowed write",
+        "activeNodes": [
+          "api",
+          "db"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Memory first, then dedicated SQL Server persistence."
+      },
+      {
+        "title": "return saved record",
+        "activeNodes": [
+          "db",
+          "api"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Binds input, validates fields and invokes an adapter."
+      },
+      {
+        "title": "201 and task JSON",
+        "activeNodes": [
+          "api",
+          "result"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "HTTP status and task shape are checked before publishing."
+      }
+    ]
+  },
+  "conflicts": {
+    "title": "Two tabs, one accepted update",
+    "summary": "The expected version is compared inside the atomic write.",
+    "nodes": [
+      {
+        "id": "a",
+        "label": "Tab A: version 1",
+        "description": "First writer submits expected version 1."
+      },
+      {
+        "id": "b",
+        "label": "Tab B: version 1",
+        "description": "Second writer also submits stale version 1."
+      },
+      {
+        "id": "db",
+        "label": "Stored version",
+        "description": "The first matching write changes version 1 to 2.",
+        "shape": "database"
+      },
+      {
+        "id": "ok",
+        "label": "200: version 2",
+        "description": "Successful writer receives the accepted state."
+      },
+      {
+        "id": "conflict",
+        "label": "409: reload and compare",
+        "description": "Second write cannot match version 1; it does not overwrite version 2."
+      }
+    ],
+    "edges": [
+      {
+        "from": "a",
+        "to": "db",
+        "label": "compare and update"
+      },
+      {
+        "from": "db",
+        "to": "ok",
+        "label": "one winner"
+      },
+      {
+        "from": "b",
+        "to": "db",
+        "label": "compare stale version"
+      },
+      {
+        "from": "db",
+        "to": "conflict",
+        "label": "no matching expected version"
+      }
+    ],
+    "steps": [
+      {
+        "title": "compare and update",
+        "activeNodes": [
+          "a",
+          "db"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The first matching write changes version 1 to 2."
+      },
+      {
+        "title": "one winner",
+        "activeNodes": [
+          "db",
+          "ok"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Successful writer receives the accepted state."
+      },
+      {
+        "title": "compare stale version",
+        "activeNodes": [
+          "b",
+          "db"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "The first matching write changes version 1 to 2."
+      },
+      {
+        "title": "no matching expected version",
+        "activeNodes": [
+          "db",
+          "conflict"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Second write cannot match version 1; it does not overwrite version 2."
+      }
+    ]
+  },
+  "retries": {
+    "title": "A lost response leaves an uncertain effect",
+    "summary": "The idempotency extension records an operation and its result atomically.",
+    "nodes": [
+      {
+        "id": "ui",
+        "label": "Submit operation key",
+        "description": "A stable key identifies one intended create."
+      },
+      {
+        "id": "db",
+        "label": "Task + key record",
+        "description": "Commit task and key/result in the same transaction.",
+        "shape": "database"
+      },
+      {
+        "id": "lost",
+        "label": "Response lost",
+        "description": "Client cannot infer whether commit happened."
+      },
+      {
+        "id": "retry",
+        "label": "Retry same key + payload",
+        "description": "Server consults persisted operation evidence."
+      },
+      {
+        "id": "result",
+        "label": "Replay original result",
+        "description": "Return the same task, with no duplicate creation."
+      }
+    ],
+    "edges": [
+      {
+        "from": "ui",
+        "to": "db",
+        "label": "commit operation"
+      },
+      {
+        "from": "db",
+        "to": "lost",
+        "label": "connection breaks"
+      },
+      {
+        "from": "lost",
+        "to": "retry",
+        "label": "reconcile intent"
+      },
+      {
+        "from": "retry",
+        "to": "db",
+        "label": "look up evidence"
+      },
+      {
+        "from": "db",
+        "to": "result",
+        "label": "same recorded result"
+      }
+    ],
+    "steps": [
+      {
+        "title": "commit operation",
+        "activeNodes": [
+          "ui",
+          "db"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Commit task and key/result in the same transaction."
+      },
+      {
+        "title": "connection breaks",
+        "activeNodes": [
+          "db",
+          "lost"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Client cannot infer whether commit happened."
+      },
+      {
+        "title": "reconcile intent",
+        "activeNodes": [
+          "lost",
+          "retry"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Server consults persisted operation evidence."
+      },
+      {
+        "title": "look up evidence",
+        "activeNodes": [
+          "retry",
+          "db"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Commit task and key/result in the same transaction."
+      },
+      {
+        "title": "same recorded result",
+        "activeNodes": [
+          "db",
+          "result"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Return the same task, with no duplicate creation."
+      }
+    ]
+  },
+  "identity": {
+    "title": "Identity and ownership checks",
+    "summary": "This is a later extension; the local reference has no login.",
+    "nodes": [
+      {
+        "id": "identity",
+        "label": "Verified identity",
+        "description": "Validate the trusted authentication mechanism."
+      },
+      {
+        "id": "owner",
+        "label": "Ownership predicate",
+        "description": "Derive owner from verified claims, never client payload."
+      },
+      {
+        "id": "db",
+        "label": "Owned task query",
+        "description": "Match ID and owner together at the data boundary.",
+        "shape": "database"
+      },
+      {
+        "id": "result",
+        "label": "Allowed result",
+        "description": "Only authorized data leaves the API."
+      }
+    ],
+    "edges": [
+      {
+        "from": "identity",
+        "to": "owner",
+        "label": "derive principal"
+      },
+      {
+        "from": "owner",
+        "to": "db",
+        "label": "scope query"
+      },
+      {
+        "from": "db",
+        "to": "result",
+        "label": "return allowed data"
+      }
+    ],
+    "steps": [
+      {
+        "title": "derive principal",
+        "activeNodes": [
+          "identity",
+          "owner"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Derive owner from verified claims, never client payload."
+      },
+      {
+        "title": "scope query",
+        "activeNodes": [
+          "owner",
+          "db"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Match ID and owner together at the data boundary."
+      },
+      {
+        "title": "return allowed data",
+        "activeNodes": [
+          "db",
+          "result"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Only authorized data leaves the API."
+      }
+    ]
+  },
+  "delivery": {
+    "title": "Test and promote the same release",
+    "summary": "An artifact identity links verification to deployed bytes.",
+    "nodes": [
+      {
+        "id": "build",
+        "label": "Build once",
+        "description": "Compile frontend and API from a recorded source revision."
+      },
+      {
+        "id": "test",
+        "label": "Verify artifact",
+        "description": "Run contract/browser checks on the built outputs."
+      },
+      {
+        "id": "artifact",
+        "label": "Immutable release",
+        "description": "Record checksums and runtime configuration contract."
+      },
+      {
+        "id": "deploy",
+        "label": "Owned environment",
+        "description": "Promote verified bytes and apply compatible schema changes."
+      },
+      {
+        "id": "observe",
+        "label": "Observe and recover",
+        "description": "Check user outcomes and use a reviewed rollback/recovery plan."
+      }
+    ],
+    "edges": [
+      {
+        "from": "build",
+        "to": "test",
+        "label": "built outputs"
+      },
+      {
+        "from": "test",
+        "to": "artifact",
+        "label": "retain identity"
+      },
+      {
+        "from": "artifact",
+        "to": "deploy",
+        "label": "promote same bytes"
+      },
+      {
+        "from": "deploy",
+        "to": "observe",
+        "label": "check outcomes"
+      }
+    ],
+    "steps": [
+      {
+        "title": "built outputs",
+        "activeNodes": [
+          "build",
+          "test"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Run contract/browser checks on the built outputs."
+      },
+      {
+        "title": "retain identity",
+        "activeNodes": [
+          "test",
+          "artifact"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Record checksums and runtime configuration contract."
+      },
+      {
+        "title": "promote same bytes",
+        "activeNodes": [
+          "artifact",
+          "deploy"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Promote verified bytes and apply compatible schema changes."
+      },
+      {
+        "title": "check outcomes",
+        "activeNodes": [
+          "deploy",
+          "observe"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Check user outcomes and use a reviewed rollback/recovery plan."
+      }
+    ]
+  }
+}

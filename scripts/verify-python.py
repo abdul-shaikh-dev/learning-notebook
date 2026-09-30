@@ -7,6 +7,12 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = (
+    ("linux-operating-systems/practice", "test_os_labs.py"),
+    ("data-engineering/practice", "test_pipeline_lab.py"),
+    ("messaging-events/practice", "test_event_lab.py"),
+    ("cloud-infrastructure/practice", "test_infra_lab.py"),
+    ("observability-performance/practice", "telemetry.test.py"),
+    ("observability-performance/practice", "integration.test.py"),
     ("delivery-operations/practice", "test_distinct_artifact_drill.py"),
     ("testing-debugging/practice", "test_diagnosis_lab.py"),
     ("testing-debugging/practice", "test_branch_lab.py"),
@@ -46,7 +52,8 @@ with tempfile.TemporaryDirectory(prefix="notebook-python-") as scratch:
         target = Path(scratch) / folder
         shutil.copytree(ROOT / "paths" / folder, target, dirs_exist_ok=True)
         print(f"Checking {folder}", flush=True)
-        subprocess.run([sys.executable, "-m", "unittest", "-v", suite], cwd=target, check=True)
+        command = [sys.executable, suite] if suite.endswith(".test.py") else [sys.executable, "-m", "unittest", "-v", suite]
+        subprocess.run(command, cwd=target, check=True, timeout=90)
     target = Path(scratch) / "algorithms"
     shutil.copytree(ROOT / "paths/data-structures-algorithms/practice", target)
     for filename in ("algorithms.py", "advanced_algorithms.py"):
