@@ -1,120 +1,84 @@
 # Learning Notebook
 
-A static, extensible learning library. [Open the live site](https://abdul-shaikh-dev.github.io/learning-notebook/).
+A personal, customizable notebook for learning software, AI, financial concepts and everyday skills. Follow a learning path, study a worked example, or return to a diagram and practice task whenever you have time.
 
-## Study
+**[Open the notebook](https://abdul-shaikh-dev.github.io/learning-notebook/)** · **[Browse the source](paths/)**
 
-Open `index.html` locally or use the website on a phone. The financial path contains six introductions, 18 main lessons, six foundation explainers, seven labs, five applied practice modules, six mixed revision tasks and a complete printable study pack. AI Agents and Agent Harnesses have staged lessons and offline practice workshops.
+The notebook currently contains **29 learning paths and 638 lessons**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
 
-Reading, practising and self-checking are separate activities. Progress stays in the current browser and origin; it does not automatically sync between a PC and phone. The financial course offers JSON backup/import. Old lesson URLs and existing financial progress remain compatible. Save the full handbook as PDF through its Print button for a portable offline reference; the hosted site supports installation and per-course offline downloads through Offline & install. Browser storage can be evicted; verify download status before going offline.
+## Choose a learning path
 
-## Repository map
+| Area | Courses |
+| --- | --- |
+| Programming | [Python](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/python) · [C# & .NET](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/dotnet) · [JavaScript → TypeScript → React](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/react) · [SQL Server & T-SQL](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/sql-server) · [Data Structures & Algorithms](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-structures-algorithms) |
+| Design and building products | [Design Patterns](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/design-patterns) · [System Design](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/system-design) · [UI Design & Accessibility](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/ui-accessibility) · [Full-Stack Project Journey](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/full-stack-journey) |
+| AI | [AI Agents](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/ai-agents) · [Agent Harnesses](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/agent-harnesses) |
+| Engineering foundations | [Git & Team Workflows](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/git-team-workflows) · [Testing & Debugging](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/testing-debugging) · [Application Security](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/application-security) · [Networking & the Web](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/networking-web) · [Linux & Operating Systems](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/linux-operating-systems) |
+| Data and distributed systems | [Data Engineering](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-engineering) · [Messaging & Event-Driven Systems](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/messaging-events) · [Observability & Performance](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/observability-performance) |
+| Delivery and infrastructure | [Delivery & Operations](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/delivery-operations) · [Kubernetes](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/kubernetes) · [Cloud & Infrastructure as Code](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/cloud-infrastructure) |
+| Personal effectiveness | [Time, Attention & Energy](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/time-attention-energy) · [Task & Project Management](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/task-project-management) · [Habits & Behaviour Change](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/habits-behaviour-change) · [Learning How to Learn](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/learning-how-to-learn) · [Self-Awareness & Communication](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/self-awareness-communication) · [Plan and Review Your Week](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/weekly-planning-journey) |
+| Financial concepts | [Financial foundations](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#explore) |
 
-- `index.html`: shared catalog entry point.
-- `assets/`: shared catalog reader and design styles.
-- `paths/<path-id>/path.json`: a path's metadata and explicit public-file list.
-- `paths/financial-foundations/content/`: lessons, foundations, regulatory additions, activities, exercises and evidence register.
-- `paths/financial-foundations/runtime/`: specialized course, study-pack rendering and calculations.
-- `paths/financial-foundations/practice/`: canonical CSV and answer key.
-- `course.html`, `handbook.html`: stable financial entry points, retained for existing bookmarks.
-- `content/paths.js`: generated catalog, never edit manually.
-- `practice/`: generated legacy download aliases, retained for old links.
-- `scripts/`: path scaffolding, synchronization and portable static build.
-- `tests/`: financial, catalog, study-pack and compatibility checks.
-- `docs/`: authoring, architecture, reviews and historical verification snapshots. These do not enter the deployed artifact.
+## Study at your own pace
 
-## Add a subject
+Start at a course overview to see its prerequisites, learning outcomes and stages. The general course reader progresses through foundations, intermediate practice and advanced applications. Financial foundations has its own beginner introductions, main lessons, visual stories and labs.
 
-Run `node scripts/new-path.cjs my-topic "My topic"`. Edit the new draft's `path.json`, then follow [the authoring guide](docs/adding-learning-paths.md). Standard paths reuse the shared reader; specialized courses can own their own runtime without changing the finance course.
+- **Read first:** explanations, examples and diagram narratives are visible without stepping through an animation. Motion and interactive explorers are optional ways to investigate a concept.
+- **Practice nearby:** lesson practice files, task kits, setup instructions and downloadable bundles sit beside the exercises. Code examples have language highlighting and copy controls; programming workshops run with the local tools described in their guides.
+- **Continue easily:** **Read & continue** records a lesson as read and opens the next one. Viewing a lesson alone does not mark it complete, and quizzes do not block navigation.
+- **Find something again:** use notebook search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
 
-## Validate and publish
+The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/practice/personal-effectiveness-studio/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
+## Offline access and progress
+
+On the hosted site, open **Offline & install** to install the notebook where your browser supports it, or save individual courses for offline reading. Saved courses include their lesson assets and practice files. External sources, live APIs and workshop dependencies still need their own connection or installation. Browser storage can be evicted, so check your downloads before travelling. See [offline behavior and validation](docs/pwa.md).
+
+Reading progress is stored in the current browser for the current site address. There is no account or automatic synchronization between your phone, PC and local file copy. Use **Progress & backups** to export and restore a JSON backup when moving devices or browsers. Keep personal exports outside this public repository.
+
+## Run locally
+
+For reading, open `index.html` directly, or serve the repository from its root:
+
+```sh
+python -m http.server 8765 --bind 127.0.0.1
 ```
-node scripts/sync-catalog.cjs
-node scripts/sync-finance.cjs
-node verify.cjs
+
+Open `http://127.0.0.1:8765/`. Reading does not require a frontend build or package installation. Direct file URLs do not support service workers; to test offline installation, build and serve `_site/` instead:
+
+```sh
 node scripts/build-pages.cjs
+python -m http.server 8877 --bind 127.0.0.1 --directory _site
 ```
 
-Serve the build at a project prefix such as `/learning-notebook/` for browser checks. GitHub Actions builds on pushes; publishing remains an explicit run of `pages.yml` with `publish=true`. Only ready-path allowlisted assets enter `_site/`. The repository is public; excluded source/docs remain visible on GitHub even though they are absent from the website artifact. See [hosting](docs/github-pages.md).
+## Customize or add a subject
 
-The financial materials use synthetic positions and dated primary-source references. They teach concepts and controls, not a complete production methodology. Exact articles, versions and source-access limitations appear in the evidence register and technical sections.
+Author course content in `paths/<id>/`; generated catalogs and bundles are rebuilt from those files. To create a new planned path:
 
-### Visual stories
-
-The financial path opens with a topic map and three visual stories: trades → positions → realised/unrealised P&L, accounting versus prudent adjustments, and entity/desk/book relationships. The sliders and trade steps share tested arithmetic in runtime/story-math.js; course-specific UI lives in runtime/visual-stories.js and styles/visuals.css. Worked versions are included in the printable handbook. The course menu collapses on phones.
-
-### Trade lifecycle walkthrough
-
-Follow one trade through eight stages at course.html#journey/booking. Each stage includes inputs, outputs, illustrative owners, controls, data lineage and a self-check. Switch between usable and stale evidence to compare an approved correction with an unresolved exception. Content and arithmetic live in content/journey.js; runtime/journey.js and styles/journey.css provide the course UI. The same content is included in the printable study pack.
-
-### Programming learning paths
-
-Five paths offer foundations, intermediate development and advanced practice: Python (23 lessons), C# & .NET (24), JavaScript → TypeScript → React (22), SQL Server & T-SQL (24), and Data Structures & Algorithms (21). Each stage includes exit criteria and a practical project with requirements, a self-assessment rubric and a reference approach. These are bounded learning curricula, not exhaustive platform references or proof of professional mastery.
-
-Use index.html#path/<id> for the course overview and #pack/<id> for the complete printable pack, including project references. Practice code runs in the learner's tools; there is no browser code runner. Reading progress and project self-checks are separate, path-specific and local to the browser. Existing lesson IDs and reading progress keys remain compatible.
-
-Validation is recorded by the executable release checks below and the course-specific practice guides. The SQL Server kit also includes an engine-verification record for the local SQL Express exercises and concurrency checks. Live providers, identity services, cloud deployments and production load remain separate exercises; passing the local suites does not establish production readiness.
-
-
-### Design and architecture learning paths
-
-Design Patterns (24 lessons) focuses on responsibilities and collaboration inside code: when a pattern helps, how to refactor toward it, and when a plain function or simple class is better. System Design (24 lessons) focuses on service requirements, data flows, capacity, reliability, security and operational tradeoffs. Both use the same three-stage reader, exercises, visual traces, project rubrics and printable packs.
-
-A useful sequence is one programming-language path first, then Design Patterns. SQL Server and basic API experience help with System Design; its foundations introduce the architecture vocabulary before scaling and failure scenarios. You can study both design paths together: code structure and system architecture inform each other, but they solve different kinds of problems.
-
-### AI Agents and Agent Harnesses
-
-Start with AI Agents for model behavior, tool use, context, grounding, planning and evaluation. Continue with Agent Harnesses for the surrounding runtime: state transitions, permissions, approval pauses, execution budgets, retries, persistence boundaries, observability and release review. Python foundations help with the optional runnable workshops; conceptual lessons can be studied without credentials or infrastructure.
-
-The workshops use scripted decisions and synthetic local tools. They test the demonstrated application rules, not a language model's intelligence, real-provider behavior or a production security boundary. Optional live-integration guidance identifies the further evidence needed. Provider-specific references are dated; verify current official documentation before implementing them. No model pricing or availability is assumed.
-
-
-## Executable release checks
-
-The Pages workflow runs the site checks plus isolated Python workshop suites on
-Python 3.11 and 3.14, React strict TypeScript/domain checks on Node 24, and C#
-foundation/HTTP acceptance checks on .NET 10. Publishing requires all jobs to pass.
-Run the same checks locally from the repository root:
-
-```text
-node verify.cjs
-python scripts/verify-python.py
-npm ci --prefix validation/react --ignore-scripts
-npm test --prefix validation/react
-python scripts/verify-dotnet.py
+```sh
+node scripts/new-path.cjs my-topic "My topic"
 ```
 
-The .NET runner defaults to net10.0; `--framework net9.0` permits a local comparison
-with an installed .NET 9 SDK but does not establish .NET 10 compatibility. Its
-temporary API is bound to loopback and stopped after testing. React dependencies
-are pinned in validation/react/package-lock.json; they are not published to Pages.
-SQL engine/concurrency checks, real-model evaluations and the advanced-project
-extensions remain separate from these executable baseline checks.
+Follow the [authoring guide](docs/adding-learning-paths.md) to add lessons, prerequisites, examples, diagrams and practice resources, then make the path ready when its content is complete.
 
+| Location | Purpose |
+| --- | --- |
+| `index.html`, `assets/` | Shared library, reader, navigation and visual components |
+| `paths/<id>/path.json` | Canonical course metadata, lessons and public-file inventory |
+| `paths/<id>/resources.json`, `paths/<id>/practice/` | Course task kits, commands and downloadable workshop files |
+| `paths/<id>/diagrams.json`, `paths/<id>/visuals.json` | Authored diagrams and concept explorers, where present |
+| `paths/financial-foundations/content/`, `paths/financial-foundations/runtime/` | Financial course content and its dedicated reader |
+| `course.html`, `handbook.html` | Stable entry points for the financial course and study pack |
+| `practice/personal-effectiveness-studio/` | Shared browser planning and reflection studio |
+| `content/` | Generated catalog, lazy course payloads and local search index |
+| `scripts/`, `tests/` | Generation, verification and deployment tooling |
+| `docs/` | Authoring notes, technical guides and dated review records |
 
-## Task kits and accessible diagrams
+## Verify changes
 
-Each ready path can add `resources.json` beside `path.json`. It defines named
-files (repository-relative href, role and description), task kits (file IDs,
-steps, commands with expected results, prerequisites and notes), lesson-to-task
-mappings and a course-specific ZIP folder. The shared reader places the matching
-stage project kit beside each lesson and exposes a Files & run instructions
-shortcut. Keep a task's complete dependency set in its file IDs.
+After editing course content or resources, regenerate the practice bundles and catalog, then verify the results:
 
-Practice ZIPs contain flat filenames inside the named course folder plus a
-generated START-HERE.txt. Commands must start from that extracted folder and
-identify their shell or application where relevant. Explain baseline limitations;
-do not imply an illustrative reference implements an advanced extension.
-
-Optional `diagrams.json` maps existing lesson IDs to a title, summary, named nodes,
-labelled edges and narrated steps. Steps identify active node IDs and zero-based
-edge indices. Preserve the full relationship map while highlighting a step; every
-diagram also supplies readable descriptions and all-step text for print.
-
-After changing course files, task metadata or diagrams, run:
-
-```text
+```sh
 python scripts/build-bundles.py
 node scripts/sync-catalog.cjs
 python scripts/build-bundles.py --check
@@ -123,76 +87,30 @@ node verify.cjs
 node scripts/build-pages.cjs
 ```
 
-Commit the regenerated ZIPs and catalog together with their sources. The release
-workflow rejects stale bundles and the public build includes only the explicit
-course inventory. The reader and resource links also work when opened via file://.
+If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the canonical financial CSV or answer key, first run `node scripts/sync-finance.cjs`. Commit the source and its regenerated outputs together.
 
+Executable workshop checks are separate from site/content checks:
 
-## Search and move your progress
+```sh
+python scripts/verify-python.py
+npm ci --prefix validation/react --ignore-scripts
+npm test --prefix validation/react
+python scripts/verify-dotnet.py
+python scripts/verify-fullstack.py
+```
 
-Use **Search notebook** in either reader to find concepts, lesson passages,
-project tasks and practice filenames. Filter by learning path or content type.
-Search runs locally; result URLs retain the query for bookmarks and browser Back.
-File results include a download and a link to their course instructions.
+Use the tool versions and setup instructions in the relevant workshop guide. SQL Server execution is opt-in for the full-stack runner through `--sql-server`; live AI providers and real authentication exercises also require separate setup. A passing content check alone does not mean those integrations have been executed.
 
-Use **Progress & backups** to download a notebook-wide JSON backup, then open
-the same page on another device and preview the file before merging it. This is
-a manual transfer, not automatic cloud synchronization. Keep using the same site
-address: local files, localhost and GitHub Pages have separate browser storage.
+## Publish to GitHub Pages
 
-The search index is generated from ready courses and their published resources.
-Run `node scripts/sync-catalog.cjs` after content changes; it rebuilds both catalog
-and search. Verification and publication reject stale search data.
+The existing public repository hosts the notebook at **https://abdul-shaikh-dev.github.io/learning-notebook/**. Pushes to `main` run validation and build checks; publication is an explicit workflow dispatch:
 
-## Engineering practice paths
+```sh
+gh workflow run pages.yml -f publish=true --ref main
+```
 
-Six further paths connect programming skills to teamwork and running services:
+The build publishes an allowlisted `_site/` directory containing the ready courses and their assets. Tests, internal documentation and verification snapshots are excluded from the site, but remain visible in the public source repository. Preview under a `/learning-notebook/` path when checking GitHub Pages URL compatibility.
 
-- **Git & team workflows:** local history, collaboration, conflicts, recovery and release review.
-- **Testing & debugging:** useful assertions, test boundaries, failure diagnosis and investigation.
-- **Application security & identity:** threat modelling, authorization, sessions and verification boundaries.
-- **Networking & the web:** requests, DNS, transport, TLS, HTTP, caching and failure behaviour.
-- **Delivery & operations:** containers, delivery pipelines, observability, recovery and incidents.
-- **Kubernetes:** desired state, workloads, service discovery, configuration, rollout and troubleshooting.
+## Scope
 
-Each follows foundation, intermediate and advanced-practice stages, with lesson
-references, self-checks, projects, printable material and a downloadable task kit.
-The home map suggests a networking → delivery → Kubernetes sequence; all paths
-remain independently accessible. Files and run instructions appear beside the
-relevant lessons, so learners need not browse the repository for dependencies.
-
-Python-based checks exercise local models, HTTP services and temporary Git
-repositories. Docker execution, Kubernetes cluster behaviour and real identity
-provider integration have separate opt-in instructions and verification limits.
-
-## Connected practice paths
-
-Linux & Operating Systems, Data Engineering, UI Design & Accessibility,
-Observability & Performance, Messaging & Event-Driven Systems, and Cloud &
-Infrastructure as Code each include three stages, task kits, diagrams,
-lesson exercises, knowledge checks and dated primary references.
-
-The Full-Stack Project Journey connects React, .NET and SQL Server through a
-working local study planner. Its complete flat practice kit contains the frontend,
-API, SQL schema, decoder checks, real HTTP acceptance tests and milestone workbook.
-The reference implements local creation, completion, validation, optimistic
-concurrency and SQL persistence. Login, idempotent creation, public deployment
-and restore drills are explicit assessed extensions.
-
-Run `python scripts/verify-fullstack.py` with .NET 10 and Node 24. For local
-compatibility testing only, `--framework net9.0` uses an installed older SDK.
-On Windows, `--sql-server '.\SQLEXPRESS'` additionally creates an isolated
-uniquely named learning database, tests SQL concurrency/restart persistence and
-removes only that test database. The Pages workflow runs the .NET 10/React build
-and HTTP checks before publishing; SQL integration remains a local opt-in check.
-
-All new paths participate in shared search, printable packs, progress backups,
-the learning map and per-course PWA downloads through their manifests.
-
-## Personal effectiveness
-
-Time, Attention & Energy; Task & Project Management; Habits & Behaviour Change; Learning How to Learn; and Self-Awareness & Communication each include staged lessons, source scope, worked fictional cases, quizzes and printable practice sheets. Plan and Review Your Week connects the five through a practical weekly journey. No programming prerequisites are needed. Research findings, method definitions and adapted planning heuristics are distinguished; these courses do not promise clinical treatment or universal productivity outcomes.
-
-An **Open interactive practice studio** link sits beside each course and task bundle. Its five activities include capacity and disruption arithmetic, a non-drag task board whose WIP includes blocked work, a habit plan, recall-before-reveal practice and conversation feedback. Entries live only in page memory; an explicit JSON export retains them privately. A review date is a record, not an automatic notification.
-
-Maintain the studio in `practice/personal-effectiveness-studio/`, then run `node scripts/sync-personal-studio.cjs` to update the six flat downloadable copies. Verification rejects stale copies. Regenerate bundles/catalogue after any content change with `python scripts/build-bundles.py` and `node scripts/sync-catalog.cjs`, then run `node verify.cjs` and `node scripts/build-pages.cjs`.
+This is a personal learning resource, with sources, worked examples and practice to support understanding. Course stages describe the material's depth; completing them is not certification or proof of production experience. Financial examples use synthetic data, and deployment, security, live integrations and operation under load need experience beyond the notebook exercises.
