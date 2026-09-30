@@ -8,7 +8,7 @@ An inbox holds unprocessed requests rather than a final plan. Capture enough con
 
 ## Try before reading the answer
 
-Combine an email request, a handwritten reminder and a duplicate message about the same report.
+Combine an email request, a handwritten reminder and a duplicate message about the same report. The due date is unresolved; preserve that question and the source context.
 
 Decision: ____________________________________________
 

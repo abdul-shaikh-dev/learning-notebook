@@ -8,7 +8,7 @@ A boundary is useful when it names available capacity and a concrete alternative
 
 ## Try before reading the answer
 
-Draft a reply to a new 90-minute request when today has only 30 spare minutes.
+Today includes a promised draft and only 30 spare minutes. Draft a reply to a new 90-minute request; completing it today would displace that draft.
 
 Decision: ____________________________________________
 

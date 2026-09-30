@@ -8,7 +8,7 @@ A final review compares intended outcomes with observed results and costs. Inclu
 
 ## Try before reading the answer
 
-Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.
+In a two-week trial, missed deadlines decreased but workload was lighter in week two. Capacity budgeting exposed schedule conflicts; message batching was also tested. Write a conclusion that separates observed usefulness from an independent causal effect.
 
 Decision: ____________________________________________
 

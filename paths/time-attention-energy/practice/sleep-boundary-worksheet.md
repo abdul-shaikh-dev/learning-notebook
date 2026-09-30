@@ -8,7 +8,7 @@ Treat sleep opportunity and essential recovery as constraints when making a plan
 
 ## Try before reading the answer
 
-An evening plan needs three hours but only 90 minutes remain before the protected bedtime. Revise it.
+An evening plan includes a required 60-minute section, optional formatting and preparation for tomorrow; together the planned work needs three hours. Only 90 minutes remain before the protected bedtime. Revise it.
 
 Decision: ____________________________________________
 

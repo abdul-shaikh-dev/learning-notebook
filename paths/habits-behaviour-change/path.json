@@ -18,7 +18,7 @@
     "Download and extract the practice bundle; every worksheet is flat in habits-behaviour-change-practice.",
     "Read README.md, then work through numbered worksheets and the three stage project sheets.",
     "Write your own response before comparing it with the fictional worked example.",
-    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
     "Repeat a modest practice in a new context and revise from observed evidence.",
@@ -299,14 +299,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Luis calls himself careless after misplacing two receipts needed for a claim."
           ],
-          "example": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
+          "example": "Luis replaces the label with an action: after paying, put the receipt in the wallet’s empty pocket. He checks whether the pocket holds the largest receipt. The result is a findable record, not evidence about his whole character.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+        "prompt": "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Rewrite Mira’s label as an observable action and choose one low-cost target.",
         "solution": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
         "solutionFormat": "prose",
         "checks": [
@@ -323,7 +323,7 @@
           "Feel motivated every evening"
         ],
         "correct": 0,
-        "explanation": "Put keys in the bowl after arriving home fits the distinction in this lesson. Become a disciplined person overlooks the stated limits; Feel motivated every evening substitutes an assumption for a feasible action."
+        "explanation": "Putting keys in a bowl after arriving home names an observable action and situation. A broad identity label gives no equivalent step to test."
       },
       "references": [
         {
@@ -356,14 +356,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Arun wants a calmer morning. He cannot guarantee that the bus is on time, but can pack his bag the evening before. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Priya wants fewer delays at the start of online meetings, but cannot control whether the network fails."
           ],
-          "example": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
+          "example": "Outcome: spend less meeting time locating files. Action: open the agenda and required document five minutes before joining. Boundary: this does not prevent network outages. Priya records file-search delays separately from connection problems.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write an outcome, controllable action and boundary for Arun.",
+        "prompt": "Arun wants a calmer morning. He cannot guarantee that the bus is on time, but can pack his bag the evening before. Write an outcome, controllable action and boundary for Arun.",
         "solution": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
         "solutionFormat": "prose",
         "checks": [
@@ -380,7 +380,7 @@
           "Calmness itself is a specific repeated action"
         ],
         "correct": 0,
-        "explanation": "Packing the bag may reduce searching even if the bus is late fits the distinction in this lesson. Packing guarantees a calm morning overlooks the stated limits; Calmness itself is a specific repeated action substitutes an assumption for a feasible action."
+        "explanation": "Packing may reduce searching, while bus delays remain outside the action’s control. Performing the action does not guarantee a calm morning."
       },
       "references": [
         {
@@ -413,14 +413,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Jo wants to read more but only logs evenings when reading happened, overlooking nights spent caring for family. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Alex wants to practise guitar and has written down only the sessions completed last week."
           ],
-          "example": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
+          "example": "A four-evening sample records evening conditions, whether ten quiet minutes and the instrument were available, and what happened. Two evenings offered an opportunity; Alex played on one. A late shift and a sleeping housemate explain the other two unavailable windows.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Design three columns that reveal opportunities and constraints.",
+        "prompt": "Jo wants to read more but only logs evenings when reading happened, overlooking nights spent caring for family. Design three columns that reveal opportunities and constraints.",
         "solution": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
         "solutionFormat": "prose",
         "checks": [
@@ -437,7 +437,7 @@
           "Infer the entire month from one evening"
         ],
         "correct": 0,
-        "explanation": "Include unavailable opportunities and context fits the distinction in this lesson. Record successes only to stay positive overlooks the stated limits; Infer the entire month from one evening substitutes an assumption for a feasible action."
+        "explanation": "Unavailable opportunities and context distinguish an impractical plan from a missed action. Success-only entries would hide that difference."
       },
       "references": [
         {
@@ -470,14 +470,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Sam opens a news app whenever the kettle is switched on, while the book stays in another room. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Hana opens a shopping site whenever she sits down for lunch at her desk, hoping for a change from work."
           ],
-          "example": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+          "example": "Cue: sitting down with lunch. Action: browsing offers. Immediate payoff: novelty and a break from work. Hana tests putting a short puzzle beside her lunch instead. She checks whether it provides a satisfying break without assuming that shopping has only one cause.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Map the cue, action, immediate payoff and competing option.",
+        "prompt": "Sam opens a news app whenever the kettle is switched on, while the book stays in another room. Map the cue, action, immediate payoff and competing option.",
         "solution": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
         "solutionFormat": "prose",
         "checks": [
@@ -494,7 +494,7 @@
           "When the entire day goes perfectly"
         ],
         "correct": 0,
-        "explanation": "When I switch on the kettle fits the distinction in this lesson. Whenever I should improve myself overlooks the stated limits; When the entire day goes perfectly substitutes an assumption for a feasible action."
+        "explanation": "Switching on the kettle is a recognisable event. A vague wish to improve does not identify when the action can begin."
       },
       "references": [
         {
@@ -527,14 +527,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Lea completes a weekly budget review but needs a calendar reminder and deliberate effort every time. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Evan has watered the balcony plants every Saturday for six weeks, using a checklist each time."
           ],
-          "example": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
+          "example": "Six completed checks establish a repeated routine. Evan still deliberately checks soil moisture and chooses which plants need water. Starting may become easier while those decisions remain deliberate; completion alone does not establish automatic initiation.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Explain why Lea has a useful routine without evidence of automaticity.",
+        "prompt": "Lea completes a weekly budget review but needs a calendar reminder and deliberate effort every time. Explain why Lea has a useful routine without evidence of automaticity.",
         "solution": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
         "solutionFormat": "prose",
         "checks": [
@@ -551,7 +551,7 @@
           "No planning will ever be needed again"
         ],
         "correct": 0,
-        "explanation": "Recorded completion, not necessarily automaticity fits the distinction in this lesson. A permanent habit has formed overlooks the stated limits; No planning will ever be needed again substitutes an assumption for a feasible action."
+        "explanation": "Completion establishes repetition. It does not show that initiation has become automatic or that planning will never be needed."
       },
       "references": [
         {
@@ -584,14 +584,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Nia plans an hour of language study after work but has ten usable minutes on most evenings. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Rosa wants to write family-history notes but rarely has the planned forty-minute evening window."
           ],
-          "example": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
+          "example": "Minimum: write one dated memory with enough detail to understand it later. Optional extension: add a photograph caption. Rosa keeps the minimum separate from the extension so a useful five-minute note does not become an incomplete forty-minute obligation.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Define a useful minimum and optional extension.",
+        "prompt": "Nia plans an hour of language study after work but has ten usable minutes on most evenings. Define a useful minimum and optional extension.",
         "solution": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
         "solutionFormat": "prose",
         "checks": [
@@ -608,7 +608,7 @@
           "A symbolic tick unrelated to learning"
         ],
         "correct": 0,
-        "explanation": "A short action that still serves the learning goal fits the distinction in this lesson. The largest session imaginable overlooks the stated limits; A symbolic tick unrelated to learning substitutes an assumption for a feasible action."
+        "explanation": "The minimum should still serve the learning goal. A symbolic tick adds little, while an oversized session can make starting less feasible."
       },
       "references": [
         {
@@ -641,14 +641,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Dev reaches day 21 of placing his notebook out and still needs to think about it. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Malik has used a new receipt-storage routine for thirty days and still sometimes checks a reminder."
           ],
-          "example": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
+          "example": "The reminder does not establish that Malik has failed or that automaticity will arrive on a particular day. He reviews whether the cue occurs, storage is easy and receipts are easier to find. He keeps the useful routine and reviews it again in two weeks.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a fair interpretation of Dev’s experience and a next check.",
+        "prompt": "Dev reaches day 21 of placing his notebook out and still needs to think about it. Write a fair interpretation of Dev’s experience and a next check.",
         "solution": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
         "solutionFormat": "prose",
         "checks": [
@@ -665,7 +665,7 @@
           "Day 21 proves whether a person has willpower"
         ],
         "correct": 0,
-        "explanation": "Substantial variation rather than a universal deadline fits the distinction in this lesson. Every habit takes exactly 66 days overlooks the stated limits; Day 21 proves whether a person has willpower substitutes an assumption for a feasible action."
+        "explanation": "The study estimates varied substantially. Neither 21 nor 66 days is a universal deadline for automaticity."
       },
       "references": [
         {
@@ -698,14 +698,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Farah says she will organise notes sometime this week and repeatedly forgets. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Chen intends to back up course notes but leaves the timing unspecified."
           ],
-          "example": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
+          "example": "Chen writes: if I finish Friday’s note review at my laptop, then I will copy the notes folder to the backup drive before shutting down. The drive must be available. The plan names a visible event and a response rather than relying on feeling organised.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write one recognisable if–then plan for Farah.",
+        "prompt": "Farah says she will organise notes sometime this week and repeatedly forgets. Write one recognisable if–then plan for Farah.",
         "solution": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
         "solutionFormat": "prose",
         "checks": [
@@ -722,7 +722,7 @@
           "I will succeed if I care enough"
         ],
         "correct": 0,
-        "explanation": "If Tuesday’s session ends, then file its handouts fits the distinction in this lesson. I really intend to be organised overlooks the stated limits; I will succeed if I care enough substitutes an assumption for a feasible action."
+        "explanation": "The plan links an identifiable situation—Tuesday’s session ending—to an immediately possible action: filing its handouts."
       },
       "references": [
         {
@@ -755,14 +755,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Ben wants to sketch but his pencils are in a closed cupboard and the desk is covered with boxes. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Marta wants to repair loose buttons, but the sewing supplies are scattered across three drawers."
           ],
-          "example": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
+          "example": "Marta gathers the needle, thread and spare buttons into one labelled box without blocking shared drawer space. She predicts less setup time and records whether the next repair begins more easily. A simpler setup cannot create time for a repair during an unavailable evening.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Choose one reversible change and predict what it may improve.",
+        "prompt": "Ben wants to sketch but his pencils are in a closed cupboard and the desk is covered with boxes. Choose one reversible change and predict what it may improve.",
         "solution": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
         "solutionFormat": "prose",
         "checks": [
@@ -779,7 +779,7 @@
           "Punish every missed session"
         ],
         "correct": 0,
-        "explanation": "Leave the required materials at the cue location fits the distinction in this lesson. Write a stronger promise overlooks the stated limits; Punish every missed session substitutes an assumption for a feasible action."
+        "explanation": "Ready materials remove a setup step at the cue location. A stronger promise does not supply the missing notebook or pencil."
       },
       "references": [
         {
@@ -812,14 +812,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Owen’s reminder to return library books appears while he is already travelling away from home."
           ],
-          "example": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
+          "example": "Owen moves the reminder to the previous evening and labels it “put library books beside tomorrow’s bag”. He notes whether he saw it, could reach the books and packed them. A noticed alert without access to the books is not an actionable opportunity.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Redesign the prompt and define what to observe.",
+        "prompt": "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Redesign the prompt and define what to observe.",
         "solution": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
         "solutionFormat": "prose",
         "checks": [
@@ -836,7 +836,7 @@
           "An alert saying only be better"
         ],
         "correct": 0,
-        "explanation": "A filing cue at the desk with the folder ready fits the distinction in this lesson. Ten alarms during the meeting overlooks the stated limits; An alert saying only be better substitutes an assumption for a feasible action."
+        "explanation": "A desk cue with the folder ready arrives where filing is possible and names the action. More alarms cannot make a meeting an available filing opportunity."
       },
       "references": [
         {
@@ -869,14 +869,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Omar checks group chat during a five-minute break because he wants contact, then misses the next session. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Sana watches clips during a short work break because she wants amusement, but the next clip often extends the break."
           ],
-          "example": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
+          "example": "Sana tests one short comic saved offline with a visible return time. She records whether the break feels enjoyable and whether she resumes work on time. The alternative preserves amusement; simply replacing it with another work task might miss the original need.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Design an alternative that respects the need for contact and timing.",
+        "prompt": "Omar checks group chat during a five-minute break because he wants contact, then misses the next session. Design an alternative that respects the need for contact and timing.",
         "solution": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
         "solutionFormat": "prose",
         "checks": [
@@ -893,7 +893,7 @@
           "Eliminating every break"
         ],
         "correct": 0,
-        "explanation": "The immediate function of the original action fits the distinction in this lesson. Only whether it looks productive to others overlooks the stated limits; Eliminating every break substitutes an assumption for a feasible action."
+        "explanation": "Identify what the original action provides before choosing an alternative. A replacement that removes needed contact or rest may be unworkable."
       },
       "references": [
         {
@@ -926,14 +926,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Aisha’s normal note-review cue disappears on days she works at a different desk. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Diego normally checks tomorrow’s appointments on his home computer, but sometimes spends the night away."
           ],
-          "example": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
+          "example": "Normal: after dinner, check the calendar on the computer and note the first appointment. Away: after the evening meal, check the same calendar on the phone. Without access, record the missing opportunity and check when access returns; do not invent a completed review.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a normal plan and a travel-day branch.",
+        "prompt": "Aisha’s normal note-review cue disappears on days she works at a different desk. Write a normal plan and a travel-day branch.",
         "solution": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
         "solutionFormat": "prose",
         "checks": [
@@ -950,7 +950,7 @@
           "Compensate by losing sleep"
         ],
         "correct": 0,
-        "explanation": "Use a shorter action at an available alternate cue fits the distinction in this lesson. Promise never to face interruptions overlooks the stated limits; Compensate by losing sleep substitutes an assumption for a feasible action."
+        "explanation": "A shorter action at an available alternate cue provides a feasible branch. It need not compensate for disruption by sacrificing essential recovery."
       },
       "references": [
         {
@@ -983,14 +983,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Ivo has four completions in seven days, but only five evenings offered a realistic opportunity. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Fatima completed a short desk-clearance routine on three of six days; four days offered an available end-of-work window."
           ],
-          "example": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
+          "example": "Completion among available opportunities is 3/4, or 75%; calendar-day completion is 3/6, or 50%. The different denominators answer different questions. Fatima retains the opportunity definition and does not infer automaticity or a causal benefit from this small sample.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Calculate the opportunity-based rate and state its limit.",
+        "prompt": "Ivo has four completions in seven days, but only five evenings offered a realistic opportunity. Calculate the opportunity-based rate and state its limit.",
         "solution": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
         "solutionFormat": "prose",
         "checks": [
@@ -1007,7 +1007,7 @@
           "The probability of success for everyone"
         ],
         "correct": 0,
-        "explanation": "Completion among recorded available opportunities fits the distinction in this lesson. Permanent automaticity overlooks the stated limits; The probability of success for everyone substitutes an assumption for a feasible action."
+        "explanation": "The rate describes completion among recorded available opportunities. It does not measure permanent automaticity or predict everyone’s success."
       },
       "references": [
         {
@@ -1040,14 +1040,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Mei puts keys in a bowl and notices that leaving home requires less searching. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Leo puts tomorrow’s cooking utensils on a tray after washing up and finds breakfast setup easier."
           ],
-          "example": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
+          "example": "Immediate result: the required utensils are visible together. Longer-term outcome: less searching during breakfast preparation. Leo samples setup time on several mornings and checks whether the tray adds clutter before deciding to keep it.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Name an immediate consequence and a separate longer-term outcome.",
+        "prompt": "Mei puts keys in a bowl and notices that leaving home requires less searching. Name an immediate consequence and a separate longer-term outcome.",
         "solution": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
         "solutionFormat": "prose",
         "checks": [
@@ -1064,7 +1064,7 @@
           "Her entire personality has improved"
         ],
         "correct": 0,
-        "explanation": "Keys are visible in the bowl fits the distinction in this lesson. A dopamine reset has occurred overlooks the stated limits; Her entire personality has improved substitutes an assumption for a feasible action."
+        "explanation": "Visible keys are an immediate, observable result. They do not establish a brain-chemical change or a personality transformation."
       },
       "references": [
         {
@@ -1097,14 +1097,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Pia misses filing because she takes a family member to an appointment. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Amal skips an evening calendar check because an essential power repair keeps her away from home."
           ],
-          "example": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
+          "example": "Recovery note: the normal home opportunity was absent. Check the calendar at the next available desk session. Amal does not add a double-length review as punishment; if outages recur, she considers a paper copy for the essential appointments.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a recovery note and a next action without blame.",
+        "prompt": "Pia misses filing because she takes a family member to an appointment. Write a recovery note and a next action without blame.",
         "solution": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
         "solutionFormat": "prose",
         "checks": [
@@ -1121,7 +1121,7 @@
           "Prove commitment with a punishing catch-up session"
         ],
         "correct": 0,
-        "explanation": "Record why the opportunity differed and choose the next feasible cue fits the distinction in this lesson. Reset all progress to zero overlooks the stated limits; Prove commitment with a punishing catch-up session substitutes an assumption for a feasible action."
+        "explanation": "Record the changed conditions and resume at a feasible cue. A missed opportunity does not erase prior observations or require punitive catch-up."
       },
       "references": [
         {
@@ -1154,14 +1154,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Ren moves a reading card to the kettle while also changing work hours and buying a new book. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Theo moves a drawing pad beside his chair during the same week that his evening work hours fall."
           ],
-          "example": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+          "example": "Theo keeps the same five-minute drawing task and pad while testing the new location. He records available evenings and work hours. More drawings may support keeping the setup, but the lighter workload remains an alternative explanation for the increase.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Choose a cleaner comparison and state a confound.",
+        "prompt": "Ren moves a reading card to the kettle while also changing work hours and buying a new book. Choose a cleaner comparison and state a confound.",
         "solution": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
         "solutionFormat": "prose",
         "checks": [
@@ -1178,7 +1178,7 @@
           "One good week proves permanent change"
         ],
         "correct": 0,
-        "explanation": "The setup seems useful here, though other changes may matter fits the distinction in this lesson. The cue caused the result for every learner overlooks the stated limits; One good week proves permanent change substitutes an assumption for a feasible action."
+        "explanation": "The setup may be useful locally, while a quieter week or other changes could also explain improvement."
       },
       "references": [
         {
@@ -1211,14 +1211,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Sol’s after-class filing routine stops when the course becomes remote. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Kim’s library-based vocabulary review loses its usual cue when the library closes for renovation."
           ],
-          "example": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+          "example": "Kim keeps the purpose—reviewing a few unfamiliar words—and chooses the end of the bus journey as a new cue, provided a safe waiting place is available. A printed card replaces the library desk. She checks the new opportunity before treating the old schedule as transferable.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Translate the routine into the new context.",
+        "prompt": "Sol’s after-class filing routine stops when the course becomes remote. Translate the routine into the new context.",
         "solution": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
         "solutionFormat": "prose",
         "checks": [
@@ -1235,7 +1235,7 @@
           "The claim that a formed habit cannot change"
         ],
         "correct": 0,
-        "explanation": "The purpose and a feasible cue/action relationship fits the distinction in this lesson. The exact old time regardless of circumstances overlooks the stated limits; The claim that a formed habit cannot change substitutes an assumption for a feasible action."
+        "explanation": "Preserve the purpose and rebuild a feasible cue-action link. Copying the old time can fail when the opportunity has changed."
       },
       "references": [
         {
@@ -1268,14 +1268,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Uma asks a housemate to remind her to pack a bag, but repeated comments feel intrusive. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Nico wants a friend’s help maintaining a receipt routine, but does not want purchases inspected."
           ],
-          "example": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
+          "example": "Nico asks: “Could we have one check-in next Saturday about whether the receipt pocket is useful? I will share the result, not the receipts. Either of us can stop the check-in.” The friend agrees to that limited role; additional monitoring needs a new agreement.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Draft a narrower agreement with an exit option.",
+        "prompt": "Uma asks a housemate to remind her to pack a bag, but repeated comments feel intrusive. Draft a narrower agreement with an exit option.",
         "solution": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
         "solutionFormat": "prose",
         "checks": [
@@ -1292,7 +1292,7 @@
           "Public logs are necessary for success"
         ],
         "correct": 0,
-        "explanation": "Specific consent and a way to stop fits the distinction in this lesson. Unlimited monitoring proves care overlooks the stated limits; Public logs are necessary for success substitutes an assumption for a feasible action."
+        "explanation": "Agree on a specific role and a way to stop. Helpful support does not require unrestricted monitoring or public logs."
       },
       "references": [
         {
@@ -1325,14 +1325,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Vic maintains a daily paper planner after switching to a shared schedule that already covers the same tasks. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Asha still copies a daily reading count into a second tracker that she never uses for a decision."
           ],
-          "example": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
+          "example": "Asha checks whether removing the duplicate count would lose any useful information. She trials keeping only the book note and weekly review. If decisions remain clear and logging takes less effort, she retires the extra entry rather than preserving it for its streak.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Choose a review decision and the evidence needed.",
+        "prompt": "Vic maintains a daily paper planner after switching to a shared schedule that already covers the same tasks. Choose a review decision and the evidence needed.",
         "solution": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
         "solutionFormat": "prose",
         "checks": [
@@ -1349,7 +1349,7 @@
           "Whenever one action is missed"
         ],
         "correct": 0,
-        "explanation": "When the routine’s benefit no longer justifies its cost fits the distinction in this lesson. Never, because a streak must be preserved overlooks the stated limits; Whenever one action is missed substitutes an assumption for a feasible action."
+        "explanation": "Retire or revise a routine when its benefit no longer justifies its cost. A long streak is not an independent reason to maintain duplicate work."
       },
       "references": [
         {
@@ -1382,14 +1382,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Jon’s ten-day desk-clearance log shows quicker morning setup, but his workload also became lighter."
           ],
-          "example": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+          "example": "Jon keeps the small clearance action, adds a fallback for late finishes and reviews after another fortnight. He reports the quicker setup and the changed workload together. A busier comparison may clarify usefulness; the current log does not isolate the routine as the cause.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a keep/change decision with an uncertainty statement.",
+        "prompt": "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
         "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
         "solutionFormat": "prose",
         "checks": [
@@ -1406,7 +1406,7 @@
           "Hide missed and unavailable opportunities"
         ],
         "correct": 0,
-        "explanation": "Describe observations, alternate explanations and the next decision fits the distinction in this lesson. Claim a permanent habit from two weeks overlooks the stated limits; Hide missed and unavailable opportunities substitutes an assumption for a feasible action."
+        "explanation": "Observed results, alternate explanations and a next decision make the plan reusable. A short log cannot establish permanent change."
       },
       "references": [
         {

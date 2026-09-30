@@ -245,7 +245,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Questions, logs, metrics and traces",
           "paragraphs": [
             "Observability is the ability to investigate a system using the outputs it exposes. Monitoring checks known conditions, while exploratory investigation asks new questions. Neither is created by collecting everything. Start with a user symptom such as Imports are slow, then identify which measurements distinguish network waiting, parsing, database work and queue delay.",
             "Logs describe events, metrics aggregate measurements and traces connect work across boundaries. A request count can show traffic growth without identifying one request. A trace can identify the slow segment but may be sampled. Combine evidence instead of expecting one signal to answer every question."
@@ -253,7 +253,7 @@
           "example": "Question: why did import request R take 900 ms?\nMetric: latency distribution changed\nTrace: database span consumed 700 ms\nLog: database retry occurred for R"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "User outcomes before dashboards",
           "paragraphs": [
             "A dashboard full of CPU gauges can miss a broken user task. Start with outcomes and use internal metrics to explain them."
           ]
@@ -296,7 +296,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Units, boundaries and clocks",
           "paragraphs": [
             "Latency is elapsed time between defined start and end points. Server processing time differs from browser-visible completion time because transport, rendering and queueing may sit outside the measurement. Name the boundary explicitly. A duration of 50 has no meaning without units; a count of errors needs a denominator and time window.",
             "Choose a monotonic clock for elapsed durations so wall-clock adjustments do not create negative times. Wall-clock timestamps help relate events in time, but clocks across machines can disagree. Record clock type, sample count, warmup and environment alongside a benchmark."
@@ -304,7 +304,7 @@
           "example": "duration_ms = (perf_counter() - start) * 1000\nBoundary: HTTP handler entry → response creation\nExcluded: client network and rendering"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Cross-machine timing uncertainty",
           "paragraphs": [
             "Do not subtract timestamps from different machines to infer a precise network duration without considering clock uncertainty. Prefer durations measured locally and a trace showing relationships."
           ]
@@ -347,7 +347,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Named events and correlation",
           "paragraphs": [
             "A structured log records named fields such as event, severity, request_id, route and duration_ms. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for import_rejected should identify the reason category, not dump the entire uploaded document.",
             "Correlate related events through a request or trace identifier. Use bounded route templates rather than raw URLs that may contain personal identifiers or secrets. Apply retention, access controls and redaction at the source as well as the collection layer. Debug verbosity should be a deliberate temporary decision."
@@ -355,7 +355,7 @@
           "example": "{\"event\":\"import_rejected\",\"reason\":\"invalid_schema\",\"request_id\":\"demo-17\",\"route\":\"/imports\",\"status\":400}"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Safe diagnostic fields",
           "paragraphs": [
             "Logging passwords, tokens or complete financial records creates a second uncontrolled data store. Redaction rules should fail safely and be tested, not added only after an incident."
           ]
@@ -398,7 +398,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Counters, gauges and distributions",
           "paragraphs": [
             "A counter accumulates events, such as completed requests, and normally increases until process restart. A gauge represents a current value such as in-flight requests and may rise or fall. A distribution records many observations such as request duration; a single gauge overwritten by each request loses the population.",
             "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as duration_seconds and requests_total, so dashboards do not mix milliseconds and seconds silently."
@@ -406,7 +406,7 @@
           "example": "requests_total: counter\ninflight_requests: gauge\nrequest_duration_seconds: histogram\nCPU utilisation: ratio gauge"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Errors with a denominator",
           "paragraphs": [
             "A counter of errors alone can be misleading when traffic changes. Divide by eligible requests in the same scope and time window to obtain an error ratio."
           ]
@@ -449,7 +449,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Percentile estimators and sample size",
           "paragraphs": [
             "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index ceil(p*n)-1.",
             "A tiny sample cannot support precise tail claims. For 20 values the nearest-rank p99 is the maximum, not a stable estimate of a broad population. Do not average p95 values from different hosts to obtain a global p95; combine compatible distributions or histogram buckets instead."
@@ -457,7 +457,7 @@
           "example": "Durations: 10, 10, 10, 10, 100 ms\nMean = 28 ms; median = 10 ms\nNearest-rank p95 = 100 ms (5 observations)"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Interpreting the slow tail",
           "paragraphs": [
             "Always show sample size, time range and estimator beside percentile claims. A lower average with a worse slow tail may be a regression for the people affected by the tail."
           ]
@@ -500,7 +500,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Traffic, errors, latency and saturation",
           "paragraphs": [
             "The four golden signals describe traffic, errors, latency and saturation. Traffic is demand, errors are failed outcomes, latency is elapsed completion time and saturation describes how close a resource is to its effective limit. The useful resource may be threads, connections, queue capacity or memory rather than CPU.",
             "Separate successful and failed request latency because fast failures can make an aggregate look healthy. Inspect dependency and endpoint differences before concluding a global trend explains every user. Saturation often predicts trouble: a growing queue can precede timeouts even when CPU is moderate."
@@ -508,7 +508,7 @@
           "example": "200 requests/s; 3% failures; success p95 180 ms; connection pool 19/20 occupied\nInterpretation: investigate database concurrency pressure rather than only CPU."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Resource levels in context",
           "paragraphs": [
             "A resource at 80% is not automatically an incident. Relate it to latency, errors, workload and known capacity limits before setting an alert threshold."
           ]
@@ -551,7 +551,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Span relationships and overlap",
           "paragraphs": [
             "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent’s elapsed time; adding parent and child durations double-counts.",
             "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
@@ -559,7 +559,7 @@
           "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Missing work and sampled traces",
           "paragraphs": [
             "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
           ]
@@ -602,7 +602,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Context carriers and trust",
           "paragraphs": [
             "Context propagation carries trace identity and related state from caller to callee. Instrumentation injects context into a supported carrier such as HTTP headers, and the receiver extracts it before creating related spans. Thread-local or async context storage avoids manually passing identifiers through every function but must preserve the correct request ownership.",
             "Treat incoming context as untrusted data. Validate supported formats, avoid recording sensitive baggage and consider trust boundaries between organisations. A trace ID is correlation metadata, not proof that a caller is authorised. Background jobs may require a link to the submitting operation rather than one long request span."
@@ -610,7 +610,7 @@
           "example": "Caller: create span → inject trace context into request\nReceiver: extract supported context → create child span → perform work\nAuthorisation remains a separate check."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Concurrent request ownership",
           "paragraphs": [
             "Global mutable current_trace_id leaks one request’s identity into another under concurrency. Use the runtime or SDK’s context model and test concurrent requests."
           ]
@@ -653,7 +653,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Label combinations and churn",
           "paragraphs": [
             "Every unique label combination creates a series in many metric systems. Three routes, five status classes and four instances can create up to 60 combinations before adding more labels. Adding a user ID with thousands of values creates a far larger and continuously changing set.",
             "Prefer bounded route templates, service names and coarse approved outcomes for metrics. Keep high-cardinality request identifiers in traces or logs with appropriate access and retention. Estimate the product of label cardinalities and consider churn, bucket count and scrape frequency when budgeting storage."
@@ -661,7 +661,7 @@
           "example": "3 route templates × 5 status classes × 4 instances = up to 60 label combinations\nAn extra 10,000 user IDs could multiply that to 600,000."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Why hashing keeps cardinality",
           "paragraphs": [
             "Hashing a user ID does not reduce cardinality; unique hashes still create unique series. It may also remain personal data depending on the context."
           ]
@@ -704,7 +704,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Bucket boundaries and aggregation",
           "paragraphs": [
             "A classic histogram counts observations in cumulative buckets. If the objective is completion under 300 ms, a bucket at 0.3 seconds can directly support that threshold ratio. Buckets too coarse around the boundary make quantile estimates less precise. More buckets consume more series and processing resources.",
             "Aggregate compatible bucket counts across instances before deriving a service-level quantile. Keep units and boundaries consistent; mixing seconds and milliseconds creates meaningless results. Different systems also offer native histograms, whose representation and configuration should be studied separately rather than assumed identical."
@@ -712,7 +712,7 @@
           "example": "Buckets seconds: 0.05, 0.1, 0.3, 1.0, +Inf\nCount at <=0.3 divided by total count estimates the observed threshold success fraction."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Quantile resolution",
           "paragraphs": [
             "A p95 derived from buckets is an estimate bounded by the available bucket resolution. Do not present it with unjustified decimal precision."
           ]
@@ -755,7 +755,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Indicators, objectives and budgets",
           "paragraphs": [
             "A service-level indicator measures reliability, for example good requests divided by eligible requests. A service-level objective sets a target over a defined window, such as 99% of eligible imports completing successfully within 300 ms over 30 days. Define exclusions and what a success means before looking at the result.",
             "The error budget is the permitted bad fraction: a 99% target allows 1% bad events in that window. At 10,000 eligible events, that is 100 bad events. Availability and latency objectives may be separate or combined; state the choice. A contractual SLA adds consequences and is not synonymous with an internal SLO."
@@ -763,7 +763,7 @@
           "example": "10,000 eligible events; 130 bad events\nSLI = 98.7%; allowed bad = 100 at 99% SLO\nBudget consumption = 130/100 = 130%"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Consistent exclusions",
           "paragraphs": [
             "Do not silently exclude inconvenient failures to meet a target. Exclusions need a documented user-focused rationale and consistent denominator."
           ]
@@ -806,7 +806,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Burn rates and response actions",
           "paragraphs": [
             "Burn rate compares the observed bad-event fraction with the permitted fraction. At a 99% target, a 5% bad fraction burns budget at five times the allowed rate. Short windows detect rapid impact; longer windows reduce noise and reveal sustained degradation. Multi-window approaches can require both to avoid paging on a tiny transient spike.",
             "A page should demand an immediate response and have an owner and runbook. A ticket can address slower trends. Record low-traffic behaviour, missing telemetry and maintenance handling. An alert that nobody can act on trains people to ignore it, so review alert usefulness after incidents."
@@ -814,7 +814,7 @@
           "example": "SLO bad allowance = 1%; observed bad = 5%\nBurn rate = 5\nResponse: check affected route and release, then dependency saturation; rollback if supported by evidence."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Zero traffic and missing data",
           "paragraphs": [
             "Threshold arithmetic alone does not prove a paging policy is good. Test it against historical or synthetic windows, including zero traffic and missing data."
           ]
@@ -857,7 +857,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Sampling decisions and loss",
           "paragraphs": [
             "Head sampling decides whether to retain a trace early, usually before its outcome is known. Tail sampling can examine completed traces and keep interesting results such as errors, but needs buffering and coordination. Both choices have cost and bias implications. Metrics are often aggregated independently of trace sampling.",
             "Record sampling policy, retention and export loss before interpreting absence. No error trace does not prove no errors occurred. A small sample may miss rare slow requests. Avoid multiplying one unusual sampled trace into a precise error-rate claim; use appropriately scoped aggregate measurements for rates."
@@ -865,7 +865,7 @@
           "example": "10% head sample: a rare failure may be omitted\nTail policy: retain errors plus selected normal traces\nMetrics: independent eligible-event counter remains the denominator"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Upstream limits on tail sampling",
           "paragraphs": [
             "A tail sampler cannot retain a trace it never receives. Upstream head sampling or export drops can limit it before the policy runs."
           ]
@@ -908,7 +908,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Workload, correctness and timing",
           "paragraphs": [
             "State a hypothesis such as A dictionary lookup reduces repeated record-search time for this workload. Define input size, operation mix and what counts as a correct answer. Compare implementations on identical input and verify results before timing. Warm up both paths, repeat measurements and report distributions rather than one best run.",
             "Use a monotonic timer and separate setup from the measured operation when the question concerns lookup time. Also measure end-to-end cost if index construction occurs for every request. Run one variable change at a time and record runtime, machine, background load and command. Local measurements describe that environment."
@@ -916,7 +916,7 @@
           "example": "Lookup-only question: time searches after index exists\nEnd-to-end question: time index construction plus searches\nBoth implementations must return identical results."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Including index setup costs",
           "paragraphs": [
             "A benchmark that omits new setup costs can make a slower real workflow look faster. Keep the claim tied to the boundary actually measured."
           ]
@@ -959,15 +959,15 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "CPU time versus waiting",
           "paragraphs": [
             "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool’s overhead.",
-            "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than a individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
+            "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than an individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
           ],
           "example": "python -m cProfile -s cumulative benchmark.py\nInspect total vs cumulative attribution and call counts.\nDo not add cumulative times of parents and children."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Profiling overhead",
           "paragraphs": [
             "Instrumentation can perturb timing. Use the profiler to locate candidates, then benchmark the change without profiling overhead for the performance claim."
           ]
@@ -1017,7 +1017,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Allocation and retained objects",
           "paragraphs": [
             "A program may allocate many temporary objects without leaking them. A leak-like problem occurs when objects remain reachable beyond their intended lifetime, or external resources are not released. Compare snapshots across a controlled workload and inspect retained references rather than assuming every peak increase is a leak.",
             "Python tracemalloc tracks allocations in Python’s managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
@@ -1025,7 +1025,7 @@
           "example": "tracemalloc.start()\nbefore = tracemalloc.take_snapshot()\n# execute controlled workload\nafter = tracemalloc.take_snapshot()\n# compare by source location; explain tracked-domain limits"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "RSS versus traced memory",
           "paragraphs": [
             "RSS, managed heap size and tracemalloc totals describe different boundaries. Do not compare them as if they were the same metric or call a one-time high-water mark a proven leak."
           ]
@@ -1068,7 +1068,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Offered rate and coordinated omission",
           "paragraphs": [
             "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator’s capacity. Neither is automatically representative; choose according to the real workload.",
             "Coordinated omission occurs when delays suppress observations that would have arrived during the delay. Record offered and achieved rate, concurrency, client errors and latency. Do not run uncontrolled tests against systems you do not own or have permission to test. The supplied lab targets loopback only and has bounded counts and timeouts."
@@ -1076,7 +1076,7 @@
           "example": "Closed loop: 4 workers wait for each response before sending next\nReport: completed count / elapsed seconds, errors, percentile estimator\nThis is not a constant-arrival-rate production capacity test."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Generator and environment limits",
           "paragraphs": [
             "A local test can reveal concurrency and waiting behaviour, but cannot establish internet performance, distributed scale or production safety. The generator can become the bottleneck."
           ]
@@ -1126,7 +1126,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Queue growth and Little's law",
           "paragraphs": [
             "A queue absorbs temporary bursts but also creates waiting time and memory pressure. If arrival rate exceeds completion capacity for long enough, backlog grows until a limit is reached. Bound queues, reject or defer work deliberately, and expose queue depth, age and waiting time rather than only worker CPU.",
             "Little’s law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
@@ -1134,7 +1134,7 @@
           "example": "Stable average arrival 20 jobs/s × average time in system 0.5 s = 10 jobs in system\nIf service falls below arrivals persistently, do not treat this stable relation as a capacity guarantee."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Downstream backpressure",
           "paragraphs": [
             "Increasing worker count can saturate the database and worsen latency. Measure the downstream limit and use backpressure rather than adding concurrency blindly."
           ]
@@ -1191,7 +1191,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Browser and database boundaries",
           "paragraphs": [
             "Browser performance includes transport, parsing, rendering and interaction response. A fast API does not guarantee a fast visible result if the browser renders thousands of rows. Database work can include connection wait, query execution, result transfer and application decoding; instrument those boundaries where possible.",
             "Use a correlation ID to connect user-visible timing with the API trace. Inspect the query plan and data volume in the SQL path, and profile React rendering in the frontend path. Optimisations such as pagination or indexes can change correctness, ordering and memory behaviour, so validate functional results alongside timing."
@@ -1199,7 +1199,7 @@
           "example": "User action 600 ms = network + API processing + browser update (overlap possible)\nAPI query span 80 ms does not explain an extra 400 ms render by itself."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Locating the actual delay",
           "paragraphs": [
             "Do not optimise the database simply because it is familiar. Locate the observed delay first, then make one change and compare the same task and data set."
           ]
@@ -1242,7 +1242,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Impact and discriminating evidence",
           "paragraphs": [
             "During an incident, first establish impact, start time and affected operations. Compare the change timeline with traffic, errors, latency and saturation. Form hypotheses that predict evidence, such as A release changed query shape, and test them against traces, logs and dependency measurements.",
             "A runbook names owner, dashboards, safe checks, rollback conditions and escalation. Preserve a timeline of decisions and evidence. Recovery can precede complete root-cause analysis; record why the action was chosen and confirm user outcomes improved. A post-incident review should identify contributing conditions and prevention work rather than blaming one person."
@@ -1250,7 +1250,7 @@
           "example": "12:00 release deployed\n12:03 import p95 rises; pool waits rise\n12:06 rollback selected after comparing query spans\n12:09 latency and failures recover; verify backlog drains"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Correlation versus causation",
           "paragraphs": [
             "Correlation with a release is a clue, not proof. Unrelated traffic growth or a dependency incident may coincide; inspect discriminating evidence and test recovery effects."
           ]
@@ -1293,7 +1293,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Telemetry export and release checks",
           "paragraphs": [
             "Instrumentation emits data, a collector or agent processes it, and a backend stores and queries it. Export can fail, queues can overflow and backends can lag. Monitor dropped telemetry, pipeline delay and resource use. Choose whether failures block application work or degrade telemetry, and document that policy.",
             "Before release, verify safe field handling, signal boundaries, correlation, alert actions and storage costs. Run a known fault and confirm it appears in the intended signals. Preserve evidence of which paths were executed. The included standard-library lab emits local JSON records and duration summaries; it does not install a collector, exporter or real paging system."
@@ -1301,7 +1301,7 @@
           "example": "Application → telemetry processing → storage → query/alert\nFailure branch: export timeout → bounded buffer or drop policy → loss metric\nApplication user path must remain explicitly designed."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Overhead and failure policy",
           "paragraphs": [
             "More instrumentation can increase overhead and expose data. Measure the cost of the chosen instrumentation and verify that failure handling does not silently change user outcomes."
           ]

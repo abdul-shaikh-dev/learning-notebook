@@ -8,7 +8,7 @@ A resumption note preserves state: last completed step, next action, open questi
 
 ## Try before reading the answer
 
-Write a return cue before leaving a half-checked table with row 8 as the next row.
+Write a return cue before leaving a half-checked table in budget-draft.md. Rows 1–7 have been checked against receipts; row 8 is next, and row 5 has an unresolved date discrepancy.
 
 Decision: ____________________________________________
 

@@ -19,7 +19,7 @@
     "Read practice/README.md.",
     "Open each lesson worksheet and attempt it before reading the answer.",
     "Complete three stage projects; no runtime or account is required.",
-    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
     "Apply one bounded change to an ordinary real commitment.",
@@ -302,13 +302,13 @@
             "A calendar contains fixed commitments and negotiable work. Count the remaining space before adding ambitions. Include travel, meals, care and transition time; empty squares are not all usable focus time. A capacity budget is a planning aid, not a judgement of personal worth.",
             "Check the shape of the available time as well as its total. Three separate 20-minute gaps might support three reading questions, but they are a poor fit for a 60-minute task needing setup and uninterrupted checking. Place fixed commitments first, subtract essential transitions and then match an outcome to an actual window. If a long task will not fit, split its deliverable at a useful boundary or move it. Do not assume that time saved in one part of the day is automatically available in another."
           ],
-          "example": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
+          "example": "A three-hour afternoon includes a 20-minute walk, 25-minute meal and 15-minute setup: 180 − 60 = 120 study minutes. Allocate 60 to practice, 40 to checking and leave 20 uncommitted.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -330,7 +330,7 @@
           "Only paid work counts"
         ],
         "correct": 0,
-        "explanation": "150 available minutes after essential commitments follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Essential commitments use 90 of the 240 minutes, leaving 150. Available capacity includes meals, travel and transitions."
       },
       "references": [
         {
@@ -354,13 +354,13 @@
             "A short log records start, finish, activity and context. Its purpose is to reveal mismatch between the imagined day and the observed day. Do not label necessary care or rest as waste. Sampling several ordinary days is more useful than drawing conclusions from an unusually good afternoon.",
             "A log is a sample with measurement error. Round consistently and mark forgotten periods as unknown rather than inventing precise entries. Record whether an activity was necessary, optional or unclear separately from its duration. Twenty minutes of messages could coordinate essential care or merely reflect optional checking; the category alone cannot decide that. Compare the log with the intended outcome, then investigate one mismatch. If logging itself distracts you, use broad categories or sample only a few windows rather than building a minute-by-minute permanent surveillance routine."
           ],
-          "example": "There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.",
+          "example": "A log records 30 minutes solving problems, 15 arranging a group meeting, 10 waiting for a download and 35 checking answers: 90 minutes total. Problem solving and checking account for 65, coordination for 15 and delay for 10. Classification describes the activity without judging its value.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -382,7 +382,7 @@
           "A causal effect of messages"
         ],
         "correct": 0,
-        "explanation": "A provisional description of that day follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "One day describes that day. It cannot establish a permanent productivity level or show that messages caused an outcome."
       },
       "references": [
         {
@@ -406,18 +406,18 @@
             "An outcome names what exists after a session: a checked paragraph, five attempted problems or a decision. An activity such as study does not say when to stop. Keep the output small enough to inspect and connect it to a real purpose.",
             "An outcome can include an unresolved-question list. A first presentation outline may be useful even when the supporting statistic is missing, provided the gap is explicit. Decide the minimum acceptable state before starting: audience named, three messages written and evidence needs listed. Keep drafting and polishing separate if they compete for the same short window. At the finish, inspect the artifact against those criteria. If the result fails one criterion, write the next correction rather than extending the session indefinitely because the work could always look better."
           ],
-          "example": "Create a three-slide outline stating audience, problem and recommendation; stop when each slide has one sentence and the missing evidence is listed. Formatting is outside this session.",
+          "example": "For a 25-minute reading session, the outcome is a four-point summary with a page reference for each point and one unresolved question. Stop when those items exist; reading the next chapter belongs to another session.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Replace work on presentation with a checkable outcome for a 35-minute session.",
+        "prompt": "The presentation needs an outline covering audience, problem and recommendation. Replace work on presentation with a checkable outcome for a 35-minute session.",
         "solution": "Create a three-slide outline stating audience, problem and recommendation; stop when each slide has one sentence and the missing evidence is listed. Formatting is outside this session.",
         "solutionFormat": "prose",
         "checks": [
@@ -434,7 +434,7 @@
           "Open many reference tabs"
         ],
         "correct": 0,
-        "explanation": "Three outline slides with one sentence each follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Three slides with one sentence each give the session an inspectable output and a stopping point."
       },
       "references": [
         {
@@ -458,13 +458,13 @@
             "Urgency concerns the cost of delay; importance concerns contribution to an outcome. A two-axis matrix is a conversation aid, not objective arithmetic. A deadline without a consequence is weaker evidence than a dependency that prevents another person from proceeding.",
             "When two items have similar consequences, use an explicit tie-break such as dependency, reversibility or effort. A quick file handoff can free another person to work while you proofread; an optional redesign can wait without damaging the essential outcome. Avoid multiplying invented scores until one option appears mathematically superior. Ask who is affected by a delay and what happens if the deadline moves. Record the reason for your choice so new evidence, such as a corrected due date, can change it without treating the original decision as a personal failure."
           ],
-          "example": "Send the dependency first, proofread next and defer theme work. Record the reason: another person is blocked today. Revisit if the deadline or dependency changes.",
+          "example": "A lab partner needs a data file before noon, an application closes Friday and reorganizing folders has no deadline. Send the verified file first to unblock the partner, schedule the application next and defer folder cleanup.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -486,7 +486,7 @@
           "The oldest browser tab"
         ],
         "correct": 0,
-        "explanation": "A named delay consequence follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A named consequence explains why delay matters. A loud request or an attractive redesign does not establish that consequence."
       },
       "references": [
         {
@@ -510,18 +510,18 @@
             "Treat sleep opportunity and essential recovery as constraints when making a plan. A timetable that repeatedly depends on cutting them is infeasible. Personal alertness varies; this course offers scheduling experiments, not clinical explanations or a prescription for sleep problems.",
             "Do not make recovery conditional on earning it through finished work. If several evenings require sacrificing essential recovery to meet ordinary commitments, the workload or scope needs attention. Separate the part of the assignment that is required tomorrow from optional polish, and check whether a deadline can be renegotiated. A plan might still fail because an essential responsibility changes; record that constraint rather than diagnosing yourself from the calendar. Advice about protecting sleep opportunity is different from treatment advice, and this worksheet does not determine an individual medical need."
           ],
-          "example": "Complete the essential 60-minute section, allow 15 minutes to prepare tomorrow and leave 15 for transition. Move optional formatting to tomorrow. Reduce scope rather than borrowing from protected sleep.",
+          "example": "Only 75 minutes remain before protected bedtime, while planned work would take two hours. Spend 45 on the required calculation, 10 recording the next step and 20 on the bedtime transition; move optional examples to tomorrow.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "An evening plan needs three hours but only 90 minutes remain before the protected bedtime. Revise it.",
+        "prompt": "An evening plan includes a required 60-minute section, optional formatting and preparation for tomorrow; together the planned work needs three hours. Only 90 minutes remain before the protected bedtime. Revise it.",
         "solution": "Complete the essential 60-minute section, allow 15 minutes to prepare tomorrow and leave 15 for transition. Move optional formatting to tomorrow. Reduce scope rather than borrowing from protected sleep.",
         "solutionFormat": "prose",
         "checks": [
@@ -538,7 +538,7 @@
           "Assuming tiredness disappears"
         ],
         "correct": 0,
-        "explanation": "Reducing or rescheduling work within available time follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Reduce or reschedule work to fit the available window while protecting essential recovery."
       },
       "references": [
         {
@@ -562,13 +562,13 @@
             "An interruption can be external, self-initiated or necessary. The cost includes finding the previous context again, not simply message-reading time. Research describes particular computing environments; it does not establish a universal number of minutes lost for every person and interruption.",
             "Separate necessary support interruptions from optional alerts before designing a change. Eliminating a required support call may increase uninterrupted minutes while damaging a responsibility that matters more than the draft. For the supplied session, the resumption time is observed rather than borrowed from a popular average. Keep a brief record of what had to be reconstructed: the sentence, source or checking position. Then test a local intervention such as leaving a return cue. Comparing similar sessions helps you distinguish less reconstruction work from a simpler task or fewer required calls."
           ],
-          "example": "Six minutes of messages plus eight minutes of resumption equals 14 minutes. There are 36 minutes left for drafting. This is the supplied scenario, not a universal interruption cost.",
+          "example": "During a 60-minute reading block, three alerts take 2 minutes each and each return takes 3 minutes. Observed disruption is 3 × (2 + 3) = 15 minutes, leaving 45 for reading. This is the recorded case, not a general interruption penalty.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -590,7 +590,7 @@
           "Every break as wasted time"
         ],
         "correct": 0,
-        "explanation": "Message time plus recorded resumption time follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Count both reading the messages and reconstructing the task afterward. The supplied resumption times are observations, not a universal average."
       },
       "references": [
         {
@@ -614,13 +614,13 @@
             "Starting friction often comes from an ambiguous first move or missing material. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.",
             "Preparing a first action can reveal a missing input. If the chapter is unavailable, obtaining the file becomes the next action; pretending to revise it would create a false promise. Choose a first move that produces useful state, such as one improved heading or a question for the author. Avoid replacing a vague large task with twenty tiny tracking cards whose maintenance costs exceed their value. After the first move, reassess the remaining work and available time. A small start is a way to clarify execution, not evidence that every barrier is motivational."
           ],
-          "example": "Open the chapter and rewrite the first unclear heading as a question it answers. The next action is visible and bounded. After that, decide whether to continue or schedule the remaining headings.",
+          "example": "For an unclear data-cleaning task, open the supplied CSV and list the column names plus the first missing value. That bounded action reveals the input before choosing a cleaning rule.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -642,7 +642,7 @@
           "Finish the entire course immediately"
         ],
         "correct": 0,
-        "explanation": "Rewrite the first unclear heading follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Rewriting one unclear heading is a concrete first move. It clarifies the remaining work without promising to finish the whole chapter."
       },
       "references": [
         {
@@ -666,13 +666,13 @@
             "A time block is a provisional appointment with an outcome. Include a start cue, finish condition and transition allowance. Blocks make trade-offs visible but can become brittle if the day is unpredictable; use shorter windows or movable blocks when care or support work dominates.",
             "A missed block is information about the plan. Check whether the estimate, start cue or timing was wrong before sliding every later appointment forward. A fixed class or care commitment does not move simply because drafting ran long. A movable block can have a latest finish or a fallback outcome, such as a rough outline instead of a reviewed draft. At the boundary, save the artifact and write the next step. This makes rescheduling deliberate and keeps the calendar from concealing work that no longer fits."
           ],
-          "example": "Draft 09:00–09:40, transition 09:40–09:50, review 09:50–10:10 and keep 10 minutes free. State what review checks rather than letting it expand indefinitely.",
+          "example": "In a 90-minute window, solve problems 14:00–14:45, transition 14:45–14:55, check answers 14:55–15:20 and leave 15:20–15:30 free. Checking means comparing methods and marking errors, not starting new problems.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -694,7 +694,7 @@
           "Guaranteed perfect concentration"
         ],
         "correct": 0,
-        "explanation": "Outcome and realistic boundary follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "An outcome and a realistic boundary explain what the block is for and when it ends. Duration alone does not define completion."
       },
       "references": [
         {
@@ -718,13 +718,13 @@
             "Planning fallacy research concerns optimistic completion predictions. A useful response is to compare similar completed work before imagining an ideal sequence. Similarity matters: a checked essay with unfamiliar sources is a poor comparator for a short familiar email.",
             "Use a range when comparable tasks vary, and investigate why they differ. A 110-minute draft may include unfamiliar sources while a 70-minute draft uses prepared notes. The middle observation describes this small sample; it does not give a confidence level for the next deadline. Separate writing effort from elapsed time if the task waits for comments. Explain which comparator matches the new work and why. If a deadline is tighter than the observed range, change scope or seek earlier inputs rather than reducing the estimate simply to make the timetable look feasible."
           ],
-          "example": "Use 70–110 minutes as a starting range and ask why the new draft would differ. Reserve about 90 minutes plus a review window if the work is comparable; mark this as a judgement, not a confidence interval.",
+          "example": "Three comparable edits took 45, 60 and 75 minutes. Use 45–75 minutes as an observed planning range, with 60 as a provisional central estimate. A prediction of 20 minutes needs a concrete reason the new edit is smaller; three observations do not establish a confidence interval.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -746,7 +746,7 @@
           "A prettier calendar"
         ],
         "correct": 0,
-        "explanation": "Durations of comparable completed drafts follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Comparable completed drafts provide a basis for the range. An ideal sequence or a preferred deadline does not explain away their observed durations."
       },
       "references": [
         {
@@ -770,18 +770,18 @@
             "A buffer is unassigned capacity for variable work, delays or recovery. Its size is a local choice based on observed variation, not a universal percentage. A buffer cannot make a plan fit when essential work already exceeds capacity; remove scope or renegotiate first.",
             "When a buffer remains unused, it can support recovery or an optional action that genuinely fits. Filling it automatically with new promises removes the protection it was meant to provide. Review the source of variation: unpredictable travel, review corrections and task setup may require different allowances. If disruption happens every day, it is no longer wholly unexpected and should be reflected in ordinary capacity. A buffer is best described with its purpose and local basis; a fixed percentage from a productivity slogan cannot establish that it suits this particular day."
           ],
-          "example": "The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.",
+          "example": "A 150-minute window cannot hold 135 minutes of work plus 25 minutes of transitions: it exceeds capacity by 10. Move a specific 30-minute optional task, leaving 105 work minutes, 25 transitions and 20 buffer minutes.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "A 180-minute window contains 160 minutes of work and 30 minutes of essential transitions. Repair it.",
+        "prompt": "A 180-minute window contains 160 minutes of work, including an optional 30-minute task, and 30 minutes of essential transitions. Repair it.",
         "solution": "The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.",
         "solutionFormat": "prose",
         "checks": [
@@ -798,7 +798,7 @@
           "Only when it guarantees no delay"
         ],
         "correct": 0,
-        "explanation": "After essential work and transitions fit follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Essential work and transitions must fit before reserving uncertainty. Adding a buffer cannot repair a plan that already exceeds capacity."
       },
       "references": [
         {
@@ -822,13 +822,13 @@
             "Notification rules should respect responsibilities. Disable or batch optional alerts while retaining a known urgent channel if you are on call or supporting others. Agree expectations before making yourself unreachable. Record what happened rather than assuming silence always improves performance.",
             "A communication agreement should explain what urgent means and how to use the urgent route. Without that rule, silencing alerts may shift the cost to someone who expected a reasonable response. Choose the smallest change: mute optional application alerts while retaining the named call, then check whether the planned outcome and responsibilities were met. Some settings may not support selective notifications; use another agreed route in that case. The practical aim is a reachable focus period, and the success measure includes essential communication as well as uninterrupted work."
           ],
-          "example": "Keep that person’s calls audible, silence optional application alerts and check messages after the block. Tell collaborators the response window if needed. Record interruptions and outcome after the trial.",
+          "example": "During a 40-minute calculation block, keep the agreed on-call number audible and disable optional social alerts. Check routine messages afterward, then record completed calculations and any urgent interruptions before deciding whether the rule helps.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -850,7 +850,7 @@
           "Answer every marketing alert instantly"
         ],
         "correct": 0,
-        "explanation": "Keep the agreed urgent channel while batching optional alerts follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Batch optional alerts while keeping the agreed urgent route available. A focus rule must still meet essential communication responsibilities."
       },
       "references": [
         {
@@ -874,18 +874,18 @@
             "A resumption note preserves state: last completed step, next action, open question and file location. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.",
             "Write the cue before closing the file when possible, while the current state is still available. Include a stable filename, the last verified step and one unresolved issue. A note saying continue editing does not distinguish completed work from work still requiring checking. On return, read the cue and inspect the actual file because another person may have changed it. Resume at the next valid step rather than blindly following stale instructions. In a shared task, record version or location information so the cue does not send someone to an outdated copy."
           ],
-          "example": "Checked rows 1–7 against receipts; next compare row 8; unresolved: row 5 date differs; file budget-draft.md. This tells the returning learner where to begin and what still needs a decision.",
+          "example": "Return cue: checked references A–D; next verify reference E against the source; open question: B has two publication dates; file literature-notes.md. The cue preserves both the next action and unresolved evidence.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Write a return cue before leaving a half-checked table with row 8 as the next row.",
+        "prompt": "Write a return cue before leaving a half-checked table in budget-draft.md. Rows 1–7 have been checked against receipts; row 8 is next, and row 5 has an unresolved date discrepancy.",
         "solution": "Checked rows 1–7 against receipts; next compare row 8; unresolved: row 5 date differs; file budget-draft.md. This tells the returning learner where to begin and what still needs a decision.",
         "solutionFormat": "prose",
         "checks": [
@@ -902,7 +902,7 @@
           "It hides unresolved questions"
         ],
         "correct": 0,
-        "explanation": "It captures the exact next unfinished step follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "An exact next step preserves the checking position. “Continue editing” leaves the returning person to reconstruct it."
       },
       "references": [
         {
@@ -926,13 +926,13 @@
             "A fixed timer can provide a stopping cue, but no single work–break ratio suits all tasks. Choose a boundary that respects the work and your circumstances. Compare comfort and task completion over several sessions; do not interpret a small personal trial as medical evidence.",
             "A break can be a brief pause, movement or another suitable recovery activity; the worksheet does not prescribe a physiological effect. Choose an accessible option and avoid making the break another performance target. In the supplied comparison, separate attempted items from correct items before deciding which timing worked better. Review whether problem difficulty was comparable and whether errors were identified by the same checking method. A longer session may suit one task but hurt another. Choose a provisional pattern, then retain the right to change it when context or comfort changes."
           ],
-          "example": "Record both output and accuracy. The longer block has more attempted work but only two clearly correct items if two are wrong. Try a review pause and compare again before selecting a default.",
+          "example": "A 20-minute session attempts four questions and checks all four correct; a 35-minute session attempts six with three errors. More attempts did not produce more correct work. Try a checking pause in a comparable longer session and record both accuracy and output.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -954,7 +954,7 @@
           "The most fashionable timer"
         ],
         "correct": 0,
-        "explanation": "Completion, accuracy and comfort under similar conditions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Compare checked output, errors and comfort under similar conditions. More attempted problems alone need not mean a better session."
       },
       "references": [
         {
@@ -978,13 +978,13 @@
             "Energy notes are subjective observations, not biological diagnoses. Track perceived alertness alongside task type and circumstances, then test a small scheduling change. Avoid declaring a permanent identity such as morning person from a handful of entries.",
             "Task difficulty can explain an apparent time-of-day pattern. Compare a difficult afternoon drafting task with a similar morning task, rather than comparing it with familiar morning administration. Record obvious context changes such as disruptions or available preparation. Keep the observation lightweight: perceived alertness and a checked outcome may be sufficient. If the morning window belongs to essential care or travel, test a different feasible window instead of displacing that responsibility. The result informs scheduling in this setting; it cannot establish a biological mechanism or a permanent identity from a few entries."
           ],
-          "example": "Move one comparable drafting task to 10:00 for a week and keep task size and quality criteria similar. Record sleep opportunity and disruptions as context. The result supports a local decision, not proof of a body clock mechanism.",
+          "example": "A learner reports easier problem checking at 11:00 than 18:00 on four days. Compare similar checking tasks at those times across six sessions, recording interruptions and sleep opportunity. Use the observations for a local scheduling choice without inferring a biological mechanism.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1006,7 +1006,7 @@
           "A guarantee for every future morning"
         ],
         "correct": 0,
-        "explanation": "A tentative scheduling hypothesis follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A few observations suggest a scheduling test. Task difficulty and other conditions could explain the pattern, so they do not establish a permanent identity."
       },
       "references": [
         {
@@ -1030,13 +1030,13 @@
             "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.",
             "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week’s priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
           ],
-          "example": "Archive the finished items, clarify carried items and choose two outcomes that fit the windows. Defer or decline the other five explicitly. Record any promises requiring renegotiation.",
+          "example": "A weekly list contains three completed tasks, two carried tasks and three new requests. With three available windows, archive the completed work and select three bounded outcomes from the five remaining candidates; defer or renegotiate the other two explicitly.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1058,7 +1058,7 @@
           "A score of personal worth"
         ],
         "correct": 0,
-        "explanation": "A feasible set of decisions for the next week follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "The review should produce feasible choices about what to keep, defer or renegotiate. Copying the backlog does not resolve limited capacity."
       },
       "references": [
         {
@@ -1082,18 +1082,18 @@
             "A boundary is useful when it names available capacity and a concrete alternative. Explain which existing outcome would move if a new request is accepted. You need not disclose private reasons to make a scheduling conflict understandable.",
             "If the requester cannot choose the priority, identify the person who can resolve the conflict. Different requesters may each assume their item comes first unless the trade-off becomes visible. Use a neutral description of capacity and the existing commitment; private reasons are not always needed. Offer alternatives you can actually fulfill rather than a partial result whose usefulness is unknown. Once the choice is made, update the affected promise and finish criteria. A clear boundary remains a scheduling decision that may be revisited when new capacity or support becomes available."
           ],
-          "example": "I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.",
+          "example": "A new 60-minute edit arrives when only 20 minutes are free. Reply: “I can check the introduction today or complete the whole edit Friday. The full edit today would displace the agreed analysis. Which should take priority?”",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Draft a reply to a new 90-minute request when today has only 30 spare minutes.",
+        "prompt": "Today includes a promised draft and only 30 spare minutes. Draft a reply to a new 90-minute request; completing it today would displace that draft.",
         "solution": "I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.",
         "solutionFormat": "prose",
         "checks": [
@@ -1110,7 +1110,7 @@
           "Private details unrelated to the decision"
         ],
         "correct": 0,
-        "explanation": "Specific alternatives and the affected commitment follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Concrete alternatives show which commitment would move and allow a priority decision without requiring private details."
       },
       "references": [
         {
@@ -1134,13 +1134,13 @@
             "Repeated carry-over can mean the plan exceeds capacity, tasks are unclear or the environment changed. Look for structural explanations before adding stricter rules. An overload response removes, reduces, delays or shares work; simply tracking more precisely does not create time.",
             "Some obligations cannot be removed by one person. Document the mismatch and seek a realistic scope, schedule or support decision where possible. Distinguish unclear tasks from too much essential work: clarification can reduce reconstruction, but it cannot create hours. Repeated carry-over is a reason to inspect the system rather than tighten reminders. Keep a minimum plan for disrupted days that preserves essential commitments and return cues. Measure whether the intervention reduces unmet obligations without quietly transferring work into evenings or removing necessary recovery from the record."
           ],
-          "example": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
+          "example": "Five of eight planned outcomes remain unfinished for four consecutive days. For the next two days, plan only three essential outcomes with finish criteria and record their actual durations. Defer the other five; negotiate scope or support if essential work still exceeds capacity.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1162,7 +1162,7 @@
           "Schedule less sleep"
         ],
         "correct": 0,
-        "explanation": "Remove optional outcomes from the commitment follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Removing optional outcomes reduces the commitment to fit capacity. More detailed tracking cannot create the missing time."
       },
       "references": [
         {
@@ -1186,13 +1186,13 @@
             "A personal experiment needs a question, one change, a comparison period and an outcome you can observe. Small samples and changing tasks limit causal conclusions. Use the trial to choose a workable routine, not to advertise a universal productivity technique.",
             "A comparison should include maintenance effort. A technique that saves ten minutes but takes twenty minutes to administer may have another benefit, but it is not a time saving on those observations. Define the outcome before seeing results so you do not choose whichever measure improved afterward. Record errors and urgent communication alongside output. Keep task and window differences visible, and avoid turning a four-session result into a precise estimate of effectiveness. The experiment supports a reversible local choice and can be repeated if the initial evidence is ambiguous."
           ],
-          "example": "Alternate two normal sessions and two sessions with optional messages checked at the end. Record checked paragraphs, errors and urgent interruptions. Keep the focus window similar; report the small sample and task differences.",
+          "example": "Across six comparable reading sessions, alternate three with routine alerts enabled and three with optional messages checked afterward. Keep session length similar and record checked summaries, errors and necessary interruptions. Treat task differences and the small sample as limitations.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1214,7 +1214,7 @@
           "Any difference proves causation"
         ],
         "correct": 0,
-        "explanation": "Batching looked useful in these four sessions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Four sessions can support a local decision to keep testing batching. Changes in workload or task difficulty still limit a causal claim."
       },
       "references": [
         {
@@ -1238,13 +1238,13 @@
             "Personal plans interact with shared deadlines, care, availability and dependencies. Make waiting visible and agree an escalation time. A calendar invite alone does not establish that another person can supply an input when you need it.",
             "Choose independent work while waiting so a handoff does not stall the whole plan. Keep the waiting input visible with a named person, reply window and follow-up decision. Being unable to act now does not mean the commitment has disappeared. Send the smallest useful artifact and specific questions; a large unfinished file without direction may make review harder. If the agreed window is missed, use the confirmed fallback or request a decision. Do not quietly substitute approval or assume that silence means the other person accepted the draft."
           ],
-          "example": "Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.",
+          "example": "A calculation needs review by Friday, and the reviewer is unavailable Thursday. Send the worked calculation Tuesday, agree a Wednesday response window and prepare independent documentation meanwhile. Agree a fallback before Friday if the response does not arrive.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1266,7 +1266,7 @@
           "Assuming instant availability"
         ],
         "correct": 0,
-        "explanation": "Confirmed input, reply window and fallback follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Confirm the required input, reply window and fallback. Another person’s contribution remains a dependency until agreed."
       },
       "references": [
         {
@@ -1290,13 +1290,13 @@
             "Choose a few recurring decisions: capture commitments, plan within capacity, leave return cues and review results. More categories and tools add maintenance cost. Retain a practice only when it helps a recurring decision enough to justify its effort.",
             "Build a minimum version for disrupted days: capture the essential commitment, choose one next action and leave a return cue. A routine that works only under ideal conditions needs a simpler fallback. Assess each field by the decision it informs rather than the visual completeness of the dashboard. Remove a field experimentally and observe whether missed obligations or uncertainty increase. Keep enough history to learn from comparable tasks, but avoid maintaining data that no review uses. The smallest useful system may differ between predictable study periods and a week dominated by care or support work."
           ],
-          "example": "Keep next action, deadline consequence and available window; remove unused mood graphs and categories. Review once weekly. Compare maintenance time and missed commitments after a week before making another change.",
+          "example": "A planner takes 15 minutes daily, but only deadlines and next actions guide decisions. Keep those fields plus an available work window, remove unused color ratings and use a short weekly review. Compare maintenance time and missed commitments after one week.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1318,7 +1318,7 @@
           "It is available in the app"
         ],
         "correct": 0,
-        "explanation": "It informs a recurring useful decision follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Keep a tracking field when it informs a recurring decision. Its maintenance cost matters as well as the information collected."
       },
       "references": [
         {
@@ -1342,18 +1342,18 @@
             "A final review compares intended outcomes with observed results and costs. Include unfinished work, context changes and practices abandoned. Sustainable planning supports ordinary obligations and recovery; it does not aim to maximize every waking minute.",
             "Include what you stopped doing and why. A practice may help one type of task and burden another, so describe the task and constraints alongside the result. Separate intended outcomes from observed outcomes and distinguish correlation from a causal claim. In this case, the lighter second-week workload is a competing explanation for fewer misses. Keep the capacity practice if it exposed useful conflicts, while retesting an uncertain notification change under more comparable conditions. Your final report should help a future decision; it should not market the routine as a cure for every difficult week."
           ],
-          "example": "The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.",
+          "example": "A three-week trial produced more checked exercises, but the final week used easier questions. The increase cannot be attributed to the new routine alone. Keep the return cues that reduced restart confusion and compare the routine again with tasks of similar difficulty.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.",
+        "prompt": "In a two-week trial, missed deadlines decreased but workload was lighter in week two. Capacity budgeting exposed schedule conflicts; message batching was also tested. Write a conclusion that separates observed usefulness from an independent causal effect.",
         "solution": "The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.",
         "solutionFormat": "prose",
         "checks": [
@@ -1370,7 +1370,7 @@
           "Delete inconvenient context"
         ],
         "correct": 0,
-        "explanation": "Report improvement and the workload confound follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Report both the improvement and the lighter workload. The result may be useful even though the scheduling change cannot be isolated as its cause."
       },
       "references": [
         {

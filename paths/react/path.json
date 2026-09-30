@@ -159,7 +159,7 @@
       "takeaway": "HTML gives meaning, CSS controls presentation and JavaScript changes behavior.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A browser turns a document into an interactive page. A button has a role, focus behavior and keyboard activation that a clickable div does not automatically provide. Start with meaningful elements before styling.",
             "The tiny example is a complete HTML fragment. Its label tells a user what the input means. A React application still produces ordinary browser elements; React is not a replacement for HTML or accessibility."
@@ -167,7 +167,7 @@
           "example": "<label for=\"topic\">Topic</label>\n<input id=\"topic\" name=\"topic\" />\n<button type=\"button\">Add topic</button>"
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "A placeholder disappears when typing and is not a substitute for a persistent label. Avoid using color alone to indicate errors."
           ]
@@ -209,7 +209,7 @@
       "takeaway": "Convert at boundaries; do not rely on accidental coercion.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Input values arrive as strings even when they look numeric. Convert deliberately, then validate. Number('') is zero, so check for blank input before conversion.",
             "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
@@ -217,7 +217,7 @@
           "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Treating every falsy value as missing rejects valid zero. Check the condition you actually mean."
           ]
@@ -265,7 +265,7 @@
       "takeaway": "Keep source records separate from derived views.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An array is an ordered collection. An object groups named properties for one record. map transforms every element, filter selects elements and reduce combines them into one value.",
             "A learning tracker can store records once and derive completed titles or totals when needed. A derived array need not be another mutable source of truth."
@@ -273,7 +273,7 @@
           "example": "const lessons = [{id: 1, title: \"Types\", done: true}, {id: 2, title: \"Arrays\", done: false}];\nconst titles = lessons.filter(x => x.done).map(x => x.title);\nconsole.log(titles); // [\"Types\"]"
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "sort mutates an array. Use [...items].sort(...) when the original order must remain intact. A shallow copy still shares nested objects."
           ]
@@ -315,7 +315,7 @@
       "takeaway": "A small pure function is easier to explain and test.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A function receives inputs and returns an output. A pure function depends only on its inputs and does not change external state. Logging and network calls are side effects; they are useful, but keep them at clear boundaries.",
             "Arrow functions are concise syntax, not a separate execution model. A function passed as an argument can be called later; calling it immediately passes its result instead."
@@ -323,7 +323,7 @@
           "example": "function completion(done, total) {\n  return total === 0 ? 0 : Math.round(100 * done / total);\n}\nconsole.log(completion(3, 4)); // 75"
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Returning nothing yields undefined. In an arrow function with braces, write return explicitly."
           ]
@@ -365,7 +365,7 @@
       "takeaway": "An asynchronous result needs success, failure and loading behavior.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A Promise represents eventual completion or failure. await pauses the current async function, not the whole browser. Use try/catch to handle rejections and decide what the user should see.",
             "fetch resolves for many HTTP errors, including 404; inspect response.ok. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
@@ -373,7 +373,7 @@
           "example": "async function loadTitles(url) {\n  const response = await fetch(url);\n  if (!response.ok) throw new Error(\"HTTP \" + response.status);\n  const data = await response.json();\n  if (!Array.isArray(data) || !data.every(x => typeof x === \"string\")) {\n    throw new Error(\"Expected a list of titles\");\n  }\n  return data;\n}\n// Example function: requires a real compatible endpoint; not run automatically."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with Promise.all; one rejection rejects that combined promise."
           ]
@@ -414,7 +414,7 @@
       "takeaway": "Types check assumptions during development; validate external data at runtime.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "TypeScript adds a static type checker to JavaScript. A union such as string | null describes alternatives. A conditional can narrow that union before an operation is used.",
             "An interface describes an expected shape, but it does not inspect a network response. Casting with as does not make unknown data valid. Start with unknown at external boundaries and check it."
@@ -422,7 +422,7 @@
           "example": "type Lesson = {id: number; title: string; done: boolean};\nfunction label(title: string | null): string {\n  return title === null ? \"Untitled\" : title.toUpperCase();\n}\nconsole.log(label(null)); // Untitled\n// Run in a TypeScript project or the official playground."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "any disables useful checking. Prefer a specific type or unknown with narrowing when the shape is not yet established."
           ]
@@ -463,7 +463,7 @@
       "takeaway": "Pass data down and keep each component’s responsibility clear.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A component renders one part of the interface from its inputs. Props are supplied by its parent. Begin with a static screen so the component boundaries are understandable before adding behavior.",
             "Use stable record IDs for list keys. The key helps React match elements between renders; it is not an ordinary prop automatically received by the child. In the snippet, the parent passes title separately."
@@ -471,7 +471,7 @@
           "example": "type RowProps = {title: string};\nfunction LessonRow({title}: RowProps) { return <li>{title}</li>; }\nexport default function App() {\n  const rows = [{id: \"types\", title: \"Types\"}, {id: \"state\", title: \"State\"}];\n  return <ul>{rows.map(r => <LessonRow key={r.id} title={r.title} />)}</ul>;\n}\n// App.tsx in the practice React project. Displays two list items."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Array indexes are fragile keys when records can be inserted, deleted or reordered. Do not generate new random keys on every render."
           ]
@@ -513,7 +513,7 @@
       "takeaway": "State is a snapshot; request the next state instead of mutating the current one.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "React state retains information between renders. A setter requests another render. The current event handler still sees the snapshot from the render that created it.",
             "When an update depends on previous state, a functional updater communicates that dependency. Create new arrays and changed objects so the update is explicit. Keep calculated totals derived from the current records."
@@ -521,7 +521,7 @@
           "example": "import {useState} from \"react\";\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(c => c + 1)}>Sessions: {count}</button>;\n}"
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Directly changing an object in state does not request a render. Also avoid storing both records and a separately maintained completed count when the count can be derived."
           ]
@@ -591,7 +591,7 @@
       "takeaway": "Store user input; derive filtered output from it.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A controlled input receives its value from state and reports changes through an event handler. Keep the input’s accessible label visible. A form can handle submission from both a button and the Enter key.",
             "Search results are derived from records plus the search query. There is no need to copy them into another state variable. Validate on submit, and explain errors in text near the field."
@@ -599,7 +599,7 @@
           "example": "const [query, setQuery] = useState(\"\");\nconst visible = lessons.filter(row => row.title.toLowerCase().includes(query.toLowerCase()));\n// Inside a component with lessons and useState:\n<label htmlFor=\"search\">Find a lesson</label>\n<input id=\"search\" value={query} onChange={e => setQuery(e.target.value)} />\n// Render visible.map(...) below the input."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "This is a component fragment, not a full file. Hooks must be called at the top level of a component or custom Hook, not inside a conditional."
           ]
@@ -641,7 +641,7 @@
       "takeaway": "Use Effects to synchronize external systems, not to calculate ordinary derived values.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An Effect can connect a component to something outside rendering, such as browser storage or a subscription. Cleanup releases resources or prevents obsolete work from affecting the current screen.",
             "Fetching data in an Effect needs loading and error handling plus protection from stale results. Frameworks and data libraries can manage these concerns. Do not suppress dependencies just to stop an Effect from running."
@@ -649,7 +649,7 @@
           "example": "useEffect(() => {\n  const controller = new AbortController();\n  fetch(\"/api/lessons\", {signal: controller.signal})\n    .then(r => { if (!r.ok) throw new Error(\"HTTP \" + r.status); return r.json(); })\n    .then(data => { /* validate shape, then update data state */ })\n    .catch(error => { if (error.name !== \"AbortError\") { /* show error state */ } });\n  return () => controller.abort();\n}, []);\n// Pattern fragment: import useEffect and supply a real API; comments are required implementation work."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "An Effect may be set up and cleaned up extra times in development Strict Mode. Design correct cleanup instead of relying on a single execution."
           ]
@@ -690,7 +690,7 @@
       "takeaway": "Finish a small complete feature before adding a larger architecture.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It deliberately keeps data in memory so state behavior is visible without storage complications.",
             "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
@@ -698,7 +698,7 @@
           "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
         },
         {
-          "title": "Common mistake to avoid",
+          "title": "Pitfalls",
           "paragraphs": [
             "Do not claim persistence just because a value survives changing a filter. This example resets after a page reload and has no backend."
           ]
@@ -740,21 +740,21 @@
       "takeaway": "A closure retains access to its lexical environment; scheduling decides when a callback observes it.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "Split a growing program by responsibility. A named export gives an explicit module interface. A closure can hide mutable state, but hidden state can also make tests depend on call order. Promise callbacks run after the current synchronous work completes; a zero-delay timer is not an instruction to run immediately."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "A closure retains access to its lexical environment; scheduling decides when a callback observes it.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The two counters retain independent value variables, producing 1, 2, 1. The promise callback runs after synchronous code, so the log order is A, C, B."
           ],
           "example": "function makeCounter() {\n  let value = 0;\n  return () => ++value;\n}\nconst first = makeCounter();\nconst second = makeCounter();\nconsole.log(first(), first(), second()); // 1 2 1\nconsole.log(\"A\");\nPromise.resolve().then(() => console.log(\"B\"));\nconsole.log(\"C\"); // A, C, then B\n// A module could export makeCounter with: export { makeCounter };"
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users’ data."
           ]
@@ -795,21 +795,21 @@
       "takeaway": "Represent valid states so that impossible combinations are difficult to express.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "Two booleans loading and failed can produce confusing combinations. A discriminated union uses one tag to distinguish loading, success and failure. Render by the tag, and TypeScript narrows the remaining fields. Runtime data must still be checked before constructing the success state."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Represent valid states so that impossible combinations are difficult to express.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The TypeScript function narrows Remote by status. Only the success branch reads data; an empty successful array is described as 0 lessons."
           ],
           "example": "type Remote<T> =\n  | { status: \"loading\" }\n  | { status: \"success\"; data: T }\n  | { status: \"error\"; message: string };\nfunction describe(value: Remote<string[]>): string {\n  switch (value.status) {\n    case \"loading\": return \"Loading\";\n    case \"success\": return value.data.length + \" lessons\";\n    case \"error\": return value.message;\n  }\n}\n// TypeScript snippet: describe({status:\"success\",data:[]}) gives \"0 lessons\"."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A cast merely changes what the checker assumes. Prefer decoding unknown into a validated domain object. Decide how to handle extra fields, invalid IDs, duplicates and payload size. Do not log entire sensitive responses just to debug a validation failure."
           ]
@@ -850,21 +850,21 @@
       "takeaway": "Centralize state transitions when related updates must remain consistent.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "A reducer receives previous state and an action and returns next state. Keep it pure: no network calls, random IDs or storage writes inside it. Generate an ID in the event handler and pass it in an action. The reducer can reject duplicate IDs or invalid titles according to a documented contract."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Centralize state transitions when related updates must remain consistent.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The reducer returns new arrays for toggle and remove; toggle also copies the matching row. The final comment shows how a component connects this function to useReducer."
           ],
           "example": "type Row = {id:string; title:string; done:boolean};\ntype Action = {type:\"toggle\"; id:string} | {type:\"remove\"; id:string};\nfunction reducer(state: Row[], action: Action): Row[] {\n  switch (action.type) {\n    case \"toggle\": return state.map(row => row.id === action.id ? {...row, done:!row.done} : row);\n    case \"remove\": return state.filter(row => row.id !== action.id);\n  }\n}\n// Component fragment: const [rows, dispatch] = useReducer(reducer, []);"
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; choose that behavior deliberately."
           ]
@@ -905,21 +905,21 @@
       "takeaway": "Share state deliberately; sharing a Hook does not automatically share its state.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "A custom Hook packages reusable stateful behavior. Two components calling the same Hook normally receive separate state. Context can distribute a shared value from an ancestor, but it is not a replacement for deciding who owns that value."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Share state deliberately; sharing a Hook does not automatically share its state.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "This Hook fragment gives each invocation its own state. The functional update flips the current value; sharing the Hook implementation does not couple its callers."
           ],
           "example": "// Component/Hook fragment; import useState from React.\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  return {on, toggle: () => setOn(value => !value)};\n}\n// const first = useToggle(); const second = useToggle();\n// Toggling first does not toggle second."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Put local form input near the component using it. Put shared records at the nearest suitable shared owner. A context value change updates consumers; splitting unrelated contexts may help, but measure before adding indirection. Hooks must obey the top-level calling rules."
           ]
@@ -960,21 +960,21 @@
       "takeaway": "State belongs to a component’s position and identity in the rendered tree.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record’s draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "State belongs to a component’s position and identity in the rendered tree.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
           ],
           "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A key reset is a product decision. Warn or preserve work where appropriate; do not use random keys to force refresh. Lifting state lets you preserve a draft across remounts but increases coordination. Test both switching records and re-rendering the same record."
           ]
@@ -1015,21 +1015,21 @@
       "takeaway": "Cancellation and stale-result protection keep old requests from overwriting newer intent.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "If a user selects A and then B, A’s slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Cancellation and stale-result protection keep old requests from overwriting newer intent.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "This Effect fragment needs itemId, setView and decode from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
           ],
           "example": "// Effect fragment with itemId, setView and decode supplied by the component.\nuseEffect(() => {\n  const controller = new AbortController();\n  let active = true;\n  setView({status:\"loading\"});\n  fetch('/api/items/' + encodeURIComponent(itemId), {signal:controller.signal})\n    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })\n    .then(raw => { const data = decode(raw); if (active) setView({status:\"success\",data}); })\n    .catch(error => { if (active && error.name !== 'AbortError') setView({status:\"error\",message:'Unable to load'}); });\n  return () => { active = false; controller.abort(); };\n}, [itemId]);"
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "This fragment assumes decode and setView are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
           ]
@@ -1072,21 +1072,21 @@
       "takeaway": "Navigation state belongs in a URL when users need to bookmark or share it.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "A selected lesson, search query or page number may need to survive refresh and Back. A local state variable alone does not provide that behavior. Production routers handle route matching and history integration; understand the browser model before choosing abstractions."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Navigation state belongs in a URL when users need to bookmark or share it.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The URL parser reads q and validates page as a positive integer, falling back to 1. pushState changes browser history without emitting popstate itself."
           ],
           "example": "const params = new URLSearchParams('?q=react&page=2');\nconst query = params.get('q') ?? '';\nconst rawPage = Number(params.get('page') ?? '1');\nconst page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;\nconsole.log(query, page); // react 2\n// pushState changes history but does not itself emit popstate."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Treat URL parameters as untrusted input. Decide which changes push a new history entry and which replace the current one. A deployed SPA also needs deep-link fallback handling unless it uses hash routes. Focus and document titles must update coherently after navigation."
           ]
@@ -1129,22 +1129,22 @@
       "takeaway": "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works.",
             "The kit supplies ui.test.tsx, vite.config.ts and locked dependencies. npm test executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The kit supplies the imports and test environment for this fragment. The test finds controls by accessible role and name, completes the Types lesson, and checks visible progress."
           ],
           "example": "// Testing Library example fragment; the downloadable kit configures Vitest, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Queries by role and accessible name tend to reflect real user interaction. Avoid tests coupled to internal state variable names or CSS selectors when a semantic query is possible. Use controllable asynchronous fixtures instead of arbitrary sleeps."
           ]
@@ -1186,21 +1186,21 @@
       "takeaway": "Recoverable UI failures and access-control decisions are different responsibilities.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "An Error Boundary can show a fallback for rendering errors in its descendants. It does not automatically handle every event-handler or asynchronous error, so those paths still need explicit handling. Place boundaries around features that can fail independently."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "Recoverable UI failures and access-control decisions are different responsibilities.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "JSX renders externalTitle as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
           ],
           "example": "// Safe text rendering:\n<p>{externalTitle}</p>\n// Do not convert untrusted strings to HTML with dangerouslySetInnerHTML.\n// Authorization still belongs on the server, even if a button is hidden."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "React’s ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
           ]
@@ -1241,21 +1241,21 @@
       "takeaway": "An optimization should preserve behavior and improve a measured bottleneck.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "A slow interaction may come from rendering, a long calculation, layout or a network waterfall. Record the slow interaction and inspect the appropriate profiler. Memoization trades bookkeeping and memory for potentially avoided work; it is not a correctness mechanism."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "An optimization should preserve behavior and improve a measured bottleneck.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "This component fragment caches expensiveFilter by rows and query. Its usefulness depends on measured cost and stable dependencies; a new rows reference invalidates the cache."
           ],
           "example": "// Component fragment:\nconst visible = useMemo(\n  () => expensiveFilter(rows, query),\n  [rows, query]\n);\n// Use only when measurement shows this calculation is worth caching.\n// Changing rows identity every render can defeat the cache."
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "React memo compares props shallowly by default; new object/function identities may still trigger work. A custom comparator can be wrong when it ignores callbacks with captured state. Large lists may need virtualization; it introduces keyboard and accessibility considerations. Compiler-enabled projects can change how much manual memoization is useful."
           ]
@@ -1302,21 +1302,21 @@
       "takeaway": "A working local screen still needs a reliable data and delivery contract.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Contract",
           "paragraphs": [
             "Persistence introduces schema versions, invalid stored data, quota failures and multi-device conflict decisions. A browser-only tracker may use local storage for non-sensitive learning data, but it must handle read/write failures and cannot promise cross-device synchronization."
           ]
         },
         {
-          "title": "Worked implementation",
+          "title": "Example",
           "paragraphs": [
             "A working local screen still needs a reliable data and delivery contract.",
-            "Read the comments to distinguish a complete function from a component or application fragment. Predict the visible result and failure path before running it."
+            "The versioned envelope supports validation and migration of persisted lessons. The release sequence covers build correctness, navigation, keyboard use, failure behavior and operational recovery."
           ],
           "example": "Persistence envelope:\n{ \"version\": 1, \"lessons\": [{\"id\":\"types\",\"title\":\"Types\",\"done\":false}] }\n\nRelease checks:\nType-check → domain tests → UI tests → production build → preview\nDeep-link refresh → keyboard flow → error states → monitoring → rollback plan"
         },
         {
-          "title": "Debugging and design tradeoffs",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record what was actually tested; a green build is not evidence that every user journey works."
           ]

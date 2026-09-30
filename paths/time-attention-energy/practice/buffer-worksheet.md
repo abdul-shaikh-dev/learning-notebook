@@ -8,7 +8,7 @@ A buffer is unassigned capacity for variable work, delays or recovery. Its size 
 
 ## Try before reading the answer
 
-A 180-minute window contains 160 minutes of work and 30 minutes of essential transitions. Repair it.
+A 180-minute window contains 160 minutes of work, including an optional 30-minute task, and 30 minutes of essential transitions. Repair it.
 
 Decision: ____________________________________________
 

@@ -88,7 +88,7 @@
       "takeaway": "State the contract, then count how work grows.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "An algorithm is a procedure for solving a problem. Its contract says what inputs it accepts and what result it promises. Test a tiny example by hand before discussing speed.",
             "Big-O describes an upper bound on growth, not a stopwatch reading. A single pass over n values has O(n) time if each step costs constant time. Auxiliary space counts extra storage, separately from the input."
@@ -96,7 +96,7 @@
           "example": "def contains(items, target):\n    for item in items:\n        if item == target:\n            return True\n    return False\n\nprint(contains([2, 4, 6], 4))  # True"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Early exit can improve a particular run without changing the worst-case bound. State whether you mean best, average, expected or worst case."
           ]
@@ -138,7 +138,7 @@
       "takeaway": "Access patterns matter more than the name of a structure.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "A Python list is a dynamic array of references. Index access is constant-time under the usual model. Inserting at the front shifts existing references and takes linear time.",
             "A linked list stores references between nodes instead of adjacent index slots. Inserting after an already-known node can be constant-time, but finding that node may require a linear walk. Neither representation is universally faster."
@@ -146,7 +146,7 @@
           "example": "values = [10, 20, 30]\nprint(values[1])  # 20\nvalues.insert(0, 5)\nprint(values)     # [5, 10, 20, 30]"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Appending to a dynamic array is amortized O(1), not a promise that every individual append costs the same. Slicing copies selected references and uses extra memory."
           ]
@@ -187,7 +187,7 @@
       "takeaway": "Use a map for keyed information and a set for membership.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "A dictionary associates keys with values; a set records unique membership. For well-behaved hashes, lookups have expected constant time, but collision behavior can worsen the cost. Hashing a long key itself may also cost time.",
             "A frequency table is a natural dictionary problem. Store the count seen so far for each item rather than repeatedly scanning the entire list."
@@ -195,7 +195,7 @@
           "example": "counts = {}\nfor topic in ['sql', 'python', 'sql']:\n    counts[topic] = counts.get(topic, 0) + 1\nprint(counts)  # {'sql': 2, 'python': 1}"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A map can use more memory than a scan. Keys need valid hashing/equality behavior; Python lists are not dictionary keys."
           ]
@@ -237,7 +237,7 @@
       "takeaway": "A stack removes the newest item; a queue removes the oldest.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
             "Python list append/pop work well for a stack. Use collections.deque for removing from the front of a queue; repeatedly using list.pop(0) adds shifting work."
@@ -245,7 +245,7 @@
           "example": "from collections import deque\nqueue = deque(['A', 'B'])\nqueue.append('C')\nprint(queue.popleft())  # A\nstack = ['A', 'B']\nprint(stack.pop())      # B"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A structure’s ordering policy is part of correctness, not just performance. Replacing a queue with a stack changes graph traversal order."
           ]
@@ -286,7 +286,7 @@
       "takeaway": "Discard half the candidates only when order justifies it.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "Binary search requires data sorted under the same comparison used by the search. Maintain inclusive low and high indexes. If the middle value is below the target, all values at or left of it can be excluded.",
             "The invariant is: if the target exists and has not been found, it lies in the remaining range. Each update must shrink that range. This version returns any matching index, not necessarily the first duplicate."
@@ -294,7 +294,7 @@
           "example": "def binary_search(values, target):\n    low, high = 0, len(values) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if values[mid] == target:\n            return mid\n        if values[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\nassert binary_search([2, 5, 8, 12, 16], 12) == 3"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Sorting an unsorted list first has a cost. For one search, a linear scan may be simpler; binary search is valuable when sorted data already exists or is reused."
           ]
@@ -367,7 +367,7 @@
       "takeaway": "A comparison rule and tie policy are part of the result.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "Sorting enables grouped display, merging and efficient search. Python’s sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
             "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
@@ -375,7 +375,7 @@
           "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Never benchmark only already-sorted tiny inputs and conclude an algorithm is best. Include reversed input, duplicates and representative sizes."
           ]
@@ -417,7 +417,7 @@
       "takeaway": "A recursive call must move toward a smaller problem.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "Recursion expresses a problem in terms of smaller instances. A base case stops expansion. A recursive algorithm can still consume substantial stack space even if its code is short.",
             "A tree represents parent-child relationships without cycles. A recursive traversal can process a node and then its children. A highly skewed tree may have depth n; Python recursion has practical limits, so an explicit stack is often safer for deep input."
@@ -425,7 +425,7 @@
           "example": "def total(tree):\n    return tree['minutes'] + sum(total(child) for child in tree['children'])\n\ntree = {'minutes': 10, 'children': [{'minutes': 20, 'children': []}]}\nassert total(tree) == 30"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "This example assumes a real acyclic tree and well-formed records. A cycle would never reach a base case. Counting calls and maximum depth are different measurements."
           ]
@@ -529,7 +529,7 @@
       "takeaway": "Use a queue to explore unweighted shortest paths by layers.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "A graph stores vertices and edges. Unlike a tree, it can contain cycles and multiple routes. An adjacency list maps each vertex to its neighbors; directed edges have a direction.",
             "Breadth-first search discovers vertices in increasing edge distance from the start. Mark a vertex seen when enqueuing it, not after repeated enqueues. It finds shortest paths by number of edges in an unweighted graph, not cheapest routes with arbitrary weights."
@@ -537,7 +537,7 @@
           "example": "from collections import deque\n\ndef distances(graph, start):\n    distance = {start: 0}\n    queue = deque([start])\n    while queue:\n        node = queue.popleft()\n        for neighbor in graph.get(node, []):\n            if neighbor not in distance:\n                distance[neighbor] = distance[node] + 1\n                queue.append(neighbor)\n    return distance\n\nassert distances({'A':['B'], 'B':['C'], 'C':['A']}, 'A') == {'A':0, 'B':1, 'C':2}"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A seen set prevents cycles from causing repeated traversal. With adjacency lists and expected constant-time hashing, traversal is O(V+E) over reachable vertices/edges."
           ]
@@ -578,7 +578,7 @@
       "takeaway": "A heap efficiently exposes an extreme, not a fully sorted sequence.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "A min-heap keeps the smallest element at its root. In Python heapq operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
             "A scheduler can use (priority, sequence, task) entries. A sequence number provides a defined tie-breaker and avoids comparing task objects when priorities tie. Real schedulers also need cancellation and fairness policies."
@@ -586,7 +586,7 @@
           "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Iteration over the underlying heap list is not guaranteed sorted order. Repeated popping sorts the extracted sequence but consumes the heap."
           ]
@@ -627,7 +627,7 @@
       "takeaway": "Reuse solutions to overlapping subproblems with a clearly defined state.",
       "sections": [
         {
-          "title": "Understand the idea",
+          "title": "Concept",
           "paragraphs": [
             "Dynamic programming stores answers to repeated subproblems. Define what each state means before writing a recurrence. For ways to climb n steps using moves of one or two, ways(n)=ways(n−1)+ways(n−2).",
             "Set ways(0)=1 for the empty sequence and ways(1)=1. The iterative version retains only two prior counts. It uses O(n) additions and a constant number of integer variables; exact large-integer arithmetic still grows as the result gets larger."
@@ -635,7 +635,7 @@
           "example": "def ways(n):\n    if not isinstance(n, int) or isinstance(n, bool) or n < 0:\n        raise ValueError('nonnegative integer required')\n    previous, current = 1, 1\n    for _ in range(n):\n        previous, current = current, previous + current\n    return previous\n\nassert ways(0) == 1\nassert ways(4) == 5"
         },
         {
-          "title": "Reason about the tradeoff",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Memoization is not a substitute for a valid recurrence. Test base cases separately. A greedy choice needs a proof; it does not follow from having a short implementation."
           ]
@@ -679,21 +679,21 @@
       "takeaway": "Changing a link changes reachability; finding the link is often the expensive part.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Model a chain as a node with a value and a next reference. To insert after a known node, first point the new node at the old successor, then point the known node at the new node. Reversing that order can lose the remainder of the chain. Empty lists need an explicit head policy."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Changing a link changes reachability; finding the link is often the expensive part.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "insert_after preserves the old successor while inserting a new node. Traversal follows next until None, producing 1, 2, 3."
           ],
           "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Insertion after an already-known node takes O(1) time. Searching by value takes O(n). The traversal assumes an acyclic chain; a cycle needs a detection policy. A Python list is usually simpler when indexed access and locality matter."
           ]
@@ -734,21 +734,21 @@
       "takeaway": "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Divide the input until runs have size zero or one. During merging, the smallest unconsumed value must be at the front of one of the runs. Select that value, advance its pointer, and repeat. Taking from the left on equal keys preserves stability."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "Each recursive call sorts a smaller half. During merging, i and j mark the unconsumed suffixes; choosing the left value on equality preserves stability."
           ],
           "example": "def merge_sort(items):\n    if len(items) < 2:\n        return list(items)\n    mid = len(items) // 2\n    left, right = merge_sort(items[:mid]), merge_sort(items[mid:])\n    out, i, j = [], 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return out + left[i:] + right[j:]\n\nassert merge_sort([3, 1, 2, 1]) == [1, 1, 2, 3]"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Each recursion level merges O(n) values, and there are O(log n) levels. Time is O(n log n) under constant-cost comparisons. This copying implementation uses O(n) peak auxiliary storage plus recursion bookkeeping; cumulative allocation is larger. Built-in sorting is preferable in most Python applications."
           ]
@@ -789,21 +789,21 @@
       "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Given sorted numbers and a target sum, place pointers at opposite ends. If the sum is too small, increasing the left value is the only useful move; decreasing the right would make it smaller. The symmetric argument applies when the sum is too large."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Monotonic structure lets you discard candidates without checking every pair.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "For sorted values, a sum below the target advances left; a sum above it retreats right. The example finds indices 1 and 2, whose values sum to 6."
           ],
           "example": "def pair_sum(values, target):\n    left, right = 0, len(values) - 1\n    while left < right:\n        total = values[left] + values[right]\n        if total == target:\n            return left, right\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return None\n\nassert pair_sum([1, 2, 4, 7], 6) == (1, 2)"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "The sorted-input precondition is essential. Each move shortens the interval, so time is O(n) and extra space O(1). Sorting first costs O(n log n) and changes index meanings unless original indices are carried alongside values."
           ]
@@ -844,21 +844,21 @@
       "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Find the longest substring with no repeated characters. Keep the last position of each character and the left edge of the current valid window. On repetition, move left past the prior occurrence only if that occurrence is within the current window."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Maintain the property of a contiguous interval instead of rebuilding every interval.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "last records the most recent index of each character. max prevents left from moving backward when a repeated character lies outside the current window; abba has a longest unique span of length 2."
           ],
           "example": "def longest_unique(text):\n    last, left, best = {}, 0, 0\n    for right, char in enumerate(text):\n        left = max(left, last.get(char, -1) + 1)\n        last[char] = right\n        best = max(best, right - left + 1)\n    return best\n\nassert longest_unique(\"abba\") == 2"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "The max prevents the left edge moving backward. Expected time O(n) uses hashing assumptions; extra space depends on distinct characters. Python iterates Unicode code points, not user-perceived grapheme clusters. Define the character model for human-language applications."
           ]
@@ -899,21 +899,21 @@
       "takeaway": "A dependency order exists only when the directed graph has no cycle.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "An edge A→B means A must precede B. Kahn’s algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "A dependency order exists only when the directed graph has no cycle.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "indegree counts remaining prerequisites. Each dequeued vertex removes its outgoing constraints; fewer emitted vertices than known vertices indicates a cycle."
           ],
           "example": "from collections import deque\n\ndef topological(graph):\n    indegree = {v: 0 for v in graph}\n    for neighbors in graph.values():\n        for v in neighbors:\n            indegree[v] = indegree.get(v, 0) + 1\n    queue = deque(v for v, degree in indegree.items() if degree == 0)\n    order = []\n    while queue:\n        node = queue.popleft(); order.append(node)\n        for neighbor in graph.get(node, []):\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                queue.append(neighbor)\n    if len(order) != len(indegree):\n        raise ValueError(\"dependency cycle\")\n    return order\n\nassert topological({\"A\":[\"B\"],\"B\":[\"C\"]}) == [\"A\",\"B\",\"C\"]"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Time and space are O(V+E) and O(V) beyond the input adjacency lists respectively. Multiple valid orders can exist. A DFS alternative uses unseen/active/finished states; encountering an active vertex detects a cycle. Reachability alone does not prove every prerequisite is complete."
           ]
@@ -962,21 +962,21 @@
       "takeaway": "A shortest-hop path may not be the minimum-cost path.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Maintain the best known cost to each vertex. Pop the cheapest candidate from a min-heap; if it is stale, skip it. Relax outgoing edges by proposing a cheaper cost. Nonnegative weights ensure a later detour cannot improve an already settled smallest distance."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "A shortest-hop path may not be the minimum-cost path.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "The route A → C → B costs 3 instead of the direct cost 8. Improved distances enter the heap, and stale entries are skipped; a ticket breaks ties without comparing vertex objects."
           ],
           "example": "import heapq\nfrom itertools import count\n\ndef dijkstra(graph, start):\n    if any(weight < 0 for edges in graph.values() for _, weight in edges):\n        raise ValueError(\"negative weight\")\n    ticket = count()\n    distance = {start: 0}\n    heap = [(0, next(ticket), start)]\n    while heap:\n        cost, _, node = heapq.heappop(heap)\n        if cost != distance[node]:\n            continue\n        for neighbor, weight in graph.get(node, []):\n            proposed = cost + weight\n            if proposed < distance.get(neighbor, float(\"inf\")):\n                distance[neighbor] = proposed\n                heapq.heappush(heap, (proposed, next(ticket), neighbor))\n    return distance\n\nassert dijkstra({\"A\":[(\"B\",8),(\"C\",2)],\"C\":[(\"B\",1)]},\"A\")[\"B\"] == 3"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
           ]
@@ -1023,21 +1023,21 @@
       "takeaway": "A locally attractive choice needs a proof, not intuition.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution’s first interval with this one without reducing the count."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "A locally attractive choice needs a proof, not intuition.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "Sorting by finish time leaves room for later compatible intervals. The sample chooses three positive-duration intervals; start >= end permits adjacent intervals."
           ],
           "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish <= start:\n            raise ValueError(\"positive-duration intervals required\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
           ]
@@ -1079,21 +1079,21 @@
       "takeaway": "Explore a search tree while restoring state after each choice.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Generate subsets by deciding whether each input position is included. The recursion state consists of an index and the currently selected values. When returning from the include branch, remove the appended value before exploring another branch."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Explore a search tree while restoring state after each choice.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "Each level explores exclusion and inclusion. The inclusion branch appends an item and then pops it, while a copied selection protects each completed subset."
           ],
           "example": "def subsets(items):\n    output, selected = [], []\n    def visit(index):\n        if index == len(items):\n            output.append(selected.copy())\n            return\n        visit(index + 1)\n        selected.append(items[index])\n        visit(index + 1)\n        selected.pop()\n    visit(0)\n    return output\n\nassert len(subsets([1,2,3])) == 8"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "There are 2^n subsets; copying each output costs up to n. Output construction therefore costs O(n·2^n), with O(n) recursion state excluding the output. Pruning helps only when a valid condition rules out an entire branch. Duplicate input values may yield duplicate value-subsets."
           ]
@@ -1134,21 +1134,21 @@
       "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "Choose a subset of items to maximize total value under an integer capacity. Each item is available once. dp[c] is the best value achievable using processed items at capacity c. Processing capacities downward keeps the current item from using an already-updated state from the same pass."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "Iteration order can determine whether an item is used once or repeatedly.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "Descending capacities ensure each item contributes at most once. Weight 2/value 3 and weight 3/value 4 combine to give value 7 at capacity 5."
           ],
           "example": "def knapsack(items, capacity):\n    if capacity < 0:\n        raise ValueError(\"negative capacity\")\n    dp = [0] * (capacity + 1)\n    for weight, value in items:\n        if weight <= 0:\n            raise ValueError(\"positive integer weights required\")\n        for c in range(capacity, weight - 1, -1):\n            dp[c] = max(dp[c], dp[c-weight] + value)\n    return dp[capacity]\n\nassert knapsack([(2,3),(3,4),(4,5)],5) == 7"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
           ]
@@ -1196,21 +1196,21 @@
       "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
       "sections": [
         {
-          "title": "Model the problem",
+          "title": "Model",
           "paragraphs": [
             "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a deliberately simple oracle for small instances and compare the optimized algorithm across generated cases. This finds edge cases without assuming that random success proves correctness."
           ]
         },
         {
-          "title": "Work through the implementation",
+          "title": "Implementation",
           "paragraphs": [
             "A result, a correctness argument and a complexity claim need separate evidence.",
-            "Trace the example before running it. Write down what each variable means after every iteration or recursive call."
+            "The review separates correctness from cost and evidence: establish the contract, invariant and termination, then justify the bound and test against an oracle and adversarial cases."
           ],
           "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits"
         },
         {
-          "title": "Correctness, cost and failure cases",
+          "title": "Correctness and cost",
           "paragraphs": [
             "Benchmarks measure a particular workload and environment. They cannot establish asymptotic complexity by themselves. Separate setup, sorting and parsing from the operation being measured; report input sizes and distributions. Avoid recursive depth claims based on balanced-tree examples alone."
           ]

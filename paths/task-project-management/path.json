@@ -19,7 +19,7 @@
     "Read practice/README.md.",
     "Open each lesson worksheet and attempt it before reading the answer.",
     "Complete three stage projects; no runtime or account is required.",
-    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
     "Apply one bounded change to an ordinary real commitment.",
@@ -302,18 +302,18 @@
             "An inbox holds unprocessed requests rather than a final plan. Capture enough context to find the original request and avoid duplicate commitments. Sensitive details belong in appropriate storage; an ordinary task board can use a neutral label.",
             "Processing is a separate decision after capture. An inbox item may become an action, project, waiting item, reference or declined request. Capture reduces the chance of losing a commitment; it should not silently turn every request into accepted work. Preserve the original due-date question rather than inventing an answer. When duplicate messages arrive, link them to one item and check whether they actually change the scope. A single inbox is a useful convention, but access rules may require separate private storage for sensitive material with only a neutral reference on the board."
           ],
-          "example": "Create one report item with links to the two messages and the reminder context. Preserve the due-date question for clarification rather than creating three separate reports.",
+          "example": "A chat request, calendar reminder and follow-up email refer to the same equipment booking. Create one inbox item with links to all three and retain the unresolved collection time as a question; do not create three bookings.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Combine an email request, a handwritten reminder and a duplicate message about the same report.",
+        "prompt": "Combine an email request, a handwritten reminder and a duplicate message about the same report. The due date is unresolved; preserve that question and the source context.",
         "solution": "Create one report item with links to the two messages and the reminder context. Preserve the due-date question for clarification rather than creating three separate reports.",
         "solutionFormat": "prose",
         "checks": [
@@ -330,7 +330,7 @@
           "Every private detail on a public board"
         ],
         "correct": 0,
-        "explanation": "Enough context to recover the request follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Capture enough context to recover and clarify the request. An inbox entry is not yet an accepted commitment or a scheduled task."
       },
       "references": [
         {
@@ -354,13 +354,13 @@
             "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
             "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday’s attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
           ],
-          "example": "Email venue is a task, running the workshop is a project and Friday attendance checking is a routine. The project needs linked tasks and completion criteria.",
+          "example": "Sending a library reservation request is a task; preparing a reading-group launch is a project; checking registrations every Monday is a routine. Link the reservation to the project and give the routine a recurring trigger.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -382,7 +382,7 @@
           "Open the attendance file"
         ],
         "correct": 0,
-        "explanation": "Run the community workshop follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Running the workshop requires several actions and a shared outcome, so it is a project. A bounded action and a recurring routine have different planning needs."
       },
       "references": [
         {
@@ -406,13 +406,13 @@
             "A next action uses a verb, object and completion test. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.",
             "Distinguish sending a question from receiving its answer. The first action is executable now; the second is waiting and needs a follow-up policy. Ask for a specific input such as seated capacity, not a vague confirmation that everything is fine. State where the request goes and when the answer is needed if another task depends on it. After sending, record the waiting condition on the same card or a linked item. The next action should expose uncertainty and reduce it rather than pretending the workshop plan can proceed without the missing information."
           ],
-          "example": "Ask the venue contact to confirm seated capacity for 20 attendees by Tuesday. The action finishes when the request is sent; the separate waiting item tracks the reply.",
+          "example": "When the reading-group room’s opening hours are unknown, send the librarian a request to confirm access for 12 readers on Saturday. Sending completes this action; record the reply as a separate waiting item.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -434,7 +434,7 @@
           "Resolve every uncertainty immediately"
         ],
         "correct": 0,
-        "explanation": "Ask the venue for seated capacity follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Asking the venue for seated capacity names an action, an object and a usable result. “Work on workshop” leaves the starting step unclear."
       },
       "references": [
         {
@@ -458,13 +458,13 @@
             "Completion criteria describe the state of the deliverable, not merely time spent. They prevent a task from repeatedly returning because essential review was omitted. Criteria should be proportionate; a personal checklist need not copy the governance of a large organization.",
             "Completion criteria can change when a newly discovered essential requirement appears, but record the change. Otherwise someone may appear to miss a target that was never stated when work began. Match each criterion with evidence: the file contains the date, the registration route works and a named reviewer checked the location. Time spent or card movement supplies none of that evidence. Keep criteria proportionate to risk; an invitation needs clear practical details, while an optional decorative choice need not become an approval bottleneck that blocks the usable result."
           ],
-          "example": "The invitation includes date, location, accessibility contact and registration route; a peer checks the details; the approved file is stored at the agreed link. Drafting alone is insufficient.",
+          "example": "A two-page club handbook is done when meeting rules, joining instructions and a contact route are present, a new member can locate the first action, and the approved version is stored at the shared link.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -486,7 +486,7 @@
           "Moved the card because it was old"
         ],
         "correct": 0,
-        "explanation": "Required details are present and checked follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Required details must be present and checked. Time spent or a finished-looking layout does not establish that the deliverable meets its criteria."
       },
       "references": [
         {
@@ -510,13 +510,13 @@
             "A scope note records beneficiary, outcome, constraints and explicit exclusions. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.",
             "Ask what benefit each requested deliverable provides. A video and a live session may serve different audiences and require different preparation, review and support. Comparing benefit and cost makes exclusion a reasoned choice rather than a refusal based on habit. Record essential participation needs early because they can affect venue and material decisions. When new information changes the intended beneficiary or outcome, revise the scope consciously. A scope note is a baseline for decisions; it is not permission to ignore a requirement that makes the agreed workshop unusable."
           ],
-          "example": "Deliver one 60-minute session and a one-page exercise sheet for 20 beginners. Exclude a recorded course and custom software. Include accessible participation arrangements as an explicit planning question.",
+          "example": "Within ten days, deliver a 45-minute orientation and a one-page reference sheet for 12 new volunteers. Exclude a training video and a custom registration app. Confirm access needs before selecting the room and materials.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -538,7 +538,7 @@
           "An unwritten expectation"
         ],
         "correct": 0,
-        "explanation": "The agreed outcome and scope boundary follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "The agreed outcome and boundary determine whether new work belongs. An appealing request may still require a separate scope decision."
       },
       "references": [
         {
@@ -562,18 +562,18 @@
             "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
             "Use a coverage check for every deliverable: can you point to creation, review and handoff work? Then ask whether any listed action contributes to no deliverable. This reveals both omissions and unnecessary activity. Split work at a boundary that leaves inspectable state rather than arbitrary equal chunks of time. Venue confirmation, exercise drafting and invitation publication can have different owners and effort. Avoid an oversized tree that takes longer to maintain than the project; expand a branch when uncertainty prevents someone from starting or checking its actions."
           ],
-          "example": "Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.",
+          "example": "A reading-group launch has three deliverables: a confirmed room, a reading guide and a joining notice. Request the room booking, draft the guide’s questions and verify the notice’s details; add review and publication actions with owners.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Break the workshop into three deliverables and list one action for each.",
+        "prompt": "Plan a 60-minute beginner workshop for 20 people, with an exercise sheet and invitation. Break the workshop into three deliverables and list one action for each.",
         "solution": "Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.",
         "solutionFormat": "prose",
         "checks": [
@@ -590,7 +590,7 @@
           "Every dependency automatically"
         ],
         "correct": 0,
-        "explanation": "What work contributes to the deliverables follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Decomposition connects actions to deliverables. Splitting work into arbitrary tiny cards can add tracking without clarifying the outcome."
       },
       "references": [
         {
@@ -614,13 +614,13 @@
             "A dependency means one item needs an input or completion from another. Distinguish genuine constraints from preferred order. Calendar dates without dependency reasoning can hide waiting and produce impossible promises.",
             "A dependency map can contain a cycle: one item waits for another that waits for the first. Resolve it by agreeing a provisional input or splitting an early deliverable; dates alone cannot fix circular waiting. Ask whether the relationship is required or merely convenient. Drafting exercises does not require the final venue address, whereas publishing the invitation does. Track the input supplied by the earlier item and its acceptance state. When a dependency changes, inspect downstream commitments so one delayed input does not quietly invalidate several promised dates."
           ],
-          "example": "Confirm venue before publishing its address. Draft before review. Draft exercises can proceed while the venue is being confirmed, so these branches may run independently.",
+          "example": "Confirm the collection point before sending pickup instructions. Draft a reading guide before testing its questions. Guide drafting can proceed while the collection point is being arranged; publication waits for the required confirmed details.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -642,7 +642,7 @@
           "Review before a draft exists"
         ],
         "correct": 0,
-        "explanation": "Draft exercises before reviewing them follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "The draft must exist before it can be reviewed. Identify the required input before scheduling dependent work."
       },
       "references": [
         {
@@ -666,18 +666,18 @@
             "A board represents states with entry and exit policies. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.",
             "Keep review visible when it is a real workflow state. Moving a draft directly to Done because writing ended conceals waiting and makes measurements inconsistent with items that include review. Define what happens when a check fails: return with a named correction and owner rather than bounce the card without explanation. A board can use a table or list instead of columns if that is more accessible. Its value comes from truthful states and policies, not its appearance. Inspect stale cards against real artifacts so the representation remains accurate."
           ],
-          "example": "Ready requires a clear action, owner and needed input. Review exits when required checks pass or returns with a named correction. Done retains the resulting file link.",
+          "example": "For a reading-guide board, Ready requires an owner, a named passage and a finish criterion. Review exits when factual and usability checks pass, or returns with a specific correction. Done includes the approved guide’s link.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Design entry criteria for Ready and exit criteria for Review on the workshop board.",
+        "prompt": "A beginner workshop needs a venue, exercise materials and an invitation. Design entry criteria for Ready and exit criteria for Review on its task board.",
         "solution": "Ready requires a clear action, owner and needed input. Review exits when required checks pass or returns with a named correction. Done retains the resulting file link.",
         "solutionFormat": "prose",
         "checks": [
@@ -694,7 +694,7 @@
           "Equal numbers of cards everywhere"
         ],
         "correct": 0,
-        "explanation": "An explicit policy for entering and leaving it follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Entry and exit policies define what a state means. A column name alone cannot show whether an item is ready, blocked or finished."
       },
       "references": [
         {
@@ -718,13 +718,13 @@
             "WIP counts started but unfinished items within the defined workflow, including blocked work. A limit creates a signal to finish or unblock before starting more. The chosen limit is local and revisable; starting extra work in a hidden list undermines the policy.",
             "If blocked work repeatedly fills the limit, investigate the missing input instead of continually raising the limit. A temporary exception may be sensible, but give it an owner, reason and a route back to normal operation. Count items across the agreed start-to-finish boundary, not only those currently being typed or edited. A review queue therefore consumes capacity when review is inside that boundary. Discuss the effect of the limit on useful delivery and waiting; the number two in this exercise is a local teaching policy rather than a universal recommendation."
           ],
-          "example": "Not under the stated policy: both started items count as WIP. First help the review blocker or finish the draft. If a genuine exception is needed, make it explicit and record its cost.",
+          "example": "A workflow limit of three includes one draft in Doing and two started items waiting for review. A fourth item cannot start under that policy. Unblock or finish existing work first; record any explicit exception and its consequence.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -746,7 +746,7 @@
           "Zero until work is approved"
         ],
         "correct": 0,
-        "explanation": "Two started unfinished items follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Both started, unfinished items count as WIP, including the blocked one. Waiting does not make started work disappear."
       },
       "references": [
         {
@@ -770,13 +770,13 @@
             "Pull means selecting ready work when the workflow has capacity. It differs from assigning an unlimited queue of simultaneous promises. Selection still considers value, risk and deadlines; a vacant slot does not require starting a low-value item.",
             "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. If the vacant slot cannot be used meaningfully, it may remain empty while the team resolves a constraint or prepares a clearer item. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
           ],
-          "example": "Pull the ready dependency if it supports the workshop outcome. Clarify or leave the optional redesign in the backlog. Capacity is a permission signal, not an obligation to start arbitrary work.",
+          "example": "With a WIP limit of three, finishing one of three started cards creates one slot. Pull the ready room-confirmation task that unblocks the notice; leave an unclear optional logo redesign in the backlog until its purpose and action are defined.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -798,7 +798,7 @@
           "Hide unfinished work"
         ],
         "correct": 0,
-        "explanation": "Check capacity and readiness follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Check readiness and workflow capacity before starting another item. Starting everything at once increases unfinished work rather than resolving it."
       },
       "references": [
         {
@@ -822,13 +822,13 @@
             "An owner coordinates progress and follow-up; they need not perform every action. Identify who can decide scope, who reviews and who supplies inputs. Shared responsibility without a named coordination role often leaves waiting invisible.",
             "Authority and ownership differ. A coordinator can follow up on approval but may lack authority to approve publication. State who decides a scope conflict, who reviews factual details and who maintains the item while it waits. A review window should be agreed with the reviewer rather than assigned privately by the writer. If the reviewer is unavailable, use an explicit alternate or escalate the decision. This prevents a blocked card from encouraging an unauthorized shortcut while keeping coordination from disappearing into the phrase shared responsibility."
           ],
-          "example": "Mira owns coordination and writing, Dev checks details and Jo approves publication. Record a review window and who follows up if approval is missing.",
+          "example": "For a reading guide, Leena coordinates and drafts, Arun checks references and Sam approves release. Agree a review deadline and name Leena as the person who follows up; coordination ownership does not mean doing every role.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -850,7 +850,7 @@
           "Every attendee independently"
         ],
         "correct": 0,
-        "explanation": "The named coordination owner follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "The coordination owner follows up and keeps the obligation visible. They may arrange work performed by other people."
       },
       "references": [
         {
@@ -874,13 +874,13 @@
             "Estimate with historical work that uses the same start and finish definitions. A duration includes waiting if the metric measures elapsed time. A few examples give a rough range, not a statistically reliable promise.",
             "Waiting for a reviewer belongs in elapsed cycle time when review lies between start and finish. Work effort may be much smaller, so do not substitute hours of writing for calendar duration when forecasting a handoff. Compare items with similar size, review requirements and availability. Three completed examples show variation but cannot justify a reliable probability statement. If the new deadline falls below all comparable durations, discuss earlier inputs, smaller scope or additional review availability. A forecast describes uncertainty; a commitment requires a conscious decision about the risk of missing it."
           ],
-          "example": "Use 2–6 days as a provisional observed range and explain that three samples are insufficient for a reliable percentile. Ask whether the same review availability applies to the new item.",
+          "example": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. Use 1–5 days as a provisional observed range and check whether reviewer availability is comparable. Three samples cannot support a reliable percentile forecast.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -902,7 +902,7 @@
           "The colour of the task card"
         ],
         "correct": 0,
-        "explanation": "Small sample and changing conditions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A small sample and changing conditions limit the estimate. Use comparable start and finish definitions and retain the uncertainty."
       },
       "references": [
         {
@@ -926,13 +926,13 @@
             "A blocked card records the missing input, responsible contact, next check and consequence. Keep it within WIP if it has started. An escalation is useful when it requests a decision or input, not merely repeats that the item is late.",
             "A blocker can be a decision, access permission, equipment or external input. Name the missing condition precisely and request the smallest action that removes it. A red label alone does not tell the owner what to do next. Record when the consequence becomes serious and who can choose the fallback. Follow-up may reveal a changed input, so recheck downstream dates and assumptions after the blocker is removed. Keep the item inside WIP when it has started; moving it out of sight does not remove its delivery risk."
           ],
-          "example": "Waiting for seated capacity from venue contact; owner Mira; follow up today at 14:00; if no reply by 17:00, ask Jo to select the backup venue. Publication remains blocked meanwhile.",
+          "example": "Room access details requested Monday remain unanswered Wednesday; the notice must publish Friday. Card: missing access confirmation; contact library desk; owner Leena; follow up Wednesday at 11:00; if absent Thursday at 12:00, ask Sam to approve the backup room. Publication stays blocked.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -954,7 +954,7 @@
           "Removing the card from every count"
         ],
         "correct": 0,
-        "explanation": "A follow-up time and decision fallback follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A follow-up time and fallback make the missing input actionable. A waiting label alone does not identify when or how to resolve it."
       },
       "references": [
         {
@@ -978,13 +978,13 @@
             "A risk is an uncertain future event; an issue has occurred. Record likelihood qualitatively when data are weak, describe impact and choose a response. A long register with no owner or trigger is less useful than a short list tied to decisions.",
             "Use a trigger to know when a response begins. For example, if capacity is not confirmed by Tuesday, contact a backup venue. The trigger connects uncertainty to action without pretending a weak qualitative likelihood estimate is precise. Risk responses may reduce likelihood, reduce impact, transfer a responsibility by agreement or accept the risk explicitly. Once cancellation is confirmed, planning for its possibility is no longer enough: execute the issue response. Review the list when circumstances change so resolved risks do not distract from active problems."
           ],
-          "example": "Projector failure is a risk: test equipment and bring printable materials. Venue cancellation is an issue: choose the backup venue now. Each response has an owner and deadline.",
+          "example": "Possible rain during an outdoor reading event is a risk: assign an owner to confirm an indoor fallback before the event. A confirmed closure of the chosen park is an issue: activate or choose the replacement location now.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1006,7 +1006,7 @@
           "An imagined minor inconvenience"
         ],
         "correct": 0,
-        "explanation": "The confirmed cancellation follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A confirmed cancellation is an issue because it has occurred. A possible future cancellation remains a risk."
       },
       "references": [
         {
@@ -1030,13 +1030,13 @@
             "A new request changes cost, schedule, quality or benefit. Describe that trade-off before accepting it. Small projects need a lightweight change note, not a complex approval bureaucracy, but silent scope growth makes commitments unreliable.",
             "A change decision may alter what the beneficiary expects. Confirm the revised acceptance criteria with the person who needs the output, and update dependent tasks so the board matches the new promise. Compare the new benefit with the added preparation, review and support work rather than only the recording duration. If the request is deferred, create a clearly separate future option; do not leave it ambiguously attached to the current deadline. Lightweight documentation is enough when it records the choice, reason, owner and affected commitments."
           ],
-          "example": "Offer to replace an optional deliverable, move the video to a later project or obtain support. Record the chosen option and revised completion criteria. Do not add it silently to the existing deadline.",
+          "example": "Two days before a volunteer orientation, a live demonstration is requested and all available capacity is assigned. Offer to replace an optional activity, schedule the demonstration later or obtain extra support. Record the chosen tradeoff and revise acceptance criteria.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1058,7 +1058,7 @@
           "A promise that nothing changes"
         ],
         "correct": 0,
-        "explanation": "A revised scope or capacity decision follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "A new request needs a scope or capacity decision. Accepting it without changing anything leaves the conflict hidden."
       },
       "references": [
         {
@@ -1082,13 +1082,13 @@
             "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period. Keep item sizes and boundaries visible. Counts help discuss the system and should not become rankings of individual worth.",
             "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person’s overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
           ],
-          "example": "The completed item’s cycle time is three days. The unfinished item’s age is three days on Friday. Throughput for the week includes the finished item but excludes the unfinished one. State this date convention explicitly.",
+          "example": "Using elapsed date differences, a card started Tuesday and completed Saturday has a cycle time of four days. Another started Thursday and remains unfinished Sunday, so its age is three days. Only the completed card contributes to that week’s throughput.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1110,7 +1110,7 @@
           "Throughput contribution"
         ],
         "correct": 0,
-        "explanation": "Work item age follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Cycle time measures completed work, age measures unfinished work and throughput counts finishes in a period. Use the stated date convention consistently."
       },
       "references": [
         {
@@ -1134,13 +1134,13 @@
             "A review checks whether the deliverable helps the intended user. Verification asks whether specified criteria were met; validation asks whether the result serves its intended use. A checklist can pass while a beginner still cannot understand the exercise.",
             "Invite feedback on an observable task rather than asking whether the work looks good. Give the learner a starting point and intended action, and record any assistance. A sheet may meet every required section while failing to explain how a beginner starts. Preserve the verification evidence, document the validation obstacle and revise the first instruction. Repeat the task with a suitable learner or synthetic walkthrough and state which was used. One successful attempt gives scoped evidence, not proof that every attendee will understand the material under all conditions."
           ],
-          "example": "Verification may pass the section checklist, but validation exposes an unclear starting instruction. Revise the first step and repeat the beginner task before calling the material ready.",
+          "example": "A joining notice contains every required field, but a new reader cannot find how to register. The field checklist may pass verification; the usability task fails validation. Revise the registration instruction and repeat the newcomer check.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1162,7 +1162,7 @@
           "A throughput increase"
         ],
         "correct": 0,
-        "explanation": "A problem with intended use follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Validation checks whether the intended user can use the result. Meeting the section checklist verifies specified content but can still leave an unclear first step."
       },
       "references": [
         {
@@ -1186,13 +1186,13 @@
             "A retrospective examines how work happened and chooses a change with an owner and review date. Focus on a recurring constraint instead of blaming individuals. A change becomes useful evidence only after observing its effects and costs.",
             "Choose one experiment small enough to observe. If several policies change together, improvement may be useful but attribution becomes unclear. Preserve the original observation, change owner and review date. For the review delay, inspect availability and input quality before demanding faster work. A new meeting can add cost without removing waiting if drafts remain unready. Compare work item age, review quality and maintenance effort after the trial. Keep, adjust or stop the intervention according to those observations rather than treating the retrospective action as complete when the meeting is scheduled."
           ],
-          "example": "Reserve a short review window twice weekly, limit review queue size and assign an owner to monitor waiting. After two weeks compare item age and quality; revise if the new window simply moves the bottleneck.",
+          "example": "Four guide drafts waited three days for reference checks. For two weeks, reserve a daily 15-minute checking slot, name an owner and bound the review queue. Compare unfinished-item age and correction rates; check whether the change shifts delay to drafting.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1214,7 +1214,7 @@
           "Add more work to the review queue"
         ],
         "correct": 0,
-        "explanation": "A review cadence with monitored waiting follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Observe the effects and costs of the chosen change. Scheduling a new review window alone does not show that waiting or quality improved."
       },
       "references": [
         {
@@ -1238,13 +1238,13 @@
             "Independent branches can progress together, but integration work still consumes capacity. A handoff should state version, acceptance criteria and unresolved questions. Adding contributors without coordinating interfaces can produce incompatible outputs.",
             "Integration has its own finish criteria. Check terminology, links, assumptions and version consistency across branches. Reserve time for corrections instead of assuming separate completion automatically creates a coherent whole. If one contributor changes the audience or date, communicate that interface change before the other branch finishes. Use stable links and an agreed accepted version to avoid reviewing two unrelated copies. Parallel work can shorten some waiting, but it introduces coordination and integration effort; the plan should represent both rather than multiplying contributors and assuming duration falls proportionately."
           ],
-          "example": "Agree the workshop date, audience and terminology first. Use stable file links, then reserve a joint review to check that invitation promises match the exercises and session duration.",
+          "example": "One person drafts a volunteer checklist while another prepares the joining notice. Agree the audience, date and role names first, use stable document links and reserve a joint review to align the notice’s promises with the checklist.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1266,7 +1266,7 @@
           "Skipping final review"
         ],
         "correct": 0,
-        "explanation": "Shared interfaces and an integration check follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Independent drafting still needs shared interfaces and integration time. Separate completion does not guarantee that the outputs fit together."
       },
       "references": [
         {
@@ -1290,13 +1290,13 @@
             "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine. Archive decisions where the next person can find them. A closed board should not conceal unfulfilled promises or imply that attendance alone proved learning.",
             "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; honest closure makes that obligation visible rather than declaring every aspect successful."
           ],
-          "example": "Link the accepted materials and feedback, name an owner and follow-up date for the access issue, and transfer attendance checking to a routine. Mark the project delivered with the known issue stated explicitly.",
+          "example": "The reading-group launch has accepted guides, collected feedback and one unresolved room-signage problem. Link the delivered outputs, assign a signage owner and follow-up date, and transfer Monday registration checks to a routine. Record delivery with the issue still visible.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1318,7 +1318,7 @@
           "Deletion of every unresolved item"
         ],
         "correct": 0,
-        "explanation": "Accepted outputs and remaining obligations follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Unresolved obligations need an accepting owner and follow-up. Archiving the board cannot substitute for that handoff."
       },
       "references": [
         {
@@ -1342,13 +1342,13 @@
             "A useful system supports the project’s decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
             "Evaluate maintenance burden with the same care as the project work. Retain a report when it changes a decision or exposes an obligation, and consolidate repeated status entry that supplies no new information. A small board can be enough for twelve tasks if it represents owners, completion and waiting truthfully. When borrowing a method name, check its defining practices rather than using the label because the interface looks familiar. You may legitimately use selected ideas in a simple task board; that honest description leaves room to adopt fuller practices when they become useful."
           ],
-          "example": "Retain one board with owner, finish criteria and blockers, plus a short twice-weekly review. Remove reports that inform no decision. If claiming Kanban, preserve the guide’s required workflow and metrics; otherwise call it a simple task board.",
+          "example": "A three-person reading-group project has nine cards and takes 40 minutes daily to maintain five reports. Keep one board with owner, finish criteria and blockers plus a short weekly review; remove reports that support no decision. Call it a task board unless the required Kanban workflow and metrics are maintained.",
           "exampleFormat": "prose"
         },
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
         }
       ],
@@ -1370,7 +1370,7 @@
           "Full Scrum because a meeting occurs"
         ],
         "correct": 0,
-        "explanation": "A task board unless the method’s full defining practices are present follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        "explanation": "Retain records that inform decisions and remove duplicate reporting. Selected workflow ideas need not be labelled a complete Scrum or Kanban implementation."
       },
       "references": [
         {

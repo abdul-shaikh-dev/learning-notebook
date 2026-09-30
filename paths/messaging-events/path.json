@@ -70,13 +70,13 @@
       "takeaway": "Name whether you request work or report a fact.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Commands, events and completion",
           "paragraphs": [
             "A message is a transported payload. A command requests an action, such as GenerateExport, and needs an owner that can accept or reject it. An event reports something that already happened, such as ExportRequested. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Accepted versus ready",
           "paragraphs": [
             "Our notebook export example accepts a job, records its identifier, and later produces a file. ExportRequested and ExportCompleted are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
           ]
@@ -125,13 +125,13 @@
       "takeaway": "Choose a topology from who must receive the message.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Queues, subscriptions and logs",
           "paragraphs": [
             "A work queue distributes jobs among competing workers. Pub/sub delivers a copy to each logical subscription. A retained log lets consumers track positions and reread records while retention permits. These are distinct contracts even if one product supports several. Multiple workers on one subscription normally share work; they do not create independent audit and email subscribers."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Worker and subscriber counts",
           "paragraphs": [
             "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of ExportCompleted. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
           ]
@@ -187,13 +187,13 @@
       "takeaway": "Separate event identity from business identity and tracing.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Event, job and correlation identity",
           "paragraphs": [
             "Give an event a stable ID, type, schema version, occurred time and source. A job ID identifies the export; an event ID identifies a particular fact; a correlation ID connects the user request and later work. Retrying publication must reuse the same event ID for that fact. A new correction is a new event, even if its business key matches."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Duplicate delivery of e-17",
           "paragraphs": [
             "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard ExportCompleted after ExportRequested. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
             "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
@@ -244,13 +244,13 @@
       "takeaway": "Publisher confirmation and consumer acknowledgement protect different hops.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Publisher confirms and acknowledgements",
           "paragraphs": [
             "A publisher confirm tells the sender about broker acceptance under configured broker semantics. A consumer acknowledgement tells the broker a delivery was handled. Neither automatically tells the original browser that its export is complete. The producer can lose a confirm even when the broker accepted the message, so retry must tolerate uncertainty and duplicates."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Lost confirmation and duplicate publication",
           "paragraphs": [
             "Suppose the broker accepts e-17, then the producer connection drops before its confirm arrives. The sender cannot distinguish this from non-acceptance. Republishing the same e-17 is reasonable with deduplication. The export worker must commit its own effect before acknowledging; receipt alone is insufficient."
           ]
@@ -299,13 +299,13 @@
       "takeaway": "At-least-once delivery demands duplicate-safe effects.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Delivery versus business effects",
           "paragraphs": [
             "At-most-once processing can lose work when acknowledgement precedes the effect. At-least-once delivery permits retries and duplicate deliveries. Exactly-once claims must state their boundary: a broker or stream transaction is not automatically an exactly-once email, payment or external API call. Local atomic transactions can make one database effect effectively once for a stable key."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Atomic SQLite effects",
           "paragraphs": [
             "The practice lab commits an inbox row and projection update together in SQLite. A replay sees the inbox key and avoids a second projection update. An external email sent between those statements would fall outside SQLite rollback; it needs a provider idempotency key or reconciliation strategy."
           ]
@@ -361,13 +361,13 @@
       "takeaway": "Acknowledge only after durable work succeeds.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Receive, commit and acknowledge",
           "paragraphs": [
             "A worker receives a delivery, validates it, performs durable work, commits, and then acknowledges. If its channel closes before acknowledgement, brokers can redeliver. Delivery tags may be channel-scoped, while application event IDs survive channels. These identifiers must not be substituted for each other."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Crash windows",
           "paragraphs": [
             "Crash before commit: database changes roll back and replay must do the work. Crash after commit before acknowledgement: replay must detect the committed inbox entry and skip the effect. The lab injects a failure during a transaction to prove both inbox and projection remain unchanged."
           ]
@@ -416,13 +416,13 @@
       "takeaway": "Persistence, replication and retention are separate decisions.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Queue and message lifetime",
           "paragraphs": [
             "A durable queue definition, persistent message flag, publisher confirm and replicated broker storage protect different failure windows. Temporary or exclusive queue lifetimes may remove queues when connections end. No single adjective guarantees survival of host loss, operator deletion or expired retention. Consumer acknowledgements do not back up the broker."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Retention and disk-failure limits",
           "paragraphs": [
             "An export request must survive worker restart, but a transient UI notification may be disposable. Record retention and maximum queue age explicitly. The SQLite lab is durable on one file-backed database but does not simulate a replicated broker or prove disk-failure survival."
           ]
@@ -464,13 +464,13 @@
       "takeaway": "Routes must express ownership and isolate subscriber failures.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Routing and subscriber ownership",
           "paragraphs": [
             "Route by a documented event type or routing key. Avoid routing directly from untrusted arbitrary strings. Give each logical subscriber a separately owned delivery history, retry budget and retention policy. A catch-all subscription is useful for an audit reader but can become an accidental source of sensitive data exposure."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Independent audit and notification",
           "paragraphs": [
             "ExportCompleted feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
           ]
@@ -519,16 +519,15 @@
       "takeaway": "Deduplication must survive restarts and be scoped to each consumer.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Inbox keys and atomic updates",
           "paragraphs": [
             "An inbox uses a unique key such as consumer name plus event ID. Combine insert-or-detect with the business update in one transaction. An in-memory set disappears on restart and cannot coordinate multiple processes. Retention of inbox keys must cover expected redelivery and replay windows; pruning too early permits effects again."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Replay and payload collisions",
           "paragraphs": [
-            "Audit and notifications can each process e-17 once, so their inbox keys differ. The lab consumes an event into a SQL projection and counts the effect once across repeated delivery and reopened connections. It rejects reuse of an ID with a different job/value payload instead of pretending that a collision is a valid replay.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "Audit and notifications can each process e-17 once, so their inbox keys differ. The lab consumes an event into a SQL projection and counts the effect once across repeated delivery and reopened connections. It rejects reuse of an ID with a different job/value payload instead of pretending that a collision is a valid replay."
           ],
           "example": "from contextlib import closing\nfrom event_lab import connect, create_job, consume, total\n\nwith closing(connect(':memory:')) as db:\n    event = create_job(db, 'j-4', 'e-17', 7)\n    print(consume(db, 'audit', event))  # True\n    print(consume(db, 'audit', event))  # False\n    print(total(db, 'audit', 'j-4'))   # 7"
         }
@@ -576,16 +575,15 @@
       "takeaway": "Write the business change and pending event in one local transaction.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "The dual-write gap",
           "paragraphs": [
             "A database update followed by a separate publish is a dual write. A crash between them leaves a committed business change without its event. Reversing the order can publish a fact whose business transaction later fails. An outbox stores the business change and publication record in one transaction; a relay later publishes pending records."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Relay retries after publication",
           "paragraphs": [
-            "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
           ],
           "example": "from contextlib import closing\nfrom event_lab import connect, create_job, pending\n\nwith closing(connect(':memory:')) as db:\n    create_job(db, 'j-4', 'e-17', 7)\n    print(len(pending(db)))  # 1 committed pending event"
         }
@@ -633,16 +631,15 @@
       "takeaway": "Retry transient failures without creating an endless hot loop.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Retry classes and budgets",
           "paragraphs": [
             "Classify retryable dependency failures separately from malformed messages and permanent authorization failures. Backoff spreads attempts; jitter reduces synchronized bursts. Limit attempts or total elapsed time and move exhausted work to quarantine with its original ID, failure reason and attempt count. Do not keep immediately requeuing an invalid payload forever."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Waits versus job expiry",
           "paragraphs": [
-            "With attempt delays of 1, 2 and 4 seconds, three retry waits total 7 seconds before considering handler time. If a job expires after 5 seconds, that schedule already exceeds its usefulness. The lab models retry classification deterministically rather than sleeping or invoking a real broker.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "With attempt delays of 1, 2 and 4 seconds, three retry waits total 7 seconds before considering handler time. If a job expires after 5 seconds, that schedule already exceeds its usefulness. The lab models retry classification deterministically rather than sleeping or invoking a real broker."
           ],
           "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine"
         }
@@ -675,7 +672,7 @@
       ],
       "stage": "intermediate",
       "exercise": {
-        "prompt": "Use retry_decision() with attempt counts 1 through 4. Decide whether a missing required field should ever retry unchanged. Record a reference answer: quarantine invalid payload immediately; retry a temporary dependency only inside a finite budget.",
+        "prompt": "Use retry_decision() with attempt counts 1 through 4. Decide whether a missing required field should ever retry unchanged. Explain your classification and retry budget.",
         "checks": [
           "Separate permanent input failure from transient dependency failure.",
           "Record the exact reference decisions and distinguish classification from scheduling."
@@ -690,13 +687,13 @@
       "takeaway": "A dead-letter store needs an owner and a repair workflow.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Quarantine ownership and replay",
           "paragraphs": [
             "A dead-letter queue is a holding area, not an automatic fix. Preserve original identity and failure details, restrict access, alert on age and growth, and define who repairs the producer or consumer. Blindly copying messages back can recreate an outage. Broker dead-letter transfer has its own durability and configuration limits."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Repairing a version mismatch",
           "paragraphs": [
             "A version-2 payload reaches a version-1-only consumer and is quarantined. First deploy a compatible consumer and run a sample in isolation. Then replay a bounded batch while checking duplicates and side effects. Do not edit the event ID merely to bypass inbox handling."
           ]
@@ -738,13 +735,13 @@
       "takeaway": "Ordering is scoped and consumers must detect stale changes.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Scoped order and stale versions",
           "paragraphs": [
             "Partition or session keys can serialize related work within a selected scope, but not across all entities or subscribers. Concurrent workers and retries can alter completion order even if delivery order was FIFO. A version number lets a projection detect missing or stale changes. A timestamp alone is weaker because clocks can disagree."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Last-value versus ledger projections",
           "paragraphs": [
             "Progress version 4 arrives before version 3. A last-value projection can ignore the stale version if its contract allows that; an incrementing ledger cannot simply drop version 3. State transitions may require buffering or querying authoritative state to close gaps."
           ]
@@ -793,16 +790,15 @@
       "takeaway": "Deploy producers and consumers independently with compatible contracts.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Serializer compatibility",
           "paragraphs": [
             "An additive optional field is often easier to evolve than a renamed required field. Compatibility depends on actual serializer behavior: some readers reject unknown fields, some supply defaults, and some silently coerce types. Specify schema version, validation and deprecation windows; test old/new payloads against both supported consumers."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "An additive field and an ID change",
           "paragraphs": [
-            "Add display_name to ExportCompleted while retaining job_id and event_id. Old consumers should still work if their parser accepts additional fields. Changing job_id from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "Add display_name to ExportCompleted while retaining job_id and event_id. Old consumers should still work if their parser accepts additional fields. Changing job_id from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment."
           ],
           "example": "from event_lab import validate\n\nevent = {'id': 'e-17', 'job_id': 'j-4',\n         'type': 'ExportRequested', 'version': 1, 'value': 7}\nprint(validate(event))  # canonical JSON for this local Python reference\n# validate(event | {'display_name': 'Example'}) raises ValueError:\n# the supplied v1 parser deliberately rejects unknown fields."
         }
@@ -850,16 +846,15 @@
       "takeaway": "Bound in-flight work and measure queue age.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Outstanding deliveries and capacity",
           "paragraphs": [
             "Prefetch limits outstanding unacknowledged deliveries for relevant broker consumers. It is not a complete memory or request-rate limit. Worker concurrency, payload size and downstream capacity also matter. A queue absorbs a temporary mismatch but cannot solve a permanent arrival rate above processing capacity. Oldest-message age often communicates user delay more clearly than depth alone."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Backlog growth and drain time",
           "paragraphs": [
-            "If arrivals are 120 jobs/s and workers complete 100/s for 60 seconds, backlog grows by 1,200 jobs. With arrivals later at 80/s, net drain is 20/s and ideal drain time is 60 seconds. These deterministic estimates ignore variable service time and retries.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "If arrivals are 120 jobs/s and workers complete 100/s for 60 seconds, backlog grows by 1,200 jobs. With arrivals later at 80/s, net drain is 20/s and ideal drain time is 60 seconds. These deterministic estimates ignore variable service time and retries."
           ],
           "example": "arrival_rate, service_rate, burst_seconds = 120, 100, 60\nbacklog = (arrival_rate - service_rate) * burst_seconds\nsteady_arrivals = 80\nprint(backlog)  # 1200\nprint(backlog / (service_rate - steady_arrivals))  # 60.0 seconds"
         }
@@ -907,13 +902,13 @@
       "takeaway": "A retained log separates stored records from consumer position.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Partition offsets and retention",
           "paragraphs": [
             "A log stores records by partition and offset; each consumer group tracks progress. Committing an offset before the effect risks skipping unfinished work after restart. Committing after the effect permits replay and requires duplicate-safe effects. Retention can remove old records even if a slow consumer has not processed them."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Isolated projection rebuilds",
           "paragraphs": [
             "An analytics projection rebuilds from offset zero into a new database, then switches readers after checks. Email notifications should not be replayed into the real provider during that rebuild. Use a new projection consumer identity and disable external effects for historical processing."
           ]
@@ -955,13 +950,13 @@
       "takeaway": "A saga coordinates local steps without pretending they are one transaction.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Steps and compensation",
           "paragraphs": [
             "When booking, charging and notification belong to different durable systems, one SQL transaction cannot roll back them all. A saga tracks steps and compensations. A refund compensates a charge but does not erase its historical occurrence or guarantee instant success. Some actions, such as sending email, have no true inverse."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Reconciling uncertain charges",
           "paragraphs": [
             "Reserve a workshop seat, charge through a provider, then confirm. If charging fails permanently, release the reservation. If charge outcome is uncertain, reconcile before issuing another charge or declaring failure. An orchestrator stores decisions durably; choreography spreads them among services and can obscure overall state."
           ]
@@ -1003,13 +998,13 @@
       "takeaway": "Authenticate identities and authorize each messaging responsibility.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Channel rights and trusted tenancy",
           "paragraphs": [
             "Limit who may publish, consume, inspect and replay each channel. Validate payload size and schema even for authenticated producers. Shared broker credentials erase attribution and widen impact. Tenant ID inside a message is data that must be checked against trusted context; it is not authorization by itself."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Least privilege and dead-letter privacy",
           "paragraphs": [
             "An export worker should not be able to publish arbitrary billing events. The audit reader may view sanitized completion metadata but not credential-bearing payloads. Dead-letter stores can retain personal data long after the originating job, so include deletion and retention policies."
           ]
@@ -1058,13 +1053,13 @@
       "takeaway": "Observe acceptance, attempts and business completion separately.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Async signals and trace context",
           "paragraphs": [
             "Carry correlation and trace context without embedding secrets. Measure accepted jobs, completed jobs, failures, retries, oldest pending age and dead-letter age. A high publish rate alone can mask a stalled consumer. Logs should say which event and attempt reached which state, while avoiding full sensitive payload dumps."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Queue wait versus API latency",
           "paragraphs": [
             "At 10:00 an export is accepted. At 10:01 its consumer retries. At 10:03 it completes. The user-perceived duration includes queue wait and processing, not just API acceptance latency. A duplicate delivery can increment delivery count without incrementing business completion count."
           ]
@@ -1113,16 +1108,15 @@
       "takeaway": "Make crash windows reproducible and test invariant preservation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Failure injection and durable state",
           "paragraphs": [
             "Inject failures before commit, after commit and before publication bookkeeping. Assert durable state after reopening the database, not just an in-memory return value. Duplicate and malformed tests are necessary but do not establish broker failover, cross-process lease behavior or ordering under real parallel load."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The local crash and replay tests",
           "paragraphs": [
-            "The local lab verifies that a crash during consume rolls back both inbox and projection. It also deliberately relays the same outbox event twice and confirms one projection effect. This is actual SQLite transaction evidence; it is not evidence about RabbitMQ quorum failover.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "The local lab verifies that a crash during consume rolls back both inbox and projection. It also deliberately relays the same outbox event twice and confirms one projection effect. This is actual SQLite transaction evidence; it is not evidence about RabbitMQ quorum failover."
           ],
           "example": "python event_lab.py\npython -m unittest -v test_event_lab.py"
         }
@@ -1170,13 +1164,13 @@
       "takeaway": "Choose from required semantics and operational responsibilities.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Broker capabilities and operations",
           "paragraphs": [
             "Compare routing, retained replay, ordering scope, payload limits, throughput, latency, transaction support, cost and team operations. RabbitMQ queues, Kafka retained logs and managed messaging services solve overlapping but different problems. Product names are not architecture requirements. Consider whether a database-backed job worker is sufficient before introducing a separate broker."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The notebook's requirements",
           "paragraphs": [
             "The notebook needs a small export queue, independent audit events and no historical stream analytics. A managed queue or conventional broker may fit; a partitioned log can be appropriate later if replayable event feeds become central. Capture what evidence would reverse that decision."
           ]
@@ -1232,15 +1226,15 @@
       "takeaway": "A complete workflow includes replay, retention and recovery ownership.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Recovery across durable stores",
           "paragraphs": [
             "Before release, enumerate durable stores: business database, outbox, inbox, broker and projections. Their backups and retention may differ. A restored database can regress an inbox and allow old effects again; a restored outbox can republish work. Recovery needs an epoch or reconciliation plan and an isolated replay mode before external effects resume."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Retry and replay review",
           "paragraphs": [
-            "The stage-three review package lists crash timelines, maximum retry budget, permitted replay effects and who owns dead-letter repair. It compares locally verified SQLite behavior with optional live broker experiments. Passing the course means completing bounded practice, not proving production expertise."
+            "The stage-three review package lists crash timelines, maximum retry budget, permitted replay effects and who owns dead-letter repair. It compares locally verified SQLite behavior with optional live broker experiments."
           ]
         }
       ],

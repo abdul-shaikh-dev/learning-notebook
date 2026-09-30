@@ -1431,7 +1431,7 @@
         {
           "title": "Make a safe release sequence",
           "paragraphs": [
-            "Before rollout, run tests, apply reviewed schema changes with a dedicated deployment process, and confirm readiness in the target environment. For multiple replicas, every replica needs access to shared durable data; the memory store in the practice app cannot provide that.",
+            "A rollout needs passing tests, reviewed schema changes applied by a dedicated deployment process, and readiness checks in the target environment. Multiple replicas need shared durable data; the practice app’s memory store is local to each process.",
             "A rollback of code is not automatically a rollback of a destructive schema change. Favor compatible expand-and-contract migrations: add a new representation, migrate data, switch readers, then remove the old representation in a later release."
           ],
           "example": "// Release checklist as an executable workflow outline:\n// build -> tests -> publish -> reviewed migration -> start new instance\n// readiness succeeds -> direct limited traffic -> observe error rate/latency\n// unhealthy -> stop traffic to new instance and restore prior compatible build\n// Validate reverse proxy headers, HTTPS and authorization in staging."
@@ -1487,7 +1487,7 @@
           "title": "Measure a representative workload",
           "paragraphs": [
             "Measure latency distributions, throughput, allocation and dependency time using representative data and concurrency. Warm up the application before comparing steady-state behavior, and record the environment so results can be repeated.",
-            "A stopwatch around one tiny operation is a teaching demonstration, not a reliable benchmark. Debug builds, startup JIT work, network variability and test data size can dominate results. Performance improvements must preserve validation and authorization."
+            "A single timing of a tiny operation is unreliable: debug builds, startup JIT work, network variability and input size can dominate it. Benchmark representative workloads and preserve validation and authorization."
           ],
           "example": "// Complete console Program.cs; illustrative timing, not a benchmark claim.\nusing System.Diagnostics;\nvar watch = Stopwatch.StartNew();\nlong total = 0;\nfor (int i = 0; i < 100_000; i++) total += i;\nwatch.Stop();\nConsole.WriteLine(total);\nConsole.WriteLine($\"Elapsed ticks: {watch.ElapsedTicks}\");\n// Expected total: 4999950000; elapsed ticks vary."
         },

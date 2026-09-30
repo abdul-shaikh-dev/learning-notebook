@@ -5,3 +5,5 @@
 .flow-text-alternative{margin:1rem 0}.flow-text-alternative details{margin-top:.6rem}.finance-course .example details{background:#fff;color:#17392f}.finance-course .example details>summary{color:#17392f}.finance-concept-diagram dd{margin:0 0 1rem 1rem}.finance-concept-diagram dt{font-weight:700}
 
 .mermaid-view marker.mermaid-edge-current path,.mermaid-view marker.mermaid-edge-current polygon{fill:#17392f!important;stroke:#17392f!important}
+
+.diagram-downloads{margin:0;padding:0;border:0;background:transparent}.diagram-downloads summary{display:flex;align-items:center;min-height:44px;padding:0 12px;cursor:pointer;font-size:14px}.diagram-downloads[open]{flex-basis:100%}.diagram-downloads button{margin:4px 8px 4px 0}

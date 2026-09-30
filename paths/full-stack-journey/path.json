@@ -164,15 +164,15 @@
       "takeaway": "A journey starts with a user outcome, not a list of frameworks.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "The study-session feature",
           "paragraphs": [
             "A learner wants to plan a study session, see it after refresh and mark it complete. A session is one record with a title, planned minutes, completion flag and version. Keep scheduling, payments, AI suggestions and multi-user sharing out of the first slice so success can be observed in minutes."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "React, API and storage roles",
           "paragraphs": [
-            "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime. Name these boundaries before running anything."
+            "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime."
           ]
         }
       ],
@@ -212,13 +212,13 @@
       "takeaway": "Keep the files together and check tool versions before debugging application behavior.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Practice project files",
           "paragraphs": [
             "The complete practice ZIP is flat: Planner.csproj and Program.cs form the API, App.tsx and main.tsx form the UI, and schema.sql is the database migration. package-lock.json pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Local runtimes and commands",
           "paragraphs": [
             "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
           ]
@@ -260,15 +260,15 @@
       "takeaway": "A click changes visible state only after the application has understood its result.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "From form submission to storage",
           "paragraphs": [
             "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a CreateTask, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Validating the returned task",
           "paragraphs": [
-            "The UI checks HTTP status, media type and response fields before appending the returned task. A 200 HTML error page is not valid task data. The database is behind the API and never receives browser credentials or direct browser SQL. Walk this path in the network panel and explain each observation."
+            "The UI checks HTTP status, media type and response fields before appending the returned task. A 200 HTML error page is not valid task data. The database is behind the API and never receives browser credentials or direct browser SQL. The browser network panel shows the request, status and returned representation."
           ]
         }
       ],
@@ -308,13 +308,13 @@
       "takeaway": "Types must describe both allowed data and observable failure.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Request fields and invariants",
           "paragraphs": [
             "POST accepts title and minutes. title is trimmed and must contain 1–120 characters; minutes is an integer from 0 through 1440. Server-generated id, done=false and version=1 appear in the result. Unknown request fields are rejected. PUT requires title, minutes, done and expected version; missing done is not silently interpreted as false."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Statuses and omitted values",
           "paragraphs": [
             "Use 201 for creation, 200 for a successful update/list, 400 for invalid input, 404 for a missing record and 409 for a stale expected version. These choices are the project contract, not universal status rules. Nullable request fields distinguish omitted values from meaningful zero and false."
           ]
@@ -356,13 +356,13 @@
       "takeaway": "Database constraints reinforce the contract at the persistence boundary.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "StudyTasks types and version",
           "paragraphs": [
             "StudyTasks uses a uniqueidentifier primary key, nvarchar(120) title, bounded int minutes, bit done and positive int Version. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server rowversion."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Constraints and schema compatibility",
           "paragraphs": [
             "schema.sql creates the table only if absent in an owned learning database. It never creates or selects a database automatically. CHECK constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
           ]
@@ -404,13 +404,13 @@
       "takeaway": "A retained draft lets a learner recover from failure.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Form state and accessible feedback",
           "paragraphs": [
             "App.tsx owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and role=status announces asynchronous outcomes without moving focus."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Draft recovery after failure",
           "paragraphs": [
             "A failed request leaves the draft unchanged. Clear title only after a decoded creation result. Disable mutation controls while a save is pending, but still handle server rejection because a second client can write. An empty list gets an explicit first-session invitation rather than a blank panel."
           ]
@@ -452,13 +452,13 @@
       "takeaway": "Prove one feature across the real browser and API before adding abstractions.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Create and complete a session",
           "paragraphs": [
             "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with version=2 and done=true. The reference renders the returned task rather than guessing a server-generated ID."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Refresh versus API restart",
           "paragraphs": [
             "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. This is a useful foundation boundary: the UI is integrated, while durability is intentionally not yet established. Record both behaviors instead of calling refresh a persistence test."
           ]
@@ -500,13 +500,13 @@
       "takeaway": "A TypeScript assertion cannot validate unknown network data.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Unknown data and decoding",
           "paragraphs": [
             "request returns unknown. decodeTask checks a GUID-shaped ID, title, integer minutes, boolean done and positive integer version before producing a StudyTask. A list additionally checks duplicate IDs because React keys and update targeting assume identity is unique."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Decoder contract tests",
           "paragraphs": [
             "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run planner-api.test.ts to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
           ]
@@ -548,13 +548,13 @@
       "takeaway": "Effect cleanup bounds which request may update the current screen.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Effect setup and cleanup",
           "paragraphs": [
             "The initial effect creates an AbortController, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Cancellation versus committed effects",
           "paragraphs": [
             "Aborting a fetch is a client-side cancellation signal. It does not prove the server cancelled work, and it cannot undo a committed mutation. Future filter-dependent requests also need stale-result protection when parameters change. Keep GET loading separate from POST submission triggered by a user action."
           ]
@@ -596,13 +596,13 @@
       "takeaway": "Changing storage requires explicit setup and observable confirmation.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Selecting SQL storage",
           "paragraphs": [
             "Create NotebookPlannerLab as a new dedicated database in SSMS and run schema.sql there. Set PlannerConnection only in the API shell, then restart. /health must report sql-server. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Local trust and deployed credentials",
           "paragraphs": [
             "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local TrustServerCertificate option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
           ]
@@ -644,13 +644,13 @@
       "takeaway": "Bind title as data even when it contains SQL-looking text.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Typed SQL parameters",
           "paragraphs": [
             "SqlPlanner uses fixed SQL statements and explicitly typed parameters. @title is nvarchar(120), @minutes is int and @id is uniqueidentifier. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Sort keys and authorization",
           "paragraphs": [
             "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user’s records."
           ]
@@ -692,13 +692,13 @@
       "takeaway": "Expected-version comparison belongs in the atomic write.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Atomic expected-version updates",
           "paragraphs": [
             "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; UPDATE WHERE Id=@id AND Version=@version affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Conflict recovery in the UI",
           "paragraphs": [
             "The in-memory adapter locks compare-and-replace; SQL performs the comparison in the update predicate. The UI retains the displayed row and explains Reload and compare. It does not automatically retry with version 2 because that would overwrite another decision without the learner reviewing it."
           ]
@@ -740,13 +740,13 @@
       "takeaway": "An invariant determines a transaction boundary.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Related writes and invariants",
           "paragraphs": [
             "Creating one session is one SQL INSERT, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Transactions and external effects",
           "paragraphs": [
             "Use a database transaction around the required writes and test a deliberate failure between them. Keep slow remote calls outside that transaction. SQL rollback can undo SQL writes, but it cannot recall an email already sent. Reliable external effects need a durable outbox and an idempotent consumer."
           ]
@@ -788,13 +788,13 @@
       "takeaway": "A transport failure is not evidence that a write failed.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Uncertain POST outcomes",
           "paragraphs": [
             "The reference POST generates a new ID each time and does not implement idempotency. If SQL commits and the connection breaks before 201 reaches the browser, an automatic retry can create a second session. Keeping a draft is good recovery UX, but it does not solve effect uncertainty."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "An idempotent creation extension",
           "paragraphs": [
             "For the assessed extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
           ]
@@ -836,13 +836,13 @@
       "takeaway": "An authenticated caller still needs authorization for each record.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Verified owner context",
           "paragraphs": [
             "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an OwnerId column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Two-account authorization tests",
           "paragraphs": [
             "Use the Application Security path for OIDC/session validation, token audience/issuer checks and cookie CSRF boundaries. Choose whether foreign IDs return 403 or are concealed as 404, then test that policy with two real accounts. A GUID is a locator, not a permission grant."
           ]
@@ -884,13 +884,13 @@
       "takeaway": "Browser policy is not API authorization.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Same-origin proxy and CORS",
           "paragraphs": [
             "Vite forwards /api on the UI origin to the API, so the baseline browser request is same-origin. Direct requests from a different origin require an explicitly allowed CORS policy. The API permits only the local development origin, methods and Content-Type header. This does not prevent non-browser clients calling the endpoint."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Cookies, CSRF and bearer tokens",
           "paragraphs": [
             "If a later deployment uses cookie authentication, consider credentialed origins, SameSite cookie behavior and CSRF tokens for unsafe methods. If using bearer tokens, document token storage and XSS exposure. Avoid allowing every origin with credentials. Test browser behavior separately from curl or Python HTTP behavior."
           ]
@@ -932,13 +932,13 @@
       "takeaway": "Choose tests by the boundary they can actually observe.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Decoder, API, browser and SQL tests",
           "paragraphs": [
             "planner-api.test.ts tests decoding and HTTP error interpretation without a server. acceptance.py calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "What each test observes",
           "paragraphs": [
             "None substitutes for all others. A mocked response cannot establish a SQL predicate, and a server test cannot prove a keyboard user can submit the form. Add independently expected results for your extensions. Keep acceptance fixtures in an isolated learning database because they create synthetic records."
           ]
@@ -980,13 +980,13 @@
       "takeaway": "Record useful metadata without leaking drafts or credentials.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Bounded request logs",
           "paragraphs": [
             "The API logs method, path, status, elapsed milliseconds and a request trace identifier. It deliberately avoids request bodies and connection strings. These local logs help identify an error boundary; they are not a distributed trace because browser/proxy/database spans are not yet correlated."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Correlated traces and measurements",
           "paragraphs": [
             "Extend the project with OpenTelemetry instrumentation and trace context propagation. Define a workload and measure request latency plus successful completion rate. Do not average percentiles from different runs, and do not label planned minutes as measured CPU time. Keep high-cardinality identifiers out of metric labels."
           ]
@@ -1028,13 +1028,13 @@
       "takeaway": "Build identity connects verification to what actually runs.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Tested artifact promotion",
           "paragraphs": [
             "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Configuration and secrets are supplied at runtime."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "Production origin and routing",
           "paragraphs": [
             "The practice dev proxy is not a production hosting plan. Serve the frontend under a known origin and route /api through a configured proxy or a deliberate CORS boundary. GitHub Pages cannot execute .NET or SQL. Deployment, managed identity and public HTTPS are optional exercises requiring owned infrastructure."
           ]
@@ -1076,13 +1076,13 @@
       "takeaway": "A backup becomes recovery evidence only after a successful restore.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Restart and isolated restore",
           "paragraphs": [
             "In SQL mode, stop/restart persistence is the first durability demonstration. A recovery drill goes further: back up the dedicated database, restore into a new learning database and verify IDs, titles, counts and versions. Measure actual elapsed recovery time and compare with a stated recovery objective."
           ]
         },
         {
-          "title": "Apply it to the study planner",
+          "title": "A final feature review",
           "paragraphs": [
             "Finish with a review explaining the complete feature and its remaining boundaries. Show a valid add, rejected input, stale conflict, retained draft, SQL restart and tested restore if performed. Distinguish the baseline from your identity/idempotency/release extensions and link each claim to recorded evidence."
           ]

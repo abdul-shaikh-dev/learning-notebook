@@ -101,20 +101,20 @@
       "takeaway": "An operating system coordinates hardware and programs.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Kernel, shell and distribution",
           "paragraphs": [
             "An operating system coordinates hardware and programs. The kernel mediates memory, CPU time, devices and system calls; user-space programs include shells, browsers and service managers. A Linux distribution combines the kernel with utilities and packages. A terminal displays interaction; a shell interprets commands."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "An importer's file read",
           "paragraphs": [
             "Imagine a notebook importer opening a CSV. Its Python code requests a file read through a library; the kernel checks access and supplies bytes from the filesystem. A missing file is an operating-system error that the application should report, not proof that Python is broken."
           ],
           "example": "# Run inside Linux or WSL, not PowerShell\nuname -s\ncat /etc/os-release\n# Expect Linux and distribution-specific metadata."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Host, guest and container kernels",
           "paragraphs": [
             "A container normally shares its host kernel. A virtual machine has a guest kernel. Windows commands in PowerShell are not interchangeable with Bash syntax even when their names look alike."
           ]
@@ -157,20 +157,20 @@
       "takeaway": "An absolute Linux path starts at /.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Absolute and relative paths",
           "paragraphs": [
             "An absolute Linux path starts at /. A relative path starts at the process working directory. The home directory is a user-specific location; ~ is expanded by the shell. Case matters on typical Linux filesystems, so Report.csv and report.csv may be different names."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A service launched from /",
           "paragraphs": [
             "A service launched from / reads ./data.csv there, even if the script is stored in /home/learner/app. Locate both the working directory and the configured data path before changing code. .. moves to the parent; . names the current directory."
           ],
           "example": "pwd\nmkdir -p notebook-lab/input\ncd notebook-lab\nprintf \"id,name\\n1,Asha\\n\" > input/sample.csv\nls -l input\n# All changes stay in notebook-lab."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Path resolution versus authorization",
           "paragraphs": [
             "Resolving a path is not an authorization check. Symlinks can redirect lookup, and another process can change filesystem state between checking and opening a path."
           ]
@@ -213,20 +213,20 @@
       "takeaway": "Before modifying a file, inspect its name, contents and parent directory.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Copies, moves and removals",
           "paragraphs": [
             "Before modifying a file, inspect its name, contents and parent directory. cp copies, mv renames or moves, and rm removes directory entries. Shell wildcards can match more files than expected. Practice in a dedicated folder and use literal names for destructive operations."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Comparing a backup copy",
           "paragraphs": [
             "Copy the sample into backup.csv, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
           ],
           "example": "cp input/sample.csv backup.csv\ncat backup.csv\nwc -l backup.csv\n# Expect 2 lines; inspect with ls before any removal."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Overwrite and deletion boundaries",
           "paragraphs": [
             "An overwrite can happen without a recycle-bin recovery path. Do not use recursive deletion against a computed or unreviewed directory. The lab needs no sudo and no changes to system directories."
           ]
@@ -269,20 +269,20 @@
       "takeaway": "A command receives an argument vector.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Arguments and shell expansion",
           "paragraphs": [
             "A command receives an argument vector. Bash performs expansion before launching it: unquoted variables can undergo word splitting and filename expansion. Double quotes preserve spaces while allowing variable expansion; single quotes generally preserve literal text. User input should be data rather than shell source."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A filename containing spaces",
           "paragraphs": [
             "The filename quarterly report.csv contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
           ],
           "example": "name=\"quarterly report.csv\"\nprintf \"%s\\n\" \"$name\"\n# One line containing the complete name.\n# Application equivalent: subprocess.run([\"tool\", name], shell=False)"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Quoting across languages",
           "paragraphs": [
             "Quoting is shell-specific. Bash syntax does not secure SQL, HTML or another shell automatically. Avoid constructing a shell command from untrusted text and avoid eval for this exercise."
           ]
@@ -332,20 +332,20 @@
       "takeaway": "Programs conventionally receive input on descriptor 0, write normal output on 1 and diagnostics on 2.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Descriptors, pipes and redirects",
           "paragraphs": [
             "Programs conventionally receive input on descriptor 0, write normal output on 1 and diagnostics on 2. A pipe connects one process output to another process input. Redirection sends a stream to a file. > replaces file contents; >> appends."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Filtering stdout and stderr",
           "paragraphs": [
             "A log filter may emit matching lines on stdout but write a missing-file message on stderr. Capturing stdout alone can hide the diagnosis. A pipeline transforms a stream, but a downstream success does not necessarily establish that all upstream stages succeeded."
           ],
           "example": "printf \"INFO ready\\nERROR invalid row\\n\" | grep ERROR\n# Expect ERROR invalid row\n# Bash only:\nset -o pipefail\nfalse | cat\nprintf \"status=%s\\n\" \"$?\"\n# Expect status=1"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Pipeline status and parsers",
           "paragraphs": [
             "Bash pipeline status normally follows the last command. set -o pipefail changes that rule. Binary data and CSV quoting require suitable parsers; a simple grep pipeline is not a CSV importer."
           ]
@@ -395,20 +395,20 @@
       "takeaway": "Each process has identities used in access decisions.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Identity and directory permissions",
           "paragraphs": [
             "Each process has identities used in access decisions. Traditional file mode bits separate owner, group and others with read, write and execute permissions. For a directory, execute allows traversal, read lists names, and write concerns entries. ACLs and capabilities add rules beyond the basic bits."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Mode 600 and parent traversal",
           "paragraphs": [
             "A private report can use mode 600: owner read/write, no group/other bits. An application still needs traversal permission on every parent directory. Fixing the final file alone may leave Permission denied unchanged."
           ],
           "example": "# Linux lab only, own file:\nchmod 600 backup.csv\nls -l backup.csv\nid\n# Expect owner rw bits, plus your actual identity."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Diagnosing denied access",
           "paragraphs": [
             "chmod 777 is not a diagnosis. An effective identity, parent access, ACL, mount option or security policy can explain a failure. Windows NTFS permissions and WSL-mounted directories may behave differently."
           ]
@@ -451,20 +451,20 @@
       "takeaway": "A process is an executing program with a PID, resources and execution state.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Process identity and exit status",
           "paragraphs": [
             "A process is an executing program with a PID, resources and execution state. Its parent launches it and eventually collects completion status. A conventional zero status indicates success; nonzero statuses communicate failure categories. Program-specific documentation defines their meanings."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Validation failure with exit 1",
           "paragraphs": [
             "The importer prints a helpful message but exits 1 when validation fails. Automation should inspect the exit status as well as output. A shell command not found is different from an application rejecting input."
           ],
           "example": "python3 -c \"import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)\"\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "PID reuse and effect evidence",
           "paragraphs": [
             "PIDs are reusable. Do not act on an old PID without confirming identity. A status alone does not prove a business effect was rolled back; transaction design establishes that guarantee."
           ]
@@ -507,20 +507,20 @@
       "takeaway": "A child normally inherits an environment snapshot from its parent.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Inherited configuration and PATH",
           "paragraphs": [
             "A child normally inherits an environment snapshot from its parent. PATH lists directories searched for command names. Environment variables are strings; applications must validate them. Working directory, interpreter version and explicit configuration together explain many laptop-versus-service differences."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A different Python interpreter",
           "paragraphs": [
             "A service might find a different python than your interactive shell. Record the absolute interpreter path and configuration source. A DATABASE_URL in an environment is configuration, but still sensitive and should not be printed into a troubleshooting report."
           ],
           "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c \"import os; print(os.environ[\"NOTEBOOK_MODE\"])\"\n# Expect practice, without permanent shell modification."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Running children and secret exposure",
           "paragraphs": [
             "Changing a variable in one shell does not retroactively update already-running children. Avoid placing untrusted directories at the front of PATH and do not include secrets in committed .env files."
           ]
@@ -570,20 +570,20 @@
       "takeaway": "A parent must manage child completion, bounded output and cleanup.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Child lifetime and timeout",
           "paragraphs": [
             "A parent must manage child completion, bounded output and cleanup. Waiting indefinitely can stall a workflow. A timeout is a local deadline; terminating one process does not necessarily terminate grandchildren. Argument lists and controlled executable paths reduce shell-related surprises."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Successful and timed-out children",
           "paragraphs": [
             "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses subprocess.run with a timeout and tests the resulting TimeoutExpired. It launches only the current Python interpreter and never scans or kills unrelated processes."
           ],
           "example": "import subprocess, sys\nresult = subprocess.run([sys.executable, \"-c\", \"print(42)\"],\n                        capture_output=True, text=True, timeout=2)\nprint(result.returncode, result.stdout.strip())\n# Expected: 0 42"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Direct-child and output limits",
           "paragraphs": [
             "The portable lab verifies direct-child behavior, not Linux process groups or a production supervisor. Output capture in memory needs a bound for potentially large output. For streaming tools consume output incrementally."
           ]
@@ -626,20 +626,20 @@
       "takeaway": "A signal is an OS notification to a process or thread.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Signals and bounded shutdown",
           "paragraphs": [
             "A signal is an OS notification to a process or thread. A service can respond to a termination request by stopping new work, finishing or cancelling bounded work, flushing state and exiting. SIGKILL cannot be caught, so cleanup must tolerate interruption."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A 30-second shutdown budget",
           "paragraphs": [
             "A worker with a 30-second shutdown budget should stop accepting tasks first, allow current work up to the remaining deadline, then record incomplete tasks for retry. Signal handlers should do minimal safe work; ordinary cleanup can happen in the main execution flow."
           ],
           "example": "# Linux observation of your own shell process only:\nps -p $$ -o pid,stat,comm\n# Design note: SIGTERM requests shutdown; SIGKILL prevents cleanup."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Actions limited to owned processes",
           "paragraphs": [
             "Signals differ on Windows. Never send kill commands to arbitrary PIDs in this notebook. The Linux observation guide restricts actions to a process that you launched in a disposable user session."
           ]
@@ -682,20 +682,20 @@
       "takeaway": "Each process works with a virtual address space.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Virtual and resident memory",
           "paragraphs": [
             "Each process works with a virtual address space. Mappings may refer to physical pages, shared libraries or files; reserved address space is different from resident physical memory. Page faults can bring data into memory or report invalid access. Resident memory and virtual size answer different questions."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Mapping a large file",
           "paragraphs": [
             "A process maps a large file but touches only a small part. Virtual size can be large while resident memory stays lower. Conversely, a growing Python list can increase resident usage. Diagnose trends alongside workload rather than comparing one number to a different metric."
           ],
           "example": "# Linux read-only observation:\nps -p $$ -o pid,vsz,rss,comm\n# VSZ and RSS typically appear in KiB; confirm your ps manual."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Container accounting limits",
           "paragraphs": [
             "A memory limit applies in a resource-accounting context. Host free memory does not imply a constrained container can allocate more. The course does not induce out-of-memory failures on your PC."
           ]
@@ -745,20 +745,20 @@
       "takeaway": "Threads within a process share resources such as address space but have separate execution contexts.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Interleaving and shared state",
           "paragraphs": [
             "Threads within a process share resources such as address space but have separate execution contexts. Scheduling can interleave operations. A read-modify-write sequence is not automatically atomic, and more workers can increase contention rather than useful throughput."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A lost increment",
           "paragraphs": [
             "Two workers both read count=5 and both write 6; one increment is lost. A lock around the entire operation can protect a local invariant. Separate processes need an appropriate shared coordination boundary, not just an in-process lock."
           ],
           "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Runtime locks and workload models",
           "paragraphs": [
             "A language runtime lock is not a complete application correctness guarantee. CPU-bound and I/O-bound workloads benefit from different models. Measure useful throughput and tail latency with a fixed workload."
           ]
@@ -801,20 +801,20 @@
       "takeaway": "A descriptor is a process-local handle to an open resource.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Open handles and unlinked files",
           "paragraphs": [
             "A descriptor is a process-local handle to an open resource. Multiple descriptors can refer to the same underlying open file description. Opening many files without closing them eventually exhausts a limit. Closing resources promptly is a correctness concern as well as a performance concern."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Closing an unlinked file",
           "paragraphs": [
             "Use a with block around a report file so normal completion and exceptions both close it. A Linux process may continue reading an open file after its pathname is unlinked; the name and the open object have distinct lifetimes."
           ],
           "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: id,name then True"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Reclaiming space and closing resources",
           "paragraphs": [
             "Removing a log pathname does not necessarily reclaim disk usage while a process holds it open. Never delete active logs to diagnose a production server. A context manager closes handles but does not guarantee committed business data."
           ]
@@ -857,20 +857,20 @@
       "takeaway": "Writing data may update userspace buffers, kernel caches and finally storage at different times.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Atomic replacement and durability",
           "paragraphs": [
             "Writing data may update userspace buffers, kernel caches and finally storage at different times. Atomic rename/replacement changes which complete object a name refers to; durability concerns survival after a crash or power loss. These are separate properties."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A temporary-file report writer",
           "paragraphs": [
             "A report writer creates a temporary file in the same directory, writes and flushes it, synchronizes file contents and replaces the prior name. This prevents a reader from observing a half-written report under the stated filesystem assumptions. Full durability may also require directory synchronization and storage guarantees."
           ],
           "example": "# Design sketch, not a crash-durability proof:\nwrite temporary in target directory\nflush application buffer; fsync temporary\nreplace target name\n# Directory durability requires platform-specific consideration."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Filesystem and storage assumptions",
           "paragraphs": [
             "Cross-filesystem moves need not have atomic rename semantics. Network filesystems and hardware caches change assumptions. The practice lab does not certify power-loss behavior or concurrent writers."
           ]
@@ -920,20 +920,20 @@
       "takeaway": "A network service binds an address and port.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Listeners and reachability",
           "paragraphs": [
             "A network service binds an address and port. Loopback accepts local communication; a wildcard bind may expose the service on available interfaces. Connection failures can arise from resolution, routing, filtering, listener state or application protocol."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Reaching a local notebook server",
           "paragraphs": [
             "A local notebook server on 127.0.0.1 is reachable only on that computer through loopback. A phone needs a reachable host address and appropriate network policy. First establish whether the expected process is listening before changing the application."
           ],
           "example": "# Linux read-only inspection:\nss -ltn\n# Look for the exact local port you deliberately started.\n# -l listeners; -t TCP; -n numeric addresses."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "HTTP health beyond listening",
           "paragraphs": [
             "Listening is not proof of a healthy HTTP response, TLS configuration or authorization. Do not expose practice services to public networks. ss availability and output fields vary by Linux environment."
           ]
@@ -983,20 +983,20 @@
       "takeaway": "A supervisor starts a long-running process and manages its lifecycle.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Supervisor configuration and readiness",
           "paragraphs": [
             "A supervisor starts a long-running process and manages its lifecycle. On many Linux distributions systemd units describe the executable, identity, working directory, dependencies and restart policy. A running process is distinct from an application ready to accept work."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A failing importer unit",
           "paragraphs": [
             "An importer service repeatedly exits because its working directory differs from a terminal. Inspect unit configuration, current state and recent logs together. Restarting indefinitely without fixing an input/configuration failure can create a noisy loop."
           ],
           "example": "# Linux with systemd, read-only:\nsystemctl --user --failed\n# No user manager? Record that limitation; do not use sudo as a workaround."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Unavailable service managers",
           "paragraphs": [
             "WSL and containers may not run systemd as PID 1. Commands are observational and can fail with an explanatory unavailable message. Do not edit or enable system units as part of this notebook."
           ]
@@ -1046,20 +1046,20 @@
       "takeaway": "A useful incident record includes observation time, affected scope, exact command, relevant output and a testable hypothesis.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Events, clocks and hypotheses",
           "paragraphs": [
             "A useful incident record includes observation time, affected scope, exact command, relevant output and a testable hypothesis. Logs should identify events and correlation IDs without disclosing secrets. Wall-clock timestamps can jump; elapsed measurements should use a monotonic clock."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A permission-denied timeline",
           "paragraphs": [
             "A report says permission denied at 10:05. Record the service identity, path and parent modes before adjusting access. Test one change at a time so evidence can explain the result. Copy only necessary sanitized diagnostics into your learning notes."
           ],
           "example": "import time\nstart = time.monotonic()\n# perform bounded work\nprint(time.monotonic() - start)\n# Nonnegative elapsed seconds; actual value varies."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Missing evidence and originals",
           "paragraphs": [
             "Absence of a log is not proof that an event did not occur. Buffered output, sampling, clock skew and unavailable storage can create gaps. Preserve originals and document transformations."
           ]
@@ -1109,20 +1109,20 @@
       "takeaway": "Finite CPU, memory, handles and storage impose capacity limits.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Arrival rate and capacity",
           "paragraphs": [
             "Finite CPU, memory, handles and storage impose capacity limits. Queueing increases when arrivals exceed service capacity. Limits protect a host but can also make failures surprising if applications assume unrestricted resources. Capacity planning needs workload and concurrency assumptions."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Backlog growing by 120 jobs",
           "paragraphs": [
             "A worker processing 10 jobs/second receives 14/second for 30 seconds. Ignoring initial backlog and variance, backlog grows by 120 jobs. Increasing workers may help only if the bottleneck is parallelizable and downstream capacity permits it."
           ],
           "example": "arrival = 14\nservice = 10\nduration = 30\nprint(max(0, arrival - service) * duration)\n# Expected: 120 queued jobs in a simplified constant-rate model."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Bounded arithmetic practice",
           "paragraphs": [
             "Do not stress your computer with unbounded allocations or fork loops. The provided lab is an arithmetic model and does not exercise kernel limits or reproduce load-test evidence."
           ]
@@ -1172,20 +1172,20 @@
       "takeaway": "Namespaces give processes distinct views of selected OS resources such as process IDs, mounts and networking.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Resource views and accounting",
           "paragraphs": [
             "Namespaces give processes distinct views of selected OS resources such as process IDs, mounts and networking. cgroups account for and constrain resource use. These mechanisms solve different problems; together with other controls they support container runtimes."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "PID and mount views",
           "paragraphs": [
             "Inside a container, a process may see PID 1 while the host sees another PID. Its memory limit can be lower than host RAM. A missing file may come from a different mount view rather than a missing host file."
           ],
           "example": "# Linux read-only observations; names and access vary:\ncat /proc/self/cgroup\nls -l /proc/self/ns\n# Compare observations, without modifying controls."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Isolation and runtime policy",
           "paragraphs": [
             "Isolation is not complete security by itself. Capabilities, user identities, seccomp, filesystem access and runtime policy still matter. This lesson uses read-only inspection; it does not create namespaces or change cgroup controls."
           ]
@@ -1235,20 +1235,20 @@
       "takeaway": "Least privilege grants only required operations to an application identity.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Runtime permissions and packages",
           "paragraphs": [
             "Least privilege grants only required operations to an application identity. Package management tracks installed software and updates; distributions have differing release policies and commands. Verify origin and compatibility before adding a dependency."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A report reader's permissions",
           "paragraphs": [
             "A report reader needs read access to input and write access to a dedicated output directory, not permission to modify executables. Separate deployment/configuration responsibilities from runtime rights. Record versions so a reproduction can explain environment differences."
           ],
           "example": "# Observation only:\nid\ncommand -v python3\npython3 --version\n# Record distribution from /etc/os-release separately."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Remote scripts and privilege",
           "paragraphs": [
             "Piping a remote script into a privileged shell hides review and expands authority. Do not install packages or change users as part of this notebook; optional Linux exercises use an existing disposable VM/WSL environment."
           ]
@@ -1291,20 +1291,20 @@
       "takeaway": "Start with a symptom and a bounded hypothesis rather than a broad fix.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Lookup, access and validation failures",
           "paragraphs": [
             "Start with a symptom and a bounded hypothesis rather than a broad fix. Separate executable lookup, configuration, file access, resource constraints and application validation. Prefer read-only evidence first, then a minimal reversible change in a practice environment."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Locating a missing data.csv",
           "paragraphs": [
             "If a service fails to open data.csv, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
           ],
           "example": "python diagnostic_lab.py\n# Expected: path -> configuration; permission -> access;\n# timeout -> lifecycle; bad-row -> application validation."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Simulation versus live diagnosis",
           "paragraphs": [
             "A simulation trains reasoning but is not a real Linux incident investigation. Production diagnosis needs authorization, change records and safe evidence handling. The reference never reads arbitrary system files or changes permissions."
           ]
@@ -1347,20 +1347,20 @@
       "takeaway": "A portfolio should show reproducible observations, an explanation of mechanisms and a tested recovery procedure.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Reproducible diagnosis and recovery",
           "paragraphs": [
             "A portfolio should show reproducible observations, an explanation of mechanisms and a tested recovery procedure. Complete the portable child-process lab first, then optionally gather Linux-only evidence in a disposable environment. Label simulated outcomes and actual command output separately."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "The final diagnostic case",
           "paragraphs": [
             "The final case combines an explicit interpreter, validated configuration, a bounded child lifetime, correct output/error separation and an incident note. Evaluate whether your recovery addresses the cause and whether it preserves prior report data."
           ],
           "example": "python -m unittest -v test_os_labs.py\n# Expected: portable lifecycle, argument and model tests pass.\n# Optional Linux observations are documented in linux-observation.md."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Completed Linux observations",
           "paragraphs": [
             "Passing a portable suite does not prove scheduler knowledge, live service management, namespace isolation or performance under load. List the Linux observations you have actually completed and unanswered hypotheses."
           ]

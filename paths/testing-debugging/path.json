@@ -155,13 +155,13 @@
       "takeaway": "A test compares an observation with a stated expectation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Expectations and defects",
           "paragraphs": [
             "A test compares an observation with a stated expectation. A defect is a mismatch with an agreed behavior, while a failure is an observed event. Start with a small study-log importer: an integer duration from 0 to 1440 is valid, an invalid row must not replace the saved report. This gives tests a reason beyond making lines run."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "A contract for the importer",
           "paragraphs": [
             "Write the observation in user terms before choosing a test framework. A test that merely repeats the function's current arithmetic can preserve a bug. Include one allowed action and one rejected action, then decide what must stay unchanged. Use synthetic records so a failing fixture never contains private learner data."
           ],
@@ -204,13 +204,13 @@
       "takeaway": "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Arrange, act and assert",
           "paragraphs": [
             "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. unittest collects independent methods on TestCase; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Independent expected values",
           "paragraphs": [
             "Do not place the expected computation inside the assertion by calling the same implementation twice. Pick a hand-computable case and distinguish the expected literal from the observed result. Keep setup short enough that the reason for a failure remains visible in the test body."
           ],
@@ -253,13 +253,13 @@
       "takeaway": "Input space is usually too large to enumerate.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Input classes and endpoints",
           "paragraphs": [
             "Input space is usually too large to enumerate. Partition it by behavior: valid durations, negative numbers, excess duration, wrong types and missing fields. Boundary values expose comparison errors cheaply. Our duration contract includes both zero and 1440, while 1441 is invalid."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Types beyond ordinary integers",
           "paragraphs": [
             "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract explicitly rejects it. That decision must be tested rather than assumed."
           ],
@@ -302,13 +302,13 @@
       "takeaway": "A negative test needs an expected error and a postcondition.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Errors and postconditions",
           "paragraphs": [
             "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use assertRaises around the smallest action and inspect unchanged state afterward."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Rejecting the right failure",
           "paragraphs": [
             "Catching every exception in a test can accidentally accept an unrelated NameError as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
           ],
@@ -351,13 +351,13 @@
       "takeaway": "A fixture is a known starting state, not a shared pile of leftovers.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Known starting state",
           "paragraphs": [
             "A fixture is a known starting state, not a shared pile of leftovers. A temporary directory gives each file test a fresh destination. Context-manager cleanup also runs when an assertion fails. This prevents one successful test from preparing the next test's hidden preconditions."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Cleanup after acquisition",
           "paragraphs": [
             "Avoid absolute home-directory files, shared fixed ports and suite-wide mutable records for beginner labs. A test must be runnable alone and in a different order. If setup can fail after acquiring a resource, register cleanup immediately instead of waiting for a later step."
           ],
@@ -400,13 +400,13 @@
       "takeaway": "A traceback records how execution reached an exception.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Exception type and call chain",
           "paragraphs": [
             "A traceback records how execution reached an exception. Begin with the exception type and message, then locate the lowest relevant application frame. The last frame may be a library conversion, while the caller supplied the wrong value. Separate the triggering input from the line where the symptom appeared."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Preserving causes safely",
           "paragraphs": [
             "Do not erase the original error by returning None from a blanket handler. The parser chains JSONDecodeError into a public ValueError so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
           ],
@@ -449,13 +449,13 @@
       "takeaway": "A useful reproduction records the exact command, runtime, smallest synthetic input, expected behavior and observed failure.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Small reproducible inputs",
           "paragraphs": [
             "A useful reproduction records the exact command, runtime, smallest synthetic input, expected behavior and observed failure. Reduce unrelated rows and options while keeping the failure. A tiny reproduction makes a hypothesis cheap to test and easier for another person to verify."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Keeping the triggering condition",
           "paragraphs": [
             "Reduction must preserve the condition that triggers the bug. Deleting a duplicate row may make a duplicate-ID failure disappear, which teaches that duplication is material. A reproduction that needs today's remote data is unstable; capture a small permitted fixture with a fixed version instead."
           ],
@@ -498,13 +498,13 @@
       "takeaway": "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Predictions and observations",
           "paragraphs": [
             "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes deliberately admits booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Inspecting the boolean branch",
           "paragraphs": [
             "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect type(value) and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
           ],
@@ -553,13 +553,13 @@
       "takeaway": "A unit test exercises a small behavior with dependencies controlled.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Unit, integration and end-to-end scope",
           "paragraphs": [
             "A unit test exercises a small behavior with dependencies controlled. An integration test combines real collaborators such as parser, filesystem and replacement. An end-to-end test follows a complete user route through its deployed boundaries. These labels describe scope; test value comes from the failure the test can reveal."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Importer risk and test cost",
           "paragraphs": [
             "For our importer, fast parser tests cover many types. A smaller set of real-file tests covers serialization and replacement. A real CLI subprocess would cover argument parsing and exit status but would not prove a future web interface. Balance scopes using risk and maintenance cost, not a fixed universal ratio."
           ],
@@ -602,13 +602,13 @@
       "takeaway": "A test double substitutes a collaborator so a failure or observation can be controlled.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Controlled collaborators",
           "paragraphs": [
             "A test double substitutes a collaborator so a failure or observation can be controlled. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This is a deliberate seam around a file operation rather than a mock of every internal helper."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "What a double cannot prove",
           "paragraphs": [
             "A mock can verify that a forbidden operation was never attempted. It cannot prove the real dependency behaves like the double. Patch where a name is looked up when using patch; injection is simpler here. Avoid asserting incidental call order unless that order protects a stated invariant."
           ],
@@ -651,13 +651,13 @@
       "takeaway": "A boundary contract includes accepted shape, meaning, failures and effects.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Accepted shapes and effects",
           "paragraphs": [
             "A boundary contract includes accepted shape, meaning, failures and effects. The study-log parser requires exactly id and minutes, not merely any JSON object. Adapter tests should cover malformed observations too: valid transport is not the same as valid application data."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Strict parser compatibility",
           "paragraphs": [
             "Unknown fields can indicate a caller-version mismatch or hidden ambiguity. Decide whether to reject or tolerate them before testing. The supplied strict parser rejects extra fields and duplicate JSON keys; that is a teaching policy, not a requirement for every API. Version contracts when policy changes."
           ],
@@ -700,13 +700,13 @@
       "takeaway": "Integration evidence should cross a real boundary.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Real-file integration",
           "paragraphs": [
             "Integration evidence should cross a real boundary. The report reference validates the complete batch, serializes a schema-versioned object into the destination directory, flushes it and replaces the target once. A readback assertion checks both the returned report and actual stored JSON."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Atomic replacement limits",
           "paragraphs": [
             "The filesystem is real but the environment is local and trusted. Atomic replacement protects readers from an in-progress target write; it does not make concurrent writers safe or prove power-loss durability. Missing parent directories and permission failures remain explicit errors rather than invented successful imports."
           ],
@@ -749,13 +749,13 @@
       "takeaway": "A property describes behavior across many inputs; a metamorphic relation links results after a controlled transformation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Properties and transformations",
           "paragraphs": [
             "A property describes behavior across many inputs; a metamorphic relation links results after a controlled transformation. Adding a zero-minute row must preserve the total, and reordering rows must preserve a sum. These relations catch some errors without calculating a separate expected result for every generated list."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Reproducible generated cases",
           "paragraphs": [
             "Our suite uses a fixed seed and finite generated cases, so it is reproducible rather than exhaustive. A property-testing engine such as Hypothesis can generate and shrink counterexamples, but it is an optional dependency. A weak property can still pass a constant-zero implementation; retain concrete nonzero examples."
           ],
@@ -798,13 +798,13 @@
       "takeaway": "A regression test preserves the condition that previously failed and the intended user outcome.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Old behavior versus corrected behavior",
           "paragraphs": [
             "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the deliberately buggy validator from parse_record's exact-type policy without requiring the entire importer to run."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Observing the regression boundary",
           "paragraphs": [
             "A test is not useful merely because it executes a changed line. Observe the boundary, relevant output and absent unwanted effects. Keep a brief issue explanation in the test name or comment. If the bug was caused by two competing updates, a sequential happy path will not preserve it."
           ],
@@ -847,13 +847,13 @@
       "takeaway": "Coverage reports which code ran; it does not measure how well expected behavior was checked.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Execution and assertion strength",
           "paragraphs": [
             "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments deliberately alter behavior and ask whether a test notices; surviving mutants reveal weak assertions or equivalent changes."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "The controlled boolean mutant",
           "paragraphs": [
             "No coverage or mutation package is required for this path. The supplied boolean mutant is one controlled experiment. Record the exact altered rule and which case distinguishes it. Do not treat one killed mutant as a universal quality score or add tests only to chase a percentage."
           ],
@@ -902,13 +902,13 @@
       "takeaway": "A fixture's provenance matters.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Fixture provenance",
           "paragraphs": [
             "A fixture's provenance matters. Synthetic IDs, bounded lists and fixed clocks keep the labs portable and private. Record seeds, runtime versions and relevant configuration when failure depends on generation. Minimize fixtures so the expected result is readable and hand-checkable."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Private and historical data",
           "paragraphs": [
             "Do not overwrite a historical captured incident merely to make a new test pass. Add a new fixture or document a migration. Avoid copying credentials or raw production records into regression folders. Time and external state should be injected or controlled when they are not the subject of the test."
           ],
@@ -951,13 +951,13 @@
       "takeaway": "A race appears when competing actions depend on an ordering the implementation does not enforce.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Competing reads and writes",
           "paragraphs": [
             "A race appears when competing actions depend on an ordering the implementation does not enforce. The VersionStore test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "One winner, one conflict",
           "paragraphs": [
             "The winning thread is intentionally unspecified. Assert one success and one conflict, then inspect version one and either allowed value. Sleeping to encourage an ordering is fragile. This is a single-process thread test; it cannot establish distributed database or multi-process coordination."
           ],
@@ -1000,13 +1000,13 @@
       "takeaway": "A flaky test changes outcome without a relevant code change.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Changing outcomes",
           "paragraphs": [
             "A flaky test changes outcome without a relevant code change. Investigate shared state, wall-clock assumptions, unmanaged threads, port conflicts and uncontrolled external services. A rerun is diagnostic evidence, not a repair. Capture the failure and isolate the dependency before adding retries to the suite."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Barriers and safety timeouts",
           "paragraphs": [
             "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, capture that failure clearly rather than letting a later join obscure the cause."
           ],
@@ -1049,22 +1049,22 @@
       "takeaway": "Async tests must distinguish an operation failure, caller cancellation and timeout.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Failure, cancellation and timeout",
           "paragraphs": [
             "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless its contract deliberately converts it. Record whether cleanup completes before the operation reports its final result."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Event-ordered cleanup",
           "paragraphs": [
-            "IsolatedAsyncioTestCase supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. Run the guided diagnosis kit for cancellation after acquisition and successful cleanup; then continue to the Python TaskGroup lab for sibling-failure behavior."
+            "IsolatedAsyncioTestCase supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. The guided diagnosis kit covers cancellation after acquisition and successful cleanup; the Python TaskGroup lab extends this to sibling-failure behavior."
           ],
           "example": "Child acquires resource -> readiness event\nParent cancels task -> child's finally runs\nAwait raises CancelledError -> assert cleanup marker"
         },
         {
           "title": "Observe cancellation after acquisition",
           "paragraphs": [
-            "The guided diagnosis kit now includes IsolatedAsyncioTestCase tests. A started event proves acquisition before cancellation. The cancelled task must propagate CancelledError, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
+            "The guided diagnosis kit includes IsolatedAsyncioTestCase tests. A started event proves acquisition before cancellation. The cancelled task must propagate CancelledError, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
           ]
         }
       ],
@@ -1104,13 +1104,13 @@
       "takeaway": "Assertions say whether a contract held; diagnostics help explain why.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Assertions and diagnostics",
           "paragraphs": [
             "Assertions say whether a contract held; diagnostics help explain why. A synthetic case ID connects a test, event and failure note without logging the learner's full text. The supplied event helper accepts known outcomes and elapsed milliseconds, then returns only an allowlisted metadata shape."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Bounded diagnostic metadata",
           "paragraphs": [
             "Useful diagnostics describe a bounded action and its outcome. Logging every input creates privacy and volume problems. Metrics summarize populations while traces describe a particular route; neither replaces an assertion. State what was measured and avoid interpreting a local test's duration as a production latency guarantee."
           ],
@@ -1153,13 +1153,13 @@
       "takeaway": "A correctness assertion expects a value or invariant.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Correctness and timing",
           "paragraphs": [
             "A correctness assertion expects a value or invariant. A performance experiment measures a distribution under a specified workload and environment. One fast unit-test run says little about tail latency, memory growth or load behavior. First ensure the measured operation produces correct output."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "A reproducible benchmark",
           "paragraphs": [
             "Do not assert an arbitrary few milliseconds in a general-purpose CI test. Keep a separate benchmark command with warmup, repeated samples, dataset size and platform notes. When optimization changes ordering or laziness, retain correctness tests so faster output does not silently become incomplete output."
           ],
@@ -1208,13 +1208,13 @@
       "takeaway": "A release decision combines targeted evidence and known limits.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Release risks and test scope",
           "paragraphs": [
             "A release decision combines targeted evidence and known limits. List changed contracts, relevant test scopes, actual results and unresolved environments. The lab suite proves local parser, file and thread behaviors; it does not certify a deployed API, GUI or adversarial service."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Collection and command evidence",
           "paragraphs": [
             "A passing runner can still have skipped tests or collect the wrong module. Record the exact entry point and test count. If tests import an installed package instead of the intended checkout, investigate module location. Require failures to stop the validation command rather than printing success unconditionally."
           ],
@@ -1257,13 +1257,13 @@
       "takeaway": "A useful diagnosis connects symptom, reproduction, cause, correction and evidence.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Symptom, cause and correction",
           "paragraphs": [
             "A useful diagnosis connects symptom, reproduction, cause, correction and evidence. Explain how a stale-version race allowed an overwritten report, which boundary now rejects the second writer and what remains untested. Another developer should be able to run the reproducer without reconstructing your session."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Observations and remaining hypotheses",
           "paragraphs": [
             "Separate observations from hypotheses. A local lock fixes the supplied single-process reference, while a persistent multi-worker service needs a transaction or appropriate coordination at its real storage boundary. Record the smallest next falsifying test rather than claiming mastery from one suite."
           ],
@@ -1306,13 +1306,13 @@
       "takeaway": "An end-to-end boundary is defined by the product route, not a framework label.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Subprocess test boundaries",
           "paragraphs": [
             "An end-to-end boundary is defined by the product route, not a framework label. Running a reference as a subprocess checks import resolution, process startup, printed output and exit status together. This is a complete local command route; it is not a deployed browser or authenticated service test."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Exit status, output and cleanup",
           "paragraphs": [
             "Keep the command and working directory explicit and bound the process with a timeout. Check return code and output separately; a script that prints a plausible total before crashing must fail. Use an owned temporary directory when the command writes data, and never point an incident reproducer at a user's live files."
           ],

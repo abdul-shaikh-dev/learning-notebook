@@ -18,7 +18,7 @@
     "Download and extract the practice bundle; every worksheet is flat in self-awareness-communication-practice.",
     "Read README.md, then work through numbered worksheets and the three stage project sheets.",
     "Write your own response before comparing it with the fictional worked example.",
-    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
     "Repeat a modest practice in a new context and revise from observed evidence.",
@@ -303,14 +303,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Ravi sees a teammate leave a message unanswered for two hours and concludes she does not respect him. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Maya sees her name missing from a draft project roster and assumes the organiser wants her excluded."
           ],
-          "example": "Observation: my message has no reply after two hours. Interpretation: she does not respect me. Question: when would be a good time to confirm the plan? She may be busy, offline or waiting for information.",
+          "example": "Observation: my name is absent from the current draft. Interpretation: the organiser wants me excluded. Maya asks, “Is this roster final, and should my assignment be included?” The draft may be incomplete; the question checks its status without asserting a motive.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Split the event into observation and interpretation, then write a neutral question.",
+        "prompt": "Ravi sees a teammate leave a message unanswered for two hours and concludes she does not respect him. Split the event into observation and interpretation, then write a neutral question.",
         "solution": "Observation: my message has no reply after two hours. Interpretation: she does not respect me. Question: when would be a good time to confirm the plan? She may be busy, offline or waiting for information.",
         "solutionFormat": "prose",
         "checks": [
@@ -327,7 +327,7 @@
           "She does not value teamwork"
         ],
         "correct": 0,
-        "explanation": "The message has no reply after two hours fits the distinction in this lesson. She deliberately ignores me overlooks the stated limits; She does not value teamwork substitutes an assumption for a feasible action."
+        "explanation": "An observation describes what happened; an explanation of someone’s intention remains an interpretation to check."
       },
       "references": [
         {
@@ -360,14 +360,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Dana feels frustrated when a shared document changes shortly before a meeting. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Omar feels disappointed when a presentation rehearsal ends before his turn."
           ],
-          "example": "I feel frustrated. I am concerned about preparing from the correct version. I will ask which sections changed and request a stable copy before the meeting. This describes Dana’s experience without assuming deliberate sabotage.",
+          "example": "Omar names the feeling and concern: “I am disappointed because I have not checked my timing.” His next action is to ask for a five-minute rehearsal slot tomorrow. The feeling matters without proving that the group deliberately dismissed his contribution.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a feeling, concern and useful next action.",
+        "prompt": "Dana feels frustrated when a shared document changes shortly before a meeting. Write a feeling, concern and useful next action.",
         "solution": "I feel frustrated. I am concerned about preparing from the correct version. I will ask which sections changed and request a stable copy before the meeting. This describes Dana’s experience without assuming deliberate sabotage.",
         "solutionFormat": "prose",
         "checks": [
@@ -384,7 +384,7 @@
           "Feeling angry requires sending the message immediately"
         ],
         "correct": 0,
-        "explanation": "I feel frustrated and will ask what changed fits the distinction in this lesson. I feel ignored, therefore they must be malicious overlooks the stated limits; Feeling angry requires sending the message immediately substitutes an assumption for a feasible action."
+        "explanation": "Naming a feeling helps clarify your experience. It neither proves another person’s intention nor determines what you must do next."
       },
       "references": [
         {
@@ -417,14 +417,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Lina values helping classmates but has only twenty minutes before her own deadline. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Nell wants to support a community event and prepare for an exam, but has only one free afternoon."
           ],
-          "example": "I can spend five minutes identifying the question, then return to my work. I can offer a longer discussion tomorrow. Lina’s limit does not erase her wish to help; it makes the available help clear.",
+          "example": "Nell offers to proofread the invitation for fifteen minutes and declines the two-hour setup shift. She explains the exam deadline and asks whether that smaller contribution would help. The choice respects both concerns while making its opportunity cost visible.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a choice that respects both concerns.",
+        "prompt": "Lina values helping classmates but has only twenty minutes before her own deadline. Write a choice that respects both concerns.",
         "solution": "I can spend five minutes identifying the question, then return to my work. I can offer a longer discussion tomorrow. Lina’s limit does not erase her wish to help; it makes the available help clear.",
         "solutionFormat": "prose",
         "checks": [
@@ -441,7 +441,7 @@
           "Ignore the request without explanation"
         ],
         "correct": 0,
-        "explanation": "Offer a defined short help slot and a later option fits the distinction in this lesson. Agree to unlimited help to prove kindness overlooks the stated limits; Ignore the request without explanation substitutes an assumption for a feasible action."
+        "explanation": "A priority translates what matters into a choice within current constraints. Valuing two outcomes does not create time to do both."
       },
       "references": [
         {
@@ -474,14 +474,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Eli assumes a brief email means a tutor is annoyed, then notices it contains a clear answer and no criticism. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Dev sees a colleague use someone else’s suggestion in a meeting and assumes his own idea was ignored."
           ],
-          "example": "Event: a two-line reply. First interpretation: annoyance. Evidence: short length only; against it, the question is answered clearly. Alternative: the tutor writes concise replies. Next action: use the answer and ask a follow-up if necessary.",
+          "example": "Event: another suggestion was chosen. First account: my contribution was ignored. Supporting evidence: nobody discussed it aloud. Alternative: the chosen option met a constraint Dev has not heard. He asks which criterion decided the choice; the missing information remains uncertain.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Record the event, first interpretation, evidence and one alternative.",
+        "prompt": "Eli assumes a brief email means a tutor is annoyed, then notices it contains a clear answer and no criticism. Record the event, first interpretation, evidence and one alternative.",
         "solution": "Event: a two-line reply. First interpretation: annoyance. Evidence: short length only; against it, the question is answered clearly. Alternative: the tutor writes concise replies. Next action: use the answer and ask a follow-up if necessary.",
         "solutionFormat": "prose",
         "checks": [
@@ -498,7 +498,7 @@
           "Diagnosing the tutor’s personality"
         ],
         "correct": 0,
-        "explanation": "Examining an interpretation and choosing a next step fits the distinction in this lesson. Proving all unpleasant feelings are irrational overlooks the stated limits; Diagnosing the tutor’s personality substitutes an assumption for a feasible action."
+        "explanation": "Separate the event, your first explanation and possible alternatives. This keeps an interpretation open to checking rather than treating it as fact."
       },
       "references": [
         {
@@ -531,14 +531,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Noor receives no invite to a study session. It may be an oversight or a deliberate choice; she does not yet know. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Hannah finds that a shared folder is no longer accessible and wonders whether her access was intentionally removed."
           ],
-          "example": "Possibilities: the organiser used an old list, or the group planned a smaller session. Question: I heard there was a session yesterday; how are invitations being organised? Noor can then respond to what she learns instead of asserting either story as fact.",
+          "example": "Possibilities include a permissions mistake or an intentional role change. Hannah asks, “I cannot open the project folder today. Has access changed, or should we check the permissions?” Either explanation still leaves an access problem to resolve; an alternative story does not erase that impact.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write two possibilities and a question that can resolve part of the uncertainty.",
+        "prompt": "Noor receives no invite to a study session. It may be an oversight or a deliberate choice; she does not yet know. Write two possibilities and a question that can resolve part of the uncertainty.",
         "solution": "Possibilities: the organiser used an old list, or the group planned a smaller session. Question: I heard there was a session yesterday; how are invitations being organised? Noor can then respond to what she learns instead of asserting either story as fact.",
         "solutionFormat": "prose",
         "checks": [
@@ -555,7 +555,7 @@
           "It proves the first interpretation was impossible"
         ],
         "correct": 0,
-        "explanation": "It remains a hypothesis open to evidence fits the distinction in this lesson. It must always be optimistic overlooks the stated limits; It proves the first interpretation was impossible substitutes an assumption for a feasible action."
+        "explanation": "An alternative explanation remains a hypothesis. It need not be optimistic, and it should not erase the impact of what happened."
       },
       "references": [
         {
@@ -588,14 +588,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Kiran drafts an angry response to a last-minute room change but mainly needs to know where to meet. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Sam drafts a complaint after a delivery time changes, but first needs to know whether someone must be present."
           ],
-          "example": "I saw the room changed. Please confirm the new location and whether the start time is the same. We can discuss notice for future changes afterwards. The first message solves the urgent information gap while preserving a later concern.",
+          "example": "Sam sends: “Does the new delivery window require someone at home, and can the parcel be collected instead?” He schedules a later discussion about notice with the supplier. The immediate question resolves a practical gap while giving the broader concern a real follow-up.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Rewrite the reply around its immediate purpose.",
+        "prompt": "Kiran drafts an angry response to a last-minute room change but mainly needs to know where to meet. Rewrite the reply around its immediate purpose.",
         "solution": "I saw the room changed. Please confirm the new location and whether the start time is the same. We can discuss notice for future changes afterwards. The first message solves the urgent information gap while preserving a later concern.",
         "solutionFormat": "prose",
         "checks": [
@@ -612,7 +612,7 @@
           "How can I win before hearing the explanation?"
         ],
         "correct": 0,
-        "explanation": "What do I need this message to accomplish? fits the distinction in this lesson. How do I remove every feeling first? overlooks the stated limits; How can I win before hearing the explanation? substitutes an assumption for a feasible action."
+        "explanation": "Identify what the message needs to accomplish. A brief pause can clarify the request without requiring every feeling to disappear."
       },
       "references": [
         {
@@ -645,14 +645,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Bea’s friend explains a timetable problem while Bea keeps glancing at notifications. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Inez’s neighbour wants to explain a shared-garden problem while Inez is about to leave."
           ],
-          "example": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
+          "example": "Inez says, “I have five minutes now, or fifteen after six. Which would work?” In the agreed slot she puts her phone aside and summarises the concern for correction. Stating available time supports attention without promising a listening posture or unlimited availability.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a short listening setup that respects both people.",
+        "prompt": "Bea’s friend explains a timetable problem while Bea keeps glancing at notifications. Write a short listening setup that respects both people.",
         "solution": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
         "solutionFormat": "prose",
         "checks": [
@@ -669,7 +669,7 @@
           "Immediate advice before the speaker finishes"
         ],
         "correct": 0,
-        "explanation": "A checked summary of what was said fits the distinction in this lesson. Unbroken eye contact alone overlooks the stated limits; Immediate advice before the speaker finishes substitutes an assumption for a feasible action."
+        "explanation": "A checked summary gives evidence of understanding. Eye contact or immediate advice alone does not establish that the message was understood."
       },
       "references": [
         {
@@ -702,14 +702,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A project partner says the draft cannot be finished tonight. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "A volunteer says the sign-up form is difficult to use, but has not named the problem."
           ],
-          "example": "What is making tonight difficult? After the answer: is the missing data the only section blocking your draft? The first invites context; the second checks a concrete dependency without assuming laziness.",
+          "example": "First: “What happens when you try to sign up?” After hearing about a missing button: “Does that happen on your phone before you submit?” The open question discovers the obstacle; the closed check locates it without assuming the volunteer misunderstood the form.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write an open question and a factual follow-up.",
+        "prompt": "A project partner says the draft cannot be finished tonight. Write an open question and a factual follow-up.",
         "solution": "What is making tonight difficult? After the answer: is the missing data the only section blocking your draft? The first invites context; the second checks a concrete dependency without assuming laziness.",
         "solutionFormat": "prose",
         "checks": [
@@ -726,7 +726,7 @@
           "You just did not try, did you?"
         ],
         "correct": 0,
-        "explanation": "What is making tonight difficult? fits the distinction in this lesson. Why are you always unreliable? overlooks the stated limits; You just did not try, did you? substitutes an assumption for a feasible action."
+        "explanation": "“What is making tonight difficult?” invites context without embedding blame. A focused factual check can follow once the constraint is clearer."
       },
       "references": [
         {
@@ -759,14 +759,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Zara says she can do the analysis but needs the figures before noon. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Luis says he can collect the equipment if someone confirms the storage room before Thursday."
           ],
-          "example": "You can complete the analysis if the figures arrive before noon; the timing is the blocker. Have I understood that, or is there another dependency? This identifies the condition while leaving Zara room to correct it.",
+          "example": "“You can collect it once the storage room is confirmed, and you need that confirmation before Thursday. Is that right, or have I missed another condition?” The summary preserves the dependency and deadline rather than turning a conditional offer into an unconditional promise.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a checked paraphrase and a correction invitation.",
+        "prompt": "Zara says she can do the analysis but needs the figures before noon. Write a checked paraphrase and a correction invitation.",
         "solution": "You can complete the analysis if the figures arrive before noon; the timing is the blocker. Have I understood that, or is there another dependency? This identifies the condition while leaving Zara room to correct it.",
         "solutionFormat": "prose",
         "checks": [
@@ -783,7 +783,7 @@
           "A judgement about the speaker’s attitude"
         ],
         "correct": 0,
-        "explanation": "An invitation to correct the summary fits the distinction in this lesson. A statement that no further explanation is needed overlooks the stated limits; A judgement about the speaker’s attitude substitutes an assumption for a feasible action."
+        "explanation": "Invite correction so the speaker can confirm or repair your summary. Preserve conditions such as needing the figures before noon."
       },
       "references": [
         {
@@ -816,14 +816,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Mo is upset that a shared room was unavailable and asks Pat to cancel another group’s booking. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Rosa is worried about an exam timetable clash and asks a classmate to promise that the tutor will change it."
           ],
-          "example": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
+          "example": "The classmate replies, “The clash sounds difficult to plan around. I cannot promise a change, but I can help you find the timetable-query contact.” The acknowledgment recognises the reported concern while keeping the limit and feasible support clear.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write acknowledgment followed by an honest limit.",
+        "prompt": "Mo is upset that a shared room was unavailable and asks Pat to cancel another group’s booking. Write acknowledgment followed by an honest limit.",
         "solution": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
         "solutionFormat": "prose",
         "checks": [
@@ -840,7 +840,7 @@
           "You should not feel upset because rooms are limited"
         ],
         "correct": 0,
-        "explanation": "The disruption matters; I can help check another room fits the distinction in this lesson. You are right about everything, so I will cancel their booking overlooks the stated limits; You should not feel upset because rooms are limited substitutes an assumption for a feasible action."
+        "explanation": "Acknowledge the disruption and offer a feasible step. Understanding the concern does not require accepting an unworkable demand."
       },
       "references": [
         {
@@ -873,14 +873,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Isha needs a teammate’s chart before preparing slides. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Chen needs a venue photograph before submitting an event notice on Wednesday."
           ],
-          "example": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
+          "example": "“Could you send one landscape photo of the entrance by Tuesday noon for Wednesday’s notice? If that is not feasible, please confirm by Monday afternoon so I can use the floor plan.” The request names the output, reason, delivery time and response window.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a specific request with a feasible response option.",
+        "prompt": "Isha needs a teammate’s chart before preparing slides. Write a specific request with a feasible response option.",
         "solution": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
         "solutionFormat": "prose",
         "checks": [
@@ -897,7 +897,7 @@
           "Prove that this project matters to you"
         ],
         "correct": 0,
-        "explanation": "Can you send the chart by 4 pm, or confirm what is ready by 2? fits the distinction in this lesson. Be more considerate overlooks the stated limits; Prove that this project matters to you substitutes an assumption for a feasible action."
+        "explanation": "The request names the chart, delivery time and confirmation window. It gives the teammate a concrete action and room to propose an alternative."
       },
       "references": [
         {
@@ -930,14 +930,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Theo receives requests for homework help late every night and needs protected study time. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Marta is asked to organise another weekend outing after agreeing to handle only the current booking."
           ],
-          "example": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
+          "example": "“I can complete the booking already agreed, but I am not available to organise next month’s outing. I can send the venue contact to the next organiser.” Marta states what she can provide without requiring the group to stop planning future outings.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Draft a boundary and a practical alternative.",
+        "prompt": "Theo receives requests for homework help late every night and needs protected study time. Draft a boundary and a practical alternative.",
         "solution": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
         "solutionFormat": "prose",
         "checks": [
@@ -954,7 +954,7 @@
           "If you cared, you would read my mind"
         ],
         "correct": 0,
-        "explanation": "I will respond during my available daytime slot fits the distinction in this lesson. You must never need help at night overlooks the stated limits; If you cared, you would read my mind substitutes an assumption for a feasible action."
+        "explanation": "State when you can respond—a choice you can carry out. A boundary cannot guarantee another person will never need help."
       },
       "references": [
         {
@@ -987,14 +987,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A slide uses unexplained abbreviations, and two readers ask what the labels mean. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Two people follow an event notice to the old entrance because its map has not been updated."
           ],
-          "example": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
+          "example": "“The notice still marks the south entrance. Two visitors came there today, while registration was at the east door. Could we update the map, or is there an access reason to retain that route?” The feedback identifies the location and observed effect while inviting relevant context.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write specific feedback that invites a response.",
+        "prompt": "A slide uses unexplained abbreviations, and two readers ask what the labels mean. Write specific feedback that invites a response.",
         "solution": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
         "solutionFormat": "prose",
         "checks": [
@@ -1011,7 +1011,7 @@
           "Everyone knows you are careless"
         ],
         "correct": 0,
-        "explanation": "The summary labels need definitions to make the comparison understandable fits the distinction in this lesson. You are bad at presenting overlooks the stated limits; Everyone knows you are careless substitutes an assumption for a feasible action."
+        "explanation": "Naming undefined labels and their effect points to a repair. A judgement of the author’s character does not identify what to change."
       },
       "references": [
         {
@@ -1044,14 +1044,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Ana hears that her meeting updates are too detailed but does not know which part to change. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Ari is told that the instructions for a shared spreadsheet are hard to follow."
           ],
-          "example": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
+          "example": "Ari asks, “Which step caused difficulty, and what were you trying to enter?” After learning that the date format was unclear, Ari adds one sample date and asks the next user to try the step. The test examines a specific repair rather than accepting a global judgement of ability.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a reply and one small experiment.",
+        "prompt": "Ana hears that her meeting updates are too detailed but does not know which part to change. Write a reply and one small experiment.",
         "solution": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
         "solutionFormat": "prose",
         "checks": [
@@ -1068,7 +1068,7 @@
           "Reject it before hearing any detail"
         ],
         "correct": 0,
-        "explanation": "Ask for an example and check what the feedback means fits the distinction in this lesson. Agree that all your communication is wrong overlooks the stated limits; Reject it before hearing any detail substitutes an assumption for a feasible action."
+        "explanation": "Ask for an example before deciding what to use. Understanding the feedback and agreeing with it are separate decisions."
       },
       "references": [
         {
@@ -1101,14 +1101,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "One classmate wants an evening meeting; another insists on mornings because of caring responsibilities. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "One housemate wants windows open during study; another wants them closed because street noise interrupts concentration."
           ],
-          "example": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
+          "example": "Positions: open versus closed windows. Concerns: fresh air versus manageable noise. Shared aim: a usable study room. They compare airing the room before study with using another quiet space. These options may help, but the concerns can remain in conflict if no suitable space exists.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Map the positions, underlying concerns and a shared aim.",
+        "prompt": "One classmate wants an evening meeting; another insists on mornings because of caring responsibilities. Map the positions, underlying concerns and a shared aim.",
         "solution": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
         "solutionFormat": "prose",
         "checks": [
@@ -1125,7 +1125,7 @@
           "Assuming the first account contains every fact"
         ],
         "correct": 0,
-        "explanation": "The concerns and constraints behind each proposed time fits the distinction in this lesson. Repeating each position louder overlooks the stated limits; Assuming the first account contains every fact substitutes an assumption for a feasible action."
+        "explanation": "Explore the concerns and constraints behind each proposed time. Repeating the positions alone cannot reveal a feasible overlap."
       },
       "references": [
         {
@@ -1165,14 +1165,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A group must finish a poster while members have different skills and available hours. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "A community team needs refreshments and registration ready, with only one member able to arrive early."
           ],
-          "example": "Plan A splits pages equally; Plan B assigns layout to the available designer and research checks to others. Compare total hours and whether each person can complete their part by Friday. Plan B may fit better, but confirm consent and backup coverage rather than assuming skill creates obligation.",
+          "example": "Option A gives everyone equal preparation tasks, leaving registration dependent on late arrivals. Option B gives early setup to the willing early member and advance preparation to others. Compare arrival times and effort, then confirm acceptance and backup arrangements; early availability does not itself create an obligation.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Generate two task plans and compare them using two criteria.",
+        "prompt": "A group must finish a poster while members have different skills and available hours. Generate two task plans and compare them using two criteria.",
         "solution": "Plan A splits pages equally; Plan B assigns layout to the available designer and research checks to others. Compare total hours and whether each person can complete their part by Friday. Plan B may fit better, but confirm consent and backup coverage rather than assuming skill creates obligation.",
         "solutionFormat": "prose",
         "checks": [
@@ -1189,7 +1189,7 @@
           "Exactly equal page counts regardless of effort"
         ],
         "correct": 0,
-        "explanation": "Agreed practical criteria and people’s actual availability fits the distinction in this lesson. Which person argues longest overlooks the stated limits; Exactly equal page counts regardless of effort substitutes an assumption for a feasible action."
+        "explanation": "Compare options against agreed criteria and actual availability. Equal quantities need not mean equal effort or a workable agreement."
       },
       "references": [
         {
@@ -1229,14 +1229,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Jules interrupts a partner twice and then discovers that he misunderstood the missing information. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "Nico tells the group the wrong deadline, and another member reschedules work using that information."
           ],
-          "example": "I interrupted you twice and missed the information you were explaining. I am sorry. Please finish; then I will summarise before suggesting a change. Jules lets the partner choose whether to continue and follows through rather than seeking reassurance.",
+          "example": "“I gave Friday as the deadline; the confirmed date is Thursday. I am sorry. I will correct the group note now and help identify the work affected.” Nico asks what practical correction would help and does not require the other person to reassure him or forgive immediately.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Draft a repair and a changed next action.",
+        "prompt": "Jules interrupts a partner twice and then discovers that he misunderstood the missing information. Draft a repair and a changed next action.",
         "solution": "I interrupted you twice and missed the information you were explaining. I am sorry. Please finish; then I will summarise before suggesting a change. Jules lets the partner choose whether to continue and follows through rather than seeking reassurance.",
         "solutionFormat": "prose",
         "checks": [
@@ -1253,7 +1253,7 @@
           "Demanding the other person accept the apology immediately"
         ],
         "correct": 0,
-        "explanation": "Naming the action and changing the next interaction fits the distinction in this lesson. Saying sorry but you made me do it overlooks the stated limits; Demanding the other person accept the apology immediately substitutes an assumption for a feasible action."
+        "explanation": "Name the action, acknowledge its effect and change the next interaction. An apology cannot require immediate forgiveness or cancel responsibility."
       },
       "references": [
         {
@@ -1286,14 +1286,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A group chat disagreement grows as people answer different parts of a long thread. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "A telephone discussion about a repair ends with two different understandings of the agreed cost."
           ],
-          "example": "We seem to be discussing two questions at once: timing and workload. Could we use a shared outline and a ten-minute call, or written comments if that works better? Afterwards we can record the agreed tasks in one message.",
+          "example": "“I heard a limit of $80 including materials. Could you confirm the scope and amount in writing before work starts?” A written record suits this factual confirmation. If scope remains disputed, they can arrange an accessible discussion and record the resulting decision afterward.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Choose a next channel and write a neutral transition.",
+        "prompt": "A group chat disagreement grows as people answer different parts of a long thread. Choose a next channel and write a neutral transition.",
         "solution": "We seem to be discussing two questions at once: timing and workload. Could we use a shared outline and a ten-minute call, or written comments if that works better? Afterwards we can record the agreed tasks in one message.",
         "solutionFormat": "prose",
         "checks": [
@@ -1310,7 +1310,7 @@
           "Who can pressure everyone into a call fastest"
         ],
         "correct": 0,
-        "explanation": "Complexity, accessibility, preference and need for a record fits the distinction in this lesson. The belief that text always communicates hostility overlooks the stated limits; Who can pressure everyone into a call fastest substitutes an assumption for a feasible action."
+        "explanation": "Choose a channel using complexity, access needs, preference and the need for a record. No single format suits every conversation."
       },
       "references": [
         {
@@ -1343,14 +1343,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A junior volunteer is repeatedly assigned work outside the agreed role after already explaining availability. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "A student has raised an inaccessible assessment format twice but has not received a response before the deadline."
           ],
-          "example": "Keep dates, requested tasks and the agreed role description. Ask the coordinator or designated support contact how assignments should be resolved. Another direct conversation is optional, not a condition for seeking help. This is procedural support, not a diagnosis of anyone involved.",
+          "example": "The student keeps the dates, format requirement and prior requests, then asks the designated accessibility office about available procedures and confidentiality. Another informal request is not a prerequisite for seeking support. The office’s actual role and the institution’s process still need checking.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Identify a practical support route and a factual record.",
+        "prompt": "A junior volunteer is repeatedly assigned work outside the agreed role after already explaining availability. Identify a practical support route and a factual record.",
         "solution": "Keep dates, requested tasks and the agreed role description. Ask the coordinator or designated support contact how assignments should be resolved. Another direct conversation is optional, not a condition for seeking help. This is procedural support, not a diagnosis of anyone involved.",
         "solutionFormat": "prose",
         "checks": [
@@ -1367,7 +1367,7 @@
           "Never, because better wording fixes every conflict"
         ],
         "correct": 0,
-        "explanation": "When role or power constraints make another informal request insufficient fits the distinction in this lesson. Only after solving the problem entirely alone overlooks the stated limits; Never, because better wording fixes every conflict substitutes an assumption for a feasible action."
+        "explanation": "Role or power constraints can make another informal request insufficient. Check the relevant support role and procedure rather than assuming wording can resolve every conflict."
       },
       "references": [
         {
@@ -1400,14 +1400,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "A practice partner agrees to send a draft Thursday but still disagrees about the introduction. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            "A committee agrees on a Saturday event date but leaves responsibility for equipment unresolved."
           ],
-          "example": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
+          "example": "Review: Saturday is agreed; the venue contact will confirm access by Tuesday. Equipment ownership remains undecided, so the committee will choose an owner at Monday’s check-in. The summary invites correction and records a partial agreement without converting the unresolved task into an accepted promise.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Write a short review and follow-up that preserves the unresolved point.",
+        "prompt": "A practice partner agrees to send a draft Thursday but still disagrees about the introduction. Write a short review and follow-up that preserves the unresolved point.",
         "solution": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
         "solutionFormat": "prose",
         "checks": [
@@ -1424,7 +1424,7 @@
           "Assume silence proves consent"
         ],
         "correct": 0,
-        "explanation": "Record agreements, unresolved issues and the next check fits the distinction in this lesson. Score success only by whether everyone agreed with you overlooks the stated limits; Assume silence proves consent substitutes an assumption for a feasible action."
+        "explanation": "Record explicit agreements, unresolved issues and follow-up. Silence is not consent, and clarification can be useful even without agreement."
       },
       "references": [
         {

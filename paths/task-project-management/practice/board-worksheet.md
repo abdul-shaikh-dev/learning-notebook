@@ -8,7 +8,7 @@ A board represents states with entry and exit policies. Ready, Doing, Review and
 
 ## Try before reading the answer
 
-Design entry criteria for Ready and exit criteria for Review on the workshop board.
+A beginner workshop needs a venue, exercise materials and an invitation. Design entry criteria for Ready and exit criteria for Review on its task board.
 
 Decision: ____________________________________________
 

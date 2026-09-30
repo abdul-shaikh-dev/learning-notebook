@@ -3,7 +3,7 @@
   "title": "Learning How to Learn",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Build a practical learning loop with retrieval, spacing, mixed cases, feedback and cautious transfer through 20 beginner-friendly lessons and three evidence-based paper projects.",
+  "description": "Build a practical learning loop with retrieval, spacing, mixed cases, feedback and cautious transfer.",
   "level": "Beginner → applied practice → independent review",
   "prerequisites": [
     "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
@@ -12,7 +12,7 @@
     "Read README.md in the practice bundle.",
     "Print or copy the blank worksheets; all examples use fictional people and synthetic records.",
     "Complete your own attempt before checking the filled example; no commands or installation are required.",
-    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "outcomes": [
     "Choose a checkable learning target and baseline.",

@@ -86,13 +86,13 @@
       "takeaway": "Managed infrastructure still needs an application owner.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Service models and responsibilities",
           "paragraphs": [
             "Cloud services rent compute, storage, networking and managed capabilities through provider APIs. A service model determines which operating tasks the provider performs and which remain yours. Running an application on managed compute does not automatically configure authorization, protect application data, establish backups or enforce cost limits."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Static versus private notebook needs",
           "paragraphs": [
             "The notebook can remain a static GitHub Pages site. A future private full-stack notebook needs an API, identity, data store and operational owner. Choosing managed services changes the work required; it does not justify adding a cloud service to every feature."
           ]
@@ -141,13 +141,13 @@
       "takeaway": "Verify identity, billing scope and ownership before a plan.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Tenant, subscription and resource group",
           "paragraphs": [
             "A tenant is an identity directory; a subscription is a resource and billing scope; a resource group organizes related resources. Region determines resource placement subject to service support. Names and labels cannot substitute for checking the actual subscription ID. Resource groups should have a lifecycle owner, purpose and expiry for temporary learning work."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "An explicit training scope",
           "paragraphs": [
             "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and creates only a named training resource group if separately applied."
           ]
@@ -196,13 +196,13 @@
       "takeaway": "Select services from workload constraints and reversible tradeoffs.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Workload and recovery requirements",
           "paragraphs": [
             "Start with users, data sensitivity, request pattern, recovery targets and deployment frequency. Compare static hosting, managed application compute and VMs. A container orchestrator is useful for some workloads but introduces extra operations. Define what must be measured rather than claiming a provider icon guarantees performance or availability."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Static hosting versus managed compute",
           "paragraphs": [
             "A personal notebook needs mostly cached static assets. A collaborative project adds authenticated writes and a database. For a training API, managed application compute can reduce OS work; Kubernetes can be a learning choice, but its cluster lifecycle is an additional responsibility."
           ]
@@ -251,13 +251,13 @@
       "takeaway": "Connectivity requires routing, name resolution and permitted access.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Routes, DNS and private endpoints",
           "paragraphs": [
             "A virtual network provides address space and subnets for supported services. Routes determine where traffic goes; filters determine whether traffic is permitted; DNS resolves names. A private endpoint alone is not enough if the client resolves a public address or lacks access to the connected network. Overlapping address ranges complicate later peering."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The inaccessible storage template",
           "paragraphs": [
             "A training API calls private storage. Draw client, API, resolver and storage endpoint. Mark which paths are public, which are private and which identity authorizes data access. The supplied Azure storage template disables public networking and supplies no private endpoint, so it is intentionally not an accessible application backend."
           ]
@@ -306,13 +306,13 @@
       "takeaway": "Choose a principal, role and scope for each responsibility.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "RBAC scope and managed identity",
           "paragraphs": [
             "Azure RBAC assignments combine principal, role definition and scope. Management-plane rights and supported data-plane rights are distinct. Roles are generally additive; a narrow assignment does not erase a broader assignment elsewhere. Managed identity can avoid stored client secrets for compatible Azure-hosted workloads, but local workstations do not automatically have that identity."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Deployment versus runtime authority",
           "paragraphs": [
             "The API needs to read one storage container, while the deployment identity creates a storage account in one resource group. These are different responsibilities and should not both receive subscription Owner. The optional template deliberately creates no role assignments because granting a real principal requires an explicit reviewed identity choice."
           ]
@@ -361,13 +361,13 @@
       "takeaway": "Version configuration, inspect differences and review changes.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Desired state and provider state",
           "paragraphs": [
             "Infrastructure as code expresses desired resources and parameters so changes can be reviewed and reproduced. Terraform uses providers to interact with remote APIs and state to associate addresses with existing objects. Configuration is not the entire deployed system: manual drift, data contents and provider defaults also matter."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The offline replacement model",
           "paragraphs": [
             "Changing an owner tag should update metadata; changing a resource name may force replacement depending on provider schema. The offline planner models these cases using a small JSON inventory. It does not parse HCL or implement Terraform provider semantics.",
             "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
@@ -418,13 +418,13 @@
       "takeaway": "Pin compatible dependencies and verify the tool boundary.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Core, providers and lock files",
           "paragraphs": [
             "Terraform core and provider plugins evolve separately. required_version constrains core; required_providers identifies sources and version constraints. terraform init initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Online initialization prerequisites",
           "paragraphs": [
             "The Azure JSON template targets Terraform >=1.6 and <2 with AzureRM ~>4.0. That allows compatible 4.x provider selections; the learner must retain their generated lock file and record actual versions. Init needs internet or a configured plugin mirror; it is not an offline test."
           ]
@@ -473,16 +473,15 @@
       "takeaway": "Define typed inputs and avoid secrets in state or examples.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Input validation and sensitive outputs",
           "paragraphs": [
             "Inputs let one configuration express several intentional environments. Use type constraints and validation for names, location and acceptable values. Outputs expose selected results, but marking a value sensitive masks presentation rather than encrypting state. Secrets can enter configuration, state, plans and logs; protect all of them."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Names, tags and public identifiers",
           "paragraphs": [
-            "The template validates a lower-case storage name and requires subscription_id rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID.",
-            "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            "The template validates a lower-case storage name and requires subscription_id rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID."
           ],
           "example": "{\n  \"variable\": {\n    \"storage_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account name; full validation appears in main.tf.json.\"\n    }\n  }\n}"
         }
@@ -530,13 +529,13 @@
       "takeaway": "References describe dependency without requiring a universal sequence.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Expression-derived dependencies",
           "paragraphs": [
             "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. depends_on can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The resource-group relationship",
           "paragraphs": [
             "The template storage account uses the created resource-group name and location through references. The graph has group before account, not group before every resource in every environment. A private endpoint would add further dependencies if intentionally designed."
           ]
@@ -585,13 +584,13 @@
       "takeaway": "State is sensitive coordination data, not an application backup.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "State identity, backups and locking",
           "paragraphs": [
             "State maps Terraform addresses to remote resource identities and stores attributes. It can contain secrets. A remote backend can centralize access and versioning; locking depends on backend support. Application rows and blob contents require their own backups. Deleting state does not safely delete resources and can make future plans propose duplicates."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Competing state writers",
           "paragraphs": [
             "Two engineers applying different changes against separate state files can overwrite assumptions about the same real object. A shared lock-capable backend limits concurrent state writes, while protected state backups support recovery. The optional template uses local state unless the learner intentionally designs a remote backend."
           ]
@@ -640,16 +639,15 @@
       "takeaway": "A plan is a proposed operation set, not a successful deployment.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Plan actions and unknown values",
           "paragraphs": [
             "Read additions, in-place changes, replacements and deletions resource by resource. Unknown-after-apply values may be legitimate but deserve attention where they affect safety. A saved plan contains sensitive information and can become inappropriate if surrounding conditions change. Review identity, scope, provider selection and destructive actions before applying."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Simulated destructive changes",
           "paragraphs": [
-            "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata.",
-            "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
           ],
           "example": "from infra_lab import plan, simulate_apply\nimport json\nfrom pathlib import Path\n\ncurrent = json.loads(Path('topology.json').read_text())['resources']\nprint(plan(current, []))  # two destroy operations in the MODEL\n# simulate_apply(current, []) raises ValueError\nprint(simulate_apply(current, [], allow_destroy=True))  # []\n# No cloud or filesystem resource is created/deleted."
         }
@@ -697,13 +695,13 @@
       "takeaway": "Protect data across resource identity changes.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Lifecycle protection and replacement",
           "paragraphs": [
             "create_before_destroy can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. prevent_destroy blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. ignore_changes intentionally delegates selected drift and can conceal unexpected changes if used broadly."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Data migration between accounts",
           "paragraphs": [
             "Renaming a storage account is not equivalent to editing an owner tag. The provider may require a new account while data remains in the old one. The learner must copy and validate data, switch clients and retain recovery options rather than assuming replacement migrates contents."
           ]
@@ -745,13 +743,13 @@
       "takeaway": "Reuse a contract without hiding ownership or mixing environments.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Module contracts and environments",
           "paragraphs": [
             "A module packages resources with typed inputs and outputs. Keep contracts small and avoid passing every provider field through without design. Development and production need distinct state, access and lifecycle policies. Terraform workspaces provide multiple states for one configuration but are not complete isolation of credentials, policy or organizational boundaries."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "A storage-module extension",
           "paragraphs": [
             "A storage module could accept name, region and approved tags, and expose its ID. It should state networking prerequisites. The supplied single-file template is intentionally a readable foundation; turning it into a module is a learner extension, not a hidden generated abstraction."
           ]
@@ -800,13 +798,13 @@
       "takeaway": "Import associates identity; review configuration before changing it.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Drift and import ownership",
           "paragraphs": [
             "Manual cloud changes can cause drift from configuration. A normal refreshed plan may propose restoring configured values. Decide whether an emergency change should be codified or reverted. Import associates an existing object with an address but does not automatically document every intended property or prove the next plan is safe."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Public-access remediation",
           "paragraphs": [
             "An operator temporarily enables public storage access during troubleshooting. The next plan should reveal the divergence; the security owner decides a controlled remediation. Importing an existing account needs exactly one intended state owner to avoid competing management."
           ]
@@ -855,16 +853,15 @@
       "takeaway": "Static checks catch selected mistakes without proving real enforcement.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Policy checks and enforcement",
           "paragraphs": [
             "Policy checks can reject missing owner/expiry tags, public endpoints or overbroad roles. Such checks are useful before a plan but can be bypassed if the real deployment path ignores them. Full authorization and network enforcement require tests against actual services. A locally passing JSON contract is evidence about that JSON only."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The offline topology validator",
           "paragraphs": [
-            "infra_lab.py rejects public storage, wildcard roles and incomplete metadata in topology.json. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network.",
-            "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            "infra_lab.py rejects public storage, wildcard roles and incomplete metadata in topology.json. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network."
           ],
           "example": "from infra_lab import validate\nimport json\nfrom pathlib import Path\n\nresources = json.loads(Path('topology.json').read_text())['resources']\nresources[1]['public_network'] = True\ntry:\n    validate(resources)\nexcept ValueError as error:\n    print(error)  # public storage forbidden by training policy"
         }
@@ -919,13 +916,13 @@
       "takeaway": "Reduce credential storage and test rotation and revocation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Federated and workload identities",
           "paragraphs": [
             "Prefer short-lived or federated identity where supported. Managed identity is for compatible Azure-hosted resources; local developer login and CI federation have different flows. Do not print credentials in CI logs or embed them in Terraform examples. Secret rotation should include consumers, overlapping validity where needed and proof that revoked credentials fail."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "CI versus application credentials",
           "paragraphs": [
             "A CI deployment exchanges a trusted workflow identity for a narrow Azure identity, while an application uses its own runtime identity. These identities must not be interchangeable. The optional template accepts no password or client secret and performs no real authentication in the offline lab."
           ]
@@ -974,16 +971,15 @@
       "takeaway": "Budget alerts are not automatic spending caps.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Cost categories and budgets",
           "paragraphs": [
             "Include compute uptime, storage, transactions, egress, monitoring retention and idle resources in estimates. Provider prices vary by region and date, so use the current calculator when considering real spend. Azure budgets can notify and connect automation but do not by themselves stop charges. Set an owner, expiry and teardown verification."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Invented teaching rates",
           "paragraphs": [
-            "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses.",
-            "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses."
           ],
           "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB = 4\n# Not Azure pricing or a bill forecast."
         }
@@ -1031,13 +1027,13 @@
       "takeaway": "Separate untrusted validation from credentialed mutation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Validation, plan and promotion",
           "paragraphs": [
             "Run formatting, validation and policy checks before credentialed actions. Pull-request code may be untrusted and should not receive deployment secrets. Review plan artifacts, commit identity, environment and provider selection. Promotion should bind the reviewed code and configuration to the target environment and permit a deliberate rollback or recovery path."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Trusted release identity",
           "paragraphs": [
             "A pull request runs offline Python checks with no Azure identity. A trusted release job can obtain scoped identity and generate a target-specific plan, with protected review before deployment. The supplied kit has no CI cloud credentials or auto-apply pipeline."
           ]
@@ -1086,16 +1082,15 @@
       "takeaway": "Distinguish syntax, model, provider and deployed-service tests.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Syntax, models and provider checks",
           "paragraphs": [
             "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. terraform validate checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Offline versus live evidence",
           "paragraphs": [
-            "The supplied suite executes only local Python/SQLite-free inventory modeling, while optional init/validate checks the AzureRM schema without apply. Mock Terraform tests are discussed as an extension requiring Terraform 1.7+; they do not establish real service reachability.",
-            "Run Python snippets from the extracted practice folder with the supplied reference files. JSON fragments show the stated contract; they are not a complete deployment configuration."
+            "The supplied suite executes only local Python/SQLite-free inventory modeling, while optional init/validate checks the AzureRM schema without apply. Mock Terraform tests are discussed as an extension requiring Terraform 1.7+; they do not establish real service reachability."
           ],
           "example": "python infra_lab.py\npython -m unittest -v test_infra_lab.py"
         }
@@ -1143,13 +1138,13 @@
       "takeaway": "Infrastructure reconstruction and data restoration are separate plans.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Failure domains and data recovery",
           "paragraphs": [
             "A region, zone, account or identity failure can affect different parts of a workload. Rebuilding infrastructure from code does not restore database rows or blob contents. Define recovery point and time objectives, protect backups separately, and rehearse isolated restoration with real synthetic verification when choosing a live environment."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Missing files and lost state",
           "paragraphs": [
             "If an export file store is lost, Terraform can create another account but cannot invent its missing files. If state is lost while the cloud survives, preserve resource identity and adopt carefully rather than creating duplicates. A rollback can also fail if data migrations are incompatible."
           ]
@@ -1198,13 +1193,13 @@
       "takeaway": "Deletion needs scope checks and post-deletion verification.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Destroy plans and residual resources",
           "paragraphs": [
             "Review destroy plans as carefully as creates. Confirm subscription and resource identity, preserve needed data, and inspect provider-dependent order and deletion protections. Destroy may fail partway, leave soft-deleted objects or retain resources outside the managed state. Cost and data-retention cleanup need observed verification, not merely a command exit."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "The isolated teardown sequence",
           "paragraphs": [
             "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review terraform plan -destroy before any terraform destroy, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
           ]
@@ -1253,13 +1248,13 @@
       "takeaway": "Use an evidence portfolio to separate design confidence from production readiness.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Infrastructure decisions and evidence",
           "paragraphs": [
-            "A reviewable portfolio has an ADR, scope and identity map, resource graph, plan classification, data restore plan, cost categories, cleanup procedure and evidence ledger. Record which local tests passed, which provider checks ran and which real deployment questions remain. A complete course is bounded learning rather than a certification of an operated cloud system."
+            "A reviewable portfolio has an ADR, scope and identity map, resource graph, plan classification, data restore plan, cost categories, cleanup procedure and evidence ledger. Record which local tests passed, which provider checks ran and which real deployment questions remain."
           ]
         },
         {
-          "title": "Work through the example",
+          "title": "Optional private-notebook deployment",
           "paragraphs": [
             "The advanced project designs a private full-stack notebook and reviews public networking, state exposure, replacement and credentialed CI risks. It keeps the static notebook unchanged and does not provision cloud resources. Optional live work needs an explicit chosen account, cost limit, ownership and teardown."
           ]

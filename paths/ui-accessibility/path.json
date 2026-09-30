@@ -231,7 +231,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Tasks and constraints",
           "paragraphs": [
             "Design begins with what a person is trying to do. For a learning notebook, the task might be finding the next SQL exercise on a phone during a short break. A catalogue of technologies is only one way to support that task. Identify the starting point, desired result, information needed and possible interruptions before drawing screens.",
             "Temporary constraints matter alongside permanent disabilities: sunlight reduces contrast, an injured wrist changes input, and a noisy train limits audio. Document a task as observable behaviour rather than a stereotype. A short conversation and watching someone attempt the task can expose assumptions that a polished mockup hides."
@@ -239,7 +239,7 @@
           "example": "Task: return to the unfinished lesson\nStarting point: home page on a phone\nSuccess: open the correct lesson and its practice files\nConstraint: one hand, intermittent connection"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Observation versus assumptions",
           "paragraphs": [
             "Do not invent user preferences and call them research. Label hypotheses explicitly, then test them with people. A task completion time is useful evidence only if the task and assistance given are recorded."
           ]
@@ -282,7 +282,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Names, groups and destinations",
           "paragraphs": [
             "Information architecture describes how content is named, grouped and connected. Separate the global catalogue, course overview, lesson and practice task because they answer different questions. Reuse familiar labels such as Lessons and Practice files. A breadcrumb communicates location; a Next lesson control communicates sequence.",
             "Provide more than one route to a large collection: browsing by topic and searching by task complement each other. Avoid forcing users to remember a filename or internal lesson ID. Put the appropriate files beside the exercise, and identify runtime requirements before download. Stable URLs also support sharing and resuming."
@@ -290,7 +290,7 @@
           "example": "Home → Python course → Parsing lesson → Import practice kit\nBreadcrumb answers: where am I?\nNext lesson answers: what follows this?"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Navigation beyond a visual map",
           "paragraphs": [
             "A visual map alone may hide the sequence from keyboard or screen-reader users. Preserve a meaningful ordered list of destinations alongside any graphical navigation."
           ]
@@ -333,7 +333,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Hierarchy and spacing",
           "paragraphs": [
             "Hierarchy lets someone scan a screen and distinguish the main task, supporting information and secondary actions. Use a clear heading, concise introduction and one dominant action when the task has a primary next step. Group related elements through proximity and shared alignment rather than enclosing every sentence in a card.",
             "Choose a spacing scale, for example 4, 8, 16, 24 and 32 pixels, and use it consistently. Larger gaps should separate sections; smaller gaps connect a label to its field. Balance visual emphasis with semantic structure: a large bold paragraph does not become a heading for assistive technology."
@@ -341,7 +341,7 @@
           "example": "Course title\n  What you will build\n  [Start first lesson]\n\nLessons by stage\nPractice kit and requirements"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Choosing the primary action",
           "paragraphs": [
             "Do not make every button a primary button. If three equally loud actions compete, the user has to infer their relative importance. Document which action advances the current task."
           ]
@@ -384,7 +384,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Native roles and landmarks",
           "paragraphs": [
             "The browser exposes an accessibility tree derived from the document, styling and ARIA. A button has a role and keyboard activation; a link navigates; a heading identifies a section. Use those elements for their purpose. A clickable div may look like a button while lacking its name, focusability and activation behaviour.",
             "Use one main landmark for the main content, a nav for navigation and a logical heading hierarchy. Name multiple navigation regions when their purpose differs. Source order should remain sensible without layout styling. ARIA can repair missing semantics when appropriate, but it does not implement the interaction described by a role."
@@ -392,7 +392,7 @@
           "example": "<nav aria-label=\"Course\"><a href=\"#lessons\">Lessons</a></nav>\n<main id=\"main\"><h1>Study dashboard</h1>\n<button type=\"button\">Save progress</button></main>"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Button behavior beyond ARIA",
           "paragraphs": [
             "Do not add role=\"button\" to a div and stop there. Prefer the native button unless a real constraint justifies recreating its focus and keyboard behaviour."
           ]
@@ -435,7 +435,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Tab order and focus",
           "paragraphs": [
             "Tab usually moves between interactive controls in document order; Shift+Tab moves backwards. Enter activates links and native buttons, and Space activates a focused native button. Provide a skip link to bypass repeated navigation. Keep the focused element visible and avoid sticky headers obscuring it.",
             "Use :focus-visible for a clear focus indicator without relying on hover. Avoid positive tabindex values because they create a second ordering system that becomes fragile as content changes. When an action removes its own control, move focus to a sensible surviving control or heading rather than leaving the user at the document start."
@@ -443,7 +443,7 @@
           "example": "<a class=\"skip\" href=\"#main\">Skip to content</a>\n<style>button:focus-visible,a:focus-visible { outline:3px solid #155e75; outline-offset:3px; }</style>"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "A keyboard-only walkthrough",
           "paragraphs": [
             "A mouse-only smoke test misses keyboard traps and disappearing focus. Test forward and backward navigation, activation, dismissal and route changes with the mouse untouched."
           ]
@@ -486,7 +486,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Contrast criteria and cues",
           "paragraphs": [
             "Contrast compares the relative luminance of foreground and background. WCAG 2.2 AA requires at least 4.5:1 for ordinary text, with 3:1 for qualifying large text. Some controls and meaningful graphics require 3:1 under the non-text contrast criterion. These are specific criteria with exceptions, not one universal number for every pixel.",
             "Use the supplied contrast utility to calculate two solid sRGB colours. A gradient or image background needs checking at the actual text location. Pair status colour with text or another cue: Completed and Not started are still understandable in grayscale. Check hover, focus, disabled and error states separately."
@@ -494,7 +494,7 @@
           "example": "#000000 against #ffffff = 21:1\nError: icon + \"Title is required\" + border\nChart series: label + line pattern + colour"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Checking the rendered threshold",
           "paragraphs": [
             "Do not round a ratio below the threshold up to a passing number. Translucency, anti-aliasing and different backgrounds can invalidate a token-only calculation; inspect the final state too."
           ]
@@ -544,7 +544,7 @@
       "stage": "foundation",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Readable text and action labels",
           "paragraphs": [
             "Choose a readable base size, a comfortable line height and a bounded measure so lines do not stretch across a large monitor. Use relative units for typography and leave room for text expansion. Distinguish a heading from a caption without making the caption too faint. Avoid embedding essential text in images.",
             "Write labels that describe the action or destination. Download practice kit is clearer than Click here. Explain abbreviations at first use, and put the most useful instruction before secondary details. Preserve user text spacing adjustments without clipping controls or hiding content. A fixed-height card often fails when a title wraps or text spacing increases."
@@ -552,7 +552,7 @@
           "example": "Less useful: \"Invalid input\"\nMore useful: \"Enter a title with at least one non-space character.\"\nLess useful link: \"Here\"\nMore useful link: \"Download Python practice kit\""
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Plain language with necessary constraints",
           "paragraphs": [
             "Plain language is not achieved by deleting necessary constraints. Explain the rule with an example and keep technical details near the decision where they matter."
           ]
@@ -595,7 +595,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Fluid layout and reflow",
           "paragraphs": [
             "Responsive design uses fluid sizing and content-driven breakpoints. Start with a single-column task flow, then introduce additional columns when they fit. A viewport meta tag enables sensible mobile layout. Use minmax and flexible widths while allowing children to shrink; a long filename can otherwise force an entire page wider than the viewport.",
             "WCAG reflow asks that content be usable without two-dimensional scrolling at the specified equivalent narrow width, with exceptions for content that intrinsically requires it such as complex data tables. Preserve readable text and task order when a sidebar becomes stacked navigation. A horizontally scrollable diagram should have an accessible name and keyboard access."
@@ -603,7 +603,7 @@
           "example": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr)); }\n.card { min-width:0; overflow-wrap:anywhere; }"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Narrow-width and zoom checks",
           "paragraphs": [
             "Desktop screenshots do not establish mobile usability. Test long labels, zoom, keyboard focus and error states at narrow widths rather than only the happy-state layout."
           ]
@@ -653,7 +653,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Labels, help and errors",
           "paragraphs": [
             "A visible label identifies a field; a placeholder disappears during entry and is not a substitute. Associate label and input through for and id. Put requirements before input and connect help text with aria-describedby. Identify required fields with text as well as machine-readable semantics.",
             "On validation failure, preserve entered values and show a specific error beside the field. Mark the invalid field with aria-invalid and reference its error. For several errors, offer a summary linking to each field. For the one-field demo, focus the invalid input and announce the message; avoid simultaneously moving focus to a summary and an input."
@@ -661,7 +661,7 @@
           "example": "<label for=\"title\">Lesson title</label>\n<input id=\"title\" aria-describedby=\"title-help title-error\">\n<p id=\"title-help\">Use a meaningful name.</p>\n<p id=\"title-error\"></p>"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Server validation and recovery",
           "paragraphs": [
             "Client validation improves recovery but is not a server security boundary. Repeat validation on the server and map server failures back to useful field or form messages."
           ]
@@ -704,7 +704,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Operation states and announcements",
           "paragraphs": [
             "Represent operation states explicitly instead of treating success as the only designed screen. Loading tells a person what is happening; empty tells them how to begin; error explains recovery; success confirms the result. A pending action should prevent unintended duplicates while leaving a path to cancel when that is part of the task.",
             "Use a polite live status region for non-urgent changes that occur without moving focus. Do not announce every keystroke or replace the entire page with a live region. An urgent error can justify an alert, but repeated alerts become disruptive. Keep feedback visible as well as announced, and distinguish Not saved from Saved locally."
@@ -712,7 +712,7 @@
           "example": "Idle → validating → saving → success\n                      ↘ error → retry\nEmpty search: \"No matching lessons. Clear filters.\""
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Persistent outcome feedback",
           "paragraphs": [
             "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Make persistent consequences inspectable after the announcement."
           ]
@@ -755,7 +755,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Modal behavior and focus",
           "paragraphs": [
             "A modal blocks interaction with the rest of the page. Use a native dialog with showModal for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with tabindex=-1.",
             "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a surface that still permits background interaction."
@@ -763,7 +763,7 @@
           "example": "const opener = document.activeElement;\ndialog.showModal();\ndialog.addEventListener(\"close\", () => opener.focus(), {once:true});"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "When a separate page fits",
           "paragraphs": [
             "Opening every preview in a modal is not automatically better. A separate page can be clearer for long content, shareable resources or complex navigation. Choose the pattern according to the task."
           ]
@@ -806,7 +806,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Image purpose and alternatives",
           "paragraphs": [
             "An informative image needs an equivalent description of the information it conveys. A decorative image can use an empty alt so it does not add noise. A functional image needs the action or destination as its alternative. The same picture can need different treatment depending on why it appears on the page.",
             "Complex diagrams need a short identification plus a nearby structured explanation. Define each important node and relationship, explain arrow meaning and preserve the reading sequence. Avoid tiny labels and colour-only categories. An SVG title is useful, but it does not replace a full explanation of a multi-step architecture."
@@ -814,7 +814,7 @@
           "example": "Diagram: browser → API → database\nText alternative: browser sends a request to the API; the API checks permission before querying the database. The browser does not connect directly to the database."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Explaining diagram relationships",
           "paragraphs": [
             "A literal inventory of shapes such as Three blue boxes misses the concept. Explain the mechanism and assumptions, including whether an arrow means data, dependency or chronology."
           ]
@@ -857,7 +857,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Headers, values and summaries",
           "paragraphs": [
             "Use a table for data whose row and column relationships matter. Provide a caption, header cells and appropriate scope for simple row and column headers. Do not use tables solely to position unrelated interface elements. For complex headers, explicit relationships may be required; simplifying the table can be the better design.",
             "Charts communicate trends efficiently, but precise values and series names must remain discoverable without hover or colour. Include units, axis meaning, time range and an accessible summary. Offer a table when values matter for a decision. A chart of 95% completion hides the denominator unless you also report 19 of 20."
@@ -865,7 +865,7 @@
           "example": "<table><caption>Practice time by week</caption>\n<tr><th scope=\"col\">Week</th><th scope=\"col\">Minutes</th></tr>\n<tr><th scope=\"row\">1</th><td>40</td></tr></table>"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Interactive chart access",
           "paragraphs": [
             "A screenshot of a chart cannot provide sortable or selectable data. If the chart is interactive, design keyboard access and focus feedback for the interaction rather than merely adding a description."
           ]
@@ -908,7 +908,7 @@
       "stage": "intermediate",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Motion and media alternatives",
           "paragraphs": [
             "Use motion to reveal a relationship that is hard to understand in a static view, such as which request is currently waiting. Provide pause and step controls where timing matters. A static labelled snapshot is a useful alternative. Avoid decorative continuous movement that competes with reading.",
             "Respect prefers-reduced-motion by disabling non-essential animation or replacing it with an immediate state change. Essential information must survive that replacement. Audio and video need appropriate captions, transcripts and descriptions of meaningful visual information; auto-generated captions require review for terminology and timing."
@@ -916,7 +916,7 @@
           "example": "@media (prefers-reduced-motion: reduce) {\n  .teaching-animation { animation:none; transition:none; }\n}\n/* Keep state labels and manual step controls visible. */"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "A purposeful still state",
           "paragraphs": [
             "Reducing a four-second animation to 0.01 seconds can cause flashing or remove the explanation. Design a purposeful still-state alternative and avoid automatic audio."
           ]
@@ -959,7 +959,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Semantic tokens and components",
           "paragraphs": [
             "Tokens name reusable decisions such as text colour, surface colour, spacing and focus outline. Components combine those decisions with behaviour: a form field has a label, help, input, invalid state and error relationship. Start with a small system and add variants when actual use cases justify them.",
             "A token named colour-danger says why it exists; red-500 says only how it looks. Validate semantic combinations such as text on danger background and focus on both light and dark surfaces. A reusable component should expose a stable accessible name and avoid duplicate IDs when rendered several times."
@@ -967,7 +967,7 @@
           "example": ":root { --text:#17392f; --surface:#ffffff; --gap:1rem; --focus:#155e75; }\n/* A field component owns label/help/error associations, not just its border. */"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Composition and state checks",
           "paragraphs": [
             "A component library does not guarantee accessibility in every composition. Test disabled, pending, error, narrow and long-text states where the component is actually used."
           ]
@@ -1010,7 +1010,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Equivalent controls and keyboard models",
           "paragraphs": [
             "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates.",
             "Custom tabs, menus and comboboxes need a defined keyboard model and ARIA relationships. Prefer native controls when they satisfy the task. Do not use a menu role for ordinary site links merely because the design calls it a menu; application menus have specialised interaction expectations."
@@ -1018,7 +1018,7 @@
           "example": "Task: move \"SQL joins\" from position 3 to 2\nPointer route: drag item\nKeyboard route: focus item → Move up\nFeedback: \"SQL joins moved to position 2 of 5\""
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Target size and announcements",
           "paragraphs": [
             "Adding tabindex to every item makes it focusable but does not implement selection, ordering or announcements. Define the state and keyboard transitions before choosing roles.",
             "WCAG 2.2 AA Target Size (Minimum) generally uses a 24 by 24 CSS pixel target or specified spacing, with exceptions. The demo chooses at least 44px-high buttons as a comfortable design target; that preference is not a statement that AA universally requires 44px."
@@ -1076,7 +1076,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Language and localisation",
           "paragraphs": [
             "Declare the page language so speech tools use appropriate pronunciation. Mark passages in another language when needed. Localisation includes dates, number formats, plural forms and text direction, not merely translating labels. Use explicit units and time zones when ambiguity changes a decision.",
             "Expect translated text to expand and avoid concatenating fragments that assume English grammar. Logical CSS properties such as margin-inline adapt more naturally to right-to-left layouts. Keep reading and focus order meaningful when the layout direction changes, and ensure icons with directional meaning are reviewed."
@@ -1084,7 +1084,7 @@
           "example": "<html lang=\"en\">\n<p lang=\"fr\">Bonjour</p>\n.card { padding-inline:1rem; }\n// Prefer a complete translatable sentence to stitched fragments."
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Clear language selection",
           "paragraphs": [
             "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person’s current task when switching."
           ]
@@ -1127,7 +1127,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Authentication and review",
           "paragraphs": [
             "Authentication is an interaction design problem as well as a security mechanism. Allow password managers and paste where appropriate; do not force people to memorise or transcribe a code when an accessible alternative can satisfy the security requirement. Explain expiration and recovery without exposing secrets in status messages.",
             "For consequential actions, show the target and effect before confirmation. Give a chance to review or undo where possible. Repeated entry of information already supplied in the same process can impose unnecessary cognitive load; reuse validated information unless a stated exception applies."
@@ -1135,7 +1135,7 @@
           "example": "Delete course data\nTarget: local progress for Python\nConsequence: reading marks will be removed\n[Cancel] [Delete progress]\n/* Do not conflate this with deleting an offline download. */"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "The security boundary",
           "paragraphs": [
             "An attractive login form does not prove secure authentication. The identity path must also review server checks, session handling and abuse controls; this lesson covers the understandable user journey."
           ]
@@ -1185,7 +1185,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Manual evaluation methods",
           "paragraphs": [
             "Automated tools can detect some missing names and relationships, but cannot establish whether a description communicates the right meaning or a workflow is usable. Use a repeatable manual plan: keyboard-only actions, visible focus, narrow layout, zoom, text spacing, reduced motion and error recovery.",
             "Screen-reader testing checks how the accessibility tree behaves in a real browser and assistive-technology combination. Record the tools and versions, task, expected result and actual result. Invite disabled users into evaluation where possible; do not assume one tester or one tool represents all needs."
@@ -1193,7 +1193,7 @@
           "example": "Evidence row: task | environment | expected | observed | severity | reproduction | fix | retest\nExample: close preview | browser + keyboard | focus returns to Preview | focus disappeared | task blocked"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Static-check limitations",
           "paragraphs": [
             "The bundled static checks are guardrails, not a WCAG conformance report. A page can pass those checks and still have a keyboard trap, confusing labels or inaccessible dynamic content."
           ]
@@ -1236,7 +1236,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Task completion and findings",
           "paragraphs": [
             "Give a realistic task without telling the participant which control to use. Ask them to think aloud if appropriate, while avoiding hints that change the result. Track completion, major wrong turns and requests for help. A quick session with a few people can reveal obvious friction, but it does not establish population-level statistics.",
             "Separate usability findings from visual preference. A participant may dislike a colour while completing the task easily; another may like the page while missing the download. Prioritise defects by impact, frequency in your evidence and cost of recovery. Keep the tested scenario constant when comparing designs."
@@ -1244,7 +1244,7 @@
           "example": "Prompt: \"Find the files needed for the next form-validation exercise.\"\nAvoid: \"Click the green download button beside lesson 9.\"\nMeasure: completion, wrong turns, help requested"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Small-sample evidence",
           "paragraphs": [
             "Do not convert a sample of three participants into a precise claim about all users. Preserve observations, quotations with consent, and the limits of the sample."
           ]
@@ -1287,7 +1287,7 @@
       "stage": "advanced",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Review scope and regression checks",
           "paragraphs": [
             "Before release, define the supported environments and scope of the review. Include actual paths through forms, navigation, resources and dialogs rather than only representative components. Record known issues and alternatives. A conformance claim needs a defined scope and the appropriate evaluation process; this course does not issue one.",
             "Keep regression checks close to components and supplement them with scheduled human checks when behaviour changes. A new sticky header can obscure focus, a renamed label can break a task and a data-table redesign can destroy header relationships. Release notes should state what was executed, what was reviewed and what remains untested."
@@ -1295,7 +1295,7 @@
           "example": "Release evidence: semantic guardrails + contrast checks + keyboard tasks + narrow/zoom checks + assistive-technology results + known limits"
         },
         {
-          "title": "Apply it deliberately",
+          "title": "Demo versus production evidence",
           "paragraphs": [
             "Passing the demo checks is evidence about that demo at that time. It is not evidence about a production React application, every browser or every future content change."
           ]

@@ -42,3 +42,21 @@ body:has(.catalog) .header-note{color:#4d635d}body:has(.catalog) .notebook-nav a
 .catalog .atlas-lesson-layout .course-tools{position:static;top:auto;z-index:auto;background:transparent}.catalog .atlas-lesson-layout .course-tools details{padding:0}.catalog .atlas-lesson-layout .course-tools details[open]{box-shadow:none}.catalog .atlas-lesson-layout .course-tools details ol{padding:0 20px 14px;margin:0}.catalog .atlas-lesson-layout .course-tools a{display:inline-flex;align-items:center}
 
 .atlas-cover>.concept-preview{align-self:center;margin:0}.atlas-cover>.atlas-itinerary{grid-column:1/-1;padding:18px 22px}.atlas-cover>.atlas-itinerary ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.atlas-cover>.atlas-itinerary progress{margin:12px 0 4px}.atlas-cover>.atlas-itinerary>a{margin-top:4px}.atlas-cover>.atlas-itinerary .atlas-course-icon{width:34px;height:34px}@media(max-width:700px){.atlas-cover>.atlas-itinerary ol{grid-template-columns:1fr;gap:0}.atlas-cover>.atlas-itinerary{padding:18px}}
+
+/* Keep essentials visible; reserve disclosures for answers and secondary tools. */
+.catalog .catalog-row>.catalog-description{grid-column:2;grid-row:4;margin:4px 0 0;max-width:68ch}
+.catalog .practice-setup{margin:24px 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.catalog .practice-setup h2{font-size:23px;margin-top:0}
+.catalog .stage-project{background:transparent;border:0;border-radius:0;padding:16px 0 0;box-shadow:none}
+.catalog .stage-project h3{margin-top:0}
+.catalog .lesson-task-kit{background:transparent;border:0;border-top:1px solid var(--line);padding:20px 0;margin:24px 0}
+.catalog .lesson-file-links{display:flex;flex-wrap:wrap;gap:4px 20px;list-style:none;padding:0;margin:12px 0}
+.catalog .lesson-file-links a{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:anywhere}
+.catalog .walkthrough-reading{margin:20px 0;padding:0;border:0;background:transparent}
+.catalog .walkthrough-reading li{margin:12px 0}.catalog .walkthrough-reading li p{margin:4px 0}
+.catalog .lesson-actions{align-items:center}.catalog .lesson-actions>button{min-height:44px}
+.catalog .lesson-actions>a:last-child{flex-basis:100%}
+.catalog .path-guide{margin-top:24px}.catalog .path-guide section{min-width:0}
+@media print{.practice-setup .download-action,.lesson-actions{display:none}}
+
+.atlas-cover:not(:has(.concept-preview)){grid-template-columns:minmax(0,1fr)}.atlas-cover:not(:has(.concept-preview)) .atlas-cover-copy{max-width:72ch}

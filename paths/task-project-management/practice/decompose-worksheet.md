@@ -8,7 +8,7 @@ Decompose from the deliverable down to actions that can be owned and checked. In
 
 ## Try before reading the answer
 
-Break the workshop into three deliverables and list one action for each.
+Plan a 60-minute beginner workshop for 20 people, with an exercise sheet and invitation. Break the workshop into three deliverables and list one action for each.
 
 Decision: ____________________________________________
 

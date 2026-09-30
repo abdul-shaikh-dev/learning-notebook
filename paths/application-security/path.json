@@ -158,14 +158,14 @@
       "takeaway": "A control should protect an asset against a concrete unwanted action.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Assets and authority",
           "paragraphs": [
             "An asset is something the application must protect: private documents, account access, money, availability or evidence of an action. A threat is a way that asset could be harmed. Start with the workflow rather than a list of fashionable security tools.",
             "A trust boundary separates components with different authority. Browser inputs, HTTP headers and uploaded files are untrusted even when the interface looks friendly. A server-side identity adapter and an application database have different responsibilities; a browser assertion is not proof of identity."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "A cross-owner threat model",
           "paragraphs": [
             "The synthetic notebook stores Alice’s and Bob’s private documents across two tenants. If Alice guesses Bob’s document ID, the unwanted action is reading another owner’s private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
             "Write asset -> entry point -> trust boundary -> abuse case -> control -> verification. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
@@ -210,14 +210,14 @@
       "takeaway": "A principal is trusted authentication output, not request-supplied profile data.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Verified identity and policy",
           "paragraphs": [
             "Authentication establishes who is acting under a particular mechanism. A principal is the server’s representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
             "The offline Principal dataclass represents an identity already verified by a trusted adapter. It deliberately does not parse tokens, compare passwords or claim cryptographic verification. Only tests and trusted application code construct it; accepting this object’s fields from request JSON would defeat the boundary."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Subject and tenant context",
           "paragraphs": [
             "The fixture gives subject alice two records with different tenant contexts. Same spelling of the owner name does not override tenant separation. In real systems use stable internal subject IDs and correctly mapped issuer/tenant context rather than mutable display fields.",
             "Keep authentication failures distinct from policy decisions in internal evidence, while minimizing unnecessary public detail. A successful login is not blanket permission to every stored object."
@@ -262,14 +262,14 @@
       "takeaway": "Authentication mechanisms need a verified credential or trusted protocol result.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Credentials and account lifecycle",
           "paragraphs": [
             "A username locates an account; a credential or authentication protocol provides evidence about control of that account. Credential verification, login throttling, recovery and session creation form a lifecycle. Protecting just the initial password check leaves reset and recovery paths as alternate entrances.",
             "Use established authentication libraries or an identity provider rather than inventing password storage or token verification. The training kit has no credential database. Its login method means the trusted adapter already authenticated the principal."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Anonymous access and login errors",
           "paragraphs": [
             "An anonymous request cannot read Alice’s private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
             "Public login errors should avoid revealing whether an account exists. Internal monitoring still needs structured failure reasons and rate evidence without storing passwords. Recovery verification should be at least as carefully designed as ordinary login."
@@ -321,14 +321,14 @@
       "takeaway": "An authenticated user still needs permission for this object and operation.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Principal, resource and action",
           "paragraphs": [
             "Authorization is a decision over principal, resource, action and relevant context. Roles alone often miss object relationships: a member may update their own document but not another member’s. Tenant checks prevent a same-named subject from crossing organizational boundaries.",
             "The reference policy accepts only read/update, requires matching tenant, then grants owners both actions and readers read-only access. Every other action defaults to denial. UI visibility and unpredictable identifiers are usability measures, not authorization enforcement."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "The ownership policy matrix",
           "paragraphs": [
             "Alice in red can read a, cannot read Bob’s b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
             "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
@@ -380,14 +380,14 @@
       "takeaway": "Validation accepts supported data; authorization determines whether it may be applied.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Accepted update fields",
           "paragraphs": [
             "A request schema should define accepted fields, types, sizes and normalization. It should reject unsupported shapes before state changes. Validation does not prove identity, permission or business correctness; it is one boundary among several.",
             "parse_update accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Rejecting mass assignment",
           "paragraphs": [
             "A payload with title plus owner is rejected even when the title is valid. A title at 80 characters succeeds; 81 fails. A control character embedded inside the normalized title fails. All accepted output is a new dictionary, so validation does not mutate the caller.",
             "Validate at the server boundary and then authorize the particular update. Browser validation can improve feedback but is easily bypassed. Database constraints provide another layer for persisted invariants."
@@ -432,14 +432,14 @@
       "takeaway": "A session is a bearer capability with a lifecycle.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Bearer sessions and revocation",
           "paragraphs": [
             "A server session maps an unpredictable opaque identifier to authenticated context. Whoever presents a valid bearer identifier may act as that session, so protect it in transport/storage and never log it. The application must define creation, expiry, privilege changes and revocation.",
             "Sessions in the kit generate random identifiers using Python secrets, rotate a previous session during login, expire after five minutes using injected time, and revoke on logout. The short lifetime is a fixture policy, not a universal recommendation. There is no durable store, idle timeout or multi-worker coordination here."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Rotation and exact expiry",
           "paragraphs": [
             "Login at time 1 creates an expiry at 301. A lookup at 300 succeeds and at 301 fails. Rotation makes the old identifier unusable. The tests control time rather than sleeping, so the exact boundary is repeatable.",
             "A production session store must handle concurrent requests, expiry cleanup, privilege changes and deployment persistence. Logout should revoke server state rather than merely remove a browser display flag."
@@ -484,14 +484,14 @@
       "takeaway": "Cookie attributes reduce specific exposure paths; they do not replace application checks.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Cookie attributes",
           "paragraphs": [
             "A browser sends cookies according to scope and attributes. Secure limits transmission to secure contexts; HttpOnly prevents ordinary JavaScript cookie reads; SameSite influences cross-site sending. Path/domain scope and expiry also matter. None of these attributes establishes object authorization.",
             "Prefer a deliberately scoped session cookie over exposing a session ID to application JavaScript without need. For a __Host- prefixed cookie, browsers require Secure, Path=/ and no Domain. A real integration must be tested under HTTPS and the browser’s current behavior."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "HTTPS and browser integration",
           "paragraphs": [
             "The example is a response-header design, not an HTTP server in the fixture. HttpOnly can hinder token theft via script, but an XSS payload may still send authenticated actions from the same page. SameSite defense also has workflow limitations and should not be described as universal CSRF protection.",
             "Cross-origin frontend/backend designs need careful credential, origin and cookie decisions. Test the intended browser flow rather than copying a permissive CORS rule. TLS protects traffic in transit; it does not make a compromised endpoint trustworthy.",
@@ -551,14 +551,14 @@
       "takeaway": "Authentication strength includes storage, recovery and independent factors.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Password hashing and factors",
           "paragraphs": [
             "Passwords must be stored using a suitable password-hashing mechanism with salts and an appropriate work factor, not encryption for later recovery or a fast general-purpose hash. Established libraries/providers handle these details; the course deliberately provides no homemade password hash.",
             "Multi-factor authentication combines factors with distinct compromise properties. Two passwords are not two independent factor types. Recovery, factor enrollment and replacement can become weaker bypasses if they are not protected and monitored."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Login and recovery policy",
           "paragraphs": [
             "Design a login-and-recovery table: operation, required proof, throttling, session effect and safe audit outcome. A password change or account recovery may require revoking prior sessions. The offline module can test the downstream revocation policy but cannot prove a real factor ceremony.",
             "Choose phishing-resistant mechanisms where the application’s risk and provider support justify them. Avoid treating an SMS code or authenticator code as identical to a passkey’s properties. Record the actual provider mechanism and tested failure paths."
@@ -610,14 +610,14 @@
       "takeaway": "A browser sending a cookie does not prove the user intended this request.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Ambient credentials and intent",
           "paragraphs": [
             "Cross-site request forgery exploits ambient browser credentials to cause an unwanted action. A victim’s browser may attach a valid session cookie to an attacker-initiated request. Authentication alone therefore does not establish deliberate user intent for a state-changing operation.",
             "The synthetic session stores an unpredictable CSRF token and requires a matching token for a mutation. This illustrates the server-side synchronizer-token decision. A real implementation also defines safe methods, origin checks, SameSite policy and framework integration; GET should not mutate state."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Session-bound CSRF checks",
           "paragraphs": [
             "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B’s token, and reject an expired session. ASCII validation ensures malformed input fails as PermissionError rather than leaking an internal comparison exception.",
             "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
@@ -669,14 +669,14 @@
       "takeaway": "Untrusted text becomes executable only when a sink interprets it as code or markup.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Output contexts",
           "paragraphs": [
             "Cross-site scripting occurs when untrusted content is interpreted as executable browser content. The safe operation depends on the output context: text nodes, attributes, URLs, JavaScript and CSS have different rules. Generic input validation is not a universal output encoder.",
             "title_html validates the title then uses Python html.escape for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "HTML text encoding tests",
           "paragraphs": [
             "The test compares exact encoded output for a synthetic script string and ensures an img-shaped input is not emitted as a raw tag. These strings are test data in memory; no attack is sent to a site or browser.",
             "Prefer template autoescaping and safe DOM text APIs. If rich HTML is truly required, use a maintained sanitizer with an explicit allowed-content policy. A content security policy can reduce impact but does not make unsafe sinks correct."
@@ -728,14 +728,14 @@
       "takeaway": "A query parameter is data; it must not become SQL syntax.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "SQL values and structure",
           "paragraphs": [
             "SQL injection occurs when untrusted input changes the structure of a database instruction. Bind parameters with the driver rather than concatenate quoted values. Parameters handle values; identifiers or sort directions require an explicit allowlist mapping because they are part of structure.",
             "find_title uses SQLite’s ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Real parameter-binding evidence",
           "paragraphs": [
             "The synthetic input apostrophe OR 1=1 is searched literally and matches no title. The normal Alice private value returns one row, and the total row count remains two. This exercises a real local SQL engine’s binding, not merely a mock query string.",
             "Prepared queries do not establish object authorization. Scope the queried records to the trusted principal/tenant and apply least database privileges. An ORM can still expose injection if raw SQL strings are assembled unsafely."
@@ -787,14 +787,14 @@
       "takeaway": "OAuth delegates access; it is not by itself a complete user-login protocol.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "OAuth participants",
           "paragraphs": [
             "OAuth has a resource owner, client, authorization server and resource server. The client obtains an access token with an intended scope and audience so it can access a protected resource. Different participants have different trust relationships and credentials.",
             "Do not assume that receiving an access token means the client has authenticated the user for its own login purposes. OpenID Connect adds a standardized identity layer. An access token’s scope is also not a substitute for application ownership policy."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "The notebook delegation flow",
           "paragraphs": [
             "Draw a notebook client, training identity provider and document API. The authorization server issues access for the API; the API validates the token using its configured mechanism and then applies object authorization. The client should not invent validation based on merely decoding token text.",
             "The offline fixture begins after a trusted adapter produces a principal. The opt-in provider worksheet specifies the real flow and required negative cases; no outbound requests, account creation or credentials are part of the local baseline."
@@ -846,14 +846,14 @@
       "takeaway": "An ID token has a specific client and validation contract.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Identity tokens and recipients",
           "paragraphs": [
             "OpenID Connect builds an identity layer on OAuth. An ID token communicates authentication claims to its intended client. The client must validate it under the issuer’s documented metadata, key and claim rules; it should not treat a decoded payload as a verified identity.",
             "ID tokens and access tokens serve different recipients and purposes. An ID token for the client is not a bearer access token for every API. Stable subject identity includes the issuer context; email is not universally a permanent account key."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Provider validation and local limits",
           "paragraphs": [
             "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library’s integration tests.",
             "The local Principal is a downstream test seam only. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
@@ -905,14 +905,14 @@
       "takeaway": "PKCE, state and nonce address related but distinct protocol threats.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "PKCE, state and nonce",
           "paragraphs": [
             "In authorization-code flows, PKCE binds code redemption to proof based on a per-request verifier. The authorization request sends a derived challenge; redemption includes the verifier. S256 is the standard challenge method normally required by modern provider policy. A public client cannot securely hide a static secret in distributed code.",
             "State binds the returned response to client request context under the selected framework; OIDC nonce binds the identity response to the authentication request. These values are not interchangeable. Use library-managed correlation and one-time flow handling rather than homegrown storage tricks."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Tracing the authorization callback",
           "paragraphs": [
             "Trace the training flow: initiation stores correlation, authorization sends challenge/state/nonce as applicable, callback checks correlation and redeems the code with the verifier, and the client validates the ID token. Replay and mismatched redirect/correlation cases must fail.",
             "The worksheet deliberately has no cryptographic implementation or live endpoint. Real tests use the provider’s supported flow and record sanitized outcomes. A passing authorization policy unit test says nothing about PKCE verification."
@@ -964,14 +964,14 @@
       "takeaway": "Decoding is parsing; cryptographic and claim validation establish a trusted token.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Trusted validation rules",
           "paragraphs": [
             "A JWT payload can be decoded without establishing who created it. A resource server must use a maintained validator configured for allowed algorithms, trusted issuer/key sources, intended audience and relevant lifetime/type rules. Accepting whichever algorithm or key URL a token suggests can cross a trust boundary.",
             "Signature success alone is insufficient: a correctly signed token for another audience or issuer must still fail. Token purpose and expected claim rules matter. Opaque access tokens require the provider’s documented mechanism, which may be introspection rather than local JWT validation."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Negative token cases",
           "paragraphs": [
             "The opt-in validation matrix includes wrong issuer, wrong audience, expiry, tampered signature, disallowed algorithm, token-type confusion and key rotation. It states expected outcomes before recording provider/library results. The offline module implements none of those cryptographic checks.",
             "After validation, map minimal trusted claims to a principal and still perform action/object authorization. Do not log raw bearer tokens as evidence; use sanitized case IDs and validator outcomes."
@@ -1023,14 +1023,14 @@
       "takeaway": "A secret needs restricted access, rotation and a safe failure path.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Secret storage and rotation",
           "paragraphs": [
             "Secrets include credentials, signing material, session identifiers and bearer tokens. Configuration names or public client IDs are not automatically secrets, but classify them deliberately. Store production secrets in an appropriate managed mechanism with least access; do not embed them in source, bundles, screenshots or logs.",
             "Rotation changes the value and the consumers that depend on it. A deployment needs a defined transition, old-value revocation and failure handling. Deleting a source file does not revoke leaked copies. The downloaded course uses no live credentials."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Sanitized evidence and revocation",
           "paragraphs": [
             "The identity-provider worksheet records environment variable names and sanitized metadata only. Test evidence uses case IDs, not tokens. For a suspected leak, revoke/rotate, investigate scope and preserve approved sanitized evidence before claiming remediation.",
             "Environment variables can still leak through process diagnostics or error reporting. Redaction should be field-aware and tested; a broad promise that logs are safe is weaker than checking the actual emitted fields."
@@ -1082,14 +1082,14 @@
       "takeaway": "Logs should explain a decision without becoming a second sensitive-data store.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Security events and log injection",
           "paragraphs": [
             "Security evidence needs enough context to diagnose denied access, login abuse and configuration failures. Structured event names, internal subject IDs, outcome categories and correlation identifiers can help. Raw passwords, tokens, cookies and full private bodies should not be routine evidence.",
             "Log injection can forge apparent records when untrusted text contains control characters or when an application concatenates log lines. Use structured logging and validated fields; apply storage permissions, retention and monitoring to the log system itself."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Allowlisted audit fields",
           "paragraphs": [
             "safe_audit permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
             "A denied request can be audited without publishing private object contents or detailed account-existence information. Logs should be reviewed for actual emitted fields, not only for a redaction helper that callers can bypass."
@@ -1134,14 +1134,14 @@
       "takeaway": "A dependency inventory links shipped software to maintenance decisions.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Dependency identity and advisories",
           "paragraphs": [
             "Your application includes code and packages you did not author. Pin and lock dependencies under an explicit update policy, retain provenance and inventory what is actually shipped. A package version in a README does not prove the deployed artifact uses that version.",
             "An advisory scanner reports known signals, not a complete exploitability assessment or a guarantee that everything unreported is safe. Consider affected versions, reachable use, deployment context and available fixes. Test upgrades rather than ignoring breaking changes indefinitely."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Runtime inventory and updates",
           "paragraphs": [
             "The local kit uses only Python’s standard library and the installed Git binary, so its inventory starts with those runtime versions and local source files. This reduces setup but does not mean the runtimes have no vulnerabilities.",
             "For a real OIDC adapter, record library/provider/runtime versions and follow their maintenance notices. Map an advisory to the shipped lockfile/artifact, assess impact, update, run security regression checks, and document unresolved exposure."
@@ -1186,14 +1186,14 @@
       "takeaway": "Rate controls need identity, resource and deployment assumptions.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Work and request limits",
           "paragraphs": [
             "Attackers can abuse legitimate operations through repetition: login attempts, expensive searches, uploads or repeated notifications. Bound inputs, work and request rates according to the asset and failure cost. Authentication does not eliminate abuse by compromised or legitimate accounts.",
             "FixedWindowLimiter allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "The fixed-window limiter",
           "paragraphs": [
             "The tests permit the first three Alice requests, deny the fourth, allow Bob independently and reset Alice at minute 1. This verifies a small algorithm contract, not distributed abuse prevention. The dictionary also needs bounded storage/expiry for a real long-lived service.",
             "Production policies often combine account, origin/network and global resource limits with monitoring. Define response behavior and safe recovery so defensive limits do not cause avoidable lockout or denial of service."
@@ -1238,14 +1238,14 @@
       "takeaway": "A security claim needs an observed boundary and a stated coverage limit.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Adversarial control tests",
           "paragraphs": [
             "Security tests should challenge each control’s actual failure mode. A successful request demonstrates functionality; foreign ownership, malformed input, expired session and injected text demonstrate selected defenses. Keep assertions about effects as well as status: a denied mutation must not change stored state.",
             "ASVS is a verification standard with a larger scope than this selected course. Choose applicable requirements and a suitable level for the actual application. Do not call a handful of local tests ASVS certification or assume every requirement is applicable to every architecture."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "Verification matrix and integration",
           "paragraphs": [
             "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. It has no HTTP server or crypto validator.",
             "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
@@ -1297,14 +1297,14 @@
       "takeaway": "Response restores control while preserving useful, sanitized evidence.",
       "sections": [
         {
-          "title": "Understand the boundary",
+          "title": "Containment and recovery",
           "paragraphs": [
             "An incident plan names who can act, which assets are at risk, what evidence is needed and how to contain the problem. Examples include leaked credentials, unauthorized object access, malicious uploads and a vulnerable dependency exposed in production. The correct containment depends on the mechanism.",
             "Recovery is more than restarting a service. Revoke compromised authority, correct the boundary, verify negative cases, restore legitimate access and monitor recurrence. Preserve approved evidence without turning logs into a collection of bearer tokens or private records."
           ]
         },
         {
-          "title": "Trace the behavior and failure",
+          "title": "An offline incident runbook",
           "paragraphs": [
             "For a cross-owner read defect, stop the affected exposure, establish the scope, fix server authorization and test every alternate endpoint. For a leaked bearer or key, revocation/rotation is necessary even after source cleanup. Communication and destructive operations require the organization’s actual authority.",
             "The advanced kit produces an offline runbook with triggers, actions, ownership, validation, rollback and remaining risk. It sends no messages or scans live systems. The runbook is reviewable practice, not evidence of an executed incident response."

@@ -114,13 +114,13 @@
       "takeaway": "A release joins code, configuration, data compatibility and an operational decision.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Release behavior and rollback",
           "paragraphs": [
             "A release joins code, configuration, data compatibility and an operational decision. A green build proves a particular artifact can be produced; it does not prove requests succeed in the target environment. Name one user operation, its owner and a rollback trigger before choosing automation. The course follows a small note service so every claim has an observable boundary."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "The bundled service and integration runbook",
           "paragraphs": [
             "The executable download is a Python/SQLite stand-in. A separate integration runbook maps the same decisions onto a React static build, .NET API and SQL Server. Their actual artifacts and credentials must be supplied by the learner; no complete three-service stack is bundled."
           ],
@@ -163,13 +163,13 @@
       "takeaway": "An environment is a set of endpoints, identities, data and configuration.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Environment identities and data",
           "paragraphs": [
             "An environment is a set of endpoints, identities, data and configuration. Calling a machine staging does not isolate it if its connection string reaches production. Make boundaries inspectable: loopback-only service, disposable test database and synthetic records. Promote an artifact between environments while changing only reviewed configuration, rather than rebuilding different binaries for each environment."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Temporary tests and retained practice data",
           "paragraphs": [
             "The test suite allocates and deletes its own temporary directory. Manual commands create notes.db in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
           ],
@@ -212,13 +212,13 @@
       "takeaway": "A source commit identifies code, an artifact digest identifies bytes, and a deployed release identifies what is running with a particular configuration.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Source, artifact and deployment",
           "paragraphs": [
             "A source commit identifies code, an artifact digest identifies bytes, and a deployed release identifies what is running with a particular configuration. Tags and names are convenient but can be moved or overwritten. Keep a release record tying these identities together. The /version endpoint in the lab reports a configured release label, so it is useful for smoke checks but is not cryptographic proof."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Checking the reported release label",
           "paragraphs": [
             "Do not treat an environment variable named RELEASE_VERSION as evidence of the image digest. A process can report v2 while running v1 bytes. Record the digest from the artifact store or container runtime and compare it with the approved release record."
           ],
@@ -261,13 +261,13 @@
       "takeaway": "A repeatable build controls source, runtime, dependency graph and build inputs.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Build inputs and dependency locks",
           "paragraphs": [
             "A repeatable build controls source, runtime, dependency graph and build inputs. A lockfile narrows dependency resolution; it does not freeze the operating system or prove all packages are safe. The standard-library Python service has no package restore, while React needs its npm lockfile and .NET needs reviewed restore inputs. Record tool versions and base-image identity alongside test results."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Pinning a verified image digest",
           "paragraphs": [
             "The downloadable Dockerfile deliberately uses the readable python:3.13-slim tag. Tags can change. As an assessed extension, resolve its current digest, replace both FROM references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
           ],
@@ -310,13 +310,13 @@
       "takeaway": "A useful gate rejects a candidate for a reason tied to user risk.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Gates tied to user risk",
           "paragraphs": [
             "A useful gate rejects a candidate for a reason tied to user risk. Unit checks cover pure decisions, HTTP tests cover protocol behavior, restart checks cover durable state and restore drills cover recoverability. The local suites check these boundaries and include a distinct-artifact rollback drill with a bounded startup-failure case. Their assertions are evidence for these local behaviors, not load capacity, authentication or public internet safety."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "A controlled broken-check experiment",
           "paragraphs": [
             "Passing checks that mirror only setup can hide missing behavior. Intentionally remove a readiness distinction or break parameterization in a copied lab, observe a specific failure and restore the implementation. Keep destructive experiments in the disposable practice copy."
           ],
@@ -359,13 +359,13 @@
       "takeaway": "An image is a packaged filesystem and launch configuration.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Image, process and storage lifetimes",
           "paragraphs": [
             "An image is a packaged filesystem and launch configuration. A container is a running instance with its own process and writable layer. Removing a container can discard data in that layer; a volume has a separate lifecycle. Port publication forwards traffic but EXPOSE is metadata. Start with one process and one loopback-published port before adding orchestration."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Disposable data and persistent volumes",
           "paragraphs": [
             "The lab writes to /tmp so a non-root container can run without a host data mount. This is intentionally disposable. Persisted data requires a reviewed volume path and permissions; bind-mounting an arbitrary folder does not make its contents a consistent database backup."
           ],
@@ -408,13 +408,13 @@
       "takeaway": "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Build stages and runtime files",
           "paragraphs": [
             "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes the same local suite, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Image permissions and build context",
           "paragraphs": [
             "The .dockerignore file permits only the Dockerfile and two named Python sources. The numeric runtime user can write /tmp; it cannot write arbitrary /app files. Verify the final image user and filesystem with docker inspect, rather than assuming a small image is hardened or vulnerability-free."
           ],
@@ -457,13 +457,13 @@
       "takeaway": "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Configuration and shutdown",
           "paragraphs": [
             "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label. Validate values before serving. Exec-form CMD makes Python the container process so it receives termination signals. The app responds to SIGTERM by stopping accept/serve work and closing its server; this simple lab does not implement a fully bounded production request-drain protocol."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Binding and bounded request drain",
           "paragraphs": [
             "The default host is loopback outside containers and 0.0.0.0 in the Dockerfile. Threaded request handlers are daemon threads, so shutdown is intentionally limited. For a real .NET service, propagate cancellation to handlers and database work, bound drain time and test an in-flight write during termination."
           ],
@@ -506,13 +506,13 @@
       "takeaway": "A secret is a value whose disclosure grants access or reveals protected data.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Secret disclosure paths",
           "paragraphs": [
             "A secret is a value whose disclosure grants access or reveals protected data. Inject it from an appropriate secret store at runtime or a build secret mount when truly needed during build. ARG, ENV and copied .env files can leave sensitive values in image metadata or layers. Redaction is a helpful backstop, not a guarantee that transformed values never escape."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Runtime and migration identities",
           "paragraphs": [
             "The toy service is unauthenticated and belongs on loopback or a dedicated local cluster. Adding a fake token to its config would not supply real authorization. When integrating SQL Server, use a narrowly scoped runtime identity and a separate migration identity; rotate leaked credentials even if later logs are hidden."
           ],
@@ -555,13 +555,13 @@
       "takeaway": "A browser downloads React static assets and sends API requests; the API authenticates the caller and accesses SQL with its own identity.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Browser, API and database",
           "paragraphs": [
             "A browser downloads React static assets and sends API requests; the API authenticates the caller and accesses SQL with its own identity. The database should not be directly reachable from the browser. Choose same-origin reverse proxy routing or a deliberately scoped cross-origin policy. Browser build-time configuration is public, so a frontend API URL is acceptable while a database password is not."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Routing the real integration",
           "paragraphs": [
             "integration-runbook.md gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to index.html. Test cookie/token assumptions and CORS with the actual staging origin."
           ],
@@ -604,15 +604,15 @@
       "takeaway": "A rolling release can run old and new application versions against one database.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Expand-and-contract migrations",
           "paragraphs": [
             "A rolling release can run old and new application versions against one database. Expand-and-contract introduces compatible fields first, deploys readers/writers that handle both, backfills deliberately and removes old fields after evidence. Application rollback does not automatically undo data changes. Review migration SQL and its lock/runtime impact separately from the normal API deployment."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "The unchanged-schema lab",
           "paragraphs": [
-            "The bundled SQLite service never changes its schema between v1 and v2. Its simulated release-label rollback test therefore proves only the compatible unchanged-schema case. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
+            "Both the release-label test and distinct_artifact_drill.py use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
           ],
           "example": "v1 reads title\nMigration adds nullable label\nv2 reads title + optional label\nBackfill in bounded batches\nRemove old representation only after old consumers disappear."
         }
@@ -653,13 +653,13 @@
       "takeaway": "CI runs code from contributors and third-party actions with runner permissions.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Runner authority and promotion",
           "paragraphs": [
             "CI runs code from contributors and third-party actions with runner permissions. Keep pull-request checks free of deployment secrets, minimize token permissions and review actions as dependencies. Separate testing from promotion; a successful untrusted branch must not automatically publish privileged artifacts. The downloadable workflow template checks the local lab only and never installs itself into the notebook repository."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Action pins and untrusted inputs",
           "paragraphs": [
             "ci-example.yaml uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
           ],
@@ -702,13 +702,13 @@
       "takeaway": "Rebuilding from a tag at deployment can select different dependencies than the tested build.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Artifact identity and provenance",
           "paragraphs": [
             "Rebuilding from a tag at deployment can select different dependencies than the tested build. Promote the same approved bytes, record their digest and retain the previous compatible artifact. Provenance connects the source and builder to those bytes; checksums detect changes but do not by themselves authenticate who produced them. Retention must cover the rollback window and incident investigation needs."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Files, registry digests and attestations",
           "paragraphs": [
             "The lab hashes a file, not a registry image or signed attestation. For Docker use a verified registry digest after push. The workflow artifact validates transfer integrity according to the Actions mechanism; production provenance and signing require an explicit verification policy and trusted builder."
           ],
@@ -751,13 +751,13 @@
       "takeaway": "Liveness asks whether the process should continue running; readiness asks whether it can accept the intended work.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Liveness, readiness and smoke tests",
           "paragraphs": [
             "Liveness asks whether the process should continue running; readiness asks whether it can accept the intended work. A dependency failure should normally remove traffic without blindly restarting every healthy process. A smoke check exercises a user operation after readiness. The lab /ready checks the local schema and a synthetic gate file; /live simply confirms the HTTP process responds."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Readiness beyond SELECT 1",
           "paragraphs": [
             "A query such as SELECT 1 alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
           ],
@@ -800,13 +800,13 @@
       "takeaway": "A rolling deployment mixes old and new instances, blue/green keeps two environments, and a canary exposes a smaller population to a candidate.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Rolling, blue/green and canary",
           "paragraphs": [
             "A rolling deployment mixes old and new instances, blue/green keeps two environments, and a canary exposes a smaller population to a candidate. Each requires data compatibility and an explicit traffic decision. For one local service the learner can compare two loopback ports manually; this is a deployment exercise, not automated production canary infrastructure. Write stop conditions before observing results."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "The local traffic-switch model",
           "paragraphs": [
             "The provided app has no reverse proxy or orchestrator. Changing which local port a client calls models a traffic switch without claiming high availability. A real canary must compare error/latency/correctness across representative traffic and control concurrent deployment writers."
           ],
@@ -849,16 +849,16 @@
       "takeaway": "Rollback restores a previous application artifact or configuration only when that version still understands current data and external effects.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Application rollback compatibility",
           "paragraphs": [
             "Rollback restores a previous application artifact or configuration only when that version still understands current data and external effects. A release can write rows that old code cannot parse, send irreversible messages or destroy fields. Classify rollback as safe, forward-fix required or restore needed before deployment. The lab tests v1/v2 labels against an unchanged schema and retains rows across host replacement."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Isolated data recovery",
           "paragraphs": [
             "Do not replace a live database file underneath a running server. Restore into a separate location, verify it and perform a controlled switch after stopping writers. The course runbook distinguishes release rollback from recovery to an earlier data point, which intentionally loses later writes.",
-            "The executable test changes the configured release label while reusing the same code. Actual differing-image rollback is a separate optional Docker/staging exercise."
+            "The release-label test reuses the same code. distinct_artifact_drill.py separately runs different v1/v2 source artifacts and rolls back to v1 with retained data. Docker-image and staging rollback remain optional integration exercises."
           ],
           "example": "Create note in v1 → stop → start v2 using same db → read\nStop v2 → start v1 using same db → read again\nObserved: data retained, because schema stayed compatible."
         }
@@ -899,13 +899,13 @@
       "takeaway": "Logs explain a specific event; metrics aggregate behavior.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Event fields and privacy",
           "paragraphs": [
             "Logs explain a specific event; metrics aggregate behavior. Record timestamp, release identity, stable route, result and a correlation identifier where useful. Do not log request bodies or authorization headers by default. The supplied JSON logs intentionally exclude note titles and query strings. They are printed to stdout so the runtime can collect them without an application-specific file location."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Retention and bounded route labels",
           "paragraphs": [
             "A production logging contract also needs access controls, retention, clock consistency and bounded cardinality. The lab does not ship a collector or tracing backend. Unknown request paths should be normalized before indexing; otherwise user-supplied identifiers can create expensive indexes or expose private data."
           ],
@@ -948,13 +948,13 @@
       "takeaway": "Counters measure cumulative events, gauges describe a current level, and histograms retain a distribution useful for latency.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Counters, gauges and histograms",
           "paragraphs": [
             "Counters measure cumulative events, gauges describe a current level, and histograms retain a distribution useful for latency. Interpret a counter through a rate over a window, including resets after restart. Monitor user symptoms and resource saturation together. The lab /metrics exposes simple JSON request/error totals; it deliberately supplies neither Prometheus exposition nor latency histograms."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Eligible requests and aggregation",
           "paragraphs": [
             "The JSON totals include probes and instrumentation requests, so they are not an eligible-user-request SLI. A production exporter should distinguish user operations, classify errors and avoid per-user labels. Two replicas require correct aggregation; averaging percentages without their denominators can distort the result."
           ],
@@ -962,8 +962,8 @@
         }
       ],
       "exercise": {
-        "prompt": "Compare one instance with1 error/10requests and another with0 / 90.",
-        "solution": "The combined error fraction is1 / 100=1%, not the average of10% and0%=5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate.",
+        "prompt": "Compare one instance with 1 error / 10 requests and another with 0 / 90.",
+        "solution": "The combined error fraction is 1 / 100 = 1%, not the average of 10% and 0% = 5%. Aggregate counts over the same eligible window and retain release attribution to compare the candidate.",
         "checks": [
           "Keep denominators aligned.",
           "Account for counter resets."
@@ -997,13 +997,13 @@
       "takeaway": "An SLI is a measured fraction or distribution; an SLO is its target over a defined window.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Indicators, objectives and budgets",
           "paragraphs": [
-            "An SLI is a measured fraction or distribution; an SLO is its target over a defined window. Specify eligible requests, successful outcomes and exclusions before calculating a budget. At99.9% success over10,000 eligible requests,10 bad requests are allowed;12 consumes120% of that budget. A negative remaining budget should affect release decisions, not be hidden by rounding."
+            "An SLI is a measured fraction or distribution; an SLO is its target over a defined window. Specify eligible requests, successful outcomes and exclusions before calculating a budget. At 99.9% success over 10,000 eligible requests, 10 bad requests are allowed; 12 consumes 120% of that budget. A negative remaining budget should affect release decisions, not be hidden by rounding."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Arithmetic versus alert policy",
           "paragraphs": [
             "The helper computes arithmetic on supplied counts. It does not gather telemetry or implement multiwindow burn alerts. A short fast-burning window should be considered alongside a longer window; a single failure fraction from a tiny sample can be noisy. Error-budget policy is an agreed operational choice."
           ],
@@ -1046,15 +1046,15 @@
       "takeaway": "A load result belongs to its workload, environment and dataset.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Workload and offered traffic",
           "paragraphs": [
-            "A load result belongs to its workload, environment and dataset. Sequential closed-loop clients wait for each response and reduce offered traffic when the server slows; an arrival-rate generator asks a different overload question. Record error rate and tail latency as well as throughput. The local helper caps requests at200 and accepts only loopback HTTP URLs."
+            "A load result belongs to its workload, environment and dataset. Sequential closed-loop clients wait for each response and reduce offered traffic when the server slows; an arrival-rate generator asks a different overload question. Record error rate and tail latency as well as throughput. The local helper caps requests at 200 and accepts only loopback HTTP URLs."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "The bounded timing helper",
           "paragraphs": [
-            "This helper is a smoke-sized timing exercise with concurrency1, not a benchmark proving capacity. Record Python/runtime, hardware, warmup, payload and sample count. A p95 from50 samples describes few tail observations and is unstable; no speed target is guaranteed by the supplied code."
+            "This helper is a smoke-sized timing exercise with concurrency 1, not a benchmark proving capacity. Record Python/runtime, hardware, warmup, payload and sample count. A p95 from 50 samples describes few tail observations and is unstable; no speed target is guaranteed by the supplied code."
           ],
           "example": "python release_tools.py load http://127.0.0.1:8080/version --count 50\nOutput: model, request count, errors, p50_ms, p95_ms\nCompare v1 and v2 under the same synthetic workload."
         }
@@ -1095,13 +1095,13 @@
       "takeaway": "A backup is a recoverable copy, not simply a file that exists.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Consistent snapshots and RPO",
           "paragraphs": [
             "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite Connection.backup into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Independent recovery and off-host copies",
           "paragraphs": [
             "Recovery point objective describes acceptable lost data age, while recovery time objective describes acceptable time to restore service. Backup frequency contributes to RPO but successful independent restoration determines recoverability. Retain off-host copies under appropriate access controls; a disk loss can destroy both local source and local snapshot."
           ],
@@ -1109,8 +1109,8 @@
         }
       ],
       "exercise": {
-        "prompt": "For hourly snapshots, what does a09:59 failure imply after a09:00 snapshot?",
-        "solution": "Up to59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss.",
+        "prompt": "For hourly snapshots, what does a 09:59 failure imply after a 09:00 snapshot?",
+        "solution": "Up to 59 minutes of later writes may be absent, assuming that snapshot is consistent and usable. Transaction-log recovery can change the model for SQL Server. State the chosen RPO and verify the restore path rather than promising zero data loss.",
         "checks": [
           "Use a supported backup API.",
           "Separate RPO from RTO."
@@ -1144,13 +1144,13 @@
       "takeaway": "A restore drill starts with a known snapshot, restores into a separate location, checks integrity and application-level invariants, and measures elapsed recovery work.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Integrity and business state",
           "paragraphs": [
             "A restore drill starts with a known snapshot, restores into a separate location, checks integrity and application-level invariants, and measures elapsed recovery work. Do not overwrite a live database while writers are running. The lab test reads expected note values from an independent restored SQLite file and verifies that post-snapshot writes are absent. It does not establish an enterprise disaster recovery system."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Snapshot and traffic-switch evidence",
           "paragraphs": [
             "A process that starts successfully can still serve the wrong dataset. Record snapshot identity/time, restore commands, missing-write reconciliation and who can approve the final traffic switch. SQL Server tests must restore actual full/differential/log sets as applicable, not rename a .bak file as if it were a usable database."
           ],
@@ -1193,15 +1193,15 @@
       "takeaway": "An incident response coordinates impact reduction, investigation and communication.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Incident roles and hypotheses",
           "paragraphs": [
             "An incident response coordinates impact reduction, investigation and communication. Assign an incident lead, separate operations from diagnosis, record a timeline and bound changes. Compare symptoms with recent release/config/schema changes without assuming the newest deploy is always the cause. A rollback is useful only if compatibility and the failure mechanism support it."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "Readiness failure and recovery",
           "paragraphs": [
-            "In the local drill create the readiness gate file, observe503 while liveness remains200, remove it and verify recovery. This simulates one failure boundary. A postmortem should explain contributing conditions and actionable follow-ups rather than blame the operator or invent evidence not recorded during the drill."
+            "In the local drill create the readiness gate file, observe 503 while liveness remains 200, remove it and verify recovery. This simulates one failure boundary. A postmortem should explain contributing conditions and actionable follow-ups rather than blame the operator or invent evidence not recorded during the drill."
           ],
           "example": "12:00 v2 promoted\n12:03 eligible errors increase\n12:04 stop further promotion; assign lead\n12:06 inspect readiness, logs, dependency health\n12:08 choose verified rollback or dependency mitigation"
         }
@@ -1242,13 +1242,13 @@
       "takeaway": "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Release evidence and decisions",
           "paragraphs": [
             "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence. Keep commands and expected results close to the decision they justify. Distinguish local tests, optional Docker checks, staging integrations and planned production work. Completing this path is selected operations practice, not a claim of operating a production platform."
           ]
         },
         {
-          "title": "Work through a release decision",
+          "title": "The service's remaining deployment work",
           "paragraphs": [
             "Use release-workbook.md and integration-runbook.md to assemble the packet. The smallest shipped service remains learning-only and unauthenticated. Real TLS, identity providers, monitored SQL, real collectors, proxy routing and provider-specific deployment must be implemented and checked separately before exposure."
           ],

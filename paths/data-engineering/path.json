@@ -79,20 +79,20 @@
       "takeaway": "A data pipeline moves and transforms records for an identifiable consumer.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Consumers and row grain",
           "paragraphs": [
             "A data pipeline moves and transforms records for an identifiable consumer. Define the question, owner, refresh interval and acceptable errors before choosing tools. Grain means what one row represents; a unique order, order line and daily total have different grains."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Orders and daily revenue",
           "paragraphs": [
             "For a learning-sales dataset, one row is one order identified by order_id. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
           ],
           "example": "order_id,customer_id,occurred_at,amount_cents\no1,c1,2026-09-01T10:00:00Z,1250\no2,c1,2026-09-01T11:00:00Z,750\n# Two orders; total 2000 cents for the day."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Business definitions beyond schema",
           "paragraphs": [
             "More rows do not imply better data. Document whether cancelled orders, refunds and test transactions belong. A schema cannot substitute for a business definition."
           ]
@@ -135,20 +135,20 @@
       "takeaway": "ETL extracts data, transforms it and loads a target.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Extraction, transformation and loading",
           "paragraphs": [
             "ETL extracts data, transforms it and loads a target. ELT extracts and loads before target-side transformation. Both require contracts, lineage and quality checks. A raw zone preserves source evidence; a curated zone carries validated, consumer-specific meaning."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A transactional CSV import",
           "paragraphs": [
             "Our small reference reads a CSV, validates fields and loads SQLite within one transaction, so it is a bounded ETL exercise. A warehouse approach might land source rows first, then transform with SQL. Choose based on governance, scale, target capability and recovery needs."
           ],
           "example": "# Logical layers, not shell commands:\nsource CSV -> contract validation -> transactional orders table\norders table -> UTC-day aggregate -> consumer report"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Raw-data retention",
           "paragraphs": [
             "Raw does not mean unrestricted permanent retention. Sensitive data needs appropriate storage, access and deletion policies. The lab uses fictional records and no cloud service."
           ]
@@ -198,20 +198,20 @@
       "takeaway": "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "CSV structure and encoding",
           "paragraphs": [
             "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python csv.DictReader maps named fields; open(..., newline=\"\", encoding=\"utf-8\") supports its newline handling."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A quoted customer label",
           "paragraphs": [
             "A customer label \"North, Team\" is one value, not two columns. A strict contract should reject missing, duplicate or unexpected headers rather than silently shifting fields. Bound file size before materializing its contents."
           ],
           "example": "import csv, io\nrows = list(csv.DictReader(io.StringIO('id,label\\n1,\"North, Team\"\\n')))\nprint(rows[0][\"label\"])\n# Expected: North, Team"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Byte-order marks and malformed files",
           "paragraphs": [
             "A byte-order mark can affect the first header; choose utf-8-sig only when it is part of the producer contract. Malformed encoding and extra fields should fail visibly, not turn into silent replacement characters."
           ]
@@ -254,20 +254,20 @@
       "takeaway": "A contract specifies fields, types, limits and meaning.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Types, nulls and units",
           "paragraphs": [
             "A contract specifies fields, types, limits and meaning. Text files carry strings even when a column means integer cents. Convert deliberately and reject invalid representations. Distinguish absent, unknown, empty and zero instead of mapping every missing value to zero."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Integer cents and UTC fields",
           "paragraphs": [
             "amount_cents=\"1250\" becomes integer 1250; \"12.50\" violates this cents contract. customer_id must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
           ],
           "example": "def cents(value):\n    if not value.isascii() or not value.isdigit():\n        raise ValueError(\"expected nonnegative integer cents\")\n    return int(value)\nprint(cents(\"1250\"))\n# Expected 1250; cents(\"12.50\") raises ValueError."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Database constraints and evolution",
           "paragraphs": [
             "A database affinity/type alone may accept values you did not intend. Validate at the application boundary and use database constraints as a second layer. Schema evolution requires a versioned compatibility policy."
           ]
@@ -310,20 +310,20 @@
       "takeaway": "Quality includes completeness, validity, uniqueness, consistency and timeliness.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Quality and batch acceptance",
           "paragraphs": [
             "Quality includes completeness, validity, uniqueness, consistency and timeliness. Decide whether a single invalid row rejects the whole batch or moves to quarantine. Publishing good rows while hiding rejected rows can make totals look deceptively complete."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Rejecting a three-row batch",
           "paragraphs": [
             "For a three-row batch with one negative amount, our reference rejects the entire batch before commit. It reports a category and row number without printing customer details. A partial-success design would need accepted/rejected counts and a consumer-visible completeness rule."
           ],
           "example": "# Quality report example:\n{\"input_rows\": 3, \"accepted_rows\": 0,\n \"rejected_batch\": true, \"reason\": \"amount contract\"}\n# Atomic policy: previous curated state remains unchanged."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Quarantine privacy",
           "paragraphs": [
             "Do not log whole sensitive rows by default. A quarantine store needs retention and access controls. The reference uses small synthetic inputs and tests state preservation."
           ]
@@ -366,20 +366,20 @@
       "takeaway": "Event time records when an event occurred; ingestion time records when your system received it.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Event time and business calendars",
           "paragraphs": [
             "Event time records when an event occurred; ingestion time records when your system received it. Aware timestamps include a timezone offset. Normalize instants before comparing them, then choose an explicit business calendar for daily aggregation."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "UTC-day grouping",
           "paragraphs": [
             "An order at 23:30 UTC can belong to the next calendar day in another timezone. Our reference groups UTC days and requires a Z suffix; it does not imply every business should use UTC-day reporting. The choice belongs in the data contract."
           ],
           "example": "from datetime import datetime, timezone\ninstant = datetime.fromisoformat(\"2026-09-01T23:30:00+00:00\")\nprint(instant.astimezone(timezone.utc).date())\n# Expected: 2026-09-01"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Ambiguous local timestamps",
           "paragraphs": [
             "Naive timestamps cannot identify a unique instant without a timezone policy. Daylight-saving transitions can repeat or skip local times. Never attach a timezone arbitrarily to fix ambiguous historical data."
           ]
@@ -422,20 +422,20 @@
       "takeaway": "Money requires a unit, currency and rounding policy.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Currency, cents and rounding",
           "paragraphs": [
             "Money requires a unit, currency and rounding policy. Binary floating point does not represent every decimal fraction exactly. The small lab stores nonnegative integer cents for a single fictional currency; other domains may require Decimal and currency-specific scale."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "An exact 2000-cent total",
           "paragraphs": [
             "Two orders 1250 and 750 cents total 2000 cents exactly. A foreign-currency conversion cannot simply add cents from different currencies. Define exchange-rate date and rounding before conversion, and retain source units for reconciliation."
           ],
           "example": "amounts_cents = [1250, 750]\nprint(sum(amounts_cents))\n# Expected: 2000\n# Display: 20.00 in the stated single-currency, two-decimal contract."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Refund and scale limits",
           "paragraphs": [
             "Integer cents do not support every currency or financial instrument. Refunds and adjustments need a signed-event contract or separate model; this reference deliberately rejects negative input amounts."
           ]
@@ -485,20 +485,20 @@
       "takeaway": "A transaction groups changes that should succeed or fail together.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Transactional batch effects",
           "paragraphs": [
             "A transaction groups changes that should succeed or fail together. Parse and validate the bounded batch, begin a transaction, write rows and commit only when required work succeeds. On failure rollback prevents partial application of that transaction."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Rollback after a uniqueness conflict",
           "paragraphs": [
             "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally."
           ],
           "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Context commits on success or rolls back on exception.\n# close the connection separately; context does not close it."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Durability and external boundaries",
           "paragraphs": [
             "A transaction boundary does not include arbitrary external files or HTTP calls. Database durability depends on engine configuration and storage. SQLite is a local baseline, not evidence that SQL Server execution was tested."
           ]
@@ -541,20 +541,20 @@
       "takeaway": "An idempotent operation can be repeated without an additional intended effect.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Batch identity and fingerprints",
           "paragraphs": [
             "An idempotent operation can be repeated without an additional intended effect. Scope a batch identity and bind it to a payload fingerprint. Repeating the same ID and same payload can reuse the prior result; repeating the ID with different content should conflict."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Replaying batch sept-01",
           "paragraphs": [
             "Batch sept-01 with two orders commits once. Running it again returns replay without adding rows. A different CSV under sept-01 is rejected. Order IDs remain globally unique in the sample, so another batch cannot silently duplicate a business order."
           ],
           "example": "first = import_csv(\"sample_orders.csv\", \"practice.db\", \"sept-01\")\nsecond = import_csv(\"sample_orders.csv\", \"practice.db\", \"sept-01\")\n# Expected first=\"committed\", second=\"replay\"; still two orders."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Canonicalization and retention",
           "paragraphs": [
             "The sample hashes exact bytes: equivalent CSV formatting produces a different fingerprint. A production canonicalization policy may differ and must be stable/versioned. Retention and concurrency must be considered when using replay keys."
           ]
@@ -597,20 +597,20 @@
       "takeaway": "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Composite extraction cursors",
           "paragraphs": [
             "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple. Persist it only after downstream commit succeeds. Timestamp-only comparisons can miss tied rows; ordering and a tie-breaker must be part of the contract."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Two tied update timestamps",
           "paragraphs": [
             "Two rows share updated_at=10:00. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
           ],
           "example": "# Composite cursor example:\nlast = (\"2026-09-01T10:00:00Z\", \"o1\")\nnext_row = (\"2026-09-01T10:00:00Z\", \"o2\")\nprint(next_row > last)\n# True under the specified lexicographic ordering."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Deletes and older arrivals",
           "paragraphs": [
             "A watermark does not solve deletions, mutable timestamps or records arriving with older times. Choose source change tracking, tombstones or periodic reconciliation where needed. The reference lab models replay, not a live incremental connector."
           ]
@@ -660,20 +660,20 @@
       "takeaway": "CDC exposes changes rather than only current rows.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Change operations and positions",
           "paragraphs": [
             "CDC exposes changes rather than only current rows. Consumers need operation type, ordering boundary, retention and a schema. A deletion is a meaningful change; a snapshot-only append importer cannot infer it from an absent row without a defined comparison policy."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "SQL Server change tables",
           "paragraphs": [
             "SQL Server CDC can capture insert, update and delete changes into change tables. A consumer persists its committed position, processes a bounded range and accounts for cleanup retention. This path explains the connector boundary without enabling CDC on your server."
           ],
           "example": "# Illustrative change envelope:\n{\"operation\":\"delete\", \"order_id\":\"o1\", \"sequence\":1042}\n# A consumer applies the tombstone and commits its checkpoint together."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Retention and connector availability",
           "paragraphs": [
             "Availability, setup and permissions vary by SQL Server edition/service. An expired retained range may require a new snapshot and reconciliation. CDC processing is not automatically exactly-once business processing."
           ]
@@ -716,20 +716,20 @@
       "takeaway": "A fact table represents a measurable event at a stated grain; a dimension provides descriptive context.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Fact grain and join cardinality",
           "paragraphs": [
             "A fact table represents a measurable event at a stated grain; a dimension provides descriptive context. Joins can change row counts when a key is not unique. Test uniqueness and unmatched references before aggregating a joined dataset."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A join that doubles revenue",
           "paragraphs": [
             "Two orders total 2000 cents. If customer c1 occurs twice in a dimension, joining both orders to both customer rows yields four rows and 4000 apparent cents. The source amount has not changed; the join multiplied it."
           ],
           "example": "SELECT SUM(o.amount_cents)\nFROM orders AS o\nJOIN customers AS c ON c.customer_id = o.customer_id;\n-- Correct only when this join cardinality matches the declared grain."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Historical dimension keys",
           "paragraphs": [
             "A surrogate key can identify a dimension version, but does not by itself enforce a correct temporal join. Define unknown members and history semantics rather than dropping unmatched facts silently."
           ]
@@ -779,20 +779,20 @@
       "takeaway": "A slowly changing dimension models descriptive changes over time.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Current and historical attributes",
           "paragraphs": [
             "A slowly changing dimension models descriptive changes over time. Type 1 overwrites an attribute; Type 2 stores distinct historical versions with effective intervals. Choose based on whether consumers need current context or context at event time."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A customer's region change",
           "paragraphs": [
             "Customer c1 moves region on September 10. A Type 1 report may show all sales in the new region. A Type 2 event-time join attaches early orders to the old region and later orders to the new one. Define interval endpoints consistently, commonly [start, end)."
           ],
           "example": "# Example interval contract:\nold: [2026-09-01, 2026-09-10)\nnew: [2026-09-10, infinity)\n# An event on Sep 10 belongs to new, never both."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Intervals and late corrections",
           "paragraphs": [
             "Overlapping or gapped intervals can multiply or lose facts. Late corrections require a policy for rebuilding impacted joins. The supplied SQLite lab does not implement a full historical dimension."
           ]
@@ -842,20 +842,20 @@
       "takeaway": "A directed acyclic graph expresses task dependencies.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Task dependencies and publication",
           "paragraphs": [
             "A directed acyclic graph expresses task dependencies. An orchestrator schedules eligible tasks, records outcomes and retries according to policy. A DAG describes dependencies, not a promise of simultaneous execution or atomicity across all tasks."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Reconcile before publish",
           "paragraphs": [
             "Extract feeds validate; validate feeds load; load feeds reconcile and publish. Publish must depend on successful reconciliation. A failed optional notification should not necessarily roll back already committed data, but its failure must be visible."
           ],
           "example": "# Dependency contract:\nextract -> validate -> load -> reconcile -> publish\n# A separate notification task observes published status."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Idempotent orchestration retries",
           "paragraphs": [
             "Retries can rerun tasks, so each task needs idempotent or compensatable effects. Airflow has version-specific APIs and deployment requirements; no orchestrator is installed or executed by this local bundle."
           ]
@@ -898,20 +898,20 @@
       "takeaway": "Windowed reporting groups events by an explicit time interval.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Windows and late arrivals",
           "paragraphs": [
             "Windowed reporting groups events by an explicit time interval. Out-of-order delivery means an event may arrive after a window was first published. Define allowed lateness and whether late arrivals update results, enter correction reports or are rejected."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "A September 1 order arriving late",
           "paragraphs": [
             "A September 1 order arrives on September 3. Under event-date accounting it belongs to September 1, so a previously published total may need a revision. Record both event time and ingestion evidence to explain the change."
           ],
           "example": "# Consumer-visible revision example:\n{\"day\":\"2026-09-01\", \"revision\":2, \"total_cents\":2250}\n# Revision 1 was 2000; late accepted order added 250."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Stream-watermark limits",
           "paragraphs": [
             "A watermark in stream processing is a progress estimate under a system policy, not proof that no earlier event exists. Our batch lab makes late-data reasoning explicit but does not execute a streaming engine."
           ]
@@ -954,20 +954,20 @@
       "takeaway": "Partitioning organizes data by a useful key, often event date, so consumers can scan relevant subsets.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Selective partitions and formats",
           "paragraphs": [
             "Partitioning organizes data by a useful key, often event date, so consumers can scan relevant subsets. CSV is portable text; columnar formats support different compression and projection patterns. Choose based on access patterns and ecosystem support, not a universal best format."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Selecting one date partition",
           "paragraphs": [
             "A daily report for September 1 can select that date partition rather than scan an entire year. Too many tiny files add metadata overhead; too few enormous partitions reduce selective reads. A changed partition scheme requires migration and consumer compatibility."
           ],
           "example": "MAX_BYTES = 262144\nwith open(\"sample_orders.csv\", \"rb\") as stream:\n    raw = stream.read(MAX_BYTES + 1)\nif len(raw) > MAX_BYTES:\n    raise ValueError(\"batch exceeds byte limit\")"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "The bounded local reader",
           "paragraphs": [
             "The reference bounds bytes and rows before loading. It does not implement Parquet, object storage or distributed partition pruning. A file extension does not establish format validity."
           ]
@@ -1010,20 +1010,20 @@
       "takeaway": "A compatible change preserves existing consumers under a stated contract.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Producer and consumer compatibility",
           "paragraphs": [
             "A compatible change preserves existing consumers under a stated contract. Adding a nullable field can still break strict header validation; renaming or changing units is often a breaking change. Version producers and consumers and test representative old/new payloads."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Adding a currency column",
           "paragraphs": [
             "Our CSV contract has exactly four columns. Adding currency requires a new version with currency validation and new aggregation rules, because sums must not mix units. Do not merely loosen extra-column rejection and claim the report remains correct."
           ],
           "example": "# Proposed v2 fields:\norder_id,customer_id,occurred_at,amount_minor,currency\n# Consumer rule: group/convert explicitly by currency.\n# v1 parser rejects this until migrated."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Defaults and migration meaning",
           "paragraphs": [
             "Defaults can invent meaning, especially for monetary or timezone fields. Migration needs rollback/replay decisions and retention of source evidence. A schema registry is helpful only when enforcement and ownership are clear."
           ]
@@ -1066,20 +1066,20 @@
       "takeaway": "Reconciliation compares expected and actual records/effects with an explicit tolerance policy.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Counts, amounts and lineage",
           "paragraphs": [
             "Reconciliation compares expected and actual records/effects with an explicit tolerance policy. Lineage identifies source, transformation version and run identity. A green execution status establishes that code ran, not that the correct business result was produced."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Checking IDs and amounts",
           "paragraphs": [
             "For two input orders, expect two stored order IDs and 2000 total cents. Count alone misses changed amounts; sum alone can hide offsetting errors. Compare identifiers and field-level evidence when correctness requires it."
           ],
           "example": "SELECT COUNT(*), SUM(amount_cents) FROM orders;\n-- Sample expected: 2, 2000\nSELECT order_id FROM orders ORDER BY order_id;\n-- Sample expected: o1, o2"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Hashes versus business truth",
           "paragraphs": [
             "Hashes detect byte changes but do not prove business truth. Keep provenance free of unnecessary personal data and document whether totals cover all accepted events or only a filtered subset."
           ]
@@ -1122,20 +1122,20 @@
       "takeaway": "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Data ownership and deletion",
           "paragraphs": [
             "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate. Minimize data collected for the learning goal. Separate sensitive source records from aggregate outputs and restrict debugging artifacts."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Deletion across data stores",
           "paragraphs": [
             "Our fixtures contain fictional IDs and no email addresses. A production customer import should not dump entire rejected rows into shared logs. A deletion request may need propagation into raw zones, curated tables, backups and downstream exports according to the applicable policy."
           ],
           "example": "# Proposed data inventory:\norders: owner=analytics; purpose=daily sales\nfields: fictional order/customer IDs, UTC instant, cents\nlogs: run ID, counts, error category; no complete source rows"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Access, retention and synthetic records",
           "paragraphs": [
             "This is general engineering guidance, not jurisdiction-specific legal advice. Encryption alone does not determine access authorization or retention. Do not add real personal data to the public notebook repository."
           ]
@@ -1185,22 +1185,22 @@
       "takeaway": "SQLite makes the baseline runnable with the Python standard library.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "SQLite versus SQL Server",
           "paragraphs": [
             "SQLite makes the baseline runnable with the Python standard library. SQL Server uses different type rules, drivers, transactions and operational configuration. Porting requires an explicit target contract and actual integration tests; equivalent-looking SQL is not execution evidence."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "The optional T-SQL schema",
           "paragraphs": [
             "The bundle includes an optional T-SQL table definition with primary keys, BIGINT cents and DATETIME2 UTC-by-contract values. Use an isolated notebook database only after reviewing the script. An external driver and connection configuration are learner prerequisites; no credentials are embedded."
           ],
           "example": "-- Illustrative target constraint:\namount_cents BIGINT NOT NULL CHECK (amount_cents >= 0)\n-- Parameterize inserts using the chosen driver.\n-- Coordinate run marker and orders in one target transaction."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "UTC and unexecuted integration",
           "paragraphs": [
-            "DATETIME2 has no timezone offset; the application must normalize and enforce UTC or choose DATETIMEOFFSET intentionally. The SQL script is a design companion and was not executed against SQL Server in this task."
+            "DATETIME2 has no timezone offset; the application must normalize and enforce UTC or choose DATETIMEOFFSET intentionally. The SQL script is a design companion; the bundled tests do not execute it against SQL Server."
           ]
         }
       ],
@@ -1241,20 +1241,20 @@
       "takeaway": "Classify failures before retrying.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Retryable failure and backfill",
           "paragraphs": [
             "Classify failures before retrying. Invalid schema is usually permanent until corrected; a transient connection failure may be retryable within a bounded policy. Backfill processes historical data and can change published results, so isolate its scope and reconcile effects."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "Conflicting and transient batches",
           "paragraphs": [
             "A batch conflict cannot be repaired by repeated retries under the same ID. Inspect payload identity and run metadata. After a transient failure, replay the same intended batch; atomic commit and deduplication should prevent duplicated effects."
           ],
           "example": "# Recovery decision:\ninvalid contract -> fix source, new reviewed attempt\nunknown commit -> query run identity, then safe replay\nbackfill -> declared range, reconciliation, publish revision"
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Uncertain committed outcomes",
           "paragraphs": [
             "Network timeouts can leave an uncertain outcome. Query the committed run identity instead of assuming failure means no effect. The local tests inject validation/constraint failures, not real network partitions or failover."
           ]
@@ -1297,20 +1297,20 @@
       "takeaway": "Combine a bounded file contract, exact amount units, timezone policy, transactional target and replay identity.",
       "sections": [
         {
-          "title": "Understand the mechanism",
+          "title": "Import contract and replay tests",
           "paragraphs": [
             "Combine a bounded file contract, exact amount units, timezone policy, transactional target and replay identity. Run the supplied baseline, then rebuild from the brief and add a documented extension. Your evidence should include failure preservation and reconciliation, not only a happy-path screenshot."
           ]
         },
         {
-          "title": "Work through a concrete case",
+          "title": "The demo and extension tests",
           "paragraphs": [
             "Run the demo: two orders commit, the same batch replays, and the total remains 2000 cents. Run the suite to exercise malformed schema, byte limits, duplicate orders, conflicting payloads and rollback. Then add a late-data revision or versioned currency contract with new tests."
           ],
           "example": "python pipeline_lab.py --demo\npython -m unittest -v test_pipeline_lab.py\n# Expected demo: committed, replay, orders=2 total_cents=2000."
         },
         {
-          "title": "Boundary and common mistake",
+          "title": "Remaining distributed boundaries",
           "paragraphs": [
             "The baseline is single-process local SQLite practice. It does not establish distributed orchestration, SQL Server adapter readiness, streaming watermark behavior or production-scale capacity. Label those extensions separately."
           ]

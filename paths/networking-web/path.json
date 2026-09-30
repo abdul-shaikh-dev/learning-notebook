@@ -170,13 +170,13 @@
       "takeaway": "A browser action becomes a request with a destination, transport, protocol and application meaning.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Request layers",
           "paragraphs": [
             "A browser action becomes a request with a destination, transport, protocol and application meaning. Naming, connectivity, encryption, HTTP status and body validation can fail separately. Start with a lesson fetch: the user needs readable lesson data, not merely a socket that opened."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Transport versus application success",
           "paragraphs": [
             "A successful lower layer does not prove higher-layer success. A 200 response may carry malformed JSON; a correct JSON object may belong to the wrong user. Keep the stages visible in a diagnostic note so 'the network is broken' becomes a testable claim."
           ],
@@ -219,13 +219,13 @@
       "takeaway": "An address identifies a network destination and a port selects a transport endpoint.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Addresses and endpoints",
           "paragraphs": [
             "An address identifies a network destination and a port selects a transport endpoint. Loopback addresses refer to the local host. Binding the lab to 127.0.0.1 prevents it intentionally listening on every interface, while port zero asks the operating system for an available port."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Loopback listener failures",
           "paragraphs": [
             "A listener on one port does not serve every URL. Connection refused often means no listener at that endpoint; a timeout can mean filtering, congestion or an unresponsive peer. Our lab only opens an ephemeral loopback listener and closes it through a context manager."
           ],
@@ -268,13 +268,13 @@
       "takeaway": "DNS relates names to typed records; a name can have more than one address and resolution can involve caching and delegation.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "DNS records and resolution",
           "paragraphs": [
             "DNS relates names to typed records; a name can have more than one address and resolution can involve caching and delegation. An A record carries an IPv4 address, while AAAA carries IPv6. A DNS result is not a guarantee that the destination service is listening or authorized."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "The offline cache model",
           "paragraphs": [
             "Use the supplied DnsCache as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
           ],
@@ -317,13 +317,13 @@
       "takeaway": "A TTL limits how long a DNS answer may be retained under the resolver's rules.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Expiry and new resolution",
           "paragraphs": [
             "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "DNS versus connection lifetime",
           "paragraphs": [
             "A small TTL does not migrate an already-open connection and is not a universal failover promise. DNS caches, connection reuse and application state have different lifetimes. The reference injects now so the exact boundary is deterministic, not a test that sleeps for five seconds."
           ],
@@ -366,13 +366,13 @@
       "takeaway": "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Byte streams and framing",
           "paragraphs": [
             "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read. Applications define message boundaries through a protocol. HTTP framing tells a recipient where headers and content end, so a client must not infer completeness from a single packet."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Bounded and truncated reads",
           "paragraphs": [
             "Use the standard HTTP client rather than writing a partial TCP parser for this course. A read can yield fewer bytes than requested, and a peer can close halfway through content. Bounded reads protect the application from accepting unlimited bodies, but correct handling must also recognize truncated messages."
           ],
@@ -415,13 +415,13 @@
       "takeaway": "A URL contains scheme, authority, path, query and sometimes a fragment.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "URL parts and origins",
           "paragraphs": [
             "A URL contains scheme, authority, path, query and sometimes a fragment. An origin is the scheme, host and port tuple used by browser security rules. Our origin helper normalizes the host and default port and rejects embedded credentials or fragments as an explicit lab request policy."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Parsing versus permission",
           "paragraphs": [
             "Parsing is not full validation or authorization. A syntactically acceptable HTTPS URL could point to an internal resource in a server-side fetcher. Fragments identify client-side locations and are not sent as the HTTP request target. Do not concatenate untrusted strings into URLs without understanding encoding."
           ],
@@ -464,13 +464,13 @@
       "takeaway": "A response body arrives as bytes.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Bytes, text and JSON",
           "paragraphs": [
             "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. JSON exchanged between systems uses UTF-8, and malformed encodings must not quietly become valid-looking lesson content."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Decoding and byte length",
           "paragraphs": [
             "The supplied decoder passes bytes to Python's JSON reader and rejects decoding/syntax failures. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
           ],
@@ -520,13 +520,13 @@
       "takeaway": "An HTTP request has a method and target plus fields and optional content.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Request and response structure",
           "paragraphs": [
             "An HTTP request has a method and target plus fields and optional content. A response has a status and fields plus permitted content. Treat field names case-insensitively at a real boundary, and keep content type separate from the bytes themselves. The local server serves a tiny JSON lesson with an explicit byte length."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Content length and HEAD",
           "paragraphs": [
             "Content-Length counts octets, not characters or JSON entries. HEAD describes the representation without sending its body; it is useful for metadata but does not validate a GET body. Our local reference uses the Python server/client libraries for framing, not a complete teaching implementation of HTTP parsing."
           ],
@@ -569,13 +569,13 @@
       "takeaway": "Status codes describe HTTP response semantics.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Response semantics",
           "paragraphs": [
             "Status codes describe HTTP response semantics. A successful representation response, a missing route and an unavailable service require different client actions. Our synthetic server exposes 200, 401, 404 and 503 deliberately. A response status says nothing by itself about whether returned JSON satisfies the app schema."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Status and body handling",
           "paragraphs": [
             "Separate status handling from body parsing. Retrying every 4xx can repeat a client mistake, while retrying 503 indefinitely can amplify an outage. The lab decoder accepts only the intended 200 lesson contract; that narrow decision is local application policy rather than a generic HTTP library rule."
           ],
@@ -618,13 +618,13 @@
       "takeaway": "A safe method requests a read-oriented operation according to HTTP semantics; idempotency concerns the intended effect of repeating a request.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Safety and repeated effects",
           "paragraphs": [
             "A safe method requests a read-oriented operation according to HTTP semantics; idempotency concerns the intended effect of repeating a request. GET and HEAD are good candidates for a bounded read retry policy. That does not make a badly designed endpoint immune to effects or remove traffic costs."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "A bounded read-retry policy",
           "paragraphs": [
             "POST is not generically idempotent. A server may implement an operation key that makes a particular POST safely repeatable, but the client needs that actual contract. Our simple policy retries only GET or HEAD and only with attempts and time remaining. It does not establish application idempotency."
           ],
@@ -667,13 +667,13 @@
       "takeaway": "TLS authenticates peers under its configuration and protects transport confidentiality and integrity.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Transport protection",
           "paragraphs": [
             "TLS authenticates peers under its configuration and protects transport confidentiality and integrity. HTTPS combines HTTP with TLS; it does not prove the application authorizes a resource or validates its own data. A trusted certificate must also match the requested server name for ordinary HTTPS identity checks."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "What the loopback lab tests",
           "paragraphs": [
             "Our lab uses plain loopback HTTP and does not perform a TLS handshake. The test inspects a default client's certificate-required and hostname-check settings only. Do not label those configuration assertions as encrypted-network evidence or disable verification merely to make an exercise connect."
           ],
@@ -716,13 +716,13 @@
       "takeaway": "Certificate trust is configured by a client's trust roots and verification policy.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Trust roots and hostname checks",
           "paragraphs": [
             "Certificate trust is configured by a client's trust roots and verification policy. Python's create_default_context enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Diagnosing certificate failures",
           "paragraphs": [
             "Never turn off checks to hide an unknown certificate error in a production-style recommendation. Diagnose name mismatch, trust-chain issues and time validity separately. This reference deliberately does not generate certificates or reach the public internet, so certificate-expiry and handshake-failure drills are design extensions."
           ],
@@ -765,13 +765,13 @@
       "takeaway": "A server uses Set-Cookie to ask a user agent to retain a name/value and attributes; later requests may send matching Cookie values.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Scoped browser state",
           "paragraphs": [
             "A server uses Set-Cookie to ask a user agent to retain a name/value and attributes; later requests may send matching Cookie values. Cookies are scoped state, not proof of identity by themselves. The lab issues a visibly synthetic session token and checks it on one private route to demonstrate transport mechanics."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "The synthetic cookie boundary",
           "paragraphs": [
             "HttpOnly limits script access, while Secure requires secure transport under user-agent rules. The lab runs HTTP, so it deliberately does not claim a Secure-cookie authentication design. The synthetic token is fixed and forgeable. Production sessions need real authentication, unpredictable identifiers and server-side authorization."
           ],
@@ -814,13 +814,13 @@
       "takeaway": "An origin policy and CORS affect how browsers expose cross-origin responses to scripts.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Cross-origin response access",
           "paragraphs": [
             "An origin policy and CORS affect how browsers expose cross-origin responses to scripts. CORS is not a general network firewall: non-browser clients can send requests regardless of browser response-exposure rules. Server authorization must independently decide whether an actor can access a resource."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Python versus browser enforcement",
           "paragraphs": [
             "The Python HTTP client does not implement browser CORS enforcement. Seeing it read a response does not prove a browser script can read that response. Some requests trigger preflight, and credentials add requirements. Keep credentials and allowed origins narrowly scoped when designing a real extension."
           ],
@@ -863,13 +863,13 @@
       "takeaway": "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Freshness and storage rules",
           "paragraphs": [
             "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while private restricts shared-cache reuse. Our SharedCache is a deliberately small offline model with an explicit private flag."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Shared-cache exclusions and limits",
           "paragraphs": [
             "Do not infer cacheability from status alone. User-specific output and public lesson data require different keys and storage policy. The reference is not a parser for every Cache-Control directive; it demonstrates that private content stays out of the shared map and that expiry is tested with an injected time. The offline cache omits Vary, Age, revalidation and full directive parsing; those need separate protocol tests before it could be a real HTTP cache."
           ],
@@ -912,13 +912,13 @@
       "takeaway": "A validator lets a client ask whether its stored representation still matches the server's current one.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Representation validators",
           "paragraphs": [
             "A validator lets a client ask whether its stored representation still matches the server's current one. Our fixed lesson ETag and If-None-Match produce a 304 response when they match. The client must already have a suitable representation to reuse; 304 does not deliver a new lesson body."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Reusing a stored response",
           "paragraphs": [
             "The lab's ETag is a teaching constant for an immutable sample. A changing application must update validators with the representation and respect variation and cache rules. Compare bytes and metadata deliberately; do not parse an empty 304 body as newly returned JSON."
           ],
@@ -961,13 +961,13 @@
       "takeaway": "A redirect describes another target; deciding to follow it belongs to the client's policy.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Redirect targets and methods",
           "paragraphs": [
             "A redirect describes another target; deciding to follow it belongs to the client's policy. The lab observes a 307 and relative Location without automatically following. For 307, the method is preserved when a client redirects. Redirect chains still need bounds and destination validation."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Policy at every hop",
           "paragraphs": [
             "A redirect can cross origins or lead from a permitted public target to an internal service in a server-side fetcher. Reapply destination and credential-forwarding policy at each hop. Never assume a successful first target makes every later Location safe. Keep observations and followed results distinct in diagnostics."
           ],
@@ -1010,13 +1010,13 @@
       "takeaway": "A forward proxy acts for clients; a reverse proxy or gateway faces clients on behalf of an origin service.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Proxy roles and metadata",
           "paragraphs": [
             "A forward proxy acts for clients; a reverse proxy or gateway faces clients on behalf of an origin service. Each hop can alter routing, buffering, TLS termination and timeout behavior. An origin may receive a proxy's connection rather than the browser's, so forwarded metadata needs a trusted boundary."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Trusted forwarding boundaries",
           "paragraphs": [
             "The loopback reference has no proxy. Do not trust an arbitrary client-supplied forwarding field as proof of identity or IP policy. A real deployment must define which intermediary may set it and how spoofed incoming fields are removed. Diagnose status origin before blaming the application."
           ],
@@ -1059,13 +1059,13 @@
       "takeaway": "A timeout bounds a particular wait under a library's semantics; an overall deadline limits how long the application is willing to keep trying.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Waits and overall deadlines",
           "paragraphs": [
             "A timeout bounds a particular wait under a library's semantics; an overall deadline limits how long the application is willing to keep trying. DNS, connection, TLS, response headers and content reads may have different wait points. A caller timeout does not cancel remote effects automatically."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "A controlled read timeout",
           "paragraphs": [
             "The /stall endpoint waits on an Event before sending a response. A client with a short socket timeout should stop waiting; cleanup releases the server event afterward. This controlled local read timeout is real, while injected-clock retry tests model a separate policy. Avoid treating either as internet latency benchmarking."
           ],
@@ -1108,13 +1108,13 @@
       "takeaway": "Repeated reads can recover a transient failure, but every retry adds load.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Retry load and budgets",
           "paragraphs": [
             "Repeated reads can recover a transient failure, but every retry adds load. The advanced reference bounds GET attempts and checks an injected overall deadline before dispatch. It retries selected gateway/unavailable statuses and returns the final status with minimal attempt metadata."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Bounding each callback",
           "paragraphs": [
             "The reference call must itself be bounded by a transport timeout; the helper cannot preempt a blocked callback. It has no backoff or jitter and performs no real retries against a service by default. A deployment extension needs retry timing, per-attempt budget, cancellation and coordination with existing retry layers."
           ],
@@ -1157,13 +1157,13 @@
       "takeaway": "A client should bound content and validate media type, syntax and application schema.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Media type, syntax and schema",
           "paragraphs": [
             "A client should bound content and validate media type, syntax and application schema. The lesson decoder expects a JSON object with string lesson and exact integer version. It rejects malformed JSON, unknown fields and booleans where a numeric version is intended. Transport success is only the start."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Malformed and oversized bodies",
           "paragraphs": [
             "An error page can arrive with 200, and a valid JSON object can have incompatible fields. Preserve the distinction between HTTP errors and protocol/application observation errors. The reference's 4096-byte bound is a teaching limit chosen for this small representation; state it in the contract and test oversized input."
           ],
@@ -1206,13 +1206,13 @@
       "takeaway": "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Layered incident evidence",
           "paragraphs": [
             "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata. Request ID, status, attempt and timings can locate a failure without copying cookies or full bodies. Compare client and server observations: a timeout on one side may coexist with completed work on the other."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Correlation without credentials",
           "paragraphs": [
             "Use a controlled case to test a hypothesis before changing every timeout. The lab's trace contains attempt and status only; it is not distributed tracing. A real system must propagate safe correlation and distinguish proxy, origin and client events. Do not log credentials to make a reproduction easier."
           ],
@@ -1255,13 +1255,13 @@
       "takeaway": "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "HTTP semantics and wire protocols",
           "paragraphs": [
             "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports. Applications should rely on the method, status and representation contract instead of assuming packet shape or one connection per request. The stdlib lab explicitly exercises HTTP/1.1 only."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "HTTP/1.1 evidence limits",
           "paragraphs": [
             "Do not call a local HTTP/1.1 result evidence for multiplexing, QUIC or proxy compatibility. Compare repeated representation outcomes when extending to another client/server stack, while measuring protocol-specific behavior separately. Header normalization and framing decisions belong to the actual protocol implementation."
           ],
@@ -1304,13 +1304,13 @@
       "takeaway": "The final project combines URL policy, observed HTTP semantics, validated bodies, public-cache isolation and bounded reads.",
       "sections": [
         {
-          "title": "Understand the contract",
+          "title": "Client requirements and evidence",
           "paragraphs": [
             "The final project combines URL policy, observed HTTP semantics, validated bodies, public-cache isolation and bounded reads. An evidence table should link each requirement to a fixture and actual result. Keep an unexecuted extension list for real DNS, TLS, browser cookies, CORS and intermediary behavior."
           ]
         },
         {
-          "title": "Work through a diagnosis",
+          "title": "Unexecuted network extensions",
           "paragraphs": [
             "Passing local tests makes a useful baseline, not a complete production client. The synthetic cookie is not authentication, cache models do not implement the full RFC, and the retry helper needs bounded callbacks. A review should name these boundaries so another learner knows what to implement next."
           ],

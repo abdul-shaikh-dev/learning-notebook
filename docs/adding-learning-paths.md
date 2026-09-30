@@ -66,3 +66,21 @@ Infrastructure exercises must name their required tools, target context and
 namespace, expected result, cleanup and execution limits. Keep local
 simulations and static manifest checks distinct from evidence obtained by
 running a real container, cluster or identity provider.
+
+## Keep the reading flow clear
+
+Teach the mechanism in the lesson, then show one concrete example and an exercise.
+Give each paragraph a distinct job. Replace repeated instructions such as “trace the
+example and explain the boundary” with an explanation of what the example does.
+Keep takeaways short and write quiz feedback that explains the decision.
+
+The reader keeps lesson explanations and complete diagram walkthroughs visible.
+Motion, quiz answers and reference solutions remain optional. Course overviews show
+one stage navigation and keep project assessment details out of the main reading
+list. Practice bundles and relevant guides are linked beside the exercise; complete
+file inventories and run instructions live at the task route. Preserve these routes
+and source detail when simplifying copy.
+
+“Read & continue” explicitly records reading and opens the next lesson in one action.
+The separate next-lesson link navigates without recording completion. Opening a page
+never counts as completing it. Keep reading, quiz and project assessment independent.

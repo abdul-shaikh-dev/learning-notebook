@@ -186,21 +186,21 @@
       "takeaway": "A design is an argument that a system can meet explicit needs under stated constraints.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A system includes people, software, data and operational responsibilities. A box diagram alone is not a design. Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Our running example is a learning notebook with accounts, lesson progress and optional workshop bookings. The current static notebook is much simpler; these are hypothetical extensions, not claims about its infrastructure.",
             "Functional requirements describe behavior: a learner marks a lesson read. Quality requirements constrain that behavior: the saved state survives refresh, other users cannot change it, and a response arrives within a measured target. An invariant is a rule such as one active booking per learner per workshop. Scope excludes features deliberately; recording exclusions prevents accidental overbuilding."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Translate an ambiguous request into testable statements before selecting services."
           ],
           "example": "Request: \"Make progress sync reliably.\"\nActor: signed-in learner\nAction: set lesson completion to true or false\nInvariant: only its owner can change a progress record\nConflict policy: reject stale edits with the current version\nOut of scope: simultaneous offline collaboration\nAcceptance: reload from another browser and see the saved state"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A requirement without a measurement method can hide disagreement. \"Fast\" means different things to a commuter on mobile and a batch importer. A useful first design may be one application and one database. More components introduce operational work, credentials, network failures and ownership decisions; each added boundary needs a reason."
           ]
@@ -242,20 +242,20 @@
       "takeaway": "Define reliability from a user action and a measurement window.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An SLI is a measured service indicator; an SLO is its target over a stated window. An SLA is a separate contractual commitment. For progress saves, measure successful eligible requests at the boundary visible to users. Specify which errors count: excluding overload responses would hide a failure users experience. Keep availability and latency objectives distinct so fast failures do not look healthy."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "This is a teaching target, not a universal requirement. A request-based budget counts bad requests; it does not directly equal downtime minutes."
           ],
           "example": "Window: 28 days\nEligible save requests: 1,000,000\nAvailability target: 99.9%\nAllowed bad requests: 1,000,000 × 0.001 = 1,000\nObserved bad requests: 600 → 400 remaining\nSeparate latency target: 99% of successful saves ≤ 500 ms"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A 99.9% request objective and 99.9% time objective can produce different results when traffic is uneven. Agree an action when the budget is burning too quickly: investigate, reduce risky changes and improve a known failure mode. Raising the target adds cost and complexity; choose it from user needs, then refine with evidence."
           ]
@@ -297,20 +297,20 @@
       "takeaway": "Capacity estimates are explicit hypotheses that measurements must refine.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Start from active users and actions rather than impressive totals. Registered users are not simultaneous connections, and daily activity is not peak request rate. Separate reads, writes, background work and payload sizes. Every estimate needs units, a time window and an assumption range. The downloadable calculator uses decimal bytes, not binary GiB, and labels its outputs."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Assume 10,000 daily active learners each making 40 API requests; real traffic is unlikely to be flat."
           ],
           "example": "Requests/day = 10,000 × 40 = 400,000\nAverage rate = 400,000 / 86,400 ≈ 4.63 requests/s\nAssumed peak multiplier = 8\nPeak rate ≈ 37.04 requests/s\nIf 25% are writes: ≈ 9.26 writes/s at this peak\nAt 2,000 response bytes/request: ≈ 74,074 bytes/s peak payload"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A peak multiplier is an assumption, not a law. Scheduled workshops can create sharp bursts that a daily average misses. Payload bandwidth excludes protocol overhead, retries and images unless explicitly included. A backend may receive fewer requests because public content is cached, or more because each user action fans out internally. Keep those layers separate."
           ]
@@ -352,20 +352,20 @@
       "takeaway": "Averages, percentiles and concurrency answer different questions.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Latency is elapsed time for one operation; throughput is completed operations per unit time. Averages can hide a slow minority, so inspect distributions and relevant percentiles. p99 is the value at or below which roughly 99% of measured samples fall, under the chosen measurement method. It is not the maximum. Do not average machine p99 values to obtain the global p99; merge distributions or appropriately aggregate raw observations."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Little's Law relates long-run averages in a stable, consistently bounded system: work in flight L = arrival rate λ × average time W."
           ],
           "example": "Stable arrival rate: 200 requests/s\nAverage total time in this boundary: 0.25 s\nAverage requests in flight: 200 × 0.25 = 50\nIf average latency grows to 1 s at the same stable rate: 200 in flight\nThis is not a p99 calculation or a worker-count prescription."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Queueing delay often grows as a bottleneck approaches saturation. Adding API instances does not remove a saturated database or a connection limit. Serial component means can be added under consistent boundaries; component p99 values generally cannot be added to claim an end-to-end p99. Measure the actual user operation and separate queue time from service time."
           ]
@@ -407,20 +407,20 @@
       "takeaway": "Every network boundary introduces delay and uncertain outcomes.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A browser resolves a name, establishes or reuses a connection, sends an HTTP request and waits for a response. HTTPS adds authenticated encryption in transit; it does not decide whether an account may edit a record. A reverse proxy can terminate TLS and route traffic. Connection reuse means setup cost is not necessarily paid on every request, while DNS caching means an address change may take time to reach clients."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Trace one progress update rather than drawing an unexplained cloud."
           ],
           "example": "Browser\n  → name resolution / connection setup if needed\n  → HTTPS reverse proxy\n  → authenticated API handler\n  → database transaction\n  → response\nFailure: commit succeeds, connection breaks before response\nClient sees timeout; database may already contain the update."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A timeout means the caller did not receive a usable result before its deadline. It does not prove the server did nothing. DNS, connection establishment, TLS, queueing and database work need compatible budgets. Avoid logging credentials in URLs or request bodies. A browser CORS policy is not a substitute for server authorization; non-browser clients are not restricted by it."
           ]
@@ -462,20 +462,20 @@
       "takeaway": "A stable API specifies identities, validation, errors and concurrency behavior.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An API is an agreement between independently changing callers and servers. Describe resource identity, inputs, response shape, errors, authorization and pagination. GET should not intentionally change business state. PUT commonly sets a resource representation and has idempotent semantics; repeated requests can still produce different responses. POST needs an explicit application contract when callers must retry safely."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Setting a completion value is easier to retry than toggling it. Versions detect stale edits."
           ],
           "example": "PUT /users/me/progress/lesson-7\nBody: {\"completed\": true, \"expectedVersion\": 4}\nSuccess: {\"completed\": true, \"version\": 5}\nStale version: conflict + current version, per documented contract\nInvalid body: validation error\nUnauthorized record access: reject\nList endpoint: bounded page size + stable order + cursor"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A cursor should reflect a deterministic ordering, often including a unique tie-breaker. Offset pagination can skip or repeat results as concurrent inserts move boundaries. Do not expose database errors or internal stack traces as public errors. Backward compatibility depends on client behavior; even adding an enum value may break a client that assumes the set is closed."
           ]
@@ -517,20 +517,20 @@
       "takeaway": "Model identity and relationships before choosing a storage brand.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A relational table stores rows with keys and constraints. A document store groups data into documents; a key-value store emphasizes lookup by key. Each can be useful, but product labels do not guarantee a particular isolation or consistency level. Start with questions: which records are read together, which values must change atomically, and what uniqueness rules must always hold?"
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "For notebook progress, a composite key naturally encodes one record per learner and lesson."
           ],
           "example": "User(user_id, display_name)\nLesson(lesson_id, path_id, title)\nProgress(user_id, lesson_id, completed, version, updated_at)\nPrimary key: (user_id, lesson_id)\nQueries: list progress for one user; find one lesson state\nWorkshop(workshop_id, capacity)\nBooking(booking_id, workshop_id, user_id, status)"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Duplicating a lesson title into every progress record speeds some reads but creates an update and freshness policy. A join is not automatically slow; measure data volume and indexing. Timestamps alone are weak conflict tokens if clock behavior or precision is uncertain. A database-generated revision can express record ordering without claiming global time order."
           ]
@@ -572,20 +572,20 @@
       "takeaway": "An index buys read efficiency with write, space and maintenance costs.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An index provides an additional access structure. An index on (user_id, updated_at, lesson_id) can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Estimate retained logical data separately from physical provisioning."
           ],
           "example": "200,000 new events/day × 500 bytes/event × 30 days\n= 3,000,000,000 bytes = 3.0 decimal GB raw\nAssumed index/metadata factor 1.5 → 4.5 GB per copy\nThree copies → 13.5 GB modeled storage\nExcluded: backups, logs, compression, temporary space, growth margin"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "The overhead factor is a scenario assumption, not a universal database multiplier. Retention must cover replicas, backups and analytics exports as appropriate. More indexes can slow every insert and enlarge restore time. A large text or binary attachment may belong in object storage, with metadata and authorization in the application; the database still needs a consistency strategy for missing or orphaned objects."
           ]
@@ -627,20 +627,20 @@
       "takeaway": "Adding instances helps only when state and downstream limits permit it.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Vertical scaling increases resources on a machine; horizontal scaling adds machines or processes. A stateless request handler does not depend on its own local memory for durable user state, allowing another worker to serve a later request. It still uses state somewhere, such as a database. A load balancer chooses a healthy destination and needs connection draining during replacement."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Use measured sustainable capacity at the required latency, then model loss of an instance. This is arithmetic, not a deployment recommendation."
           ],
           "example": "Peak demand: 370 requests/s\nMeasured instance limit at target latency: 100 requests/s\nPlanning utilization factor: 0.7 → 70 requests/s per instance\nceil(370 / 70) = 6 serving instances\nTo retain that modeled capacity after losing one: 7 total\nThen verify shared database and connection limits."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Autoscaling has detection and startup delay; it cannot absorb an instant burst merely because a policy exists. Sticky sessions may simplify local state temporarily but complicate failover and uneven loads. Readiness should reflect whether an instance can serve traffic; restarting every instance during a shared database outage can amplify the incident. Capacity depends on workload mix and data size."
           ]
@@ -682,20 +682,20 @@
       "takeaway": "Every cache needs a key, ownership, expiry and invalidation policy.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A cache keeps a reusable result nearer a caller. Cache-aside first checks the cache, loads the origin on a miss, then populates it. A TTL bounds how long an entry may remain without refresh, but it does not automatically solve all races. Public lesson content is a better starting point than private authorization decisions or the final available workshop seat."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "An illustrative read cache reduces origin reads, but cache hits still consume some resources."
           ],
           "example": "Incoming reads: 1,000/s\nHit ratio: 90%\nModeled origin reads: 1,000 × (1 − 0.9) = 100/s\nCache outage: potentially 1,000 origin reads/s\nKey: public-lesson:{lesson_id}:{content_version}\nPrivate data keys must include the relevant tenant/user scope."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "On expiry, many callers can miss together and stampede the origin. Coalescing duplicate loads and varying refresh times can help; bounded stale content is acceptable only when the product permits it. Evicting after a write can race with an old reader repopulating stale data, so use versioned keys or a deliberate consistency strategy. A high hit ratio does not excuse incorrect user isolation."
           ]
@@ -778,20 +778,20 @@
       "takeaway": "A queue decouples timing; consumers still need correctness and limits.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "An asynchronous queue lets the request record work and return before a slow task finishes. The user needs a status model: accepted, processing, completed or failed. Competing consumers distribute jobs, but ordering may only exist within a partition or group. A worker can perform an effect and crash before acknowledging, causing the same message to be delivered again."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Generate a study-pack export in a worker instead of holding an HTTP connection open."
           ],
           "example": "API → durable job record / reliable enqueue contract\nResponse: accepted + job ID + status URL\nWorker → generate output → record result → acknowledge\nCrash after output but before acknowledge → job may repeat\nIdempotent output key: exports/{job_id}/{version}\nBound attempts; quarantine repeatedly failing jobs for review."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A queue is a buffer, not extra processing capacity. If arrivals exceed completions for long enough, age and storage grow without bound unless admission is controlled. A dead-letter queue requires ownership and safe replay; it is not automatic resolution. Avoid claiming end-to-end exactly-once effects solely from a broker guarantee. Database effects and external email delivery need their own contracts."
           ]
@@ -833,20 +833,20 @@
       "takeaway": "Copies improve some failure and read scenarios but introduce coordination and lag.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Replication copies data between nodes. A leader may serialize writes while followers serve reads. With asynchronous replication, a follower can lag; a learner may save progress then read an old value from a different copy. Synchronous acknowledgment policies can reduce some data-loss windows while increasing latency or rejecting work when the required replicas are unavailable. The exact guarantee depends on the database configuration."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Make a stale-read scenario explicit rather than calling every replica interchangeable."
           ],
           "example": "t0: leader version 8; follower version 8\nt1: learner writes version 9; leader acknowledges\nt2: follower still version 8; next read appears to undo save\nt3: replication reaches follower; it becomes version 9\nPossible policy: read own recent updates from leader\nAlternative: carry a version token and wait/route until satisfied."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Replication is not backup: an accidental deletion can replicate immediately. Failover requires leader election, fencing or equivalent protection against conflicting writers, and an understood acknowledged-write guarantee. Routing recent reads to a leader is a design pattern, not universal proof of linearizability. Test behavior during failover and after reconnect, not only healthy lag."
           ]
@@ -888,20 +888,20 @@
       "takeaway": "During a network partition, some guarantees cannot all be maintained.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "In the CAP result, consistency means an atomic or linearizable view of operations, and availability means every request to a non-failing node eventually receives a valid result according to the operation under the model; merely returning an error does not meet that property. A partition means messages between parts of the system can be lost. The theorem is not a menu where a real service casually disables network failures, and its availability definition is not an operational uptime percentage."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Consider the last workshop seat and two isolated sides. Both cannot independently promise that same unique seat while preserving a single-copy booking invariant."
           ],
           "example": "Side A sees 1 seat\nSide B sees 1 seat\nNetwork messages between A and B are lost\nPolicy 1: restrict authoritative writes; one side waits/rejects\nPolicy 2: allow both writes and reconcile conflicts later\nPolicy 2 cannot also promise no conflicting booking occurred."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A service can choose different policies for different data: stale public lesson text may be acceptable, while booking commits require coordination. Outside partitions, latency and consistency still involve tradeoffs, but CAP alone does not quantify them. Eventual consistency needs a convergence mechanism and assumptions; it does not specify how long a learner will wait or how conflicting edits are resolved."
           ]
@@ -943,20 +943,20 @@
       "takeaway": "A shard key distributes work and determines which operations need coordination.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing user_id can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Compare a notebook progress workload and a flash booking event."
           ],
           "example": "Progress shard key: user_id\nBenefit: a learner's progress stays together\nCross-user report: scatter/gather or separate projection\nBooking shard key: workshop_id\nBenefit: one workshop invariant stays local\nRisk: one popular workshop dominates one partition\nMitigation requires workload-specific admission or redesign."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Moving from N to N+1 resources must preserve routing and ownership while data moves. A directory or virtual partitions can reduce movement, but introduce metadata and migration work. Cross-shard transactions and global uniqueness need a deliberate mechanism. Before sharding, examine query tuning, retention, vertical capacity and read replicas; each addresses different bottlenecks."
           ]
@@ -998,20 +998,20 @@
       "takeaway": "A transaction boundary must enforce the invariant under concurrent attempts.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A transaction groups database work according to its atomicity, isolation and durability guarantees. Isolation levels determine which concurrent observations are allowed; a transaction is not automatically serializable. The classic read-then-write race occurs when two callers read one remaining seat and both decide to book it. Application checks alone do not establish exclusivity."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "This is conceptual SQL; exact syntax, constraints and isolation behavior require the chosen engine and an actual concurrency test."
           ],
           "example": "BEGIN TRANSACTION\nUPDATE Workshop\nSET remaining = remaining - 1\nWHERE workshop_id = @id AND remaining > 0;\nIF affected_rows != 1: ROLLBACK; report sold out\nINSERT Booking(...); -- uniqueness rule for active booking\nCOMMIT\nIf insert fails, rollback must restore the decrement."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "The conditional update and booking insert must share the same atomic boundary. Define cancellation, expiry and duplicate-operation behavior too. Deadlocks or serialization failures may require retrying the complete transaction from a safe boundary, with a bounded policy. Sending an email inside a database transaction cannot make the external email atomic with that transaction and may hold locks while the network stalls."
           ]
@@ -1053,20 +1053,20 @@
       "takeaway": "A retry-safe operation needs stable intent and durable coordination.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Idempotency means repeating the same intended operation does not repeat its business effect. For create-booking, a client-generated key can identify one intent. Scope it to the caller and operation, validate a fingerprint of the meaningful request, and persist the outcome. Reusing a key for a different workshop must not silently return an unrelated booking. Two simultaneous requests with the same key must coordinate, not both pass an in-memory check."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Store the key and booking effect in a consistent boundary when possible."
           ],
           "example": "Key: learner-17 / reserve / request-abc\nPayload fingerprint: workshop=42\nFirst call: create booking B9 + durable key/result\nResponse lost\nRetry same key + payload: return B9\nSame key + different payload: reject conflict\nIn-progress duplicate: wait or documented retry/status response"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Retention sets the replay window: deleting a key too soon can allow an old retry to create another effect. Infinite retention has its own cost and privacy implications. Idempotency is not authentication or authorization. If a third-party side effect is involved, its own idempotency contract or a reconciliation process is necessary; a local key cannot retroactively undo a duplicate external action."
           ]
@@ -1149,20 +1149,20 @@
       "takeaway": "Recovery mechanisms must not turn a partial failure into overload.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A deadline limits the entire operation; a timeout often limits one call or phase. Pass remaining time downstream rather than letting every nested call spend a fresh full budget. Retry only failures that the operation contract permits, and make side effects safe first. Backoff increases delays, jitter spreads synchronized callers, and a retry budget limits additional load. None creates missing capacity."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Multiplication across layers is a common hidden cost."
           ],
           "example": "Three layers each allow 3 attempts including the first\nWorst-case deepest attempts: 3 × 3 × 3 = 27\nChoose one intentional retry owner where practical\nOverall deadline: 1,000 ms\nReserve time for response/cleanup; stop retries when budget is spent\nIsolate export-worker concurrency from interactive-save capacity."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A circuit breaker temporarily avoids calls to a failing dependency and probes recovery; it does not replace deadlines, idempotency or an error response. Separate resource pools can prevent a slow export dependency from consuming all interactive connections. Aggressive identical retry schedules create bursts. Timeouts must include the phases the client library actually covers, and cancellation does not prove a remote operation stopped."
           ]
@@ -1204,20 +1204,20 @@
       "takeaway": "A bounded system decides what to reject before resources are exhausted.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Backpressure slows or stops producers when consumers cannot keep up. At a public HTTP boundary, callers may not cooperate, so rate limits, concurrency caps, bounded queues and load shedding protect the service. A rate limit bounds arrivals over time; a concurrency limit bounds simultaneous work. They solve different problems. A slow dependency can exhaust in-flight slots even with a modest request rate."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Model a finite burst with constant rates; this fluid model ignores variance and is not a latency percentile prediction."
           ],
           "example": "Arrivals: 120 jobs/s for 60 s\nProcessing: 100 jobs/s\nBacklog added: (120 − 100) × 60 = 1,200 jobs\nAfter burst: arrivals fall to 80 jobs/s\nSpare processing: 100 − 80 = 20 jobs/s\nDrain time: 1,200 / 20 = 60 s\nIf arrivals stay at 100/s, this backlog never drains in the model."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Protect fair access per tenant as well as aggregate capacity. A global cap can let one client consume everything. Reject with a documented response and retry guidance where appropriate; blindly retrying rejected work defeats the protection. Separate optional analytics from essential saves, but define what degradation means to users. Queue depth without processing rate or job age is difficult to interpret."
           ]
@@ -1300,20 +1300,20 @@
       "takeaway": "Cross-system workflows need explicit intermediate states and recovery.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Writing a database row and publishing a message are two effects. If one succeeds and the other fails, systems disagree. A transactional outbox stores the domain change and an event record in one local database transaction. A relay publishes pending records later. Because publishing may succeed before the relay records success, duplicates remain possible and consumers need deduplication or idempotent effects."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Keep the invariant local, then make notification delivery recoverable."
           ],
           "example": "One transaction:\n  create confirmed booking B9\n  insert outbox event E7: BookingConfirmed(B9)\nRelay publishes E7; crash before marking sent\nRelay later republishes E7\nConsumer tracks E7 and handles duplicate safely\nBooking stays confirmed even if notification is delayed."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
             "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
@@ -1356,20 +1356,20 @@
       "takeaway": "Telemetry should answer what users lost and where time or work went.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Metrics summarize measurements, logs record events, and traces connect spans of a request across components. A trace ID helps correlate work but does not prove causality by itself. Measure user outcomes and also the internal signals needed to investigate them: latency, traffic, errors and saturation. A successful HTTP response with an incorrect result is still a product failure."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "A slow-save investigation should join evidence rather than guess from one chart."
           ],
           "example": "Symptom: save p99 rises from measured baseline\nCheck: error ratio, volume, in-flight requests\nTrace: API queue 180 ms; DB call 420 ms\nDB evidence: lock waits increased after deployment\nCompare: affected operation and release window\nAction: mitigate, then verify user-level recovery"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Do not put user IDs, arbitrary URLs or request IDs into unbounded metric labels; cardinality can become expensive. Logs and traces can leak secrets and personal data, so choose fields, retention and access controls deliberately. Sampling can miss rare failures. Alerts need an actionable owner and runbook, and should be tied to meaningful symptoms or imminent capacity exhaustion rather than every unusual number."
           ]
@@ -1411,20 +1411,20 @@
       "takeaway": "Security decisions belong at every protected server boundary.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Authentication establishes identity; authorization decides which action that identity may perform on which resource. For notebook progress, ownership must be checked server-side on reads and writes, not inferred from a hidden button. Tenant identifiers supplied by a client are inputs to validate, not proof of membership. Least privilege restricts what each service account can do if compromised."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Model an attacker who changes a URL and request body, not just a cooperative UI."
           ],
           "example": "Authenticated learner A requests /users/B/progress\nServer loads identity A from verified session/token\nServer evaluates policy for resource owner B\nReject unauthorized access before returning private data\nAlso test export/status/download endpoints\nAudit relevant decisions without storing access tokens"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Encryption in transit and at rest protects different threats but does not stop a legitimately authenticated user exploiting broken object authorization. Bound upload sizes and parsing work, validate input, use parameterized queries and isolate secrets from source code. Define session revocation and secret rotation behavior. Threat modeling asks what can go wrong at each trust boundary and how a control can be verified."
           ]
@@ -1479,20 +1479,20 @@
       "takeaway": "Recovery is a tested procedure, not a checkbox saying backups exist.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "RPO expresses the targeted maximum tolerable data-loss interval; RTO expresses the targeted time to restore the required service. These are objectives, not guarantees supplied by naming a backup product. A restore depends on intact backups, keys, configuration, dependencies, operators and enough capacity. Replication can improve availability while faithfully spreading deletion or corruption."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "A toy failure timeline reveals whether objectives are being met."
           ],
           "example": "Last recoverable point: 10:00\nFailure: 10:12\nRequired service restored and validated: 10:47\nObserved potential data-loss interval: 12 minutes\nObserved recovery duration from failure: 35 minutes\nTargets: RPO 15 min, RTO 30 min\nResult: RPO interval fits; recovery misses RTO by 5 min"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A backup schedule alone does not prove a recovery point: the newest backup may be incomplete or unusable. Test restore into an isolated environment and validate record counts, relationships, critical workflows and access controls. Decide whether stale analytical data can recover later than booking authority. Regional recovery also needs routing, configuration and protection from two simultaneous writers."
           ]
@@ -1534,20 +1534,20 @@
       "takeaway": "Change architecture where evidence justifies an independently operated boundary.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "A modular monolith is one deployable application with internal ownership boundaries. Microservices add independently deployed services and network contracts. Separate services can support different scaling or team needs, but introduce partial failure, observability, version compatibility and operational overhead. A notebook does not need a service per noun merely because it has users, lessons and progress."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Expand-and-contract avoids assuming every client upgrades simultaneously."
           ],
           "example": "1. Add optional preferred_name; old name still works\n2. Deploy readers that understand both representations\n3. Backfill existing records with a restartable process\n4. Deploy writers for the new contract; observe old usage\n5. Remove old field only after compatibility criteria pass\nRollback plan must account for any new data already written."
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "Rolling deployments temporarily mix versions. A rollback of application binaries may not reverse a destructive schema migration. For a service extraction, draw data ownership and synchronization before copying a module behind HTTP. Record the trigger: perhaps exports have independent resource needs and failure isolation, while progress and booking invariants benefit from one transactional owner."
           ]
@@ -1589,20 +1589,20 @@
       "takeaway": "A good design exposes assumptions and proposes tests that could prove it wrong.",
       "sections": [
         {
-          "title": "Build the mental model",
+          "title": "Concept",
           "paragraphs": [
             "Finish a design with evidence, not a gallery of components. An architecture decision record states context, options, choice, consequences and a revisit trigger. A load test measures a specified workload and environment; results do not automatically transfer to a different dataset or failure mode. A failure drill tests a recovery hypothesis. Keep synthetic data and controlled environments for learning."
           ]
         },
         {
-          "title": "Work through the design",
+          "title": "Design",
           "paragraphs": [
             "Review the notebook booking extension as an argument."
           ],
           "example": "Claim: one seat cannot be double-booked\nMechanism: conditional inventory change + unique booking + transaction\nEvidence: concurrent final-seat and rollback tests\nClaim: repeated uncertain requests do not duplicate bookings\nMechanism: durable scoped idempotency key\nEvidence: response-loss and simultaneous retry tests\nUnknown: regional failover write behavior → needs separate drill"
         },
         {
-          "title": "Tradeoffs and failure cases",
+          "title": "Tradeoffs",
           "paragraphs": [
             "A benchmark must report concurrency, arrival model, payloads, dataset, duration, warmup and failures. Closed-loop clients that wait before sending again can hide overload behavior; an arrival-rate model asks a different question. Track tail latency and correctness, not only requests per second. A paper design and calculator cannot certify production reliability, security or cost."
           ]

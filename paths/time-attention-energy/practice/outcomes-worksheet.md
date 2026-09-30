@@ -8,7 +8,7 @@ An outcome names what exists after a session: a checked paragraph, five attempte
 
 ## Try before reading the answer
 
-Replace work on presentation with a checkable outcome for a 35-minute session.
+The presentation needs an outline covering audience, problem and recommendation. Replace work on presentation with a checkable outcome for a 35-minute session.
 
 Decision: ____________________________________________
 
