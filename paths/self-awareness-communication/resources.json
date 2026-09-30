@@ -1,0 +1,894 @@
+{
+  "folder": "self-awareness-communication-practice",
+  "files": [
+    {
+      "id": "README",
+      "href": "paths/self-awareness-communication/practice/README.md",
+      "role": "guide",
+      "description": "Start here: sequence, offline use and practice boundaries"
+    },
+    {
+      "id": "sources-and-limits",
+      "href": "paths/self-awareness-communication/practice/sources-and-limits.md",
+      "role": "reference",
+      "description": "Source scope and evidence limits"
+    },
+    {
+      "id": "01-observation-interpretation",
+      "href": "paths/self-awareness-communication/practice/01-observation-interpretation.md",
+      "role": "worksheet",
+      "description": "Separate what happened from what it means worksheet and worked case"
+    },
+    {
+      "id": "02-feeling-and-action",
+      "href": "paths/self-awareness-communication/practice/02-feeling-and-action.md",
+      "role": "worksheet",
+      "description": "Name a feeling without making it an instruction worksheet and worked case"
+    },
+    {
+      "id": "03-values-and-priorities",
+      "href": "paths/self-awareness-communication/practice/03-values-and-priorities.md",
+      "role": "worksheet",
+      "description": "Translate a value into an everyday choice worksheet and worked case"
+    },
+    {
+      "id": "04-reflection-record",
+      "href": "paths/self-awareness-communication/practice/04-reflection-record.md",
+      "role": "worksheet",
+      "description": "Use a short reflection record worksheet and worked case"
+    },
+    {
+      "id": "05-perspective-check",
+      "href": "paths/self-awareness-communication/practice/05-perspective-check.md",
+      "role": "worksheet",
+      "description": "Hold an alternative explanation lightly worksheet and worked case"
+    },
+    {
+      "id": "06-pause-and-purpose",
+      "href": "paths/self-awareness-communication/practice/06-pause-and-purpose.md",
+      "role": "worksheet",
+      "description": "Pause long enough to choose the purpose worksheet and worked case"
+    },
+    {
+      "id": "07-listen-with-attention",
+      "href": "paths/self-awareness-communication/practice/07-listen-with-attention.md",
+      "role": "worksheet",
+      "description": "Create conditions for attentive listening worksheet and worked case"
+    },
+    {
+      "id": "08-open-questions",
+      "href": "paths/self-awareness-communication/practice/08-open-questions.md",
+      "role": "worksheet",
+      "description": "Ask questions that invite useful detail worksheet and worked case"
+    },
+    {
+      "id": "09-paraphrase",
+      "href": "paths/self-awareness-communication/practice/09-paraphrase.md",
+      "role": "worksheet",
+      "description": "Paraphrase and invite correction worksheet and worked case"
+    },
+    {
+      "id": "10-validate-without-agreeing",
+      "href": "paths/self-awareness-communication/practice/10-validate-without-agreeing.md",
+      "role": "worksheet",
+      "description": "Acknowledge experience while keeping your own view worksheet and worked case"
+    },
+    {
+      "id": "11-clear-request",
+      "href": "paths/self-awareness-communication/practice/11-clear-request.md",
+      "role": "worksheet",
+      "description": "Make a request someone can answer worksheet and worked case"
+    },
+    {
+      "id": "12-boundaries",
+      "href": "paths/self-awareness-communication/practice/12-boundaries.md",
+      "role": "worksheet",
+      "description": "State a boundary as your own available action worksheet and worked case"
+    },
+    {
+      "id": "13-give-feedback",
+      "href": "paths/self-awareness-communication/practice/13-give-feedback.md",
+      "role": "worksheet",
+      "description": "Give feedback about a specific event worksheet and worked case"
+    },
+    {
+      "id": "14-receive-feedback",
+      "href": "paths/self-awareness-communication/practice/14-receive-feedback.md",
+      "role": "worksheet",
+      "description": "Receive feedback by checking the example worksheet and worked case"
+    },
+    {
+      "id": "15-conflict-map",
+      "href": "paths/self-awareness-communication/practice/15-conflict-map.md",
+      "role": "worksheet",
+      "description": "Map positions, concerns and constraints worksheet and worked case"
+    },
+    {
+      "id": "16-negotiate-options",
+      "href": "paths/self-awareness-communication/practice/16-negotiate-options.md",
+      "role": "worksheet",
+      "description": "Compare options with agreed criteria worksheet and worked case"
+    },
+    {
+      "id": "17-repair",
+      "href": "paths/self-awareness-communication/practice/17-repair.md",
+      "role": "worksheet",
+      "description": "Repair a specific communication mistake worksheet and worked case"
+    },
+    {
+      "id": "18-written-channel",
+      "href": "paths/self-awareness-communication/practice/18-written-channel.md",
+      "role": "worksheet",
+      "description": "Choose a channel that fits the issue worksheet and worked case"
+    },
+    {
+      "id": "19-power-and-help",
+      "href": "paths/self-awareness-communication/practice/19-power-and-help.md",
+      "role": "worksheet",
+      "description": "Recognise when informal conversation is insufficient worksheet and worked case"
+    },
+    {
+      "id": "20-conversation-review",
+      "href": "paths/self-awareness-communication/practice/20-conversation-review.md",
+      "role": "worksheet",
+      "description": "Review a conversation using observable evidence worksheet and worked case"
+    },
+    {
+      "id": "foundation-project",
+      "href": "paths/self-awareness-communication/practice/foundation-project.md",
+      "role": "worksheet",
+      "description": "A factual reflection and a listening plan project sheet"
+    },
+    {
+      "id": "intermediate-project",
+      "href": "paths/self-awareness-communication/practice/intermediate-project.md",
+      "role": "worksheet",
+      "description": "A listening and feedback role-play project sheet"
+    },
+    {
+      "id": "advanced-project",
+      "href": "paths/self-awareness-communication/practice/advanced-project.md",
+      "role": "worksheet",
+      "description": "A difficult-conversation plan and review project sheet"
+    },
+    {
+      "id": "lab-html",
+      "href": "paths/self-awareness-communication/practice/lab.html",
+      "role": "reference",
+      "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+    },
+    {
+      "id": "lab-js",
+      "href": "paths/self-awareness-communication/practice/lab.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-css",
+      "href": "paths/self-awareness-communication/practice/lab.css",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-model-js",
+      "href": "paths/self-awareness-communication/practice/lab-model.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "practice-observation-interpretation",
+      "title": "Separate what happened from what it means practice",
+      "goal": "Split the event into observation and interpretation, then write a neutral question.",
+      "fileIds": [
+        "README",
+        "01-observation-interpretation",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 01-observation-interpretation.md.",
+        "Split the event into observation and interpretation, then write a neutral question.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-feeling-and-action",
+      "title": "Name a feeling without making it an instruction practice",
+      "goal": "Write a feeling, concern and useful next action.",
+      "fileIds": [
+        "README",
+        "02-feeling-and-action",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 02-feeling-and-action.md.",
+        "Write a feeling, concern and useful next action.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-values-and-priorities",
+      "title": "Translate a value into an everyday choice practice",
+      "goal": "Write a choice that respects both concerns.",
+      "fileIds": [
+        "README",
+        "03-values-and-priorities",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 03-values-and-priorities.md.",
+        "Write a choice that respects both concerns.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-reflection-record",
+      "title": "Use a short reflection record practice",
+      "goal": "Record the event, first interpretation, evidence and one alternative.",
+      "fileIds": [
+        "README",
+        "04-reflection-record",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 04-reflection-record.md.",
+        "Record the event, first interpretation, evidence and one alternative.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-perspective-check",
+      "title": "Hold an alternative explanation lightly practice",
+      "goal": "Write two possibilities and a question that can resolve part of the uncertainty.",
+      "fileIds": [
+        "README",
+        "05-perspective-check",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 05-perspective-check.md.",
+        "Write two possibilities and a question that can resolve part of the uncertainty.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-pause-and-purpose",
+      "title": "Pause long enough to choose the purpose practice",
+      "goal": "Rewrite the reply around its immediate purpose.",
+      "fileIds": [
+        "README",
+        "06-pause-and-purpose",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 06-pause-and-purpose.md.",
+        "Rewrite the reply around its immediate purpose.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-listen-with-attention",
+      "title": "Create conditions for attentive listening practice",
+      "goal": "Write a short listening setup that respects both people.",
+      "fileIds": [
+        "README",
+        "07-listen-with-attention",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 07-listen-with-attention.md.",
+        "Write a short listening setup that respects both people.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-open-questions",
+      "title": "Ask questions that invite useful detail practice",
+      "goal": "Write an open question and a factual follow-up.",
+      "fileIds": [
+        "README",
+        "08-open-questions",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 08-open-questions.md.",
+        "Write an open question and a factual follow-up.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-paraphrase",
+      "title": "Paraphrase and invite correction practice",
+      "goal": "Write a checked paraphrase and a correction invitation.",
+      "fileIds": [
+        "README",
+        "09-paraphrase",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 09-paraphrase.md.",
+        "Write a checked paraphrase and a correction invitation.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-validate-without-agreeing",
+      "title": "Acknowledge experience while keeping your own view practice",
+      "goal": "Write acknowledgment followed by an honest limit.",
+      "fileIds": [
+        "README",
+        "10-validate-without-agreeing",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 10-validate-without-agreeing.md.",
+        "Write acknowledgment followed by an honest limit.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-clear-request",
+      "title": "Make a request someone can answer practice",
+      "goal": "Write a specific request with a feasible response option.",
+      "fileIds": [
+        "README",
+        "11-clear-request",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 11-clear-request.md.",
+        "Write a specific request with a feasible response option.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-boundaries",
+      "title": "State a boundary as your own available action practice",
+      "goal": "Draft a boundary and a practical alternative.",
+      "fileIds": [
+        "README",
+        "12-boundaries",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 12-boundaries.md.",
+        "Draft a boundary and a practical alternative.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-give-feedback",
+      "title": "Give feedback about a specific event practice",
+      "goal": "Write specific feedback that invites a response.",
+      "fileIds": [
+        "README",
+        "13-give-feedback",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 13-give-feedback.md.",
+        "Write specific feedback that invites a response.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-receive-feedback",
+      "title": "Receive feedback by checking the example practice",
+      "goal": "Write a reply and one small experiment.",
+      "fileIds": [
+        "README",
+        "14-receive-feedback",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 14-receive-feedback.md.",
+        "Write a reply and one small experiment.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-conflict-map",
+      "title": "Map positions, concerns and constraints practice",
+      "goal": "Map the positions, underlying concerns and a shared aim.",
+      "fileIds": [
+        "README",
+        "15-conflict-map",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 15-conflict-map.md.",
+        "Map the positions, underlying concerns and a shared aim.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-negotiate-options",
+      "title": "Compare options with agreed criteria practice",
+      "goal": "Generate two task plans and compare them using two criteria.",
+      "fileIds": [
+        "README",
+        "16-negotiate-options",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 16-negotiate-options.md.",
+        "Generate two task plans and compare them using two criteria.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-repair",
+      "title": "Repair a specific communication mistake practice",
+      "goal": "Draft a repair and a changed next action.",
+      "fileIds": [
+        "README",
+        "17-repair",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 17-repair.md.",
+        "Draft a repair and a changed next action.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-written-channel",
+      "title": "Choose a channel that fits the issue practice",
+      "goal": "Choose a next channel and write a neutral transition.",
+      "fileIds": [
+        "README",
+        "18-written-channel",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 18-written-channel.md.",
+        "Choose a next channel and write a neutral transition.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-power-and-help",
+      "title": "Recognise when informal conversation is insufficient practice",
+      "goal": "Identify a practical support route and a factual record.",
+      "fileIds": [
+        "README",
+        "19-power-and-help",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 19-power-and-help.md.",
+        "Identify a practical support route and a factual record.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-conversation-review",
+      "title": "Review a conversation using observable evidence practice",
+      "goal": "Write a short review and follow-up that preserves the unresolved point.",
+      "fileIds": [
+        "README",
+        "20-conversation-review",
+        "sources-and-limits",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Read the fictional case in 20-conversation-review.md.",
+        "Write a short review and follow-up that preserves the unresolved point.",
+        "Write a response before revealing the worked example.",
+        "Compare the response with the self-check; record one adjustment."
+      ],
+      "commands": [],
+      "notes": [
+        "Printable offline exercise; personal disclosure is optional.",
+        "The worked response is an example, not the only correct wording.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": [],
+      "kind": "lesson"
+    },
+    {
+      "id": "foundation",
+      "title": "A factual reflection and a listening plan",
+      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "fileIds": [
+        "README",
+        "foundation-project",
+        "sources-and-limits",
+        "01-observation-interpretation",
+        "02-feeling-and-action",
+        "03-values-and-priorities",
+        "04-reflection-record",
+        "05-perspective-check",
+        "06-pause-and-purpose",
+        "07-listen-with-attention",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open foundation-project.md.",
+        "Separate observations and interpretations in a fictional case.",
+        "Write an open question and a checked paraphrase.",
+        "Name your purpose and a respectful limit.",
+        "Compare the record with the exit criteria and revise any unsupported claim."
+      ],
+      "commands": [],
+      "notes": [
+        "No runtime required. Keep any personal record private by default.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "intermediate",
+      "title": "A listening and feedback role-play",
+      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "fileIds": [
+        "README",
+        "intermediate-project",
+        "sources-and-limits",
+        "08-open-questions",
+        "09-paraphrase",
+        "10-validate-without-agreeing",
+        "11-clear-request",
+        "12-boundaries",
+        "13-give-feedback",
+        "14-receive-feedback",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open intermediate-project.md.",
+        "Use a voluntary fictional role-play with permission to pause.",
+        "Practise a question, paraphrase, clear request and feedback example.",
+        "Record the partner’s correction and revise the message.",
+        "Compare the record with the exit criteria and revise any unsupported claim."
+      ],
+      "commands": [],
+      "notes": [
+        "No runtime required. Keep any personal record private by default.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "advanced",
+      "title": "A difficult-conversation plan and review",
+      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "fileIds": [
+        "README",
+        "advanced-project",
+        "sources-and-limits",
+        "15-conflict-map",
+        "16-negotiate-options",
+        "17-repair",
+        "18-written-channel",
+        "19-power-and-help",
+        "20-conversation-review",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open advanced-project.md.",
+        "Map positions, concerns, constraints and power differences.",
+        "Compare two options using agreed practical criteria.",
+        "Record agreements, unresolved questions and an appropriate follow-up.",
+        "Compare the record with the exit criteria and revise any unsupported claim."
+      ],
+      "commands": [],
+      "notes": [
+        "No runtime required. Keep any personal record private by default.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "prerequisites": []
+    }
+  ],
+  "lessonTasks": {
+    "observation-interpretation": "practice-observation-interpretation",
+    "feeling-and-action": "practice-feeling-and-action",
+    "values-and-priorities": "practice-values-and-priorities",
+    "reflection-record": "practice-reflection-record",
+    "perspective-check": "practice-perspective-check",
+    "pause-and-purpose": "practice-pause-and-purpose",
+    "listen-with-attention": "practice-listen-with-attention",
+    "open-questions": "practice-open-questions",
+    "paraphrase": "practice-paraphrase",
+    "validate-without-agreeing": "practice-validate-without-agreeing",
+    "clear-request": "practice-clear-request",
+    "boundaries": "practice-boundaries",
+    "give-feedback": "practice-give-feedback",
+    "receive-feedback": "practice-receive-feedback",
+    "conflict-map": "practice-conflict-map",
+    "negotiate-options": "practice-negotiate-options",
+    "repair": "practice-repair",
+    "written-channel": "practice-written-channel",
+    "power-and-help": "practice-power-and-help",
+    "conversation-review": "practice-conversation-review"
+  },
+  "bundle": {
+    "href": "paths/self-awareness-communication/practice-bundle.zip"
+  },
+  "studio": {
+    "href": "paths/self-awareness-communication/practice/lab.html",
+    "title": "Open interactive practice studio"
+  }
+}

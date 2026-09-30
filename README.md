@@ -188,3 +188,11 @@ and HTTP checks before publishing; SQL integration remains a local opt-in check.
 
 All new paths participate in shared search, printable packs, progress backups,
 the learning map and per-course PWA downloads through their manifests.
+
+## Personal effectiveness
+
+Time, Attention & Energy; Task & Project Management; Habits & Behaviour Change; Learning How to Learn; and Self-Awareness & Communication each include staged lessons, source scope, worked fictional cases, quizzes and printable practice sheets. Plan and Review Your Week connects the five through a practical weekly journey. No programming prerequisites are needed. Research findings, method definitions and adapted planning heuristics are distinguished; these courses do not promise clinical treatment or universal productivity outcomes.
+
+An **Open interactive practice studio** link sits beside each course and task bundle. Its five activities include capacity and disruption arithmetic, a non-drag task board whose WIP includes blocked work, a habit plan, recall-before-reveal practice and conversation feedback. Entries live only in page memory; an explicit JSON export retains them privately. A review date is a record, not an automatic notification.
+
+Maintain the studio in `practice/personal-effectiveness-studio/`, then run `node scripts/sync-personal-studio.cjs` to update the six flat downloadable copies. Verification rejects stale copies. Regenerate bundles/catalogue after any content change with `python scripts/build-bundles.py` and `node scripts/sync-catalog.cjs`, then run `node verify.cjs` and `node scripts/build-pages.cjs`.

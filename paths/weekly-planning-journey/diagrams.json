@@ -1,0 +1,613 @@
+{
+  "priorities-capacity": {
+    "title": "Reconcile 11 remaining hours",
+    "summary": "The original week fits eight project hours plus three reserved hours.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "35 hours",
+        "description": "Five seven-hour working days."
+      },
+      {
+        "id": "n1",
+        "label": "24 committed",
+        "description": "Twelve fixed plus twelve estimated routine hours."
+      },
+      {
+        "id": "n2",
+        "label": "11 remain",
+        "description": "Project and uncertainty capacity before disruptions."
+      },
+      {
+        "id": "n3",
+        "label": "8 event",
+        "description": "Accepted event pack work."
+      },
+      {
+        "id": "n4",
+        "label": "3 reserve",
+        "description": "Unscheduled capacity for changes."
+      },
+      {
+        "id": "n5",
+        "label": "Defer",
+        "description": "Four-hour noticeboard idea cannot also fit."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "account for"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "subtract"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "choose"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "reserve"
+      },
+      {
+        "from": "n2",
+        "to": "n5",
+        "label": "exclude extra work"
+      }
+    ],
+    "steps": [
+      {
+        "title": "account for",
+        "explanation": "Five seven-hour working days. Twelve fixed plus twelve estimated routine hours.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "subtract",
+        "explanation": "Twelve fixed plus twelve estimated routine hours. Project and uncertainty capacity before disruptions.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "choose",
+        "explanation": "Project and uncertainty capacity before disruptions. Accepted event pack work.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "reserve",
+        "explanation": "Project and uncertainty capacity before disruptions. Unscheduled capacity for changes.",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "exclude extra work",
+        "explanation": "Project and uncertainty capacity before disruptions. Four-hour noticeboard idea cannot also fit.",
+        "activeNodes": [
+          "n2",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ]
+  },
+  "outcomes-next-actions": {
+    "title": "A deliverable contains dependencies",
+    "summary": "Prepare independent pieces while waiting for names.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Event pack",
+        "description": "Friday deliverable needs names and venue details."
+      },
+      {
+        "id": "n1",
+        "label": "Ask Lee",
+        "description": "Request names Monday and follow up Tuesday."
+      },
+      {
+        "id": "n2",
+        "label": "Venue",
+        "description": "Check venue details independently."
+      },
+      {
+        "id": "n3",
+        "label": "Cover",
+        "description": "Prepare a cover sheet independently."
+      },
+      {
+        "id": "n4",
+        "label": "Assemble",
+        "description": "Combine the received names and prepared pieces."
+      },
+      {
+        "id": "n5",
+        "label": "Check",
+        "description": "Final-check and deliver Friday."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "dependency"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "can proceed"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "can proceed"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "names received"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "details ready"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "cover ready"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "review"
+      }
+    ],
+    "steps": [
+      {
+        "title": "dependency",
+        "explanation": "Friday deliverable needs names and venue details. Request names Monday and follow up Tuesday.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "can proceed",
+        "explanation": "Friday deliverable needs names and venue details. Check venue details independently.",
+        "activeNodes": [
+          "n0",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "can proceed",
+        "explanation": "Friday deliverable needs names and venue details. Prepare a cover sheet independently.",
+        "activeNodes": [
+          "n0",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "names received",
+        "explanation": "Request names Monday and follow up Tuesday. Combine the received names and prepared pieces.",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "details ready",
+        "explanation": "Check venue details independently. Combine the received names and prepared pieces.",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ]
+      },
+      {
+        "title": "cover ready",
+        "explanation": "Prepare a cover sheet independently. Combine the received names and prepared pieces.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          5
+        ]
+      },
+      {
+        "title": "review",
+        "explanation": "Combine the received names and prepared pieces. Final-check and deliver Friday.",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          6
+        ]
+      }
+    ]
+  },
+  "midweek-disruption": {
+    "title": "A disruption changes the budget",
+    "summary": "Used reserve is already spent capacity.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "11 original",
+        "description": "Eight event hours plus three reserve."
+      },
+      {
+        "id": "n1",
+        "label": "3 service",
+        "description": "Tuesday issue consumes reserve."
+      },
+      {
+        "id": "n2",
+        "label": "8 remain",
+        "description": "Only eight hours remain for event and new work."
+      },
+      {
+        "id": "n3",
+        "label": "10 requested",
+        "description": "Eight event hours plus two urgent hours."
+      },
+      {
+        "id": "n4",
+        "label": "2 shortfall",
+        "description": "Agree a scope, deadline or ownership trade-off."
+      },
+      {
+        "id": "n5",
+        "label": "6 plus 2",
+        "description": "Approved shorter pack plus urgent work fits eight hours."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "issue occurs"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "subtract"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "compare demand"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "exceeds by two"
+      },
+      {
+        "from": "n4",
+        "to": "n5",
+        "label": "agreed revision"
+      }
+    ],
+    "steps": [
+      {
+        "title": "issue occurs",
+        "explanation": "Eight event hours plus three reserve. Tuesday issue consumes reserve.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "subtract",
+        "explanation": "Tuesday issue consumes reserve. Only eight hours remain for event and new work.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "compare demand",
+        "explanation": "Only eight hours remain for event and new work. Eight event hours plus two urgent hours.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "exceeds by two",
+        "explanation": "Eight event hours plus two urgent hours. Agree a scope, deadline or ownership trade-off.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "agreed revision",
+        "explanation": "Agree a scope, deadline or ownership trade-off. Approved shorter pack plus urgent work fits eight hours.",
+        "activeNodes": [
+          "n4",
+          "n5"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ]
+  },
+  "learning-in-week": {
+    "title": "A small learning thread survives disruption",
+    "summary": "Completed and proposed occasions stay distinct.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Tuesday done",
+        "description": "Twelve-minute study and first attempt completed."
+      },
+      {
+        "id": "n1",
+        "label": "Thursday lost",
+        "description": "Eight-minute review cancelled by changed commitments."
+      },
+      {
+        "id": "n2",
+        "label": "Friday optional",
+        "description": "One short case only if time and energy permit."
+      },
+      {
+        "id": "n3",
+        "label": "Monday check",
+        "description": "Ten-minute delayed new-case check retained."
+      },
+      {
+        "id": "n4",
+        "label": "Evidence",
+        "description": "Record actual occasions and checked answers."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "week changes"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "optional fallback"
+      },
+      {
+        "from": "n1",
+        "to": "n3",
+        "label": "retain feasible check"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "record only if done"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "check outcomes"
+      }
+    ],
+    "steps": [
+      {
+        "title": "week changes",
+        "explanation": "Twelve-minute study and first attempt completed. Eight-minute review cancelled by changed commitments.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "optional fallback",
+        "explanation": "Eight-minute review cancelled by changed commitments. One short case only if time and energy permit.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "retain feasible check",
+        "explanation": "Eight-minute review cancelled by changed commitments. Ten-minute delayed new-case check retained.",
+        "activeNodes": [
+          "n1",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "record only if done",
+        "explanation": "One short case only if time and energy permit. Record actual occasions and checked answers.",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "check outcomes",
+        "explanation": "Ten-minute delayed new-case check retained. Record actual occasions and checked answers.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ]
+      }
+    ]
+  },
+  "review-without-blame": {
+    "title": "Review turns a week into the next experiment",
+    "summary": "Use observed outcomes, costs and conditions before choosing a change.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Baseline",
+        "description": "Save original estimates and commitments."
+      },
+      {
+        "id": "n1",
+        "label": "Observed",
+        "description": "Log delivery, actual time and missed occasions."
+      },
+      {
+        "id": "n2",
+        "label": "Compare",
+        "description": "Name wins, costs and changed conditions."
+      },
+      {
+        "id": "n3",
+        "label": "Experiment",
+        "description": "Remove deferred blocks and check active commitments."
+      },
+      {
+        "id": "n4",
+        "label": "Next week",
+        "description": "Build a new plan from current capacity."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "keep record"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "review evidence"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "choose one repair"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "test next week"
+      }
+    ],
+    "steps": [
+      {
+        "title": "keep record",
+        "explanation": "Save original estimates and commitments. Log delivery, actual time and missed occasions.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "review evidence",
+        "explanation": "Log delivery, actual time and missed occasions. Name wins, costs and changed conditions.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "choose one repair",
+        "explanation": "Name wins, costs and changed conditions. Remove deferred blocks and check active commitments.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "test next week",
+        "explanation": "Remove deferred blocks and check active commitments. Build a new plan from current capacity.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  }
+}

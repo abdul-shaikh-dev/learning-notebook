@@ -1,0 +1,516 @@
+{
+  "cue-map": {
+    "title": "Map an ordinary routine",
+    "summary": "The kettle is a visible recurring event in the kitchen. A nearby short story is a feasible alternative to test during the same wait.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Sam switches on the kettle",
+        "description": "The kettle is a visible recurring event in the kitchen."
+      },
+      {
+        "id": "1",
+        "label": "Sam opens the news app",
+        "description": "The recorded action is opening the app, not being an undisciplined person."
+      },
+      {
+        "id": "2",
+        "label": "Waiting feels less boring",
+        "description": "The app provides stimulation while Sam waits; this is a hypothesis about its immediate function."
+      },
+      {
+        "id": "3",
+        "label": "Place a story beside the kettle",
+        "description": "A nearby short story is a feasible alternative to test during the same wait."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "cues observed action",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "provides immediate stimulation",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "suggests another source of stimulation",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Sam switches on the kettle",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The kettle is a visible recurring event in the kitchen."
+      },
+      {
+        "title": "Sam opens the news app",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "The recorded action is opening the app, not being an undisciplined person."
+      },
+      {
+        "title": "Waiting feels less boring",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "The app provides stimulation while Sam waits; this is a hypothesis about its immediate function."
+      },
+      {
+        "title": "Place a story beside the kettle",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "A nearby short story is a feasible alternative to test during the same wait."
+      }
+    ]
+  },
+  "if-then": {
+    "title": "Farah’s filing plan with an obstacle branch",
+    "summary": "The response depends on whether the normal session offers a feasible filing opportunity.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Tuesday desk session ends",
+        "description": "Farah uses finishing the desk session as the recognisable cue."
+      },
+      {
+        "id": "1",
+        "label": "Folder available now?",
+        "description": "Check whether the handouts and labelled folder are within reach.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "File the handouts",
+        "description": "If materials are ready, file the handouts before closing the bag."
+      },
+      {
+        "id": "3",
+        "label": "Choose a feasible alternative",
+        "description": "If the folder is absent, keep the handouts together and specify the next desk opportunity."
+      },
+      {
+        "id": "4",
+        "label": "Next desk opportunity",
+        "description": "At the agreed opportunity, check materials again rather than adding a penalty task."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "notice planned cue",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "yes: materials ready",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "no: setup missing",
+        "from": "1"
+      },
+      {
+        "to": "4",
+        "label": "schedule practical retry",
+        "from": "3"
+      },
+      {
+        "to": "1",
+        "label": "recheck availability",
+        "from": "4"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Tuesday desk session ends",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Farah uses finishing the desk session as the recognisable cue."
+      },
+      {
+        "title": "Folder available now?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0,
+          4
+        ],
+        "explanation": "Check whether the handouts and labelled folder are within reach."
+      },
+      {
+        "title": "File the handouts",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "If materials are ready, file the handouts before closing the bag."
+      },
+      {
+        "title": "Choose a feasible alternative",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If the folder is absent, keep the handouts together and specify the next desk opportunity."
+      },
+      {
+        "title": "Next desk opportunity",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "At the agreed opportunity, check materials again rather than adding a penalty task."
+      }
+    ]
+  },
+  "measurement": {
+    "title": "Keep measurements separate",
+    "summary": "Ivo records five realistic opportunities among seven calendar evenings. Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Five feasible evenings",
+        "description": "Ivo records five realistic opportunities among seven calendar evenings."
+      },
+      {
+        "id": "1",
+        "label": "Four reviews completed",
+        "description": "Four completions among five opportunities gives 80%; calendar completion is four of seven."
+      },
+      {
+        "id": "2",
+        "label": "Starting effort recorded separately",
+        "description": "A tick establishes completion, while Ivo’s ease note records how deliberate starting felt."
+      },
+      {
+        "id": "3",
+        "label": "Compare usefulness and limits",
+        "description": "Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "defines the denominator",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "completion does not establish automaticity",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "adds another measure to the review",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Five feasible evenings",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Ivo records five realistic opportunities among seven calendar evenings."
+      },
+      {
+        "title": "Four reviews completed",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Four completions among five opportunities gives 80%; calendar completion is four of seven."
+      },
+      {
+        "title": "Starting effort recorded separately",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "A tick establishes completion, while Ivo’s ease note records how deliberate starting felt."
+      },
+      {
+        "title": "Compare usefulness and limits",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement."
+      }
+    ]
+  },
+  "missed-opportunity": {
+    "title": "Pia’s recovery after a missed filing action",
+    "summary": "A missed action leads to a factual opportunity check and the next feasible attempt.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Filing did not happen",
+        "description": "Record the missed action without erasing earlier useful practice."
+      },
+      {
+        "id": "1",
+        "label": "Desk opportunity existed?",
+        "description": "Pia was at a family appointment; distinguish an absent opportunity from a missed cue.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Record unavailable opportunity",
+        "description": "For the appointment day, note the context rather than calling it a failed available attempt."
+      },
+      {
+        "id": "3",
+        "label": "Inspect cue or setup",
+        "description": "If a desk opportunity did exist, check whether the cue was noticed and materials were available."
+      },
+      {
+        "id": "4",
+        "label": "Resume at next feasible cue",
+        "description": "Use the normal modest action; add an alternate cue only if recurring context changes warrant it."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "check circumstances",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "no: appointment replaced desk session",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "yes: opportunity existed",
+        "from": "1"
+      },
+      {
+        "to": "4",
+        "label": "wait for a feasible opportunity",
+        "from": "2"
+      },
+      {
+        "to": "4",
+        "label": "make only a warranted adjustment",
+        "from": "3"
+      },
+      {
+        "to": "1",
+        "label": "if another miss occurs, inspect again",
+        "from": "4"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Filing did not happen",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Record the missed action without erasing earlier useful practice."
+      },
+      {
+        "title": "Desk opportunity existed?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0,
+          5
+        ],
+        "explanation": "Pia was at a family appointment; distinguish an absent opportunity from a missed cue."
+      },
+      {
+        "title": "Record unavailable opportunity",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "For the appointment day, note the context rather than calling it a failed available attempt."
+      },
+      {
+        "title": "Inspect cue or setup",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If a desk opportunity did exist, check whether the cue was noticed and materials were available."
+      },
+      {
+        "title": "Resume at next feasible cue",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Use the normal modest action; add an alternate cue only if recurring context changes warrant it."
+      }
+    ]
+  },
+  "evidence-review": {
+    "title": "Wen’s maintenance decision",
+    "summary": "Separate useful observations from causal claims, then choose the next version of the routine.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Read two-week bag-packing log",
+        "description": "The record includes fewer searches, two unavailable evenings and one missed cue."
+      },
+      {
+        "id": "1",
+        "label": "Still useful and feasible?",
+        "description": "Compare search benefit, setup effort and the current timetable.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Keep normal cue",
+        "description": "Keep after-dinner packing when the benefit and fit remain worthwhile."
+      },
+      {
+        "id": "3",
+        "label": "Change or retire deliberately",
+        "description": "If the purpose or context has changed, simplify the setup, choose another cue or stop an unnecessary routine."
+      },
+      {
+        "id": "4",
+        "label": "Set next review and recovery",
+        "description": "Record a late-shift branch and a review date; a lighter timetable remains an alternate explanation for improvement."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "compare benefit and cost",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "yes: purpose and fit remain",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "no: purpose or fit changed",
+        "from": "1"
+      },
+      {
+        "to": "4",
+        "label": "document maintenance plan",
+        "from": "2"
+      },
+      {
+        "to": "4",
+        "label": "document revised decision",
+        "from": "3"
+      },
+      {
+        "to": "0",
+        "label": "review new observations at the agreed date",
+        "from": "4"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Read two-week bag-packing log",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "The record includes fewer searches, two unavailable evenings and one missed cue."
+      },
+      {
+        "title": "Still useful and feasible?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Compare search benefit, setup effort and the current timetable."
+      },
+      {
+        "title": "Keep normal cue",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Keep after-dinner packing when the benefit and fit remain worthwhile."
+      },
+      {
+        "title": "Change or retire deliberately",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If the purpose or context has changed, simplify the setup, choose another cue or stop an unnecessary routine."
+      },
+      {
+        "title": "Set next review and recovery",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Record a late-shift branch and a review date; a lighter timetable remains an alternate explanation for improvement."
+      }
+    ]
+  }
+}

@@ -1,0 +1,477 @@
+{
+  "observation-interpretation": {
+    "title": "Separate facts and interpretations",
+    "summary": "The visible fact is a message without a reply after two hours. A neutral timing question can obtain information Ravi needs for the shared plan.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "No reply after two hours",
+        "description": "The visible fact is a message without a reply after two hours."
+      },
+      {
+        "id": "1",
+        "label": "Ravi guesses disrespect",
+        "description": "Disrespect is an interpretation of intent, not something established by silence."
+      },
+      {
+        "id": "2",
+        "label": "Consider busy or offline",
+        "description": "Busy, offline and waiting for information remain possibilities rather than replacement certainties."
+      },
+      {
+        "id": "3",
+        "label": "Ask when confirmation is possible",
+        "description": "A neutral timing question can obtain information Ravi needs for the shared plan."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "prompts an interpretation",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "opens competing explanations",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "identifies information to request",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "No reply after two hours",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The visible fact is a message without a reply after two hours."
+      },
+      {
+        "title": "Ravi guesses disrespect",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Disrespect is an interpretation of intent, not something established by silence."
+      },
+      {
+        "title": "Consider busy or offline",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Busy, offline and waiting for information remain possibilities rather than replacement certainties."
+      },
+      {
+        "title": "Ask when confirmation is possible",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "A neutral timing question can obtain information Ravi needs for the shared plan."
+      }
+    ]
+  },
+  "paraphrase": {
+    "title": "Zara’s deadline: summarise and correct",
+    "summary": "A checked summary can be corrected before anyone plans around it.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Listen to Zara’s condition",
+        "description": "Zara can complete analysis if the figures arrive before noon."
+      },
+      {
+        "id": "1",
+        "label": "Restate condition and blocker",
+        "description": "Summarise: the figures must arrive before noon for the analysis to be completed."
+      },
+      {
+        "id": "2",
+        "label": "Summary accurate?",
+        "description": "Ask Zara whether the timing condition is correct and whether another dependency is missing.",
+        "shape": "decision"
+      },
+      {
+        "id": "3",
+        "label": "Revise from correction",
+        "description": "If Zara names another dependency or changes the timing, update the summary instead of defending it."
+      },
+      {
+        "id": "4",
+        "label": "Plan using confirmed meaning",
+        "description": "Use the checked conditions to decide who will provide the figures and when."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "preserve the stated condition",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "invite correction",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "no: detail missing or mistaken",
+        "from": "2"
+      },
+      {
+        "to": "1",
+        "label": "restate updated understanding",
+        "from": "3"
+      },
+      {
+        "to": "4",
+        "label": "yes: understanding confirmed",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Listen to Zara’s condition",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Zara can complete analysis if the figures arrive before noon."
+      },
+      {
+        "title": "Restate condition and blocker",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0,
+          3
+        ],
+        "explanation": "Summarise: the figures must arrive before noon for the analysis to be completed."
+      },
+      {
+        "title": "Summary accurate?",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Ask Zara whether the timing condition is correct and whether another dependency is missing."
+      },
+      {
+        "title": "Revise from correction",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If Zara names another dependency or changes the timing, update the summary instead of defending it."
+      },
+      {
+        "title": "Plan using confirmed meaning",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Use the checked conditions to decide who will provide the figures and when."
+      }
+    ]
+  },
+  "give-feedback": {
+    "title": "Make feedback actionable",
+    "summary": "The slide contains ABC and QRT without definitions; identify this exact artefact. Ask whether space or format constraints require a different workable change.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Undefined chart labels",
+        "description": "The slide contains ABC and QRT without definitions; identify this exact artefact."
+      },
+      {
+        "id": "1",
+        "label": "Readers cannot interpret comparison",
+        "description": "Two readers asked what the labels meant, so describe that observed effect without claiming everyone was confused."
+      },
+      {
+        "id": "2",
+        "label": "Request a short legend",
+        "description": "Suggest a brief legend that addresses the interpretation problem."
+      },
+      {
+        "id": "3",
+        "label": "Invite author’s constraints",
+        "description": "Ask whether space or format constraints require a different workable change."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "creates a specific reader difficulty",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "supports a targeted change",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "allows a feasible alternative",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Undefined chart labels",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The slide contains ABC and QRT without definitions; identify this exact artefact."
+      },
+      {
+        "title": "Readers cannot interpret comparison",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Two readers asked what the labels meant, so describe that observed effect without claiming everyone was confused."
+      },
+      {
+        "title": "Request a short legend",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Suggest a brief legend that addresses the interpretation problem."
+      },
+      {
+        "title": "Invite author’s constraints",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Ask whether space or format constraints require a different workable change."
+      }
+    ]
+  },
+  "conflict-map": {
+    "title": "Explore a disagreement",
+    "summary": "Record each proposed time without treating either account as the entire story. A shared outline and short overlap slot may fit better; check consent and actual availability.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Evening versus morning meeting",
+        "description": "Record each proposed time without treating either account as the entire story."
+      },
+      {
+        "id": "1",
+        "label": "Work and care constraints",
+        "description": "Ask what makes each time important; work hours and care commitments constrain availability."
+      },
+      {
+        "id": "2",
+        "label": "Shared presentation deadline",
+        "description": "Both classmates need enough preparation time before the presentation."
+      },
+      {
+        "id": "3",
+        "label": "Compare overlap or asynchronous work",
+        "description": "A shared outline and short overlap slot may fit better; check consent and actual availability."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "reveals underlying concerns",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "defines what both need to achieve",
+        "from": "1"
+      },
+      {
+        "to": "3",
+        "label": "provides criteria for options",
+        "from": "2"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Evening versus morning meeting",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Record each proposed time without treating either account as the entire story."
+      },
+      {
+        "title": "Work and care constraints",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Ask what makes each time important; work hours and care commitments constrain availability."
+      },
+      {
+        "title": "Shared presentation deadline",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Both classmates need enough preparation time before the presentation."
+      },
+      {
+        "title": "Compare overlap or asynchronous work",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "A shared outline and short overlap slot may fit better; check consent and actual availability."
+      }
+    ]
+  },
+  "conversation-review": {
+    "title": "Review Dana’s document conversation",
+    "summary": "An agreed deadline and an unresolved introduction need different follow-up actions.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Summarise draft deadline",
+        "description": "Record that the draft is due Thursday and identify who will check the chart."
+      },
+      {
+        "id": "1",
+        "label": "Agreement explicitly confirmed?",
+        "description": "Invite correction; silence alone is not reliable evidence of consent.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Clarify the disputed detail",
+        "description": "If the deadline or owner was misunderstood, ask a focused question and revise the record."
+      },
+      {
+        "id": "3",
+        "label": "Preserve unresolved introduction",
+        "description": "Even with the deadline agreed, record that the introduction remains undecided."
+      },
+      {
+        "id": "4",
+        "label": "Compare two versions Friday",
+        "description": "Use the agreed next check to address the remaining issue and verify whether the draft arrived."
+      }
+    ],
+    "edges": [
+      {
+        "to": "1",
+        "label": "ask for confirmation or correction",
+        "from": "0"
+      },
+      {
+        "to": "2",
+        "label": "no: meaning or commitment unclear",
+        "from": "1"
+      },
+      {
+        "to": "0",
+        "label": "update the summary",
+        "from": "2"
+      },
+      {
+        "to": "3",
+        "label": "yes: deadline confirmed",
+        "from": "1"
+      },
+      {
+        "to": "4",
+        "label": "schedule the unresolved decision",
+        "from": "3"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Summarise draft deadline",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Record that the draft is due Thursday and identify who will check the chart."
+      },
+      {
+        "title": "Agreement explicitly confirmed?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Invite correction; silence alone is not reliable evidence of consent."
+      },
+      {
+        "title": "Clarify the disputed detail",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "If the deadline or owner was misunderstood, ask a focused question and revise the record."
+      },
+      {
+        "title": "Preserve unresolved introduction",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Even with the deadline agreed, record that the introduction remains undecided."
+      },
+      {
+        "title": "Compare two versions Friday",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Use the agreed next check to address the remaining issue and verify whether the draft arrived."
+      }
+    ]
+  }
+}

@@ -34,3 +34,5 @@ require('./lazy-loading.cjs');
 require('./pwa.cjs');
 
 require('./new-learning-paths.cjs');
+
+require('./personal-effectiveness.cjs');

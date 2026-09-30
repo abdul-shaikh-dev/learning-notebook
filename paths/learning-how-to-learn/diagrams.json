@@ -1,0 +1,471 @@
+{
+  "retrieval-loop": {
+    "title": "Attempt, check, correct, return",
+    "summary": "Closed-source retrieval and checked feedback serve different purposes.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Prompt",
+        "description": "Choose a question matching the learning target."
+      },
+      {
+        "id": "n1",
+        "label": "Attempt",
+        "description": "Produce an answer with the source closed."
+      },
+      {
+        "id": "n2",
+        "label": "Compare",
+        "description": "Reopen the checked rule and identify gaps."
+      },
+      {
+        "id": "n3",
+        "label": "Repair",
+        "description": "Explain the correction in your own words."
+      },
+      {
+        "id": "n4",
+        "label": "Later case",
+        "description": "Return after a gap with a new comparable case."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "retrieve"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "check"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "correct"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "space"
+      }
+    ],
+    "steps": [
+      {
+        "title": "retrieve",
+        "explanation": "Choose a question matching the learning target. Produce an answer with the source closed.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "check",
+        "explanation": "Produce an answer with the source closed. Reopen the checked rule and identify gaps.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "correct",
+        "explanation": "Reopen the checked rule and identify gaps. Explain the correction in your own words.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "space",
+        "explanation": "Explain the correction in your own words. Return after a gap with a new comparable case.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      }
+    ]
+  },
+  "spaced-returns": {
+    "title": "A realistic three-occasion plan",
+    "summary": "These dates are an adjustable example, not an optimum formula.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Tuesday",
+        "description": "Introduce and attempt the rule for 12 minutes."
+      },
+      {
+        "id": "n1",
+        "label": "Thursday",
+        "description": "Retrieve mixed cases for six minutes."
+      },
+      {
+        "id": "n2",
+        "label": "Monday",
+        "description": "Use new cases after a gap."
+      },
+      {
+        "id": "n3",
+        "label": "Adjust",
+        "description": "Use actual errors and availability to choose the next gap."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "two-day gap"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "four-day gap"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "observe and adapt"
+      }
+    ],
+    "steps": [
+      {
+        "title": "two-day gap",
+        "explanation": "Introduce and attempt the rule for 12 minutes. Retrieve mixed cases for six minutes.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "four-day gap",
+        "explanation": "Retrieve mixed cases for six minutes. Use new cases after a gap.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "observe and adapt",
+        "explanation": "Use new cases after a gap. Use actual errors and availability to choose the next gap.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "mix-related-cases": {
+    "title": "Choose the rule before the answer",
+    "summary": "Urgency is an override in this synthetic policy.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Case",
+        "description": "Read duration and whether it is urgent today."
+      },
+      {
+        "id": "n1",
+        "label": "Urgent",
+        "description": "Urgent same-day requests go to a manager."
+      },
+      {
+        "id": "n2",
+        "label": "Long planned",
+        "description": "Planned requests of two or more days go to a manager."
+      },
+      {
+        "id": "n3",
+        "label": "Short planned",
+        "description": "Planned one-day requests go to the coordinator."
+      },
+      {
+        "id": "n4",
+        "label": "Check",
+        "description": "State the case feature and compare with the source."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "urgent today"
+      },
+      {
+        "from": "n0",
+        "to": "n2",
+        "label": "planned two or more days"
+      },
+      {
+        "from": "n0",
+        "to": "n3",
+        "label": "planned one day"
+      },
+      {
+        "from": "n1",
+        "to": "n4",
+        "label": "explain"
+      },
+      {
+        "from": "n2",
+        "to": "n4",
+        "label": "explain"
+      },
+      {
+        "from": "n3",
+        "to": "n4",
+        "label": "explain"
+      }
+    ],
+    "steps": [
+      {
+        "title": "urgent today",
+        "explanation": "Read duration and whether it is urgent today. Urgent same-day requests go to a manager.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "planned two or more days",
+        "explanation": "Read duration and whether it is urgent today. Planned requests of two or more days go to a manager.",
+        "activeNodes": [
+          "n0",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "planned one day",
+        "explanation": "Read duration and whether it is urgent today. Planned one-day requests go to the coordinator.",
+        "activeNodes": [
+          "n0",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      },
+      {
+        "title": "explain",
+        "explanation": "Urgent same-day requests go to a manager. State the case feature and compare with the source.",
+        "activeNodes": [
+          "n1",
+          "n4"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "explain",
+        "explanation": "Planned requests of two or more days go to a manager. State the case feature and compare with the source.",
+        "activeNodes": [
+          "n2",
+          "n4"
+        ],
+        "activeEdges": [
+          4
+        ]
+      },
+      {
+        "title": "explain",
+        "explanation": "Planned one-day requests go to the coordinator. State the case feature and compare with the source.",
+        "activeNodes": [
+          "n3",
+          "n4"
+        ],
+        "activeEdges": [
+          5
+        ]
+      }
+    ]
+  },
+  "feedback-action": {
+    "title": "Turn a comment into a repair",
+    "summary": "Specific feedback names the decision that needs work.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Comment",
+        "description": "Be more careful is too vague to act on."
+      },
+      {
+        "id": "n1",
+        "label": "Clarify",
+        "description": "Ask which case, criterion and rule were missed."
+      },
+      {
+        "id": "n2",
+        "label": "Action",
+        "description": "Add an urgency-first check to the decision."
+      },
+      {
+        "id": "n3",
+        "label": "Retry",
+        "description": "Attempt a fresh urgent case without the answer visible."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "ask for detail"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "choose repair"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "check revision"
+      }
+    ],
+    "steps": [
+      {
+        "title": "ask for detail",
+        "explanation": "Be more careful is too vague to act on. Ask which case, criterion and rule were missed.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "choose repair",
+        "explanation": "Ask which case, criterion and rule were missed. Add an urgency-first check to the decision.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "check revision",
+        "explanation": "Add an urgency-first check to the decision. Attempt a fresh urgent case without the answer visible.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  },
+  "transfer-cases": {
+    "title": "Transfer has a boundary",
+    "summary": "A shared decision structure does not make two policies identical.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "n0",
+        "label": "Original",
+        "description": "Explain the leave-rule urgency override."
+      },
+      {
+        "id": "n1",
+        "label": "New rule",
+        "description": "Read the booking policy and identify its actual threshold."
+      },
+      {
+        "id": "n2",
+        "label": "Apply",
+        "description": "Use the shared exception-first idea in the new case."
+      },
+      {
+        "id": "n3",
+        "label": "Boundary",
+        "description": "Consult the real policy before acting in a workplace."
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1",
+        "label": "change context"
+      },
+      {
+        "from": "n1",
+        "to": "n2",
+        "label": "verify differences"
+      },
+      {
+        "from": "n2",
+        "to": "n3",
+        "label": "state limits"
+      }
+    ],
+    "steps": [
+      {
+        "title": "change context",
+        "explanation": "Explain the leave-rule urgency override. Read the booking policy and identify its actual threshold.",
+        "activeNodes": [
+          "n0",
+          "n1"
+        ],
+        "activeEdges": [
+          0
+        ]
+      },
+      {
+        "title": "verify differences",
+        "explanation": "Read the booking policy and identify its actual threshold. Use the shared exception-first idea in the new case.",
+        "activeNodes": [
+          "n1",
+          "n2"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "state limits",
+        "explanation": "Use the shared exception-first idea in the new case. Consult the real policy before acting in a workplace.",
+        "activeNodes": [
+          "n2",
+          "n3"
+        ],
+        "activeEdges": [
+          2
+        ]
+      }
+    ]
+  }
+}

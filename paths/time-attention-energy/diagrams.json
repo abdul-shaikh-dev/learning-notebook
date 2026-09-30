@@ -1,0 +1,609 @@
+{
+  "capacity": {
+    "title": "A 240-minute window becomes a feasible plan",
+    "summary": "Subtract the scenario’s essential commitments before allocating study outcomes. The three allocations total the remaining 150 minutes.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "240 minutes initially available",
+        "description": "The learner has a four-hour window before adding travel, a meal and a necessary transition."
+      },
+      {
+        "id": "1",
+        "label": "90 minutes essential",
+        "description": "Reserve 45 minutes for the journey, 30 for a meal and 15 for transition: 45 + 30 + 15 = 90."
+      },
+      {
+        "id": "2",
+        "label": "150 minutes usable",
+        "description": "Subtract essentials from the window: 240 − 90 = 150 minutes. This is a local scenario, not a universal capacity formula."
+      },
+      {
+        "id": "3",
+        "label": "90-minute checked draft",
+        "description": "Allocate 90 minutes to drafting and checking the essential section; define the accepted state before starting."
+      },
+      {
+        "id": "4",
+        "label": "30-minute practice",
+        "description": "Choose a bounded exercise that fits 30 minutes rather than an entire unestimated chapter."
+      },
+      {
+        "id": "5",
+        "label": "30-minute uncertainty reserve",
+        "description": "Leave 30 minutes uncommitted for variation. The plan uses 90 + 30 + 30 = 150 minutes without reducing essential commitments."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "identify essential uses"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "subtract 90 from 240"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "allocate 90"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "allocate 30"
+      },
+      {
+        "from": "2",
+        "to": "5",
+        "label": "retain 30"
+      }
+    ],
+    "steps": [
+      {
+        "title": "240 minutes initially available",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The learner has a four-hour window before adding travel, a meal and a necessary transition."
+      },
+      {
+        "title": "90 minutes essential",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Reserve 45 minutes for the journey, 30 for a meal and 15 for transition: 45 + 30 + 15 = 90."
+      },
+      {
+        "title": "150 minutes usable",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Subtract essentials from the window: 240 − 90 = 150 minutes. This is a local scenario, not a universal capacity formula."
+      },
+      {
+        "title": "90-minute checked draft",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Allocate 90 minutes to drafting and checking the essential section; define the accepted state before starting."
+      },
+      {
+        "title": "30-minute practice",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Choose a bounded exercise that fits 30 minutes rather than an entire unestimated chapter."
+      },
+      {
+        "title": "30-minute uncertainty reserve",
+        "activeNodes": [
+          "5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Leave 30 minutes uncommitted for variation. The plan uses 90 + 30 + 30 = 150 minutes without reducing essential commitments."
+      }
+    ]
+  },
+  "attention-context": {
+    "title": "Leave and recover a specific working state",
+    "summary": "An urgent interruption requires a reachable response. A return cue preserves the next unfinished check; optional alerts can wait.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Draft in progress",
+        "description": "The learner is checking a paragraph against its source when a message arrives."
+      },
+      {
+        "id": "1",
+        "label": "Urgent responsibility?",
+        "description": "Use the previously agreed communication rule to distinguish a required response from an optional alert.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Leave return cue",
+        "description": "Record the current file, last verified sentence and next source check before switching when circumstances allow."
+      },
+      {
+        "id": "3",
+        "label": "Respond to urgent input",
+        "description": "Address the necessary call or message; record its actual duration rather than assuming every interruption has the same cost."
+      },
+      {
+        "id": "4",
+        "label": "Resume named check",
+        "description": "Read the cue, inspect the file for changes and restart at the recorded unfinished check. Record reconstruction time separately."
+      },
+      {
+        "id": "5",
+        "label": "Queue optional alert",
+        "description": "Leave the optional message for the agreed checking window and continue the current paragraph."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "alert arrives"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "required response"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "state preserved"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "responsibility handled"
+      },
+      {
+        "from": "1",
+        "to": "5",
+        "label": "optional message"
+      },
+      {
+        "from": "5",
+        "to": "0",
+        "label": "continue current task"
+      },
+      {
+        "from": "4",
+        "to": "0",
+        "label": "context recovered"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Draft in progress",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          5,
+          6
+        ],
+        "explanation": "The learner is checking a paragraph against its source when a message arrives."
+      },
+      {
+        "title": "Urgent responsibility?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Use the previously agreed communication rule to distinguish a required response from an optional alert."
+      },
+      {
+        "title": "Leave return cue",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Record the current file, last verified sentence and next source check before switching when circumstances allow."
+      },
+      {
+        "title": "Respond to urgent input",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Address the necessary call or message; record its actual duration rather than assuming every interruption has the same cost."
+      },
+      {
+        "title": "Resume named check",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Read the cue, inspect the file for changes and restart at the recorded unfinished check. Record reconstruction time separately."
+      },
+      {
+        "title": "Queue optional alert",
+        "activeNodes": [
+          "5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Leave the optional message for the agreed checking window and continue the current paragraph."
+      }
+    ]
+  },
+  "estimate": {
+    "title": "Ground a draft forecast in comparable work",
+    "summary": "The supplied drafts took 70, 90 and 110 minutes. Preserve that variation and revise the comparison when inputs or review requirements differ.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Three completed drafts",
+        "description": "Collect the observed 70-, 90- and 110-minute durations using the same completion definition."
+      },
+      {
+        "id": "1",
+        "label": "Comparable new draft?",
+        "description": "Check source familiarity, length and review scope. Similar-looking titles alone do not establish comparable work.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Provisional 70–110 range",
+        "description": "Use the observed range as a planning starting point. Three examples do not establish a reliable percentile or confidence interval."
+      },
+      {
+        "id": "3",
+        "label": "Identify relevant differences",
+        "description": "If the new draft needs unfamiliar sources or extra review, name that added work and seek a closer comparator."
+      },
+      {
+        "id": "4",
+        "label": "Reserve a realistic window",
+        "description": "Choose a feasible window and review allowance. If a 40-minute promise cannot fit the evidence, reduce scope or renegotiate rather than hiding variation."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "compare work conditions"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "sufficiently similar"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "important mismatch"
+      },
+      {
+        "from": "3",
+        "to": "1",
+        "label": "find closer comparison"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "plan with visible uncertainty"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Three completed drafts",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Collect the observed 70-, 90- and 110-minute durations using the same completion definition."
+      },
+      {
+        "title": "Comparable new draft?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0,
+          3
+        ],
+        "explanation": "Check source familiarity, length and review scope. Similar-looking titles alone do not establish comparable work."
+      },
+      {
+        "title": "Provisional 70–110 range",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Use the observed range as a planning starting point. Three examples do not establish a reliable percentile or confidence interval."
+      },
+      {
+        "title": "Identify relevant differences",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If the new draft needs unfamiliar sources or extra review, name that added work and seek a closer comparator."
+      },
+      {
+        "title": "Reserve a realistic window",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Choose a feasible window and review allowance. If a 40-minute promise cannot fit the evidence, reduce scope or renegotiate rather than hiding variation."
+      }
+    ]
+  },
+  "experiment": {
+    "title": "A four-session message-batching trial",
+    "summary": "Compare two ordinary and two batching sessions with similar tasks, checked output and errors. Small samples support a reversible local choice.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Question and measures",
+        "description": "Ask whether optional message batching helps checked drafting. Define checked paragraphs, errors, urgent interruptions and administration effort before trial results."
+      },
+      {
+        "id": "1",
+        "label": "Two ordinary sessions",
+        "description": "Observe two sessions with the learner’s usual message handling, keeping the focus window and draft size reasonably similar."
+      },
+      {
+        "id": "2",
+        "label": "Two batching sessions",
+        "description": "Observe two sessions with optional messages checked at the end while the agreed urgent route remains available."
+      },
+      {
+        "id": "3",
+        "label": "Compare outcomes and context",
+        "description": "Compare checked output and errors, not just attempts. Record workload, task difficulty and disruption differences that may explain results."
+      },
+      {
+        "id": "4",
+        "label": "Keep, adjust or repeat",
+        "description": "Choose a provisional routine if the benefit exceeds its cost; repeat a more comparable trial if the result is ambiguous. Do not claim universal causation."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "record comparison condition"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "test one policy change"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "supply baseline observations"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "supply trial observations"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "assess benefit and limits"
+      },
+      {
+        "from": "4",
+        "to": "0",
+        "label": "revise the next question"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Question and measures",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "Ask whether optional message batching helps checked drafting. Define checked paragraphs, errors, urgent interruptions and administration effort before trial results."
+      },
+      {
+        "title": "Two ordinary sessions",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Observe two sessions with the learner’s usual message handling, keeping the focus window and draft size reasonably similar."
+      },
+      {
+        "title": "Two batching sessions",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Observe two sessions with optional messages checked at the end while the agreed urgent route remains available."
+      },
+      {
+        "title": "Compare outcomes and context",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2,
+          3
+        ],
+        "explanation": "Compare checked output and errors, not just attempts. Record workload, task difficulty and disruption differences that may explain results."
+      },
+      {
+        "title": "Keep, adjust or repeat",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Choose a provisional routine if the benefit exceeds its cost; repeat a more comparable trial if the result is ambiguous. Do not claim universal causation."
+      }
+    ]
+  },
+  "weekly-review": {
+    "title": "Turn a backlog into a feasible week",
+    "summary": "Two available windows cannot absorb every carried and newly proposed item. Keep, clarify, defer or renegotiate each commitment explicitly.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Collect seven unresolved options",
+        "description": "Archive the two finished items; bring together three carried commitments and four new proposals without silently accepting all of them."
+      },
+      {
+        "id": "1",
+        "label": "Check two available windows",
+        "description": "Inspect essential commitments, needed inputs and the actual shape of the two remaining work windows."
+      },
+      {
+        "id": "2",
+        "label": "Select two fitting outcomes",
+        "description": "Choose two outcomes with checkable finish states and meaningful delay consequences that fit the available windows."
+      },
+      {
+        "id": "3",
+        "label": "Defer or renegotiate others",
+        "description": "Record which items are deferred, declined or reduced. Notify an affected promise holder through an authorized channel when a changed commitment requires it."
+      },
+      {
+        "id": "4",
+        "label": "Review actual use next week",
+        "description": "Compare finished outcomes, duration and changed constraints. Use the results to revise estimates rather than copy every unfinished item forward."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "reconcile demand with capacity"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "commit only feasible work"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "resolve work beyond capacity"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "observe selected outcomes"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "check revised promises"
+      },
+      {
+        "from": "4",
+        "to": "0",
+        "label": "begin next review"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Collect seven unresolved options",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          5
+        ],
+        "explanation": "Archive the two finished items; bring together three carried commitments and four new proposals without silently accepting all of them."
+      },
+      {
+        "title": "Check two available windows",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Inspect essential commitments, needed inputs and the actual shape of the two remaining work windows."
+      },
+      {
+        "title": "Select two fitting outcomes",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Choose two outcomes with checkable finish states and meaningful delay consequences that fit the available windows."
+      },
+      {
+        "title": "Defer or renegotiate others",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Record which items are deferred, declined or reduced. Notify an affected promise holder through an authorized channel when a changed commitment requires it."
+      },
+      {
+        "title": "Review actual use next week",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Compare finished outcomes, duration and changed constraints. Use the results to revise estimates rather than copy every unfinished item forward."
+      }
+    ]
+  }
+}

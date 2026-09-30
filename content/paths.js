@@ -31112,6 +31112,2805 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "habits-behaviour-change",
+    "title": "Habits & Behaviour Change",
+    "category": "Personal development",
+    "status": "ready",
+    "description": "Design realistic everyday routines using context, small actions and honest observations.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "No specialist knowledge required.",
+      "A text editor or printed worksheets; fictional cases can be used throughout."
+    ],
+    "outcomes": [
+      "A factual baseline and a feasible target",
+      "A small routine experiment",
+      "An evidence-based maintenance decision"
+    ],
+    "setup": [
+      "Download and extract the practice bundle; every worksheet is flat in habits-behaviour-change-practice.",
+      "Read README.md, then work through numbered worksheets and the three stage project sheets.",
+      "Write your own response before comparing it with the fictional worked example.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "nextSteps": [
+      "Repeat a modest practice in a new context and revise from observed evidence.",
+      "Use relevant support or formal procedures when an everyday self-management tool is insufficient."
+    ],
+    "sources": [
+      {
+        "title": "APA: Wendy Wood on habits and context",
+        "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change"
+      },
+      {
+        "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+        "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/"
+      },
+      {
+        "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+        "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf"
+      },
+      {
+        "title": "Lally et al. (2010): real-world habit formation",
+        "url": "https://doi.org/10.1002/ejsp.674"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Start here: sequence, offline use and practice boundaries",
+        "href": "paths/habits-behaviour-change/practice/README.md"
+      },
+      {
+        "title": "Source scope and evidence limits",
+        "href": "paths/habits-behaviour-change/practice/sources-and-limits.md"
+      },
+      {
+        "title": "Describe actions without judging identity worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/01-behaviour-not-identity.md"
+      },
+      {
+        "title": "Separate an outcome from its next action worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/02-goals-and-actions.md"
+      },
+      {
+        "title": "Observe a baseline before redesigning worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/03-baseline-observation.md"
+      },
+      {
+        "title": "Map the cue and surrounding context worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/04-cue-map.md"
+      },
+      {
+        "title": "Distinguish repetition from automaticity worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/05-habit-or-routine.md"
+      },
+      {
+        "title": "Choose a version that fits a real opportunity worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/06-small-start.md"
+      },
+      {
+        "title": "Reject fixed habit deadlines worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/07-time-variation.md"
+      },
+      {
+        "title": "Turn an intention into a situation/action plan worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/08-if-then.md"
+      },
+      {
+        "title": "Change the effort around the action worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/09-friction.md"
+      },
+      {
+        "title": "Use reminders as useful signals worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/10-prompt-design.md"
+      },
+      {
+        "title": "Offer an alternative that serves the same immediate need worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/11-replacement.md"
+      },
+      {
+        "title": "Prepare for a likely obstacle worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/12-obstacle-plan.md"
+      },
+      {
+        "title": "Measure opportunities, completion and ease separately worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/13-measurement.md"
+      },
+      {
+        "title": "Notice immediate usefulness without inventing brain claims worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/14-feedback-reward.md"
+      },
+      {
+        "title": "Respond to a missed action with information worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/15-missed-opportunity.md"
+      },
+      {
+        "title": "Change one practical element at a time worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/16-one-change-test.md"
+      },
+      {
+        "title": "Rebuild the plan when the environment changes worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/17-changed-context.md"
+      },
+      {
+        "title": "Ask for support without handing over control worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/18-support-consent.md"
+      },
+      {
+        "title": "Decide whether to keep, change or retire a routine worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/19-maintain-or-retire.md"
+      },
+      {
+        "title": "Make an honest maintenance plan worksheet and worked case",
+        "href": "paths/habits-behaviour-change/practice/20-evidence-review.md"
+      },
+      {
+        "title": "A factual baseline and a feasible target project sheet",
+        "href": "paths/habits-behaviour-change/practice/foundation-project.md"
+      },
+      {
+        "title": "A small routine experiment project sheet",
+        "href": "paths/habits-behaviour-change/practice/intermediate-project.md"
+      },
+      {
+        "title": "An evidence-based maintenance decision project sheet",
+        "href": "paths/habits-behaviour-change/practice/advanced-project.md"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/habits-behaviour-change/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/habits-behaviour-change/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/habits-behaviour-change/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/habits-behaviour-change/practice/lab-model.js"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation — observe and define",
+        "description": "A factual baseline and a feasible target",
+        "exitCriteria": [
+          "State a useful outcome and a controllable action.",
+          "Record three opportunities with context, completion and constraints.",
+          "Choose a recognised cue and a useful minimum.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "project": {
+          "title": "A factual baseline and a feasible target",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "State a useful outcome and a controllable action.",
+            "Record three opportunities with context, completion and constraints.",
+            "Choose a recognised cue and a useful minimum."
+          ],
+          "rubric": [
+            "State a useful outcome and a controllable action.",
+            "Record three opportunities with context, completion and constraints.",
+            "Choose a recognised cue and a useful minimum.",
+            "Record known facts and uncertainty separately, using the relevant stage measures."
+          ],
+          "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate — practise and compare",
+        "description": "A small routine experiment",
+        "exitCriteria": [
+          "Write a cue/action plan and an obstacle branch.",
+          "Try one reversible setup change, keeping the target stable.",
+          "Record available opportunities, completion and ease separately.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "project": {
+          "title": "A small routine experiment",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "Write a cue/action plan and an obstacle branch.",
+            "Try one reversible setup change, keeping the target stable.",
+            "Record available opportunities, completion and ease separately."
+          ],
+          "rubric": [
+            "Write a cue/action plan and an obstacle branch.",
+            "Try one reversible setup change, keeping the target stable.",
+            "Record available opportunities, completion and ease separately.",
+            "Record known facts and uncertainty separately, using the relevant stage measures."
+          ],
+          "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced — adapt and review",
+        "description": "An evidence-based maintenance decision",
+        "exitCriteria": [
+          "Compare benefit, effort and context fit.",
+          "State what was observed and what cannot be inferred.",
+          "Choose keep, change or retire with a recovery branch and review date.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "project": {
+          "title": "An evidence-based maintenance decision",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "Compare benefit, effort and context fit.",
+            "State what was observed and what cannot be inferred.",
+            "Choose keep, change or retire with a recovery branch and review date."
+          ],
+          "rubric": [
+            "Compare benefit, effort and context fit.",
+            "State what was observed and what cannot be inferred.",
+            "Choose keep, change or retire with a recovery branch and review date.",
+            "Record known facts and uncertainty separately, using the relevant stage measures."
+          ],
+          "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "behaviour-not-identity",
+        "title": "1. Describe actions without judging identity",
+        "takeaway": "A behaviour is something you can observe; an identity label hides the action you can change.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A behaviour is something you can observe; an identity label hides the action you can change. Replace broad promises with a small action and a situation. Choose an ordinary task within your control, such as putting a notebook on the desk. Missing it tells you something about the plan and circumstances, rather than proving a character flaw."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Observable wording also makes the result checkable: either the keys reached the bowl or they did not. A label such as organised cannot tell you which step to change. Keep the target narrow enough to inspect while recognising that a useful key-storage action does not represent the whole person."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+          "solution": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
+          "solutionFormat": "prose",
+          "checks": [
+            "An identity label is rewritten as a specific observable action.",
+            "The target includes a recognisable arrival situation.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which target can be observed?",
+          "options": [
+            "Put keys in the bowl after arriving home",
+            "Become a disciplined person",
+            "Feel motivated every evening"
+          ],
+          "correct": 0,
+          "explanation": "Put keys in the bowl after arriving home fits the distinction in this lesson. Become a disciplined person overlooks the stated limits; Feel motivated every evening substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "goals-and-actions",
+        "title": "2. Separate an outcome from its next action",
+        "takeaway": "An outcome explains why you care; a repeatable action explains what you will do.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An outcome explains why you care; a repeatable action explains what you will do. Some outcomes depend on other people or changing conditions. A useful plan names the part you control and a modest first version. Do not confuse doing the action with guaranteeing the desired result. Revisit whether the action still serves its purpose."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "An action measure and an outcome measure answer different questions. Packing can happen reliably while mornings remain difficult for unrelated reasons. Check both before deciding to expand the routine. If packing adds work without reducing searching, reconsider its design rather than insisting that reliable completion alone makes it valuable."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Arun wants a calmer morning. He cannot guarantee that the bus is on time, but can pack his bag the evening before. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an outcome, controllable action and boundary for Arun.",
+          "solution": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Outcome and controllable action are written separately.",
+            "An external constraint is identified.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement separates action and outcome?",
+          "options": [
+            "Packing the bag may reduce searching even if the bus is late",
+            "Packing guarantees a calm morning",
+            "Calmness itself is a specific repeated action"
+          ],
+          "correct": 0,
+          "explanation": "Packing the bag may reduce searching even if the bus is late fits the distinction in this lesson. Packing guarantees a calm morning overlooks the stated limits; Calmness itself is a specific repeated action substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "baseline-observation",
+        "title": "3. Observe a baseline before redesigning",
+        "takeaway": "A baseline is a short description of what currently happens, including opportunities when it does not happen.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A baseline is a short description of what currently happens, including opportunities when it does not happen. Record the situation, action and immediate consequence without trying to capture everything. A three-day snapshot is a starting point, not a complete portrait. Avoid recording private material from other people. Use fictional data if personal tracking feels intrusive."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A baseline should include the denominator: the situations in which the target could reasonably occur. Otherwise a completion count conceals changes in opportunity. Choose a logging window short enough to maintain and note unusual days. The cost of observation should not exceed the practical benefit of learning about the task."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Jo wants to read more but only logs evenings when reading happened, overlooking nights spent caring for family. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design three columns that reveal opportunities and constraints.",
+          "solution": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The baseline includes both action and no-opportunity rows.",
+            "Context is recorded without unnecessary private details.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a baseline more informative?",
+          "options": [
+            "Include unavailable opportunities and context",
+            "Record successes only to stay positive",
+            "Infer the entire month from one evening"
+          ],
+          "correct": 0,
+          "explanation": "Include unavailable opportunities and context fits the distinction in this lesson. Record successes only to stay positive overlooks the stated limits; Infer the entire month from one evening substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "cue-map",
+        "title": "4. Map the cue and surrounding context",
+        "takeaway": "A cue is a recognisable situation associated with an action; context includes place, timing, people and materials.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A cue is a recognisable situation associated with an action; context includes place, timing, people and materials. Look for a cue that already occurs, rather than adding many reminders. A time can work, but only if it is reliably noticed. Distinguish noticing the cue from having the opportunity to act. Context mapping generates a testable hypothesis rather than proof of an unconscious mechanism."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Cue selection is a balance between reliability and fit. A daily event is frequent, but it may occur where the necessary materials are absent. A less frequent cue in the right setting can be more useful. Map the physical sequence, then check whether the proposed alternative can occupy the same opportunity."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Sam opens a news app whenever the kettle is switched on, while the book stays in another room. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Map the cue, action, immediate payoff and competing option.",
+          "solution": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Cue, action and immediate consequence are distinguished.",
+            "The alternative is physically available at the cue.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which cue is most recognisable?",
+          "options": [
+            "When I switch on the kettle",
+            "Whenever I should improve myself",
+            "When the entire day goes perfectly"
+          ],
+          "correct": 0,
+          "explanation": "When I switch on the kettle fits the distinction in this lesson. Whenever I should improve myself overlooks the stated limits; When the entire day goes perfectly substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Map an ordinary routine",
+          "summary": "The kettle is a visible recurring event in the kitchen. A nearby short story is a feasible alternative to test during the same wait.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Sam switches on the kettle",
+              "description": "The kettle is a visible recurring event in the kitchen."
+            },
+            {
+              "id": "1",
+              "label": "Sam opens the news app",
+              "description": "The recorded action is opening the app, not being an undisciplined person."
+            },
+            {
+              "id": "2",
+              "label": "Waiting feels less boring",
+              "description": "The app provides stimulation while Sam waits; this is a hypothesis about its immediate function."
+            },
+            {
+              "id": "3",
+              "label": "Place a story beside the kettle",
+              "description": "A nearby short story is a feasible alternative to test during the same wait."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "cues observed action",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "provides immediate stimulation",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "suggests another source of stimulation",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Sam switches on the kettle",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The kettle is a visible recurring event in the kitchen."
+            },
+            {
+              "title": "Sam opens the news app",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "The recorded action is opening the app, not being an undisciplined person."
+            },
+            {
+              "title": "Waiting feels less boring",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "The app provides stimulation while Sam waits; this is a hypothesis about its immediate function."
+            },
+            {
+              "title": "Place a story beside the kettle",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "A nearby short story is a feasible alternative to test during the same wait."
+            }
+          ]
+        }
+      },
+      {
+        "id": "habit-or-routine",
+        "title": "5. Distinguish repetition from automaticity",
+        "takeaway": "Repeating an action and beginning it with little deliberate decision are related but different.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Repeating an action and beginning it with little deliberate decision are related but different. A routine can require planning every time and still be useful. Record ease of starting separately from completion. Your simple ease rating is a personal observation, not a validated diagnostic instrument. Do not call a behaviour automatic merely because a checklist has many ticks."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Ease of initiation is not the same as ease of performing every component. Someone may start a review automatically but still think carefully about its content. That is not a contradiction. For complex tasks, automatic starting and deliberate execution can coexist; do not aim to remove judgement from decisions that require it."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Lea completes a weekly budget review but needs a calendar reminder and deliberate effort every time. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why Lea has a useful routine without evidence of automaticity.",
+          "solution": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Completion is separated from ease of initiation.",
+            "The routine remains useful without an automaticity claim.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What do repeated ticks establish?",
+          "options": [
+            "Recorded completion, not necessarily automaticity",
+            "A permanent habit has formed",
+            "No planning will ever be needed again"
+          ],
+          "correct": 0,
+          "explanation": "Recorded completion, not necessarily automaticity fits the distinction in this lesson. A permanent habit has formed overlooks the stated limits; No planning will ever be needed again substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "small-start",
+        "title": "6. Choose a version that fits a real opportunity",
+        "takeaway": "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "The minimum and the extension need separate labels so the target does not drift upward unnoticed. A minimum that is too small to serve the purpose creates empty ticks; one that is too demanding recreates the original obstacle. Evaluate its usefulness against an ordinary constrained day rather than an unusually free weekend."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Nia plans an hour of language study after work but has ten usable minutes on most evenings. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Define a useful minimum and optional extension.",
+          "solution": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The minimum makes a real contribution to the purpose.",
+            "The extension is clearly optional.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What is a sensible minimum?",
+          "options": [
+            "A short action that still serves the learning goal",
+            "The largest session imaginable",
+            "A symbolic tick unrelated to learning"
+          ],
+          "correct": 0,
+          "explanation": "A short action that still serves the learning goal fits the distinction in this lesson. The largest session imaginable overlooks the stated limits; A symbolic tick unrelated to learning substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "time-variation",
+        "title": "7. Reject fixed habit deadlines",
+        "takeaway": "Habit formation time varies, and estimates depend on the behaviour, person and measurement method.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Habit formation time varies, and estimates depend on the behaviour, person and measurement method. Lally and colleagues modelled daily automaticity and reported estimates ranging from 18 to 254 days among fitted cases. These are study estimates, not a schedule every learner should meet. Twenty-one days is not a universal rule. A useful review asks whether the plan remains workable and starting is becoming easier."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study’s fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Dev reaches day 21 of placing his notebook out and still needs to think about it. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a fair interpretation of Dev’s experience and a next check.",
+          "solution": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Study estimates are described as variable rather than a deadline.",
+            "The next review checks cue and practical fit.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What does the reported range support?",
+          "options": [
+            "Substantial variation rather than a universal deadline",
+            "Every habit takes exactly 66 days",
+            "Day 21 proves whether a person has willpower"
+          ],
+          "correct": 0,
+          "explanation": "Substantial variation rather than a universal deadline fits the distinction in this lesson. Every habit takes exactly 66 days overlooks the stated limits; Day 21 proves whether a person has willpower substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Lally et al. (2010): real-world habit formation",
+            "url": "https://doi.org/10.1002/ejsp.674",
+            "section": "Abstract and automaticity modelling results",
+            "scope": "Original observational study of selected daily behaviours; estimates vary by person and behaviour, not a universal deadline.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "if-then",
+        "title": "8. Turn an intention into a situation/action plan",
+        "takeaway": "An implementation intention links a specified situation to a specified action.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An implementation intention links a specified situation to a specified action. Write an if–then sentence that you can recognise in real life. Keep the response within your control and immediately possible. This is a planning tool supported by original goal-pursuit research; it does not remove material barriers or make unrealistic goals feasible."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "The if clause should identify an opportunity, not merely a feeling such as when I am motivated. The then clause should specify a response you can begin without another decision. Too many competing plans at one cue can recreate uncertainty; start with a single response and add a branch only for a likely obstacle."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Farah says she will organise notes sometime this week and repeatedly forgets. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write one recognisable if–then plan for Farah.",
+          "solution": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The if clause describes a recognisable situation.",
+            "The then clause names an immediately feasible action.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which is an implementation intention?",
+          "options": [
+            "If Tuesday’s session ends, then file its handouts",
+            "I really intend to be organised",
+            "I will succeed if I care enough"
+          ],
+          "correct": 0,
+          "explanation": "If Tuesday’s session ends, then file its handouts fits the distinction in this lesson. I really intend to be organised overlooks the stated limits; I will succeed if I care enough substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Farah’s filing plan with an obstacle branch",
+          "summary": "The response depends on whether the normal session offers a feasible filing opportunity.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Tuesday desk session ends",
+              "description": "Farah uses finishing the desk session as the recognisable cue."
+            },
+            {
+              "id": "1",
+              "label": "Folder available now?",
+              "description": "Check whether the handouts and labelled folder are within reach.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "File the handouts",
+              "description": "If materials are ready, file the handouts before closing the bag."
+            },
+            {
+              "id": "3",
+              "label": "Choose a feasible alternative",
+              "description": "If the folder is absent, keep the handouts together and specify the next desk opportunity."
+            },
+            {
+              "id": "4",
+              "label": "Next desk opportunity",
+              "description": "At the agreed opportunity, check materials again rather than adding a penalty task."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "notice planned cue",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "yes: materials ready",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "no: setup missing",
+              "from": "1"
+            },
+            {
+              "to": "4",
+              "label": "schedule practical retry",
+              "from": "3"
+            },
+            {
+              "to": "1",
+              "label": "recheck availability",
+              "from": "4"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Tuesday desk session ends",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Farah uses finishing the desk session as the recognisable cue."
+            },
+            {
+              "title": "Folder available now?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0,
+                4
+              ],
+              "explanation": "Check whether the handouts and labelled folder are within reach."
+            },
+            {
+              "title": "File the handouts",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "If materials are ready, file the handouts before closing the bag."
+            },
+            {
+              "title": "Choose a feasible alternative",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If the folder is absent, keep the handouts together and specify the next desk opportunity."
+            },
+            {
+              "title": "Next desk opportunity",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "At the agreed opportunity, check materials again rather than adding a penalty task."
+            }
+          ]
+        }
+      },
+      {
+        "id": "friction",
+        "title": "9. Change the effort around the action",
+        "takeaway": "Friction is the extra work between noticing a cue and completing an action.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people’s needs."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Reducing friction can accidentally create clutter or affect a shared space. Prefer a reversible setup and ask anyone whose access would change. Judge the modification on setup effort and actual usefulness, not aesthetic appearance. If materials are easier to reach but the task still does not fit, investigate timing or purpose next."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Ben wants to sketch but his pencils are in a closed cupboard and the desk is covered with boxes. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose one reversible change and predict what it may improve.",
+          "solution": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
+          "solutionFormat": "prose",
+          "checks": [
+            "One reversible setup step is changed.",
+            "The predicted benefit can be observed.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which change directly reduces setup friction?",
+          "options": [
+            "Leave the required materials at the cue location",
+            "Write a stronger promise",
+            "Punish every missed session"
+          ],
+          "correct": 0,
+          "explanation": "Leave the required materials at the cue location fits the distinction in this lesson. Write a stronger promise overlooks the stated limits; Punish every missed session substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "prompt-design",
+        "title": "10. Use reminders as useful signals",
+        "takeaway": "A reminder is useful when it arrives at an actionable moment and says what to do.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A reminder is useful when it arrives at an actionable moment and says what to do. An alarm that fires during commuting may be noticed but impossible to use. Prefer one well-placed prompt over many competing notifications. Record whether the signal was seen and whether acting was feasible. This distinguishes a prompt failure from a lack of opportunity."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Reminder fatigue is a practical observation rather than a fixed personal trait. Repeatedly dismissing an unactionable alarm may mean the signal is badly placed. Separate noticing from doing when reviewing the data. Removing redundant prompts can make the remaining one clearer, but an essential appointment reminder may still need a different backup."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Redesign the prompt and define what to observe.",
+          "solution": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The prompt occurs at an available opportunity.",
+            "Seen, feasible and completed are recorded separately.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which prompt is most actionable?",
+          "options": [
+            "A filing cue at the desk with the folder ready",
+            "Ten alarms during the meeting",
+            "An alert saying only be better"
+          ],
+          "correct": 0,
+          "explanation": "A filing cue at the desk with the folder ready fits the distinction in this lesson. Ten alarms during the meeting overlooks the stated limits; An alert saying only be better substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "replacement",
+        "title": "11. Offer an alternative that serves the same immediate need",
+        "takeaway": "An unwanted routine may provide something useful, such as a pause, stimulation or connection.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An unwanted routine may provide something useful, such as a pause, stimulation or connection. First ask what the action does in that moment, then choose a harmless alternative that can meet part of that need. Removing an action without a workable option may leave the original cue unchanged. Treat the explanation as a hypothesis and compare what actually happens."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative’s immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Omar checks group chat during a five-minute break because he wants contact, then misses the next session. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design an alternative that respects the need for contact and timing.",
+          "solution": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The original action’s immediate function is named.",
+            "The replacement fits the break duration.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What should a replacement consider?",
+          "options": [
+            "The immediate function of the original action",
+            "Only whether it looks productive to others",
+            "Eliminating every break"
+          ],
+          "correct": 0,
+          "explanation": "The immediate function of the original action fits the distinction in this lesson. Only whether it looks productive to others overlooks the stated limits; Eliminating every break substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "obstacle-plan",
+        "title": "12. Prepare for a likely obstacle",
+        "takeaway": "A coping plan names a realistic obstacle and an alternative response before it happens.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A coping plan names a realistic obstacle and an alternative response before it happens. Choose a common obstacle rather than every imagined failure. The alternative may be a shorter action, a different opportunity or an explicit skip. Avoid a plan that requires sacrificing basic needs or responsibilities. Record which branch occurred so the plan can be revised."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A coping branch should reduce uncertainty rather than create a second elaborate system. Write exactly when the branch applies and how to return to the normal version. An explicit skip can be appropriate when opportunity is absent. This preserves realistic planning instead of making every interruption another task that must be compensated for."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Aisha’s normal note-review cue disappears on days she works at a different desk. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a normal plan and a travel-day branch.",
+          "solution": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Normal cue and obstacle branch are both specified.",
+            "The branch permits a skip when opportunity is absent.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which branch is realistic?",
+          "options": [
+            "Use a shorter action at an available alternate cue",
+            "Promise never to face interruptions",
+            "Compensate by losing sleep"
+          ],
+          "correct": 0,
+          "explanation": "Use a shorter action at an available alternate cue fits the distinction in this lesson. Promise never to face interruptions overlooks the stated limits; Compensate by losing sleep substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "measurement",
+        "title": "13. Measure opportunities, completion and ease separately",
+        "takeaway": "One number rarely captures whether a routine is working.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Add an outcome measure only if it is meaningful and cheap to collect. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A completion rate can rise because the opportunity definition changed, so keep definitions stable during a comparison. Ease ratings are subjective and may fluctuate with the task or day. Record them consistently without treating differences of one point as precise measurements. A helpful log supports a decision without pretending to be laboratory evidence."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Ivo has four completions in seven days, but only five evenings offered a realistic opportunity. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate the opportunity-based rate and state its limit.",
+          "solution": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The numerator and denominator are explicit.",
+            "Completion, ease and outcome are not conflated.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What does 4 of 5 measure?",
+          "options": [
+            "Completion among recorded available opportunities",
+            "Permanent automaticity",
+            "The probability of success for everyone"
+          ],
+          "correct": 0,
+          "explanation": "Completion among recorded available opportunities fits the distinction in this lesson. Permanent automaticity overlooks the stated limits; The probability of success for everyone substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Keep measurements separate",
+          "summary": "Ivo records five realistic opportunities among seven calendar evenings. Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Five feasible evenings",
+              "description": "Ivo records five realistic opportunities among seven calendar evenings."
+            },
+            {
+              "id": "1",
+              "label": "Four reviews completed",
+              "description": "Four completions among five opportunities gives 80%; calendar completion is four of seven."
+            },
+            {
+              "id": "2",
+              "label": "Starting effort recorded separately",
+              "description": "A tick establishes completion, while Ivo’s ease note records how deliberate starting felt."
+            },
+            {
+              "id": "3",
+              "label": "Compare usefulness and limits",
+              "description": "Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "defines the denominator",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "completion does not establish automaticity",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "adds another measure to the review",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Five feasible evenings",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Ivo records five realistic opportunities among seven calendar evenings."
+            },
+            {
+              "title": "Four reviews completed",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Four completions among five opportunities gives 80%; calendar completion is four of seven."
+            },
+            {
+              "title": "Starting effort recorded separately",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "A tick establishes completion, while Ivo’s ease note records how deliberate starting felt."
+            },
+            {
+              "title": "Compare usefulness and limits",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement."
+            }
+          ]
+        }
+      },
+      {
+        "id": "feedback-reward",
+        "title": "14. Notice immediate usefulness without inventing brain claims",
+        "takeaway": "A routine is easier to evaluate when its immediate result is visible.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action’s own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Immediate satisfaction and longer-term value can diverge. An action may feel rewarding now but add little to the goal, or be useful while remaining effortful. Look for both rather than assuming enjoyment proves effectiveness. A simple visible consequence often gives enough feedback without adding purchases, competition or elaborate reward tracking."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Mei puts keys in a bowl and notices that leaving home requires less searching. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Name an immediate consequence and a separate longer-term outcome.",
+          "solution": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Immediate consequence and longer-term outcome differ.",
+            "No unsupported brain mechanism is asserted.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which feedback is directly observable?",
+          "options": [
+            "Keys are visible in the bowl",
+            "A dopamine reset has occurred",
+            "Her entire personality has improved"
+          ],
+          "correct": 0,
+          "explanation": "Keys are visible in the bowl fits the distinction in this lesson. A dopamine reset has occurred overlooks the stated limits; Her entire personality has improved substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "missed-opportunity",
+        "title": "15. Respond to a missed action with information",
+        "takeaway": "A missed action is a chance to inspect conditions and resume at the next feasible opportunity.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally’s study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Different explanations for a miss need different responses. An absent cue suggests an alternate opportunity; unavailable materials suggest setup changes; a deliberate competing priority may need no repair. Look for repeated patterns before changing the whole plan. Resumption should restore the usual feasible action rather than making the next attempt harder as punishment."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Pia misses filing because she takes a family member to an appointment. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a recovery note and a next action without blame.",
+          "solution": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The reason for the miss is categorised from facts.",
+            "The next action avoids punitive catch-up.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which response produces useful information?",
+          "options": [
+            "Record why the opportunity differed and choose the next feasible cue",
+            "Reset all progress to zero",
+            "Prove commitment with a punishing catch-up session"
+          ],
+          "correct": 0,
+          "explanation": "Record why the opportunity differed and choose the next feasible cue fits the distinction in this lesson. Reset all progress to zero overlooks the stated limits; Prove commitment with a punishing catch-up session substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Lally et al. (2010): real-world habit formation",
+            "url": "https://doi.org/10.1002/ejsp.674",
+            "section": "Abstract and automaticity modelling results",
+            "scope": "Original observational study of selected daily behaviours; estimates vary by person and behaviour, not a universal deadline.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Pia’s recovery after a missed filing action",
+          "summary": "A missed action leads to a factual opportunity check and the next feasible attempt.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Filing did not happen",
+              "description": "Record the missed action without erasing earlier useful practice."
+            },
+            {
+              "id": "1",
+              "label": "Desk opportunity existed?",
+              "description": "Pia was at a family appointment; distinguish an absent opportunity from a missed cue.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Record unavailable opportunity",
+              "description": "For the appointment day, note the context rather than calling it a failed available attempt."
+            },
+            {
+              "id": "3",
+              "label": "Inspect cue or setup",
+              "description": "If a desk opportunity did exist, check whether the cue was noticed and materials were available."
+            },
+            {
+              "id": "4",
+              "label": "Resume at next feasible cue",
+              "description": "Use the normal modest action; add an alternate cue only if recurring context changes warrant it."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "check circumstances",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "no: appointment replaced desk session",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "yes: opportunity existed",
+              "from": "1"
+            },
+            {
+              "to": "4",
+              "label": "wait for a feasible opportunity",
+              "from": "2"
+            },
+            {
+              "to": "4",
+              "label": "make only a warranted adjustment",
+              "from": "3"
+            },
+            {
+              "to": "1",
+              "label": "if another miss occurs, inspect again",
+              "from": "4"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Filing did not happen",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Record the missed action without erasing earlier useful practice."
+            },
+            {
+              "title": "Desk opportunity existed?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0,
+                5
+              ],
+              "explanation": "Pia was at a family appointment; distinguish an absent opportunity from a missed cue."
+            },
+            {
+              "title": "Record unavailable opportunity",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "For the appointment day, note the context rather than calling it a failed available attempt."
+            },
+            {
+              "title": "Inspect cue or setup",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If a desk opportunity did exist, check whether the cue was noticed and materials were available."
+            },
+            {
+              "title": "Resume at next feasible cue",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Use the normal modest action; add an alternate cue only if recurring context changes warrant it."
+            }
+          ]
+        }
+      },
+      {
+        "id": "one-change-test",
+        "title": "16. Change one practical element at a time",
+        "takeaway": "A small comparison is more interpretable when you know what changed.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A small comparison is more interpretable when you know what changed. Hold the target action stable while trying a new cue location or simpler setup. Record other changes such as a quieter week. You can make a useful local decision with imperfect information, but should not present a personal before/after log as a controlled experiment."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A before/after comparison has no independent control group and cannot isolate every influence. Keep a dated note of the changed element and important surrounding events. You can choose the more workable setup even without proving causation. Report the decision as a local judgement and avoid presenting a small personal sample as a general result."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Ren moves a reading card to the kettle while also changing work hours and buying a new book. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a cleaner comparison and state a confound.",
+          "solution": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+          "solutionFormat": "prose",
+          "checks": [
+            "One proposed change is isolated where practical.",
+            "A plausible confound is recorded.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which conclusion fits a personal comparison?",
+          "options": [
+            "The setup seems useful here, though other changes may matter",
+            "The cue caused the result for every learner",
+            "One good week proves permanent change"
+          ],
+          "correct": 0,
+          "explanation": "The setup seems useful here, though other changes may matter fits the distinction in this lesson. The cue caused the result for every learner overlooks the stated limits; One good week proves permanent change substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "changed-context",
+        "title": "17. Rebuild the plan when the environment changes",
+        "takeaway": "A plan designed for one setting may need deliberate rebuilding in another.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A plan designed for one setting may need deliberate rebuilding in another. When moving rooms, starting a new timetable or travelling, check which cues and materials still exist. Preserve the purpose rather than copying a time that no longer fits. Choose a stable new opportunity and return to deliberate planning when necessary."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A new setting may preserve some cues while removing others. Audit the sequence rather than assuming the whole routine transfers or disappears. For digital work, a clear end-of-session event may replace leaving a classroom. Allow deliberate reminders during transition and judge success by usefulness in the new setting rather than effortless continuity."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Sol’s after-class filing routine stops when the course becomes remote. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Translate the routine into the new context.",
+          "solution": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The changed context’s missing cue is identified.",
+            "The new cue fits the same useful purpose.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What should be preserved during a context change?",
+          "options": [
+            "The purpose and a feasible cue/action relationship",
+            "The exact old time regardless of circumstances",
+            "The claim that a formed habit cannot change"
+          ],
+          "correct": 0,
+          "explanation": "The purpose and a feasible cue/action relationship fits the distinction in this lesson. The exact old time regardless of circumstances overlooks the stated limits; The claim that a formed habit cannot change substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "APA: Wendy Wood on habits and context",
+            "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+            "section": "Interview on context and repetition",
+            "scope": "Expert interview, not an experimental test; used only for context design principles.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "support-consent",
+        "title": "18. Ask for support without handing over control",
+        "takeaway": "Support works best when its form and boundaries are agreed.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Support works best when its form and boundaries are agreed. Ask a friend for a specific helpful action, such as one weekly check-in, rather than permission to monitor everything. Either person can decline or change the arrangement. Keep logs private by default; public accountability is an option, not a requirement or a measure of sincerity."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Support arrangements also impose effort on the helper. Agree on frequency, wording and what information is shared so neither person has to guess. A neutral check-in can be useful; unsolicited daily criticism can make the task harder. Revisit consent when schedules change, and allow a supportive relationship to continue without the monitoring arrangement."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Uma asks a housemate to remind her to pack a bag, but repeated comments feel intrusive. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a narrower agreement with an exit option.",
+          "solution": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The helper’s role and frequency are agreed.",
+            "Either person can stop the arrangement.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What makes support appropriate?",
+          "options": [
+            "Specific consent and a way to stop",
+            "Unlimited monitoring proves care",
+            "Public logs are necessary for success"
+          ],
+          "correct": 0,
+          "explanation": "Specific consent and a way to stop fits the distinction in this lesson. Unlimited monitoring proves care overlooks the stated limits; Public logs are necessary for success substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+            "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+            "section": "Studies 1–3 and distinction between goal and implementation intentions",
+            "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "maintain-or-retire",
+        "title": "19. Decide whether to keep, change or retire a routine",
+        "takeaway": "A routine is valuable because it serves a purpose, not because it has a long streak.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A routine is valuable because it serves a purpose, not because it has a long streak. Review benefit, effort and fit together. A well-practised action can become unnecessary when the goal changes. Retiring it deliberately is different from judging yourself for inconsistency. Document the reason and identify whether any useful part belongs in a new routine."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Maintenance decisions should account for duplication. Two systems that once served different purposes may now copy the same information, increasing effort and error. Identify what would actually be lost by removing one. A short trial of a simpler version can reveal whether the retired step had a benefit that was initially overlooked."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Vic maintains a daily paper planner after switching to a shared schedule that already covers the same tasks. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a review decision and the evidence needed.",
+          "solution": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Benefit and duplicated effort are compared.",
+            "The keep/change/retire decision has a reason.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "When is retirement sensible?",
+          "options": [
+            "When the routine’s benefit no longer justifies its cost",
+            "Never, because a streak must be preserved",
+            "Whenever one action is missed"
+          ],
+          "correct": 0,
+          "explanation": "When the routine’s benefit no longer justifies its cost fits the distinction in this lesson. Never, because a streak must be preserved overlooks the stated limits; Whenever one action is missed substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "evidence-review",
+        "title": "20. Make an honest maintenance plan",
+        "takeaway": "A final review joins the target, observations, changes and limits into a reusable plan.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A final review joins the target, observations, changes and limits into a reusable plan. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A reusable plan names the evidence that would trigger revision: an absent cue, rising setup cost or a changed goal. Review dates prevent indefinite tracking without a decision. Keep uncertainty visible while committing to a modest next action. The quality of the review rests on accurate records and a feasible adjustment, not an impressive transformation claim."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a keep/change decision with an uncertainty statement.",
+          "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Observations and alternate explanations are separate.",
+            "A recovery branch and review date are specified.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which review is most honest?",
+          "options": [
+            "Describe observations, alternate explanations and the next decision",
+            "Claim a permanent habit from two weeks",
+            "Hide missed and unavailable opportunities"
+          ],
+          "correct": 0,
+          "explanation": "Describe observations, alternate explanations and the next decision fits the distinction in this lesson. Claim a permanent habit from two weeks overlooks the stated limits; Hide missed and unavailable opportunities substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+            "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+            "section": "Abstract: repetition, automaticity and measurement criteria",
+            "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Wen’s maintenance decision",
+          "summary": "Separate useful observations from causal claims, then choose the next version of the routine.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Read two-week bag-packing log",
+              "description": "The record includes fewer searches, two unavailable evenings and one missed cue."
+            },
+            {
+              "id": "1",
+              "label": "Still useful and feasible?",
+              "description": "Compare search benefit, setup effort and the current timetable.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Keep normal cue",
+              "description": "Keep after-dinner packing when the benefit and fit remain worthwhile."
+            },
+            {
+              "id": "3",
+              "label": "Change or retire deliberately",
+              "description": "If the purpose or context has changed, simplify the setup, choose another cue or stop an unnecessary routine."
+            },
+            {
+              "id": "4",
+              "label": "Set next review and recovery",
+              "description": "Record a late-shift branch and a review date; a lighter timetable remains an alternate explanation for improvement."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "compare benefit and cost",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "yes: purpose and fit remain",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "no: purpose or fit changed",
+              "from": "1"
+            },
+            {
+              "to": "4",
+              "label": "document maintenance plan",
+              "from": "2"
+            },
+            {
+              "to": "4",
+              "label": "document revised decision",
+              "from": "3"
+            },
+            {
+              "to": "0",
+              "label": "review new observations at the agreed date",
+              "from": "4"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Read two-week bag-packing log",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "The record includes fewer searches, two unavailable evenings and one missed cue."
+            },
+            {
+              "title": "Still useful and feasible?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Compare search benefit, setup effort and the current timetable."
+            },
+            {
+              "title": "Keep normal cue",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Keep after-dinner packing when the benefit and fit remain worthwhile."
+            },
+            {
+              "title": "Change or retire deliberately",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If the purpose or context has changed, simplify the setup, choose another cue or stop an unnecessary routine."
+            },
+            {
+              "title": "Set next review and recovery",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Record a late-shift branch and a review date; a lighter timetable remains an alternate explanation for improvement."
+            }
+          ]
+        }
+      }
+    ],
+    "resources": {
+      "folder": "habits-behaviour-change-practice",
+      "files": [
+        {
+          "id": "README",
+          "href": "paths/habits-behaviour-change/practice/README.md",
+          "role": "guide",
+          "description": "Start here: sequence, offline use and practice boundaries"
+        },
+        {
+          "id": "sources-and-limits",
+          "href": "paths/habits-behaviour-change/practice/sources-and-limits.md",
+          "role": "reference",
+          "description": "Source scope and evidence limits"
+        },
+        {
+          "id": "01-behaviour-not-identity",
+          "href": "paths/habits-behaviour-change/practice/01-behaviour-not-identity.md",
+          "role": "worksheet",
+          "description": "Describe actions without judging identity worksheet and worked case"
+        },
+        {
+          "id": "02-goals-and-actions",
+          "href": "paths/habits-behaviour-change/practice/02-goals-and-actions.md",
+          "role": "worksheet",
+          "description": "Separate an outcome from its next action worksheet and worked case"
+        },
+        {
+          "id": "03-baseline-observation",
+          "href": "paths/habits-behaviour-change/practice/03-baseline-observation.md",
+          "role": "worksheet",
+          "description": "Observe a baseline before redesigning worksheet and worked case"
+        },
+        {
+          "id": "04-cue-map",
+          "href": "paths/habits-behaviour-change/practice/04-cue-map.md",
+          "role": "worksheet",
+          "description": "Map the cue and surrounding context worksheet and worked case"
+        },
+        {
+          "id": "05-habit-or-routine",
+          "href": "paths/habits-behaviour-change/practice/05-habit-or-routine.md",
+          "role": "worksheet",
+          "description": "Distinguish repetition from automaticity worksheet and worked case"
+        },
+        {
+          "id": "06-small-start",
+          "href": "paths/habits-behaviour-change/practice/06-small-start.md",
+          "role": "worksheet",
+          "description": "Choose a version that fits a real opportunity worksheet and worked case"
+        },
+        {
+          "id": "07-time-variation",
+          "href": "paths/habits-behaviour-change/practice/07-time-variation.md",
+          "role": "worksheet",
+          "description": "Reject fixed habit deadlines worksheet and worked case"
+        },
+        {
+          "id": "08-if-then",
+          "href": "paths/habits-behaviour-change/practice/08-if-then.md",
+          "role": "worksheet",
+          "description": "Turn an intention into a situation/action plan worksheet and worked case"
+        },
+        {
+          "id": "09-friction",
+          "href": "paths/habits-behaviour-change/practice/09-friction.md",
+          "role": "worksheet",
+          "description": "Change the effort around the action worksheet and worked case"
+        },
+        {
+          "id": "10-prompt-design",
+          "href": "paths/habits-behaviour-change/practice/10-prompt-design.md",
+          "role": "worksheet",
+          "description": "Use reminders as useful signals worksheet and worked case"
+        },
+        {
+          "id": "11-replacement",
+          "href": "paths/habits-behaviour-change/practice/11-replacement.md",
+          "role": "worksheet",
+          "description": "Offer an alternative that serves the same immediate need worksheet and worked case"
+        },
+        {
+          "id": "12-obstacle-plan",
+          "href": "paths/habits-behaviour-change/practice/12-obstacle-plan.md",
+          "role": "worksheet",
+          "description": "Prepare for a likely obstacle worksheet and worked case"
+        },
+        {
+          "id": "13-measurement",
+          "href": "paths/habits-behaviour-change/practice/13-measurement.md",
+          "role": "worksheet",
+          "description": "Measure opportunities, completion and ease separately worksheet and worked case"
+        },
+        {
+          "id": "14-feedback-reward",
+          "href": "paths/habits-behaviour-change/practice/14-feedback-reward.md",
+          "role": "worksheet",
+          "description": "Notice immediate usefulness without inventing brain claims worksheet and worked case"
+        },
+        {
+          "id": "15-missed-opportunity",
+          "href": "paths/habits-behaviour-change/practice/15-missed-opportunity.md",
+          "role": "worksheet",
+          "description": "Respond to a missed action with information worksheet and worked case"
+        },
+        {
+          "id": "16-one-change-test",
+          "href": "paths/habits-behaviour-change/practice/16-one-change-test.md",
+          "role": "worksheet",
+          "description": "Change one practical element at a time worksheet and worked case"
+        },
+        {
+          "id": "17-changed-context",
+          "href": "paths/habits-behaviour-change/practice/17-changed-context.md",
+          "role": "worksheet",
+          "description": "Rebuild the plan when the environment changes worksheet and worked case"
+        },
+        {
+          "id": "18-support-consent",
+          "href": "paths/habits-behaviour-change/practice/18-support-consent.md",
+          "role": "worksheet",
+          "description": "Ask for support without handing over control worksheet and worked case"
+        },
+        {
+          "id": "19-maintain-or-retire",
+          "href": "paths/habits-behaviour-change/practice/19-maintain-or-retire.md",
+          "role": "worksheet",
+          "description": "Decide whether to keep, change or retire a routine worksheet and worked case"
+        },
+        {
+          "id": "20-evidence-review",
+          "href": "paths/habits-behaviour-change/practice/20-evidence-review.md",
+          "role": "worksheet",
+          "description": "Make an honest maintenance plan worksheet and worked case"
+        },
+        {
+          "id": "foundation-project",
+          "href": "paths/habits-behaviour-change/practice/foundation-project.md",
+          "role": "worksheet",
+          "description": "A factual baseline and a feasible target project sheet"
+        },
+        {
+          "id": "intermediate-project",
+          "href": "paths/habits-behaviour-change/practice/intermediate-project.md",
+          "role": "worksheet",
+          "description": "A small routine experiment project sheet"
+        },
+        {
+          "id": "advanced-project",
+          "href": "paths/habits-behaviour-change/practice/advanced-project.md",
+          "role": "worksheet",
+          "description": "An evidence-based maintenance decision project sheet"
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/habits-behaviour-change/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/habits-behaviour-change/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/habits-behaviour-change/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/habits-behaviour-change/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "practice-behaviour-not-identity",
+          "title": "Describe actions without judging identity practice",
+          "goal": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+          "fileIds": [
+            "README",
+            "01-behaviour-not-identity",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 01-behaviour-not-identity.md.",
+            "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-goals-and-actions",
+          "title": "Separate an outcome from its next action practice",
+          "goal": "Write an outcome, controllable action and boundary for Arun.",
+          "fileIds": [
+            "README",
+            "02-goals-and-actions",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 02-goals-and-actions.md.",
+            "Write an outcome, controllable action and boundary for Arun.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-baseline-observation",
+          "title": "Observe a baseline before redesigning practice",
+          "goal": "Design three columns that reveal opportunities and constraints.",
+          "fileIds": [
+            "README",
+            "03-baseline-observation",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 03-baseline-observation.md.",
+            "Design three columns that reveal opportunities and constraints.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-cue-map",
+          "title": "Map the cue and surrounding context practice",
+          "goal": "Map the cue, action, immediate payoff and competing option.",
+          "fileIds": [
+            "README",
+            "04-cue-map",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 04-cue-map.md.",
+            "Map the cue, action, immediate payoff and competing option.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-habit-or-routine",
+          "title": "Distinguish repetition from automaticity practice",
+          "goal": "Explain why Lea has a useful routine without evidence of automaticity.",
+          "fileIds": [
+            "README",
+            "05-habit-or-routine",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 05-habit-or-routine.md.",
+            "Explain why Lea has a useful routine without evidence of automaticity.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-small-start",
+          "title": "Choose a version that fits a real opportunity practice",
+          "goal": "Define a useful minimum and optional extension.",
+          "fileIds": [
+            "README",
+            "06-small-start",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 06-small-start.md.",
+            "Define a useful minimum and optional extension.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-time-variation",
+          "title": "Reject fixed habit deadlines practice",
+          "goal": "Write a fair interpretation of Dev’s experience and a next check.",
+          "fileIds": [
+            "README",
+            "07-time-variation",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 07-time-variation.md.",
+            "Write a fair interpretation of Dev’s experience and a next check.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-if-then",
+          "title": "Turn an intention into a situation/action plan practice",
+          "goal": "Write one recognisable if–then plan for Farah.",
+          "fileIds": [
+            "README",
+            "08-if-then",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 08-if-then.md.",
+            "Write one recognisable if–then plan for Farah.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-friction",
+          "title": "Change the effort around the action practice",
+          "goal": "Choose one reversible change and predict what it may improve.",
+          "fileIds": [
+            "README",
+            "09-friction",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 09-friction.md.",
+            "Choose one reversible change and predict what it may improve.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-prompt-design",
+          "title": "Use reminders as useful signals practice",
+          "goal": "Redesign the prompt and define what to observe.",
+          "fileIds": [
+            "README",
+            "10-prompt-design",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 10-prompt-design.md.",
+            "Redesign the prompt and define what to observe.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-replacement",
+          "title": "Offer an alternative that serves the same immediate need practice",
+          "goal": "Design an alternative that respects the need for contact and timing.",
+          "fileIds": [
+            "README",
+            "11-replacement",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 11-replacement.md.",
+            "Design an alternative that respects the need for contact and timing.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-obstacle-plan",
+          "title": "Prepare for a likely obstacle practice",
+          "goal": "Write a normal plan and a travel-day branch.",
+          "fileIds": [
+            "README",
+            "12-obstacle-plan",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 12-obstacle-plan.md.",
+            "Write a normal plan and a travel-day branch.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-measurement",
+          "title": "Measure opportunities, completion and ease separately practice",
+          "goal": "Calculate the opportunity-based rate and state its limit.",
+          "fileIds": [
+            "README",
+            "13-measurement",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 13-measurement.md.",
+            "Calculate the opportunity-based rate and state its limit.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-feedback-reward",
+          "title": "Notice immediate usefulness without inventing brain claims practice",
+          "goal": "Name an immediate consequence and a separate longer-term outcome.",
+          "fileIds": [
+            "README",
+            "14-feedback-reward",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 14-feedback-reward.md.",
+            "Name an immediate consequence and a separate longer-term outcome.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-missed-opportunity",
+          "title": "Respond to a missed action with information practice",
+          "goal": "Write a recovery note and a next action without blame.",
+          "fileIds": [
+            "README",
+            "15-missed-opportunity",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 15-missed-opportunity.md.",
+            "Write a recovery note and a next action without blame.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-one-change-test",
+          "title": "Change one practical element at a time practice",
+          "goal": "Choose a cleaner comparison and state a confound.",
+          "fileIds": [
+            "README",
+            "16-one-change-test",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 16-one-change-test.md.",
+            "Choose a cleaner comparison and state a confound.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-changed-context",
+          "title": "Rebuild the plan when the environment changes practice",
+          "goal": "Translate the routine into the new context.",
+          "fileIds": [
+            "README",
+            "17-changed-context",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 17-changed-context.md.",
+            "Translate the routine into the new context.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-support-consent",
+          "title": "Ask for support without handing over control practice",
+          "goal": "Draft a narrower agreement with an exit option.",
+          "fileIds": [
+            "README",
+            "18-support-consent",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 18-support-consent.md.",
+            "Draft a narrower agreement with an exit option.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-maintain-or-retire",
+          "title": "Decide whether to keep, change or retire a routine practice",
+          "goal": "Choose a review decision and the evidence needed.",
+          "fileIds": [
+            "README",
+            "19-maintain-or-retire",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 19-maintain-or-retire.md.",
+            "Choose a review decision and the evidence needed.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-evidence-review",
+          "title": "Make an honest maintenance plan practice",
+          "goal": "Write a keep/change decision with an uncertainty statement.",
+          "fileIds": [
+            "README",
+            "20-evidence-review",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 20-evidence-review.md.",
+            "Write a keep/change decision with an uncertainty statement.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "foundation",
+          "title": "A factual baseline and a feasible target",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "foundation-project",
+            "sources-and-limits",
+            "01-behaviour-not-identity",
+            "02-goals-and-actions",
+            "03-baseline-observation",
+            "04-cue-map",
+            "05-habit-or-routine",
+            "06-small-start",
+            "07-time-variation",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open foundation-project.md.",
+            "State a useful outcome and a controllable action.",
+            "Record three opportunities with context, completion and constraints.",
+            "Choose a recognised cue and a useful minimum.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        },
+        {
+          "id": "intermediate",
+          "title": "A small routine experiment",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "intermediate-project",
+            "sources-and-limits",
+            "08-if-then",
+            "09-friction",
+            "10-prompt-design",
+            "11-replacement",
+            "12-obstacle-plan",
+            "13-measurement",
+            "14-feedback-reward",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open intermediate-project.md.",
+            "Write a cue/action plan and an obstacle branch.",
+            "Try one reversible setup change, keeping the target stable.",
+            "Record available opportunities, completion and ease separately.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        },
+        {
+          "id": "advanced",
+          "title": "An evidence-based maintenance decision",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "advanced-project",
+            "sources-and-limits",
+            "15-missed-opportunity",
+            "16-one-change-test",
+            "17-changed-context",
+            "18-support-consent",
+            "19-maintain-or-retire",
+            "20-evidence-review",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open advanced-project.md.",
+            "Compare benefit, effort and context fit.",
+            "State what was observed and what cannot be inferred.",
+            "Choose keep, change or retire with a recovery branch and review date.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        }
+      ],
+      "lessonTasks": {
+        "behaviour-not-identity": "practice-behaviour-not-identity",
+        "goals-and-actions": "practice-goals-and-actions",
+        "baseline-observation": "practice-baseline-observation",
+        "cue-map": "practice-cue-map",
+        "habit-or-routine": "practice-habit-or-routine",
+        "small-start": "practice-small-start",
+        "time-variation": "practice-time-variation",
+        "if-then": "practice-if-then",
+        "friction": "practice-friction",
+        "prompt-design": "practice-prompt-design",
+        "replacement": "practice-replacement",
+        "obstacle-plan": "practice-obstacle-plan",
+        "measurement": "practice-measurement",
+        "feedback-reward": "practice-feedback-reward",
+        "missed-opportunity": "practice-missed-opportunity",
+        "one-change-test": "practice-one-change-test",
+        "changed-context": "practice-changed-context",
+        "support-consent": "practice-support-consent",
+        "maintain-or-retire": "practice-maintain-or-retire",
+        "evidence-review": "practice-evidence-review"
+      },
+      "bundle": {
+        "href": "paths/habits-behaviour-change/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/habits-behaviour-change/practice/lab.html",
+        "title": "Open interactive practice studio"
+      }
+    }
+  },
+  {
     "id": "react",
     "title": "JavaScript → TypeScript → React",
     "category": "Web development",
@@ -38173,6 +40972,1849 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/kubernetes/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "learning-how-to-learn",
+    "title": "Learning How to Learn",
+    "category": "Personal effectiveness",
+    "status": "ready",
+    "description": "Build a practical learning loop with retrieval, spacing, mixed cases, feedback and cautious transfer through 20 beginner-friendly lessons and three evidence-based paper projects.",
+    "level": "Beginner → applied practice → independent review",
+    "prerequisites": [
+      "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
+    ],
+    "setup": [
+      "Read README.md in the practice bundle.",
+      "Print or copy the blank worksheets; all examples use fictional people and synthetic records.",
+      "Complete your own attempt before checking the filled example; no commands or installation are required.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "outcomes": [
+      "Choose a checkable learning target and baseline.",
+      "Retrieve, check and correct without mistaking familiarity for recall.",
+      "Space realistic occasions and mix related cases for rule selection.",
+      "Use specific feedback, error patterns and confidence checks.",
+      "Demonstrate delayed application and state the limits of transfer."
+    ],
+    "nextSteps": [
+      "Use one small target in your own setting and record actual evidence.",
+      "Use the companion paths for deeper practice when useful.",
+      "These projects assess practical reasoning, not clinical treatment or professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+        "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266"
+      },
+      {
+        "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
+        "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/"
+      },
+      {
+        "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
+        "url": "https://escholarship.org/uc/item/3rr6q10c"
+      },
+      {
+        "title": "Rohrer & Taylor (2007), The shuffling of mathematics problems improves learning",
+        "url": "https://link.springer.com/article/10.1007/s11251-007-9015-8"
+      },
+      {
+        "title": "Butler (2010), Repeated testing produces superior transfer of learning relative to repeated studying",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/20804289/"
+      },
+      {
+        "title": "Hattie & Timperley (2007), The Power of Feedback",
+        "url": "https://doi.org/10.3102/003465430298487"
+      },
+      {
+        "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+        "url": "https://doi.org/10.1037/0003-066X.54.7.493"
+      },
+      {
+        "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete printable practice bundle",
+        "href": "paths/learning-how-to-learn/practice-bundle.zip"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/learning-how-to-learn/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/learning-how-to-learn/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/learning-how-to-learn/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/learning-how-to-learn/practice/lab-model.js"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "learning-target",
+        "title": "1. Choose a useful learning target",
+        "stage": "foundation",
+        "takeaway": "Describe what you want to do, not how much content you will consume.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Learning means a change in what you can recall, explain or do. Finishing a video is an activity; explaining the new procedure without the video is evidence. Choose a small target with a use case and a way to check it. A beginner can start with something ordinary, such as the steps for submitting a leave request.",
+              "Write the target in plain language: by Friday I can explain the three leave-request steps and handle a late request. Record what you already know before studying. If a reliable reference must be consulted during real work, include using that reference correctly in the target rather than memorising everything."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya has 15 minutes on three evenings. She replaces learn office policy with correctly decide whether three sample leave requests need approval. Her baseline is one correct decision out of three; Friday will use three different cases."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite learn cooking into an observable target for a first attempt at a simple meal. Include a baseline and a check.",
+          "solution": "One possible target is follow the supplied lentil recipe and explain when to reduce the heat. Baseline: I cannot identify that step. Check: prepare a small batch using the recipe, identify the simmer cue and compare the result with the recipe description. This measures a useful action; reading five recipes alone would not.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Target names an observable action and its use.",
+            "Baseline and later check measure that action.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which is an observable target?",
+          "options": [
+            "Watch four policy videos.",
+            "Become naturally good at learning.",
+            "Explain and apply the three approval rules to new requests."
+          ],
+          "correct": 2,
+          "explanation": "A usable target specifies a performance and a check. Watching content records exposure but does not show that the learner can apply a rule."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "recognition-recall",
+        "title": "2. Separate familiarity from recall",
+        "stage": "foundation",
+        "takeaway": "Recognising a sentence and producing an answer are different tasks.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A familiar page can feel easy because the answer is visible. When the page closes, the cues disappear. Use that difference to decide what needs practice. Recognition is useful for navigating a reference; unaided recall matters when the task requires producing information without it.",
+              "After a short reading, close the source and write what you can remember. Then reopen it to check. Missing details are information about this attempt, not a judgement of ability. Start with a small passage and a specific question so the attempt is manageable."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya recognises the phrase line manager approval but cannot state which request needs it. She records familiar, not yet retrievable and asks: which requests need approval, and why?"
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Read this synthetic rule once: requests of two or more days need a manager; one-day requests need a coordinator; urgent same-day requests also need a manager. Close it and explain the urgent exception.",
+          "solution": "The urgent same-day request needs manager approval even though its duration is one day. Someone who remembers only the duration rule may send it to the coordinator. Comparing the closed-source explanation with the rule exposes that gap.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Urgent same-day exception is produced with the rule closed.",
+            "Answer distinguishes urgency from ordinary duration.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What most directly checks recall?",
+          "options": [
+            "Read until the paragraph feels familiar.",
+            "Explain the exception with the source closed, then check it.",
+            "Highlight the exception twice."
+          ],
+          "correct": 1,
+          "explanation": "Closing the source removes the visible answer cue. Highlighting or rereading may increase familiarity while leaving the exception unretrievable."
+        },
+        "references": [
+          {
+            "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
+            "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
+            "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
+            "reviewed": "2026-09-30",
+            "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+          }
+        ]
+      },
+      {
+        "id": "retrieval-loop",
+        "title": "3. Use a retrieval and correction loop",
+        "stage": "foundation",
+        "takeaway": "Attempt, compare, correct, and try again later.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Retrieval practice asks you to produce an answer from memory. It can be a spoken explanation, a blank-page list or a response to a question. Keep the first attempt low stakes. Open the source afterward and correct errors so an incorrect guess does not become your only record.",
+              "Make the question match the target. For explaining policy, ask why and when, not only what word was on the page. Mark accurate, partly accurate or missing using an answer key. A later attempt gives better evidence of retention than copying the corrected answer immediately."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya writes urgent request goes to coordinator. Checking shows the manager exception. She records the reason, then schedules a new urgent case for Thursday rather than repeatedly copying manager."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Create two retrieval questions for the three request rules and show how you would correct a wrong response.",
+          "solution": "Question one: who approves a two-day planned request? Manager. Question two: who approves a same-day urgent one-day request? Manager because urgency overrides the usual one-day route. If coordinator is answered, compare with the source, label the missing exception, then test a fresh urgent case later.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Two prompts require producing a route and a reason.",
+            "Correction identifies the missing override and a later retry.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "After a wrong retrieval answer, what is useful?",
+          "options": [
+            "Check the rule, explain the correction and revisit it later.",
+            "Keep rehearsing the wrong guess without checking.",
+            "Avoid all further attempts."
+          ],
+          "correct": 0,
+          "explanation": "A checked correction identifies the actual gap and a later case tests what remains. Rehearsing an unchecked guess can preserve the error."
+        },
+        "references": [
+          {
+            "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
+            "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
+            "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
+            "reviewed": "2026-09-30",
+            "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+          }
+        ],
+        "diagram": {
+          "title": "Attempt, check, correct, return",
+          "summary": "Closed-source retrieval and checked feedback serve different purposes.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Prompt",
+              "description": "Choose a question matching the learning target."
+            },
+            {
+              "id": "n1",
+              "label": "Attempt",
+              "description": "Produce an answer with the source closed."
+            },
+            {
+              "id": "n2",
+              "label": "Compare",
+              "description": "Reopen the checked rule and identify gaps."
+            },
+            {
+              "id": "n3",
+              "label": "Repair",
+              "description": "Explain the correction in your own words."
+            },
+            {
+              "id": "n4",
+              "label": "Later case",
+              "description": "Return after a gap with a new comparable case."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "retrieve"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "check"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "correct"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "space"
+            }
+          ],
+          "steps": [
+            {
+              "title": "retrieve",
+              "explanation": "Choose a question matching the learning target. Produce an answer with the source closed.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "check",
+              "explanation": "Produce an answer with the source closed. Reopen the checked rule and identify gaps.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "correct",
+              "explanation": "Reopen the checked rule and identify gaps. Explain the correction in your own words.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "space",
+              "explanation": "Explain the correction in your own words. Return after a gap with a new comparable case.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "small-prompts",
+        "title": "4. Build clear practice prompts",
+        "stage": "foundation",
+        "takeaway": "A prompt should test one meaningful decision and have a checkable answer.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A card saying policy is too broad. A card saying who approves a planned one-day request? has a clear answer. Include enough context to distinguish cases, but do not reveal the answer in the question. Avoid cards that reward memorising an arbitrary sentence while missing its meaning.",
+              "Use several formats: recall a rule, explain a reason, choose an action in a case. Keep an answer key with the essential points and accepted alternatives. Long procedures often need a scenario or a checklist practice rather than dozens of disconnected word cards."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya replaces urgent requests need manager approval, true? with a new case: a person needs today off unexpectedly; which route applies? The new prompt removes the visible answer."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Repair this prompt: the coordinator approves one-day requests, right? Add an answer key and one case variant.",
+          "solution": "A repaired question is who approves a planned one-day request under these rules? Key: coordinator. Variant: who approves an urgent same-day one-day request? Key: manager. The pair tests the exception without turning every one-day case into the same answer.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Repaired prompt omits the visible coordinator answer.",
+            "Variant changes planned request to urgent same-day request.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which prompt gives away least of its answer?",
+          "options": [
+            "Is coordinator the coordinator answer?",
+            "Repeat the sentence printed above.",
+            "Who approves this planned one-day request?"
+          ],
+          "correct": 2,
+          "explanation": "The case requires producing an approver from the rule. A question that already prints coordinator can be answered through recognition instead."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "spaced-returns",
+        "title": "5. Return after a gap",
+        "stage": "foundation",
+        "takeaway": "Spread useful attempts across available days.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Spacing means separating practice occasions. A gap creates a later opportunity to retrieve rather than simply holding an answer in immediate memory. Choose gaps you can keep and adjust after observing difficulty. The right interval depends on the material, current knowledge and how long you need to retain it.",
+              "Start with a practical plan, such as Tuesday, Thursday and next Monday. This is an example, not a scientifically exact schedule. If recall repeatedly fails, revisit sooner or simplify the prompt; if it remains easy after gaps, consider a longer gap. A missed date does not require restarting the entire course."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya studies Tuesday for 12 minutes, answers three cases Thursday for 6 minutes, and checks again Monday. She cannot guarantee any particular percentage remembered; she can record which decisions remain accurate."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "You can study Monday and Friday but not Wednesday. Plan three separated attempts over two weeks and explain the limitation.",
+          "solution": "Use Monday of week one for study plus first attempt, Friday for closed-source cases and Monday of week two for new cases. The unequal gaps are acceptable when they fit real availability. Results may suggest a shorter gap for the urgent exception. This schedule is a starting experiment, not a universal optimum.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Three attempts occur on genuinely available dates across two weeks.",
+            "Unequal gaps are explained without claiming an optimal formula.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should determine review gaps?",
+          "options": [
+            "The belief that missed dates erase learning.",
+            "Retention need, observed recall and realistic availability.",
+            "A guaranteed identical formula for every topic."
+          ],
+          "correct": 1,
+          "explanation": "Gaps should serve the retention need and fit actual availability. A single exact timetable cannot account for every topic or current recall level."
+        },
+        "references": [
+          {
+            "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
+            "url": "https://escholarship.org/uc/item/3rr6q10c",
+            "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
+            "reviewed": "2026-09-30",
+            "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
+          }
+        ],
+        "diagram": {
+          "title": "A realistic three-occasion plan",
+          "summary": "These dates are an adjustable example, not an optimum formula.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Tuesday",
+              "description": "Introduce and attempt the rule for 12 minutes."
+            },
+            {
+              "id": "n1",
+              "label": "Thursday",
+              "description": "Retrieve mixed cases for six minutes."
+            },
+            {
+              "id": "n2",
+              "label": "Monday",
+              "description": "Use new cases after a gap."
+            },
+            {
+              "id": "n3",
+              "label": "Adjust",
+              "description": "Use actual errors and availability to choose the next gap."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "two-day gap"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "four-day gap"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "observe and adapt"
+            }
+          ],
+          "steps": [
+            {
+              "title": "two-day gap",
+              "explanation": "Introduce and attempt the rule for 12 minutes. Retrieve mixed cases for six minutes.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "four-day gap",
+              "explanation": "Retrieve mixed cases for six minutes. Use new cases after a gap.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "observe and adapt",
+              "explanation": "Use new cases after a gap. Use actual errors and availability to choose the next gap.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "check-baseline",
+        "title": "6. Take a small baseline and stage check",
+        "stage": "foundation",
+        "takeaway": "A comparable delayed check is more informative than study time alone.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Before starting, answer a few representative questions without the source. Keep the questions and scoring rule. Later use different questions testing the same rule and a similar time allowance. Improvement on identical memorised questions can overstate what you can do.",
+              "For the foundation project, count a case correct only if both approval route and reason are correct. Record support used and the gap since practice. With only three cases, one changed answer greatly changes the percentage; keep the actual counts visible and avoid sweeping conclusions."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya scores one of three before practice and three of three on Friday after a two-day gap. She reports those counts, the small sample and the limited policy coverage rather than claiming permanent mastery."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Score these answers: planned two-day manager because duration; urgent one-day coordinator because duration; planned one-day coordinator because duration. State a fair next check.",
+          "solution": "Two of three are correct. The urgent answer misses the override. A fair follow-up uses a new urgent case plus different planned durations after a gap, with the same rule for counting route and reason. Three cases cannot establish broad competence in every policy situation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Count is two correct cases out of three.",
+            "Follow-up uses new cases and the same route-plus-reason rule.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Why keep counts as well as percentages?",
+          "options": [
+            "Small samples make percentages look more precise than they are.",
+            "Percentages prove permanent retention.",
+            "Counts remove the need for a scoring rule."
+          ],
+          "correct": 0,
+          "explanation": "With three cases, one changed answer moves the percentage by a third. Counts preserve the small sample rather than implying precise permanent mastery."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "explain-connections",
+        "title": "7. Explain connections in your own words",
+        "stage": "intermediate",
+        "takeaway": "A useful explanation states why a rule fits the case.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Self-explanation means making the reasoning visible while reading an example or doing a task. Ask why this step applies and how it connects to what you already know. A fluent invented explanation can still be wrong, so compare it with a reliable source.",
+              "Use short explanations anchored in the material. I know urgent requests go to a manager because this policy gives urgency priority over duration is stronger than managers always do important things. The second statement adds a plausible story that the rule does not establish."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya draws two tests: is it urgent today? If yes, manager. Otherwise is it two or more days? If yes, manager; else coordinator. She checks this ordering against all three supplied rules."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Explain why testing urgency before duration avoids an error. Give a counterexample to duration alone.",
+          "solution": "An urgent one-day request is the counterexample. Duration alone sends it to the coordinator, but the exception sends it to the manager. Testing urgency first makes the override explicit. Another decision order could work if it explicitly checks the override before giving a final answer.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Urgent one-day case demonstrates the duration-only error.",
+            "Explanation anchors the override in the supplied policy.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which explanation is supported?",
+          "options": [
+            "Managers always approve anything important.",
+            "A confident explanation needs no checking.",
+            "Urgency overrides the usual one-day route in this policy."
+          ],
+          "correct": 2,
+          "explanation": "The override is explicitly supplied in this policy. A story about managers handling important things adds an unsupported generalisation."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "worked-to-independent",
+        "title": "8. Move from worked examples to independent attempts",
+        "stage": "intermediate",
+        "takeaway": "Use help deliberately and then test what remains without it.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A worked example shows decisions and their reasons. A beginner can first explain each step, then fill a missing step, then solve a new case alone. Keep the source available when the goal is learning the procedure, and label any support used during assessment.",
+              "If the independent attempt fails, inspect the exact step rather than jumping straight to more complete examples. Gradually reduce support at a pace that preserves useful practice. Difficulty by itself is not proof that learning is happening."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya first sees a solved urgent case, then completes the reason for a planned two-day case, then routes a fresh one-day request. She distinguishes copied reasoning from her independent answer."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a three-step help reduction for learning a recipe adjustment, without assuming the learner already knows the process.",
+          "solution": "First study a worked example of reducing a four-serving recipe to two and explain each halving. Next fill missing amounts in another two-serving example with the rule visible. Finally adjust a new simple recipe independently, then compare amounts. If a step fails, revisit that calculation rather than calling all cooking ability weak.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Support reduces from worked example to missing step to new independent recipe adjustment.",
+            "Amounts and reasoning are compared with a checked reference.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What shows independent performance?",
+          "options": [
+            "Removing help before any explanation is understood.",
+            "A new attempt with the stated support removed and the result checked.",
+            "Copying a complete worked solution."
+          ],
+          "correct": 1,
+          "explanation": "A new checked attempt with reduced support shows what the learner can produce. Copying a worked solution only establishes access to the displayed answer."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "mix-related-cases",
+        "title": "9. Mix related cases to choose the method",
+        "stage": "intermediate",
+        "takeaway": "Interleave distinguishable cases after an initial introduction.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "In blocked practice, several similar problems appear together. That can help an initial introduction but also tells you which method to use. In mixed practice, related cases appear in varied order so you must first choose a method. Start with categories you can explain before increasing variety.",
+              "Mixing planned one-day, planned multi-day and urgent one-day requests tests whether you notice the distinguishing feature. This is different from switching between policy, email and cooking every minute. Keep enough time to complete and check each attempt."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya practices A A A then B B B with explanations, then tries A B C A C B without labels. She discovers that she used duration for an urgent case and adds an explicit urgency check."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Arrange six practice cases that force choosing between the three request routes. Explain why labels should be removed.",
+          "solution": "Use planned one-day, urgent one-day, planned three-day, planned one-day, planned two-day, urgent one-day. Remove category headings so the learner must read the details and choose. Keep answers in a separate key; mixing without knowing the basic rules may only produce confusion.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Six cases include planned short, planned long and urgent requests.",
+            "Category labels are removed so selection must be made.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What is the aim of mixing related cases?",
+          "options": [
+            "Practise identifying which rule applies.",
+            "Switch unrelated tasks as often as possible.",
+            "Make every attempt impossible."
+          ],
+          "correct": 0,
+          "explanation": "Related cases require deciding which rule fits their distinguishing feature. Frequent switching among unrelated tasks is a different activity."
+        },
+        "references": [
+          {
+            "title": "Rohrer & Taylor (2007), The shuffling of mathematics problems improves learning",
+            "url": "https://link.springer.com/article/10.1007/s11251-007-9015-8",
+            "section": "Mathematics practice experiments comparing massed/spaced and blocked/shuffled problems",
+            "reviewed": "2026-09-30",
+            "scope": "College mathematics experiments; mixing related categories is different from switching unrelated work every few minutes."
+          }
+        ],
+        "diagram": {
+          "title": "Choose the rule before the answer",
+          "summary": "Urgency is an override in this synthetic policy.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Case",
+              "description": "Read duration and whether it is urgent today."
+            },
+            {
+              "id": "n1",
+              "label": "Urgent",
+              "description": "Urgent same-day requests go to a manager."
+            },
+            {
+              "id": "n2",
+              "label": "Long planned",
+              "description": "Planned requests of two or more days go to a manager."
+            },
+            {
+              "id": "n3",
+              "label": "Short planned",
+              "description": "Planned one-day requests go to the coordinator."
+            },
+            {
+              "id": "n4",
+              "label": "Check",
+              "description": "State the case feature and compare with the source."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "urgent today"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "planned two or more days"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "planned one day"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "explain"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "explain"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "explain"
+            }
+          ],
+          "steps": [
+            {
+              "title": "urgent today",
+              "explanation": "Read duration and whether it is urgent today. Urgent same-day requests go to a manager.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "planned two or more days",
+              "explanation": "Read duration and whether it is urgent today. Planned requests of two or more days go to a manager.",
+              "activeNodes": [
+                "n0",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "planned one day",
+              "explanation": "Read duration and whether it is urgent today. Planned one-day requests go to the coordinator.",
+              "activeNodes": [
+                "n0",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "explain",
+              "explanation": "Urgent same-day requests go to a manager. State the case feature and compare with the source.",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "explain",
+              "explanation": "Planned requests of two or more days go to a manager. State the case feature and compare with the source.",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ]
+            },
+            {
+              "title": "explain",
+              "explanation": "Planned one-day requests go to the coordinator. State the case feature and compare with the source.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                5
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "feedback-action",
+        "title": "10. Turn feedback into the next attempt",
+        "stage": "intermediate",
+        "takeaway": "Feedback is useful when it identifies a gap and a repair.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Feedback can describe the target, your current response and a next step. You did badly gives little direction. You used duration but missed the same-day urgency exception points to a specific decision. Ask for examples or criteria when feedback is vague.",
+              "Write one action you will take, then attempt a comparable case. Do not treat praise, speed or confidence as evidence that the action is correct. Check whether the revised answer satisfies the original criterion, and ask for clarification if the feedback conflicts with the source."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "A colleague tells Maya to be more careful. She asks which case and rule were wrong. The colleague identifies the urgent case; Maya adds the urgency question and tests it on a new example."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Convert this feedback into a repair: your explanation names an approver but does not say why. Show a revised answer.",
+          "solution": "Repair: add the case feature and matching rule. Revised answer: manager, because the request is urgent for today and that exception overrides the normal one-day coordinator route. Test a new urgent request later to see whether the explanation is available without the prompt.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Revised response states approver, case feature and applicable rule.",
+            "Feedback produces a specific repair and a new attempt.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which feedback best supports repair?",
+          "options": [
+            "You are just not a policy person.",
+            "Excellent personality!",
+            "Name the missed rule and ask for a new application."
+          ],
+          "correct": 2,
+          "explanation": "A missed rule and a new application connect the criterion to a repair. Personality labels and broad praise do not identify the decision to change."
+        },
+        "references": [
+          {
+            "title": "Hattie & Timperley (2007), The Power of Feedback",
+            "url": "https://doi.org/10.3102/003465430298487",
+            "section": "Feedback model: target, current performance, next steps and differential feedback effects",
+            "reviewed": "2026-09-30",
+            "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ],
+        "diagram": {
+          "title": "Turn a comment into a repair",
+          "summary": "Specific feedback names the decision that needs work.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Comment",
+              "description": "Be more careful is too vague to act on."
+            },
+            {
+              "id": "n1",
+              "label": "Clarify",
+              "description": "Ask which case, criterion and rule were missed."
+            },
+            {
+              "id": "n2",
+              "label": "Action",
+              "description": "Add an urgency-first check to the decision."
+            },
+            {
+              "id": "n3",
+              "label": "Retry",
+              "description": "Attempt a fresh urgent case without the answer visible."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "ask for detail"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "choose repair"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "check revision"
+            }
+          ],
+          "steps": [
+            {
+              "title": "ask for detail",
+              "explanation": "Be more careful is too vague to act on. Ask which case, criterion and rule were missed.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "choose repair",
+              "explanation": "Ask which case, criterion and rule were missed. Add an urgency-first check to the decision.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "check revision",
+              "explanation": "Add an urgency-first check to the decision. Attempt a fresh urgent case without the answer visible.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "error-patterns",
+        "title": "11. Keep a short error log",
+        "stage": "intermediate",
+        "takeaway": "Group errors by the decision that failed.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "An error log records the question, your response, the checked answer and a likely cause. Causes are hypotheses: missing knowledge, misreading context, selecting the wrong rule or a slip. Do not infer a permanent trait from one wrong answer.",
+              "Look for repeated patterns and choose one repair. If three errors all omit the urgency cue, rereading all policy pages may waste time. Make a cue-identification question and test it after a gap. If the source is ambiguous, record the ambiguity instead of pretending the key is certain."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya logs two wrong urgent cases and one hurried duration slip. She groups the first two as rule selection and the third as reading accuracy. Their next practice tasks differ."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify forgetting the manager exception, reading three days as one, and applying coordinator despite recalling the exception. Suggest one repair for each.",
+          "solution": "Forgetting suggests a knowledge retrieval gap: retrieve the exception after a short gap. Misreading suggests an attention-to-detail issue: restate the case details before routing. Knowing but not applying suggests rule selection: mix urgent and planned cases and explain the first decision. These remain hypotheses to check with another attempt.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Three different errors receive plausible distinct classifications.",
+            "Each repair targets the failed decision rather than a trait label.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should an error log avoid?",
+          "options": [
+            "Planning a targeted retry.",
+            "Turning one attempt into a permanent ability label.",
+            "Recording the original question."
+          ],
+          "correct": 1,
+          "explanation": "One attempt supports a tentative explanation, not a permanent ability judgement. Keeping the original question makes the repair inspectable."
+        },
+        "references": [
+          {
+            "title": "Hattie & Timperley (2007), The Power of Feedback",
+            "url": "https://doi.org/10.3102/003465430298487",
+            "section": "Feedback model: target, current performance, next steps and differential feedback effects",
+            "reviewed": "2026-09-30",
+            "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ]
+      },
+      {
+        "id": "calibrate-confidence",
+        "title": "12. Compare confidence with results",
+        "stage": "intermediate",
+        "takeaway": "A prediction becomes useful when you compare it with a check.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Before answering, predict whether you can explain the rule accurately. After checking, compare your prediction with performance. Confidence can help select what to review, but only if it is repeatedly compared with evidence.",
+              "Use a simple low, medium or high rating. High confidence with a wrong answer deserves attention because you may skip it otherwise. Low confidence with a correct explanation may need another delayed attempt rather than endless immediate rereading. Avoid treating one rating as a personality measure."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya rates urgent routing high but gets it wrong. She rates planned multi-day medium and gets it right. She prioritises the urgent exception and retains the multi-day rule for a later spaced check."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "You predict four of five correct and get two of five. Write a useful next step without calling yourself a poor learner.",
+          "solution": "The prediction exceeded this result by two answers. Inspect which items were confidently wrong, correct those rules and use five fresh comparable cases after a gap. Record support and conditions. A single five-item set is too small to diagnose a stable confidence pattern.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Prediction four of five is compared with actual two of five.",
+            "Confidently wrong items are selected for correction.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What deserves priority?",
+          "options": [
+            "A high-confidence answer that the key shows is wrong.",
+            "Only answers that felt unpleasant.",
+            "Every answer equally forever regardless of results."
+          ],
+          "correct": 0,
+          "explanation": "A confidently wrong item is easy to skip if confidence alone directs review. Checked accuracy supplies the missing calibration evidence."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "study-environment",
+        "title": "13. Make a small session easy to begin",
+        "stage": "intermediate",
+        "takeaway": "Reduce avoidable setup and protect a manageable opportunity.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A realistic session has a cue, a small action and the materials ready. After dinner I will answer two policy cases from the printed sheet is easier to begin than learn everything sometime. A quiet room is useful if available; alternatives may be a short offline page, headphones or a different time.",
+              "Distractions and constraints are different. Closing notifications can reduce interruption; it cannot remove a care duty or unpredictable shift. Plan a fallback that fits those constraints and choose a smaller learning target when needed. There is no required minimum session length."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya puts two questions beside her notebook. If evening care runs late, she answers one question aloud the next morning and checks it at lunch. The fallback keeps contact with the target without pretending to replace every practice session."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a normal cue and fallback for a learner with only two predictable ten-minute windows this week.",
+          "solution": "Normal plan: after Tuesday lunch, answer two prepared questions for ten minutes. Fallback: if lunch is interrupted, use Friday’s window and reduce the target to one rule plus its exception. Record the missed occasion honestly; do not fill the remaining week with imaginary spare time.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Normal cue fits one of the two available ten-minute windows.",
+            "Fallback reduces scope rather than inventing another window.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "An if-then study plan can do what?",
+          "options": [
+            "Create extra hours in an overloaded week.",
+            "Guarantee focus regardless of circumstances.",
+            "Link an available cue to a specific action."
+          ],
+          "correct": 2,
+          "explanation": "A cue-action link makes starting concrete in an available window. It cannot remove care duties or create more time."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
+            "section": "Implementation intentions: linking specified situations to goal-directed responses",
+            "reviewed": "2026-09-30",
+            "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ]
+      },
+      {
+        "id": "retain-useful-notes",
+        "title": "14. Write notes that support later practice",
+        "stage": "intermediate",
+        "takeaway": "Keep cues, checked answers and reasons, not a transcript of everything.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Notes can be a useful external memory. Put a question or case on one side and essential answer points on the other. Include the source and any exception. A summary that is accurate but never used may be less useful than a short set of questions you revisit.",
+              "Choose the form for the task and access needs. A diagram may show an ordered decision, audio may make practice accessible, and a printed sheet may work offline. Preferences and accessibility needs are real; they do not establish fixed visual, auditory or kinaesthetic learner types that require matched instruction."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya keeps one page: three rules, two exception questions, source date and a review log. She uses both spoken recall and written cases because those actions test different parts of her work target."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Reduce a page of copied policy to a usable note outline. Explain how you would choose an accessible format.",
+          "solution": "Outline: target; three checked rules; urgency-before-duration decision; three blank case prompts; answer key; source; next review. Choose large print or audio if it helps access, and still include a way to produce and check answers. Do not label the learner a fixed type based on a preferred format.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Outline contains prompts, checked key, exception and source.",
+            "Accessible format is chosen without assigning a fixed learning-style identity.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "How should practice format be chosen?",
+          "options": [
+            "By whichever format avoids all effort.",
+            "By the task, access needs and whether answers can be checked.",
+            "By a fixed learning-style label alone."
+          ],
+          "correct": 1,
+          "explanation": "Format should provide access and match the required performance. A fixed style label does not establish that only one format can work."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "transfer-cases",
+        "title": "15. Test transfer with changed cases",
+        "stage": "advanced",
+        "takeaway": "A new context checks whether you can use the underlying idea.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Transfer means using knowledge in a different situation. Change surface details while preserving the principle, then explain why the principle still applies. Also include a case where it does not apply so the learner practices boundaries rather than repeating a slogan.",
+              "The policy rules here belong to one fictional organisation. Another organisation may use different approvers. Transfer is recognising that you must find and apply its actual rules, not carrying Maya’s exact policy everywhere. New contexts can need instruction, equipment or supervised practice."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya now routes room bookings: short planned bookings go to reception, long bookings to facilities, and urgent bookings to facilities. She explains the similar exception structure while checking the new names and thresholds."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Use the exception-first idea with a fictional booking rule and state what must be checked before using it in a real workplace.",
+          "solution": "For a supplied rule where urgent bookings always go to facilities, test urgency first, then duration. In a real workplace confirm the current booking policy, what urgent means and who has authority. A similar logical structure does not make the leave-request names or thresholds valid for bookings.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Booking rule is checked before applying exception-first reasoning.",
+            "Real workplace names and thresholds are explicitly untested.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What supports transfer?",
+          "options": [
+            "Explain the shared principle and verify the new context’s rules.",
+            "Assume every organisation has identical policies.",
+            "Repeat only the original example forever."
+          ],
+          "correct": 0,
+          "explanation": "The decision structure may carry over while names and thresholds change. Assuming identical policy would ignore the changed context."
+        },
+        "references": [
+          {
+            "title": "Butler (2010), Repeated testing produces superior transfer of learning relative to repeated studying",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/20804289/",
+            "section": "Abstract: four prose-learning experiments with same and new inferential questions",
+            "reviewed": "2026-09-30",
+            "scope": "Prose-learning experiments with later inference questions; transfer to every workplace skill is not established."
+          }
+        ],
+        "diagram": {
+          "title": "Transfer has a boundary",
+          "summary": "A shared decision structure does not make two policies identical.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Original",
+              "description": "Explain the leave-rule urgency override."
+            },
+            {
+              "id": "n1",
+              "label": "New rule",
+              "description": "Read the booking policy and identify its actual threshold."
+            },
+            {
+              "id": "n2",
+              "label": "Apply",
+              "description": "Use the shared exception-first idea in the new case."
+            },
+            {
+              "id": "n3",
+              "label": "Boundary",
+              "description": "Consult the real policy before acting in a workplace."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "change context"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "verify differences"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "state limits"
+            }
+          ],
+          "steps": [
+            {
+              "title": "change context",
+              "explanation": "Explain the leave-rule urgency override. Read the booking policy and identify its actual threshold.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "verify differences",
+              "explanation": "Read the booking policy and identify its actual threshold. Use the shared exception-first idea in the new case.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "state limits",
+              "explanation": "Use the shared exception-first idea in the new case. Consult the real policy before acting in a workplace.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan-practice-week",
+        "title": "16. Build a flexible practice week",
+        "stage": "advanced",
+        "takeaway": "Choose review occasions and a small assessment you can actually complete.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Start with available windows, the target and the current error pattern. Give each occasion a purpose: introduce or clarify, retrieve, mix cases, or test after a gap. Leave room for a missed occasion. A larger timetable is not automatically better.",
+              "For the intermediate project, build a two-week plan using a topic you can check safely on paper. Include a normal plan and fallback, a baseline, correction and a delayed check. Do not turn every spare minute into compulsory practice; the target should fit your life."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya has Tuesday 12 minutes, Thursday 8 and Monday 10. She uses Tuesday to repair urgency, Thursday for mixed cases and Monday for a delayed new-case check. If Thursday is lost, she keeps Monday and narrows the test rather than doubling Monday."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Plan the same target when only Tuesday and next Monday are available. List what you would omit and what evidence remains.",
+          "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. This plan gives actual delayed evidence but cannot tell how the omitted occasion would have changed performance.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Only Tuesday and next Monday are scheduled.",
+            "Omitted Thursday review is recorded and later check retained.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What is a sensible fallback?",
+          "options": [
+            "Double every missed session regardless of capacity.",
+            "Declare all previous practice worthless.",
+            "Reduce scope while preserving a useful later check."
+          ],
+          "correct": 2,
+          "explanation": "Reducing scope can preserve a meaningful delayed check within real capacity. Automatic doubling ignores the reason a session was missed."
+        },
+        "references": [
+          {
+            "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
+            "url": "https://escholarship.org/uc/item/3rr6q10c",
+            "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
+            "reviewed": "2026-09-30",
+            "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
+          }
+        ]
+      },
+      {
+        "id": "evaluate-advice",
+        "title": "17. Evaluate a learning claim",
+        "stage": "advanced",
+        "takeaway": "Ask what was measured and whether it matches your situation.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Advice such as this method doubles learning is incomplete without the task, comparison, learners, time horizon and outcome. Look for the primary study or research review. A laboratory result can guide a practical experiment without proving the exact workplace result.",
+              "Distinguish research findings from this course’s design choices. Retrieval and spacing have evidence across many studied conditions; the specific number of questions and weekly dates used here are teaching examples. No method guarantees perfect memory, and more effort or discomfort is not always better."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya sees a claim that 20 flashcards a day guarantees expertise. She asks whether expertise was measured, whether feedback was used, whether the check was delayed and whether the task resembled her need to make decisions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Assess the claim: a student answered more vocabulary questions after spaced practice, so spaced cards guarantee safe operation of a machine.",
+          "solution": "The conclusion exceeds the outcome. Vocabulary recall does not establish machine-operation skill or safety. Spacing may inform knowledge review, but operating equipment also needs task-specific instruction, practice, checks and applicable supervision. Ask for measured procedural performance and relevant conditions before extending the claim.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Vocabulary recall is distinguished from procedural machine operation.",
+            "Missing task-specific performance evidence is named.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a limitation of a vocabulary study?",
+          "options": [
+            "Its exact schedule must suit all learners.",
+            "It does not by itself establish safe performance of an unrelated procedure.",
+            "It proves no learning technique can ever help."
+          ],
+          "correct": 1,
+          "explanation": "The measured outcome was vocabulary recall. Safe operation requires relevant procedural evidence, so the broad claim exceeds the study."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      },
+      {
+        "id": "adapt-stalled-learning",
+        "title": "18. Respond when progress stalls",
+        "stage": "advanced",
+        "takeaway": "Change one plausible cause and check again.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "If results stop improving, first inspect the target, scoring and conditions. Are questions too broad? Is the source unclear? Are you practicing only familiar examples? Are sessions repeatedly unavailable? These lead to different repairs.",
+              "Choose one small change and keep a record. Shorten a difficult prompt, add a worked example, seek specific feedback or reduce the target. If exhaustion or access barriers dominate, changing technique alone may not solve the problem. A pause or a smaller commitment can be reasonable."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya repeatedly misses urgent cases after a long shift. On a rested day she can explain them. She tests the same skill in a shorter earlier window before concluding the rule itself is impossible for her."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A learner gets zero of four mixed cases right but can copy worked examples. Propose a repair and the evidence that would make you change it.",
+          "solution": "Check that they understand one category first. Work through one example aloud, fill one missing decision, then attempt a similar new case and compare. If that succeeds but mixed cases fail, practise identifying the case feature. If even the source remains unclear, get clarification rather than increasing question volume.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Repair checks one category with reduced support before mixing.",
+            "A fresh attempt determines whether to adjust the repair.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What is useful when progress stalls?",
+          "options": [
+            "Inspect the specific failure and test a targeted adjustment.",
+            "Change six techniques at once and keep no record.",
+            "Assume the learner has reached a permanent ceiling."
+          ],
+          "correct": 0,
+          "explanation": "A specific failure suggests a testable repair. Changing many methods at once makes it hard to know which adjustment helped."
+        },
+        "references": [
+          {
+            "title": "Hattie & Timperley (2007), The Power of Feedback",
+            "url": "https://doi.org/10.3102/003465430298487",
+            "section": "Feedback model: target, current performance, next steps and differential feedback effects",
+            "reviewed": "2026-09-30",
+            "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ]
+      },
+      {
+        "id": "delayed-demonstration",
+        "title": "19. Demonstrate and explain a changed case",
+        "stage": "advanced",
+        "takeaway": "Submit evidence of recall, application and limitations.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "The advanced project is a small learning portfolio. Preserve the baseline, practice dates, corrected errors and a delayed attempt at a changed case. Use a checkable everyday topic rather than a high-risk task. Explain where the principle applies and where new rules must be consulted.",
+              "Assess the evidence, not the appearance of the notebook. A clear unsuccessful attempt with a sensible next step is more informative than an invented perfect score. Label synthetic examples, actual learner results and untested predictions separately."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya’s portfolio includes one of three baseline, two of three Thursday and three of three Monday, plus a new booking case. She missed Thursday’s second planned session and names that fact. A new organisation’s real approval policy remains untested."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a four-sentence portfolio conclusion for a learner who improves from one of four to three of four and fails the changed-context case.",
+          "solution": "I answered one of four baseline cases and three of four comparable delayed cases after two practice occasions. I still missed the urgency exception once. I did not correctly apply the principle in the changed booking context, so transfer is not established. Next I will check the new rule and attempt a fresh changed case after feedback.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Conclusion retains counts one of four and three of four.",
+            "Failed changed-context case is stated as unestablished transfer.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which conclusion matches the evidence?",
+          "options": [
+            "All related skills are now mastered permanently.",
+            "The failed transfer erases every correct answer.",
+            "Improved on these cases; transfer still needs work."
+          ],
+          "correct": 2,
+          "explanation": "The new-context failure limits the transfer conclusion while the comparable-case improvement remains recorded. Neither result proves permanent universal skill."
+        },
+        "references": [
+          {
+            "title": "Butler (2010), Repeated testing produces superior transfer of learning relative to repeated studying",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/20804289/",
+            "section": "Abstract: four prose-learning experiments with same and new inferential questions",
+            "reviewed": "2026-09-30",
+            "scope": "Prose-learning experiments with later inference questions; transfer to every workplace skill is not established."
+          }
+        ]
+      },
+      {
+        "id": "maintain-learning",
+        "title": "20. Choose what to maintain and when to stop",
+        "stage": "advanced",
+        "takeaway": "Retain useful knowledge without turning every topic into an endless obligation.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A learning system should serve current needs. Keep active prompts for knowledge you expect to use, an external reference for rarely used detail and a retirement list for outdated rules. Recheck a rule when the source changes rather than rehearsing obsolete answers.",
+              "Choose a next review based on likely use, stakes and observed difficulty. When the target is met for your purpose, reduce review load and move on. These projects develop a practical method; they do not certify expertise or promise unlimited recall."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Maya keeps the urgent exception in occasional mixed practice, saves the current policy link and retires last year’s threshold. Before a rare unfamiliar case she checks the source instead of trusting an old card."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Decide what to do with an easy frequently used rule, an unused obsolete rule and a rarely used current detail.",
+          "solution": "Use the frequently used rule in work and schedule a lighter check if needed. Retire the obsolete rule and replace it if the policy changed. Keep the rarely used current detail in a reliable reference and practise finding it when relevant. None of these choices requires constant daily cards forever.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Easy current, obsolete and rarely used current rules receive different treatments.",
+            "Policy change triggers verified update or retirement.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should happen after a source changes?",
+          "options": [
+            "Assume memory practice updates itself.",
+            "Check and update or retire affected prompts.",
+            "Keep old answers because they were once fluent."
+          ],
+          "correct": 1,
+          "explanation": "Practising obsolete answers can preserve an outdated rule. Verify the source change and update or retire affected prompts."
+        },
+        "references": [
+          {
+            "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
+            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
+            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
+            "reviewed": "2026-09-30",
+            "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation: A first checked learning loop",
+        "description": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
+        "exitCriteria": [
+          "Target describes recall or application, not content consumed.",
+          "Routes and reasons are scored against the supplied policy.",
+          "Original wrong answers and corrections remain visible.",
+          "Dates, support and the small-sample limitation are stated."
+        ],
+        "project": {
+          "title": "A first checked learning loop",
+          "brief": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
+          "requirements": [
+            "Use foundation-kit.md without looking at the answer key first.",
+            "Write an observable target and score three baseline cases.",
+            "Create two clear prompts and complete one closed-source attempt plus correction.",
+            "Plan and complete a later check or label it pending."
+          ],
+          "rubric": [
+            "Target describes recall or application, not content consumed.",
+            "Routes and reasons are scored against the supplied policy.",
+            "Original wrong answers and corrections remain visible.",
+            "Dates, support and the small-sample limitation are stated."
+          ],
+          "solution": "The synthetic sample begins one of three, corrects the urgency exception and later scores three of three on new cases. Actual learners must record their own results. A pending check is honestly pending; it cannot be graded as demonstrated retention. See foundation-kit.md for the full worked record and criterion scoring.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate: A flexible two-week practice plan",
+        "description": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
+        "exitCriteria": [
+          "Each occasion has a specific practice purpose.",
+          "Related case mixing tests method selection, not unrelated task switching.",
+          "The fallback respects actual constraints.",
+          "Predictions, completed practice and checked results are distinct."
+        ],
+        "project": {
+          "title": "A flexible two-week practice plan",
+          "brief": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
+          "requirements": [
+            "Use intermediate-kit.md and practice-log.md.",
+            "Choose a safe everyday topic with a reliable answer key.",
+            "Include an error classification, related mixed cases and two separated occasions.",
+            "Write a normal cue, realistic fallback and confidence comparison."
+          ],
+          "rubric": [
+            "Each occasion has a specific practice purpose.",
+            "Related case mixing tests method selection, not unrelated task switching.",
+            "The fallback respects actual constraints.",
+            "Predictions, completed practice and checked results are distinct."
+          ],
+          "solution": "The worked policy plan uses Tuesday 12 minutes, Thursday eight and next Monday ten; an unavailable Thursday is removed rather than squeezed into a care duty. The urgent-rule error receives targeted feedback and a new mixed case. See intermediate-kit.md; different feasible timings are acceptable if the evidence and limits are explicit.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced: Delayed application and transfer portfolio",
+        "description": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+        "exitCriteria": [
+          "Comparable delayed evidence is retained, including errors.",
+          "Changed-case explanation checks new rules rather than assuming identical policy.",
+          "Research claims distinguish studied outcomes from practical adaptations.",
+          "The conclusion names demonstrated skill, untested scope and one next action."
+        ],
+        "project": {
+          "title": "Delayed application and transfer portfolio",
+          "brief": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+          "requirements": [
+            "Use advanced-kit.md and retain the earlier baseline.",
+            "Answer comparable new cases after a gap with support labelled.",
+            "Apply the principle to a new supplied booking rule and explain its boundary.",
+            "Evaluate one learning claim and choose maintain, revise or retire for your prompts."
+          ],
+          "rubric": [
+            "Comparable delayed evidence is retained, including errors.",
+            "Changed-case explanation checks new rules rather than assuming identical policy.",
+            "Research claims distinguish studied outcomes from practical adaptations.",
+            "The conclusion names demonstrated skill, untested scope and one next action."
+          ],
+          "solution": "A strong sample reports one of three baseline and three of three delayed cases, then correctly applies the urgency-first structure to the supplied booking policy. It explicitly declines to claim real workplace competence or guaranteed retention. See advanced-kit.md for the complete synthetic portfolio and a failed-transfer alternative.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "resources": {
+      "folder": "learning-how-to-learn-practice",
+      "files": [
+        {
+          "id": "readme-md",
+          "href": "paths/learning-how-to-learn/practice/README.md",
+          "role": "guide",
+          "description": "Learning How to Learn: printable practice"
+        },
+        {
+          "id": "foundation-kit-md",
+          "href": "paths/learning-how-to-learn/practice/foundation-kit.md",
+          "role": "guide",
+          "description": "Foundation kit: a first checked learning loop"
+        },
+        {
+          "id": "intermediate-kit-md",
+          "href": "paths/learning-how-to-learn/practice/intermediate-kit.md",
+          "role": "guide",
+          "description": "Intermediate kit: a flexible practice plan"
+        },
+        {
+          "id": "advanced-kit-md",
+          "href": "paths/learning-how-to-learn/practice/advanced-kit.md",
+          "role": "guide",
+          "description": "Advanced kit: delayed application and transfer"
+        },
+        {
+          "id": "practice-log-md",
+          "href": "paths/learning-how-to-learn/practice/practice-log.md",
+          "role": "guide",
+          "description": "Learning record: blank sheet and filled example"
+        },
+        {
+          "id": "research-and-limits-md",
+          "href": "paths/learning-how-to-learn/practice/research-and-limits.md",
+          "role": "guide",
+          "description": "Research register and limits"
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/learning-how-to-learn/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/learning-how-to-learn/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/learning-how-to-learn/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/learning-how-to-learn/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "A first checked learning loop",
+          "goal": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
+          "fileIds": [
+            "readme-md",
+            "foundation-kit-md",
+            "practice-log-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in foundation-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "1. Choose a useful learning target",
+              "href": "#topic/learning-how-to-learn/learning-target"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "A flexible two-week practice plan",
+          "goal": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
+          "fileIds": [
+            "readme-md",
+            "intermediate-kit-md",
+            "practice-log-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in intermediate-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "7. Explain connections in your own words",
+              "href": "#topic/learning-how-to-learn/explain-connections"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Delayed application and transfer portfolio",
+          "goal": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+          "fileIds": [
+            "readme-md",
+            "advanced-kit-md",
+            "practice-log-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in advanced-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "15. Test transfer with changed cases",
+              "href": "#topic/learning-how-to-learn/transfer-cases"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "learning-target": "foundation",
+        "recognition-recall": "foundation",
+        "retrieval-loop": "foundation",
+        "small-prompts": "foundation",
+        "spaced-returns": "foundation",
+        "check-baseline": "foundation",
+        "explain-connections": "intermediate",
+        "worked-to-independent": "intermediate",
+        "mix-related-cases": "intermediate",
+        "feedback-action": "intermediate",
+        "error-patterns": "intermediate",
+        "calibrate-confidence": "intermediate",
+        "study-environment": "intermediate",
+        "retain-useful-notes": "intermediate",
+        "transfer-cases": "advanced",
+        "plan-practice-week": "advanced",
+        "evaluate-advice": "advanced",
+        "adapt-stalled-learning": "advanced",
+        "delayed-demonstration": "advanced",
+        "maintain-learning": "advanced"
+      },
+      "bundle": {
+        "href": "paths/learning-how-to-learn/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/learning-how-to-learn/practice/lab.html",
+        "title": "Open interactive practice studio"
       }
     }
   },
@@ -46692,6 +51334,1735 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "weekly-planning-journey",
+    "title": "Plan and Review Your Week",
+    "category": "Personal effectiveness",
+    "status": "ready",
+    "description": "Connect five personal-effectiveness topics through Sam’s fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
+    "level": "Beginner → applied practice → independent review",
+    "prerequisites": [
+      "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
+    ],
+    "setup": [
+      "Read README.md in the practice bundle.",
+      "Print or copy the blank worksheets; all examples use fictional people and synthetic records.",
+      "Complete your own attempt before checking the filled example; no commands or installation are required.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "outcomes": [
+      "Capture accepted commitments and convert outcomes into next actions.",
+      "Budget time after fixed work, breaks and uncertainty.",
+      "Revise a plan after disruption with a concrete agreed trade-off.",
+      "Keep habits and learning realistic under care and energy constraints.",
+      "Review actual evidence and design one bounded next-week experiment."
+    ],
+    "nextSteps": [
+      "Use one small target in your own setting and record actual evidence.",
+      "Use the companion paths for deeper practice when useful.",
+      "These projects assess practical reasoning, not clinical treatment or professional certification."
+    ],
+    "sources": [
+      {
+        "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
+        "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/"
+      },
+      {
+        "title": "Hattie & Timperley (2007), The Power of Feedback",
+        "url": "https://doi.org/10.3102/003465430298487"
+      },
+      {
+        "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+        "url": "https://doi.org/10.1037/0003-066X.54.7.493"
+      },
+      {
+        "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete printable practice bundle",
+        "href": "paths/weekly-planning-journey/practice-bundle.zip"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/weekly-planning-journey/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/weekly-planning-journey/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/weekly-planning-journey/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/weekly-planning-journey/practice/lab-model.js"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "week-context",
+        "title": "1. Meet a realistic week",
+        "stage": "foundation",
+        "takeaway": "Start with commitments, constraints and a small purpose.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Sam works in a community office, helps a family member on Wednesday evening and takes a short course. This fictional week has meetings, deadlines and variable energy. You can complete the whole journey on paper; none of the five companion paths is a prerequisite.",
+              "The purpose is to deliver a Friday event pack, attend a Thursday appointment and keep two brief learning occasions. A weekly plan is a revisable proposal. Record fixed commitments separately from estimates and aspirations before choosing tasks."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam’s working hours are 09:00–17:00 with a one-hour lunch. Across five days that is 35 working hours. Twelve hours are fixed meetings and duties; routine service work takes an estimated 12. That leaves 11 hours before allowing for uncertainty."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate available capacity and state one reason it is not a promise of 11 focused hours.",
+          "solution": "Five days times seven working hours is 35. Subtract 12 fixed hours and 12 estimated routine hours to leave 11. Routine work can vary, and transitions, interruptions or lower energy may reduce usable project time. The 11 is a planning estimate, not a guarantee.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Capacity is 35 minus 12 minus 12 equals 11.",
+            "One uncertainty prevents treating 11 as guaranteed focused hours.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should a weekly plan begin with?",
+          "options": [
+            "A list of unlimited ambitions.",
+            "A claim that every hour has equal focus.",
+            "Actual commitments and constraints."
+          ],
+          "correct": 2,
+          "explanation": "Commitments and unavailable time constrain the feasible plan. Unlimited ambitions do not establish the hours needed to deliver them."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "capture-week",
+        "title": "2. Capture open commitments",
+        "stage": "foundation",
+        "takeaway": "A capture list is an inventory before it is a schedule.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Sam has emails, paper notes and ideas. Put each commitment in one temporary list, then clarify it. Separate tasks you have accepted from possibilities and requests still awaiting agreement. Capture can reduce forgotten items, but it does not make all items equally important.",
+              "For each item ask what result is needed, who expects it and when. Avoid scheduling vague entries such as event or improve life. The task-project-management path develops this distinction further; here we use it to prepare a small weekly plan."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam captures event pack, book appointment, reply to Lee, learn policy and redesign noticeboard. The noticeboard is an optional idea, not an agreed Friday obligation. The event pack has an actual recipient and deadline."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Clarify event pack, maybe new poster and reply to Lee by Tuesday into a commitment inventory.",
+          "solution": "Event pack: agreed Friday deliverable; clarify required contents and recipient. New poster: optional idea, park unless accepted with a deadline. Reply to Lee: accepted Tuesday response; identify the question and next action. Capturing all three does not mean scheduling all three this week.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Accepted event/reply commitments are separated from optional poster idea.",
+            "Result, recipient and timing are clarified.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What follows capture?",
+          "options": [
+            "Treat ideas as binding promises.",
+            "Clarify the result, owner and timing.",
+            "Assign every item the same deadline."
+          ],
+          "correct": 1,
+          "explanation": "Capture is an inventory; clarification identifies accepted results and timing. Optional ideas are not automatically promises."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
+            "section": "Implementation intentions: linking specified situations to goal-directed responses",
+            "reviewed": "2026-09-30",
+            "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ]
+      },
+      {
+        "id": "outcomes-next-actions",
+        "title": "3. Turn outcomes into next actions",
+        "stage": "foundation",
+        "takeaway": "A next action is something you can start without another planning session.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "An outcome is the completed result; a project is a result requiring multiple actions. Sam’s event pack needs venue details, attendee list and a final check. List dependencies before booking time so a waiting item does not occupy a fictional work slot.",
+              "Use a concrete verb and object: ask Lee for the attendee list or check the venue address against the booking. If an item depends on another person, record the request, the response needed and a follow-up date. The companion task-project-management path offers more practice."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam cannot format the final list until Lee sends names, but can prepare the cover sheet now. The plan includes a Monday request and a Tuesday follow-up rather than assuming the names are already available."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Break event pack into four actions and identify which can proceed while the attendee list is missing.",
+          "solution": "Ask Lee for names Monday; check venue details; prepare cover sheet; reconcile names and final-check the pack after the list arrives. Venue and cover work can proceed while waiting. Formatting a final list before names arrive risks rework, so mark it as dependent.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Four actions include names request and final reconciliation.",
+            "Independent venue/cover work is separated from waiting work.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a next action?",
+          "options": [
+            "Ask Lee for the attendee list by Tuesday noon.",
+            "Event pack.",
+            "Become completely organised."
+          ],
+          "correct": 0,
+          "explanation": "The request names an action, recipient and timing. Event pack is a result requiring several actions, not a single startable step."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
+            "section": "Implementation intentions: linking specified situations to goal-directed responses",
+            "reviewed": "2026-09-30",
+            "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ],
+        "diagram": {
+          "title": "A deliverable contains dependencies",
+          "summary": "Prepare independent pieces while waiting for names.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Event pack",
+              "description": "Friday deliverable needs names and venue details."
+            },
+            {
+              "id": "n1",
+              "label": "Ask Lee",
+              "description": "Request names Monday and follow up Tuesday."
+            },
+            {
+              "id": "n2",
+              "label": "Venue",
+              "description": "Check venue details independently."
+            },
+            {
+              "id": "n3",
+              "label": "Cover",
+              "description": "Prepare a cover sheet independently."
+            },
+            {
+              "id": "n4",
+              "label": "Assemble",
+              "description": "Combine the received names and prepared pieces."
+            },
+            {
+              "id": "n5",
+              "label": "Check",
+              "description": "Final-check and deliver Friday."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "dependency"
+            },
+            {
+              "from": "n0",
+              "to": "n2",
+              "label": "can proceed"
+            },
+            {
+              "from": "n0",
+              "to": "n3",
+              "label": "can proceed"
+            },
+            {
+              "from": "n1",
+              "to": "n4",
+              "label": "names received"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "details ready"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "cover ready"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "review"
+            }
+          ],
+          "steps": [
+            {
+              "title": "dependency",
+              "explanation": "Friday deliverable needs names and venue details. Request names Monday and follow up Tuesday.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "can proceed",
+              "explanation": "Friday deliverable needs names and venue details. Check venue details independently.",
+              "activeNodes": [
+                "n0",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "can proceed",
+              "explanation": "Friday deliverable needs names and venue details. Prepare a cover sheet independently.",
+              "activeNodes": [
+                "n0",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "names received",
+              "explanation": "Request names Monday and follow up Tuesday. Combine the received names and prepared pieces.",
+              "activeNodes": [
+                "n1",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "details ready",
+              "explanation": "Check venue details independently. Combine the received names and prepared pieces.",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ]
+            },
+            {
+              "title": "cover ready",
+              "explanation": "Prepare a cover sheet independently. Combine the received names and prepared pieces.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                5
+              ]
+            },
+            {
+              "title": "review",
+              "explanation": "Combine the received names and prepared pieces. Final-check and deliver Friday.",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                6
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "priorities-capacity",
+        "title": "4. Choose a feasible set of outcomes",
+        "stage": "foundation",
+        "takeaway": "Priority becomes real when you name what is deferred.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Sam’s event work is estimated at eight hours and optional noticeboard work at four. With 11 remaining hours, both would total 12 before any buffer. Choose based on actual deadline, consequences and agreement. A short list is useful only if the work fits the available windows.",
+              "Reserve some capacity for uncertainty, then say what will not fit this week. These numbers are a fictional budgeting example, not a universal percentage rule. The time-attention-energy path explores capacity; this journey applies it to a concrete calendar."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam reserves three of the 11 hours for uncertainty and schedules the eight-hour event pack. The four-hour noticeboard idea goes to later. Routine work is already in the 12-hour estimate and must not be counted as spare project time again."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "If a second agreed task takes two hours, show the shortfall and a decision to resolve it.",
+          "solution": "Eight hours event plus two hours new task plus three hours reserved totals 13 against 11, a two-hour shortfall. Ask the owner to reduce event scope, move the new deadline or explicitly reduce reserve with acknowledged uncertainty. Simply placing all 13 hours on the calendar does not create capacity.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Eight plus two plus three is compared with 11.",
+            "Two-hour shortfall leads to an explicit agreed change.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a priority list credible?",
+          "options": [
+            "Every request is labelled highest priority.",
+            "The calendar hides estimate gaps.",
+            "Chosen work fits capacity and deferred work is named."
+          ],
+          "correct": 2,
+          "explanation": "Priorities require choosing within the available budget. Giving every request top priority leaves the shortfall unresolved."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "diagram": {
+          "title": "Reconcile 11 remaining hours",
+          "summary": "The original week fits eight project hours plus three reserved hours.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "35 hours",
+              "description": "Five seven-hour working days."
+            },
+            {
+              "id": "n1",
+              "label": "24 committed",
+              "description": "Twelve fixed plus twelve estimated routine hours."
+            },
+            {
+              "id": "n2",
+              "label": "11 remain",
+              "description": "Project and uncertainty capacity before disruptions."
+            },
+            {
+              "id": "n3",
+              "label": "8 event",
+              "description": "Accepted event pack work."
+            },
+            {
+              "id": "n4",
+              "label": "3 reserve",
+              "description": "Unscheduled capacity for changes."
+            },
+            {
+              "id": "n5",
+              "label": "Defer",
+              "description": "Four-hour noticeboard idea cannot also fit."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "account for"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "subtract"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "choose"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "reserve"
+            },
+            {
+              "from": "n2",
+              "to": "n5",
+              "label": "exclude extra work"
+            }
+          ],
+          "steps": [
+            {
+              "title": "account for",
+              "explanation": "Five seven-hour working days. Twelve fixed plus twelve estimated routine hours.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "subtract",
+              "explanation": "Twelve fixed plus twelve estimated routine hours. Project and uncertainty capacity before disruptions.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "choose",
+              "explanation": "Project and uncertainty capacity before disruptions. Accepted event pack work.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "reserve",
+              "explanation": "Project and uncertainty capacity before disruptions. Unscheduled capacity for changes.",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "exclude extra work",
+              "explanation": "Project and uncertainty capacity before disruptions. Four-hour noticeboard idea cannot also fit.",
+              "activeNodes": [
+                "n2",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "calendar-energy",
+        "title": "5. Place work around time and energy",
+        "stage": "foundation",
+        "takeaway": "Use calendar constraints and observed energy together.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Time availability and attention are related but different. Sam has a quiet Monday morning and tends to be tired after Wednesday care duties. Put demanding drafting in a suitable window and lighter checking in another, while treating these observations as flexible patterns.",
+              "Do not assign moral value to energy. If a pattern changes, adjust the plan. Breaks and rest belong in the available-time calculation. The time-attention-energy path helps observe these conditions; here the goal is a calendar you can explain."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam places two hours of drafting Monday morning, two Tuesday, two Thursday, and two Friday checking and delivery. Wednesday has no demanding event block. Three hours remain unscheduled as reserve distributed across the week."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Move one two-hour draft block out of Wednesday evening and explain what must be checked before placing it Thursday.",
+          "solution": "Remove the evening block because care duties make that time unavailable. Check Thursday meetings, appointment and remaining work hours before using a two-hour daytime window. If none exists, reduce or renegotiate scope. Low-energy time is not automatically spare time, and an appointment cannot be double-booked.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Wednesday care time is treated as unavailable.",
+            "Thursday meeting and appointment windows are checked before placement.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should guide demanding work placement?",
+          "options": [
+            "A requirement to fill every gap.",
+            "Available windows and observed conditions, revised when they change.",
+            "The assumption that tired hours equal rested hours."
+          ],
+          "correct": 1,
+          "explanation": "Available time and observed conditions help place demanding work. Equal calendar length does not establish equal attention or energy."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "baseline-plan-project",
+        "title": "6. Finish a baseline week plan",
+        "stage": "foundation",
+        "takeaway": "A reviewable plan states assumptions and trade-offs.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "The foundation project combines capture, next actions, capacity and calendar placement. Write a one-page plan with three outcomes at most, required actions, dependencies, reserved time and deferred items. The three-outcome limit is a teaching aid, not a law.",
+              "Assess whether another person could see what will happen and where it could fail. Include a fallback if the attendee list is late. Compare your plan with the filled synthetic worksheet only after drafting; many schedules can meet the same constraints."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam’s baseline plan names eight event hours, Lee’s Tuesday response, the Thursday appointment and two short learning occasions outside working hours when available. Noticeboard redesign is deferred. Friday delivery assumes the list arrives by Thursday morning."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a fallback for names arriving Thursday noon. Preserve the Friday purpose and identify a decision owner.",
+          "solution": "Use Thursday to reconcile names after noon, preserve Friday final checking, and ask the event owner whether a simpler layout is acceptable if time shrinks. Lee remains the list owner; Sam owns assembly and must notify the event owner if delivery risk changes. A late list does not justify silently guessing names.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Late-name fallback preserves required details without guessing names.",
+            "Event owner decides a scope or timing change.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in a reviewable plan?",
+          "options": [
+            "Dependencies, reserve, deferrals and a fallback.",
+            "Only colourful calendar blocks.",
+            "Unstated assumptions about other people."
+          ],
+          "correct": 0,
+          "explanation": "Dependencies and fallbacks expose what could prevent delivery. Colourful blocks alone conceal assumptions about other people."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
+            "section": "Implementation intentions: linking specified situations to goal-directed responses",
+            "reviewed": "2026-09-30",
+            "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ]
+      },
+      {
+        "id": "supporting-habit",
+        "title": "7. Add one small supporting habit",
+        "stage": "intermediate",
+        "takeaway": "A habit supports the week; it should not consume the week.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Sam loses track of requests at the end of the day. Choose one small behaviour: after closing the service desk, spend three minutes updating the waiting list. Define the cue and the smallest useful action. The habits-behaviour-change path develops this further.",
+              "If the cue disappears, use a fallback rather than adding a punitive catch-up routine. A missed repetition is evidence about the environment or action size. This journey does not assume a fixed number of days to form a habit."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Normal: after desk close, note outstanding requests and tomorrow’s first action. Fallback after a late close: write only the most important waiting request before leaving. Sam records whether the action helped the next morning."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a three-minute close-of-day routine and a one-minute fallback. Give an observable outcome.",
+          "solution": "Three minutes: list outstanding requests, identify owners and choose tomorrow’s first action. One minute: record the one request most likely to be forgotten. Outcome: the next morning Sam can identify that request without reconstructing all emails. Record missed occasions instead of inventing a perfect streak.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Three-minute normal routine and one-minute fallback use an actual cue.",
+            "Observable next-morning result is defined without a perfect-streak claim.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "A useful habit cue is what?",
+          "options": [
+            "A promise to never be interrupted.",
+            "A punishment after every missed day.",
+            "An actual recurring event linked to a small action."
+          ],
+          "correct": 2,
+          "explanation": "A recurring event offers a concrete cue for a small behaviour. A promise of no interruption cannot be relied on as a cue."
+        },
+        "references": [
+          {
+            "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
+            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
+            "section": "Implementation intentions: linking specified situations to goal-directed responses",
+            "reviewed": "2026-09-30",
+            "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ]
+      },
+      {
+        "id": "midweek-disruption",
+        "title": "8. Replan when the week changes",
+        "stage": "intermediate",
+        "takeaway": "Update capacity before adding new work.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "On Tuesday afternoon, a service issue requires three extra hours. It uses the entire three-hour reserve. On Wednesday, a two-hour urgent request arrives. The baseline cannot now fit unchanged; compare remaining hours and work before choosing a response.",
+              "First distinguish a new fact from an emotion: the issue used three hours; Sam feels worried. Both matter, but only the first is a capacity calculation. The self-awareness-communication path supports noticing reactions and communicating clearly during changes."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Before Wednesday’s request, event work still fits if estimates hold, but no reserve remains. Adding two more hours creates a two-hour shortfall. Sam asks to simplify the pack by two hours or move the new request; this is a visible trade-off.",
+              "The weekly total does not show timing by itself. Monday’s spare hour has already elapsed when Tuesday’s issue arrives. The printable revision therefore adds an agreed one-hour routine deferral; unused past time is not reassigned into the future."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Calculate the revised budget and name two legitimate responses to the new request.",
+          "solution": "Original 11 project/reserve hours minus three service hours leaves eight. Eight event hours plus two urgent hours requires ten, so the shortfall is two. One response is an agreed simpler six-hour pack plus two urgent hours. Another is retaining the eight-hour pack and moving or reassigning the urgent request. Do not count used reserve twice.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Three service hours leave eight aggregate hours against ten requested.",
+            "Scope/deadline/ownership choices and elapsed-time constraints are named.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "After reserve is consumed, what should happen?",
+          "options": [
+            "Hide the new request from the plan.",
+            "Recalculate and agree a trade-off before adding more work.",
+            "Assume the reserve magically returns."
+          ],
+          "correct": 1,
+          "explanation": "Spent reserve no longer protects later work. Recalculation makes the new shortfall visible, and day-level timing still needs checking."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "diagram": {
+          "title": "A disruption changes the budget",
+          "summary": "Used reserve is already spent capacity.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "11 original",
+              "description": "Eight event hours plus three reserve."
+            },
+            {
+              "id": "n1",
+              "label": "3 service",
+              "description": "Tuesday issue consumes reserve."
+            },
+            {
+              "id": "n2",
+              "label": "8 remain",
+              "description": "Only eight hours remain for event and new work."
+            },
+            {
+              "id": "n3",
+              "label": "10 requested",
+              "description": "Eight event hours plus two urgent hours."
+            },
+            {
+              "id": "n4",
+              "label": "2 shortfall",
+              "description": "Agree a scope, deadline or ownership trade-off."
+            },
+            {
+              "id": "n5",
+              "label": "6 plus 2",
+              "description": "Approved shorter pack plus urgent work fits eight hours."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "issue occurs"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "subtract"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "compare demand"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "exceeds by two"
+            },
+            {
+              "from": "n4",
+              "to": "n5",
+              "label": "agreed revision"
+            }
+          ],
+          "steps": [
+            {
+              "title": "issue occurs",
+              "explanation": "Eight event hours plus three reserve. Tuesday issue consumes reserve.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "subtract",
+              "explanation": "Tuesday issue consumes reserve. Only eight hours remain for event and new work.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "compare demand",
+              "explanation": "Only eight hours remain for event and new work. Eight event hours plus two urgent hours.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "exceeds by two",
+              "explanation": "Eight event hours plus two urgent hours. Agree a scope, deadline or ownership trade-off.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "agreed revision",
+              "explanation": "Agree a scope, deadline or ownership trade-off. Approved shorter pack plus urgent work fits eight hours.",
+              "activeNodes": [
+                "n4",
+                "n5"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "communicate-tradeoffs",
+        "title": "9. Communicate a concrete trade-off",
+        "stage": "intermediate",
+        "takeaway": "State the change, impact and proposed choice.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A useful update separates facts, needs and requests. Sam can say the service issue used three hours; adding this request puts Friday’s pack at risk; can we use a shorter layout or move the request? Avoid promising both outcomes before checking capacity.",
+              "Choose a recipient who can decide the scope or deadline. State what needs an answer and by when. Record any agreement in the plan. A prepared script is practice, not an instruction to send messages without the learner’s own decision and authority."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam drafts: I can deliver the full pack Friday or the urgent request today plus a shorter pack Friday. Please confirm the shorter pack by 14:00 so I can proceed. The decision owner agrees to the shorter layout."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite I am overwhelmed, everything will be late into a factual update with one proposed choice.",
+          "solution": "The service issue used the three-hour reserve, and the new request adds two hours. The full Friday pack and new request exceed remaining capacity by two hours. I propose a shorter pack with the same required information; please confirm by 14:00. If not accepted, we need to move or reassign the new request. This gives the owner an actionable decision.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Message includes fact, two-hour impact, proposed choice and decision time.",
+            "Request is directed to the owner who can change scope or deadline.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a trade-off message useful?",
+          "options": [
+            "A concrete impact and a choice for the decision owner.",
+            "Blame without a request.",
+            "An unsupported promise that everything fits."
+          ],
+          "correct": 0,
+          "explanation": "The owner needs an impact and a decision to resolve it. Blame or an unsupported promise gives no usable choice."
+        },
+        "references": [
+          {
+            "title": "Hattie & Timperley (2007), The Power of Feedback",
+            "url": "https://doi.org/10.3102/003465430298487",
+            "section": "Feedback model: target, current performance, next steps and differential feedback effects",
+            "reviewed": "2026-09-30",
+            "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ]
+      },
+      {
+        "id": "learning-in-week",
+        "title": "10. Keep learning small and checkable",
+        "stage": "intermediate",
+        "takeaway": "Protect a useful learning attempt without overloading the changed week.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "The learning-how-to-learn path contributes a target, retrieval, correction and a later check. Sam is learning the three leave-request rules. Tuesday’s 12-minute study happened; Thursday’s eight-minute review may be lost after disruption.",
+              "Choose an available later check instead of cramming all missed practice into an already full evening. A short closed-source attempt can reveal what remains, but it does not replace every form of skill practice. Record which plan actually happened."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam keeps a ten-minute Monday check next week and uses one two-minute Friday question if energy permits. The optional Friday question is not counted as completed until it occurs. Care duties still take priority Wednesday evening."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a revised learning plan after Thursday’s review is cancelled. Include what evidence you can still collect.",
+          "solution": "Keep next Monday’s ten-minute new-case check with the source closed, followed by correction. Optionally answer one Friday case in two minutes if genuinely available. Record Tuesday practice, cancelled Thursday and actual Friday status. Monday provides delayed evidence; it does not show what an uncompleted Thursday review would have added.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Cancelled Thursday review stays cancelled in the record.",
+            "Monday delayed check remains realistic and Friday is optional.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What is honest after a missed review?",
+          "options": [
+            "Record it as complete to preserve a streak.",
+            "Double work into a care commitment.",
+            "Record the miss and retain a realistic later check."
+          ],
+          "correct": 2,
+          "explanation": "The log should record what happened and retain a feasible check. Marking a cancelled review complete invents evidence."
+        },
+        "references": [
+          {
+            "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
+            "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
+            "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
+            "reviewed": "2026-09-30",
+            "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+          }
+        ],
+        "diagram": {
+          "title": "A small learning thread survives disruption",
+          "summary": "Completed and proposed occasions stay distinct.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Tuesday done",
+              "description": "Twelve-minute study and first attempt completed."
+            },
+            {
+              "id": "n1",
+              "label": "Thursday lost",
+              "description": "Eight-minute review cancelled by changed commitments."
+            },
+            {
+              "id": "n2",
+              "label": "Friday optional",
+              "description": "One short case only if time and energy permit."
+            },
+            {
+              "id": "n3",
+              "label": "Monday check",
+              "description": "Ten-minute delayed new-case check retained."
+            },
+            {
+              "id": "n4",
+              "label": "Evidence",
+              "description": "Record actual occasions and checked answers."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "week changes"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "optional fallback"
+            },
+            {
+              "from": "n1",
+              "to": "n3",
+              "label": "retain feasible check"
+            },
+            {
+              "from": "n2",
+              "to": "n4",
+              "label": "record only if done"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "check outcomes"
+            }
+          ],
+          "steps": [
+            {
+              "title": "week changes",
+              "explanation": "Twelve-minute study and first attempt completed. Eight-minute review cancelled by changed commitments.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "optional fallback",
+              "explanation": "Eight-minute review cancelled by changed commitments. One short case only if time and energy permit.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "retain feasible check",
+              "explanation": "Eight-minute review cancelled by changed commitments. Ten-minute delayed new-case check retained.",
+              "activeNodes": [
+                "n1",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "record only if done",
+              "explanation": "One short case only if time and energy permit. Record actual occasions and checked answers.",
+              "activeNodes": [
+                "n2",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "check outcomes",
+              "explanation": "Ten-minute delayed new-case check retained. Record actual occasions and checked answers.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                4
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "revised-plan-project",
+        "title": "11. Submit a revised week plan",
+        "stage": "intermediate",
+        "takeaway": "Preserve the original plan and show what changed.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "The intermediate project is a before-and-after plan. Keep the baseline page, then annotate the two disruptions, the consumed reserve, the agreed scope change and the updated calendar. Evidence of adaptation is more useful than replacing the original with a perfect-looking final plan.",
+              "Show the links between capacity, communication, supporting habit and learning. These are applications of the five companion paths, not mandatory prerequisites. A successful revision can include deferral or reduced scope; it need not contain more work."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam’s revised plan uses six hours for the shorter pack, two for the urgent request and three already used for service. The total remains 11. The plan notes no remaining reserve and a need to flag any further change.",
+              "The day-level kit also checks elapsed time. Because Monday’s spare hour cannot be reused, the service owner agrees to defer one noncritical routine hour. Record that additional timing decision alongside the aggregate 11-hour equation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Reconcile the revised 11 hours and explain one remaining risk.",
+          "solution": "Three service hours plus six shorter-pack hours plus two urgent-request hours equals 11. The eight originally planned event hours have been replaced by six, not added. No reserve remains; late names or another service issue could still require a new decision. Record the owner’s agreement and do not claim uncertainty has vanished.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Three service plus six pack plus two urgent hours equals 11 aggregate demand.",
+            "Day-level timing and agreed routine deferral remain visible.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should a revision preserve?",
+          "options": [
+            "Every original task regardless of capacity.",
+            "The baseline and the reasons for the changes.",
+            "Only the final attractive calendar."
+          ],
+          "correct": 1,
+          "explanation": "The preserved baseline shows why the scope changed. A final calendar alone can hide the trade-off and consumed reserve."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "collect-week-evidence",
+        "title": "12. Collect light evidence through the week",
+        "stage": "advanced",
+        "takeaway": "Record enough to learn without turning tracking into another job.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "At the end of a day, note completed actions, unexpected demands, approximate time and one observation about conditions. Separate estimated from observed time. You do not need minute-by-minute surveillance or a productivity score for every activity.",
+              "Use evidence to answer next week’s question. For Sam, the important questions are whether the pack estimate held, whether the waiting-list routine prevented omissions and whether learning happened. Personal information can stay private; the practice scenario uses fictional names and data."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Friday log: shorter pack delivered; estimated six hours, observed seven; urgent task two hours; service issue three. Project/change work totals 12 against the original 11-hour budget. The temporal revision had already deferred one routine hour; the extra pack hour requires a second agreed routine deferral. Monday’s unused past hour stays unused."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify the inconsistency and what you would record before concluding the plan worked.",
+          "solution": "Observed event seven plus urgent two plus service three is 12, one above the 11 budget. Check where the extra hour came from: reduced routine work, moved task, longer day or a recording error. Record the answer and its cost. Delivery alone does not prove that the original capacity assumptions held.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Seven plus two plus three gives 12 observed against 11 budgeted.",
+            "The actual source of the extra hour is recorded before judging success.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should a log distinguish?",
+          "options": [
+            "Planned estimates from observed time and outcomes.",
+            "Feelings from all evidence by discarding them.",
+            "Completed work from imagined future work by mixing them."
+          ],
+          "correct": 0,
+          "explanation": "Observed work is evidence to compare with estimates. Mixing planned and completed work makes the comparison unreliable."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "review-without-blame",
+        "title": "13. Review outcomes and conditions",
+        "stage": "advanced",
+        "takeaway": "Compare expectations with events before judging yourself.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "A weekly review asks what happened, what helped, what got in the way and what to change. Separate outcome, process and conditions. Sam delivered the pack, but the delivery does not automatically validate every estimate or erase the missed learning review.",
+              "Use self-awareness to name reactions without making them the whole explanation. I felt anxious after reserve ran out can lead to a clearer early update next time. Avoid I am always disorganised; it is too broad to test or repair."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam notices that an optional noticeboard visit had wrongly remained on the calendar and removes it. That removal alone does not reconcile work capacity: two routine hours were explicitly deferred, one for the elapsed-reserve timing problem and one for the pack overrun. The close-of-day habit happened three of five days; Thursday learning was cancelled."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a review that contains a win, a cost, a condition and one repair using these facts.",
+          "solution": "Win: the agreed shorter pack was delivered. Cost: it took seven rather than six hours; two routine hours were deferred in total, and the optional noticeboard visit was removed from the active calendar. Condition: late-week disruptions exhausted usable reserve, while Monday’s spare hour had already elapsed. Repair: remove deferred optional blocks at planning time and flag estimate growth earlier. Keep the three-of-five habit count and cancelled learning review visible.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Review states win, cost, condition and a testable repair.",
+            "Missed learning and three-of-five habit count stay visible.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "Which review supports learning?",
+          "options": [
+            "A global character judgement.",
+            "Only counting completed items.",
+            "Specific outcomes, costs, conditions and a testable repair."
+          ],
+          "correct": 2,
+          "explanation": "Specific outcomes and conditions support a repair. A global character judgement cannot identify which planning decision to change."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "diagram": {
+          "title": "Review turns a week into the next experiment",
+          "summary": "Use observed outcomes, costs and conditions before choosing a change.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "n0",
+              "label": "Baseline",
+              "description": "Save original estimates and commitments."
+            },
+            {
+              "id": "n1",
+              "label": "Observed",
+              "description": "Log delivery, actual time and missed occasions."
+            },
+            {
+              "id": "n2",
+              "label": "Compare",
+              "description": "Name wins, costs and changed conditions."
+            },
+            {
+              "id": "n3",
+              "label": "Experiment",
+              "description": "Remove deferred blocks and check active commitments."
+            },
+            {
+              "id": "n4",
+              "label": "Next week",
+              "description": "Build a new plan from current capacity."
+            }
+          ],
+          "edges": [
+            {
+              "from": "n0",
+              "to": "n1",
+              "label": "keep record"
+            },
+            {
+              "from": "n1",
+              "to": "n2",
+              "label": "review evidence"
+            },
+            {
+              "from": "n2",
+              "to": "n3",
+              "label": "choose one repair"
+            },
+            {
+              "from": "n3",
+              "to": "n4",
+              "label": "test next week"
+            }
+          ],
+          "steps": [
+            {
+              "title": "keep record",
+              "explanation": "Save original estimates and commitments. Log delivery, actual time and missed occasions.",
+              "activeNodes": [
+                "n0",
+                "n1"
+              ],
+              "activeEdges": [
+                0
+              ]
+            },
+            {
+              "title": "review evidence",
+              "explanation": "Log delivery, actual time and missed occasions. Name wins, costs and changed conditions.",
+              "activeNodes": [
+                "n1",
+                "n2"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "choose one repair",
+              "explanation": "Name wins, costs and changed conditions. Remove deferred blocks and check active commitments.",
+              "activeNodes": [
+                "n2",
+                "n3"
+              ],
+              "activeEdges": [
+                2
+              ]
+            },
+            {
+              "title": "test next week",
+              "explanation": "Remove deferred blocks and check active commitments. Build a new plan from current capacity.",
+              "activeNodes": [
+                "n3",
+                "n4"
+              ],
+              "activeEdges": [
+                3
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "choose-next-experiment",
+        "title": "14. Change one thing next week",
+        "stage": "advanced",
+        "takeaway": "A small experiment has a prediction and a check.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "Choose one change linked to an observed issue. Sam’s pack estimate was too low and deferred work remained on the calendar. Rather than installing a complex new system, Sam removes deferred blocks at planning time and checks midweek for conflicting commitments.",
+              "State the prediction, what you will observe and when to review. Keep other changes limited so you can interpret the result. One week is a small sample; a quiet week may hide the problem, while a disrupted week may reveal new constraints."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Prediction: removing deferred blocks will reduce accidental overbooking. Check: compare active blocks with accepted commitments Wednesday and Friday. Sam keeps the small waiting-list habit rather than replacing it and still reviews learning on Monday."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design one experiment for inaccurate task estimates. Include a condition under which you would change your conclusion.",
+          "solution": "For the next three similar packs, record expected and observed assembly time separately from waiting time. Prediction: using those observations will narrow the estimate gap. Review after the third pack. If scope or interruptions differ greatly, compare like cases before concluding the estimation method helped; do not generalise from one unusually quiet week.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Experiment states one change, prediction and observation point.",
+            "Different scope or disruptions limit the estimate comparison.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What makes an experiment reviewable?",
+          "options": [
+            "Declaring success before the week occurs.",
+            "A specific change, prediction, observation and review date.",
+            "Changing every routine simultaneously."
+          ],
+          "correct": 1,
+          "explanation": "Prediction and observation make a small change assessable. Simultaneous changes or advance success claims obscure the evidence."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      },
+      {
+        "id": "next-week-portfolio",
+        "title": "15. Prepare next week from the evidence",
+        "stage": "advanced",
+        "takeaway": "Carry forward lessons and commitments, not every unfinished item automatically.",
+        "sections": [
+          {
+            "title": "Understand and try it",
+            "paragraphs": [
+              "The advanced project is a week portfolio: baseline, revision, event log, review and next-week proposal. Include links to the five companion topics and explain the concrete contribution of each. The portfolio is evidence of reasoning and adaptation; it is not a score of personal worth.",
+              "Carry forward only work that is still relevant and accepted. Recheck deadlines and available capacity, keep recovery time and learning realistic, and name unresolved dependencies. Stop when you have a usable plan rather than polishing a tracker indefinitely."
+            ]
+          },
+          {
+            "title": "Worked scenario",
+            "paragraphs": [
+              "Sam carries forward Monday’s learning check and Lee’s unresolved follow-up, parks noticeboard redesign for a later decision and removes its calendar block. Next week reserves uncertainty using the new commitments rather than copying last week’s numbers blindly.",
+              "The filled next-week scenario changes fixed hours to 14 and carries two additional routine hours. Its budget is 35 minus 14 minus 12 minus two, leaving seven hours before reserve. Confirm carried work is not already included in the new routine estimate before subtracting it twice."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a five-topic explanation for the portfolio and name one honest boundary.",
+          "solution": "Time-attention-energy supplied capacity and suitable windows. Task-project-management supplied next actions and dependencies. Habits-behaviour-change supplied the small close-of-day routine. Self-awareness-communication supplied a factual trade-off request and reaction note. Learning-how-to-learn supplied a target, retrieval and later check. All outcomes in the filled sample are synthetic; an actual learner must record their own week before claiming personal improvement.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Each of five exact companion IDs is tied to a concrete action.",
+            "Synthetic outcomes are distinguished from actual learner evidence.",
+            "State the scenario-specific condition that would change the decision."
+          ]
+        },
+        "quiz": {
+          "question": "What should carry into next week?",
+          "options": [
+            "Relevant accepted work and lessons from actual evidence.",
+            "Every unfinished idea automatically.",
+            "An unchanged copy of a week with different commitments."
+          ],
+          "correct": 0,
+          "explanation": "Carry-forward requires renewed relevance and acceptance. Copying every unfinished idea ignores changed commitments and capacity."
+        },
+        "references": [
+          {
+            "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
+            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
+            "reviewed": "2026-09-30",
+            "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation: A feasible baseline week",
+        "description": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+        "exitCriteria": [
+          "Working-hour arithmetic is correct and breaks are accounted for.",
+          "Next actions and dependencies have owners.",
+          "No fixed commitment is double-booked.",
+          "The plan states reserve, deferral and a feasible learning occasion."
+        ],
+        "project": {
+          "title": "A feasible baseline week",
+          "brief": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+          "requirements": [
+            "Use foundation-kit.md and week-planner.md.",
+            "Reconcile 35 working hours minus 24 fixed/routine hours.",
+            "Place eight event hours and preserve three reserve hours.",
+            "Identify Lee’s dependency, a late-response fallback and the deferred noticeboard idea."
+          ],
+          "rubric": [
+            "Working-hour arithmetic is correct and breaks are accounted for.",
+            "Next actions and dependencies have owners.",
+            "No fixed commitment is double-booked.",
+            "The plan states reserve, deferral and a feasible learning occasion."
+          ],
+          "solution": "The baseline allocates eight of 11 remaining hours to the event pack and three to reserve. It defers the four-hour noticeboard idea, requests names Monday and schedules Tuesday follow-up. See foundation-kit.md for one acceptable placement and filled planner; alternate feasible calendars are allowed.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate: A disruption and revised agreement",
+        "description": "Revise the plan after three service hours and a new two-hour urgent request.",
+        "exitCriteria": [
+          "Used reserve is not counted twice.",
+          "The new request has an explicit scope/deadline/ownership decision.",
+          "Original and revised plans remain comparable.",
+          "Care commitments and missed learning occasions are respected and recorded."
+        ],
+        "project": {
+          "title": "A disruption and revised agreement",
+          "brief": "Revise the plan after three service hours and a new two-hour urgent request.",
+          "requirements": [
+            "Keep the baseline and use intermediate-kit.md.",
+            "Subtract consumed reserve and show the two-hour shortfall.",
+            "Draft a factual trade-off message to the decision owner.",
+            "Apply the agreed six-hour shorter pack and revise habit/learning occasions realistically."
+          ],
+          "rubric": [
+            "Used reserve is not counted twice.",
+            "The new request has an explicit scope/deadline/ownership decision.",
+            "Original and revised plans remain comparable.",
+            "Care commitments and missed learning occasions are respected and recorded."
+          ],
+          "solution": "Three service hours plus six shorter-pack hours plus two urgent hours equals 11. The full eight-hour pack is replaced by six. The scripted agreement accepts a shorter layout, cancels Thursday learning and retains Monday’s check. See intermediate-kit.md for the message, revised ledger and remaining-risk note.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced: Evidence, review and next-week experiment",
+        "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+        "exitCriteria": [
+          "Observed 12 hours versus planned 11 is explained, not hidden.",
+          "Review includes outcome, cost and conditions without global self-judgement.",
+          "All five companion connections use a concrete action.",
+          "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+        ],
+        "project": {
+          "title": "Evidence, review and next-week experiment",
+          "brief": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+          "requirements": [
+            "Use advanced-kit.md and review-and-next-week.md.",
+            "Reconcile observed seven pack hours, two urgent and three service hours.",
+            "Name the displaced optional visit and the three-of-five habit result.",
+            "Explain all five companion contributions and choose one next-week experiment with a review point."
+          ],
+          "rubric": [
+            "Observed 12 hours versus planned 11 is explained, not hidden.",
+            "Review includes outcome, cost and conditions without global self-judgement.",
+            "All five companion connections use a concrete action.",
+            "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+          ],
+          "solution": "The pack overrun displaced an optional visit mistakenly retained in the calendar. The sample records delivery, three of five habit occasions and cancelled Thursday learning, then removes deferred blocks and checks commitments Wednesday. See advanced-kit.md for the full evidence-led review and a new-week proposal.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "resources": {
+      "folder": "weekly-planning-journey-practice",
+      "files": [
+        {
+          "id": "readme-md",
+          "href": "paths/weekly-planning-journey/practice/README.md",
+          "role": "guide",
+          "description": "Plan and Review Your Week: printable journey"
+        },
+        {
+          "id": "foundation-kit-md",
+          "href": "paths/weekly-planning-journey/practice/foundation-kit.md",
+          "role": "guide",
+          "description": "Foundation kit: Sam's baseline week"
+        },
+        {
+          "id": "intermediate-kit-md",
+          "href": "paths/weekly-planning-journey/practice/intermediate-kit.md",
+          "role": "guide",
+          "description": "Intermediate kit: Tuesday and Wednesday changes"
+        },
+        {
+          "id": "advanced-kit-md",
+          "href": "paths/weekly-planning-journey/practice/advanced-kit.md",
+          "role": "guide",
+          "description": "Advanced kit: evidence, review and next week"
+        },
+        {
+          "id": "week-planner-md",
+          "href": "paths/weekly-planning-journey/practice/week-planner.md",
+          "role": "guide",
+          "description": "Week planner: blank and filled sheet"
+        },
+        {
+          "id": "review-and-next-week-md",
+          "href": "paths/weekly-planning-journey/practice/review-and-next-week.md",
+          "role": "guide",
+          "description": "Weekly review: blank and filled sheet"
+        },
+        {
+          "id": "companion-map-md",
+          "href": "paths/weekly-planning-journey/practice/companion-map.md",
+          "role": "guide",
+          "description": "Five companion paths in one week"
+        },
+        {
+          "id": "research-and-limits-md",
+          "href": "paths/weekly-planning-journey/practice/research-and-limits.md",
+          "role": "guide",
+          "description": "Weekly planning: research and limits"
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/weekly-planning-journey/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/weekly-planning-journey/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/weekly-planning-journey/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/weekly-planning-journey/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "A feasible baseline week",
+          "goal": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+          "fileIds": [
+            "readme-md",
+            "foundation-kit-md",
+            "week-planner-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in foundation-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "1. Meet a realistic week",
+              "href": "#topic/weekly-planning-journey/week-context"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "A disruption and revised agreement",
+          "goal": "Revise the plan after three service hours and a new two-hour urgent request.",
+          "fileIds": [
+            "readme-md",
+            "intermediate-kit-md",
+            "review-and-next-week-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in intermediate-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "7. Add one small supporting habit",
+              "href": "#topic/weekly-planning-journey/supporting-habit"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Evidence, review and next-week experiment",
+          "goal": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+          "fileIds": [
+            "readme-md",
+            "advanced-kit-md",
+            "review-and-next-week-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open README.md; no installation is needed.",
+            "Complete the exact numbered tasks in advanced-kit.md.",
+            "Record your own answers in the blank worksheet before reading the filled sample.",
+            "Compare with the rubric and revise a missed criterion.",
+            "Keep completed work; mark future checks pending rather than complete."
+          ],
+          "commands": [],
+          "prerequisites": [
+            {
+              "label": "12. Collect light evidence through the week",
+              "href": "#topic/weekly-planning-journey/collect-week-evidence"
+            }
+          ],
+          "notes": [
+            "The filled examples are synthetic, not the learner’s results.",
+            "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "week-context": "foundation",
+        "capture-week": "foundation",
+        "outcomes-next-actions": "foundation",
+        "priorities-capacity": "foundation",
+        "calendar-energy": "foundation",
+        "baseline-plan-project": "foundation",
+        "supporting-habit": "intermediate",
+        "midweek-disruption": "intermediate",
+        "communicate-tradeoffs": "intermediate",
+        "learning-in-week": "intermediate",
+        "revised-plan-project": "intermediate",
+        "collect-week-evidence": "advanced",
+        "review-without-blame": "advanced",
+        "choose-next-experiment": "advanced",
+        "next-week-portfolio": "advanced"
+      },
+      "bundle": {
+        "href": "paths/weekly-planning-journey/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/weekly-planning-journey/practice/lab.html",
+        "title": "Open interactive practice studio"
+      }
+    }
+  },
+  {
     "id": "python",
     "title": "Python",
     "category": "Programming",
@@ -49411,6 +55782,2784 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/python/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "self-awareness-communication",
+    "title": "Self-Awareness & Communication",
+    "category": "Personal development",
+    "status": "ready",
+    "description": "Practise reflection, listening, clear requests and respectful disagreement in everyday situations.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "No specialist knowledge required.",
+      "A text editor or printed worksheets; fictional cases can be used throughout."
+    ],
+    "outcomes": [
+      "A factual reflection and a listening plan",
+      "A listening and feedback role-play",
+      "A difficult-conversation plan and review"
+    ],
+    "setup": [
+      "Download and extract the practice bundle; every worksheet is flat in self-awareness-communication-practice.",
+      "Read README.md, then work through numbered worksheets and the three stage project sheets.",
+      "Write your own response before comparing it with the fictional worked example.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "nextSteps": [
+      "Repeat a modest practice in a new context and revise from observed evidence.",
+      "Use relevant support or formal procedures when an everyday self-management tool is insufficient."
+    ],
+    "sources": [
+      {
+        "title": "University of Michigan Ombuds: Collaborative Conflict Resolution",
+        "url": "https://ombuds.umich.edu/article/principles-collaborative-conflict-resolution"
+      },
+      {
+        "title": "Oregon State University Ombuds: Giving and Receiving Feedback",
+        "url": "https://ombuds.oregonstate.edu/sites/ombuds.oregonstate.edu/files/2026-01/OMBUDS%20Handouts_Feedback.pdf"
+      },
+      {
+        "title": "Harvard Medical School Ombuds: Active Listening Techniques",
+        "url": "https://hms.harvard.edu/sites/default/files/assets/Sites/Ombuds/files/HMS.HSDM_.HSPH_.OmbudsOffice.ActiveListeningTechniques.pdf"
+      },
+      {
+        "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+        "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation"
+      },
+      {
+        "title": "NHS Every Mind Matters: Reframing unhelpful thoughts",
+        "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Start here: sequence, offline use and practice boundaries",
+        "href": "paths/self-awareness-communication/practice/README.md"
+      },
+      {
+        "title": "Source scope and evidence limits",
+        "href": "paths/self-awareness-communication/practice/sources-and-limits.md"
+      },
+      {
+        "title": "Separate what happened from what it means worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/01-observation-interpretation.md"
+      },
+      {
+        "title": "Name a feeling without making it an instruction worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/02-feeling-and-action.md"
+      },
+      {
+        "title": "Translate a value into an everyday choice worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/03-values-and-priorities.md"
+      },
+      {
+        "title": "Use a short reflection record worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/04-reflection-record.md"
+      },
+      {
+        "title": "Hold an alternative explanation lightly worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/05-perspective-check.md"
+      },
+      {
+        "title": "Pause long enough to choose the purpose worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/06-pause-and-purpose.md"
+      },
+      {
+        "title": "Create conditions for attentive listening worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/07-listen-with-attention.md"
+      },
+      {
+        "title": "Ask questions that invite useful detail worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/08-open-questions.md"
+      },
+      {
+        "title": "Paraphrase and invite correction worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/09-paraphrase.md"
+      },
+      {
+        "title": "Acknowledge experience while keeping your own view worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/10-validate-without-agreeing.md"
+      },
+      {
+        "title": "Make a request someone can answer worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/11-clear-request.md"
+      },
+      {
+        "title": "State a boundary as your own available action worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/12-boundaries.md"
+      },
+      {
+        "title": "Give feedback about a specific event worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/13-give-feedback.md"
+      },
+      {
+        "title": "Receive feedback by checking the example worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/14-receive-feedback.md"
+      },
+      {
+        "title": "Map positions, concerns and constraints worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/15-conflict-map.md"
+      },
+      {
+        "title": "Compare options with agreed criteria worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/16-negotiate-options.md"
+      },
+      {
+        "title": "Repair a specific communication mistake worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/17-repair.md"
+      },
+      {
+        "title": "Choose a channel that fits the issue worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/18-written-channel.md"
+      },
+      {
+        "title": "Recognise when informal conversation is insufficient worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/19-power-and-help.md"
+      },
+      {
+        "title": "Review a conversation using observable evidence worksheet and worked case",
+        "href": "paths/self-awareness-communication/practice/20-conversation-review.md"
+      },
+      {
+        "title": "A factual reflection and a listening plan project sheet",
+        "href": "paths/self-awareness-communication/practice/foundation-project.md"
+      },
+      {
+        "title": "A listening and feedback role-play project sheet",
+        "href": "paths/self-awareness-communication/practice/intermediate-project.md"
+      },
+      {
+        "title": "A difficult-conversation plan and review project sheet",
+        "href": "paths/self-awareness-communication/practice/advanced-project.md"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/self-awareness-communication/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/self-awareness-communication/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/self-awareness-communication/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/self-awareness-communication/practice/lab-model.js"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation — observe and define",
+        "description": "A factual reflection and a listening plan",
+        "exitCriteria": [
+          "Separate observations and interpretations in a fictional case.",
+          "Write an open question and a checked paraphrase.",
+          "Name your purpose and a respectful limit.",
+          "Preserve consent, practical limits and unresolved disagreement in the record."
+        ],
+        "project": {
+          "title": "A factual reflection and a listening plan",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "Separate observations and interpretations in a fictional case.",
+            "Write an open question and a checked paraphrase.",
+            "Name your purpose and a respectful limit."
+          ],
+          "rubric": [
+            "Separate observations and interpretations in a fictional case.",
+            "Write an open question and a checked paraphrase.",
+            "Name your purpose and a respectful limit.",
+            "Preserve consent, practical limits and unresolved disagreement in the record."
+          ],
+          "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate — practise and compare",
+        "description": "A listening and feedback role-play",
+        "exitCriteria": [
+          "Use a voluntary fictional role-play with permission to pause.",
+          "Practise a question, paraphrase, clear request and feedback example.",
+          "Record the partner’s correction and revise the message.",
+          "Preserve consent, practical limits and unresolved disagreement in the record."
+        ],
+        "project": {
+          "title": "A listening and feedback role-play",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "Use a voluntary fictional role-play with permission to pause.",
+            "Practise a question, paraphrase, clear request and feedback example.",
+            "Record the partner’s correction and revise the message."
+          ],
+          "rubric": [
+            "Use a voluntary fictional role-play with permission to pause.",
+            "Practise a question, paraphrase, clear request and feedback example.",
+            "Record the partner’s correction and revise the message.",
+            "Preserve consent, practical limits and unresolved disagreement in the record."
+          ],
+          "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced — adapt and review",
+        "description": "A difficult-conversation plan and review",
+        "exitCriteria": [
+          "Map positions, concerns, constraints and power differences.",
+          "Compare two options using agreed practical criteria.",
+          "Record agreements, unresolved questions and an appropriate follow-up.",
+          "Preserve consent, practical limits and unresolved disagreement in the record."
+        ],
+        "project": {
+          "title": "A difficult-conversation plan and review",
+          "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+          "requirements": [
+            "Map positions, concerns, constraints and power differences.",
+            "Compare two options using agreed practical criteria.",
+            "Record agreements, unresolved questions and an appropriate follow-up."
+          ],
+          "rubric": [
+            "Map positions, concerns, constraints and power differences.",
+            "Compare two options using agreed practical criteria.",
+            "Record agreements, unresolved questions and an appropriate follow-up.",
+            "Preserve consent, practical limits and unresolved disagreement in the record."
+          ],
+          "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "observation-interpretation",
+        "title": "1. Separate what happened from what it means",
+        "takeaway": "An observation describes what could be seen or heard; an interpretation explains it and may be wrong.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An observation describes what could be seen or heard; an interpretation explains it and may be wrong. Both are useful, but keeping them separate creates room to ask questions. Avoid treating a guess about someone’s motives as a fact. A precise observation can be checked together without requiring the other person to accept your whole explanation."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Interpretations become especially risky when they attribute intent: deliberate avoidance cannot be observed from silence alone. Ask for information relevant to the task rather than demanding an explanation of character. If repeated missed replies cause a practical problem, that pattern can still be discussed using dates and effects without claiming certainty about motives."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Ravi sees a teammate leave a message unanswered for two hours and concludes she does not respect him. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Observation: my message has no reply after two hours. Interpretation: she does not respect me. Question: when would be a good time to confirm the plan? She may be busy, offline or waiting for information.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Split the event into observation and interpretation, then write a neutral question.",
+          "solution": "Observation: my message has no reply after two hours. Interpretation: she does not respect me. Question: when would be a good time to confirm the plan? She may be busy, offline or waiting for information.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Observation and motive interpretation are separated.",
+            "The question seeks missing information neutrally.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement is an observation?",
+          "options": [
+            "The message has no reply after two hours",
+            "She deliberately ignores me",
+            "She does not value teamwork"
+          ],
+          "correct": 0,
+          "explanation": "The message has no reply after two hours fits the distinction in this lesson. She deliberately ignores me overlooks the stated limits; She does not value teamwork substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "NHS Every Mind Matters: Reframing unhelpful thoughts",
+            "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/",
+            "section": "Catch, check, change; considering evidence and alternatives",
+            "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Separate facts and interpretations",
+          "summary": "The visible fact is a message without a reply after two hours. A neutral timing question can obtain information Ravi needs for the shared plan.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "No reply after two hours",
+              "description": "The visible fact is a message without a reply after two hours."
+            },
+            {
+              "id": "1",
+              "label": "Ravi guesses disrespect",
+              "description": "Disrespect is an interpretation of intent, not something established by silence."
+            },
+            {
+              "id": "2",
+              "label": "Consider busy or offline",
+              "description": "Busy, offline and waiting for information remain possibilities rather than replacement certainties."
+            },
+            {
+              "id": "3",
+              "label": "Ask when confirmation is possible",
+              "description": "A neutral timing question can obtain information Ravi needs for the shared plan."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "prompts an interpretation",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "opens competing explanations",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "identifies information to request",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "No reply after two hours",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The visible fact is a message without a reply after two hours."
+            },
+            {
+              "title": "Ravi guesses disrespect",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Disrespect is an interpretation of intent, not something established by silence."
+            },
+            {
+              "title": "Consider busy or offline",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Busy, offline and waiting for information remain possibilities rather than replacement certainties."
+            },
+            {
+              "title": "Ask when confirmation is possible",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "A neutral timing question can obtain information Ravi needs for the shared plan."
+            }
+          ]
+        }
+      },
+      {
+        "id": "feeling-and-action",
+        "title": "2. Name a feeling without making it an instruction",
+        "takeaway": "A feeling is information about your experience; it does not determine the next action.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A feeling is information about your experience; it does not determine the next action. Use ordinary words such as frustrated, disappointed or uncertain if they fit. You do not need a perfect label to choose a respectful response. Separate the feeling from a judgement about the other person and from the action you might take next."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Some words that sound like feelings contain interpretations: ignored can imply someone intended exclusion. Translate them into an emotion and the specific event when possible. This does not invalidate the experience. It makes the concern clearer and gives the other person a chance to address the event rather than defend against a presumed motive."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Dana feels frustrated when a shared document changes shortly before a meeting. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I feel frustrated. I am concerned about preparing from the correct version. I will ask which sections changed and request a stable copy before the meeting. This describes Dana’s experience without assuming deliberate sabotage.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a feeling, concern and useful next action.",
+          "solution": "I feel frustrated. I am concerned about preparing from the correct version. I will ask which sections changed and request a stable copy before the meeting. This describes Dana’s experience without assuming deliberate sabotage.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The feeling differs from the proposed action.",
+            "The concern names an actual practical effect.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which separates feeling and action?",
+          "options": [
+            "I feel frustrated and will ask what changed",
+            "I feel ignored, therefore they must be malicious",
+            "Feeling angry requires sending the message immediately"
+          ],
+          "correct": 0,
+          "explanation": "I feel frustrated and will ask what changed fits the distinction in this lesson. I feel ignored, therefore they must be malicious overlooks the stated limits; Feeling angry requires sending the message immediately substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "NHS Every Mind Matters: Reframing unhelpful thoughts",
+            "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/",
+            "section": "Catch, check, change; considering evidence and alternatives",
+            "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "values-and-priorities",
+        "title": "3. Translate a value into an everyday choice",
+        "takeaway": "A value describes what matters to you; a priority chooses where to act under current constraints.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A value describes what matters to you; a priority chooses where to act under current constraints. Values can conflict in a particular situation: helping someone and protecting study time may both matter. Choose a feasible action rather than ranking yourself as good or bad. Describe the trade-off openly and revisit it when circumstances change."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A feasible value-based choice includes the opportunity cost. Offering help for twenty minutes means that time is unavailable for another task. State the limit before beginning so the other person can decide whether the offer helps. Consistency does not mean making the same choice under different deadlines and responsibilities."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Lina values helping classmates but has only twenty minutes before her own deadline. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I can spend five minutes identifying the question, then return to my work. I can offer a longer discussion tomorrow. Lina’s limit does not erase her wish to help; it makes the available help clear.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a choice that respects both concerns.",
+          "solution": "I can spend five minutes identifying the question, then return to my work. I can offer a longer discussion tomorrow. Lina’s limit does not erase her wish to help; it makes the available help clear.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The competing priorities are both named.",
+            "The help offer has a clear time limit.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which choice makes the trade-off visible?",
+          "options": [
+            "Offer a defined short help slot and a later option",
+            "Agree to unlimited help to prove kindness",
+            "Ignore the request without explanation"
+          ],
+          "correct": 0,
+          "explanation": "Offer a defined short help slot and a later option fits the distinction in this lesson. Agree to unlimited help to prove kindness overlooks the stated limits; Ignore the request without explanation substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "reflection-record",
+        "title": "4. Use a short reflection record",
+        "takeaway": "A reflection record makes a situation, your first explanation and possible alternatives visible.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A reflection record makes a situation, your first explanation and possible alternatives visible. Keep the record brief and use low-stakes examples. The purpose is curiosity and a next action, not grading your feelings or diagnosing yourself. You may use a fictional scenario or stop if the exercise is not helpful. Personal notes do not need to be shared."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Reflection works best when it ends with a useful question or action rather than repeated analysis of the same event. Include evidence that supports and challenges the first account, and leave uncertainty when evidence is missing. A record can be complete even if the feeling does not change; the purpose here is a clearer everyday decision."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Eli assumes a brief email means a tutor is annoyed, then notices it contains a clear answer and no criticism. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Event: a two-line reply. First interpretation: annoyance. Evidence: short length only; against it, the question is answered clearly. Alternative: the tutor writes concise replies. Next action: use the answer and ask a follow-up if necessary.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Record the event, first interpretation, evidence and one alternative.",
+          "solution": "Event: a two-line reply. First interpretation: annoyance. Evidence: short length only; against it, the question is answered clearly. Alternative: the tutor writes concise replies. Next action: use the answer and ask a follow-up if necessary.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Evidence for and against the first account is recorded.",
+            "A practical next step ends the reflection.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What is the record for?",
+          "options": [
+            "Examining an interpretation and choosing a next step",
+            "Proving all unpleasant feelings are irrational",
+            "Diagnosing the tutor’s personality"
+          ],
+          "correct": 0,
+          "explanation": "Examining an interpretation and choosing a next step fits the distinction in this lesson. Proving all unpleasant feelings are irrational overlooks the stated limits; Diagnosing the tutor’s personality substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "NHS Every Mind Matters: Reframing unhelpful thoughts",
+            "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/",
+            "section": "Catch, check, change; considering evidence and alternatives",
+            "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "perspective-check",
+        "title": "5. Hold an alternative explanation lightly",
+        "takeaway": "An alternative explanation is a possibility to check, not a replacement certainty.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An alternative explanation is a possibility to check, not a replacement certainty. Ask what information would distinguish competing explanations. A flexible account can include uncertainty and real problems. Do not force a positive story when evidence points to an issue that needs addressing. Fair reflection makes room for both context and accountability."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "An alternative should not erase an actual impact. Even if an invitation was omitted accidentally, the person still missed the session. Separate the question of intent from the request to improve the invitation process. This allows a practical response while avoiding both unsupported accusation and forced reassurance that nothing important happened."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Noor receives no invite to a study session. It may be an oversight or a deliberate choice; she does not yet know. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Possibilities: the organiser used an old list, or the group planned a smaller session. Question: I heard there was a session yesterday; how are invitations being organised? Noor can then respond to what she learns instead of asserting either story as fact.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write two possibilities and a question that can resolve part of the uncertainty.",
+          "solution": "Possibilities: the organiser used an old list, or the group planned a smaller session. Question: I heard there was a session yesterday; how are invitations being organised? Noor can then respond to what she learns instead of asserting either story as fact.",
+          "solutionFormat": "prose",
+          "checks": [
+            "At least two explanations remain possibilities.",
+            "The question can reveal relevant information.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What makes an alternative useful?",
+          "options": [
+            "It remains a hypothesis open to evidence",
+            "It must always be optimistic",
+            "It proves the first interpretation was impossible"
+          ],
+          "correct": 0,
+          "explanation": "It remains a hypothesis open to evidence fits the distinction in this lesson. It must always be optimistic overlooks the stated limits; It proves the first interpretation was impossible substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "NHS Every Mind Matters: Reframing unhelpful thoughts",
+            "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/",
+            "section": "Catch, check, change; considering evidence and alternatives",
+            "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "pause-and-purpose",
+        "title": "6. Pause long enough to choose the purpose",
+        "takeaway": "A brief pause can help you decide what a conversation needs to accomplish.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A brief pause can help you decide what a conversation needs to accomplish. Before replying, identify the practical issue, what information is missing and the smallest useful request. A pause can be as simple as drafting without sending. It is a choice about timing, not a claim that all emotion must disappear before speaking."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Urgent information and a broader concern may require separate timing. First clarify the location needed for today; later discuss how changes should be announced. Separating purposes is useful only if the broader issue receives a real follow-up. Otherwise postponement can become avoidance, so specify when and how the second discussion will happen."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Kiran drafts an angry response to a last-minute room change but mainly needs to know where to meet. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I saw the room changed. Please confirm the new location and whether the start time is the same. We can discuss notice for future changes afterwards. The first message solves the urgent information gap while preserving a later concern.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite the reply around its immediate purpose.",
+          "solution": "I saw the room changed. Please confirm the new location and whether the start time is the same. We can discuss notice for future changes afterwards. The first message solves the urgent information gap while preserving a later concern.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Urgent purpose and later concern are distinguished.",
+            "The reply requests the needed information.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What is a useful pause question?",
+          "options": [
+            "What do I need this message to accomplish?",
+            "How do I remove every feeling first?",
+            "How can I win before hearing the explanation?"
+          ],
+          "correct": 0,
+          "explanation": "What do I need this message to accomplish? fits the distinction in this lesson. How do I remove every feeling first? overlooks the stated limits; How can I win before hearing the explanation? substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "listen-with-attention",
+        "title": "7. Create conditions for attentive listening",
+        "takeaway": "Listening begins with giving the speaker a fair opportunity to explain.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Listening begins with giving the speaker a fair opportunity to explain. Ask whether the time and setting work, reduce avoidable interruptions and agree on how long you have. Attention does not require a single body-language style: people differ in comfort with eye contact and silence. Check understanding through words rather than judging engagement from appearance alone."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. A time limit is compatible with care when stated honestly; pretending unlimited attention while distracted gives the speaker less reliable information about your availability."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Bea’s friend explains a timetable problem while Bea keeps glancing at notifications. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a short listening setup that respects both people.",
+          "solution": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Time and setting are agreed before listening.",
+            "Understanding is checked rather than inferred from posture.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which is reliable evidence of understanding?",
+          "options": [
+            "A checked summary of what was said",
+            "Unbroken eye contact alone",
+            "Immediate advice before the speaker finishes"
+          ],
+          "correct": 0,
+          "explanation": "A checked summary of what was said fits the distinction in this lesson. Unbroken eye contact alone overlooks the stated limits; Immediate advice before the speaker finishes substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Harvard Medical School Ombuds: Active Listening Techniques",
+            "url": "https://hms.harvard.edu/sites/default/files/assets/Sites/Ombuds/files/HMS.HSDM_.HSPH_.OmbudsOffice.ActiveListeningTechniques.pdf",
+            "section": "Encourage, clarify, restate, reflect, summarise and validate",
+            "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "open-questions",
+        "title": "8. Ask questions that invite useful detail",
+        "takeaway": "An open question invites an explanation; a closed question checks a specific fact.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "An open question invites an explanation; a closed question checks a specific fact. Use each for its purpose. One neutral open question can reveal constraints that a string of leading questions misses. Avoid questions that contain an accusation. After hearing the answer, ask a focused check rather than making the speaker repeat everything."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Open questions are helpful for discovering context, while closed checks are helpful for confirming details such as a deadline. Too many open questions can feel like an interview and delay a simple decision. Move from exploration to a focused check when you have enough information, and avoid why questions that embed blame in their wording."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A project partner says the draft cannot be finished tonight. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "What is making tonight difficult? After the answer: is the missing data the only section blocking your draft? The first invites context; the second checks a concrete dependency without assuming laziness.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an open question and a factual follow-up.",
+          "solution": "What is making tonight difficult? After the answer: is the missing data the only section blocking your draft? The first invites context; the second checks a concrete dependency without assuming laziness.",
+          "solutionFormat": "prose",
+          "checks": [
+            "An open question invites context without blame.",
+            "The follow-up checks a concrete dependency.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which question invites context?",
+          "options": [
+            "What is making tonight difficult?",
+            "Why are you always unreliable?",
+            "You just did not try, did you?"
+          ],
+          "correct": 0,
+          "explanation": "What is making tonight difficult? fits the distinction in this lesson. Why are you always unreliable? overlooks the stated limits; You just did not try, did you? substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Harvard Medical School Ombuds: Active Listening Techniques",
+            "url": "https://hms.harvard.edu/sites/default/files/assets/Sites/Ombuds/files/HMS.HSDM_.HSPH_.OmbudsOffice.ActiveListeningTechniques.pdf",
+            "section": "Encourage, clarify, restate, reflect, summarise and validate",
+            "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "paraphrase",
+        "title": "9. Paraphrase and invite correction",
+        "takeaway": "A paraphrase restates the speaker’s meaning in your own words and checks it.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A paraphrase restates the speaker’s meaning in your own words and checks it. Keep the summary short enough that the other person can correct it. Distinguish the facts they reported from your interpretation of their concern. Checking meaning is more useful than mechanically repeating every sentence or announcing that you know exactly how they feel."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A paraphrase can accidentally add an inference that the speaker never expressed. Keep conditions such as if the figures arrive before noon intact rather than summarising only the desired result. Invite correction before planning the next action. A corrected summary is evidence of learning, not evidence that the listening attempt failed."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Zara says she can do the analysis but needs the figures before noon. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "You can complete the analysis if the figures arrive before noon; the timing is the blocker. Have I understood that, or is there another dependency? This identifies the condition while leaving Zara room to correct it.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a checked paraphrase and a correction invitation.",
+          "solution": "You can complete the analysis if the figures arrive before noon; the timing is the blocker. Have I understood that, or is there another dependency? This identifies the condition while leaving Zara room to correct it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The summary preserves the speaker’s condition.",
+            "The speaker is invited to correct it.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What completes a useful paraphrase?",
+          "options": [
+            "An invitation to correct the summary",
+            "A statement that no further explanation is needed",
+            "A judgement about the speaker’s attitude"
+          ],
+          "correct": 0,
+          "explanation": "An invitation to correct the summary fits the distinction in this lesson. A statement that no further explanation is needed overlooks the stated limits; A judgement about the speaker’s attitude substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Harvard Medical School Ombuds: Active Listening Techniques",
+            "url": "https://hms.harvard.edu/sites/default/files/assets/Sites/Ombuds/files/HMS.HSDM_.HSPH_.OmbudsOffice.ActiveListeningTechniques.pdf",
+            "section": "Encourage, clarify, restate, reflect, summarise and validate",
+            "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Zara’s deadline: summarise and correct",
+          "summary": "A checked summary can be corrected before anyone plans around it.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Listen to Zara’s condition",
+              "description": "Zara can complete analysis if the figures arrive before noon."
+            },
+            {
+              "id": "1",
+              "label": "Restate condition and blocker",
+              "description": "Summarise: the figures must arrive before noon for the analysis to be completed."
+            },
+            {
+              "id": "2",
+              "label": "Summary accurate?",
+              "description": "Ask Zara whether the timing condition is correct and whether another dependency is missing.",
+              "shape": "decision"
+            },
+            {
+              "id": "3",
+              "label": "Revise from correction",
+              "description": "If Zara names another dependency or changes the timing, update the summary instead of defending it."
+            },
+            {
+              "id": "4",
+              "label": "Plan using confirmed meaning",
+              "description": "Use the checked conditions to decide who will provide the figures and when."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "preserve the stated condition",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "invite correction",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "no: detail missing or mistaken",
+              "from": "2"
+            },
+            {
+              "to": "1",
+              "label": "restate updated understanding",
+              "from": "3"
+            },
+            {
+              "to": "4",
+              "label": "yes: understanding confirmed",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Listen to Zara’s condition",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Zara can complete analysis if the figures arrive before noon."
+            },
+            {
+              "title": "Restate condition and blocker",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0,
+                3
+              ],
+              "explanation": "Summarise: the figures must arrive before noon for the analysis to be completed."
+            },
+            {
+              "title": "Summary accurate?",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Ask Zara whether the timing condition is correct and whether another dependency is missing."
+            },
+            {
+              "title": "Revise from correction",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If Zara names another dependency or changes the timing, update the summary instead of defending it."
+            },
+            {
+              "title": "Plan using confirmed meaning",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Use the checked conditions to decide who will provide the figures and when."
+            }
+          ]
+        }
+      },
+      {
+        "id": "validate-without-agreeing",
+        "title": "10. Acknowledge experience while keeping your own view",
+        "takeaway": "Acknowledging someone’s concern is different from accepting every claim or proposed solution.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Acknowledging someone’s concern is different from accepting every claim or proposed solution. Name what you have heard without pretending certainty about their feelings. You can understand why a delay matters and still disagree about who should do the task. This helps keep the practical disagreement visible instead of turning listening into a demand for agreement."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Validation becomes misleading when it claims knowledge of an emotion the person has not named. Use tentative language and focus on the reported disruption. You can acknowledge the effect while declining an unworkable request. Keeping those functions separate helps avoid a promise made only to end discomfort in the conversation."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Mo is upset that a shared room was unavailable and asks Pat to cancel another group’s booking. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write acknowledgment followed by an honest limit.",
+          "solution": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The disruption is acknowledged without guessing motives.",
+            "The limit and available help are explicit.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which response acknowledges without promising too much?",
+          "options": [
+            "The disruption matters; I can help check another room",
+            "You are right about everything, so I will cancel their booking",
+            "You should not feel upset because rooms are limited"
+          ],
+          "correct": 0,
+          "explanation": "The disruption matters; I can help check another room fits the distinction in this lesson. You are right about everything, so I will cancel their booking overlooks the stated limits; You should not feel upset because rooms are limited substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Harvard Medical School Ombuds: Active Listening Techniques",
+            "url": "https://hms.harvard.edu/sites/default/files/assets/Sites/Ombuds/files/HMS.HSDM_.HSPH_.OmbudsOffice.ActiveListeningTechniques.pdf",
+            "section": "Encourage, clarify, restate, reflect, summarise and validate",
+            "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "clear-request",
+        "title": "11. Make a request someone can answer",
+        "takeaway": "A clear request names an action, timing and relevant reason while allowing a response.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A clear request names an action, timing and relevant reason while allowing a response. A request is not a hidden test of caring. State what would help and ask whether it is feasible. If a deadline is fixed, explain the constraint; if it is flexible, say so. Avoid vague demands such as communicate better that leave success undefined."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Requests often fail because the response window is hidden. State when you need confirmation as well as when you need the task completed, especially if your next step depends on it. Distinguish a flexible preference from a fixed deadline. A negotiated alternative can satisfy the purpose even when the original request cannot be met."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Isha needs a teammate’s chart before preparing slides. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a specific request with a feasible response option.",
+          "solution": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Action, completion time and confirmation time are clear.",
+            "An alternative response is possible.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which request can be answered clearly?",
+          "options": [
+            "Can you send the chart by 4 pm, or confirm what is ready by 2?",
+            "Be more considerate",
+            "Prove that this project matters to you"
+          ],
+          "correct": 0,
+          "explanation": "Can you send the chart by 4 pm, or confirm what is ready by 2? fits the distinction in this lesson. Be more considerate overlooks the stated limits; Prove that this project matters to you substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "boundaries",
+        "title": "12. State a boundary as your own available action",
+        "takeaway": "A boundary explains what you can participate in or provide, rather than controlling another person.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A boundary explains what you can participate in or provide, rather than controlling another person. Use clear scope and an alternative when one is available. You do not need an elaborate justification for every limit. A boundary may disappoint someone and still be reasonable. Avoid making threats or promising actions you cannot carry out."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person’s behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Theo receives requests for homework help late every night and needs protected study time. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a boundary and a practical alternative.",
+          "solution": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The boundary describes the learner’s own action.",
+            "An available alternative is stated without coercion.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which is a controllable boundary?",
+          "options": [
+            "I will respond during my available daytime slot",
+            "You must never need help at night",
+            "If you cared, you would read my mind"
+          ],
+          "correct": 0,
+          "explanation": "I will respond during my available daytime slot fits the distinction in this lesson. You must never need help at night overlooks the stated limits; If you cared, you would read my mind substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "give-feedback",
+        "title": "13. Give feedback about a specific event",
+        "takeaway": "Useful feedback describes an event, its effect and a possible next step.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Useful feedback describes an event, its effect and a possible next step. Choose a relevant example and avoid global labels. Ask whether the timing is workable, especially when the feedback is not urgent. Describe your experience as your experience. The other person may have information that changes your interpretation or the proposed solution."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Feedback about an artefact is easier to revise when it identifies the exact location and effect. Avoid exaggerations such as everyone was confused when only two readers asked. A proposed change is a starting point for discussion: the author may know a constraint that suggests a different solution. Ask for that perspective before treating your fix as mandatory."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A slide uses unexplained abbreviations, and two readers ask what the labels mean. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write specific feedback that invites a response.",
+          "solution": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
+          "solutionFormat": "prose",
+          "checks": [
+            "A specific artefact or event is identified.",
+            "Impact, proposed change and response invitation are present.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which feedback is actionable?",
+          "options": [
+            "The summary labels need definitions to make the comparison understandable",
+            "You are bad at presenting",
+            "Everyone knows you are careless"
+          ],
+          "correct": 0,
+          "explanation": "The summary labels need definitions to make the comparison understandable fits the distinction in this lesson. You are bad at presenting overlooks the stated limits; Everyone knows you are careless substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Oregon State University Ombuds: Giving and Receiving Feedback",
+            "url": "https://ombuds.oregonstate.edu/sites/ombuds.oregonstate.edu/files/2026-01/OMBUDS%20Handouts_Feedback.pdf",
+            "section": "Giving and receiving feedback tip sheet",
+            "scope": "University educational handout; used for specific, respectful feedback, not a clinical intervention.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Make feedback actionable",
+          "summary": "The slide contains ABC and QRT without definitions; identify this exact artefact. Ask whether space or format constraints require a different workable change.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Undefined chart labels",
+              "description": "The slide contains ABC and QRT without definitions; identify this exact artefact."
+            },
+            {
+              "id": "1",
+              "label": "Readers cannot interpret comparison",
+              "description": "Two readers asked what the labels meant, so describe that observed effect without claiming everyone was confused."
+            },
+            {
+              "id": "2",
+              "label": "Request a short legend",
+              "description": "Suggest a brief legend that addresses the interpretation problem."
+            },
+            {
+              "id": "3",
+              "label": "Invite author’s constraints",
+              "description": "Ask whether space or format constraints require a different workable change."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "creates a specific reader difficulty",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "supports a targeted change",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "allows a feasible alternative",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Undefined chart labels",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The slide contains ABC and QRT without definitions; identify this exact artefact."
+            },
+            {
+              "title": "Readers cannot interpret comparison",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Two readers asked what the labels meant, so describe that observed effect without claiming everyone was confused."
+            },
+            {
+              "title": "Request a short legend",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Suggest a brief legend that addresses the interpretation problem."
+            },
+            {
+              "title": "Invite author’s constraints",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Ask whether space or format constraints require a different workable change."
+            }
+          ]
+        }
+      },
+      {
+        "id": "receive-feedback",
+        "title": "14. Receive feedback by checking the example",
+        "takeaway": "Feedback is information to examine; accepting it respectfully does not require immediate agreement.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Feedback is information to examine; accepting it respectfully does not require immediate agreement. Ask for a specific example, restate the point and decide what you can use. You may need time to compare it with other evidence. Avoid turning one comment into a global identity verdict, and avoid dismissing it solely because it feels uncomfortable."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Receiving feedback involves two separate decisions: whether you understand it and whether you will act on it. Clarify the first before debating the second. A small test can reveal whether a proposed change improves the task. If you decline part of the advice, explain the relevant constraint rather than dismissing the person’s experience."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Ana hears that her meeting updates are too detailed but does not know which part to change. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a reply and one small experiment.",
+          "solution": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The reply asks for an example before deciding.",
+            "The proposed experiment has a checkable result.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What is a constructive first step?",
+          "options": [
+            "Ask for an example and check what the feedback means",
+            "Agree that all your communication is wrong",
+            "Reject it before hearing any detail"
+          ],
+          "correct": 0,
+          "explanation": "Ask for an example and check what the feedback means fits the distinction in this lesson. Agree that all your communication is wrong overlooks the stated limits; Reject it before hearing any detail substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "Oregon State University Ombuds: Giving and Receiving Feedback",
+            "url": "https://ombuds.oregonstate.edu/sites/ombuds.oregonstate.edu/files/2026-01/OMBUDS%20Handouts_Feedback.pdf",
+            "section": "Giving and receiving feedback tip sheet",
+            "scope": "University educational handout; used for specific, respectful feedback, not a clinical intervention.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "conflict-map",
+        "title": "15. Map positions, concerns and constraints",
+        "takeaway": "A position is the proposed solution; the concern underneath explains why it matters.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A position is the proposed solution; the concern underneath explains why it matters. Two people may propose different solutions while sharing part of the goal. List each account without declaring one complete story. Include non-negotiable constraints such as a deadline or available space. Understanding concerns can expand options; it does not guarantee agreement."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A stated position may hide several concerns, so do not assume a single underlying need explains everything. Ask which parts are essential and which are flexible. A shared aim can help compare options but does not eliminate conflicting constraints. Preserve the disagreement when no feasible overlap exists instead of forcing a superficial agreement."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "One classmate wants an evening meeting; another insists on mornings because of caring responsibilities. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Map the positions, underlying concerns and a shared aim.",
+          "solution": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Positions and underlying concerns are distinguished.",
+            "Shared aim and real constraints are included.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What can reveal new options?",
+          "options": [
+            "The concerns and constraints behind each proposed time",
+            "Repeating each position louder",
+            "Assuming the first account contains every fact"
+          ],
+          "correct": 0,
+          "explanation": "The concerns and constraints behind each proposed time fits the distinction in this lesson. Repeating each position louder overlooks the stated limits; Assuming the first account contains every fact substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Collaborative Conflict Resolution",
+            "url": "https://ombuds.umich.edu/article/principles-collaborative-conflict-resolution",
+            "section": "Multiple perspectives and collaborative resolution",
+            "scope": "University practical guidance, not experimental proof that every disagreement can be resolved collaboratively.",
+            "reviewed": "2026-09-30"
+          },
+          {
+            "title": "US National Archives FOIA Ombuds: Interests versus Positions",
+            "url": "https://foia.blogs.archives.gov/2012/03/28/difficult-conversations-part-1-interests-vs-positions/",
+            "section": "Distinguishing the position from the interest behind it",
+            "reviewed": "2026-09-30",
+            "scope": "First-party government ombuds practice guidance; used only for the distinction and example option comparison, not legal advice or a guaranteed outcome."
+          }
+        ],
+        "diagram": {
+          "title": "Explore a disagreement",
+          "summary": "Record each proposed time without treating either account as the entire story. A shared outline and short overlap slot may fit better; check consent and actual availability.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Evening versus morning meeting",
+              "description": "Record each proposed time without treating either account as the entire story."
+            },
+            {
+              "id": "1",
+              "label": "Work and care constraints",
+              "description": "Ask what makes each time important; work hours and care commitments constrain availability."
+            },
+            {
+              "id": "2",
+              "label": "Shared presentation deadline",
+              "description": "Both classmates need enough preparation time before the presentation."
+            },
+            {
+              "id": "3",
+              "label": "Compare overlap or asynchronous work",
+              "description": "A shared outline and short overlap slot may fit better; check consent and actual availability."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "reveals underlying concerns",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "defines what both need to achieve",
+              "from": "1"
+            },
+            {
+              "to": "3",
+              "label": "provides criteria for options",
+              "from": "2"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Evening versus morning meeting",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Record each proposed time without treating either account as the entire story."
+            },
+            {
+              "title": "Work and care constraints",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Ask what makes each time important; work hours and care commitments constrain availability."
+            },
+            {
+              "title": "Shared presentation deadline",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Both classmates need enough preparation time before the presentation."
+            },
+            {
+              "title": "Compare overlap or asynchronous work",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "A shared outline and short overlap slot may fit better; check consent and actual availability."
+            }
+          ]
+        }
+      },
+      {
+        "id": "negotiate-options",
+        "title": "16. Compare options with agreed criteria",
+        "takeaway": "Negotiation becomes clearer when people agree what an option needs to satisfy.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Negotiation becomes clearer when people agree what an option needs to satisfy. Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Be honest when an option does not meet a constraint. A fair process permits disagreement and does not require equal division when tasks have different demands."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Fairness is not always equal quantities. Tasks differ in complexity, skill requirements and timing, and people differ in available hours. Agree on criteria before allocating work, then check whether everyone accepts the plan. An option that looks efficient but depends on an unwilling participant is not yet a workable agreement."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A group must finish a poster while members have different skills and available hours. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Plan A splits pages equally; Plan B assigns layout to the available designer and research checks to others. Compare total hours and whether each person can complete their part by Friday. Plan B may fit better, but confirm consent and backup coverage rather than assuming skill creates obligation.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Generate two task plans and compare them using two criteria.",
+          "solution": "Plan A splits pages equally; Plan B assigns layout to the available designer and research checks to others. Compare total hours and whether each person can complete their part by Friday. Plan B may fit better, but confirm consent and backup coverage rather than assuming skill creates obligation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Two options are compared against explicit criteria.",
+            "Availability and agreement are checked.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What should guide option selection?",
+          "options": [
+            "Agreed practical criteria and people’s actual availability",
+            "Which person argues longest",
+            "Exactly equal page counts regardless of effort"
+          ],
+          "correct": 0,
+          "explanation": "Agreed practical criteria and people’s actual availability fits the distinction in this lesson. Which person argues longest overlooks the stated limits; Exactly equal page counts regardless of effort substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Collaborative Conflict Resolution",
+            "url": "https://ombuds.umich.edu/article/principles-collaborative-conflict-resolution",
+            "section": "Multiple perspectives and collaborative resolution",
+            "scope": "University practical guidance, not experimental proof that every disagreement can be resolved collaboratively.",
+            "reviewed": "2026-09-30"
+          },
+          {
+            "title": "US National Archives FOIA Ombuds: Interests versus Positions",
+            "url": "https://foia.blogs.archives.gov/2012/03/28/difficult-conversations-part-1-interests-vs-positions/",
+            "section": "Distinguishing the position from the interest behind it",
+            "reviewed": "2026-09-30",
+            "scope": "First-party government ombuds practice guidance; used only for the distinction and example option comparison, not legal advice or a guaranteed outcome."
+          }
+        ]
+      },
+      {
+        "id": "repair",
+        "title": "17. Repair a specific communication mistake",
+        "takeaway": "A repair identifies what happened, recognises its effect and states what you will change.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A repair identifies what happened, recognises its effect and states what you will change. An apology is clearer when it does not demand immediate forgiveness. Avoid adding a justification that cancels responsibility. You can explain context later while still owning the action. A practical repair may require correcting a document or following through on a promise."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Repair needs follow-through that matches the mistake. Correcting misinformation requires updating the shared record, while an interruption requires making space to finish. An apology cannot require the recipient to provide reassurance or forgive immediately. Check the practical effect of the changed action without turning the repair into another demand on the other person."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "Jules interrupts a partner twice and then discovers that he misunderstood the missing information. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "I interrupted you twice and missed the information you were explaining. I am sorry. Please finish; then I will summarise before suggesting a change. Jules lets the partner choose whether to continue and follows through rather than seeking reassurance.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a repair and a changed next action.",
+          "solution": "I interrupted you twice and missed the information you were explaining. I am sorry. Please finish; then I will summarise before suggesting a change. Jules lets the partner choose whether to continue and follows through rather than seeking reassurance.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The mistake and its effect are named.",
+            "The changed next action matches the mistake.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What makes repair concrete?",
+          "options": [
+            "Naming the action and changing the next interaction",
+            "Saying sorry but you made me do it",
+            "Demanding the other person accept the apology immediately"
+          ],
+          "correct": 0,
+          "explanation": "Naming the action and changing the next interaction fits the distinction in this lesson. Saying sorry but you made me do it overlooks the stated limits; Demanding the other person accept the apology immediately substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "written-channel",
+        "title": "18. Choose a channel that fits the issue",
+        "takeaway": "A channel affects how easily people can clarify meaning, prepare and keep a record.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A channel affects how easily people can clarify meaning, prepare and keep a record. Text can be useful for facts and confirmation; a scheduled conversation can help explore a complex disagreement. Preferences and accessibility matter, so ask what works. Do not assume an in-person discussion is always superior or that a short message has a hostile tone."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Written messages preserve a record but remove immediate opportunities to clarify tone. Live conversations allow questions but may be inaccessible or difficult to schedule. A combined approach can work: exchange facts in writing, discuss the unresolved point in an agreed format, then record decisions. Ask about access needs instead of assuming one format suits everyone."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A group chat disagreement grows as people answer different parts of a long thread. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "We seem to be discussing two questions at once: timing and workload. Could we use a shared outline and a ten-minute call, or written comments if that works better? Afterwards we can record the agreed tasks in one message.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose a next channel and write a neutral transition.",
+          "solution": "We seem to be discussing two questions at once: timing and workload. Could we use a shared outline and a ten-minute call, or written comments if that works better? Afterwards we can record the agreed tasks in one message.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Channel choice considers access and clarification.",
+            "The final decision will have an agreed record.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "What should influence channel choice?",
+          "options": [
+            "Complexity, accessibility, preference and need for a record",
+            "The belief that text always communicates hostility",
+            "Who can pressure everyone into a call fastest"
+          ],
+          "correct": 0,
+          "explanation": "Complexity, accessibility, preference and need for a record fits the distinction in this lesson. The belief that text always communicates hostility overlooks the stated limits; Who can pressure everyone into a call fastest substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "power-and-help",
+        "title": "19. Recognise when informal conversation is insufficient",
+        "takeaway": "Communication tools are options, and context can make direct discussion unsuitable.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "Communication tools are options, and context can make direct discussion unsuitable. Power differences, repeated disrespect or a formal process can change the available choices. You may ask a teacher, supervisor or relevant support office about procedures instead of negotiating alone. Do not use this course to excuse mistreatment or assign responsibility for another person’s behaviour."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "Informal support and formal processes serve different purposes. An ombuds may help explore options without making a decision, while a designated reporting route may have specific responsibilities. Check the actual role and confidentiality rules before sharing sensitive details. This course cannot determine the correct procedure for every institution or replace its published policies."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A junior volunteer is repeatedly assigned work outside the agreed role after already explaining availability. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "Keep dates, requested tasks and the agreed role description. Ask the coordinator or designated support contact how assignments should be resolved. Another direct conversation is optional, not a condition for seeking help. This is procedural support, not a diagnosis of anyone involved.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Identify a practical support route and a factual record.",
+          "solution": "Keep dates, requested tasks and the agreed role description. Ask the coordinator or designated support contact how assignments should be resolved. Another direct conversation is optional, not a condition for seeking help. This is procedural support, not a diagnosis of anyone involved.",
+          "solutionFormat": "prose",
+          "checks": [
+            "The factual record includes role and requested work.",
+            "An appropriate support route is identified without diagnosis.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "When can a support route be appropriate?",
+          "options": [
+            "When role or power constraints make another informal request insufficient",
+            "Only after solving the problem entirely alone",
+            "Never, because better wording fixes every conflict"
+          ],
+          "correct": 0,
+          "explanation": "When role or power constraints make another informal request insufficient fits the distinction in this lesson. Only after solving the problem entirely alone overlooks the stated limits; Never, because better wording fixes every conflict substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Collaborative Conflict Resolution",
+            "url": "https://ombuds.umich.edu/article/principles-collaborative-conflict-resolution",
+            "section": "Multiple perspectives and collaborative resolution",
+            "scope": "University practical guidance, not experimental proof that every disagreement can be resolved collaboratively.",
+            "reviewed": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "id": "conversation-review",
+        "title": "20. Review a conversation using observable evidence",
+        "takeaway": "A review distinguishes what you tried, what the other person said and what remains unresolved.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the distinction",
+            "paragraphs": [
+              "A review distinguishes what you tried, what the other person said and what remains unresolved. Evaluate listening, clarity and follow-through rather than whether you won. A conversation may succeed by clarifying disagreement or identifying a next step. Protect privacy in notes and obtain consent before any practice recording. Use a fictional role-play if a real conversation is unsuitable."
+            ]
+          },
+          {
+            "title": "Mechanism and practical trade-off",
+            "paragraphs": [
+              "A good review records explicit commitments rather than interpreting silence as agreement. Identify who will do what and when, and invite correction of the summary. Track whether the follow-up happened before declaring the plan effective. Where the discussion only clarified an unresolved concern, that is still useful evidence for selecting the next appropriate step."
+            ]
+          },
+          {
+            "title": "Work through an everyday case",
+            "paragraphs": [
+              "A practice partner agrees to send a draft Thursday but still disagrees about the introduction. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+            ],
+            "example": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
+            "exampleFormat": "prose"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a short review and follow-up that preserves the unresolved point.",
+          "solution": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Agreement and unresolved issue remain separate.",
+            "The follow-up names an action and a review point.",
+            "The worked response is used for comparison, with any justified alternative explained."
+          ]
+        },
+        "quiz": {
+          "question": "Which review is most useful?",
+          "options": [
+            "Record agreements, unresolved issues and the next check",
+            "Score success only by whether everyone agreed with you",
+            "Assume silence proves consent"
+          ],
+          "correct": 0,
+          "explanation": "Record agreements, unresolved issues and the next check fits the distinction in this lesson. Score success only by whether everyone agreed with you overlooks the stated limits; Assume silence proves consent substitutes an assumption for a feasible action."
+        },
+        "references": [
+          {
+            "title": "University of Michigan Ombuds: Preparing for a Challenging Conversation",
+            "url": "https://ombuds.umich.edu/article/preparing-challenging-conversation",
+            "section": "Preparation, non-blaming language and follow-up",
+            "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
+            "reviewed": "2026-09-30"
+          }
+        ],
+        "diagram": {
+          "title": "Review Dana’s document conversation",
+          "summary": "An agreed deadline and an unresolved introduction need different follow-up actions.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Summarise draft deadline",
+              "description": "Record that the draft is due Thursday and identify who will check the chart."
+            },
+            {
+              "id": "1",
+              "label": "Agreement explicitly confirmed?",
+              "description": "Invite correction; silence alone is not reliable evidence of consent.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Clarify the disputed detail",
+              "description": "If the deadline or owner was misunderstood, ask a focused question and revise the record."
+            },
+            {
+              "id": "3",
+              "label": "Preserve unresolved introduction",
+              "description": "Even with the deadline agreed, record that the introduction remains undecided."
+            },
+            {
+              "id": "4",
+              "label": "Compare two versions Friday",
+              "description": "Use the agreed next check to address the remaining issue and verify whether the draft arrived."
+            }
+          ],
+          "edges": [
+            {
+              "to": "1",
+              "label": "ask for confirmation or correction",
+              "from": "0"
+            },
+            {
+              "to": "2",
+              "label": "no: meaning or commitment unclear",
+              "from": "1"
+            },
+            {
+              "to": "0",
+              "label": "update the summary",
+              "from": "2"
+            },
+            {
+              "to": "3",
+              "label": "yes: deadline confirmed",
+              "from": "1"
+            },
+            {
+              "to": "4",
+              "label": "schedule the unresolved decision",
+              "from": "3"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Summarise draft deadline",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Record that the draft is due Thursday and identify who will check the chart."
+            },
+            {
+              "title": "Agreement explicitly confirmed?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Invite correction; silence alone is not reliable evidence of consent."
+            },
+            {
+              "title": "Clarify the disputed detail",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "If the deadline or owner was misunderstood, ask a focused question and revise the record."
+            },
+            {
+              "title": "Preserve unresolved introduction",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Even with the deadline agreed, record that the introduction remains undecided."
+            },
+            {
+              "title": "Compare two versions Friday",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Use the agreed next check to address the remaining issue and verify whether the draft arrived."
+            }
+          ]
+        }
+      }
+    ],
+    "resources": {
+      "folder": "self-awareness-communication-practice",
+      "files": [
+        {
+          "id": "README",
+          "href": "paths/self-awareness-communication/practice/README.md",
+          "role": "guide",
+          "description": "Start here: sequence, offline use and practice boundaries"
+        },
+        {
+          "id": "sources-and-limits",
+          "href": "paths/self-awareness-communication/practice/sources-and-limits.md",
+          "role": "reference",
+          "description": "Source scope and evidence limits"
+        },
+        {
+          "id": "01-observation-interpretation",
+          "href": "paths/self-awareness-communication/practice/01-observation-interpretation.md",
+          "role": "worksheet",
+          "description": "Separate what happened from what it means worksheet and worked case"
+        },
+        {
+          "id": "02-feeling-and-action",
+          "href": "paths/self-awareness-communication/practice/02-feeling-and-action.md",
+          "role": "worksheet",
+          "description": "Name a feeling without making it an instruction worksheet and worked case"
+        },
+        {
+          "id": "03-values-and-priorities",
+          "href": "paths/self-awareness-communication/practice/03-values-and-priorities.md",
+          "role": "worksheet",
+          "description": "Translate a value into an everyday choice worksheet and worked case"
+        },
+        {
+          "id": "04-reflection-record",
+          "href": "paths/self-awareness-communication/practice/04-reflection-record.md",
+          "role": "worksheet",
+          "description": "Use a short reflection record worksheet and worked case"
+        },
+        {
+          "id": "05-perspective-check",
+          "href": "paths/self-awareness-communication/practice/05-perspective-check.md",
+          "role": "worksheet",
+          "description": "Hold an alternative explanation lightly worksheet and worked case"
+        },
+        {
+          "id": "06-pause-and-purpose",
+          "href": "paths/self-awareness-communication/practice/06-pause-and-purpose.md",
+          "role": "worksheet",
+          "description": "Pause long enough to choose the purpose worksheet and worked case"
+        },
+        {
+          "id": "07-listen-with-attention",
+          "href": "paths/self-awareness-communication/practice/07-listen-with-attention.md",
+          "role": "worksheet",
+          "description": "Create conditions for attentive listening worksheet and worked case"
+        },
+        {
+          "id": "08-open-questions",
+          "href": "paths/self-awareness-communication/practice/08-open-questions.md",
+          "role": "worksheet",
+          "description": "Ask questions that invite useful detail worksheet and worked case"
+        },
+        {
+          "id": "09-paraphrase",
+          "href": "paths/self-awareness-communication/practice/09-paraphrase.md",
+          "role": "worksheet",
+          "description": "Paraphrase and invite correction worksheet and worked case"
+        },
+        {
+          "id": "10-validate-without-agreeing",
+          "href": "paths/self-awareness-communication/practice/10-validate-without-agreeing.md",
+          "role": "worksheet",
+          "description": "Acknowledge experience while keeping your own view worksheet and worked case"
+        },
+        {
+          "id": "11-clear-request",
+          "href": "paths/self-awareness-communication/practice/11-clear-request.md",
+          "role": "worksheet",
+          "description": "Make a request someone can answer worksheet and worked case"
+        },
+        {
+          "id": "12-boundaries",
+          "href": "paths/self-awareness-communication/practice/12-boundaries.md",
+          "role": "worksheet",
+          "description": "State a boundary as your own available action worksheet and worked case"
+        },
+        {
+          "id": "13-give-feedback",
+          "href": "paths/self-awareness-communication/practice/13-give-feedback.md",
+          "role": "worksheet",
+          "description": "Give feedback about a specific event worksheet and worked case"
+        },
+        {
+          "id": "14-receive-feedback",
+          "href": "paths/self-awareness-communication/practice/14-receive-feedback.md",
+          "role": "worksheet",
+          "description": "Receive feedback by checking the example worksheet and worked case"
+        },
+        {
+          "id": "15-conflict-map",
+          "href": "paths/self-awareness-communication/practice/15-conflict-map.md",
+          "role": "worksheet",
+          "description": "Map positions, concerns and constraints worksheet and worked case"
+        },
+        {
+          "id": "16-negotiate-options",
+          "href": "paths/self-awareness-communication/practice/16-negotiate-options.md",
+          "role": "worksheet",
+          "description": "Compare options with agreed criteria worksheet and worked case"
+        },
+        {
+          "id": "17-repair",
+          "href": "paths/self-awareness-communication/practice/17-repair.md",
+          "role": "worksheet",
+          "description": "Repair a specific communication mistake worksheet and worked case"
+        },
+        {
+          "id": "18-written-channel",
+          "href": "paths/self-awareness-communication/practice/18-written-channel.md",
+          "role": "worksheet",
+          "description": "Choose a channel that fits the issue worksheet and worked case"
+        },
+        {
+          "id": "19-power-and-help",
+          "href": "paths/self-awareness-communication/practice/19-power-and-help.md",
+          "role": "worksheet",
+          "description": "Recognise when informal conversation is insufficient worksheet and worked case"
+        },
+        {
+          "id": "20-conversation-review",
+          "href": "paths/self-awareness-communication/practice/20-conversation-review.md",
+          "role": "worksheet",
+          "description": "Review a conversation using observable evidence worksheet and worked case"
+        },
+        {
+          "id": "foundation-project",
+          "href": "paths/self-awareness-communication/practice/foundation-project.md",
+          "role": "worksheet",
+          "description": "A factual reflection and a listening plan project sheet"
+        },
+        {
+          "id": "intermediate-project",
+          "href": "paths/self-awareness-communication/practice/intermediate-project.md",
+          "role": "worksheet",
+          "description": "A listening and feedback role-play project sheet"
+        },
+        {
+          "id": "advanced-project",
+          "href": "paths/self-awareness-communication/practice/advanced-project.md",
+          "role": "worksheet",
+          "description": "A difficult-conversation plan and review project sheet"
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/self-awareness-communication/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/self-awareness-communication/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/self-awareness-communication/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/self-awareness-communication/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "practice-observation-interpretation",
+          "title": "Separate what happened from what it means practice",
+          "goal": "Split the event into observation and interpretation, then write a neutral question.",
+          "fileIds": [
+            "README",
+            "01-observation-interpretation",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 01-observation-interpretation.md.",
+            "Split the event into observation and interpretation, then write a neutral question.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-feeling-and-action",
+          "title": "Name a feeling without making it an instruction practice",
+          "goal": "Write a feeling, concern and useful next action.",
+          "fileIds": [
+            "README",
+            "02-feeling-and-action",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 02-feeling-and-action.md.",
+            "Write a feeling, concern and useful next action.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-values-and-priorities",
+          "title": "Translate a value into an everyday choice practice",
+          "goal": "Write a choice that respects both concerns.",
+          "fileIds": [
+            "README",
+            "03-values-and-priorities",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 03-values-and-priorities.md.",
+            "Write a choice that respects both concerns.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-reflection-record",
+          "title": "Use a short reflection record practice",
+          "goal": "Record the event, first interpretation, evidence and one alternative.",
+          "fileIds": [
+            "README",
+            "04-reflection-record",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 04-reflection-record.md.",
+            "Record the event, first interpretation, evidence and one alternative.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-perspective-check",
+          "title": "Hold an alternative explanation lightly practice",
+          "goal": "Write two possibilities and a question that can resolve part of the uncertainty.",
+          "fileIds": [
+            "README",
+            "05-perspective-check",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 05-perspective-check.md.",
+            "Write two possibilities and a question that can resolve part of the uncertainty.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-pause-and-purpose",
+          "title": "Pause long enough to choose the purpose practice",
+          "goal": "Rewrite the reply around its immediate purpose.",
+          "fileIds": [
+            "README",
+            "06-pause-and-purpose",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 06-pause-and-purpose.md.",
+            "Rewrite the reply around its immediate purpose.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-listen-with-attention",
+          "title": "Create conditions for attentive listening practice",
+          "goal": "Write a short listening setup that respects both people.",
+          "fileIds": [
+            "README",
+            "07-listen-with-attention",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 07-listen-with-attention.md.",
+            "Write a short listening setup that respects both people.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-open-questions",
+          "title": "Ask questions that invite useful detail practice",
+          "goal": "Write an open question and a factual follow-up.",
+          "fileIds": [
+            "README",
+            "08-open-questions",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 08-open-questions.md.",
+            "Write an open question and a factual follow-up.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-paraphrase",
+          "title": "Paraphrase and invite correction practice",
+          "goal": "Write a checked paraphrase and a correction invitation.",
+          "fileIds": [
+            "README",
+            "09-paraphrase",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 09-paraphrase.md.",
+            "Write a checked paraphrase and a correction invitation.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-validate-without-agreeing",
+          "title": "Acknowledge experience while keeping your own view practice",
+          "goal": "Write acknowledgment followed by an honest limit.",
+          "fileIds": [
+            "README",
+            "10-validate-without-agreeing",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 10-validate-without-agreeing.md.",
+            "Write acknowledgment followed by an honest limit.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-clear-request",
+          "title": "Make a request someone can answer practice",
+          "goal": "Write a specific request with a feasible response option.",
+          "fileIds": [
+            "README",
+            "11-clear-request",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 11-clear-request.md.",
+            "Write a specific request with a feasible response option.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-boundaries",
+          "title": "State a boundary as your own available action practice",
+          "goal": "Draft a boundary and a practical alternative.",
+          "fileIds": [
+            "README",
+            "12-boundaries",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 12-boundaries.md.",
+            "Draft a boundary and a practical alternative.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-give-feedback",
+          "title": "Give feedback about a specific event practice",
+          "goal": "Write specific feedback that invites a response.",
+          "fileIds": [
+            "README",
+            "13-give-feedback",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 13-give-feedback.md.",
+            "Write specific feedback that invites a response.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-receive-feedback",
+          "title": "Receive feedback by checking the example practice",
+          "goal": "Write a reply and one small experiment.",
+          "fileIds": [
+            "README",
+            "14-receive-feedback",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 14-receive-feedback.md.",
+            "Write a reply and one small experiment.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-conflict-map",
+          "title": "Map positions, concerns and constraints practice",
+          "goal": "Map the positions, underlying concerns and a shared aim.",
+          "fileIds": [
+            "README",
+            "15-conflict-map",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 15-conflict-map.md.",
+            "Map the positions, underlying concerns and a shared aim.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-negotiate-options",
+          "title": "Compare options with agreed criteria practice",
+          "goal": "Generate two task plans and compare them using two criteria.",
+          "fileIds": [
+            "README",
+            "16-negotiate-options",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 16-negotiate-options.md.",
+            "Generate two task plans and compare them using two criteria.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-repair",
+          "title": "Repair a specific communication mistake practice",
+          "goal": "Draft a repair and a changed next action.",
+          "fileIds": [
+            "README",
+            "17-repair",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 17-repair.md.",
+            "Draft a repair and a changed next action.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-written-channel",
+          "title": "Choose a channel that fits the issue practice",
+          "goal": "Choose a next channel and write a neutral transition.",
+          "fileIds": [
+            "README",
+            "18-written-channel",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 18-written-channel.md.",
+            "Choose a next channel and write a neutral transition.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-power-and-help",
+          "title": "Recognise when informal conversation is insufficient practice",
+          "goal": "Identify a practical support route and a factual record.",
+          "fileIds": [
+            "README",
+            "19-power-and-help",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 19-power-and-help.md.",
+            "Identify a practical support route and a factual record.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-conversation-review",
+          "title": "Review a conversation using observable evidence practice",
+          "goal": "Write a short review and follow-up that preserves the unresolved point.",
+          "fileIds": [
+            "README",
+            "20-conversation-review",
+            "sources-and-limits",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Read the fictional case in 20-conversation-review.md.",
+            "Write a short review and follow-up that preserves the unresolved point.",
+            "Write a response before revealing the worked example.",
+            "Compare the response with the self-check; record one adjustment."
+          ],
+          "commands": [],
+          "notes": [
+            "Printable offline exercise; personal disclosure is optional.",
+            "The worked response is an example, not the only correct wording.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": [],
+          "kind": "lesson"
+        },
+        {
+          "id": "foundation",
+          "title": "A factual reflection and a listening plan",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "foundation-project",
+            "sources-and-limits",
+            "01-observation-interpretation",
+            "02-feeling-and-action",
+            "03-values-and-priorities",
+            "04-reflection-record",
+            "05-perspective-check",
+            "06-pause-and-purpose",
+            "07-listen-with-attention",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open foundation-project.md.",
+            "Separate observations and interpretations in a fictional case.",
+            "Write an open question and a checked paraphrase.",
+            "Name your purpose and a respectful limit.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        },
+        {
+          "id": "intermediate",
+          "title": "A listening and feedback role-play",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "intermediate-project",
+            "sources-and-limits",
+            "08-open-questions",
+            "09-paraphrase",
+            "10-validate-without-agreeing",
+            "11-clear-request",
+            "12-boundaries",
+            "13-give-feedback",
+            "14-receive-feedback",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open intermediate-project.md.",
+            "Use a voluntary fictional role-play with permission to pause.",
+            "Practise a question, paraphrase, clear request and feedback example.",
+            "Record the partner’s correction and revise the message.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        },
+        {
+          "id": "advanced",
+          "title": "A difficult-conversation plan and review",
+          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "fileIds": [
+            "README",
+            "advanced-project",
+            "sources-and-limits",
+            "15-conflict-map",
+            "16-negotiate-options",
+            "17-repair",
+            "18-written-channel",
+            "19-power-and-help",
+            "20-conversation-review",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open advanced-project.md.",
+            "Map positions, concerns, constraints and power differences.",
+            "Compare two options using agreed practical criteria.",
+            "Record agreements, unresolved questions and an appropriate follow-up.",
+            "Compare the record with the exit criteria and revise any unsupported claim."
+          ],
+          "commands": [],
+          "notes": [
+            "No runtime required. Keep any personal record private by default.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "prerequisites": []
+        }
+      ],
+      "lessonTasks": {
+        "observation-interpretation": "practice-observation-interpretation",
+        "feeling-and-action": "practice-feeling-and-action",
+        "values-and-priorities": "practice-values-and-priorities",
+        "reflection-record": "practice-reflection-record",
+        "perspective-check": "practice-perspective-check",
+        "pause-and-purpose": "practice-pause-and-purpose",
+        "listen-with-attention": "practice-listen-with-attention",
+        "open-questions": "practice-open-questions",
+        "paraphrase": "practice-paraphrase",
+        "validate-without-agreeing": "practice-validate-without-agreeing",
+        "clear-request": "practice-clear-request",
+        "boundaries": "practice-boundaries",
+        "give-feedback": "practice-give-feedback",
+        "receive-feedback": "practice-receive-feedback",
+        "conflict-map": "practice-conflict-map",
+        "negotiate-options": "practice-negotiate-options",
+        "repair": "practice-repair",
+        "written-channel": "practice-written-channel",
+        "power-and-help": "practice-power-and-help",
+        "conversation-review": "practice-conversation-review"
+      },
+      "bundle": {
+        "href": "paths/self-awareness-communication/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/self-awareness-communication/practice/lab.html",
+        "title": "Open interactive practice studio"
       }
     }
   },
@@ -56695,6 +65844,2981 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "task-project-management",
+    "title": "Task & Project Management",
+    "category": "Personal effectiveness",
+    "status": "ready",
+    "description": "Learn task & project management through realistic constraints, worked examples, printable practice and assessed projects.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "No specialist knowledge required.",
+      "A text editor or Markdown viewer for printable worksheets."
+    ],
+    "outcomes": [
+      "A clear small project",
+      "A visible controlled workflow",
+      "A delivered and improved project",
+      "Explain evidence limits and revise a practical system."
+    ],
+    "setup": [
+      "Read practice/README.md.",
+      "Open each lesson worksheet and attempt it before reading the answer.",
+      "Complete three stage projects; no runtime or account is required.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "nextSteps": [
+      "Apply one bounded change to an ordinary real commitment.",
+      "Retain the smallest useful routine and review actual outcomes."
+    ],
+    "sources": [
+      {
+        "title": "NASA Systems Engineering Handbook",
+        "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/"
+      },
+      {
+        "title": "NASA System Design Processes",
+        "url": "https://www.nasa.gov/reference/4-0-system-design-processes/"
+      },
+      {
+        "title": "NASA Product Realization",
+        "url": "https://www.nasa.gov/reference/5-0-product-realization/"
+      },
+      {
+        "title": "The Kanban Guide, May 2025",
+        "url": "https://kanbanguides.org/the-kanban-guide/2025.5/"
+      },
+      {
+        "title": "Buehler, Griffin and Ross: Exploring the planning fallacy",
+        "url": "https://doi.org/10.1037/0022-3514.67.3.366"
+      },
+      {
+        "title": "The Scrum Guide, November 2020",
+        "url": "https://scrumguides.org/scrum-guide.html"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "capture-worksheet.md",
+        "href": "paths/task-project-management/practice/capture-worksheet.md"
+      },
+      {
+        "title": "task-project-worksheet.md",
+        "href": "paths/task-project-management/practice/task-project-worksheet.md"
+      },
+      {
+        "title": "next-action-worksheet.md",
+        "href": "paths/task-project-management/practice/next-action-worksheet.md"
+      },
+      {
+        "title": "done-worksheet.md",
+        "href": "paths/task-project-management/practice/done-worksheet.md"
+      },
+      {
+        "title": "scope-worksheet.md",
+        "href": "paths/task-project-management/practice/scope-worksheet.md"
+      },
+      {
+        "title": "decompose-worksheet.md",
+        "href": "paths/task-project-management/practice/decompose-worksheet.md"
+      },
+      {
+        "title": "sequence-worksheet.md",
+        "href": "paths/task-project-management/practice/sequence-worksheet.md"
+      },
+      {
+        "title": "board-worksheet.md",
+        "href": "paths/task-project-management/practice/board-worksheet.md"
+      },
+      {
+        "title": "wip-worksheet.md",
+        "href": "paths/task-project-management/practice/wip-worksheet.md"
+      },
+      {
+        "title": "pull-worksheet.md",
+        "href": "paths/task-project-management/practice/pull-worksheet.md"
+      },
+      {
+        "title": "owners-worksheet.md",
+        "href": "paths/task-project-management/practice/owners-worksheet.md"
+      },
+      {
+        "title": "estimates-worksheet.md",
+        "href": "paths/task-project-management/practice/estimates-worksheet.md"
+      },
+      {
+        "title": "blocked-worksheet.md",
+        "href": "paths/task-project-management/practice/blocked-worksheet.md"
+      },
+      {
+        "title": "risk-worksheet.md",
+        "href": "paths/task-project-management/practice/risk-worksheet.md"
+      },
+      {
+        "title": "change-worksheet.md",
+        "href": "paths/task-project-management/practice/change-worksheet.md"
+      },
+      {
+        "title": "metrics-worksheet.md",
+        "href": "paths/task-project-management/practice/metrics-worksheet.md"
+      },
+      {
+        "title": "review-worksheet.md",
+        "href": "paths/task-project-management/practice/review-worksheet.md"
+      },
+      {
+        "title": "retrospective-worksheet.md",
+        "href": "paths/task-project-management/practice/retrospective-worksheet.md"
+      },
+      {
+        "title": "parallel-worksheet.md",
+        "href": "paths/task-project-management/practice/parallel-worksheet.md"
+      },
+      {
+        "title": "close-worksheet.md",
+        "href": "paths/task-project-management/practice/close-worksheet.md"
+      },
+      {
+        "title": "system-review-worksheet.md",
+        "href": "paths/task-project-management/practice/system-review-worksheet.md"
+      },
+      {
+        "title": "foundation-project.md",
+        "href": "paths/task-project-management/practice/foundation-project.md"
+      },
+      {
+        "title": "intermediate-project.md",
+        "href": "paths/task-project-management/practice/intermediate-project.md"
+      },
+      {
+        "title": "advanced-project.md",
+        "href": "paths/task-project-management/practice/advanced-project.md"
+      },
+      {
+        "title": "README.md",
+        "href": "paths/task-project-management/practice/README.md"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/task-project-management/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/task-project-management/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/task-project-management/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/task-project-management/practice/lab-model.js"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation",
+        "description": "Turn a synthetic workshop request into a scoped plan.",
+        "exitCriteria": [
+          "Beneficiary, deliverables and excluded scope are explicit.",
+          "Every deliverable has executable actions and an owner.",
+          "Completion criteria describe checked artifacts.",
+          "Dependency order separates required inputs from independent branches."
+        ],
+        "project": {
+          "title": "A clear small project",
+          "brief": "Turn a synthetic workshop request into a scoped plan.",
+          "requirements": [
+            "Define beneficiary, outcome and exclusions.",
+            "Decompose into deliverables and next actions.",
+            "Write completion criteria for three tasks.",
+            "Map genuine dependencies and name owners."
+          ],
+          "rubric": [
+            "Beneficiary, deliverables and excluded scope are explicit.",
+            "Every deliverable has executable actions and an owner.",
+            "Completion criteria describe checked artifacts.",
+            "Dependency order separates required inputs from independent branches."
+          ],
+          "solution": "For a 20-person beginner workshop, plan venue, exercise sheet and invitation. Confirm venue before publishing its address; drafting can run independently. Each item has an owner and checked completion state. Exclude video production from the initial scope.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate",
+        "description": "Operate a synthetic board through a week of changes.",
+        "exitCriteria": [
+          "Workflow states have clear entry and exit policies.",
+          "WIP control counts blocked items inside the defined boundary.",
+          "Blockers have an owner, follow-up time and decision fallback.",
+          "Scope changes and forecasts expose trade-offs and uncertainty."
+        ],
+        "project": {
+          "title": "A visible controlled workflow",
+          "brief": "Operate a synthetic board through a week of changes.",
+          "requirements": [
+            "Define workflow entry and exit rules.",
+            "Set a WIP control and explain blocked-item counting.",
+            "Handle one blocker and one scope request.",
+            "Forecast with a small comparable sample and state limitations."
+          ],
+          "rubric": [
+            "Workflow states have clear entry and exit policies.",
+            "WIP control counts blocked items inside the defined boundary.",
+            "Blockers have an owner, follow-up time and decision fallback.",
+            "Scope changes and forecasts expose trade-offs and uncertainty."
+          ],
+          "solution": "Use Ready, Doing, Review and Done with WIP two across started states. One blocked review and one draft consume both slots. Follow up on the blocker before pulling another item. A video request needs revised scope or capacity; three past cycle times give only a provisional range.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced",
+        "description": "Close a project using acceptance and improvement evidence.",
+        "exitCriteria": [
+          "Age, cycle time and throughput use consistent boundaries.",
+          "Acceptance includes both specification checks and intended-use evidence.",
+          "The improvement trial addresses an observed workflow constraint.",
+          "Closure links accepted outputs and transfers remaining obligations."
+        ],
+        "project": {
+          "title": "A delivered and improved project",
+          "brief": "Close a project using acceptance and improvement evidence.",
+          "requirements": [
+            "Calculate age, cycle time and throughput with explicit boundaries.",
+            "Perform verification and a beneficiary validation task.",
+            "Review one recurring workflow bottleneck.",
+            "Record accepted outputs, unresolved obligations and a follow-up owner."
+          ],
+          "rubric": [
+            "Age, cycle time and throughput use consistent boundaries.",
+            "Acceptance includes both specification checks and intended-use evidence.",
+            "The improvement trial addresses an observed workflow constraint.",
+            "Closure links accepted outputs and transfers remaining obligations."
+          ],
+          "solution": "A Monday-to-Thursday card has three elapsed days of cycle time; an unfinished Tuesday card is three days old Friday. A beginner struggles to find the first exercise step despite a complete checklist, so revise and retest. Close with accepted links and a named owner for the access issue; trial scheduled reviews for recurring wait time.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "capture",
+        "title": "1. Capture commitments in one inbox",
+        "takeaway": "An inbox holds unprocessed requests rather than a final plan.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "An inbox holds unprocessed requests rather than a final plan. Capture enough context to find the original request and avoid duplicate commitments. Sensitive details belong in appropriate storage; an ordinary task board can use a neutral label.",
+              "Processing is a separate decision after capture. An inbox item may become an action, project, waiting item, reference or declined request. Capture reduces the chance of losing a commitment; it should not silently turn every request into accepted work. Preserve the original due-date question rather than inventing an answer. When duplicate messages arrive, link them to one item and check whether they actually change the scope. A single inbox is a useful convention, but access rules may require separate private storage for sensitive material with only a neutral reference on the board."
+            ],
+            "example": "Create one report item with links to the two messages and the reminder context. Preserve the due-date question for clarification rather than creating three separate reports.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Combine an email request, a handwritten reminder and a duplicate message about the same report.",
+          "solution": "Create one report item with links to the two messages and the reminder context. Preserve the due-date question for clarification rather than creating three separate reports.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Merge duplicate requests into one commitment.",
+            "Preserve the source context and unresolved due-date question.",
+            "Avoid accepting work merely because it was captured."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in capture?",
+          "options": [
+            "Enough context to recover the request",
+            "An automatic promise to do everything",
+            "Every private detail on a public board"
+          ],
+          "correct": 0,
+          "explanation": "Enough context to recover the request follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "task-project",
+        "title": "2. Separate tasks, projects and routines",
+        "takeaway": "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
+              "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday’s attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
+            ],
+            "example": "Email venue is a task, running the workshop is a project and Friday attendance checking is a routine. The project needs linked tasks and completion criteria.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify email venue, run community workshop and check attendance every Friday.",
+          "solution": "Email venue is a task, running the workshop is a project and Friday attendance checking is a routine. The project needs linked tasks and completion criteria.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explain the action, multi-step outcome and recurrence separately.",
+            "Give the routine a trigger.",
+            "Identify which item requires linked deliverables."
+          ]
+        },
+        "quiz": {
+          "question": "Which item needs a multi-step plan?",
+          "options": [
+            "Run the community workshop",
+            "Send the venue email",
+            "Open the attendance file"
+          ],
+          "correct": 0,
+          "explanation": "Run the community workshop follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "next-action",
+        "title": "3. Write the next observable action",
+        "takeaway": "A next action uses a verb, object and completion test.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A next action uses a verb, object and completion test. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.",
+              "Distinguish sending a question from receiving its answer. The first action is executable now; the second is waiting and needs a follow-up policy. Ask for a specific input such as seated capacity, not a vague confirmation that everything is fine. State where the request goes and when the answer is needed if another task depends on it. After sending, record the waiting condition on the same card or a linked item. The next action should expose uncertainty and reduce it rather than pretending the workshop plan can proceed without the missing information."
+            ],
+            "example": "Ask the venue contact to confirm seated capacity for 20 attendees by Tuesday. The action finishes when the request is sent; the separate waiting item tracks the reply.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite sort workshop stuff when room capacity is unknown.",
+          "solution": "Ask the venue contact to confirm seated capacity for 20 attendees by Tuesday. The action finishes when the request is sent; the separate waiting item tracks the reply.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Name the missing capacity input.",
+            "Specify the recipient and needed reply timing.",
+            "Separate sending the request from receiving the answer."
+          ]
+        },
+        "quiz": {
+          "question": "Which action can be started now?",
+          "options": [
+            "Ask the venue for seated capacity",
+            "Make workshop perfect",
+            "Resolve every uncertainty immediately"
+          ],
+          "correct": 0,
+          "explanation": "Ask the venue for seated capacity follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA System Design Processes",
+            "url": "https://www.nasa.gov/reference/4-0-system-design-processes/",
+            "section": "Stakeholder expectations and requirements; adapted to small ordinary projects",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "done",
+        "title": "4. Agree what done means",
+        "takeaway": "Completion criteria describe the state of the deliverable, not merely time spent.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Completion criteria describe the state of the deliverable, not merely time spent. They prevent a task from repeatedly returning because essential review was omitted. Criteria should be proportionate; a personal checklist need not copy the governance of a large organization.",
+              "Completion criteria can change when a newly discovered essential requirement appears, but record the change. Otherwise someone may appear to miss a target that was never stated when work began. Match each criterion with evidence: the file contains the date, the registration route works and a named reviewer checked the location. Time spent or card movement supplies none of that evidence. Keep criteria proportionate to risk; an invitation needs clear practical details, while an optional decorative choice need not become an approval bottleneck that blocks the usable result."
+            ],
+            "example": "The invitation includes date, location, accessibility contact and registration route; a peer checks the details; the approved file is stored at the agreed link. Drafting alone is insufficient.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define done for a one-page workshop invitation.",
+          "solution": "The invitation includes date, location, accessibility contact and registration route; a peer checks the details; the approved file is stored at the agreed link. Drafting alone is insufficient.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Check the required invitation details.",
+            "Include review evidence and the accepted file location.",
+            "Distinguish a draft from a checked deliverable."
+          ]
+        },
+        "quiz": {
+          "question": "Which criterion checks a deliverable?",
+          "options": [
+            "Required details are present and checked",
+            "Worked on it for two hours",
+            "Moved the card because it was old"
+          ],
+          "correct": 0,
+          "explanation": "Required details are present and checked follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Product Realization",
+            "url": "https://www.nasa.gov/reference/5-0-product-realization/",
+            "section": "Verification and validation; adapted to learner deliverables",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "scope",
+        "title": "5. State outcome and exclusions",
+        "takeaway": "A scope note records beneficiary, outcome, constraints and explicit exclusions.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A scope note records beneficiary, outcome, constraints and explicit exclusions. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.",
+              "Ask what benefit each requested deliverable provides. A video and a live session may serve different audiences and require different preparation, review and support. Comparing benefit and cost makes exclusion a reasoned choice rather than a refusal based on habit. Record essential participation needs early because they can affect venue and material decisions. When new information changes the intended beneficiary or outcome, revise the scope consciously. A scope note is a baseline for decisions; it is not permission to ignore a requirement that makes the agreed workshop unusable."
+            ],
+            "example": "Deliver one 60-minute session and a one-page exercise sheet for 20 beginners. Exclude a recorded course and custom software. Include accessible participation arrangements as an explicit planning question.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Scope a 20-person beginner workshop with a two-week deadline.",
+          "solution": "Deliver one 60-minute session and a one-page exercise sheet for 20 beginners. Exclude a recorded course and custom software. Include accessible participation arrangements as an explicit planning question.",
+          "solutionFormat": "prose",
+          "checks": [
+            "State audience, duration and participant capacity.",
+            "Name excluded deliverables.",
+            "Keep essential participation arrangements visible."
+          ]
+        },
+        "quiz": {
+          "question": "What helps evaluate a new request?",
+          "options": [
+            "The agreed outcome and scope boundary",
+            "The number of board colours",
+            "An unwritten expectation"
+          ],
+          "correct": 0,
+          "explanation": "The agreed outcome and scope boundary follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA System Design Processes",
+            "url": "https://www.nasa.gov/reference/4-0-system-design-processes/",
+            "section": "Stakeholder expectations and requirements; adapted to small ordinary projects",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "decompose",
+        "title": "6. Break deliverables into manageable work",
+        "takeaway": "Decompose from the deliverable down to actions that can be owned and checked.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
+              "Use a coverage check for every deliverable: can you point to creation, review and handoff work? Then ask whether any listed action contributes to no deliverable. This reveals both omissions and unnecessary activity. Split work at a boundary that leaves inspectable state rather than arbitrary equal chunks of time. Venue confirmation, exercise drafting and invitation publication can have different owners and effort. Avoid an oversized tree that takes longer to maintain than the project; expand a branch when uncertainty prevents someone from starting or checking its actions."
+            ],
+            "example": "Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Break the workshop into three deliverables and list one action for each.",
+          "solution": "Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Connect every action to a deliverable.",
+            "Include review and handoff work.",
+            "Do not mistake the work tree for execution order."
+          ]
+        },
+        "quiz": {
+          "question": "What does decomposition primarily expose?",
+          "options": [
+            "What work contributes to the deliverables",
+            "The guaranteed finish date",
+            "Every dependency automatically"
+          ],
+          "correct": 0,
+          "explanation": "What work contributes to the deliverables follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Decompose the 20-person workshop",
+          "summary": "Connect venue, learning material and invitation work to the workshop outcome; give each action a checked finish state.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Beginner workshop outcome",
+              "description": "Deliver one usable 60-minute workshop and exercise sheet for 20 beginners; video production is outside the initial scope."
+            },
+            {
+              "id": "1",
+              "label": "Venue arrangement",
+              "description": "Create a deliverable covering capacity, location and participation constraints so publication has reliable venue information."
+            },
+            {
+              "id": "2",
+              "label": "Learning material",
+              "description": "Create the exercise sheet and instructions needed for the beginner session, including a usable first step."
+            },
+            {
+              "id": "3",
+              "label": "Participant invitation",
+              "description": "Create accurate date, venue, registration and participation-contact information."
+            },
+            {
+              "id": "4",
+              "label": "Confirm, draft and review actions",
+              "description": "Assign an owner to each bounded action. Include creation, checking and handoff rather than listing writing alone."
+            },
+            {
+              "id": "5",
+              "label": "Checked completion states",
+              "description": "Retain confirmation or accepted file links as evidence. Time spent and moving a card do not establish completion."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "requires venue deliverable"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "requires learning deliverable"
+            },
+            {
+              "from": "0",
+              "to": "3",
+              "label": "requires information deliverable"
+            },
+            {
+              "from": "1",
+              "to": "4",
+              "label": "confirm venue input"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "draft and test exercise"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "write and check invitation"
+            },
+            {
+              "from": "4",
+              "to": "5",
+              "label": "verify each artifact"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Beginner workshop outcome",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Deliver one usable 60-minute workshop and exercise sheet for 20 beginners; video production is outside the initial scope."
+            },
+            {
+              "title": "Venue arrangement",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Create a deliverable covering capacity, location and participation constraints so publication has reliable venue information."
+            },
+            {
+              "title": "Learning material",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Create the exercise sheet and instructions needed for the beginner session, including a usable first step."
+            },
+            {
+              "title": "Participant invitation",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Create accurate date, venue, registration and participation-contact information."
+            },
+            {
+              "title": "Confirm, draft and review actions",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4,
+                5
+              ],
+              "explanation": "Assign an owner to each bounded action. Include creation, checking and handoff rather than listing writing alone."
+            },
+            {
+              "title": "Checked completion states",
+              "activeNodes": [
+                "5"
+              ],
+              "activeEdges": [
+                6
+              ],
+              "explanation": "Retain confirmation or accepted file links as evidence. Time spent and moving a card do not establish completion."
+            }
+          ]
+        }
+      },
+      {
+        "id": "sequence",
+        "title": "7. Map dependencies before dates",
+        "takeaway": "A dependency means one item needs an input or completion from another.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A dependency means one item needs an input or completion from another. Distinguish genuine constraints from preferred order. Calendar dates without dependency reasoning can hide waiting and produce impossible promises.",
+              "A dependency map can contain a cycle: one item waits for another that waits for the first. Resolve it by agreeing a provisional input or splitting an early deliverable; dates alone cannot fix circular waiting. Ask whether the relationship is required or merely convenient. Drafting exercises does not require the final venue address, whereas publishing the invitation does. Track the input supplied by the earlier item and its acceptance state. When a dependency changes, inspect downstream commitments so one delayed input does not quietly invalidate several promised dates."
+            ],
+            "example": "Confirm venue before publishing its address. Draft before review. Draft exercises can proceed while the venue is being confirmed, so these branches may run independently.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Order confirm venue, publish invitation, draft exercises and review exercises.",
+          "solution": "Confirm venue before publishing its address. Draft before review. Draft exercises can proceed while the venue is being confirmed, so these branches may run independently.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify the venue input needed by publication.",
+            "Keep draft-before-review ordering explicit.",
+            "Allow the independent drafting branch to proceed."
+          ]
+        },
+        "quiz": {
+          "question": "Which ordering is a genuine dependency?",
+          "options": [
+            "Draft exercises before reviewing them",
+            "Finish all venue work before any writing",
+            "Review before a draft exists"
+          ],
+          "correct": 0,
+          "explanation": "Draft exercises before reviewing them follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Parallel branches with genuine dependencies",
+          "summary": "Venue confirmation enables invitation publication. Exercise drafting can run independently, but both branches meet at a final consistency check.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Agree audience and date",
+              "description": "Set the workshop audience, provisional date and shared terminology before the independent branches create conflicting promises."
+            },
+            {
+              "id": "1",
+              "label": "Confirm venue",
+              "description": "Obtain the address and seated capacity from the venue contact; the invitation cannot publish an unconfirmed address."
+            },
+            {
+              "id": "2",
+              "label": "Publish checked invitation",
+              "description": "Check the accepted venue input, date and registration route before making the invitation available."
+            },
+            {
+              "id": "3",
+              "label": "Draft exercise sheet",
+              "description": "Begin learning-material drafting while venue confirmation is in progress; the draft does not require the final address."
+            },
+            {
+              "id": "4",
+              "label": "Review exercise sheet",
+              "description": "Review requires an existing draft. Check the first step, expected duration and supporting material."
+            },
+            {
+              "id": "5",
+              "label": "Integrate workshop materials",
+              "description": "Compare the invitation’s promises with the reviewed exercises and the actual session duration. Resolve mismatches before delivery."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "start venue branch"
+            },
+            {
+              "from": "0",
+              "to": "3",
+              "label": "start independent drafting branch"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "confirmed address required"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "draft required for review"
+            },
+            {
+              "from": "2",
+              "to": "5",
+              "label": "supply published commitments"
+            },
+            {
+              "from": "4",
+              "to": "5",
+              "label": "supply checked learning content"
+            },
+            {
+              "from": "5",
+              "to": "3",
+              "label": "correct content mismatch if found"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Agree audience and date",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Set the workshop audience, provisional date and shared terminology before the independent branches create conflicting promises."
+            },
+            {
+              "title": "Confirm venue",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Obtain the address and seated capacity from the venue contact; the invitation cannot publish an unconfirmed address."
+            },
+            {
+              "title": "Publish checked invitation",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Check the accepted venue input, date and registration route before making the invitation available."
+            },
+            {
+              "title": "Draft exercise sheet",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                1,
+                6
+              ],
+              "explanation": "Begin learning-material drafting while venue confirmation is in progress; the draft does not require the final address."
+            },
+            {
+              "title": "Review exercise sheet",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Review requires an existing draft. Check the first step, expected duration and supporting material."
+            },
+            {
+              "title": "Integrate workshop materials",
+              "activeNodes": [
+                "5"
+              ],
+              "activeEdges": [
+                4,
+                5
+              ],
+              "explanation": "Compare the invitation’s promises with the reviewed exercises and the actual session duration. Resolve mismatches before delivery."
+            }
+          ]
+        }
+      },
+      {
+        "id": "board",
+        "title": "8. Visualize the real workflow",
+        "takeaway": "A board represents states with entry and exit policies.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A board represents states with entry and exit policies. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.",
+              "Keep review visible when it is a real workflow state. Moving a draft directly to Done because writing ended conceals waiting and makes measurements inconsistent with items that include review. Define what happens when a check fails: return with a named correction and owner rather than bounce the card without explanation. A board can use a table or list instead of columns if that is more accessible. Its value comes from truthful states and policies, not its appearance. Inspect stale cards against real artifacts so the representation remains accurate."
+            ],
+            "example": "Ready requires a clear action, owner and needed input. Review exits when required checks pass or returns with a named correction. Done retains the resulting file link.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design entry criteria for Ready and exit criteria for Review on the workshop board.",
+          "solution": "Ready requires a clear action, owner and needed input. Review exits when required checks pass or returns with a named correction. Done retains the resulting file link.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Define Ready entry conditions.",
+            "Define Review exit and correction rules.",
+            "Retain the deliverable link at completion."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a column meaningful?",
+          "options": [
+            "An explicit policy for entering and leaving it",
+            "Its colour alone",
+            "Equal numbers of cards everywhere"
+          ],
+          "correct": 0,
+          "explanation": "An explicit policy for entering and leaving it follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "wip",
+        "title": "9. Control work in progress",
+        "takeaway": "WIP counts started but unfinished items within the defined workflow, including blocked work.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "WIP counts started but unfinished items within the defined workflow, including blocked work. A limit creates a signal to finish or unblock before starting more. The chosen limit is local and revisable; starting extra work in a hidden list undermines the policy.",
+              "If blocked work repeatedly fills the limit, investigate the missing input instead of continually raising the limit. A temporary exception may be sensible, but give it an owner, reason and a route back to normal operation. Count items across the agreed start-to-finish boundary, not only those currently being typed or edited. A review queue therefore consumes capacity when review is inside that boundary. Discuss the effect of the limit on useful delivery and waiting; the number two in this exercise is a local teaching policy rather than a universal recommendation."
+            ],
+            "example": "Not under the stated policy: both started items count as WIP. First help the review blocker or finish the draft. If a genuine exception is needed, make it explicit and record its cost.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A limit is two. One draft is in Doing and one is blocked in Review. May a third item start?",
+          "solution": "Not under the stated policy: both started items count as WIP. First help the review blocker or finish the draft. If a genuine exception is needed, make it explicit and record its cost.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Count both started unfinished items.",
+            "Keep blocked review within the defined WIP boundary.",
+            "Choose an unblocking or finishing action before a new start."
+          ]
+        },
+        "quiz": {
+          "question": "What is current WIP?",
+          "options": [
+            "Two started unfinished items",
+            "One because blocked items vanish",
+            "Zero until work is approved"
+          ],
+          "correct": 0,
+          "explanation": "Two started unfinished items follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "A blocked review still consumes WIP",
+          "summary": "With a limit of two, one draft and one blocked review occupy both slots. Finish or unblock before starting a third item unless an explicit exception is agreed.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Count two started items",
+              "description": "Doing contains one draft; Review contains one blocked card. Both have started and neither is finished, so WIP equals two."
+            },
+            {
+              "id": "1",
+              "label": "Below limit two?",
+              "description": "Compare started unfinished work with the agreed limit across Doing and Review, including blocked items.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Finish or unblock existing work",
+              "description": "At the limit, work on the draft or obtain the missing review input. Do not create a hidden extra started task."
+            },
+            {
+              "id": "3",
+              "label": "An item reaches Done",
+              "description": "A card exits WIP only when its completion criteria pass. Moving a blocked card to a hidden list does not release capacity."
+            },
+            {
+              "id": "4",
+              "label": "Pull one ready item",
+              "description": "When WIP drops to one, select a clear useful item with available inputs; pulling it restores WIP to two."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "compare count with policy"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "no: WIP is two"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "resolve input and finish"
+            },
+            {
+              "from": "3",
+              "to": "0",
+              "label": "recount started unfinished work"
+            },
+            {
+              "from": "1",
+              "to": "4",
+              "label": "yes: WIP below two"
+            },
+            {
+              "from": "4",
+              "to": "0",
+              "label": "new start changes count"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Count two started items",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                3,
+                5
+              ],
+              "explanation": "Doing contains one draft; Review contains one blocked card. Both have started and neither is finished, so WIP equals two."
+            },
+            {
+              "title": "Below limit two?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Compare started unfinished work with the agreed limit across Doing and Review, including blocked items."
+            },
+            {
+              "title": "Finish or unblock existing work",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "At the limit, work on the draft or obtain the missing review input. Do not create a hidden extra started task."
+            },
+            {
+              "title": "An item reaches Done",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "A card exits WIP only when its completion criteria pass. Moving a blocked card to a hidden list does not release capacity."
+            },
+            {
+              "title": "Pull one ready item",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "When WIP drops to one, select a clear useful item with available inputs; pulling it restores WIP to two."
+            }
+          ]
+        }
+      },
+      {
+        "id": "pull",
+        "title": "10. Pull work when capacity exists",
+        "takeaway": "Pull means selecting ready work when the workflow has capacity.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Pull means selecting ready work when the workflow has capacity. It differs from assigning an unlimited queue of simultaneous promises. Selection still considers value, risk and deadlines; a vacant slot does not require starting a low-value item.",
+              "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. If the vacant slot cannot be used meaningfully, it may remain empty while the team resolves a constraint or prepares a clearer item. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
+            ],
+            "example": "Pull the ready dependency if it supports the workshop outcome. Clarify or leave the optional redesign in the backlog. Capacity is a permission signal, not an obligation to start arbitrary work.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "One item finishes under a WIP limit of two; choose between a ready dependency and a vague optional redesign.",
+          "solution": "Pull the ready dependency if it supports the workshop outcome. Clarify or leave the optional redesign in the backlog. Capacity is a permission signal, not an obligation to start arbitrary work.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Check capacity after the completed item exits.",
+            "Compare readiness and value of the two options.",
+            "Leave the vague item unstarted until clarified."
+          ]
+        },
+        "quiz": {
+          "question": "What should happen before pulling?",
+          "options": [
+            "Check capacity and readiness",
+            "Start every visible card",
+            "Hide unfinished work"
+          ],
+          "correct": 0,
+          "explanation": "Check capacity and readiness follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "owners",
+        "title": "11. Clarify ownership and decisions",
+        "takeaway": "An owner coordinates progress and follow-up; they need not perform every action.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "An owner coordinates progress and follow-up; they need not perform every action. Identify who can decide scope, who reviews and who supplies inputs. Shared responsibility without a named coordination role often leaves waiting invisible.",
+              "Authority and ownership differ. A coordinator can follow up on approval but may lack authority to approve publication. State who decides a scope conflict, who reviews factual details and who maintains the item while it waits. A review window should be agreed with the reviewer rather than assigned privately by the writer. If the reviewer is unavailable, use an explicit alternate or escalate the decision. This prevents a blocked card from encouraging an unauthorized shortcut while keeping coordination from disappearing into the phrase shared responsibility."
+            ],
+            "example": "Mira owns coordination and writing, Dev checks details and Jo approves publication. Record a review window and who follows up if approval is missing.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Assign roles for an invitation written by Mira, checked by Dev and approved by Jo.",
+          "solution": "Mira owns coordination and writing, Dev checks details and Jo approves publication. Record a review window and who follows up if approval is missing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate writing, checking and approval roles.",
+            "Name who follows up on missing review.",
+            "Record an agreed review window."
+          ]
+        },
+        "quiz": {
+          "question": "Who should track a missing review?",
+          "options": [
+            "The named coordination owner",
+            "Nobody because it is shared",
+            "Every attendee independently"
+          ],
+          "correct": 0,
+          "explanation": "The named coordination owner follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "estimates",
+        "title": "12. Forecast using comparable items",
+        "takeaway": "Estimate with historical work that uses the same start and finish definitions.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Estimate with historical work that uses the same start and finish definitions. A duration includes waiting if the metric measures elapsed time. A few examples give a rough range, not a statistically reliable promise.",
+              "Waiting for a reviewer belongs in elapsed cycle time when review lies between start and finish. Work effort may be much smaller, so do not substitute hours of writing for calendar duration when forecasting a handoff. Compare items with similar size, review requirements and availability. Three completed examples show variation but cannot justify a reliable probability statement. If the new deadline falls below all comparable durations, discuss earlier inputs, smaller scope or additional review availability. A forecast describes uncertainty; a commitment requires a conscious decision about the risk of missing it."
+            ],
+            "example": "Use 2–6 days as a provisional observed range and explain that three samples are insufficient for a reliable percentile. Ask whether the same review availability applies to the new item.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Three invitation cards took 2, 3 and 6 elapsed days. Forecast another similar item.",
+          "solution": "Use 2–6 days as a provisional observed range and explain that three samples are insufficient for a reliable percentile. Ask whether the same review availability applies to the new item.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use comparable elapsed start-to-finish durations.",
+            "Keep the 2–6 day observed variation visible.",
+            "State the three-sample limitation and review assumption."
+          ]
+        },
+        "quiz": {
+          "question": "What limits this forecast?",
+          "options": [
+            "Small sample and changing conditions",
+            "The absence of a precise-looking decimal",
+            "The colour of the task card"
+          ],
+          "correct": 0,
+          "explanation": "Small sample and changing conditions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Buehler, Griffin and Ross: Exploring the planning fallacy",
+            "url": "https://doi.org/10.1037/0022-3514.67.3.366",
+            "section": "Original 1994 experiments on completion-time predictions",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "blocked",
+        "title": "13. Make blocked work actionable",
+        "takeaway": "A blocked card records the missing input, responsible contact, next check and consequence.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A blocked card records the missing input, responsible contact, next check and consequence. Keep it within WIP if it has started. An escalation is useful when it requests a decision or input, not merely repeats that the item is late.",
+              "A blocker can be a decision, access permission, equipment or external input. Name the missing condition precisely and request the smallest action that removes it. A red label alone does not tell the owner what to do next. Record when the consequence becomes serious and who can choose the fallback. Follow-up may reveal a changed input, so recheck downstream dates and assumptions after the blocker is removed. Keep the item inside WIP when it has started; moving it out of sight does not remove its delivery risk."
+            ],
+            "example": "Waiting for seated capacity from venue contact; owner Mira; follow up today at 14:00; if no reply by 17:00, ask Jo to select the backup venue. Publication remains blocked meanwhile.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "The venue confirmation has had no reply for two days and publication needs it tomorrow. Write a blocker note.",
+          "solution": "Waiting for seated capacity from venue contact; owner Mira; follow up today at 14:00; if no reply by 17:00, ask Jo to select the backup venue. Publication remains blocked meanwhile.",
+          "solutionFormat": "prose",
+          "checks": [
+            "State the missing venue input.",
+            "Give an owner and timed follow-up.",
+            "Identify the decision fallback before publication is due."
+          ]
+        },
+        "quiz": {
+          "question": "What makes the blocker note actionable?",
+          "options": [
+            "A follow-up time and decision fallback",
+            "Only a red label",
+            "Removing the card from every count"
+          ],
+          "correct": 0,
+          "explanation": "A follow-up time and decision fallback follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Resolve a venue blocker with a timed fallback",
+          "summary": "Publication needs venue capacity tomorrow. The owner follows up today, then asks the decision authority to select a backup if the input remains missing.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Missing seated capacity",
+              "description": "Venue confirmation has had no reply for two days; invitation publication depends on that specific input."
+            },
+            {
+              "id": "1",
+              "label": "Mira follows up at 14:00",
+              "description": "Mira owns the item and asks the venue contact for the missing capacity, stating the publication consequence."
+            },
+            {
+              "id": "2",
+              "label": "Reply received by 17:00?",
+              "description": "Inspect the actual reply for usable capacity information; silence or an unrelated acknowledgement does not unblock the invitation.",
+              "shape": "decision"
+            },
+            {
+              "id": "3",
+              "label": "Check and use venue input",
+              "description": "Confirm the capacity supports 20 attendees, update the invitation and inspect dependent dates."
+            },
+            {
+              "id": "4",
+              "label": "Jo selects backup venue",
+              "description": "If the reply is still missing, ask Jo to make the agreed backup decision; Mira coordinates rather than assumes approval authority."
+            },
+            {
+              "id": "5",
+              "label": "Confirm backup details",
+              "description": "Obtain the selected backup’s address and capacity before publication. Keep the card blocked and counted as WIP until the needed input is usable."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "request smallest missing input"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "reach follow-up deadline"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "yes: usable confirmation"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "no: invoke agreed fallback"
+            },
+            {
+              "from": "4",
+              "to": "5",
+              "label": "selection needs verification"
+            },
+            {
+              "from": "5",
+              "to": "3",
+              "label": "validated backup unblocks work"
+            },
+            {
+              "from": "5",
+              "to": "4",
+              "label": "backup unavailable: request another decision"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Missing seated capacity",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Venue confirmation has had no reply for two days; invitation publication depends on that specific input."
+            },
+            {
+              "title": "Mira follows up at 14:00",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Mira owns the item and asks the venue contact for the missing capacity, stating the publication consequence."
+            },
+            {
+              "title": "Reply received by 17:00?",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Inspect the actual reply for usable capacity information; silence or an unrelated acknowledgement does not unblock the invitation."
+            },
+            {
+              "title": "Check and use venue input",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2,
+                5
+              ],
+              "explanation": "Confirm the capacity supports 20 attendees, update the invitation and inspect dependent dates."
+            },
+            {
+              "title": "Jo selects backup venue",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                6
+              ],
+              "explanation": "If the reply is still missing, ask Jo to make the agreed backup decision; Mira coordinates rather than assumes approval authority."
+            },
+            {
+              "title": "Confirm backup details",
+              "activeNodes": [
+                "5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Obtain the selected backup’s address and capacity before publication. Keep the card blocked and counted as WIP until the needed input is usable."
+            }
+          ]
+        }
+      },
+      {
+        "id": "risk",
+        "title": "14. Distinguish risks from issues",
+        "takeaway": "A risk is an uncertain future event; an issue has occurred.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A risk is an uncertain future event; an issue has occurred. Record likelihood qualitatively when data are weak, describe impact and choose a response. A long register with no owner or trigger is less useful than a short list tied to decisions.",
+              "Use a trigger to know when a response begins. For example, if capacity is not confirmed by Tuesday, contact a backup venue. The trigger connects uncertainty to action without pretending a weak qualitative likelihood estimate is precise. Risk responses may reduce likelihood, reduce impact, transfer a responsibility by agreement or accept the risk explicitly. Once cancellation is confirmed, planning for its possibility is no longer enough: execute the issue response. Review the list when circumstances change so resolved risks do not distract from active problems."
+            ],
+            "example": "Projector failure is a risk: test equipment and bring printable materials. Venue cancellation is an issue: choose the backup venue now. Each response has an owner and deadline.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Classify possible projector failure and a confirmed venue cancellation.",
+          "solution": "Projector failure is a risk: test equipment and bring printable materials. Venue cancellation is an issue: choose the backup venue now. Each response has an owner and deadline.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate possible failure from confirmed cancellation.",
+            "Give a proportionate response for each.",
+            "Name an owner and action timing."
+          ]
+        },
+        "quiz": {
+          "question": "Which item is already an issue?",
+          "options": [
+            "The confirmed cancellation",
+            "A possible failure next week",
+            "An imagined minor inconvenience"
+          ],
+          "correct": 0,
+          "explanation": "The confirmed cancellation follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "change",
+        "title": "15. Handle new scope as a decision",
+        "takeaway": "A new request changes cost, schedule, quality or benefit.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A new request changes cost, schedule, quality or benefit. Describe that trade-off before accepting it. Small projects need a lightweight change note, not a complex approval bureaucracy, but silent scope growth makes commitments unreliable.",
+              "A change decision may alter what the beneficiary expects. Confirm the revised acceptance criteria with the person who needs the output, and update dependent tasks so the board matches the new promise. Compare the new benefit with the added preparation, review and support work rather than only the recording duration. If the request is deferred, create a clearly separate future option; do not leave it ambiguously attached to the current deadline. Lightweight documentation is enough when it records the choice, reason, owner and affected commitments."
+            ],
+            "example": "Offer to replace an optional deliverable, move the video to a later project or obtain support. Record the chosen option and revised completion criteria. Do not add it silently to the existing deadline.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A recorded video is requested three days before the workshop. Existing capacity is full.",
+          "solution": "Offer to replace an optional deliverable, move the video to a later project or obtain support. Record the chosen option and revised completion criteria. Do not add it silently to the existing deadline.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Expose the added work and limited capacity.",
+            "Offer a scope, schedule or support trade-off.",
+            "Record the accepted option and revised criteria."
+          ]
+        },
+        "quiz": {
+          "question": "What should acceptance include?",
+          "options": [
+            "A revised scope or capacity decision",
+            "An invisible extra commitment",
+            "A promise that nothing changes"
+          ],
+          "correct": 0,
+          "explanation": "A revised scope or capacity decision follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "metrics",
+        "title": "16. Measure flow with defined boundaries",
+        "takeaway": "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period. Keep item sizes and boundaries visible. Counts help discuss the system and should not become rankings of individual worth.",
+              "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person’s overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
+            ],
+            "example": "The completed item’s cycle time is three days. The unfinished item’s age is three days on Friday. Throughput for the week includes the finished item but excludes the unfinished one. State this date convention explicitly.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An item started Monday and finished Thursday; another started Tuesday and is unfinished Friday. Use elapsed day differences.",
+          "solution": "The completed item’s cycle time is three days. The unfinished item’s age is three days on Friday. Throughput for the week includes the finished item but excludes the unfinished one. State this date convention explicitly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "State the elapsed-day convention.",
+            "Calculate completed cycle time separately from unfinished age.",
+            "Exclude unfinished work from throughput."
+          ]
+        },
+        "quiz": {
+          "question": "Which metric applies to an unfinished item?",
+          "options": [
+            "Work item age",
+            "Completed cycle time",
+            "Throughput contribution"
+          ],
+          "correct": 0,
+          "explanation": "Work item age follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "title": "17. Inspect outcomes with the beneficiary",
+        "takeaway": "A review checks whether the deliverable helps the intended user.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A review checks whether the deliverable helps the intended user. Verification asks whether specified criteria were met; validation asks whether the result serves its intended use. A checklist can pass while a beginner still cannot understand the exercise.",
+              "Invite feedback on an observable task rather than asking whether the work looks good. Give the learner a starting point and intended action, and record any assistance. A sheet may meet every required section while failing to explain how a beginner starts. Preserve the verification evidence, document the validation obstacle and revise the first instruction. Repeat the task with a suitable learner or synthetic walkthrough and state which was used. One successful attempt gives scoped evidence, not proof that every attendee will understand the material under all conditions."
+            ],
+            "example": "Verification may pass the section checklist, but validation exposes an unclear starting instruction. Revise the first step and repeat the beginner task before calling the material ready.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "The exercise sheet has every required section but a beginner cannot identify the first step. Evaluate it.",
+          "solution": "Verification may pass the section checklist, but validation exposes an unclear starting instruction. Revise the first step and repeat the beginner task before calling the material ready.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish section verification from intended-use validation.",
+            "Identify the first-step obstacle.",
+            "Revise and repeat the relevant task."
+          ]
+        },
+        "quiz": {
+          "question": "What did the beginner test reveal?",
+          "options": [
+            "A problem with intended use",
+            "Proof that all criteria are irrelevant",
+            "A throughput increase"
+          ],
+          "correct": 0,
+          "explanation": "A problem with intended use follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Product Realization",
+            "url": "https://www.nasa.gov/reference/5-0-product-realization/",
+            "section": "Verification and validation; adapted to learner deliverables",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Verification and validation reveal different problems",
+          "summary": "A section checklist may pass while a beginner cannot find the first step. Preserve both forms of evidence and revise the intended-use obstacle.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Draft exercise sheet",
+              "description": "The sheet contains the required sections but has not yet been accepted for the beginner session."
+            },
+            {
+              "id": "1",
+              "label": "Verify required sections",
+              "description": "Check each specified section and factual detail; record the file version and the checks actually executed."
+            },
+            {
+              "id": "2",
+              "label": "Beginner can start unaided?",
+              "description": "Observe the named starting task and record assistance. A complete section list does not guarantee usable instructions.",
+              "shape": "decision"
+            },
+            {
+              "id": "3",
+              "label": "Revise first instruction",
+              "description": "If the learner cannot identify the first step, rewrite that instruction and inspect any affected section checks."
+            },
+            {
+              "id": "4",
+              "label": "Record scoped acceptance",
+              "description": "When the intended task succeeds, retain the verified file and observed validation result. State the learner/task scope rather than claiming universal usability."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "inspect specification criteria"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "test intended use"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "no: unclear starting step"
+            },
+            {
+              "from": "3",
+              "to": "1",
+              "label": "recheck revised artifact"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "yes: observed task succeeds"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Draft exercise sheet",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The sheet contains the required sections but has not yet been accepted for the beginner session."
+            },
+            {
+              "title": "Verify required sections",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0,
+                3
+              ],
+              "explanation": "Check each specified section and factual detail; record the file version and the checks actually executed."
+            },
+            {
+              "title": "Beginner can start unaided?",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Observe the named starting task and record assistance. A complete section list does not guarantee usable instructions."
+            },
+            {
+              "title": "Revise first instruction",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If the learner cannot identify the first step, rewrite that instruction and inspect any affected section checks."
+            },
+            {
+              "title": "Record scoped acceptance",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "When the intended task succeeds, retain the verified file and observed validation result. State the learner/task scope rather than claiming universal usability."
+            }
+          ]
+        }
+      },
+      {
+        "id": "retrospective",
+        "title": "18. Improve one workflow constraint",
+        "takeaway": "A retrospective examines how work happened and chooses a change with an owner and review date.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A retrospective examines how work happened and chooses a change with an owner and review date. Focus on a recurring constraint instead of blaming individuals. A change becomes useful evidence only after observing its effects and costs.",
+              "Choose one experiment small enough to observe. If several policies change together, improvement may be useful but attribution becomes unclear. Preserve the original observation, change owner and review date. For the review delay, inspect availability and input quality before demanding faster work. A new meeting can add cost without removing waiting if drafts remain unready. Compare work item age, review quality and maintenance effort after the trial. Keep, adjust or stop the intervention according to those observations rather than treating the retrospective action as complete when the meeting is scheduled."
+            ],
+            "example": "Reserve a short review window twice weekly, limit review queue size and assign an owner to monitor waiting. After two weeks compare item age and quality; revise if the new window simply moves the bottleneck.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Three items waited five days for review. Design a workflow experiment.",
+          "solution": "Reserve a short review window twice weekly, limit review queue size and assign an owner to monitor waiting. After two weeks compare item age and quality; revise if the new window simply moves the bottleneck.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Connect the change to repeated review waiting.",
+            "Give the trial an owner and review date.",
+            "Observe quality and any moved bottleneck."
+          ]
+        },
+        "quiz": {
+          "question": "Which experiment addresses the observation?",
+          "options": [
+            "A review cadence with monitored waiting",
+            "Demand faster work without a change",
+            "Add more work to the review queue"
+          ],
+          "correct": 0,
+          "explanation": "A review cadence with monitored waiting follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Scrum Guide, November 2020",
+            "url": "https://scrumguides.org/scrum-guide.html",
+            "section": "Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "parallel",
+        "title": "19. Coordinate parallel branches and handoffs",
+        "takeaway": "Independent branches can progress together, but integration work still consumes capacity.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Independent branches can progress together, but integration work still consumes capacity. A handoff should state version, acceptance criteria and unresolved questions. Adding contributors without coordinating interfaces can produce incompatible outputs.",
+              "Integration has its own finish criteria. Check terminology, links, assumptions and version consistency across branches. Reserve time for corrections instead of assuming separate completion automatically creates a coherent whole. If one contributor changes the audience or date, communicate that interface change before the other branch finishes. Use stable links and an agreed accepted version to avoid reviewing two unrelated copies. Parallel work can shorten some waiting, but it introduces coordination and integration effort; the plan should represent both rather than multiplying contributors and assuming duration falls proportionately."
+            ],
+            "example": "Agree the workshop date, audience and terminology first. Use stable file links, then reserve a joint review to check that invitation promises match the exercises and session duration.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Two people draft exercises and invitations independently; plan their integration.",
+          "solution": "Agree the workshop date, audience and terminology first. Use stable file links, then reserve a joint review to check that invitation promises match the exercises and session duration.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Agree shared date, audience and terminology early.",
+            "Use stable file versions or links.",
+            "Reserve an integration check against workshop promises."
+          ]
+        },
+        "quiz": {
+          "question": "What protects parallel work from mismatch?",
+          "options": [
+            "Shared interfaces and an integration check",
+            "Assuming more people remove all coordination",
+            "Skipping final review"
+          ],
+          "correct": 0,
+          "explanation": "Shared interfaces and an integration check follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "close",
+        "title": "20. Close the project with usable evidence",
+        "takeaway": "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine. Archive decisions where the next person can find them. A closed board should not conceal unfulfilled promises or imply that attendance alone proved learning.",
+              "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; honest closure makes that obligation visible rather than declaring every aspect successful."
+            ],
+            "example": "Link the accepted materials and feedback, name an owner and follow-up date for the access issue, and transfer attendance checking to a routine. Mark the project delivered with the known issue stated explicitly.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Verification and validation; adapted to learner deliverables. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Close a workshop with delivered materials, one unresolved access issue and a recurring attendance task.",
+          "solution": "Link the accepted materials and feedback, name an owner and follow-up date for the access issue, and transfer attendance checking to a routine. Mark the project delivered with the known issue stated explicitly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Link accepted deliverables and available feedback.",
+            "Assign the unresolved access issue and follow-up date.",
+            "Transfer the attendance routine to an accepted owner."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in honest closure?",
+          "options": [
+            "Accepted outputs and remaining obligations",
+            "Only a celebration image",
+            "Deletion of every unresolved item"
+          ],
+          "correct": 0,
+          "explanation": "Accepted outputs and remaining obligations follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Product Realization",
+            "url": "https://www.nasa.gov/reference/5-0-product-realization/",
+            "section": "Verification and validation; adapted to learner deliverables",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Close delivery without hiding remaining work",
+          "summary": "Archive accepted materials while transferring the unresolved access issue and recurring attendance task to named owners who accept them.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Accepted materials and feedback",
+              "description": "Link the delivered invitation, exercise sheet and observed feedback. Attendance alone does not establish learning success."
+            },
+            {
+              "id": "1",
+              "label": "Open access issue",
+              "description": "Record the unresolved participation issue, its impact and a follow-up date instead of deleting it from the closure report."
+            },
+            {
+              "id": "2",
+              "label": "Ongoing attendance routine",
+              "description": "Separate the recurring Friday attendance check from the completed workshop project and state its trigger."
+            },
+            {
+              "id": "3",
+              "label": "Owners accept follow-up",
+              "description": "Confirm a named person accepts each ongoing obligation. Archiving a card without ownership merely hides the work."
+            },
+            {
+              "id": "4",
+              "label": "Archive closure evidence",
+              "description": "Store accepted links, limitations, outstanding obligations and the route for future corrections together."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "4",
+              "label": "retain delivered evidence"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "transfer issue responsibility"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "transfer recurring responsibility"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "include accepted follow-up ownership"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Accepted materials and feedback",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Link the delivered invitation, exercise sheet and observed feedback. Attendance alone does not establish learning success."
+            },
+            {
+              "title": "Open access issue",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [],
+              "explanation": "Record the unresolved participation issue, its impact and a follow-up date instead of deleting it from the closure report."
+            },
+            {
+              "title": "Ongoing attendance routine",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [],
+              "explanation": "Separate the recurring Friday attendance check from the completed workshop project and state its trigger."
+            },
+            {
+              "title": "Owners accept follow-up",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "Confirm a named person accepts each ongoing obligation. Archiving a card without ownership merely hides the work."
+            },
+            {
+              "title": "Archive closure evidence",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                0,
+                3
+              ],
+              "explanation": "Store accepted links, limitations, outstanding obligations and the route for future corrections together."
+            }
+          ]
+        }
+      },
+      {
+        "id": "system-review",
+        "title": "21. Select a proportionate management system",
+        "takeaway": "A useful system supports the project’s decisions with modest maintenance.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A useful system supports the project’s decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
+              "Evaluate maintenance burden with the same care as the project work. Retain a report when it changes a decision or exposes an obligation, and consolidate repeated status entry that supplies no new information. A small board can be enough for twelve tasks if it represents owners, completion and waiting truthfully. When borrowing a method name, check its defining practices rather than using the label because the interface looks familiar. You may legitimately use selected ideas in a simple task board; that honest description leaves room to adopt fuller practices when they become useful."
+            ],
+            "example": "Retain one board with owner, finish criteria and blockers, plus a short twice-weekly review. Remove reports that inform no decision. If claiming Kanban, preserve the guide’s required workflow and metrics; otherwise call it a simple task board.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A two-person project has 12 cards and spends an hour daily updating seven reports. Simplify it.",
+          "solution": "Retain one board with owner, finish criteria and blockers, plus a short twice-weekly review. Remove reports that inform no decision. If claiming Kanban, preserve the guide’s required workflow and metrics; otherwise call it a simple task board.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Keep essential ownership, completion and blocker information.",
+            "Remove reports that inform no decision.",
+            "Distinguish a simple board from a complete named method."
+          ]
+        },
+        "quiz": {
+          "question": "What is an accurate method claim?",
+          "options": [
+            "A task board unless the method’s full defining practices are present",
+            "Full Kanban because cards exist",
+            "Full Scrum because a meeting occurs"
+          ],
+          "correct": 0,
+          "explanation": "A task board unless the method’s full defining practices are present follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Kanban Guide, May 2025",
+            "url": "https://kanbanguides.org/the-kanban-guide/2025.5/",
+            "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "folder": "task-project-management-practice",
+      "files": [
+        {
+          "id": "capture-worksheet",
+          "href": "paths/task-project-management/practice/capture-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable capture commitments in one inbox case with blank response fields and worked solution."
+        },
+        {
+          "id": "task-project-worksheet",
+          "href": "paths/task-project-management/practice/task-project-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable separate tasks, projects and routines case with blank response fields and worked solution."
+        },
+        {
+          "id": "next-action-worksheet",
+          "href": "paths/task-project-management/practice/next-action-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable write the next observable action case with blank response fields and worked solution."
+        },
+        {
+          "id": "done-worksheet",
+          "href": "paths/task-project-management/practice/done-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable agree what done means case with blank response fields and worked solution."
+        },
+        {
+          "id": "scope-worksheet",
+          "href": "paths/task-project-management/practice/scope-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable state outcome and exclusions case with blank response fields and worked solution."
+        },
+        {
+          "id": "decompose-worksheet",
+          "href": "paths/task-project-management/practice/decompose-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable break deliverables into manageable work case with blank response fields and worked solution."
+        },
+        {
+          "id": "sequence-worksheet",
+          "href": "paths/task-project-management/practice/sequence-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable map dependencies before dates case with blank response fields and worked solution."
+        },
+        {
+          "id": "board-worksheet",
+          "href": "paths/task-project-management/practice/board-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable visualize the real workflow case with blank response fields and worked solution."
+        },
+        {
+          "id": "wip-worksheet",
+          "href": "paths/task-project-management/practice/wip-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable control work in progress case with blank response fields and worked solution."
+        },
+        {
+          "id": "pull-worksheet",
+          "href": "paths/task-project-management/practice/pull-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable pull work when capacity exists case with blank response fields and worked solution."
+        },
+        {
+          "id": "owners-worksheet",
+          "href": "paths/task-project-management/practice/owners-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable clarify ownership and decisions case with blank response fields and worked solution."
+        },
+        {
+          "id": "estimates-worksheet",
+          "href": "paths/task-project-management/practice/estimates-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable forecast using comparable items case with blank response fields and worked solution."
+        },
+        {
+          "id": "blocked-worksheet",
+          "href": "paths/task-project-management/practice/blocked-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable make blocked work actionable case with blank response fields and worked solution."
+        },
+        {
+          "id": "risk-worksheet",
+          "href": "paths/task-project-management/practice/risk-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable distinguish risks from issues case with blank response fields and worked solution."
+        },
+        {
+          "id": "change-worksheet",
+          "href": "paths/task-project-management/practice/change-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable handle new scope as a decision case with blank response fields and worked solution."
+        },
+        {
+          "id": "metrics-worksheet",
+          "href": "paths/task-project-management/practice/metrics-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable measure flow with defined boundaries case with blank response fields and worked solution."
+        },
+        {
+          "id": "review-worksheet",
+          "href": "paths/task-project-management/practice/review-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable inspect outcomes with the beneficiary case with blank response fields and worked solution."
+        },
+        {
+          "id": "retrospective-worksheet",
+          "href": "paths/task-project-management/practice/retrospective-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable improve one workflow constraint case with blank response fields and worked solution."
+        },
+        {
+          "id": "parallel-worksheet",
+          "href": "paths/task-project-management/practice/parallel-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable coordinate parallel branches and handoffs case with blank response fields and worked solution."
+        },
+        {
+          "id": "close-worksheet",
+          "href": "paths/task-project-management/practice/close-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable close the project with usable evidence case with blank response fields and worked solution."
+        },
+        {
+          "id": "system-review-worksheet",
+          "href": "paths/task-project-management/practice/system-review-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable select a proportionate management system case with blank response fields and worked solution."
+        },
+        {
+          "id": "foundation-project",
+          "href": "paths/task-project-management/practice/foundation-project.md",
+          "role": "project",
+          "description": "Assessed foundation project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "intermediate-project",
+          "href": "paths/task-project-management/practice/intermediate-project.md",
+          "role": "project",
+          "description": "Assessed intermediate project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "advanced-project",
+          "href": "paths/task-project-management/practice/advanced-project.md",
+          "role": "project",
+          "description": "Assessed advanced project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "README-md",
+          "href": "paths/task-project-management/practice/README.md",
+          "role": "guide",
+          "description": "Offline and print instructions, learning order, assessment and evidence limits."
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/task-project-management/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/task-project-management/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/task-project-management/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/task-project-management/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "practice-capture",
+          "title": "Practise: Capture commitments in one inbox",
+          "goal": "Combine an email request, a handwritten reminder and a duplicate message about the same report.",
+          "fileIds": [
+            "capture-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open capture-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-task-project",
+          "title": "Practise: Separate tasks, projects and routines",
+          "goal": "Classify email venue, run community workshop and check attendance every Friday.",
+          "fileIds": [
+            "task-project-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open task-project-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-next-action",
+          "title": "Practise: Write the next observable action",
+          "goal": "Rewrite sort workshop stuff when room capacity is unknown.",
+          "fileIds": [
+            "next-action-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open next-action-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-done",
+          "title": "Practise: Agree what done means",
+          "goal": "Define done for a one-page workshop invitation.",
+          "fileIds": [
+            "done-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open done-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-scope",
+          "title": "Practise: State outcome and exclusions",
+          "goal": "Scope a 20-person beginner workshop with a two-week deadline.",
+          "fileIds": [
+            "scope-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open scope-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-decompose",
+          "title": "Practise: Break deliverables into manageable work",
+          "goal": "Break the workshop into three deliverables and list one action for each.",
+          "fileIds": [
+            "decompose-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open decompose-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-sequence",
+          "title": "Practise: Map dependencies before dates",
+          "goal": "Order confirm venue, publish invitation, draft exercises and review exercises.",
+          "fileIds": [
+            "sequence-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open sequence-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-board",
+          "title": "Practise: Visualize the real workflow",
+          "goal": "Design entry criteria for Ready and exit criteria for Review on the workshop board.",
+          "fileIds": [
+            "board-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open board-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-wip",
+          "title": "Practise: Control work in progress",
+          "goal": "A limit is two. One draft is in Doing and one is blocked in Review. May a third item start?",
+          "fileIds": [
+            "wip-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open wip-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-pull",
+          "title": "Practise: Pull work when capacity exists",
+          "goal": "One item finishes under a WIP limit of two; choose between a ready dependency and a vague optional redesign.",
+          "fileIds": [
+            "pull-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open pull-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-owners",
+          "title": "Practise: Clarify ownership and decisions",
+          "goal": "Assign roles for an invitation written by Mira, checked by Dev and approved by Jo.",
+          "fileIds": [
+            "owners-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open owners-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-estimates",
+          "title": "Practise: Forecast using comparable items",
+          "goal": "Three invitation cards took 2, 3 and 6 elapsed days. Forecast another similar item.",
+          "fileIds": [
+            "estimates-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open estimates-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-blocked",
+          "title": "Practise: Make blocked work actionable",
+          "goal": "The venue confirmation has had no reply for two days and publication needs it tomorrow. Write a blocker note.",
+          "fileIds": [
+            "blocked-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open blocked-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-risk",
+          "title": "Practise: Distinguish risks from issues",
+          "goal": "Classify possible projector failure and a confirmed venue cancellation.",
+          "fileIds": [
+            "risk-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open risk-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-change",
+          "title": "Practise: Handle new scope as a decision",
+          "goal": "A recorded video is requested three days before the workshop. Existing capacity is full.",
+          "fileIds": [
+            "change-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open change-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-metrics",
+          "title": "Practise: Measure flow with defined boundaries",
+          "goal": "An item started Monday and finished Thursday; another started Tuesday and is unfinished Friday. Use elapsed day differences.",
+          "fileIds": [
+            "metrics-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open metrics-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-review",
+          "title": "Practise: Inspect outcomes with the beneficiary",
+          "goal": "The exercise sheet has every required section but a beginner cannot identify the first step. Evaluate it.",
+          "fileIds": [
+            "review-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open review-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-retrospective",
+          "title": "Practise: Improve one workflow constraint",
+          "goal": "Three items waited five days for review. Design a workflow experiment.",
+          "fileIds": [
+            "retrospective-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open retrospective-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-parallel",
+          "title": "Practise: Coordinate parallel branches and handoffs",
+          "goal": "Two people draft exercises and invitations independently; plan their integration.",
+          "fileIds": [
+            "parallel-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open parallel-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-close",
+          "title": "Practise: Close the project with usable evidence",
+          "goal": "Close a workshop with delivered materials, one unresolved access issue and a recurring attendance task.",
+          "fileIds": [
+            "close-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open close-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-system-review",
+          "title": "Practise: Select a proportionate management system",
+          "goal": "A two-person project has 12 cards and spends an hour daily updating seven reports. Simplify it.",
+          "fileIds": [
+            "system-review-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open system-review-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "foundation",
+          "title": "A clear small project",
+          "goal": "Turn a synthetic workshop request into a scoped plan.",
+          "fileIds": [
+            "foundation-project",
+            "README-md",
+            "capture-worksheet",
+            "task-project-worksheet",
+            "next-action-worksheet",
+            "done-worksheet",
+            "scope-worksheet",
+            "decompose-worksheet",
+            "sequence-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Define beneficiary, outcome and exclusions.",
+            "Decompose into deliverables and next actions.",
+            "Write completion criteria for three tasks.",
+            "Map genuine dependencies and name owners.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "A visible controlled workflow",
+          "goal": "Operate a synthetic board through a week of changes.",
+          "fileIds": [
+            "intermediate-project",
+            "README-md",
+            "board-worksheet",
+            "wip-worksheet",
+            "pull-worksheet",
+            "owners-worksheet",
+            "estimates-worksheet",
+            "blocked-worksheet",
+            "risk-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Define workflow entry and exit rules.",
+            "Set a WIP control and explain blocked-item counting.",
+            "Handle one blocker and one scope request.",
+            "Forecast with a small comparable sample and state limitations.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "A delivered and improved project",
+          "goal": "Close a project using acceptance and improvement evidence.",
+          "fileIds": [
+            "advanced-project",
+            "README-md",
+            "change-worksheet",
+            "metrics-worksheet",
+            "review-worksheet",
+            "retrospective-worksheet",
+            "parallel-worksheet",
+            "close-worksheet",
+            "system-review-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Calculate age, cycle time and throughput with explicit boundaries.",
+            "Perform verification and a beneficiary validation task.",
+            "Review one recurring workflow bottleneck.",
+            "Record accepted outputs, unresolved obligations and a follow-up owner.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "capture": "practice-capture",
+        "task-project": "practice-task-project",
+        "next-action": "practice-next-action",
+        "done": "practice-done",
+        "scope": "practice-scope",
+        "decompose": "practice-decompose",
+        "sequence": "practice-sequence",
+        "board": "practice-board",
+        "wip": "practice-wip",
+        "pull": "practice-pull",
+        "owners": "practice-owners",
+        "estimates": "practice-estimates",
+        "blocked": "practice-blocked",
+        "risk": "practice-risk",
+        "change": "practice-change",
+        "metrics": "practice-metrics",
+        "review": "practice-review",
+        "retrospective": "practice-retrospective",
+        "parallel": "practice-parallel",
+        "close": "practice-close",
+        "system-review": "practice-system-review"
+      },
+      "bundle": {
+        "href": "paths/task-project-management/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/task-project-management/practice/lab.html",
+        "title": "Open interactive practice studio"
+      }
+    }
+  },
+  {
     "id": "testing-debugging",
     "title": "Testing & Debugging",
     "category": "Software engineering",
@@ -59094,6 +71218,2848 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/testing-debugging/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "time-attention-energy",
+    "title": "Time, Attention & Energy",
+    "category": "Personal effectiveness",
+    "status": "ready",
+    "description": "Learn time, attention & energy through realistic constraints, worked examples, printable practice and assessed projects.",
+    "level": "Foundations → intermediate → advanced practice",
+    "prerequisites": [
+      "No specialist knowledge required.",
+      "A text editor or Markdown viewer for printable worksheets."
+    ],
+    "outcomes": [
+      "A feasible study day",
+      "A week of deliberate focus",
+      "A sustainable personal system",
+      "Explain evidence limits and revise a practical system."
+    ],
+    "setup": [
+      "Read practice/README.md.",
+      "Open each lesson worksheet and attempt it before reading the answer.",
+      "Complete three stage projects; no runtime or account is required.",
+      "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+    ],
+    "nextSteps": [
+      "Apply one bounded change to an ordinary real commitment.",
+      "Retain the smallest useful routine and review actual outcomes."
+    ],
+    "sources": [
+      {
+        "title": "Does time management work? Original meta-analysis",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066"
+      },
+      {
+        "title": "The Scrum Guide, November 2020",
+        "url": "https://scrumguides.org/scrum-guide.html"
+      },
+      {
+        "title": "NASA Systems Engineering Handbook",
+        "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/"
+      },
+      {
+        "title": "NHLBI: Healthy sleep habits",
+        "url": "https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits"
+      },
+      {
+        "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
+        "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf"
+      },
+      {
+        "title": "Buehler, Griffin and Ross: Exploring the planning fallacy",
+        "url": "https://doi.org/10.1037/0022-3514.67.3.366"
+      }
+    ],
+    "downloads": [
+      {
+        "title": "capacity-worksheet.md",
+        "href": "paths/time-attention-energy/practice/capacity-worksheet.md"
+      },
+      {
+        "title": "time-log-worksheet.md",
+        "href": "paths/time-attention-energy/practice/time-log-worksheet.md"
+      },
+      {
+        "title": "outcomes-worksheet.md",
+        "href": "paths/time-attention-energy/practice/outcomes-worksheet.md"
+      },
+      {
+        "title": "priorities-worksheet.md",
+        "href": "paths/time-attention-energy/practice/priorities-worksheet.md"
+      },
+      {
+        "title": "sleep-boundary-worksheet.md",
+        "href": "paths/time-attention-energy/practice/sleep-boundary-worksheet.md"
+      },
+      {
+        "title": "attention-context-worksheet.md",
+        "href": "paths/time-attention-energy/practice/attention-context-worksheet.md"
+      },
+      {
+        "title": "small-start-worksheet.md",
+        "href": "paths/time-attention-energy/practice/small-start-worksheet.md"
+      },
+      {
+        "title": "blocks-worksheet.md",
+        "href": "paths/time-attention-energy/practice/blocks-worksheet.md"
+      },
+      {
+        "title": "estimate-worksheet.md",
+        "href": "paths/time-attention-energy/practice/estimate-worksheet.md"
+      },
+      {
+        "title": "buffer-worksheet.md",
+        "href": "paths/time-attention-energy/practice/buffer-worksheet.md"
+      },
+      {
+        "title": "notifications-worksheet.md",
+        "href": "paths/time-attention-energy/practice/notifications-worksheet.md"
+      },
+      {
+        "title": "resume-worksheet.md",
+        "href": "paths/time-attention-energy/practice/resume-worksheet.md"
+      },
+      {
+        "title": "breaks-worksheet.md",
+        "href": "paths/time-attention-energy/practice/breaks-worksheet.md"
+      },
+      {
+        "title": "energy-patterns-worksheet.md",
+        "href": "paths/time-attention-energy/practice/energy-patterns-worksheet.md"
+      },
+      {
+        "title": "weekly-review-worksheet.md",
+        "href": "paths/time-attention-energy/practice/weekly-review-worksheet.md"
+      },
+      {
+        "title": "boundaries-worksheet.md",
+        "href": "paths/time-attention-energy/practice/boundaries-worksheet.md"
+      },
+      {
+        "title": "overload-worksheet.md",
+        "href": "paths/time-attention-energy/practice/overload-worksheet.md"
+      },
+      {
+        "title": "experiment-worksheet.md",
+        "href": "paths/time-attention-energy/practice/experiment-worksheet.md"
+      },
+      {
+        "title": "shared-time-worksheet.md",
+        "href": "paths/time-attention-energy/practice/shared-time-worksheet.md"
+      },
+      {
+        "title": "sustainable-system-worksheet.md",
+        "href": "paths/time-attention-energy/practice/sustainable-system-worksheet.md"
+      },
+      {
+        "title": "evidence-review-worksheet.md",
+        "href": "paths/time-attention-energy/practice/evidence-review-worksheet.md"
+      },
+      {
+        "title": "foundation-project.md",
+        "href": "paths/time-attention-energy/practice/foundation-project.md"
+      },
+      {
+        "title": "intermediate-project.md",
+        "href": "paths/time-attention-energy/practice/intermediate-project.md"
+      },
+      {
+        "title": "advanced-project.md",
+        "href": "paths/time-attention-energy/practice/advanced-project.md"
+      },
+      {
+        "title": "README.md",
+        "href": "paths/time-attention-energy/practice/README.md"
+      },
+      {
+        "title": "lab.html",
+        "href": "paths/time-attention-energy/practice/lab.html"
+      },
+      {
+        "title": "lab.js",
+        "href": "paths/time-attention-energy/practice/lab.js"
+      },
+      {
+        "title": "lab.css",
+        "href": "paths/time-attention-energy/practice/lab.css"
+      },
+      {
+        "title": "lab-model.js",
+        "href": "paths/time-attention-energy/practice/lab-model.js"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Foundation",
+        "description": "Plan a synthetic day with limited capacity and a clear output.",
+        "exitCriteria": [
+          "Capacity calculation includes essential commitments and transitions.",
+          "Two session outcomes have observable finish conditions.",
+          "The schedule protects essential recovery and keeps uncertainty visible.",
+          "An interruption record includes a usable next-step cue."
+        ],
+        "project": {
+          "title": "A feasible study day",
+          "brief": "Plan a synthetic day with limited capacity and a clear output.",
+          "requirements": [
+            "List fixed commitments and calculate remaining capacity.",
+            "Select two outcomes and finish conditions.",
+            "Include transitions, recovery and uncertainty.",
+            "Write a return cue for one interrupted session."
+          ],
+          "rubric": [
+            "Capacity calculation includes essential commitments and transitions.",
+            "Two session outcomes have observable finish conditions.",
+            "The schedule protects essential recovery and keeps uncertainty visible.",
+            "An interruption record includes a usable next-step cue."
+          ],
+          "solution": "For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Intermediate",
+        "description": "Design and evaluate a small scheduling experiment.",
+        "exitCriteria": [
+          "Estimates refer to comparable past durations and show variation.",
+          "Focus blocks respect an agreed urgent communication route.",
+          "The trial compares checked output, errors and context.",
+          "The weekly review defers or renegotiates work beyond capacity."
+        ],
+        "project": {
+          "title": "A week of deliberate focus",
+          "brief": "Design and evaluate a small scheduling experiment.",
+          "requirements": [
+            "Use three comparable past task durations.",
+            "Build blocks with buffers and an urgent communication route.",
+            "Compare two scheduling approaches using output and accuracy.",
+            "Document sample size and changing conditions."
+          ],
+          "rubric": [
+            "Estimates refer to comparable past durations and show variation.",
+            "Focus blocks respect an agreed urgent communication route.",
+            "The trial compares checked output, errors and context.",
+            "The weekly review defers or renegotiates work beyond capacity."
+          ],
+          "solution": "Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload confounds any improvement; keep conclusions local.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Advanced",
+        "description": "Produce a two-week routine and an honest evidence review.",
+        "exitCriteria": [
+          "The routine has a minimum version for disrupted days.",
+          "A conflicting request is resolved through explicit feasible alternatives.",
+          "Tracking fields are justified by decisions and maintenance cost.",
+          "The evidence review states confounds and a bounded next experiment."
+        ],
+        "project": {
+          "title": "A sustainable personal system",
+          "brief": "Produce a two-week routine and an honest evidence review.",
+          "requirements": [
+            "Capture obligations and review capacity twice.",
+            "Renegotiate one synthetic conflicting request.",
+            "Remove one unnecessary tracking field.",
+            "Report observed outcomes, maintenance cost and a next revision."
+          ],
+          "rubric": [
+            "The routine has a minimum version for disrupted days.",
+            "A conflicting request is resolved through explicit feasible alternatives.",
+            "Tracking fields are justified by decisions and maintenance cost.",
+            "The evidence review states confounds and a bounded next experiment."
+          ],
+          "solution": "Keep one commitment list, a daily capacity check and a weekly review. For a 90-minute request with 30 minutes available, offer a partial result today or a full result Thursday. Record fewer misses alongside workload differences; retain useful decisions and revise unsupported claims.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "capacity",
+        "title": "1. Begin with available capacity",
+        "takeaway": "A calendar contains fixed commitments and negotiable work.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A calendar contains fixed commitments and negotiable work. Count the remaining space before adding ambitions. Include travel, meals, care and transition time; empty squares are not all usable focus time. A capacity budget is a planning aid, not a judgement of personal worth.",
+              "Check the shape of the available time as well as its total. Three separate 20-minute gaps might support three reading questions, but they are a poor fit for a 60-minute task needing setup and uninterrupted checking. Place fixed commitments first, subtract essential transitions and then match an outcome to an actual window. If a long task will not fit, split its deliverable at a useful boundary or move it. Do not assume that time saved in one part of the day is automatically available in another."
+            ],
+            "example": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. Find study capacity.",
+          "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Subtract all named essential commitments.",
+            "Distinguish a continuous window from several short gaps.",
+            "Keep the selected outcomes inside the calculated capacity."
+          ]
+        },
+        "quiz": {
+          "question": "Which capacity estimate includes real constraints?",
+          "options": [
+            "150 available minutes after essential commitments",
+            "All 240 minutes are study time",
+            "Only paid work counts"
+          ],
+          "correct": 0,
+          "explanation": "150 available minutes after essential commitments follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "A 240-minute window becomes a feasible plan",
+          "summary": "Subtract the scenario’s essential commitments before allocating study outcomes. The three allocations total the remaining 150 minutes.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "240 minutes initially available",
+              "description": "The learner has a four-hour window before adding travel, a meal and a necessary transition."
+            },
+            {
+              "id": "1",
+              "label": "90 minutes essential",
+              "description": "Reserve 45 minutes for the journey, 30 for a meal and 15 for transition: 45 + 30 + 15 = 90."
+            },
+            {
+              "id": "2",
+              "label": "150 minutes usable",
+              "description": "Subtract essentials from the window: 240 − 90 = 150 minutes. This is a local scenario, not a universal capacity formula."
+            },
+            {
+              "id": "3",
+              "label": "90-minute checked draft",
+              "description": "Allocate 90 minutes to drafting and checking the essential section; define the accepted state before starting."
+            },
+            {
+              "id": "4",
+              "label": "30-minute practice",
+              "description": "Choose a bounded exercise that fits 30 minutes rather than an entire unestimated chapter."
+            },
+            {
+              "id": "5",
+              "label": "30-minute uncertainty reserve",
+              "description": "Leave 30 minutes uncommitted for variation. The plan uses 90 + 30 + 30 = 150 minutes without reducing essential commitments."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "identify essential uses"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "subtract 90 from 240"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "allocate 90"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "allocate 30"
+            },
+            {
+              "from": "2",
+              "to": "5",
+              "label": "retain 30"
+            }
+          ],
+          "steps": [
+            {
+              "title": "240 minutes initially available",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "The learner has a four-hour window before adding travel, a meal and a necessary transition."
+            },
+            {
+              "title": "90 minutes essential",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Reserve 45 minutes for the journey, 30 for a meal and 15 for transition: 45 + 30 + 15 = 90."
+            },
+            {
+              "title": "150 minutes usable",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Subtract essentials from the window: 240 − 90 = 150 minutes. This is a local scenario, not a universal capacity formula."
+            },
+            {
+              "title": "90-minute checked draft",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Allocate 90 minutes to drafting and checking the essential section; define the accepted state before starting."
+            },
+            {
+              "title": "30-minute practice",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Choose a bounded exercise that fits 30 minutes rather than an entire unestimated chapter."
+            },
+            {
+              "title": "30-minute uncertainty reserve",
+              "activeNodes": [
+                "5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Leave 30 minutes uncommitted for variation. The plan uses 90 + 30 + 30 = 150 minutes without reducing essential commitments."
+            }
+          ]
+        }
+      },
+      {
+        "id": "time-log",
+        "title": "2. Observe a day without grading it",
+        "takeaway": "A short log records start, finish, activity and context.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A short log records start, finish, activity and context. Its purpose is to reveal mismatch between the imagined day and the observed day. Do not label necessary care or rest as waste. Sampling several ordinary days is more useful than drawing conclusions from an unusually good afternoon.",
+              "A log is a sample with measurement error. Round consistently and mark forgotten periods as unknown rather than inventing precise entries. Record whether an activity was necessary, optional or unclear separately from its duration. Twenty minutes of messages could coordinate essential care or merely reflect optional checking; the category alone cannot decide that. Compare the log with the intended outcome, then investigate one mismatch. If logging itself distracts you, use broad categories or sample only a few windows rather than building a minute-by-minute permanent surveillance routine."
+            ],
+            "example": "There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Record a synthetic day with 40 minutes reading, 20 messages, 15 travel delay and 25 drafting. Classify without moral labels.",
+          "solution": "There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Account for all 100 supplied minutes.",
+            "Avoid treating communication as automatically unnecessary.",
+            "Mark an uncertain classification instead of inventing a cause."
+          ]
+        },
+        "quiz": {
+          "question": "What does one day of logging establish?",
+          "options": [
+            "A provisional description of that day",
+            "Your permanent productivity level",
+            "A causal effect of messages"
+          ],
+          "correct": 0,
+          "explanation": "A provisional description of that day follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "outcomes",
+        "title": "3. Define a useful session outcome",
+        "takeaway": "An outcome names what exists after a session: a checked paragraph, five attempted problems or a decision.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "An outcome names what exists after a session: a checked paragraph, five attempted problems or a decision. An activity such as study does not say when to stop. Keep the output small enough to inspect and connect it to a real purpose.",
+              "An outcome can include an unresolved-question list. A first presentation outline may be useful even when the supporting statistic is missing, provided the gap is explicit. Decide the minimum acceptable state before starting: audience named, three messages written and evidence needs listed. Keep drafting and polishing separate if they compete for the same short window. At the finish, inspect the artifact against those criteria. If the result fails one criterion, write the next correction rather than extending the session indefinitely because the work could always look better."
+            ],
+            "example": "Create a three-slide outline stating audience, problem and recommendation; stop when each slide has one sentence and the missing evidence is listed. Formatting is outside this session.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Replace work on presentation with a checkable outcome for a 35-minute session.",
+          "solution": "Create a three-slide outline stating audience, problem and recommendation; stop when each slide has one sentence and the missing evidence is listed. Formatting is outside this session.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Name the audience and intended result.",
+            "Give each outline slide a checkable message.",
+            "Separate evidence gaps from optional formatting."
+          ]
+        },
+        "quiz": {
+          "question": "Which outcome has a stopping test?",
+          "options": [
+            "Three outline slides with one sentence each",
+            "Try harder all afternoon",
+            "Open many reference tabs"
+          ],
+          "correct": 0,
+          "explanation": "Three outline slides with one sentence each follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Scrum Guide, November 2020",
+            "url": "https://scrumguides.org/scrum-guide.html",
+            "section": "Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "priorities",
+        "title": "4. Choose when everything seems important",
+        "takeaway": "Urgency concerns the cost of delay; importance concerns contribution to an outcome.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Urgency concerns the cost of delay; importance concerns contribution to an outcome. A two-axis matrix is a conversation aid, not objective arithmetic. A deadline without a consequence is weaker evidence than a dependency that prevents another person from proceeding.",
+              "When two items have similar consequences, use an explicit tie-break such as dependency, reversibility or effort. A quick file handoff can free another person to work while you proofread; an optional redesign can wait without damaging the essential outcome. Avoid multiplying invented scores until one option appears mathematically superior. Ask who is affected by a delay and what happens if the deadline moves. Record the reason for your choice so new evidence, such as a corrected due date, can change it without treating the original decision as a personal failure."
+            ],
+            "example": "Send the dependency first, proofread next and defer theme work. Record the reason: another person is blocked today. Revisit if the deadline or dependency changes.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Choose between proofreading due tomorrow, optional theme redesign and sending a file needed by a teammate today.",
+          "solution": "Send the dependency first, proofread next and defer theme work. Record the reason: another person is blocked today. Revisit if the deadline or dependency changes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify who is blocked and by which input.",
+            "Distinguish a real deadline consequence from preference.",
+            "State what new information would change the order."
+          ]
+        },
+        "quiz": {
+          "question": "What best supports the first choice?",
+          "options": [
+            "A named delay consequence",
+            "The most colourful task",
+            "The oldest browser tab"
+          ],
+          "correct": 0,
+          "explanation": "A named delay consequence follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "sleep-boundary",
+        "title": "5. Protect essential recovery",
+        "takeaway": "Treat sleep opportunity and essential recovery as constraints when making a plan.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Treat sleep opportunity and essential recovery as constraints when making a plan. A timetable that repeatedly depends on cutting them is infeasible. Personal alertness varies; this course offers scheduling experiments, not clinical explanations or a prescription for sleep problems.",
+              "Do not make recovery conditional on earning it through finished work. If several evenings require sacrificing essential recovery to meet ordinary commitments, the workload or scope needs attention. Separate the part of the assignment that is required tomorrow from optional polish, and check whether a deadline can be renegotiated. A plan might still fail because an essential responsibility changes; record that constraint rather than diagnosing yourself from the calendar. Advice about protecting sleep opportunity is different from treatment advice, and this worksheet does not determine an individual medical need."
+            ],
+            "example": "Complete the essential 60-minute section, allow 15 minutes to prepare tomorrow and leave 15 for transition. Move optional formatting to tomorrow. Reduce scope rather than borrowing from protected sleep.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An evening plan needs three hours but only 90 minutes remain before the protected bedtime. Revise it.",
+          "solution": "Complete the essential 60-minute section, allow 15 minutes to prepare tomorrow and leave 15 for transition. Move optional formatting to tomorrow. Reduce scope rather than borrowing from protected sleep.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Keep the protected bedtime in the revised schedule.",
+            "Move or reduce a named part of the work.",
+            "Reserve a transition instead of filling all 90 minutes."
+          ]
+        },
+        "quiz": {
+          "question": "What makes the revised plan feasible?",
+          "options": [
+            "Reducing or rescheduling work within available time",
+            "Removing the sleep boundary",
+            "Assuming tiredness disappears"
+          ],
+          "correct": 0,
+          "explanation": "Reducing or rescheduling work within available time follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NHLBI: Healthy sleep habits",
+            "url": "https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits",
+            "section": "Protecting sleep opportunity; no diagnosis or treatment advice",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "attention-context",
+        "title": "6. Notice what pulls attention",
+        "takeaway": "An interruption can be external, self-initiated or necessary.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "An interruption can be external, self-initiated or necessary. The cost includes finding the previous context again, not simply message-reading time. Research describes particular computing environments; it does not establish a universal number of minutes lost for every person and interruption.",
+              "Separate necessary support interruptions from optional alerts before designing a change. Eliminating a required support call may increase uninterrupted minutes while damaging a responsibility that matters more than the draft. For the supplied session, the resumption time is observed rather than borrowed from a popular average. Keep a brief record of what had to be reconstructed: the sentence, source or checking position. Then test a local intervention such as leaving a return cue. Comparing similar sessions helps you distinguish less reconstruction work from a simpler task or fewer required calls."
+            ],
+            "example": "Six minutes of messages plus eight minutes of resumption equals 14 minutes. There are 36 minutes left for drafting. This is the supplied scenario, not a universal interruption cost.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.",
+          "solution": "Six minutes of messages plus eight minutes of resumption equals 14 minutes. There are 36 minutes left for drafting. This is the supplied scenario, not a universal interruption cost.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Add message and resumption durations separately.",
+            "Use the supplied observations rather than a universal average.",
+            "Distinguish optional alerts from necessary responsibility."
+          ]
+        },
+        "quiz": {
+          "question": "What belongs in this observed cost?",
+          "options": [
+            "Message time plus recorded resumption time",
+            "A universal internet recovery estimate",
+            "Every break as wasted time"
+          ],
+          "correct": 0,
+          "explanation": "Message time plus recorded resumption time follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
+            "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
+            "section": "Field study of suspension and resumption; context-specific evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Leave and recover a specific working state",
+          "summary": "An urgent interruption requires a reachable response. A return cue preserves the next unfinished check; optional alerts can wait.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Draft in progress",
+              "description": "The learner is checking a paragraph against its source when a message arrives."
+            },
+            {
+              "id": "1",
+              "label": "Urgent responsibility?",
+              "description": "Use the previously agreed communication rule to distinguish a required response from an optional alert.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Leave return cue",
+              "description": "Record the current file, last verified sentence and next source check before switching when circumstances allow."
+            },
+            {
+              "id": "3",
+              "label": "Respond to urgent input",
+              "description": "Address the necessary call or message; record its actual duration rather than assuming every interruption has the same cost."
+            },
+            {
+              "id": "4",
+              "label": "Resume named check",
+              "description": "Read the cue, inspect the file for changes and restart at the recorded unfinished check. Record reconstruction time separately."
+            },
+            {
+              "id": "5",
+              "label": "Queue optional alert",
+              "description": "Leave the optional message for the agreed checking window and continue the current paragraph."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "alert arrives"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "required response"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "state preserved"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "responsibility handled"
+            },
+            {
+              "from": "1",
+              "to": "5",
+              "label": "optional message"
+            },
+            {
+              "from": "5",
+              "to": "0",
+              "label": "continue current task"
+            },
+            {
+              "from": "4",
+              "to": "0",
+              "label": "context recovered"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Draft in progress",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                5,
+                6
+              ],
+              "explanation": "The learner is checking a paragraph against its source when a message arrives."
+            },
+            {
+              "title": "Urgent responsibility?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Use the previously agreed communication rule to distinguish a required response from an optional alert."
+            },
+            {
+              "title": "Leave return cue",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Record the current file, last verified sentence and next source check before switching when circumstances allow."
+            },
+            {
+              "title": "Respond to urgent input",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Address the necessary call or message; record its actual duration rather than assuming every interruption has the same cost."
+            },
+            {
+              "title": "Resume named check",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3
+              ],
+              "explanation": "Read the cue, inspect the file for changes and restart at the recorded unfinished check. Record reconstruction time separately."
+            },
+            {
+              "title": "Queue optional alert",
+              "activeNodes": [
+                "5"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Leave the optional message for the agreed checking window and continue the current paragraph."
+            }
+          ]
+        }
+      },
+      {
+        "id": "small-start",
+        "title": "7. Make starting concrete",
+        "takeaway": "Starting friction often comes from an ambiguous first move or missing material.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Starting friction often comes from an ambiguous first move or missing material. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.",
+              "Preparing a first action can reveal a missing input. If the chapter is unavailable, obtaining the file becomes the next action; pretending to revise it would create a false promise. Choose a first move that produces useful state, such as one improved heading or a question for the author. Avoid replacing a vague large task with twenty tiny tracking cards whose maintenance costs exceed their value. After the first move, reassess the remaining work and available time. A small start is a way to clarify execution, not evidence that every barrier is motivational."
+            ],
+            "example": "Open the chapter and rewrite the first unclear heading as a question it answers. The next action is visible and bounded. After that, decide whether to continue or schedule the remaining headings.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Turn revise chapter into a first action using a chapter with three unclear headings.",
+          "solution": "Open the chapter and rewrite the first unclear heading as a question it answers. The next action is visible and bounded. After that, decide whether to continue or schedule the remaining headings.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use a verb and a specific object.",
+            "Make the first move possible with available material.",
+            "Choose a stopping point that leaves useful state."
+          ]
+        },
+        "quiz": {
+          "question": "Which first action is executable?",
+          "options": [
+            "Rewrite the first unclear heading",
+            "Become disciplined",
+            "Finish the entire course immediately"
+          ],
+          "correct": 0,
+          "explanation": "Rewrite the first unclear heading follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "blocks",
+        "title": "8. Reserve time with a purpose",
+        "takeaway": "A time block is a provisional appointment with an outcome.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A time block is a provisional appointment with an outcome. Include a start cue, finish condition and transition allowance. Blocks make trade-offs visible but can become brittle if the day is unpredictable; use shorter windows or movable blocks when care or support work dominates.",
+              "A missed block is information about the plan. Check whether the estimate, start cue or timing was wrong before sliding every later appointment forward. A fixed class or care commitment does not move simply because drafting ran long. A movable block can have a latest finish or a fallback outcome, such as a rough outline instead of a reviewed draft. At the boundary, save the artifact and write the next step. This makes rescheduling deliberate and keeps the calendar from concealing work that no longer fits."
+            ],
+            "example": "Draft 09:00–09:40, transition 09:40–09:50, review 09:50–10:10 and keep 10 minutes free. State what review checks rather than letting it expand indefinitely.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Place a 40-minute draft, 20-minute review and 10-minute transition into an 80-minute window.",
+          "solution": "Draft 09:00–09:40, transition 09:40–09:50, review 09:50–10:10 and keep 10 minutes free. State what review checks rather than letting it expand indefinitely.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Fit drafting, review and transition inside 80 minutes.",
+            "Specify what the review checks.",
+            "Show the remaining uncommitted time."
+          ]
+        },
+        "quiz": {
+          "question": "What should a useful block specify?",
+          "options": [
+            "Outcome and realistic boundary",
+            "Only a motivational slogan",
+            "Guaranteed perfect concentration"
+          ],
+          "correct": 0,
+          "explanation": "Outcome and realistic boundary follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "estimate",
+        "title": "9. Use past durations before optimism",
+        "takeaway": "Planning fallacy research concerns optimistic completion predictions.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Planning fallacy research concerns optimistic completion predictions. A useful response is to compare similar completed work before imagining an ideal sequence. Similarity matters: a checked essay with unfamiliar sources is a poor comparator for a short familiar email.",
+              "Use a range when comparable tasks vary, and investigate why they differ. A 110-minute draft may include unfamiliar sources while a 70-minute draft uses prepared notes. The middle observation describes this small sample; it does not give a confidence level for the next deadline. Separate writing effort from elapsed time if the task waits for comments. Explain which comparator matches the new work and why. If a deadline is tighter than the observed range, change scope or seek earlier inputs rather than reducing the estimate simply to make the timetable look feasible."
+            ],
+            "example": "Use 70–110 minutes as a starting range and ask why the new draft would differ. Reserve about 90 minutes plus a review window if the work is comparable; mark this as a judgement, not a confidence interval.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Three comparable drafts took 70, 90 and 110 minutes. A new draft is predicted at 40. Give a grounded planning range.",
+          "solution": "Use 70–110 minutes as a starting range and ask why the new draft would differ. Reserve about 90 minutes plus a review window if the work is comparable; mark this as a judgement, not a confidence interval.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare the new task with completed work.",
+            "Keep the 70–110 minute variation visible.",
+            "Avoid presenting three observations as a reliable percentile."
+          ]
+        },
+        "quiz": {
+          "question": "Which evidence challenges the 40-minute prediction?",
+          "options": [
+            "Durations of comparable completed drafts",
+            "The hope to finish sooner",
+            "A prettier calendar"
+          ],
+          "correct": 0,
+          "explanation": "Durations of comparable completed drafts follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Buehler, Griffin and Ross: Exploring the planning fallacy",
+            "url": "https://doi.org/10.1037/0022-3514.67.3.366",
+            "section": "Original 1994 experiments on completion-time predictions",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Ground a draft forecast in comparable work",
+          "summary": "The supplied drafts took 70, 90 and 110 minutes. Preserve that variation and revise the comparison when inputs or review requirements differ.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Three completed drafts",
+              "description": "Collect the observed 70-, 90- and 110-minute durations using the same completion definition."
+            },
+            {
+              "id": "1",
+              "label": "Comparable new draft?",
+              "description": "Check source familiarity, length and review scope. Similar-looking titles alone do not establish comparable work.",
+              "shape": "decision"
+            },
+            {
+              "id": "2",
+              "label": "Provisional 70–110 range",
+              "description": "Use the observed range as a planning starting point. Three examples do not establish a reliable percentile or confidence interval."
+            },
+            {
+              "id": "3",
+              "label": "Identify relevant differences",
+              "description": "If the new draft needs unfamiliar sources or extra review, name that added work and seek a closer comparator."
+            },
+            {
+              "id": "4",
+              "label": "Reserve a realistic window",
+              "description": "Choose a feasible window and review allowance. If a 40-minute promise cannot fit the evidence, reduce scope or renegotiate rather than hiding variation."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "compare work conditions"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "sufficiently similar"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "important mismatch"
+            },
+            {
+              "from": "3",
+              "to": "1",
+              "label": "find closer comparison"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "plan with visible uncertainty"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Three completed drafts",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [],
+              "explanation": "Collect the observed 70-, 90- and 110-minute durations using the same completion definition."
+            },
+            {
+              "title": "Comparable new draft?",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0,
+                3
+              ],
+              "explanation": "Check source familiarity, length and review scope. Similar-looking titles alone do not establish comparable work."
+            },
+            {
+              "title": "Provisional 70–110 range",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Use the observed range as a planning starting point. Three examples do not establish a reliable percentile or confidence interval."
+            },
+            {
+              "title": "Identify relevant differences",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "If the new draft needs unfamiliar sources or extra review, name that added work and seek a closer comparator."
+            },
+            {
+              "title": "Reserve a realistic window",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Choose a feasible window and review allowance. If a 40-minute promise cannot fit the evidence, reduce scope or renegotiate rather than hiding variation."
+            }
+          ]
+        }
+      },
+      {
+        "id": "buffer",
+        "title": "10. Make uncertainty visible",
+        "takeaway": "A buffer is unassigned capacity for variable work, delays or recovery.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A buffer is unassigned capacity for variable work, delays or recovery. Its size is a local choice based on observed variation, not a universal percentage. A buffer cannot make a plan fit when essential work already exceeds capacity; remove scope or renegotiate first.",
+              "When a buffer remains unused, it can support recovery or an optional action that genuinely fits. Filling it automatically with new promises removes the protection it was meant to provide. Review the source of variation: unpredictable travel, review corrections and task setup may require different allowances. If disruption happens every day, it is no longer wholly unexpected and should be reflected in ordinary capacity. A buffer is best described with its purpose and local basis; a fixed percentage from a productivity slogan cannot establish that it suits this particular day."
+            ],
+            "example": "The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Original 1994 experiments on completion-time predictions. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A 180-minute window contains 160 minutes of work and 30 minutes of essential transitions. Repair it.",
+          "solution": "The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognize that the initial plan exceeds capacity.",
+            "Identify the optional 30 minutes to move.",
+            "Keep transitions and buffer distinct."
+          ]
+        },
+        "quiz": {
+          "question": "When is buffer meaningful?",
+          "options": [
+            "After essential work and transitions fit",
+            "When it hides an overfull plan",
+            "Only when it guarantees no delay"
+          ],
+          "correct": 0,
+          "explanation": "After essential work and transitions fit follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Buehler, Griffin and Ross: Exploring the planning fallacy",
+            "url": "https://doi.org/10.1037/0022-3514.67.3.366",
+            "section": "Original 1994 experiments on completion-time predictions",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "notifications",
+        "title": "11. Design a reachable focus period",
+        "takeaway": "Notification rules should respect responsibilities.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Notification rules should respect responsibilities. Disable or batch optional alerts while retaining a known urgent channel if you are on call or supporting others. Agree expectations before making yourself unreachable. Record what happened rather than assuming silence always improves performance.",
+              "A communication agreement should explain what urgent means and how to use the urgent route. Without that rule, silencing alerts may shift the cost to someone who expected a reasonable response. Choose the smallest change: mute optional application alerts while retaining the named call, then check whether the planned outcome and responsibilities were met. Some settings may not support selective notifications; use another agreed route in that case. The practical aim is a reachable focus period, and the success measure includes essential communication as well as uninterrupted work."
+            ],
+            "example": "Keep that person’s calls audible, silence optional application alerts and check messages after the block. Tell collaborators the response window if needed. Record interruptions and outcome after the trial.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a 25-minute focus period while responsible for an urgent call from a family member.",
+          "solution": "Keep that person’s calls audible, silence optional application alerts and check messages after the block. Tell collaborators the response window if needed. Record interruptions and outcome after the trial.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Retain the specified urgent family channel.",
+            "Name when optional messages will be checked.",
+            "Include a way to evaluate both focus and responsibility."
+          ]
+        },
+        "quiz": {
+          "question": "Which policy respects the constraint?",
+          "options": [
+            "Keep the agreed urgent channel while batching optional alerts",
+            "Turn off every contact without agreement",
+            "Answer every marketing alert instantly"
+          ],
+          "correct": 0,
+          "explanation": "Keep the agreed urgent channel while batching optional alerts follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
+            "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
+            "section": "Field study of suspension and resumption; context-specific evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "resume",
+        "title": "12. Leave a return cue",
+        "takeaway": "A resumption note preserves state: last completed step, next action, open question and file location.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A resumption note preserves state: last completed step, next action, open question and file location. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.",
+              "Write the cue before closing the file when possible, while the current state is still available. Include a stable filename, the last verified step and one unresolved issue. A note saying continue editing does not distinguish completed work from work still requiring checking. On return, read the cue and inspect the actual file because another person may have changed it. Resume at the next valid step rather than blindly following stale instructions. In a shared task, record version or location information so the cue does not send someone to an outdated copy."
+            ],
+            "example": "Checked rows 1–7 against receipts; next compare row 8; unresolved: row 5 date differs; file budget-draft.md. This tells the returning learner where to begin and what still needs a decision.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Field study of suspension and resumption; context-specific evidence. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a return cue before leaving a half-checked table with row 8 as the next row.",
+          "solution": "Checked rows 1–7 against receipts; next compare row 8; unresolved: row 5 date differs; file budget-draft.md. This tells the returning learner where to begin and what still needs a decision.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify rows already checked and the next row.",
+            "Preserve the unresolved date discrepancy.",
+            "Include the file location or name."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a return cue useful?",
+          "options": [
+            "It captures the exact next unfinished step",
+            "It says be productive",
+            "It hides unresolved questions"
+          ],
+          "correct": 0,
+          "explanation": "It captures the exact next unfinished step follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
+            "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
+            "section": "Field study of suspension and resumption; context-specific evidence",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "breaks",
+        "title": "13. Choose breaks as a local experiment",
+        "takeaway": "A fixed timer can provide a stopping cue, but no single work–break ratio suits all tasks.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A fixed timer can provide a stopping cue, but no single work–break ratio suits all tasks. Choose a boundary that respects the work and your circumstances. Compare comfort and task completion over several sessions; do not interpret a small personal trial as medical evidence.",
+              "A break can be a brief pause, movement or another suitable recovery activity; the worksheet does not prescribe a physiological effect. Choose an accessible option and avoid making the break another performance target. In the supplied comparison, separate attempted items from correct items before deciding which timing worked better. Review whether problem difficulty was comparable and whether errors were identified by the same checking method. A longer session may suit one task but hurt another. Choose a provisional pattern, then retain the right to change it when context or comfort changes."
+            ],
+            "example": "Record both output and accuracy. The longer block has more attempted work but only two clearly correct items if two are wrong. Try a review pause and compare again before selecting a default.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare two synthetic sessions: 25-minute blocks finish 3 problems; 40-minute blocks finish 4 but leave two careless errors.",
+          "solution": "Record both output and accuracy. The longer block has more attempted work but only two clearly correct items if two are wrong. Try a review pause and compare again before selecting a default.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish attempted problems from accurate results.",
+            "Account for the two reported errors.",
+            "Describe a further comparison instead of declaring a universal timer."
+          ]
+        },
+        "quiz": {
+          "question": "What is the fair comparison?",
+          "options": [
+            "Completion, accuracy and comfort under similar conditions",
+            "Attempt count alone",
+            "The most fashionable timer"
+          ],
+          "correct": 0,
+          "explanation": "Completion, accuracy and comfort under similar conditions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "energy-patterns",
+        "title": "14. Schedule from observations",
+        "takeaway": "Energy notes are subjective observations, not biological diagnoses.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Energy notes are subjective observations, not biological diagnoses. Track perceived alertness alongside task type and circumstances, then test a small scheduling change. Avoid declaring a permanent identity such as morning person from a handful of entries.",
+              "Task difficulty can explain an apparent time-of-day pattern. Compare a difficult afternoon drafting task with a similar morning task, rather than comparing it with familiar morning administration. Record obvious context changes such as disruptions or available preparation. Keep the observation lightweight: perceived alertness and a checked outcome may be sufficient. If the morning window belongs to essential care or travel, test a different feasible window instead of displacing that responsibility. The result informs scheduling in this setting; it cannot establish a biological mechanism or a permanent identity from a few entries."
+            ],
+            "example": "Move one comparable drafting task to 10:00 for a week and keep task size and quality criteria similar. Record sleep opportunity and disruptions as context. The result supports a local decision, not proof of a body clock mechanism.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A learner reports better drafting at 10:00 than 16:00 on three days. Propose a bounded test.",
+          "solution": "Move one comparable drafting task to 10:00 for a week and keep task size and quality criteria similar. Record sleep opportunity and disruptions as context. The result supports a local decision, not proof of a body clock mechanism.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Treat the reported pattern as tentative.",
+            "Keep task size and quality criteria comparable.",
+            "Record contextual differences and avoid diagnosis."
+          ]
+        },
+        "quiz": {
+          "question": "What conclusion fits three observations?",
+          "options": [
+            "A tentative scheduling hypothesis",
+            "A permanent diagnosis",
+            "A guarantee for every future morning"
+          ],
+          "correct": 0,
+          "explanation": "A tentative scheduling hypothesis follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NHLBI: Healthy sleep habits",
+            "url": "https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits",
+            "section": "Protecting sleep opportunity; no diagnosis or treatment advice",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "weekly-review",
+        "title": "15. Review commitments before adding more",
+        "takeaway": "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.",
+              "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week’s priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
+            ],
+            "example": "Archive the finished items, clarify carried items and choose two outcomes that fit the windows. Defer or decline the other five explicitly. Record any promises requiring renegotiation.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A weekly list has two finished items, three carried items and four proposed additions; only two work windows are free.",
+          "solution": "Archive the finished items, clarify carried items and choose two outcomes that fit the windows. Defer or decline the other five explicitly. Record any promises requiring renegotiation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate completed items from unresolved commitments.",
+            "Select outcomes that fit two available windows.",
+            "Explicitly defer or renegotiate the remaining items."
+          ]
+        },
+        "quiz": {
+          "question": "What should a weekly review produce?",
+          "options": [
+            "A feasible set of decisions for the next week",
+            "An ever-longer wish list",
+            "A score of personal worth"
+          ],
+          "correct": 0,
+          "explanation": "A feasible set of decisions for the next week follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "The Scrum Guide, November 2020",
+            "url": "https://scrumguides.org/scrum-guide.html",
+            "section": "Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "Turn a backlog into a feasible week",
+          "summary": "Two available windows cannot absorb every carried and newly proposed item. Keep, clarify, defer or renegotiate each commitment explicitly.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Collect seven unresolved options",
+              "description": "Archive the two finished items; bring together three carried commitments and four new proposals without silently accepting all of them."
+            },
+            {
+              "id": "1",
+              "label": "Check two available windows",
+              "description": "Inspect essential commitments, needed inputs and the actual shape of the two remaining work windows."
+            },
+            {
+              "id": "2",
+              "label": "Select two fitting outcomes",
+              "description": "Choose two outcomes with checkable finish states and meaningful delay consequences that fit the available windows."
+            },
+            {
+              "id": "3",
+              "label": "Defer or renegotiate others",
+              "description": "Record which items are deferred, declined or reduced. Notify an affected promise holder through an authorized channel when a changed commitment requires it."
+            },
+            {
+              "id": "4",
+              "label": "Review actual use next week",
+              "description": "Compare finished outcomes, duration and changed constraints. Use the results to revise estimates rather than copy every unfinished item forward."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "reconcile demand with capacity"
+            },
+            {
+              "from": "1",
+              "to": "2",
+              "label": "commit only feasible work"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "resolve work beyond capacity"
+            },
+            {
+              "from": "2",
+              "to": "4",
+              "label": "observe selected outcomes"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "check revised promises"
+            },
+            {
+              "from": "4",
+              "to": "0",
+              "label": "begin next review"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Collect seven unresolved options",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "Archive the two finished items; bring together three carried commitments and four new proposals without silently accepting all of them."
+            },
+            {
+              "title": "Check two available windows",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Inspect essential commitments, needed inputs and the actual shape of the two remaining work windows."
+            },
+            {
+              "title": "Select two fitting outcomes",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Choose two outcomes with checkable finish states and meaningful delay consequences that fit the available windows."
+            },
+            {
+              "title": "Defer or renegotiate others",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Record which items are deferred, declined or reduced. Notify an affected promise holder through an authorized channel when a changed commitment requires it."
+            },
+            {
+              "title": "Review actual use next week",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Compare finished outcomes, duration and changed constraints. Use the results to revise estimates rather than copy every unfinished item forward."
+            }
+          ]
+        }
+      },
+      {
+        "id": "boundaries",
+        "title": "16. Renegotiate with specific trade-offs",
+        "takeaway": "A boundary is useful when it names available capacity and a concrete alternative.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A boundary is useful when it names available capacity and a concrete alternative. Explain which existing outcome would move if a new request is accepted. You need not disclose private reasons to make a scheduling conflict understandable.",
+              "If the requester cannot choose the priority, identify the person who can resolve the conflict. Different requesters may each assume their item comes first unless the trade-off becomes visible. Use a neutral description of capacity and the existing commitment; private reasons are not always needed. Offer alternatives you can actually fulfill rather than a partial result whose usefulness is unknown. Once the choice is made, update the affected promise and finish criteria. A clear boundary remains a scheduling decision that may be revisited when new capacity or support becomes available."
+            ],
+            "example": "I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Draft a reply to a new 90-minute request when today has only 30 spare minutes.",
+          "solution": "I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare the 90-minute request with 30 spare minutes.",
+            "Offer concrete feasible alternatives.",
+            "Name the existing commitment affected by immediate acceptance."
+          ]
+        },
+        "quiz": {
+          "question": "What makes the reply actionable?",
+          "options": [
+            "Specific alternatives and the affected commitment",
+            "A vague promise to try",
+            "Private details unrelated to the decision"
+          ],
+          "correct": 0,
+          "explanation": "Specific alternatives and the affected commitment follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "overload",
+        "title": "17. Reduce load when the plan repeatedly fails",
+        "takeaway": "Repeated carry-over can mean the plan exceeds capacity, tasks are unclear or the environment changed.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Repeated carry-over can mean the plan exceeds capacity, tasks are unclear or the environment changed. Look for structural explanations before adding stricter rules. An overload response removes, reduces, delays or shares work; simply tracking more precisely does not create time.",
+              "Some obligations cannot be removed by one person. Document the mismatch and seek a realistic scope, schedule or support decision where possible. Distinguish unclear tasks from too much essential work: clarification can reduce reconstruction, but it cannot create hours. Repeated carry-over is a reason to inspect the system rather than tighten reminders. Keep a minimum plan for disrupted days that preserves essential commitments and return cues. Measure whether the intervention reduces unmet obligations without quietly transferring work into evenings or removing necessary recovery from the record."
+            ],
+            "example": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Four of six daily outcomes carry over on three days. Design one intervention.",
+          "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Reduce a named part of the next day’s commitment.",
+            "Check actual durations of the essential outcomes.",
+            "Avoid solving capacity shortage through sleep reduction."
+          ]
+        },
+        "quiz": {
+          "question": "Which change directly reduces load?",
+          "options": [
+            "Remove optional outcomes from the commitment",
+            "Add more reminders for the same six",
+            "Schedule less sleep"
+          ],
+          "correct": 0,
+          "explanation": "Remove optional outcomes from the commitment follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "experiment",
+        "title": "18. Test one scheduling change",
+        "takeaway": "A personal experiment needs a question, one change, a comparison period and an outcome you can observe.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A personal experiment needs a question, one change, a comparison period and an outcome you can observe. Small samples and changing tasks limit causal conclusions. Use the trial to choose a workable routine, not to advertise a universal productivity technique.",
+              "A comparison should include maintenance effort. A technique that saves ten minutes but takes twenty minutes to administer may have another benefit, but it is not a time saving on those observations. Define the outcome before seeing results so you do not choose whichever measure improved afterward. Record errors and urgent communication alongside output. Keep task and window differences visible, and avoid turning a four-session result into a precise estimate of effectiveness. The experiment supports a reversible local choice and can be repeated if the initial evidence is ambiguous."
+            ],
+            "example": "Alternate two normal sessions and two sessions with optional messages checked at the end. Record checked paragraphs, errors and urgent interruptions. Keep the focus window similar; report the small sample and task differences.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a trial of message batching with four comparable study sessions.",
+          "solution": "Alternate two normal sessions and two sessions with optional messages checked at the end. Record checked paragraphs, errors and urgent interruptions. Keep the focus window similar; report the small sample and task differences.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Define outcome measures before the trial.",
+            "Keep comparison windows and tasks reasonably similar.",
+            "State the small sample and potential confounds."
+          ]
+        },
+        "quiz": {
+          "question": "Which claim fits the trial?",
+          "options": [
+            "Batching looked useful in these four sessions",
+            "Batching doubles everyone’s productivity",
+            "Any difference proves causation"
+          ],
+          "correct": 0,
+          "explanation": "Batching looked useful in these four sessions follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "diagram": {
+          "title": "A four-session message-batching trial",
+          "summary": "Compare two ordinary and two batching sessions with similar tasks, checked output and errors. Small samples support a reversible local choice.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "0",
+              "label": "Question and measures",
+              "description": "Ask whether optional message batching helps checked drafting. Define checked paragraphs, errors, urgent interruptions and administration effort before trial results."
+            },
+            {
+              "id": "1",
+              "label": "Two ordinary sessions",
+              "description": "Observe two sessions with the learner’s usual message handling, keeping the focus window and draft size reasonably similar."
+            },
+            {
+              "id": "2",
+              "label": "Two batching sessions",
+              "description": "Observe two sessions with optional messages checked at the end while the agreed urgent route remains available."
+            },
+            {
+              "id": "3",
+              "label": "Compare outcomes and context",
+              "description": "Compare checked output and errors, not just attempts. Record workload, task difficulty and disruption differences that may explain results."
+            },
+            {
+              "id": "4",
+              "label": "Keep, adjust or repeat",
+              "description": "Choose a provisional routine if the benefit exceeds its cost; repeat a more comparable trial if the result is ambiguous. Do not claim universal causation."
+            }
+          ],
+          "edges": [
+            {
+              "from": "0",
+              "to": "1",
+              "label": "record comparison condition"
+            },
+            {
+              "from": "0",
+              "to": "2",
+              "label": "test one policy change"
+            },
+            {
+              "from": "1",
+              "to": "3",
+              "label": "supply baseline observations"
+            },
+            {
+              "from": "2",
+              "to": "3",
+              "label": "supply trial observations"
+            },
+            {
+              "from": "3",
+              "to": "4",
+              "label": "assess benefit and limits"
+            },
+            {
+              "from": "4",
+              "to": "0",
+              "label": "revise the next question"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Question and measures",
+              "activeNodes": [
+                "0"
+              ],
+              "activeEdges": [
+                5
+              ],
+              "explanation": "Ask whether optional message batching helps checked drafting. Define checked paragraphs, errors, urgent interruptions and administration effort before trial results."
+            },
+            {
+              "title": "Two ordinary sessions",
+              "activeNodes": [
+                "1"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "Observe two sessions with the learner’s usual message handling, keeping the focus window and draft size reasonably similar."
+            },
+            {
+              "title": "Two batching sessions",
+              "activeNodes": [
+                "2"
+              ],
+              "activeEdges": [
+                1
+              ],
+              "explanation": "Observe two sessions with optional messages checked at the end while the agreed urgent route remains available."
+            },
+            {
+              "title": "Compare outcomes and context",
+              "activeNodes": [
+                "3"
+              ],
+              "activeEdges": [
+                2,
+                3
+              ],
+              "explanation": "Compare checked output and errors, not just attempts. Record workload, task difficulty and disruption differences that may explain results."
+            },
+            {
+              "title": "Keep, adjust or repeat",
+              "activeNodes": [
+                "4"
+              ],
+              "activeEdges": [
+                4
+              ],
+              "explanation": "Choose a provisional routine if the benefit exceeds its cost; repeat a more comparable trial if the result is ambiguous. Do not claim universal causation."
+            }
+          ]
+        }
+      },
+      {
+        "id": "shared-time",
+        "title": "19. Coordinate time with other people",
+        "takeaway": "Personal plans interact with shared deadlines, care, availability and dependencies.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Personal plans interact with shared deadlines, care, availability and dependencies. Make waiting visible and agree an escalation time. A calendar invite alone does not establish that another person can supply an input when you need it.",
+              "Choose independent work while waiting so a handoff does not stall the whole plan. Keep the waiting input visible with a named person, reply window and follow-up decision. Being unable to act now does not mean the commitment has disappeared. Send the smallest useful artifact and specific questions; a large unfinished file without direction may make review harder. If the agreed window is missed, use the confirmed fallback or request a decision. Do not quietly substitute approval or assume that silence means the other person accepted the draft."
+            ],
+            "example": "Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A draft needs comments by Wednesday but the reviewer is away Tuesday. Build a workable handoff.",
+          "solution": "Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Account for the reviewer’s Tuesday absence.",
+            "Give a specific input and reply window.",
+            "Include independent work and an agreed fallback."
+          ]
+        },
+        "quiz": {
+          "question": "What reduces handoff uncertainty?",
+          "options": [
+            "Confirmed input, reply window and fallback",
+            "An unacknowledged invite",
+            "Assuming instant availability"
+          ],
+          "correct": 0,
+          "explanation": "Confirmed input, reply window and fallback follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "sustainable-system",
+        "title": "20. Build the smallest sustainable routine",
+        "takeaway": "Choose a few recurring decisions: capture commitments, plan within capacity, leave return cues and review results.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Choose a few recurring decisions: capture commitments, plan within capacity, leave return cues and review results. More categories and tools add maintenance cost. Retain a practice only when it helps a recurring decision enough to justify its effort.",
+              "Build a minimum version for disrupted days: capture the essential commitment, choose one next action and leave a return cue. A routine that works only under ideal conditions needs a simpler fallback. Assess each field by the decision it informs rather than the visual completeness of the dashboard. Remove a field experimentally and observe whether missed obligations or uncertainty increase. Keep enough history to learn from comparable tasks, but avoid maintaining data that no review uses. The smallest useful system may differ between predictable study periods and a week dominated by care or support work."
+            ],
+            "example": "Keep next action, deadline consequence and available window; remove unused mood graphs and categories. Review once weekly. Compare maintenance time and missed commitments after a week before making another change.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A tracker takes 25 minutes daily and only its next-action field is used. Simplify it.",
+          "solution": "Keep next action, deadline consequence and available window; remove unused mood graphs and categories. Review once weekly. Compare maintenance time and missed commitments after a week before making another change.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Retain fields that inform actual decisions.",
+            "Reduce the 25-minute daily maintenance burden.",
+            "Review missed commitments as well as administration time."
+          ]
+        },
+        "quiz": {
+          "question": "What justifies keeping a tracking field?",
+          "options": [
+            "It informs a recurring useful decision",
+            "It fills the dashboard",
+            "It is available in the app"
+          ],
+          "correct": 0,
+          "explanation": "It informs a recurring useful decision follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      },
+      {
+        "id": "evidence-review",
+        "title": "21. Report what changed with honest limits",
+        "takeaway": "A final review compares intended outcomes with observed results and costs.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "A final review compares intended outcomes with observed results and costs. Include unfinished work, context changes and practices abandoned. Sustainable planning supports ordinary obligations and recovery; it does not aim to maximize every waking minute.",
+              "Include what you stopped doing and why. A practice may help one type of task and burden another, so describe the task and constraints alongside the result. Separate intended outcomes from observed outcomes and distinguish correlation from a causal claim. In this case, the lighter second-week workload is a competing explanation for fewer misses. Keep the capacity practice if it exposed useful conflicts, while retesting an uncertain notification change under more comparable conditions. Your final report should help a future decision; it should not market the routine as a cure for every difficult week."
+            ],
+            "example": "The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.",
+            "exampleFormat": "prose"
+          },
+          {
+            "title": "Evidence and adaptation",
+            "paragraphs": [
+              "Source scope: Discussion and limitations; associations are not individual guarantees. Use it to understand this lesson’s named concept; the worksheet’s numeric case and proposed response are original practice examples. The adapted decision rule needs checking against the responsibilities and inputs in your setting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.",
+          "solution": "The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Report the workload difference between weeks.",
+            "Separate local usefulness from a causal conclusion.",
+            "Choose a next revision grounded in the evidence."
+          ]
+        },
+        "quiz": {
+          "question": "Which conclusion is defensible?",
+          "options": [
+            "Report improvement and the workload confound",
+            "Claim the routine caused all improvement",
+            "Delete inconvenient context"
+          ],
+          "correct": 0,
+          "explanation": "Report improvement and the workload confound follows the lesson’s decision rule. The other options omit a constraint, misuse a measure or claim more than the evidence supports."
+        },
+        "references": [
+          {
+            "title": "Does time management work? Original meta-analysis",
+            "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245066",
+            "section": "Discussion and limitations; associations are not individual guarantees",
+            "reviewed": "2026-09-30",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "folder": "time-attention-energy-practice",
+      "files": [
+        {
+          "id": "capacity-worksheet",
+          "href": "paths/time-attention-energy/practice/capacity-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable begin with available capacity case with blank response fields and worked solution."
+        },
+        {
+          "id": "time-log-worksheet",
+          "href": "paths/time-attention-energy/practice/time-log-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable observe a day without grading it case with blank response fields and worked solution."
+        },
+        {
+          "id": "outcomes-worksheet",
+          "href": "paths/time-attention-energy/practice/outcomes-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable define a useful session outcome case with blank response fields and worked solution."
+        },
+        {
+          "id": "priorities-worksheet",
+          "href": "paths/time-attention-energy/practice/priorities-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable choose when everything seems important case with blank response fields and worked solution."
+        },
+        {
+          "id": "sleep-boundary-worksheet",
+          "href": "paths/time-attention-energy/practice/sleep-boundary-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable protect essential recovery case with blank response fields and worked solution."
+        },
+        {
+          "id": "attention-context-worksheet",
+          "href": "paths/time-attention-energy/practice/attention-context-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable notice what pulls attention case with blank response fields and worked solution."
+        },
+        {
+          "id": "small-start-worksheet",
+          "href": "paths/time-attention-energy/practice/small-start-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable make starting concrete case with blank response fields and worked solution."
+        },
+        {
+          "id": "blocks-worksheet",
+          "href": "paths/time-attention-energy/practice/blocks-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable reserve time with a purpose case with blank response fields and worked solution."
+        },
+        {
+          "id": "estimate-worksheet",
+          "href": "paths/time-attention-energy/practice/estimate-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable use past durations before optimism case with blank response fields and worked solution."
+        },
+        {
+          "id": "buffer-worksheet",
+          "href": "paths/time-attention-energy/practice/buffer-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable make uncertainty visible case with blank response fields and worked solution."
+        },
+        {
+          "id": "notifications-worksheet",
+          "href": "paths/time-attention-energy/practice/notifications-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable design a reachable focus period case with blank response fields and worked solution."
+        },
+        {
+          "id": "resume-worksheet",
+          "href": "paths/time-attention-energy/practice/resume-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable leave a return cue case with blank response fields and worked solution."
+        },
+        {
+          "id": "breaks-worksheet",
+          "href": "paths/time-attention-energy/practice/breaks-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable choose breaks as a local experiment case with blank response fields and worked solution."
+        },
+        {
+          "id": "energy-patterns-worksheet",
+          "href": "paths/time-attention-energy/practice/energy-patterns-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable schedule from observations case with blank response fields and worked solution."
+        },
+        {
+          "id": "weekly-review-worksheet",
+          "href": "paths/time-attention-energy/practice/weekly-review-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable review commitments before adding more case with blank response fields and worked solution."
+        },
+        {
+          "id": "boundaries-worksheet",
+          "href": "paths/time-attention-energy/practice/boundaries-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable renegotiate with specific trade-offs case with blank response fields and worked solution."
+        },
+        {
+          "id": "overload-worksheet",
+          "href": "paths/time-attention-energy/practice/overload-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable reduce load when the plan repeatedly fails case with blank response fields and worked solution."
+        },
+        {
+          "id": "experiment-worksheet",
+          "href": "paths/time-attention-energy/practice/experiment-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable test one scheduling change case with blank response fields and worked solution."
+        },
+        {
+          "id": "shared-time-worksheet",
+          "href": "paths/time-attention-energy/practice/shared-time-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable coordinate time with other people case with blank response fields and worked solution."
+        },
+        {
+          "id": "sustainable-system-worksheet",
+          "href": "paths/time-attention-energy/practice/sustainable-system-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable build the smallest sustainable routine case with blank response fields and worked solution."
+        },
+        {
+          "id": "evidence-review-worksheet",
+          "href": "paths/time-attention-energy/practice/evidence-review-worksheet.md",
+          "role": "worksheet",
+          "description": "Printable report what changed with honest limits case with blank response fields and worked solution."
+        },
+        {
+          "id": "foundation-project",
+          "href": "paths/time-attention-energy/practice/foundation-project.md",
+          "role": "project",
+          "description": "Assessed foundation project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "intermediate-project",
+          "href": "paths/time-attention-energy/practice/intermediate-project.md",
+          "role": "project",
+          "description": "Assessed intermediate project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "advanced-project",
+          "href": "paths/time-attention-energy/practice/advanced-project.md",
+          "role": "project",
+          "description": "Assessed advanced project with rubric and worked synthetic approach."
+        },
+        {
+          "id": "README-md",
+          "href": "paths/time-attention-energy/practice/README.md",
+          "role": "guide",
+          "description": "Offline and print instructions, learning order, assessment and evidence limits."
+        },
+        {
+          "id": "lab-html",
+          "href": "paths/time-attention-energy/practice/lab.html",
+          "role": "reference",
+          "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+        },
+        {
+          "id": "lab-js",
+          "href": "paths/time-attention-energy/practice/lab.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-css",
+          "href": "paths/time-attention-energy/practice/lab.css",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        },
+        {
+          "id": "lab-model-js",
+          "href": "paths/time-attention-energy/practice/lab-model.js",
+          "role": "reference",
+          "description": "Companion file for the offline practice studio"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "practice-capacity",
+          "title": "Practise: Begin with available capacity",
+          "goal": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. Find study capacity.",
+          "fileIds": [
+            "capacity-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open capacity-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-time-log",
+          "title": "Practise: Observe a day without grading it",
+          "goal": "Record a synthetic day with 40 minutes reading, 20 messages, 15 travel delay and 25 drafting. Classify without moral labels.",
+          "fileIds": [
+            "time-log-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open time-log-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-outcomes",
+          "title": "Practise: Define a useful session outcome",
+          "goal": "Replace work on presentation with a checkable outcome for a 35-minute session.",
+          "fileIds": [
+            "outcomes-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open outcomes-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-priorities",
+          "title": "Practise: Choose when everything seems important",
+          "goal": "Choose between proofreading due tomorrow, optional theme redesign and sending a file needed by a teammate today.",
+          "fileIds": [
+            "priorities-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open priorities-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-sleep-boundary",
+          "title": "Practise: Protect essential recovery",
+          "goal": "An evening plan needs three hours but only 90 minutes remain before the protected bedtime. Revise it.",
+          "fileIds": [
+            "sleep-boundary-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open sleep-boundary-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-attention-context",
+          "title": "Practise: Notice what pulls attention",
+          "goal": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.",
+          "fileIds": [
+            "attention-context-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open attention-context-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-small-start",
+          "title": "Practise: Make starting concrete",
+          "goal": "Turn revise chapter into a first action using a chapter with three unclear headings.",
+          "fileIds": [
+            "small-start-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open small-start-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-blocks",
+          "title": "Practise: Reserve time with a purpose",
+          "goal": "Place a 40-minute draft, 20-minute review and 10-minute transition into an 80-minute window.",
+          "fileIds": [
+            "blocks-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open blocks-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-estimate",
+          "title": "Practise: Use past durations before optimism",
+          "goal": "Three comparable drafts took 70, 90 and 110 minutes. A new draft is predicted at 40. Give a grounded planning range.",
+          "fileIds": [
+            "estimate-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open estimate-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-buffer",
+          "title": "Practise: Make uncertainty visible",
+          "goal": "A 180-minute window contains 160 minutes of work and 30 minutes of essential transitions. Repair it.",
+          "fileIds": [
+            "buffer-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open buffer-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-notifications",
+          "title": "Practise: Design a reachable focus period",
+          "goal": "Design a 25-minute focus period while responsible for an urgent call from a family member.",
+          "fileIds": [
+            "notifications-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open notifications-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-resume",
+          "title": "Practise: Leave a return cue",
+          "goal": "Write a return cue before leaving a half-checked table with row 8 as the next row.",
+          "fileIds": [
+            "resume-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open resume-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-breaks",
+          "title": "Practise: Choose breaks as a local experiment",
+          "goal": "Compare two synthetic sessions: 25-minute blocks finish 3 problems; 40-minute blocks finish 4 but leave two careless errors.",
+          "fileIds": [
+            "breaks-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open breaks-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-energy-patterns",
+          "title": "Practise: Schedule from observations",
+          "goal": "A learner reports better drafting at 10:00 than 16:00 on three days. Propose a bounded test.",
+          "fileIds": [
+            "energy-patterns-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open energy-patterns-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-weekly-review",
+          "title": "Practise: Review commitments before adding more",
+          "goal": "A weekly list has two finished items, three carried items and four proposed additions; only two work windows are free.",
+          "fileIds": [
+            "weekly-review-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open weekly-review-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-boundaries",
+          "title": "Practise: Renegotiate with specific trade-offs",
+          "goal": "Draft a reply to a new 90-minute request when today has only 30 spare minutes.",
+          "fileIds": [
+            "boundaries-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open boundaries-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-overload",
+          "title": "Practise: Reduce load when the plan repeatedly fails",
+          "goal": "Four of six daily outcomes carry over on three days. Design one intervention.",
+          "fileIds": [
+            "overload-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open overload-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-experiment",
+          "title": "Practise: Test one scheduling change",
+          "goal": "Design a trial of message batching with four comparable study sessions.",
+          "fileIds": [
+            "experiment-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open experiment-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-shared-time",
+          "title": "Practise: Coordinate time with other people",
+          "goal": "A draft needs comments by Wednesday but the reviewer is away Tuesday. Build a workable handoff.",
+          "fileIds": [
+            "shared-time-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open shared-time-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-sustainable-system",
+          "title": "Practise: Build the smallest sustainable routine",
+          "goal": "A tracker takes 25 minutes daily and only its next-action field is used. Simplify it.",
+          "fileIds": [
+            "sustainable-system-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open sustainable-system-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "practice-evidence-review",
+          "title": "Practise: Report what changed with honest limits",
+          "goal": "Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.",
+          "fileIds": [
+            "evidence-review-worksheet",
+            "README-md",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Open evidence-review-worksheet.md and write your answer before the worked example.",
+            "Compare the explicit constraint and reasoning with the solution.",
+            "Try one bounded adaptation and record its limits."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "The file is printable Markdown; no runtime is required.",
+            "Use synthetic examples if personal details would be sensitive.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ],
+          "kind": "lesson"
+        },
+        {
+          "id": "foundation",
+          "title": "A feasible study day",
+          "goal": "Plan a synthetic day with limited capacity and a clear output.",
+          "fileIds": [
+            "foundation-project",
+            "README-md",
+            "capacity-worksheet",
+            "time-log-worksheet",
+            "outcomes-worksheet",
+            "priorities-worksheet",
+            "sleep-boundary-worksheet",
+            "attention-context-worksheet",
+            "small-start-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "List fixed commitments and calculate remaining capacity.",
+            "Select two outcomes and finish conditions.",
+            "Include transitions, recovery and uncertainty.",
+            "Write a return cue for one interrupted session.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "A week of deliberate focus",
+          "goal": "Design and evaluate a small scheduling experiment.",
+          "fileIds": [
+            "intermediate-project",
+            "README-md",
+            "blocks-worksheet",
+            "estimate-worksheet",
+            "buffer-worksheet",
+            "notifications-worksheet",
+            "resume-worksheet",
+            "breaks-worksheet",
+            "energy-patterns-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Use three comparable past task durations.",
+            "Build blocks with buffers and an urgent communication route.",
+            "Compare two scheduling approaches using output and accuracy.",
+            "Document sample size and changing conditions.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "A sustainable personal system",
+          "goal": "Produce a two-week routine and an honest evidence review.",
+          "fileIds": [
+            "advanced-project",
+            "README-md",
+            "weekly-review-worksheet",
+            "boundaries-worksheet",
+            "overload-worksheet",
+            "experiment-worksheet",
+            "shared-time-worksheet",
+            "sustainable-system-worksheet",
+            "evidence-review-worksheet",
+            "lab-html",
+            "lab-js",
+            "lab-css",
+            "lab-model-js"
+          ],
+          "steps": [
+            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+            "Capture obligations and review capacity twice.",
+            "Renegotiate one synthetic conflicting request.",
+            "Remove one unnecessary tracking field.",
+            "Report observed outcomes, maintenance cost and a next revision.",
+            "Score the rubric; revise missing criteria and preserve the evidence."
+          ],
+          "commands": [],
+          "prerequisites": [],
+          "notes": [
+            "All project cases are synthetic unless you elect to use an ordinary personal example.",
+            "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "capacity": "practice-capacity",
+        "time-log": "practice-time-log",
+        "outcomes": "practice-outcomes",
+        "priorities": "practice-priorities",
+        "sleep-boundary": "practice-sleep-boundary",
+        "attention-context": "practice-attention-context",
+        "small-start": "practice-small-start",
+        "blocks": "practice-blocks",
+        "estimate": "practice-estimate",
+        "buffer": "practice-buffer",
+        "notifications": "practice-notifications",
+        "resume": "practice-resume",
+        "breaks": "practice-breaks",
+        "energy-patterns": "practice-energy-patterns",
+        "weekly-review": "practice-weekly-review",
+        "boundaries": "practice-boundaries",
+        "overload": "practice-overload",
+        "experiment": "practice-experiment",
+        "shared-time": "practice-shared-time",
+        "sustainable-system": "practice-sustainable-system",
+        "evidence-review": "practice-evidence-review"
+      },
+      "bundle": {
+        "href": "paths/time-attention-energy/practice-bundle.zip"
+      },
+      "studio": {
+        "href": "paths/time-attention-energy/practice/lab.html",
+        "title": "Open interactive practice studio"
       }
     }
   },

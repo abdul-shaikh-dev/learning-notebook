@@ -1,0 +1,742 @@
+{
+  "decompose": {
+    "title": "Decompose the 20-person workshop",
+    "summary": "Connect venue, learning material and invitation work to the workshop outcome; give each action a checked finish state.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Beginner workshop outcome",
+        "description": "Deliver one usable 60-minute workshop and exercise sheet for 20 beginners; video production is outside the initial scope."
+      },
+      {
+        "id": "1",
+        "label": "Venue arrangement",
+        "description": "Create a deliverable covering capacity, location and participation constraints so publication has reliable venue information."
+      },
+      {
+        "id": "2",
+        "label": "Learning material",
+        "description": "Create the exercise sheet and instructions needed for the beginner session, including a usable first step."
+      },
+      {
+        "id": "3",
+        "label": "Participant invitation",
+        "description": "Create accurate date, venue, registration and participation-contact information."
+      },
+      {
+        "id": "4",
+        "label": "Confirm, draft and review actions",
+        "description": "Assign an owner to each bounded action. Include creation, checking and handoff rather than listing writing alone."
+      },
+      {
+        "id": "5",
+        "label": "Checked completion states",
+        "description": "Retain confirmation or accepted file links as evidence. Time spent and moving a card do not establish completion."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "requires venue deliverable"
+      },
+      {
+        "from": "0",
+        "to": "2",
+        "label": "requires learning deliverable"
+      },
+      {
+        "from": "0",
+        "to": "3",
+        "label": "requires information deliverable"
+      },
+      {
+        "from": "1",
+        "to": "4",
+        "label": "confirm venue input"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "draft and test exercise"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "write and check invitation"
+      },
+      {
+        "from": "4",
+        "to": "5",
+        "label": "verify each artifact"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Beginner workshop outcome",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Deliver one usable 60-minute workshop and exercise sheet for 20 beginners; video production is outside the initial scope."
+      },
+      {
+        "title": "Venue arrangement",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Create a deliverable covering capacity, location and participation constraints so publication has reliable venue information."
+      },
+      {
+        "title": "Learning material",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Create the exercise sheet and instructions needed for the beginner session, including a usable first step."
+      },
+      {
+        "title": "Participant invitation",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Create accurate date, venue, registration and participation-contact information."
+      },
+      {
+        "title": "Confirm, draft and review actions",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          4,
+          5
+        ],
+        "explanation": "Assign an owner to each bounded action. Include creation, checking and handoff rather than listing writing alone."
+      },
+      {
+        "title": "Checked completion states",
+        "activeNodes": [
+          "5"
+        ],
+        "activeEdges": [
+          6
+        ],
+        "explanation": "Retain confirmation or accepted file links as evidence. Time spent and moving a card do not establish completion."
+      }
+    ]
+  },
+  "sequence": {
+    "title": "Parallel branches with genuine dependencies",
+    "summary": "Venue confirmation enables invitation publication. Exercise drafting can run independently, but both branches meet at a final consistency check.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Agree audience and date",
+        "description": "Set the workshop audience, provisional date and shared terminology before the independent branches create conflicting promises."
+      },
+      {
+        "id": "1",
+        "label": "Confirm venue",
+        "description": "Obtain the address and seated capacity from the venue contact; the invitation cannot publish an unconfirmed address."
+      },
+      {
+        "id": "2",
+        "label": "Publish checked invitation",
+        "description": "Check the accepted venue input, date and registration route before making the invitation available."
+      },
+      {
+        "id": "3",
+        "label": "Draft exercise sheet",
+        "description": "Begin learning-material drafting while venue confirmation is in progress; the draft does not require the final address."
+      },
+      {
+        "id": "4",
+        "label": "Review exercise sheet",
+        "description": "Review requires an existing draft. Check the first step, expected duration and supporting material."
+      },
+      {
+        "id": "5",
+        "label": "Integrate workshop materials",
+        "description": "Compare the invitation’s promises with the reviewed exercises and the actual session duration. Resolve mismatches before delivery."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "start venue branch"
+      },
+      {
+        "from": "0",
+        "to": "3",
+        "label": "start independent drafting branch"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "confirmed address required"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "draft required for review"
+      },
+      {
+        "from": "2",
+        "to": "5",
+        "label": "supply published commitments"
+      },
+      {
+        "from": "4",
+        "to": "5",
+        "label": "supply checked learning content"
+      },
+      {
+        "from": "5",
+        "to": "3",
+        "label": "correct content mismatch if found"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Agree audience and date",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Set the workshop audience, provisional date and shared terminology before the independent branches create conflicting promises."
+      },
+      {
+        "title": "Confirm venue",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Obtain the address and seated capacity from the venue contact; the invitation cannot publish an unconfirmed address."
+      },
+      {
+        "title": "Publish checked invitation",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Check the accepted venue input, date and registration route before making the invitation available."
+      },
+      {
+        "title": "Draft exercise sheet",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          1,
+          6
+        ],
+        "explanation": "Begin learning-material drafting while venue confirmation is in progress; the draft does not require the final address."
+      },
+      {
+        "title": "Review exercise sheet",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3
+        ],
+        "explanation": "Review requires an existing draft. Check the first step, expected duration and supporting material."
+      },
+      {
+        "title": "Integrate workshop materials",
+        "activeNodes": [
+          "5"
+        ],
+        "activeEdges": [
+          4,
+          5
+        ],
+        "explanation": "Compare the invitation’s promises with the reviewed exercises and the actual session duration. Resolve mismatches before delivery."
+      }
+    ]
+  },
+  "wip": {
+    "title": "A blocked review still consumes WIP",
+    "summary": "With a limit of two, one draft and one blocked review occupy both slots. Finish or unblock before starting a third item unless an explicit exception is agreed.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Count two started items",
+        "description": "Doing contains one draft; Review contains one blocked card. Both have started and neither is finished, so WIP equals two."
+      },
+      {
+        "id": "1",
+        "label": "Below limit two?",
+        "description": "Compare started unfinished work with the agreed limit across Doing and Review, including blocked items.",
+        "shape": "decision"
+      },
+      {
+        "id": "2",
+        "label": "Finish or unblock existing work",
+        "description": "At the limit, work on the draft or obtain the missing review input. Do not create a hidden extra started task."
+      },
+      {
+        "id": "3",
+        "label": "An item reaches Done",
+        "description": "A card exits WIP only when its completion criteria pass. Moving a blocked card to a hidden list does not release capacity."
+      },
+      {
+        "id": "4",
+        "label": "Pull one ready item",
+        "description": "When WIP drops to one, select a clear useful item with available inputs; pulling it restores WIP to two."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "compare count with policy"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "no: WIP is two"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "resolve input and finish"
+      },
+      {
+        "from": "3",
+        "to": "0",
+        "label": "recount started unfinished work"
+      },
+      {
+        "from": "1",
+        "to": "4",
+        "label": "yes: WIP below two"
+      },
+      {
+        "from": "4",
+        "to": "0",
+        "label": "new start changes count"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Count two started items",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [
+          3,
+          5
+        ],
+        "explanation": "Doing contains one draft; Review contains one blocked card. Both have started and neither is finished, so WIP equals two."
+      },
+      {
+        "title": "Below limit two?",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Compare started unfinished work with the agreed limit across Doing and Review, including blocked items."
+      },
+      {
+        "title": "Finish or unblock existing work",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "At the limit, work on the draft or obtain the missing review input. Do not create a hidden extra started task."
+      },
+      {
+        "title": "An item reaches Done",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "A card exits WIP only when its completion criteria pass. Moving a blocked card to a hidden list does not release capacity."
+      },
+      {
+        "title": "Pull one ready item",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "When WIP drops to one, select a clear useful item with available inputs; pulling it restores WIP to two."
+      }
+    ]
+  },
+  "blocked": {
+    "title": "Resolve a venue blocker with a timed fallback",
+    "summary": "Publication needs venue capacity tomorrow. The owner follows up today, then asks the decision authority to select a backup if the input remains missing.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Missing seated capacity",
+        "description": "Venue confirmation has had no reply for two days; invitation publication depends on that specific input."
+      },
+      {
+        "id": "1",
+        "label": "Mira follows up at 14:00",
+        "description": "Mira owns the item and asks the venue contact for the missing capacity, stating the publication consequence."
+      },
+      {
+        "id": "2",
+        "label": "Reply received by 17:00?",
+        "description": "Inspect the actual reply for usable capacity information; silence or an unrelated acknowledgement does not unblock the invitation.",
+        "shape": "decision"
+      },
+      {
+        "id": "3",
+        "label": "Check and use venue input",
+        "description": "Confirm the capacity supports 20 attendees, update the invitation and inspect dependent dates."
+      },
+      {
+        "id": "4",
+        "label": "Jo selects backup venue",
+        "description": "If the reply is still missing, ask Jo to make the agreed backup decision; Mira coordinates rather than assumes approval authority."
+      },
+      {
+        "id": "5",
+        "label": "Confirm backup details",
+        "description": "Obtain the selected backup’s address and capacity before publication. Keep the card blocked and counted as WIP until the needed input is usable."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "request smallest missing input"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "reach follow-up deadline"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "yes: usable confirmation"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "no: invoke agreed fallback"
+      },
+      {
+        "from": "4",
+        "to": "5",
+        "label": "selection needs verification"
+      },
+      {
+        "from": "5",
+        "to": "3",
+        "label": "validated backup unblocks work"
+      },
+      {
+        "from": "5",
+        "to": "4",
+        "label": "backup unavailable: request another decision"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Missing seated capacity",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Venue confirmation has had no reply for two days; invitation publication depends on that specific input."
+      },
+      {
+        "title": "Mira follows up at 14:00",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "Mira owns the item and asks the venue contact for the missing capacity, stating the publication consequence."
+      },
+      {
+        "title": "Reply received by 17:00?",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Inspect the actual reply for usable capacity information; silence or an unrelated acknowledgement does not unblock the invitation."
+      },
+      {
+        "title": "Check and use venue input",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2,
+          5
+        ],
+        "explanation": "Confirm the capacity supports 20 attendees, update the invitation and inspect dependent dates."
+      },
+      {
+        "title": "Jo selects backup venue",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          3,
+          6
+        ],
+        "explanation": "If the reply is still missing, ask Jo to make the agreed backup decision; Mira coordinates rather than assumes approval authority."
+      },
+      {
+        "title": "Confirm backup details",
+        "activeNodes": [
+          "5"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "Obtain the selected backup’s address and capacity before publication. Keep the card blocked and counted as WIP until the needed input is usable."
+      }
+    ]
+  },
+  "review": {
+    "title": "Verification and validation reveal different problems",
+    "summary": "A section checklist may pass while a beginner cannot find the first step. Preserve both forms of evidence and revise the intended-use obstacle.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Draft exercise sheet",
+        "description": "The sheet contains the required sections but has not yet been accepted for the beginner session."
+      },
+      {
+        "id": "1",
+        "label": "Verify required sections",
+        "description": "Check each specified section and factual detail; record the file version and the checks actually executed."
+      },
+      {
+        "id": "2",
+        "label": "Beginner can start unaided?",
+        "description": "Observe the named starting task and record assistance. A complete section list does not guarantee usable instructions.",
+        "shape": "decision"
+      },
+      {
+        "id": "3",
+        "label": "Revise first instruction",
+        "description": "If the learner cannot identify the first step, rewrite that instruction and inspect any affected section checks."
+      },
+      {
+        "id": "4",
+        "label": "Record scoped acceptance",
+        "description": "When the intended task succeeds, retain the verified file and observed validation result. State the learner/task scope rather than claiming universal usability."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "1",
+        "label": "inspect specification criteria"
+      },
+      {
+        "from": "1",
+        "to": "2",
+        "label": "test intended use"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "no: unclear starting step"
+      },
+      {
+        "from": "3",
+        "to": "1",
+        "label": "recheck revised artifact"
+      },
+      {
+        "from": "2",
+        "to": "4",
+        "label": "yes: observed task succeeds"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Draft exercise sheet",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "The sheet contains the required sections but has not yet been accepted for the beginner session."
+      },
+      {
+        "title": "Verify required sections",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [
+          0,
+          3
+        ],
+        "explanation": "Check each specified section and factual detail; record the file version and the checks actually executed."
+      },
+      {
+        "title": "Beginner can start unaided?",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [
+          1
+        ],
+        "explanation": "Observe the named starting task and record assistance. A complete section list does not guarantee usable instructions."
+      },
+      {
+        "title": "Revise first instruction",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "If the learner cannot identify the first step, rewrite that instruction and inspect any affected section checks."
+      },
+      {
+        "title": "Record scoped acceptance",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          4
+        ],
+        "explanation": "When the intended task succeeds, retain the verified file and observed validation result. State the learner/task scope rather than claiming universal usability."
+      }
+    ]
+  },
+  "close": {
+    "title": "Close delivery without hiding remaining work",
+    "summary": "Archive accepted materials while transferring the unresolved access issue and recurring attendance task to named owners who accept them.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "0",
+        "label": "Accepted materials and feedback",
+        "description": "Link the delivered invitation, exercise sheet and observed feedback. Attendance alone does not establish learning success."
+      },
+      {
+        "id": "1",
+        "label": "Open access issue",
+        "description": "Record the unresolved participation issue, its impact and a follow-up date instead of deleting it from the closure report."
+      },
+      {
+        "id": "2",
+        "label": "Ongoing attendance routine",
+        "description": "Separate the recurring Friday attendance check from the completed workshop project and state its trigger."
+      },
+      {
+        "id": "3",
+        "label": "Owners accept follow-up",
+        "description": "Confirm a named person accepts each ongoing obligation. Archiving a card without ownership merely hides the work."
+      },
+      {
+        "id": "4",
+        "label": "Archive closure evidence",
+        "description": "Store accepted links, limitations, outstanding obligations and the route for future corrections together."
+      }
+    ],
+    "edges": [
+      {
+        "from": "0",
+        "to": "4",
+        "label": "retain delivered evidence"
+      },
+      {
+        "from": "1",
+        "to": "3",
+        "label": "transfer issue responsibility"
+      },
+      {
+        "from": "2",
+        "to": "3",
+        "label": "transfer recurring responsibility"
+      },
+      {
+        "from": "3",
+        "to": "4",
+        "label": "include accepted follow-up ownership"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Accepted materials and feedback",
+        "activeNodes": [
+          "0"
+        ],
+        "activeEdges": [],
+        "explanation": "Link the delivered invitation, exercise sheet and observed feedback. Attendance alone does not establish learning success."
+      },
+      {
+        "title": "Open access issue",
+        "activeNodes": [
+          "1"
+        ],
+        "activeEdges": [],
+        "explanation": "Record the unresolved participation issue, its impact and a follow-up date instead of deleting it from the closure report."
+      },
+      {
+        "title": "Ongoing attendance routine",
+        "activeNodes": [
+          "2"
+        ],
+        "activeEdges": [],
+        "explanation": "Separate the recurring Friday attendance check from the completed workshop project and state its trigger."
+      },
+      {
+        "title": "Owners accept follow-up",
+        "activeNodes": [
+          "3"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "Confirm a named person accepts each ongoing obligation. Archiving a card without ownership merely hides the work."
+      },
+      {
+        "title": "Archive closure evidence",
+        "activeNodes": [
+          "4"
+        ],
+        "activeEdges": [
+          0,
+          3
+        ],
+        "explanation": "Store accepted links, limitations, outstanding obligations and the route for future corrections together."
+      }
+    ]
+  }
+}

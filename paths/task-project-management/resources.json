@@ -1,0 +1,880 @@
+{
+  "folder": "task-project-management-practice",
+  "files": [
+    {
+      "id": "capture-worksheet",
+      "href": "paths/task-project-management/practice/capture-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable capture commitments in one inbox case with blank response fields and worked solution."
+    },
+    {
+      "id": "task-project-worksheet",
+      "href": "paths/task-project-management/practice/task-project-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable separate tasks, projects and routines case with blank response fields and worked solution."
+    },
+    {
+      "id": "next-action-worksheet",
+      "href": "paths/task-project-management/practice/next-action-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable write the next observable action case with blank response fields and worked solution."
+    },
+    {
+      "id": "done-worksheet",
+      "href": "paths/task-project-management/practice/done-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable agree what done means case with blank response fields and worked solution."
+    },
+    {
+      "id": "scope-worksheet",
+      "href": "paths/task-project-management/practice/scope-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable state outcome and exclusions case with blank response fields and worked solution."
+    },
+    {
+      "id": "decompose-worksheet",
+      "href": "paths/task-project-management/practice/decompose-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable break deliverables into manageable work case with blank response fields and worked solution."
+    },
+    {
+      "id": "sequence-worksheet",
+      "href": "paths/task-project-management/practice/sequence-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable map dependencies before dates case with blank response fields and worked solution."
+    },
+    {
+      "id": "board-worksheet",
+      "href": "paths/task-project-management/practice/board-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable visualize the real workflow case with blank response fields and worked solution."
+    },
+    {
+      "id": "wip-worksheet",
+      "href": "paths/task-project-management/practice/wip-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable control work in progress case with blank response fields and worked solution."
+    },
+    {
+      "id": "pull-worksheet",
+      "href": "paths/task-project-management/practice/pull-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable pull work when capacity exists case with blank response fields and worked solution."
+    },
+    {
+      "id": "owners-worksheet",
+      "href": "paths/task-project-management/practice/owners-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable clarify ownership and decisions case with blank response fields and worked solution."
+    },
+    {
+      "id": "estimates-worksheet",
+      "href": "paths/task-project-management/practice/estimates-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable forecast using comparable items case with blank response fields and worked solution."
+    },
+    {
+      "id": "blocked-worksheet",
+      "href": "paths/task-project-management/practice/blocked-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable make blocked work actionable case with blank response fields and worked solution."
+    },
+    {
+      "id": "risk-worksheet",
+      "href": "paths/task-project-management/practice/risk-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable distinguish risks from issues case with blank response fields and worked solution."
+    },
+    {
+      "id": "change-worksheet",
+      "href": "paths/task-project-management/practice/change-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable handle new scope as a decision case with blank response fields and worked solution."
+    },
+    {
+      "id": "metrics-worksheet",
+      "href": "paths/task-project-management/practice/metrics-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable measure flow with defined boundaries case with blank response fields and worked solution."
+    },
+    {
+      "id": "review-worksheet",
+      "href": "paths/task-project-management/practice/review-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable inspect outcomes with the beneficiary case with blank response fields and worked solution."
+    },
+    {
+      "id": "retrospective-worksheet",
+      "href": "paths/task-project-management/practice/retrospective-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable improve one workflow constraint case with blank response fields and worked solution."
+    },
+    {
+      "id": "parallel-worksheet",
+      "href": "paths/task-project-management/practice/parallel-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable coordinate parallel branches and handoffs case with blank response fields and worked solution."
+    },
+    {
+      "id": "close-worksheet",
+      "href": "paths/task-project-management/practice/close-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable close the project with usable evidence case with blank response fields and worked solution."
+    },
+    {
+      "id": "system-review-worksheet",
+      "href": "paths/task-project-management/practice/system-review-worksheet.md",
+      "role": "worksheet",
+      "description": "Printable select a proportionate management system case with blank response fields and worked solution."
+    },
+    {
+      "id": "foundation-project",
+      "href": "paths/task-project-management/practice/foundation-project.md",
+      "role": "project",
+      "description": "Assessed foundation project with rubric and worked synthetic approach."
+    },
+    {
+      "id": "intermediate-project",
+      "href": "paths/task-project-management/practice/intermediate-project.md",
+      "role": "project",
+      "description": "Assessed intermediate project with rubric and worked synthetic approach."
+    },
+    {
+      "id": "advanced-project",
+      "href": "paths/task-project-management/practice/advanced-project.md",
+      "role": "project",
+      "description": "Assessed advanced project with rubric and worked synthetic approach."
+    },
+    {
+      "id": "README-md",
+      "href": "paths/task-project-management/practice/README.md",
+      "role": "guide",
+      "description": "Offline and print instructions, learning order, assessment and evidence limits."
+    },
+    {
+      "id": "lab-html",
+      "href": "paths/task-project-management/practice/lab.html",
+      "role": "reference",
+      "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+    },
+    {
+      "id": "lab-js",
+      "href": "paths/task-project-management/practice/lab.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-css",
+      "href": "paths/task-project-management/practice/lab.css",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-model-js",
+      "href": "paths/task-project-management/practice/lab-model.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "practice-capture",
+      "title": "Practise: Capture commitments in one inbox",
+      "goal": "Combine an email request, a handwritten reminder and a duplicate message about the same report.",
+      "fileIds": [
+        "capture-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open capture-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-task-project",
+      "title": "Practise: Separate tasks, projects and routines",
+      "goal": "Classify email venue, run community workshop and check attendance every Friday.",
+      "fileIds": [
+        "task-project-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open task-project-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-next-action",
+      "title": "Practise: Write the next observable action",
+      "goal": "Rewrite sort workshop stuff when room capacity is unknown.",
+      "fileIds": [
+        "next-action-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open next-action-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-done",
+      "title": "Practise: Agree what done means",
+      "goal": "Define done for a one-page workshop invitation.",
+      "fileIds": [
+        "done-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open done-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-scope",
+      "title": "Practise: State outcome and exclusions",
+      "goal": "Scope a 20-person beginner workshop with a two-week deadline.",
+      "fileIds": [
+        "scope-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open scope-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-decompose",
+      "title": "Practise: Break deliverables into manageable work",
+      "goal": "Break the workshop into three deliverables and list one action for each.",
+      "fileIds": [
+        "decompose-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open decompose-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-sequence",
+      "title": "Practise: Map dependencies before dates",
+      "goal": "Order confirm venue, publish invitation, draft exercises and review exercises.",
+      "fileIds": [
+        "sequence-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open sequence-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-board",
+      "title": "Practise: Visualize the real workflow",
+      "goal": "Design entry criteria for Ready and exit criteria for Review on the workshop board.",
+      "fileIds": [
+        "board-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open board-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-wip",
+      "title": "Practise: Control work in progress",
+      "goal": "A limit is two. One draft is in Doing and one is blocked in Review. May a third item start?",
+      "fileIds": [
+        "wip-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open wip-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-pull",
+      "title": "Practise: Pull work when capacity exists",
+      "goal": "One item finishes under a WIP limit of two; choose between a ready dependency and a vague optional redesign.",
+      "fileIds": [
+        "pull-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open pull-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-owners",
+      "title": "Practise: Clarify ownership and decisions",
+      "goal": "Assign roles for an invitation written by Mira, checked by Dev and approved by Jo.",
+      "fileIds": [
+        "owners-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open owners-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-estimates",
+      "title": "Practise: Forecast using comparable items",
+      "goal": "Three invitation cards took 2, 3 and 6 elapsed days. Forecast another similar item.",
+      "fileIds": [
+        "estimates-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open estimates-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-blocked",
+      "title": "Practise: Make blocked work actionable",
+      "goal": "The venue confirmation has had no reply for two days and publication needs it tomorrow. Write a blocker note.",
+      "fileIds": [
+        "blocked-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open blocked-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-risk",
+      "title": "Practise: Distinguish risks from issues",
+      "goal": "Classify possible projector failure and a confirmed venue cancellation.",
+      "fileIds": [
+        "risk-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open risk-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-change",
+      "title": "Practise: Handle new scope as a decision",
+      "goal": "A recorded video is requested three days before the workshop. Existing capacity is full.",
+      "fileIds": [
+        "change-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open change-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-metrics",
+      "title": "Practise: Measure flow with defined boundaries",
+      "goal": "An item started Monday and finished Thursday; another started Tuesday and is unfinished Friday. Use elapsed day differences.",
+      "fileIds": [
+        "metrics-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open metrics-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-review",
+      "title": "Practise: Inspect outcomes with the beneficiary",
+      "goal": "The exercise sheet has every required section but a beginner cannot identify the first step. Evaluate it.",
+      "fileIds": [
+        "review-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open review-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-retrospective",
+      "title": "Practise: Improve one workflow constraint",
+      "goal": "Three items waited five days for review. Design a workflow experiment.",
+      "fileIds": [
+        "retrospective-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open retrospective-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-parallel",
+      "title": "Practise: Coordinate parallel branches and handoffs",
+      "goal": "Two people draft exercises and invitations independently; plan their integration.",
+      "fileIds": [
+        "parallel-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open parallel-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-close",
+      "title": "Practise: Close the project with usable evidence",
+      "goal": "Close a workshop with delivered materials, one unresolved access issue and a recurring attendance task.",
+      "fileIds": [
+        "close-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open close-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "practice-system-review",
+      "title": "Practise: Select a proportionate management system",
+      "goal": "A two-person project has 12 cards and spends an hour daily updating seven reports. Simplify it.",
+      "fileIds": [
+        "system-review-worksheet",
+        "README-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open system-review-worksheet.md and write your answer before the worked example.",
+        "Compare the explicit constraint and reasoning with the solution.",
+        "Try one bounded adaptation and record its limits."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "The file is printable Markdown; no runtime is required.",
+        "Use synthetic examples if personal details would be sensitive.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ],
+      "kind": "lesson"
+    },
+    {
+      "id": "foundation",
+      "title": "A clear small project",
+      "goal": "Turn a synthetic workshop request into a scoped plan.",
+      "fileIds": [
+        "foundation-project",
+        "README-md",
+        "capture-worksheet",
+        "task-project-worksheet",
+        "next-action-worksheet",
+        "done-worksheet",
+        "scope-worksheet",
+        "decompose-worksheet",
+        "sequence-worksheet",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Define beneficiary, outcome and exclusions.",
+        "Decompose into deliverables and next actions.",
+        "Write completion criteria for three tasks.",
+        "Map genuine dependencies and name owners.",
+        "Score the rubric; revise missing criteria and preserve the evidence."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "All project cases are synthetic unless you elect to use an ordinary personal example.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "A visible controlled workflow",
+      "goal": "Operate a synthetic board through a week of changes.",
+      "fileIds": [
+        "intermediate-project",
+        "README-md",
+        "board-worksheet",
+        "wip-worksheet",
+        "pull-worksheet",
+        "owners-worksheet",
+        "estimates-worksheet",
+        "blocked-worksheet",
+        "risk-worksheet",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Define workflow entry and exit rules.",
+        "Set a WIP control and explain blocked-item counting.",
+        "Handle one blocker and one scope request.",
+        "Forecast with a small comparable sample and state limitations.",
+        "Score the rubric; revise missing criteria and preserve the evidence."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "All project cases are synthetic unless you elect to use an ordinary personal example.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "A delivered and improved project",
+      "goal": "Close a project using acceptance and improvement evidence.",
+      "fileIds": [
+        "advanced-project",
+        "README-md",
+        "change-worksheet",
+        "metrics-worksheet",
+        "review-worksheet",
+        "retrospective-worksheet",
+        "parallel-worksheet",
+        "close-worksheet",
+        "system-review-worksheet",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Calculate age, cycle time and throughput with explicit boundaries.",
+        "Perform verification and a beneficiary validation task.",
+        "Review one recurring workflow bottleneck.",
+        "Record accepted outputs, unresolved obligations and a follow-up owner.",
+        "Score the rubric; revise missing criteria and preserve the evidence."
+      ],
+      "commands": [],
+      "prerequisites": [],
+      "notes": [
+        "All project cases are synthetic unless you elect to use an ordinary personal example.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "capture": "practice-capture",
+    "task-project": "practice-task-project",
+    "next-action": "practice-next-action",
+    "done": "practice-done",
+    "scope": "practice-scope",
+    "decompose": "practice-decompose",
+    "sequence": "practice-sequence",
+    "board": "practice-board",
+    "wip": "practice-wip",
+    "pull": "practice-pull",
+    "owners": "practice-owners",
+    "estimates": "practice-estimates",
+    "blocked": "practice-blocked",
+    "risk": "practice-risk",
+    "change": "practice-change",
+    "metrics": "practice-metrics",
+    "review": "practice-review",
+    "retrospective": "practice-retrospective",
+    "parallel": "practice-parallel",
+    "close": "practice-close",
+    "system-review": "practice-system-review"
+  },
+  "bundle": {
+    "href": "paths/task-project-management/practice-bundle.zip"
+  },
+  "studio": {
+    "href": "paths/task-project-management/practice/lab.html",
+    "title": "Open interactive practice studio"
+  }
+}

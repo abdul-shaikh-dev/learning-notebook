@@ -1,0 +1,198 @@
+{
+  "folder": "learning-how-to-learn-practice",
+  "files": [
+    {
+      "id": "readme-md",
+      "href": "paths/learning-how-to-learn/practice/README.md",
+      "role": "guide",
+      "description": "Learning How to Learn: printable practice"
+    },
+    {
+      "id": "foundation-kit-md",
+      "href": "paths/learning-how-to-learn/practice/foundation-kit.md",
+      "role": "guide",
+      "description": "Foundation kit: a first checked learning loop"
+    },
+    {
+      "id": "intermediate-kit-md",
+      "href": "paths/learning-how-to-learn/practice/intermediate-kit.md",
+      "role": "guide",
+      "description": "Intermediate kit: a flexible practice plan"
+    },
+    {
+      "id": "advanced-kit-md",
+      "href": "paths/learning-how-to-learn/practice/advanced-kit.md",
+      "role": "guide",
+      "description": "Advanced kit: delayed application and transfer"
+    },
+    {
+      "id": "practice-log-md",
+      "href": "paths/learning-how-to-learn/practice/practice-log.md",
+      "role": "guide",
+      "description": "Learning record: blank sheet and filled example"
+    },
+    {
+      "id": "research-and-limits-md",
+      "href": "paths/learning-how-to-learn/practice/research-and-limits.md",
+      "role": "guide",
+      "description": "Research register and limits"
+    },
+    {
+      "id": "lab-html",
+      "href": "paths/learning-how-to-learn/practice/lab.html",
+      "role": "reference",
+      "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+    },
+    {
+      "id": "lab-js",
+      "href": "paths/learning-how-to-learn/practice/lab.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-css",
+      "href": "paths/learning-how-to-learn/practice/lab.css",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-model-js",
+      "href": "paths/learning-how-to-learn/practice/lab-model.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "A first checked learning loop",
+      "goal": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
+      "fileIds": [
+        "readme-md",
+        "foundation-kit-md",
+        "practice-log-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in foundation-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "1. Choose a useful learning target",
+          "href": "#topic/learning-how-to-learn/learning-target"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "A flexible two-week practice plan",
+      "goal": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
+      "fileIds": [
+        "readme-md",
+        "intermediate-kit-md",
+        "practice-log-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in intermediate-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "7. Explain connections in your own words",
+          "href": "#topic/learning-how-to-learn/explain-connections"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Delayed application and transfer portfolio",
+      "goal": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+      "fileIds": [
+        "readme-md",
+        "advanced-kit-md",
+        "practice-log-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in advanced-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "15. Test transfer with changed cases",
+          "href": "#topic/learning-how-to-learn/transfer-cases"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "learning-target": "foundation",
+    "recognition-recall": "foundation",
+    "retrieval-loop": "foundation",
+    "small-prompts": "foundation",
+    "spaced-returns": "foundation",
+    "check-baseline": "foundation",
+    "explain-connections": "intermediate",
+    "worked-to-independent": "intermediate",
+    "mix-related-cases": "intermediate",
+    "feedback-action": "intermediate",
+    "error-patterns": "intermediate",
+    "calibrate-confidence": "intermediate",
+    "study-environment": "intermediate",
+    "retain-useful-notes": "intermediate",
+    "transfer-cases": "advanced",
+    "plan-practice-week": "advanced",
+    "evaluate-advice": "advanced",
+    "adapt-stalled-learning": "advanced",
+    "delayed-demonstration": "advanced",
+    "maintain-learning": "advanced"
+  },
+  "bundle": {
+    "href": "paths/learning-how-to-learn/practice-bundle.zip"
+  },
+  "studio": {
+    "href": "paths/learning-how-to-learn/practice/lab.html",
+    "title": "Open interactive practice studio"
+  }
+}

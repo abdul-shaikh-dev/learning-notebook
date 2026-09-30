@@ -1,0 +1,205 @@
+{
+  "folder": "weekly-planning-journey-practice",
+  "files": [
+    {
+      "id": "readme-md",
+      "href": "paths/weekly-planning-journey/practice/README.md",
+      "role": "guide",
+      "description": "Plan and Review Your Week: printable journey"
+    },
+    {
+      "id": "foundation-kit-md",
+      "href": "paths/weekly-planning-journey/practice/foundation-kit.md",
+      "role": "guide",
+      "description": "Foundation kit: Sam's baseline week"
+    },
+    {
+      "id": "intermediate-kit-md",
+      "href": "paths/weekly-planning-journey/practice/intermediate-kit.md",
+      "role": "guide",
+      "description": "Intermediate kit: Tuesday and Wednesday changes"
+    },
+    {
+      "id": "advanced-kit-md",
+      "href": "paths/weekly-planning-journey/practice/advanced-kit.md",
+      "role": "guide",
+      "description": "Advanced kit: evidence, review and next week"
+    },
+    {
+      "id": "week-planner-md",
+      "href": "paths/weekly-planning-journey/practice/week-planner.md",
+      "role": "guide",
+      "description": "Week planner: blank and filled sheet"
+    },
+    {
+      "id": "review-and-next-week-md",
+      "href": "paths/weekly-planning-journey/practice/review-and-next-week.md",
+      "role": "guide",
+      "description": "Weekly review: blank and filled sheet"
+    },
+    {
+      "id": "companion-map-md",
+      "href": "paths/weekly-planning-journey/practice/companion-map.md",
+      "role": "guide",
+      "description": "Five companion paths in one week"
+    },
+    {
+      "id": "research-and-limits-md",
+      "href": "paths/weekly-planning-journey/practice/research-and-limits.md",
+      "role": "guide",
+      "description": "Weekly planning: research and limits"
+    },
+    {
+      "id": "lab-html",
+      "href": "paths/weekly-planning-journey/practice/lab.html",
+      "role": "reference",
+      "description": "Interactive practice studio: capacity, task board, habit plan, recall card and conversation choices"
+    },
+    {
+      "id": "lab-js",
+      "href": "paths/weekly-planning-journey/practice/lab.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-css",
+      "href": "paths/weekly-planning-journey/practice/lab.css",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    },
+    {
+      "id": "lab-model-js",
+      "href": "paths/weekly-planning-journey/practice/lab-model.js",
+      "role": "reference",
+      "description": "Companion file for the offline practice studio"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "A feasible baseline week",
+      "goal": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+      "fileIds": [
+        "readme-md",
+        "foundation-kit-md",
+        "week-planner-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in foundation-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "1. Meet a realistic week",
+          "href": "#topic/weekly-planning-journey/week-context"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "A disruption and revised agreement",
+      "goal": "Revise the plan after three service hours and a new two-hour urgent request.",
+      "fileIds": [
+        "readme-md",
+        "intermediate-kit-md",
+        "review-and-next-week-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in intermediate-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "7. Add one small supporting habit",
+          "href": "#topic/weekly-planning-journey/supporting-habit"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Evidence, review and next-week experiment",
+      "goal": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+      "fileIds": [
+        "readme-md",
+        "advanced-kit-md",
+        "review-and-next-week-md",
+        "lab-html",
+        "lab-js",
+        "lab-css",
+        "lab-model-js"
+      ],
+      "steps": [
+        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
+        "Open README.md; no installation is needed.",
+        "Complete the exact numbered tasks in advanced-kit.md.",
+        "Record your own answers in the blank worksheet before reading the filled sample.",
+        "Compare with the rubric and revise a missed criterion.",
+        "Keep completed work; mark future checks pending rather than complete."
+      ],
+      "commands": [],
+      "prerequisites": [
+        {
+          "label": "12. Collect light evidence through the week",
+          "href": "#topic/weekly-planning-journey/collect-week-evidence"
+        }
+      ],
+      "notes": [
+        "The filled examples are synthetic, not the learner’s results.",
+        "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
+        "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "week-context": "foundation",
+    "capture-week": "foundation",
+    "outcomes-next-actions": "foundation",
+    "priorities-capacity": "foundation",
+    "calendar-energy": "foundation",
+    "baseline-plan-project": "foundation",
+    "supporting-habit": "intermediate",
+    "midweek-disruption": "intermediate",
+    "communicate-tradeoffs": "intermediate",
+    "learning-in-week": "intermediate",
+    "revised-plan-project": "intermediate",
+    "collect-week-evidence": "advanced",
+    "review-without-blame": "advanced",
+    "choose-next-experiment": "advanced",
+    "next-week-portfolio": "advanced"
+  },
+  "bundle": {
+    "href": "paths/weekly-planning-journey/practice-bundle.zip"
+  },
+  "studio": {
+    "href": "paths/weekly-planning-journey/practice/lab.html",
+    "title": "Open interactive practice studio"
+  }
+}

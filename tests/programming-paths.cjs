@@ -9,7 +9,7 @@ vm.createContext(context);vm.runInContext((fs.readFileSync('assets/js/learning-t
 let count=0;
 for(const p of paths){
  assert.ok(p.prerequisites.length&&p.setup.length&&p.outcomes.length&&p.nextSteps.length&&p.sources.length);
- assert.ok(p.lessons.length>=20);
+ assert.ok(p.lessons.length >= (p.category === 'Personal effectiveness' ? 12 : 20), p.id + ': complete course length');
  assert.deepEqual(p.stages.map(s=>s.id),['foundation','intermediate','advanced']);
  for(const stage of p.stages){assert.ok(stage.exitCriteria.length&&stage.project.requirements.length&&stage.project.rubric.length&&stage.project.solution);assert.ok(p.lessons.some(l=>l.stage===stage.id));}
  assert.ok(p.lessons.every(l=>p.stages.some(s=>s.id===l.stage)));
@@ -33,7 +33,7 @@ for(const p of paths){
  assert.equal((node('main').innerHTML.match(/<h4>Reference approach/g)||[]).length,p.stages.length);
  assert.ok(!node('main').innerHTML.includes('data-stage-check'));
 }
-console.log('PASS: '+count+' programming lessons, exercises, official references, downloads, visual traces and complete printable packs.');
+console.log('PASS: '+count+' staged lessons, exercises, scoped references, downloads, visual traces and complete printable packs.');
 
 
 const p=paths[0],key='learning-notebook:path:'+p.id+':assessments:v1';

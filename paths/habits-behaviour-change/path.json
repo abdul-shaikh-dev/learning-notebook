@@ -1,0 +1,1422 @@
+{
+  "id": "habits-behaviour-change",
+  "title": "Habits & Behaviour Change",
+  "category": "Personal development",
+  "status": "ready",
+  "description": "Design realistic everyday routines using context, small actions and honest observations.",
+  "level": "Foundations → intermediate → advanced practice",
+  "prerequisites": [
+    "No specialist knowledge required.",
+    "A text editor or printed worksheets; fictional cases can be used throughout."
+  ],
+  "outcomes": [
+    "A factual baseline and a feasible target",
+    "A small routine experiment",
+    "An evidence-based maintenance decision"
+  ],
+  "setup": [
+    "Download and extract the practice bundle; every worksheet is flat in habits-behaviour-change-practice.",
+    "Read README.md, then work through numbered worksheets and the three stage project sheets.",
+    "Write your own response before comparing it with the fictional worked example.",
+    "Interactive practice: open lab.html alongside its three companion files. On the hosted notebook, the Practice studio link opens it directly. No installation is needed."
+  ],
+  "nextSteps": [
+    "Repeat a modest practice in a new context and revise from observed evidence.",
+    "Use relevant support or formal procedures when an everyday self-management tool is insufficient."
+  ],
+  "sources": [
+    {
+      "title": "APA: Wendy Wood on habits and context",
+      "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change"
+    },
+    {
+      "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/"
+    },
+    {
+      "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+      "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf"
+    },
+    {
+      "title": "Lally et al. (2010): real-world habit formation",
+      "url": "https://doi.org/10.1002/ejsp.674"
+    }
+  ],
+  "publicFiles": [
+    "practice/README.md",
+    "practice/sources-and-limits.md",
+    "practice/01-behaviour-not-identity.md",
+    "practice/02-goals-and-actions.md",
+    "practice/03-baseline-observation.md",
+    "practice/04-cue-map.md",
+    "practice/05-habit-or-routine.md",
+    "practice/06-small-start.md",
+    "practice/07-time-variation.md",
+    "practice/08-if-then.md",
+    "practice/09-friction.md",
+    "practice/10-prompt-design.md",
+    "practice/11-replacement.md",
+    "practice/12-obstacle-plan.md",
+    "practice/13-measurement.md",
+    "practice/14-feedback-reward.md",
+    "practice/15-missed-opportunity.md",
+    "practice/16-one-change-test.md",
+    "practice/17-changed-context.md",
+    "practice/18-support-consent.md",
+    "practice/19-maintain-or-retire.md",
+    "practice/20-evidence-review.md",
+    "practice/foundation-project.md",
+    "practice/intermediate-project.md",
+    "practice/advanced-project.md",
+    "practice/lab.html",
+    "practice/lab.js",
+    "practice/lab.css",
+    "practice/lab-model.js"
+  ],
+  "downloads": [
+    {
+      "title": "Start here: sequence, offline use and practice boundaries",
+      "href": "paths/habits-behaviour-change/practice/README.md"
+    },
+    {
+      "title": "Source scope and evidence limits",
+      "href": "paths/habits-behaviour-change/practice/sources-and-limits.md"
+    },
+    {
+      "title": "Describe actions without judging identity worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/01-behaviour-not-identity.md"
+    },
+    {
+      "title": "Separate an outcome from its next action worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/02-goals-and-actions.md"
+    },
+    {
+      "title": "Observe a baseline before redesigning worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/03-baseline-observation.md"
+    },
+    {
+      "title": "Map the cue and surrounding context worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/04-cue-map.md"
+    },
+    {
+      "title": "Distinguish repetition from automaticity worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/05-habit-or-routine.md"
+    },
+    {
+      "title": "Choose a version that fits a real opportunity worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/06-small-start.md"
+    },
+    {
+      "title": "Reject fixed habit deadlines worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/07-time-variation.md"
+    },
+    {
+      "title": "Turn an intention into a situation/action plan worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/08-if-then.md"
+    },
+    {
+      "title": "Change the effort around the action worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/09-friction.md"
+    },
+    {
+      "title": "Use reminders as useful signals worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/10-prompt-design.md"
+    },
+    {
+      "title": "Offer an alternative that serves the same immediate need worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/11-replacement.md"
+    },
+    {
+      "title": "Prepare for a likely obstacle worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/12-obstacle-plan.md"
+    },
+    {
+      "title": "Measure opportunities, completion and ease separately worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/13-measurement.md"
+    },
+    {
+      "title": "Notice immediate usefulness without inventing brain claims worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/14-feedback-reward.md"
+    },
+    {
+      "title": "Respond to a missed action with information worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/15-missed-opportunity.md"
+    },
+    {
+      "title": "Change one practical element at a time worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/16-one-change-test.md"
+    },
+    {
+      "title": "Rebuild the plan when the environment changes worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/17-changed-context.md"
+    },
+    {
+      "title": "Ask for support without handing over control worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/18-support-consent.md"
+    },
+    {
+      "title": "Decide whether to keep, change or retire a routine worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/19-maintain-or-retire.md"
+    },
+    {
+      "title": "Make an honest maintenance plan worksheet and worked case",
+      "href": "paths/habits-behaviour-change/practice/20-evidence-review.md"
+    },
+    {
+      "title": "A factual baseline and a feasible target project sheet",
+      "href": "paths/habits-behaviour-change/practice/foundation-project.md"
+    },
+    {
+      "title": "A small routine experiment project sheet",
+      "href": "paths/habits-behaviour-change/practice/intermediate-project.md"
+    },
+    {
+      "title": "An evidence-based maintenance decision project sheet",
+      "href": "paths/habits-behaviour-change/practice/advanced-project.md"
+    },
+    {
+      "title": "lab.html",
+      "href": "paths/habits-behaviour-change/practice/lab.html"
+    },
+    {
+      "title": "lab.js",
+      "href": "paths/habits-behaviour-change/practice/lab.js"
+    },
+    {
+      "title": "lab.css",
+      "href": "paths/habits-behaviour-change/practice/lab.css"
+    },
+    {
+      "title": "lab-model.js",
+      "href": "paths/habits-behaviour-change/practice/lab-model.js"
+    }
+  ],
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "Foundation — observe and define",
+      "description": "A factual baseline and a feasible target",
+      "exitCriteria": [
+        "State a useful outcome and a controllable action.",
+        "Record three opportunities with context, completion and constraints.",
+        "Choose a recognised cue and a useful minimum.",
+        "Record known facts and uncertainty separately, using the relevant stage measures."
+      ],
+      "project": {
+        "title": "A factual baseline and a feasible target",
+        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "requirements": [
+          "State a useful outcome and a controllable action.",
+          "Record three opportunities with context, completion and constraints.",
+          "Choose a recognised cue and a useful minimum."
+        ],
+        "rubric": [
+          "State a useful outcome and a controllable action.",
+          "Record three opportunities with context, completion and constraints.",
+          "Choose a recognised cue and a useful minimum.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solutionFormat": "prose"
+      }
+    },
+    {
+      "id": "intermediate",
+      "title": "Intermediate — practise and compare",
+      "description": "A small routine experiment",
+      "exitCriteria": [
+        "Write a cue/action plan and an obstacle branch.",
+        "Try one reversible setup change, keeping the target stable.",
+        "Record available opportunities, completion and ease separately.",
+        "Record known facts and uncertainty separately, using the relevant stage measures."
+      ],
+      "project": {
+        "title": "A small routine experiment",
+        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "requirements": [
+          "Write a cue/action plan and an obstacle branch.",
+          "Try one reversible setup change, keeping the target stable.",
+          "Record available opportunities, completion and ease separately."
+        ],
+        "rubric": [
+          "Write a cue/action plan and an obstacle branch.",
+          "Try one reversible setup change, keeping the target stable.",
+          "Record available opportunities, completion and ease separately.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solutionFormat": "prose"
+      }
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced — adapt and review",
+      "description": "An evidence-based maintenance decision",
+      "exitCriteria": [
+        "Compare benefit, effort and context fit.",
+        "State what was observed and what cannot be inferred.",
+        "Choose keep, change or retire with a recovery branch and review date.",
+        "Record known facts and uncertainty separately, using the relevant stage measures."
+      ],
+      "project": {
+        "title": "An evidence-based maintenance decision",
+        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "requirements": [
+          "Compare benefit, effort and context fit.",
+          "State what was observed and what cannot be inferred.",
+          "Choose keep, change or retire with a recovery branch and review date."
+        ],
+        "rubric": [
+          "Compare benefit, effort and context fit.",
+          "State what was observed and what cannot be inferred.",
+          "Choose keep, change or retire with a recovery branch and review date.",
+          "Record known facts and uncertainty separately, using the relevant stage measures."
+        ],
+        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solutionFormat": "prose"
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": "behaviour-not-identity",
+      "title": "1. Describe actions without judging identity",
+      "takeaway": "A behaviour is something you can observe; an identity label hides the action you can change.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A behaviour is something you can observe; an identity label hides the action you can change. Replace broad promises with a small action and a situation. Choose an ordinary task within your control, such as putting a notebook on the desk. Missing it tells you something about the plan and circumstances, rather than proving a character flaw."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Observable wording also makes the result checkable: either the keys reached the bowl or they did not. A label such as organised cannot tell you which step to change. Keep the target narrow enough to inspect while recognising that a useful key-storage action does not represent the whole person."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+        "solution": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
+        "solutionFormat": "prose",
+        "checks": [
+          "An identity label is rewritten as a specific observable action.",
+          "The target includes a recognisable arrival situation.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which target can be observed?",
+        "options": [
+          "Put keys in the bowl after arriving home",
+          "Become a disciplined person",
+          "Feel motivated every evening"
+        ],
+        "correct": 0,
+        "explanation": "Put keys in the bowl after arriving home fits the distinction in this lesson. Become a disciplined person overlooks the stated limits; Feel motivated every evening substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "goals-and-actions",
+      "title": "2. Separate an outcome from its next action",
+      "takeaway": "An outcome explains why you care; a repeatable action explains what you will do.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "An outcome explains why you care; a repeatable action explains what you will do. Some outcomes depend on other people or changing conditions. A useful plan names the part you control and a modest first version. Do not confuse doing the action with guaranteeing the desired result. Revisit whether the action still serves its purpose."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "An action measure and an outcome measure answer different questions. Packing can happen reliably while mornings remain difficult for unrelated reasons. Check both before deciding to expand the routine. If packing adds work without reducing searching, reconsider its design rather than insisting that reliable completion alone makes it valuable."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Arun wants a calmer morning. He cannot guarantee that the bus is on time, but can pack his bag the evening before. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write an outcome, controllable action and boundary for Arun.",
+        "solution": "Outcome: spend less time searching before leaving. Action: put tomorrow’s notebook and pass in the bag after dinner. Boundary: bus delays remain outside this action; record morning search time separately.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Outcome and controllable action are written separately.",
+          "An external constraint is identified.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which statement separates action and outcome?",
+        "options": [
+          "Packing the bag may reduce searching even if the bus is late",
+          "Packing guarantees a calm morning",
+          "Calmness itself is a specific repeated action"
+        ],
+        "correct": 0,
+        "explanation": "Packing the bag may reduce searching even if the bus is late fits the distinction in this lesson. Packing guarantees a calm morning overlooks the stated limits; Calmness itself is a specific repeated action substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "baseline-observation",
+      "title": "3. Observe a baseline before redesigning",
+      "takeaway": "A baseline is a short description of what currently happens, including opportunities when it does not happen.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A baseline is a short description of what currently happens, including opportunities when it does not happen. Record the situation, action and immediate consequence without trying to capture everything. A three-day snapshot is a starting point, not a complete portrait. Avoid recording private material from other people. Use fictional data if personal tracking feels intrusive."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A baseline should include the denominator: the situations in which the target could reasonably occur. Otherwise a completion count conceals changes in opportunity. Choose a logging window short enough to maintain and note unusual days. The cost of observation should not exceed the practical benefit of learning about the task."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Jo wants to read more but only logs evenings when reading happened, overlooking nights spent caring for family. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Design three columns that reveal opportunities and constraints.",
+        "solution": "Jo records evening context, whether a realistic reading opportunity existed, and what she did. Two no-opportunity evenings remain visible. This prevents treating family responsibilities as failures to use an available cue.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The baseline includes both action and no-opportunity rows.",
+          "Context is recorded without unnecessary private details.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What makes a baseline more informative?",
+        "options": [
+          "Include unavailable opportunities and context",
+          "Record successes only to stay positive",
+          "Infer the entire month from one evening"
+        ],
+        "correct": 0,
+        "explanation": "Include unavailable opportunities and context fits the distinction in this lesson. Record successes only to stay positive overlooks the stated limits; Infer the entire month from one evening substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "cue-map",
+      "title": "4. Map the cue and surrounding context",
+      "takeaway": "A cue is a recognisable situation associated with an action; context includes place, timing, people and materials.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A cue is a recognisable situation associated with an action; context includes place, timing, people and materials. Look for a cue that already occurs, rather than adding many reminders. A time can work, but only if it is reliably noticed. Distinguish noticing the cue from having the opportunity to act. Context mapping generates a testable hypothesis rather than proof of an unconscious mechanism."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Cue selection is a balance between reliability and fit. A daily event is frequent, but it may occur where the necessary materials are absent. A less frequent cue in the right setting can be more useful. Map the physical sequence, then check whether the proposed alternative can occupy the same opportunity."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Sam opens a news app whenever the kettle is switched on, while the book stays in another room. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Map the cue, action, immediate payoff and competing option.",
+        "solution": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Cue, action and immediate consequence are distinguished.",
+          "The alternative is physically available at the cue.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which cue is most recognisable?",
+        "options": [
+          "When I switch on the kettle",
+          "Whenever I should improve myself",
+          "When the entire day goes perfectly"
+        ],
+        "correct": 0,
+        "explanation": "When I switch on the kettle fits the distinction in this lesson. Whenever I should improve myself overlooks the stated limits; When the entire day goes perfectly substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "habit-or-routine",
+      "title": "5. Distinguish repetition from automaticity",
+      "takeaway": "Repeating an action and beginning it with little deliberate decision are related but different.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "Repeating an action and beginning it with little deliberate decision are related but different. A routine can require planning every time and still be useful. Record ease of starting separately from completion. Your simple ease rating is a personal observation, not a validated diagnostic instrument. Do not call a behaviour automatic merely because a checklist has many ticks."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Ease of initiation is not the same as ease of performing every component. Someone may start a review automatically but still think carefully about its content. That is not a contradiction. For complex tasks, automatic starting and deliberate execution can coexist; do not aim to remove judgement from decisions that require it."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Lea completes a weekly budget review but needs a calendar reminder and deliberate effort every time. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Explain why Lea has a useful routine without evidence of automaticity.",
+        "solution": "Weekly completion shows repetition. Her continued deliberate scheduling means automatic initiation has not been established. She keeps the review because it helps her, and records whether starting becomes easier rather than forcing a habit label.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Completion is separated from ease of initiation.",
+          "The routine remains useful without an automaticity claim.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What do repeated ticks establish?",
+        "options": [
+          "Recorded completion, not necessarily automaticity",
+          "A permanent habit has formed",
+          "No planning will ever be needed again"
+        ],
+        "correct": 0,
+        "explanation": "Recorded completion, not necessarily automaticity fits the distinction in this lesson. A permanent habit has formed overlooks the stated limits; No planning will ever be needed again substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "small-start",
+      "title": "6. Choose a version that fits a real opportunity",
+      "takeaway": "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "The minimum and the extension need separate labels so the target does not drift upward unnoticed. A minimum that is too small to serve the purpose creates empty ticks; one that is too demanding recreates the original obstacle. Evaluate its usefulness against an ordinary constrained day rather than an unusually free weekend."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Nia plans an hour of language study after work but has ten usable minutes on most evenings. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Define a useful minimum and optional extension.",
+        "solution": "Minimum: review three saved words and use one in a sentence. Optional extension: listen to a short clip. She records the minimum separately, so a ten-minute evening does not become a failed one-hour session.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The minimum makes a real contribution to the purpose.",
+          "The extension is clearly optional.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What is a sensible minimum?",
+        "options": [
+          "A short action that still serves the learning goal",
+          "The largest session imaginable",
+          "A symbolic tick unrelated to learning"
+        ],
+        "correct": 0,
+        "explanation": "A short action that still serves the learning goal fits the distinction in this lesson. The largest session imaginable overlooks the stated limits; A symbolic tick unrelated to learning substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "time-variation",
+      "title": "7. Reject fixed habit deadlines",
+      "takeaway": "Habit formation time varies, and estimates depend on the behaviour, person and measurement method.",
+      "stage": "foundation",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "Habit formation time varies, and estimates depend on the behaviour, person and measurement method. Lally and colleagues modelled daily automaticity and reported estimates ranging from 18 to 254 days among fitted cases. These are study estimates, not a schedule every learner should meet. Twenty-one days is not a universal rule. A useful review asks whether the plan remains workable and starting is becoming easier."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study’s fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Dev reaches day 21 of placing his notebook out and still needs to think about it. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a fair interpretation of Dev’s experience and a next check.",
+        "solution": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Study estimates are described as variable rather than a deadline.",
+          "The next review checks cue and practical fit.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What does the reported range support?",
+        "options": [
+          "Substantial variation rather than a universal deadline",
+          "Every habit takes exactly 66 days",
+          "Day 21 proves whether a person has willpower"
+        ],
+        "correct": 0,
+        "explanation": "Substantial variation rather than a universal deadline fits the distinction in this lesson. Every habit takes exactly 66 days overlooks the stated limits; Day 21 proves whether a person has willpower substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Lally et al. (2010): real-world habit formation",
+          "url": "https://doi.org/10.1002/ejsp.674",
+          "section": "Abstract and automaticity modelling results",
+          "scope": "Original observational study of selected daily behaviours; estimates vary by person and behaviour, not a universal deadline.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "if-then",
+      "title": "8. Turn an intention into a situation/action plan",
+      "takeaway": "An implementation intention links a specified situation to a specified action.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "An implementation intention links a specified situation to a specified action. Write an if–then sentence that you can recognise in real life. Keep the response within your control and immediately possible. This is a planning tool supported by original goal-pursuit research; it does not remove material barriers or make unrealistic goals feasible."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "The if clause should identify an opportunity, not merely a feeling such as when I am motivated. The then clause should specify a response you can begin without another decision. Too many competing plans at one cue can recreate uncertainty; start with a single response and add a branch only for a likely obstacle."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Farah says she will organise notes sometime this week and repeatedly forgets. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write one recognisable if–then plan for Farah.",
+        "solution": "If I finish the Tuesday study session at my desk, then I will put the handouts in the labelled folder before closing my bag. The situation and response are concrete, and the folder must already be available.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The if clause describes a recognisable situation.",
+          "The then clause names an immediately feasible action.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which is an implementation intention?",
+        "options": [
+          "If Tuesday’s session ends, then file its handouts",
+          "I really intend to be organised",
+          "I will succeed if I care enough"
+        ],
+        "correct": 0,
+        "explanation": "If Tuesday’s session ends, then file its handouts fits the distinction in this lesson. I really intend to be organised overlooks the stated limits; I will succeed if I care enough substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "friction",
+      "title": "9. Change the effort around the action",
+      "takeaway": "Friction is the extra work between noticing a cue and completing an action.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people’s needs."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Reducing friction can accidentally create clutter or affect a shared space. Prefer a reversible setup and ask anyone whose access would change. Judge the modification on setup effort and actual usefulness, not aesthetic appearance. If materials are easier to reach but the task still does not fit, investigate timing or purpose next."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Ben wants to sketch but his pencils are in a closed cupboard and the desk is covered with boxes. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose one reversible change and predict what it may improve.",
+        "solution": "Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less setup time and checks whether sketching starts more often. It is a local experiment; he does not claim all motivation problems have been solved.",
+        "solutionFormat": "prose",
+        "checks": [
+          "One reversible setup step is changed.",
+          "The predicted benefit can be observed.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which change directly reduces setup friction?",
+        "options": [
+          "Leave the required materials at the cue location",
+          "Write a stronger promise",
+          "Punish every missed session"
+        ],
+        "correct": 0,
+        "explanation": "Leave the required materials at the cue location fits the distinction in this lesson. Write a stronger promise overlooks the stated limits; Punish every missed session substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "prompt-design",
+      "title": "10. Use reminders as useful signals",
+      "takeaway": "A reminder is useful when it arrives at an actionable moment and says what to do.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A reminder is useful when it arrives at an actionable moment and says what to do. An alarm that fires during commuting may be noticed but impossible to use. Prefer one well-placed prompt over many competing notifications. Record whether the signal was seen and whether acting was feasible. This distinguishes a prompt failure from a lack of opportunity."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Reminder fatigue is a practical observation rather than a fixed personal trait. Repeatedly dismissing an unactionable alarm may mean the signal is badly placed. Separate noticing from doing when reviewing the data. Removing redundant prompts can make the remaining one clearer, but an essential appointment reminder may still need a different backup."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Redesign the prompt and define what to observe.",
+        "solution": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The prompt occurs at an available opportunity.",
+          "Seen, feasible and completed are recorded separately.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which prompt is most actionable?",
+        "options": [
+          "A filing cue at the desk with the folder ready",
+          "Ten alarms during the meeting",
+          "An alert saying only be better"
+        ],
+        "correct": 0,
+        "explanation": "A filing cue at the desk with the folder ready fits the distinction in this lesson. Ten alarms during the meeting overlooks the stated limits; An alert saying only be better substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "replacement",
+      "title": "11. Offer an alternative that serves the same immediate need",
+      "takeaway": "An unwanted routine may provide something useful, such as a pause, stimulation or connection.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "An unwanted routine may provide something useful, such as a pause, stimulation or connection. First ask what the action does in that moment, then choose a harmless alternative that can meet part of that need. Removing an action without a workable option may leave the original cue unchanged. Treat the explanation as a hypothesis and compare what actually happens."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative’s immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Omar checks group chat during a five-minute break because he wants contact, then misses the next session. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Design an alternative that respects the need for contact and timing.",
+        "solution": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The original action’s immediate function is named.",
+          "The replacement fits the break duration.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What should a replacement consider?",
+        "options": [
+          "The immediate function of the original action",
+          "Only whether it looks productive to others",
+          "Eliminating every break"
+        ],
+        "correct": 0,
+        "explanation": "The immediate function of the original action fits the distinction in this lesson. Only whether it looks productive to others overlooks the stated limits; Eliminating every break substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "obstacle-plan",
+      "title": "12. Prepare for a likely obstacle",
+      "takeaway": "A coping plan names a realistic obstacle and an alternative response before it happens.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A coping plan names a realistic obstacle and an alternative response before it happens. Choose a common obstacle rather than every imagined failure. The alternative may be a shorter action, a different opportunity or an explicit skip. Avoid a plan that requires sacrificing basic needs or responsibilities. Record which branch occurred so the plan can be revised."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A coping branch should reduce uncertainty rather than create a second elaborate system. Write exactly when the branch applies and how to return to the normal version. An explicit skip can be appropriate when opportunity is absent. This preserves realistic planning instead of making every interruption another task that must be compensated for."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Aisha’s normal note-review cue disappears on days she works at a different desk. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a normal plan and a travel-day branch.",
+        "solution": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Normal cue and obstacle branch are both specified.",
+          "The branch permits a skip when opportunity is absent.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which branch is realistic?",
+        "options": [
+          "Use a shorter action at an available alternate cue",
+          "Promise never to face interruptions",
+          "Compensate by losing sleep"
+        ],
+        "correct": 0,
+        "explanation": "Use a shorter action at an available alternate cue fits the distinction in this lesson. Promise never to face interruptions overlooks the stated limits; Compensate by losing sleep substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "measurement",
+      "title": "13. Measure opportunities, completion and ease separately",
+      "takeaway": "One number rarely captures whether a routine is working.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Add an outcome measure only if it is meaningful and cheap to collect. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A completion rate can rise because the opportunity definition changed, so keep definitions stable during a comparison. Ease ratings are subjective and may fluctuate with the task or day. Record them consistently without treating differences of one point as precise measurements. A helpful log supports a decision without pretending to be laboratory evidence."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Ivo has four completions in seven days, but only five evenings offered a realistic opportunity. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Calculate the opportunity-based rate and state its limit.",
+        "solution": "Four of five available opportunities were used, or 80%. Four of seven calendar days were completed. Both numbers are true but answer different questions. A single week cannot prove the new cue caused improvement.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The numerator and denominator are explicit.",
+          "Completion, ease and outcome are not conflated.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What does 4 of 5 measure?",
+        "options": [
+          "Completion among recorded available opportunities",
+          "Permanent automaticity",
+          "The probability of success for everyone"
+        ],
+        "correct": 0,
+        "explanation": "Completion among recorded available opportunities fits the distinction in this lesson. Permanent automaticity overlooks the stated limits; The probability of success for everyone substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "feedback-reward",
+      "title": "14. Notice immediate usefulness without inventing brain claims",
+      "takeaway": "A routine is easier to evaluate when its immediate result is visible.",
+      "stage": "intermediate",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action’s own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Immediate satisfaction and longer-term value can diverge. An action may feel rewarding now but add little to the goal, or be useful while remaining effortful. Look for both rather than assuming enjoyment proves effectiveness. A simple visible consequence often gives enough feedback without adding purchases, competition or elaborate reward tracking."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Mei puts keys in a bowl and notices that leaving home requires less searching. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Name an immediate consequence and a separate longer-term outcome.",
+        "solution": "Immediate consequence: she sees the keys in the bowl and can retrieve them. Longer-term outcome: fewer rushed departures. She records search time on a few mornings rather than claiming the bowl guarantees calmness.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Immediate consequence and longer-term outcome differ.",
+          "No unsupported brain mechanism is asserted.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which feedback is directly observable?",
+        "options": [
+          "Keys are visible in the bowl",
+          "A dopamine reset has occurred",
+          "Her entire personality has improved"
+        ],
+        "correct": 0,
+        "explanation": "Keys are visible in the bowl fits the distinction in this lesson. A dopamine reset has occurred overlooks the stated limits; Her entire personality has improved substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "missed-opportunity",
+      "title": "15. Respond to a missed action with information",
+      "takeaway": "A missed action is a chance to inspect conditions and resume at the next feasible opportunity.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally’s study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Different explanations for a miss need different responses. An absent cue suggests an alternate opportunity; unavailable materials suggest setup changes; a deliberate competing priority may need no repair. Look for repeated patterns before changing the whole plan. Resumption should restore the usual feasible action rather than making the next attempt harder as punishment."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Pia misses filing because she takes a family member to an appointment. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a recovery note and a next action without blame.",
+        "solution": "No desk-session opportunity occurred. Resume filing at the next normal session; do not double the task as a penalty. If appointments repeatedly alter the schedule, add an alternate cue or change the target frequency.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The reason for the miss is categorised from facts.",
+          "The next action avoids punitive catch-up.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which response produces useful information?",
+        "options": [
+          "Record why the opportunity differed and choose the next feasible cue",
+          "Reset all progress to zero",
+          "Prove commitment with a punishing catch-up session"
+        ],
+        "correct": 0,
+        "explanation": "Record why the opportunity differed and choose the next feasible cue fits the distinction in this lesson. Reset all progress to zero overlooks the stated limits; Prove commitment with a punishing catch-up session substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Lally et al. (2010): real-world habit formation",
+          "url": "https://doi.org/10.1002/ejsp.674",
+          "section": "Abstract and automaticity modelling results",
+          "scope": "Original observational study of selected daily behaviours; estimates vary by person and behaviour, not a universal deadline.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "one-change-test",
+      "title": "16. Change one practical element at a time",
+      "takeaway": "A small comparison is more interpretable when you know what changed.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A small comparison is more interpretable when you know what changed. Hold the target action stable while trying a new cue location or simpler setup. Record other changes such as a quieter week. You can make a useful local decision with imperfect information, but should not present a personal before/after log as a controlled experiment."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A before/after comparison has no independent control group and cannot isolate every influence. Keep a dated note of the changed element and important surrounding events. You can choose the more workable setup even without proving causation. Report the decision as a local judgement and avoid presenting a small personal sample as a general result."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Ren moves a reading card to the kettle while also changing work hours and buying a new book. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose a cleaner comparison and state a confound.",
+        "solution": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+        "solutionFormat": "prose",
+        "checks": [
+          "One proposed change is isolated where practical.",
+          "A plausible confound is recorded.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which conclusion fits a personal comparison?",
+        "options": [
+          "The setup seems useful here, though other changes may matter",
+          "The cue caused the result for every learner",
+          "One good week proves permanent change"
+        ],
+        "correct": 0,
+        "explanation": "The setup seems useful here, though other changes may matter fits the distinction in this lesson. The cue caused the result for every learner overlooks the stated limits; One good week proves permanent change substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "changed-context",
+      "title": "17. Rebuild the plan when the environment changes",
+      "takeaway": "A plan designed for one setting may need deliberate rebuilding in another.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A plan designed for one setting may need deliberate rebuilding in another. When moving rooms, starting a new timetable or travelling, check which cues and materials still exist. Preserve the purpose rather than copying a time that no longer fits. Choose a stable new opportunity and return to deliberate planning when necessary."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A new setting may preserve some cues while removing others. Audit the sequence rather than assuming the whole routine transfers or disappears. For digital work, a clear end-of-session event may replace leaving a classroom. Allow deliberate reminders during transition and judge success by usefulness in the new setting rather than effortless continuity."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Sol’s after-class filing routine stops when the course becomes remote. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Translate the routine into the new context.",
+        "solution": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The changed context’s missing cue is identified.",
+          "The new cue fits the same useful purpose.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What should be preserved during a context change?",
+        "options": [
+          "The purpose and a feasible cue/action relationship",
+          "The exact old time regardless of circumstances",
+          "The claim that a formed habit cannot change"
+        ],
+        "correct": 0,
+        "explanation": "The purpose and a feasible cue/action relationship fits the distinction in this lesson. The exact old time regardless of circumstances overlooks the stated limits; The claim that a formed habit cannot change substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "APA: Wendy Wood on habits and context",
+          "url": "https://www.apa.org/monitor/2026/01-02/wendy-wood-habits-behavior-change",
+          "section": "Interview on context and repetition",
+          "scope": "Expert interview, not an experimental test; used only for context design principles.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "support-consent",
+      "title": "18. Ask for support without handing over control",
+      "takeaway": "Support works best when its form and boundaries are agreed.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "Support works best when its form and boundaries are agreed. Ask a friend for a specific helpful action, such as one weekly check-in, rather than permission to monitor everything. Either person can decline or change the arrangement. Keep logs private by default; public accountability is an option, not a requirement or a measure of sincerity."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Support arrangements also impose effort on the helper. Agree on frequency, wording and what information is shared so neither person has to guess. A neutral check-in can be useful; unsolicited daily criticism can make the task harder. Revisit consent when schedules change, and allow a supportive relationship to continue without the monitoring arrangement."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Uma asks a housemate to remind her to pack a bag, but repeated comments feel intrusive. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Draft a narrower agreement with an exit option.",
+        "solution": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
+        "solutionFormat": "prose",
+        "checks": [
+          "The helper’s role and frequency are agreed.",
+          "Either person can stop the arrangement.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "What makes support appropriate?",
+        "options": [
+          "Specific consent and a way to stop",
+          "Unlimited monitoring proves care",
+          "Public logs are necessary for success"
+        ],
+        "correct": 0,
+        "explanation": "Specific consent and a way to stop fits the distinction in this lesson. Unlimited monitoring proves care overlooks the stated limits; Public logs are necessary for success substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gollwitzer & Brandstätter (1997): Implementation Intentions and Effective Goal Pursuit",
+          "url": "https://sparq.stanford.edu/sites/g/files/sbiybj19021/files/media/file/gollwitzer_brandstatter_1997_-_implementation_intentions_effective_goal_pursuit.pdf",
+          "section": "Studies 1–3 and distinction between goal and implementation intentions",
+          "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "maintain-or-retire",
+      "title": "19. Decide whether to keep, change or retire a routine",
+      "takeaway": "A routine is valuable because it serves a purpose, not because it has a long streak.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A routine is valuable because it serves a purpose, not because it has a long streak. Review benefit, effort and fit together. A well-practised action can become unnecessary when the goal changes. Retiring it deliberately is different from judging yourself for inconsistency. Document the reason and identify whether any useful part belongs in a new routine."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "Maintenance decisions should account for duplication. Two systems that once served different purposes may now copy the same information, increasing effort and error. Identify what would actually be lost by removing one. A short trial of a simpler version can reveal whether the retired step had a benefit that was initially overlooked."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Vic maintains a daily paper planner after switching to a shared schedule that already covers the same tasks. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose a review decision and the evidence needed.",
+        "solution": "Vic compares whether the paper planner adds useful information or merely duplicates work. If it adds little, he retires daily copying and keeps a weekly review of deadlines. The decision follows purpose and cost rather than protecting a streak.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Benefit and duplicated effort are compared.",
+          "The keep/change/retire decision has a reason.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "When is retirement sensible?",
+        "options": [
+          "When the routine’s benefit no longer justifies its cost",
+          "Never, because a streak must be preserved",
+          "Whenever one action is missed"
+        ],
+        "correct": 0,
+        "explanation": "When the routine’s benefit no longer justifies its cost fits the distinction in this lesson. Never, because a streak must be preserved overlooks the stated limits; Whenever one action is missed substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "id": "evidence-review",
+      "title": "20. Make an honest maintenance plan",
+      "takeaway": "A final review joins the target, observations, changes and limits into a reusable plan.",
+      "stage": "advanced",
+      "sections": [
+        {
+          "title": "Understand the distinction",
+          "paragraphs": [
+            "A final review joins the target, observations, changes and limits into a reusable plan. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
+          ]
+        },
+        {
+          "title": "Mechanism and practical trade-off",
+          "paragraphs": [
+            "A reusable plan names the evidence that would trigger revision: an absent cue, rising setup cost or a changed goal. Review dates prevent indefinite tracking without a decision. Keep uncertainty visible while committing to a modest next action. The quality of the review rests on accurate records and a feasible adjustment, not an impressive transformation claim."
+          ]
+        },
+        {
+          "title": "Work through an everyday case",
+          "paragraphs": [
+            "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Before choosing an action, identify what is known and what still needs checking. Use the worked response as one possible approach and adapt it to the stated constraints."
+          ],
+          "example": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+          "exampleFormat": "prose"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a keep/change decision with an uncertainty statement.",
+        "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Observations and alternate explanations are separate.",
+          "A recovery branch and review date are specified.",
+          "The worked response is used for comparison, with any justified alternative explained."
+        ]
+      },
+      "quiz": {
+        "question": "Which review is most honest?",
+        "options": [
+          "Describe observations, alternate explanations and the next decision",
+          "Claim a permanent habit from two weeks",
+          "Hide missed and unavailable opportunities"
+        ],
+        "correct": 0,
+        "explanation": "Describe observations, alternate explanations and the next decision fits the distinction in this lesson. Claim a permanent habit from two weeks overlooks the stated limits; Hide missed and unavailable opportunities substitutes an assumption for a feasible action."
+      },
+      "references": [
+        {
+          "title": "Gardner, Rebar & Lally (2022): tracking real-world habit formation",
+          "url": "https://discovery.ucl.ac.uk/id/eprint/10144814/",
+          "section": "Abstract: repetition, automaticity and measurement criteria",
+          "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
+          "reviewed": "2026-09-30"
+        }
+      ]
+    }
+  ]
+}
