@@ -447,6 +447,7 @@
         {
           "title": "Reconcile what remains before moving blocks",
           "paragraphs": [
+            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
             "Sam began with 11 project hours, eight for the event pack and three reserved. By Wednesday, four event hours are complete. An essential extra meeting removes two remaining hours. Start the revision from seven remaining hours, not the original eleven.",
             "Five hours now remain: four for event work and one uncommitted. If Lee's venue confirmation also slips past the print cutoff, spare effort cannot fix release. Separate reduced capacity from a missing prerequisite."
           ],
@@ -500,6 +501,7 @@
         {
           "title": "Change the message when the constraint changes",
           "paragraphs": [
+            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
             "Sam reports: \"The pack needs four more hours and I have five, but venue confirmation arrives after the print cutoff. I can finish confirmed content today; we need a decision on venue details.\" This identifies the constraint rather than saying only that the week is busy.",
             "The organiser explains that printed directions are essential for attendees unable to use the digital version. A digital-only substitute is not equivalent. Sam offers a confirmed alternative venue or a later distribution decision instead of assuming the first workaround is acceptable."
           ],
@@ -754,6 +756,7 @@
         {
           "title": "Choose an experiment that could disappoint you",
           "paragraphs": [
+            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
             "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. An earlier dependency request is a candidate improvement. The evidence does not justify rebuilding every part of the planning system.",
             "Next week Sam requests the key confirmation two working days earlier while keeping estimation unchanged. The observation is whether a usable answer arrives before the decision point. If the source cannot confirm earlier, the experiment may fail and a fallback release decision becomes more relevant."
           ],
@@ -793,14 +796,14 @@
     },
     {
       "id": "next-week-portfolio",
-      "title": "15. Prepare next week from the evidence",
+      "title": "15. Make a usable plan for next week",
       "stage": "advanced",
       "takeaway": "Carry forward lessons and commitments, not every unfinished item automatically.",
       "sections": [
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "The advanced project is a week portfolio: baseline, revision, event log, review and next-week proposal. Include links to the five companion topics and explain the concrete contribution of each. The portfolio is evidence of reasoning and adaptation; it is not a score of personal worth.",
+            "The final task is one usable next-week plan and one sentence explaining a change. Choose accepted work that fits, preserve needed recovery time, and name what you are deferring. A baseline, event log and five-topic portfolio are optional ways to explore your reasoning further; no topic IDs or written cross-references are required.",
             "Carry forward only work that is still relevant and accepted. Recheck deadlines and available capacity, keep recovery time and learning realistic, and name unresolved dependencies. Stop when you have a usable plan rather than polishing a tracker indefinitely."
           ]
         },
@@ -813,13 +816,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Write a five-topic explanation for the portfolio and state one conclusion the results do not support.",
-        "solution": "Time-attention-energy supplied capacity and suitable windows. Task-project-management supplied next actions and dependencies. Habits-behaviour-change supplied the small close-of-day routine. Self-awareness-communication supplied a factual trade-off request and reaction note. Learning-how-to-learn supplied a target, retrieval and later check. All outcomes in the filled sample are synthetic; an actual learner must record their own week before claiming personal improvement.",
+        "prompt": "Using the supplied seven-hour next-week capacity, choose work and reserve that fit. Explain one change from the previous week and name a condition that would make you revise the plan.",
+        "solution": "Plan the accepted four-hour task and keep three hours uncommitted. Defer the noticeboard redesign. I reduced the commitment because fixed work and carried routine tasks leave seven hours, not eleven. If the four-hour task grows or a required input is late, agree a scope or timing change. These are synthetic scenario numbers, not evidence of personal improvement.",
         "solutionFormat": "prose",
         "checks": [
-          "Each of five exact companion IDs is tied to a concrete action.",
-          "Synthetic outcomes are distinguished from actual learner evidence.",
-          "State the scenario-specific condition that would change the decision."
+          "Work and reserve fit the seven-hour budget without counting carried work twice.",
+          "One reason for the change and one revision condition are clear.",
+          "Synthetic facts are not presented as personal results."
         ]
       },
       "quiz": {
@@ -905,29 +908,29 @@
     {
       "id": "advanced",
       "title": "Review the week and choose an experiment",
-      "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+      "description": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
       "exitCriteria": [
-        "Observed 12 hours versus planned 11 is explained, not hidden.",
-        "Review includes outcome, cost and conditions without global self-judgement.",
-        "All five companion connections use a concrete action.",
-        "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+        "Chosen work and reserve fit the revised capacity.",
+        "One change has a reason grounded in the scenario.",
+        "Deferred work and an unresolved dependency remain visible.",
+        "Synthetic observations are distinguished from personal evidence."
       ],
       "project": {
-        "title": "Evidence, review and next-week experiment",
-        "brief": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+        "title": "One plan for next week",
+        "brief": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
         "requirements": [
-          "Use advanced-kit.md and review-and-next-week.md.",
-          "Reconcile observed seven pack hours, two urgent and three service hours.",
-          "Name the displaced optional visit and the three-of-five habit result.",
-          "Explain all five companion contributions and choose one next-week experiment with a review point."
+          "Use the seven-hour scenario in advanced-kit.md, or calculate your own available capacity.",
+          "Write the selected work, reserve and one deferral on a single page or note.",
+          "Add one sentence explaining a change and a condition that would make you revise it.",
+          "The larger review worksheet and five-topic portfolio are optional."
         ],
         "rubric": [
-          "Observed 12 hours versus planned 11 is explained, not hidden.",
-          "Review includes outcome, cost and conditions without global self-judgement.",
-          "All five companion connections use a concrete action.",
-          "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+          "Chosen work and reserve fit the revised capacity.",
+          "One change has a reason grounded in the scenario.",
+          "Deferred work and an unresolved dependency remain visible.",
+          "Synthetic observations are distinguished from personal evidence."
         ],
-        "solution": "The pack overrun displaced an optional visit mistakenly retained in the calendar. The sample records delivery, three of five habit occasions and cancelled Thursday learning, then removes deferred blocks and checks commitments Wednesday. See advanced-kit.md for the full evidence-led review and a new-week proposal.",
+        "solution": "The supplied next week has 35 - 14 - 12 - 2 = seven available hours. Choose the accepted four-hour task and three hours of reserve; defer the noticeboard redesign. Explain that fixed work and carried routine tasks reduced capacity. Check whether carried work is already in the routine estimate before subtracting it. See advanced-kit.md for an optional longer worked review.",
         "solutionFormat": "prose"
       }
     }

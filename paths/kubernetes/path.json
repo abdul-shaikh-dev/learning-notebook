@@ -153,11 +153,11 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "What does adding a second replica fail to guarantee?",
+        "question": "Which application property must be designed separately from Deployment replica reconciliation?",
         "options": [
-          "Two scheduled application instances",
-          "Shared, correct note storage across replicas",
-          "Controller replacement behavior"
+          "A controller attempting to reconcile the desired Pod count.",
+          "Shared, correct note storage across replicas.",
+          "Separate Pod identities for the requested replicas."
         ],
         "correct": 1,
         "explanation": "Shared, correct note storage across replicas. Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome."
@@ -606,8 +606,8 @@
         "question": "Which probe should normally represent temporary inability to serve work?",
         "options": [
           "Readiness",
-          "Every liveness dependency check",
-          "An image tag"
+          "Liveness that fails whenever a shared dependency is unavailable",
+          "Startup checks alone after initialization has finished"
         ],
         "correct": 0,
         "explanation": "Readiness. /ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill."
@@ -897,14 +897,14 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which setting directly removes ambient Linux capabilities?",
+        "question": "Which setting directly removes Linux capabilities?",
         "options": [
           "replicas:2",
           "capabilities.drop:[ALL]",
           "Service typeClusterIP"
         ],
         "correct": 1,
-        "explanation": "capabilities.drop: [ALL] removes ambient Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
+        "explanation": "capabilities.drop: [ALL] removes Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
       },
       "references": [
         {
@@ -1252,8 +1252,8 @@
         "question": "A running Pod can still have no Service traffic because?",
         "options": [
           "Readiness may fail even though its process runs",
-          "Running status guarantees every user operation succeeds",
-          "Its YAML filename is too short"
+          "Running status also means Ready=True for every container",
+          "The Service uses the Deployment name rather than Pod labels to choose endpoints"
         ],
         "correct": 0,
         "explanation": "A running process can fail its readiness probe, leaving its Pod ineligible for normal Service traffic. Inspect readiness and endpoints as well as process state; Running alone does not establish routability."

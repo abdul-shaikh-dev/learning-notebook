@@ -15,3 +15,17 @@ const vm=require('node:vm'),ctx={escapeText:s=>String(s).replaceAll('&','&amp;')
 for(const id of ids){const p=paths.find(x=>x.id===id);const link=ctx.bundleLink(p);assert(link.includes(p.resources.studio.href));assert(link.includes('Open interactive practice studio'));const bad=structuredClone(p);bad.resources.studio.href='javascript:alert(1)';assert(!ctx.bundleLink(bad).includes('javascript:'));}
 assert(ctx.lessonExample({}, {example:'A <sample>',exampleFormat:'prose'},0).includes('A &lt;sample&gt;'));assert(!ctx.lessonExample({}, {example:'A <sample>',exampleFormat:'prose'},0).includes('<pre'));
 console.log('PASS: six personal paths, lesson/stage resources, capacity edge cases, blocked-WIP policy, habit validation and private practice guardrails.');
+
+// The README entry must land in a published course, not the authoring directory.
+const readme=fs.readFileSync('README.md','utf8');
+const studioURL=readme.match(/https:\/\/[^\s)]+\/learning-notebook\/(paths\/[^\s)]+\/practice\/lab\.html)/);
+assert(studioURL,'README contains the published studio entry');
+assert(fs.existsSync(studioURL[1]));
+assert(paths.find(p=>studioURL[1].startsWith('paths/'+p.id+'/')).publicFiles.includes('practice/lab.html'));
+// ZIP copies keep the exact shared theme behavior without requiring notebook assets.
+assert(html.replaceAll('\r\n','\n').includes(fs.readFileSync('assets/js/notebook-theme.js','utf8').replaceAll('\r\n','\n')));
+assert(html.includes('data-theme-toggle aria-label="Dark mode"'));
+for(const [,src] of html.matchAll(/<script[^>]+src="([^"]+)"/g)){
+ assert(!src.includes('://')&&!src.includes('..'),'Studio scripts are portable within its practice directory');
+ assert(fs.existsSync('paths/time-attention-energy/practice/'+src));
+}

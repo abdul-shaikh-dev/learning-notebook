@@ -6,14 +6,13 @@ Friday shorter pack delivered with required details. Pack estimate six hours; ob
 
 Habit: close-of-day waiting note happened three of five workdays and identified one missing response. Learning: Tuesday initial attempt happened; Thursday cancelled; Friday optional question not attempted; next Monday check still pending. Sam felt worried after reserve was consumed and sent the factual decision request instead of promising every original outcome.
 
-## Exact tasks
+## Start here: one plan, one reason
 
-1. Compare planned and observed work using the supplied ledger. Explain the 12-versus-11 demand and the actual 34-hour day-level total.
-2. Record delivered, deferred, cancelled and pending items separately. Bring both deferred routine hours into next week's inventory.
-3. Write a review with one win, one cost, one condition and one repair. Separate feeling from factual capacity.
-4. Explain how all five companion paths informed a concrete action, using companion-map.md.
-5. Choose one next-week experiment with prediction, observations and a review date. Recheck new commitments rather than copying last week's 11-hour capacity.
-6. Complete review-and-next-week.md and grade all rubric criteria. For a real week, replace every synthetic observation with an actual record.
+Next week has 35 working hours, 14 fixed hours, 12 estimated routine hours and two additional carried routine hours. That leaves seven hours before reserve. The carried hours are not already included in the 12-hour estimate.
+
+Write a note with the work you choose, the time you leave uncommitted and one item you defer. Add one sentence explaining a change and a condition that would make you revise the plan. Check that the numbers fit. No portfolio, companion-topic IDs or grading sheet is required.
+
+For a longer optional exercise, reconcile the supplied week's 12-versus-11 demand, record the deferrals, and use review-and-next-week.md. The companion map can help you explore the ideas; written cross-references are optional.
 
 ## Worked review — synthetic
 
@@ -25,6 +24,6 @@ Experiment: remove deferred blocks before Monday starts; prediction is fewer acc
 
 Five links: time-attention-energy → seven-hour-day budget and suitable windows; task-project-management → Lee dependency and concrete pack actions; habits-behaviour-change → three-minute waiting note and fallback; self-awareness-communication → worry acknowledged plus owner decision request; learning-how-to-learn → closed-source target and delayed check.
 
-## Rubric
+## Optional self-check
 
-0 missing / 1 partial / 2 complete: observed time and all deferrals reconciled; outcome/cost/conditions reviewed without global self-judgement; five concrete companion connections; feasible next-week proposal with actual/pending distinction. All four need 2. A completed fictional review demonstrates scenario reasoning; only a real subsequent week can supply personal experiment results.
+Does the plan fit the stated capacity? Does the reason explain a useful change? Are deferred work and a revision condition visible? Stop when the plan is usable. A fictional plan demonstrates scenario reasoning; only an actual week can provide personal results.

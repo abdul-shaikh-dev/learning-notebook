@@ -486,9 +486,10 @@
         {
           "title": "Rollback after a uniqueness conflict",
           "paragraphs": [
-            "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally."
+            "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally.",
+            "This snippet assumes the reference connection's default legacy transaction control: INSERT opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With autocommit=True, the context does not make these writes atomic. Set the transaction policy deliberately."
           ],
-          "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Context commits on success or rolls back on exception.\n# close the connection separately; context does not close it."
+          "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Assumes transaction-enabled connection; INSERT opens the transaction.\n# Context commits or rolls back that open transaction.\n# close the connection separately; context does not close it."
         },
         {
           "title": "Durability and external boundaries",

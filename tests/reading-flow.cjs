@@ -32,3 +32,9 @@ for(const p of paths)for(const l of p.lessons)for(const s of l.sections)if(s.exa
 const saveCode=finance.slice(finance.indexOf('function save()'),finance.indexOf('function progress()'));
 const recovery={localStorage:{setItem(){throw Error('blocked');}}};vm.createContext(recovery);vm.runInContext("const KEY='test';let state={},storageOK=true;function progress(){}\n"+saveCode,recovery);recovery.save();assert.equal(vm.runInContext('storageOK',recovery),false);recovery.localStorage.setItem=()=>{};recovery.save();assert.equal(vm.runInContext('storageOK',recovery),true);
 console.log(`PASS: reading continuation, storage failure, ${paths.length} course overviews, ${diagrams} visible diagram narratives, ${visuals} readable motion scenarios and direct task links.`);
+
+for(const p of paths)for(const l of p.lessons)if(l.diagram){
+ const screen=ctx.diagramView(l),print=ctx.diagramView(l,true);
+ assert.match(screen,/<details class="mermaid-text" data-diagram-alternative>/,'Screen alternative starts collapsed');
+ assert(!print.includes('<summary>Full diagram description'),'Print does not hide the alternative in a disclosure');
+}

@@ -724,7 +724,7 @@
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           ]
         },
         {
@@ -748,7 +748,7 @@
         ]
       },
       "quiz": {
-        "question": "Which evidence challenges the 40-minute prediction?",
+        "question": "What supports a realistic completion estimate?",
         "options": [
           "Durations of comparable completed drafts",
           "The hope to finish sooner",
@@ -764,6 +764,13 @@
           "section": "Original 1994 experiments on completion-time predictions",
           "reviewed": "2026-09-30",
           "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+        },
+        {
+          "title": "Buehler, Griffin and Ross: original article, university-hosted full text",
+          "url": "https://bear.warrington.ufl.edu/brenner/mar7588/Papers/buehler-et-al-1994.pdf",
+          "section": "General discussion, journal page 380: directional optimism versus absolute accuracy",
+          "reviewed": "2026-10-02",
+          "scope": "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
         }
       ]
     },
@@ -785,7 +792,7 @@
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           ]
         },
         {
@@ -825,6 +832,13 @@
           "section": "Original 1994 experiments on completion-time predictions",
           "reviewed": "2026-09-30",
           "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+        },
+        {
+          "title": "Buehler, Griffin and Ross: original article, university-hosted full text",
+          "url": "https://bear.warrington.ufl.edu/brenner/mar7588/Papers/buehler-et-al-1994.pdf",
+          "section": "General discussion, journal page 380: directional optimism versus absolute accuracy",
+          "reviewed": "2026-10-02",
+          "scope": "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
         }
       ]
     },
@@ -898,7 +912,7 @@
         {
           "title": "Evidence and adaptation",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
           ]
         }
       ],
@@ -926,9 +940,9 @@
         {
           "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
           "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
-          "section": "Field study of suspension and resumption; context-specific evidence",
-          "reviewed": "2026-09-30",
-          "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          "section": "PDF pages 8–9: summary of findings, design implications and future work",
+          "reviewed": "2026-10-02",
+          "scope": "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
         }
       ]
     },

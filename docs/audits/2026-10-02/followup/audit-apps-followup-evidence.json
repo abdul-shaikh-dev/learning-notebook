@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-02",
+  "scope": "Close the AI LangGraph and .NET 10 execution gaps from the prior content audit",
+  "historicalAuditUnchanged": true,
+  "repositoryChanges": [],
+  "environments": {
+    "python": "C:/Users/abdul/OneDrive/Documents/New project/research-pack-stage/.offline-restore-check/Scripts/python.exe",
+    "packages": {"langgraph": "1.2.12", "langchain": "1.4.3", "langchain-openai": "1.6.7", "deepagents": "0.7.21"},
+    "dotnet": "C:/Users/abdul/OneDrive/Documents/New project/curriculum-fixes/dotnet10/dotnet.exe",
+    "sdk": "10.0.401",
+    "installation": "Reused existing isolated environments; no global installation or dependency pin changes. NuGet restore allowed for official pinned dependencies."
+  },
+  "checks": [
+    {
+      "command": "<existing venv python> -m unittest discover -p test*.py -v",
+      "cwd": "G:/Projects/2026/learn/learning-notebook/paths/ai-agents",
+      "result": "passed",
+      "tests": 33,
+      "previousGap": "The four missing-langgraph errors are resolved in the pinned environment.",
+      "coverage": ["Actual LangGraph routing", "No-evidence termination without drafting", "Valid first answer", "Bad-then-good revision", "Two failed drafts terminate", "Citation-membership limitation", "Workshop policy and tool boundaries", "Offline/stubbed provider evaluation"]
+    },
+    {
+      "command": "<existing venv python> local_framework_lab.py",
+      "result": "passed",
+      "observed": {"attempts": 1, "status": "citation_valid", "draft": "Imports roll back on failure [D1]."},
+      "mode": "Deterministic graph, no live model request"
+    },
+    {
+      "command": "python scripts/verify-dotnet.py (existing .NET 10.0.401 prepended to process PATH)",
+      "cwd": "G:/Projects/2026/learn/learning-notebook",
+      "result": "passed",
+      "exitCode": 0,
+      "builds": ["net10.0 Foundation", "net10.0 Api", "net10.0 Acceptance", "Pinned net10.0 PersistenceChecks"],
+      "assertions": {"foundation": 4, "sqliteAndTestHostAuthorization": 15, "realLoopbackHttpAcceptance": 11},
+      "coverage": ["SQLite persistence across complete host restart", "Unauthenticated401 and missing-permission403", "Cross-owner read/write rejection", "Stale-version409", "Constraint failure rollback", "Validation and bounded pagination", "Concurrent unique create identifiers"],
+      "expectedDiagnostic": "EF logs a UNIQUE constraint error for Audits.EventKey in the deliberately injected rollback case; the assertion suite passes afterward.",
+      "initialAttempt": "Sandbox package restore failed due to blocked socket access; authorized escalated rerun restored dependencies and passed."
+    }
+  ],
+  "confirmedNewDefects": [],
+  "remainingLimits": [
+    "No live LLM, LangSmith Fleet workspace, paid provider, or real identity provider exercised.",
+    "The .NET persistence suite uses SQLite and test-only authentication; it does not establish SQL Server or production authentication behavior.",
+    "Passing these suites closes the named execution gaps, not every possible deployment or factual-validation gap."
+  ]
+}

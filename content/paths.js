@@ -2008,14 +2008,14 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Where must a fencing token be enforced to prevent stale writes?",
+          "question": "Worker A holds token 7, its lease expires, and worker B receives token 8. Where must token 7 be rejected when A returns with a delayed write?",
           "options": [
-            "Only in an informational log line.",
-            "At the protected resource boundary.",
-            "Only in the model prompt."
+            "In a lease check performed only before A starts its work",
+            "At the protected resource, atomically with accepting or rejecting the write",
+            "Only in checkpoint compare-and-swap, while the external write remains unconditional"
           ],
           "correct": 1,
-          "explanation": "A token prevents nothing unless the receiver rejects outdated authority. Logging or displaying it is insufficient."
+          "explanation": "The protected resource must reject a stale token at the write boundary. An earlier lease check can become stale, and checkpoint fencing alone cannot protect a separate unconditional external effect."
         },
         "references": [
           {
@@ -3038,7 +3038,7 @@ const LEARNING_PATHS = [
       "Download workshop.py and test_workshop.py into one folder and run python -m unittest -v test_workshop.py.",
       "Run python workshop.py for the deterministic demonstration. The scripted source emits prepared proposals, not model-generated decisions.",
       "Download evaluation_cases.json and README.md for the project rubric and live-integration boundary checklist.",
-      "No live requests, credentials, package installation or cloud provisioning are part of this path."
+      "The standard-library workshop needs no credentials, package installation or live requests. The optional local-framework guide installs pinned LangChain, LangGraph and Deep Agents packages and can call an explicitly selected loopback llama.cpp server; it does not require cloud provisioning."
     ],
     "nextSteps": [
       "Complete the Agent Harnesses path to deepen executor, persistence, replay and operational design.",
@@ -6722,7 +6722,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Write a state-changing endpoint contract covering authentication, CSRF, authorization and validation in a safe order. Use security_http.py and test_security_http.py to observe denied PATCH requests and unchanged SQLite rows.",
-          "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. Add real browser/HTTP tests separately; local token comparisons do not establish route integration.",
+          "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. The supplied HTTP tests exercise route integration. Add real browser and identity-provider tests separately; local token comparisons alone do not establish those boundaries.",
           "solutionFormat": "prose",
           "checks": [
             "Missing and cross-session tokens fail.",
@@ -8038,7 +8038,7 @@ const LEARNING_PATHS = [
           {
             "title": "Verification matrix and integration",
             "paragraphs": [
-              "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. It has no HTTP server or crypto validator.",
+              "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate test_security_http.py suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
               "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
             ],
             "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"
@@ -8802,7 +8802,7 @@ const LEARNING_PATHS = [
               "State the method's contract: for example quantity and price must be nonnegative. Validate at the boundary rather than silently producing impossible results.",
               "Parameters are passed by value by default. For a reference type the copied value is a reference, so mutating an object's contents can still affect its caller. Avoid hidden mutation when a return value is enough."
             ],
-            "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0 || price < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Values must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
+            "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Quantity must be nonnegative\");\n    if (price < 0)\n        throw new ArgumentOutOfRangeException(nameof(price), \"Price must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
           },
           {
             "title": "Choose return and failure contracts together",
@@ -13266,7 +13266,7 @@ const LEARNING_PATHS = [
             "title": "Read the action before reading the totals",
             "paragraphs": [
               "Suppose a plan contains one tag update and one database replacement. The summary says two resources change, but only the replacement crosses the data-lifetime boundary. Read the address, before/after fields, action order and replacement reason. An unknown endpoint is normal during creation; an unknown backup destination is a missing recovery assumption. Neither observation is resolved by counting plus signs.",
-              "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. There is no provider, provisioner, cloud resource or cost. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
+              "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. The terraform_data resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
             ],
             "example": "initial: [create], exit 2\nafter local apply: [no-op], exit 0\ninput v1 -> v2: [update], exit 2\nidentity-1 -> identity-2: [delete, create], exit 2",
             "exampleFormat": "prose"
@@ -13716,9 +13716,9 @@ const LEARNING_PATHS = [
           {
             "title": "Invented teaching rates",
             "paragraphs": [
-              "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses."
+              "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB retained for one month equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses."
             ],
-            "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB = 4\n# Not Azure pricing or a bill forecast."
+            "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB * 1 month = 4\n# Not Azure pricing or a bill forecast."
           }
         ],
         "quiz": {
@@ -15025,9 +15025,10 @@ const LEARNING_PATHS = [
           {
             "title": "Rollback after a uniqueness conflict",
             "paragraphs": [
-              "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally."
+              "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally.",
+              "This snippet assumes the reference connection's default legacy transaction control: INSERT opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With autocommit=True, the context does not make these writes atomic. Set the transaction policy deliberately."
             ],
-            "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Context commits on success or rolls back on exception.\n# close the connection separately; context does not close it."
+            "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Assumes transaction-enabled connection; INSERT opens the transaction.\n# Context commits or rolls back that open transaction.\n# close the connection separately; context does not close it."
           },
           {
             "title": "Durability and external boundaries",
@@ -17045,7 +17046,7 @@ const LEARNING_PATHS = [
               "items": [
                 "index = 3"
               ],
-              "explanation": "Two comparisons found the target. This does not imply every search takes two comparisons."
+              "explanation": "Two loop iterations found the target. The code performs three value comparisons: equality and less-than for 8, then equality for 12. Other searches can take more iterations."
             }
           ]
         },
@@ -21215,7 +21216,7 @@ const LEARNING_PATHS = [
           {
             "title": "Build stages and runtime files",
             "paragraphs": [
-              "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes the same local suite, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
+              "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes test_release_app.py, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
             ]
           },
           {
@@ -23494,6 +23495,13 @@ const LEARNING_PATHS = [
             "section": "Introduction and catalog organization",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
+            "url": "https://www.informit.com/articles/article.aspx?p=1404056",
+            "section": "Authors discuss designing for change and refactoring toward patterns",
+            "reviewed": "2026-10-02",
+            "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
           }
         ]
       },
@@ -24172,6 +24180,13 @@ const LEARNING_PATHS = [
             "section": "Factory Method and Abstract Factory",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "GoF: Abstract Factory, publisher excerpt",
+            "url": "https://www.informit.com/articles/article.aspx?p=1398599",
+            "section": "Intent, consequences and implementation",
+            "reviewed": "2026-10-02",
+            "scope": "Original chapter excerpt supports related product families and overridable factory methods. The simple Python selection function remains a course adaptation."
           }
         ],
         "diagram": {
@@ -24471,6 +24486,13 @@ const LEARNING_PATHS = [
             "section": "Adapter",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "GoF: Adapter, publisher excerpt",
+            "url": "https://www.informit.com/articles/article.aspx?p=1398600",
+            "section": "Intent and motivation; applicability on page 2",
+            "reviewed": "2026-10-02",
+            "scope": "Original excerpt supports interface translation and object composition. Seconds-to-minutes validation and rounding are course-specific policies."
           }
         ],
         "visual": {
@@ -25197,7 +25219,7 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
-              "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and integer minute values already validated at creation."
+              "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and nonnegative integer minute values supplied by the caller. The dataclass constructors do not validate those values."
             ]
           },
           {
@@ -25840,7 +25862,7 @@ const LEARNING_PATHS = [
             "title": "Contract and collaboration",
             "paragraphs": [
               "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
-              "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
+              "Compare Observer, which notifies registered subscribers under an explicit failure policy, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
             ]
           },
           {
@@ -25853,7 +25875,7 @@ const LEARNING_PATHS = [
           {
             "title": "Compare failure and fan-out contracts",
             "paragraphs": [
-              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
             ]
           }
         ],
@@ -25862,7 +25884,7 @@ const LEARNING_PATHS = [
           "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
           "checks": [
             "The first accepting handler prevents later handlers from running.",
-            "Observer broadcasts to every subscriber.",
+            "Observer attempts notification in subscriber order; this fail-fast example skips later subscribers after an exception.",
             "Decline, valid falsey result and failure are distinct."
           ]
         },
@@ -25883,6 +25905,13 @@ const LEARNING_PATHS = [
             "section": "Chain Of Responsibility",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "GoF: Chain of Responsibility, publisher excerpt",
+            "url": "https://www.informit.com/articles/article.aspx?p=1398601",
+            "section": "Participants, collaborations and consequences",
+            "reviewed": "2026-10-02",
+            "scope": "Original excerpt supports forwarding until a handler accepts and possible unhandled requests. None, LookupError and exception propagation are this course implementation contract."
           }
         ],
         "diagram": {
@@ -26878,6 +26907,13 @@ const LEARNING_PATHS = [
             "section": "How to use a design pattern",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "Martin Fowler: Definition of refactoring",
+            "url": "https://martinfowler.com/bliki/DefinitionOfRefactoring.html",
+            "section": "Definition of refactoring",
+            "reviewed": "2026-10-02",
+            "scope": "Author definition supports behavior-preserving restructuring; local examples executed separately."
           }
         ],
         "diagram": {
@@ -27040,6 +27076,13 @@ const LEARNING_PATHS = [
             "section": "How to select a design pattern",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          },
+          {
+            "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
+            "url": "https://www.informit.com/articles/article.aspx?p=1404056",
+            "section": "Authors discuss designing for change and refactoring toward patterns",
+            "reviewed": "2026-10-02",
+            "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
           }
         ]
       }
@@ -27797,7 +27840,7 @@ const LEARNING_PATHS = [
             "SQL Server Management Studio"
           ],
           "correct": 0,
-          "explanation": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md."
+          "explanation": "npm ci installs from the existing lockfile and fails when it disagrees with package.json. Use the same relevant npm configuration that created the lockfile."
         },
         "references": [
           {
@@ -27845,7 +27888,7 @@ const LEARNING_PATHS = [
             "Only when the title field is validated."
           ],
           "correct": 0,
-          "explanation": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list."
+          "explanation": "Browser code and configuration are visible to the user. Keep database credentials on the server; the API validates requests and enforces authorization before accessing SQL."
         },
         "references": [
           {
@@ -28057,7 +28100,7 @@ const LEARNING_PATHS = [
             "A database login identifier."
           ],
           "correct": 0,
-          "explanation": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express."
+          "explanation": "Version is incremented by the application after a successful update. Matching the expected version in the write predicate detects a stale update; it is not a clock or login identifier."
         },
         "references": [
           {
@@ -28105,7 +28148,7 @@ const LEARNING_PATHS = [
             "Whenever loading starts."
           ],
           "correct": 0,
-          "explanation": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension."
+          "explanation": "Keep the draft until the create response has succeeded and passed runtime validation. Clearing it before that point loses the learner's input when the request fails."
         },
         "references": [
           {
@@ -28249,7 +28292,7 @@ const LEARNING_PATHS = [
             "The record can never have been created."
           ],
           "correct": 0,
-          "explanation": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears."
+          "explanation": "Aborting stops the client fetch from completing normally, but the server may already have committed. Reconcile the operation outcome before retrying a mutation."
         },
         "references": [
           {
@@ -28297,7 +28340,7 @@ const LEARNING_PATHS = [
             "A URL query parameter sent to every browser."
           ],
           "correct": 0,
-          "explanation": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior."
+          "explanation": "The API reads its connection string from server configuration or secret storage. Putting it in browser source or URLs exposes credentials to clients and logs."
         },
         "references": [
           {
@@ -28345,7 +28388,7 @@ const LEARNING_PATHS = [
             "Only for uniqueidentifier IDs."
           ],
           "correct": 0,
-          "explanation": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values."
+          "explanation": "Parameters keep values separate from SQL syntax. They do not establish who owns a record; the API must derive identity from trusted authentication and enforce ownership in its access rules."
         },
         "references": [
           {
@@ -28376,11 +28419,11 @@ const LEARNING_PATHS = [
             ]
           },
           {
-            "title": "Preserve the draft after a stale update",
+            "title": "Extension: preserve an edit draft after a stale update",
             "paragraphs": [
-              "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A's row. The UI should keep B's unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
-              "Run two independent clients against the local reference with the same initial version. Check that only one update succeeds, then read the stored row through a third request. In the UI, enter a draft before injecting a 409. Check that the draft survives, the error appears and the stored winning update remains unchanged.",
-              "Extend planner-ui.test.tsx with controllable responses: first load version 4, return conflict on save, then offer version 5 on explicit refresh. A changed case edits different fields; explain why automatic merging still needs a stated field-level policy."
+              "The reference UI creates sessions and toggles completion; it does not yet edit an existing title or minutes. After adding an editor, try this case: two tabs read version 4. A changes the title and receives version 5. B submits version 4 with a minutes edit. The API must return a conflict and retain A's row. Keep B's unsaved minutes visible while offering deliberate reload or reconciliation. Automatically resending with version 5 would silently overwrite another decision.",
+              "In the existing reference, run two independent clients with the same initial version and check that only one update succeeds. Read the winning row through a third request. In the UI, enter a new-session draft before a completion toggle receives an injected 409; verify that draft and the displayed row survive and the conflict message appears.",
+              "After implementing the existing-session editor, extend planner-ui.test.tsx with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
             ]
           }
         ],
@@ -28549,7 +28592,7 @@ const LEARNING_PATHS = [
             "Only when XACT_ABORT is enabled."
           ],
           "correct": 0,
-          "explanation": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment."
+          "explanation": "SQL rollback covers changes in that database transaction, not an email already sent. A transactional outbox can record delivery intent with the data change, while delivery still needs retries and deduplication."
         },
         "references": [
           {
@@ -28605,7 +28648,7 @@ const LEARNING_PATHS = [
             "Retry must produce exactly one task without extra design."
           ],
           "correct": 0,
-          "explanation": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key."
+          "explanation": "A timeout does not establish whether the server committed. Reconcile a durable operation identity; an idempotency key and matching payload can make a retry safe only when the server implements that contract."
         },
         "references": [
           {
@@ -28769,7 +28812,7 @@ const LEARNING_PATHS = [
             "Yes; GUIDs are hard to guess."
           ],
           "correct": 0,
-          "explanation": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+          "explanation": "A caller can alter request fields. Derive the owner from verified identity and enforce that owner on reads and writes; a hidden field or hard-to-guess ID is not authorization."
         },
         "references": [
           {
@@ -28896,7 +28939,7 @@ const LEARNING_PATHS = [
             "Yes, when the request is JSON."
           ],
           "correct": 0,
-          "explanation": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy."
+          "explanation": "CORS controls browser access to cross-origin responses. It does not authenticate a person, and non-browser clients are not constrained by it. Authentication and authorization remain API responsibilities."
         },
         "references": [
           {
@@ -28944,7 +28987,7 @@ const LEARNING_PATHS = [
             "A SQL SELECT count alone."
           ],
           "correct": 0,
-          "explanation": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately."
+          "explanation": "Passing malformed values through decodeTask directly checks the runtime boundary. A valid screenshot or database count cannot show that the decoder rejects invalid fields."
         },
         "references": [
           {
@@ -29040,7 +29083,7 @@ const LEARNING_PATHS = [
             "It makes database migrations reversible automatically."
           ],
           "correct": 0,
-          "explanation": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained."
+          "explanation": "Promoting the same artifact preserves which bytes were tested. Rebuilding can produce different bytes; configuration, migration compatibility and rollback still require their own checks."
         },
         "references": [
           {
@@ -38105,11 +38148,11 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "What does adding a second replica fail to guarantee?",
+          "question": "Which application property must be designed separately from Deployment replica reconciliation?",
           "options": [
-            "Two scheduled application instances",
-            "Shared, correct note storage across replicas",
-            "Controller replacement behavior"
+            "A controller attempting to reconcile the desired Pod count.",
+            "Shared, correct note storage across replicas.",
+            "Separate Pod identities for the requested replicas."
           ],
           "correct": 1,
           "explanation": "Shared, correct note storage across replicas. Authentication, authorization, transaction/idempotency rules, compatible schemas and recoverable data remain application/service responsibilities. Kubernetes can restart a broken process but cannot infer the correct business outcome."
@@ -39651,8 +39694,8 @@ const LEARNING_PATHS = [
           "question": "Which probe should normally represent temporary inability to serve work?",
           "options": [
             "Readiness",
-            "Every liveness dependency check",
-            "An image tag"
+            "Liveness that fails whenever a shared dependency is unavailable",
+            "Startup checks alone after initialization has finished"
           ],
           "correct": 0,
           "explanation": "Readiness. /ready becomes503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill."
@@ -40462,14 +40505,14 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which setting directly removes ambient Linux capabilities?",
+          "question": "Which setting directly removes Linux capabilities?",
           "options": [
             "replicas:2",
             "capabilities.drop:[ALL]",
             "Service typeClusterIP"
           ],
           "correct": 1,
-          "explanation": "capabilities.drop: [ALL] removes ambient Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
+          "explanation": "capabilities.drop: [ALL] removes Linux capabilities from the container. Non-root execution, writable-path permissions and filesystem restrictions are separate controls and must be tested together."
         },
         "references": [
           {
@@ -40989,8 +41032,8 @@ const LEARNING_PATHS = [
           "question": "A running Pod can still have no Service traffic because?",
           "options": [
             "Readiness may fail even though its process runs",
-            "Running status guarantees every user operation succeeds",
-            "Its YAML filename is too short"
+            "Running status also means Ready=True for every container",
+            "The Service uses the Deployment name rather than Pod labels to choose endpoints"
           ],
           "correct": 0,
           "explanation": "A running process can fail its readiness probe, leaving its Pod ineligible for normal Service traffic. Inspect readiness and endpoints as well as process state; Running alone does not establish routability."
@@ -41813,9 +41856,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -41863,9 +41906,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
-            "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
-            "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
-            "reviewed": "2026-09-30",
+            "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+            "section": "Author-hosted full text; experiments 1 and 2 and general discussion",
+            "reviewed": "2026-10-02",
             "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
           }
         ]
@@ -41913,10 +41956,17 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
-            "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
-            "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
-            "reviewed": "2026-09-30",
+            "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+            "section": "Author-hosted full text; experiments 1 and 2 and general discussion",
+            "reviewed": "2026-10-02",
             "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+          },
+          {
+            "title": "Dunlosky et al. (2013): Practice testing with feedback",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Section 8: practice testing, feedback and implementation",
+            "reviewed": "2026-10-02",
+            "scope": "Supports the correction step. Roediger and Karpicke (2006) used recall testing without feedback; this combined classroom routine is an adaptation."
           }
         ],
         "diagram": {
@@ -42063,9 +42113,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -42116,9 +42166,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
-            "url": "https://escholarship.org/uc/item/3rr6q10c",
-            "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
-            "reviewed": "2026-09-30",
+            "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+            "section": "University repository manuscript; inter-study interval analyses and discussion",
+            "reviewed": "2026-10-02",
             "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
           }
         ],
@@ -42245,9 +42295,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
-            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
-            "reviewed": "2026-09-30",
+            "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+            "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
+            "reviewed": "2026-10-02",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
           }
         ]
@@ -42295,9 +42345,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -42348,9 +42398,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -42376,7 +42426,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Arrange six practice cases that force choosing between the three request routes. Explain why labels should be removed.",
+          "prompt": "Arrange six practice cases that force choosing between the three request categories and their two approval routes. Explain why category labels should be removed.",
           "solution": "Use planned one-day, urgent one-day, planned three-day, planned one-day, planned two-day, urgent one-day. Remove category headings so the learner must read the details and choose. Keep answers in a separate key; mixing without knowing the basic rules may only produce confusion.",
           "solutionFormat": "prose",
           "checks": [
@@ -42402,6 +42452,13 @@ const LEARNING_PATHS = [
             "section": "Mathematics practice experiments comparing massed/spaced and blocked/shuffled problems",
             "reviewed": "2026-09-30",
             "scope": "College mathematics experiments; mixing related categories is different from switching unrelated work every few minutes."
+          },
+          {
+            "title": "Dunlosky et al. (2013): Interleaved practice",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Sections 10.4 and 10.5",
+            "reviewed": "2026-10-02",
+            "scope": "Broader review describes initial practice followed by mixing related problems and rates evidence as moderate. It does not establish a benefit for every task."
           }
         ],
         "diagram": {
@@ -42759,10 +42816,17 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-            "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
-            "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
-            "reviewed": "2026-09-30",
+            "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+            "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
+            "reviewed": "2026-10-02",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          },
+          {
+            "title": "Roediger & Karpicke (2006): Predicted and delayed performance",
+            "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+            "section": "General discussion: predictions versus performance after a week",
+            "reviewed": "2026-10-02",
+            "scope": "Supports checking confidence against delayed results. Does not validate the low/medium/high worksheet or a diagnostic cutoff."
           }
         ]
       },
@@ -42809,9 +42873,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
-            "url": "https://doi.org/10.1037/0003-066X.54.7.493",
-            "section": "Implementation intentions: linking specified situations to goal-directed responses",
-            "reviewed": "2026-09-30",
+            "url": "https://www.socmot.uni-konstanz.de/sites/default/files/99_Gollwitzer_Implementation_Intentions.pdf",
+            "section": "Author university full text; implementation-intention framework",
+            "reviewed": "2026-10-02",
             "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
           }
         ]
@@ -42859,10 +42923,17 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          },
+          {
+            "title": "Pashler et al. (2008), Learning Styles: Concepts and Evidence",
+            "url": "https://www.psychologicalscience.org/journals/pspi/j.1539-6053.2009.01038.x/",
+            "section": "Evidence required for matching instruction to assessed learning styles",
+            "reviewed": "2026-10-02",
+            "scope": "Review distinguishes format preferences from evidence for the learning-styles matching hypothesis. It does not dismiss accessibility needs."
           }
         ]
       },
@@ -43041,9 +43112,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
-            "url": "https://escholarship.org/uc/item/3rr6q10c",
-            "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
-            "reviewed": "2026-09-30",
+            "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+            "section": "University repository manuscript; inter-study interval analyses and discussion",
+            "reviewed": "2026-10-02",
             "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
           }
         ]
@@ -43091,9 +43162,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -43170,7 +43241,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Write a four-sentence portfolio conclusion for a learner who improves from one of four to three of four and fails the changed-context case.",
-          "solution": "I answered one of four baseline cases and three of four comparable delayed cases after two practice occasions. I still missed the urgency exception once. I did not correctly apply the principle in the changed booking context, so transfer is not established. Next I will check the new rule and attempt a fresh changed case after feedback.",
+          "solution": "I answered one of four baseline cases and three of four comparable later cases. One answer remains incorrect, so I need to inspect that item before choosing a repair. I did not correctly apply the principle in the changed booking context, so transfer is not established. Next I will check the new rule and attempt a fresh changed case after feedback.",
           "solutionFormat": "prose",
           "checks": [
             "Conclusion retains counts one of four and three of four.",
@@ -43241,9 +43312,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-            "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-            "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-            "reviewed": "2026-09-30",
+            "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+            "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+            "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
         ]
@@ -44126,7 +44197,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The importer prints a helpful message but exits 1 when validation fails. Automation should inspect the exit status as well as output. A shell command not found is different from an application rejecting input."
             ],
-            "example": "python3 -c \"import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)\"\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
+            "example": "python3 -c 'import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)'\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
           },
           {
             "title": "PID reuse and effect evidence",
@@ -44181,7 +44252,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A service might find a different python than your interactive shell. Record the absolute interpreter path and configuration source. A DATABASE_URL in an environment is configuration, but still sensitive and should not be printed into a troubleshooting report."
             ],
-            "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c \"import os; print(os.environ[\"NOTEBOOK_MODE\"])\"\n# Expect practice, without permanent shell modification."
+            "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c 'import os; print(os.environ[\"NOTEBOOK_MODE\"])'\n# Expect practice, without permanent shell modification."
           },
           {
             "title": "Running children and secret exposure",
@@ -48072,9 +48143,9 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "At t=15, which result matches the model?",
           "options": [
-            "Return cached address forever",
+            "Return the old address until a new one is explicitly inserted",
             "No cached answer",
-            "Open an encrypted connection"
+            "Return the old address once more because expiry comparisons use greater-than only"
           ],
           "correct": 1,
           "explanation": "This model expires the entry at now equal to its expiry; it does not keep stale data indefinitely."
@@ -48212,8 +48283,8 @@ const LEARNING_PATHS = [
           "question": "Why is one socket read insufficient as a general parser?",
           "options": [
             "Stream chunks need not match messages",
-            "TCP changes JSON fields",
-            "Ports define JSON length"
+            "A successful sendall forces the peer to return exactly that many bytes in its next recv",
+            "Receiving fewer bytes than requested always means the peer has finished its message"
           ],
           "correct": 0,
           "explanation": "TCP is a stream: reads may split or combine application messages."
@@ -48292,7 +48363,7 @@ const LEARNING_PATHS = [
           {
             "title": "Decoding and byte length",
             "paragraphs": [
-              "The supplied decoder passes bytes to Python's JSON reader and rejects decoding/syntax failures. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
+              "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to json.loads would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
             ],
             "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
           }
@@ -48404,7 +48475,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Does a 404 identify a DNS failure?",
-          "solution": "No. It is an HTTP response from a server. Check the requested target or route; DNS already resolved enough for the exchange to happen.",
+          "solution": "No. A 404 is an HTTP response from a server or intermediary, not a DNS error. Check the target or route and which component answered. It does not prove a fresh DNS lookup occurred: the client may use a literal IP address, a cached answer, an existing connection or a proxy.",
           "solutionFormat": "prose",
           "checks": [
             "Identify the evidence supplied by the response and the layer that produced it.",
@@ -48461,11 +48532,11 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which alone justifies retrying an uncertain POST?",
+          "question": "Which provides the missing duplicate-effect protection for retrying an uncertain POST, once retryability and attempt/time budgets are also satisfied?",
           "options": [
-            "A timeout",
+            "A timeout after the request was sent",
             "A documented deduplication contract for that operation",
-            "A long TTL"
+            "An HTTP 5xx response regardless of the endpoint contract"
           ],
           "correct": 1,
           "explanation": "An uncertain POST needs its operation-specific deduplication contract; a timeout alone is insufficient."
@@ -48845,7 +48916,7 @@ const LEARNING_PATHS = [
           {
             "title": "Freshness and storage rules",
             "paragraphs": [
-              "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while private restricts shared-cache reuse. Our SharedCache is a deliberately small offline model with an explicit private flag."
+              "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our SharedCache is a deliberately small offline model with an explicit private flag."
             ]
           },
           {
@@ -48918,8 +48989,8 @@ const LEARNING_PATHS = [
           "question": "Where does the body after a legitimate 304 come from?",
           "options": [
             "The cached representation",
-            "The 304 content",
-            "DNS storage"
+            "The 304 response body after JSON decoding",
+            "A fresh representation generated from the ETag value"
           ],
           "correct": 0,
           "explanation": "A 304 validates an existing stored representation and does not supply a new body."
@@ -50457,8 +50528,8 @@ const LEARNING_PATHS = [
           "question": "Which signal naturally connects work across services?",
           "options": [
             "A distributed trace with related spans.",
-            "A single average CPU gauge.",
-            "An unlabeled screenshot of a dashboard."
+            "A per-service duration histogram without request correlation.",
+            "Independent service logs with no shared request context."
           ],
           "correct": 0,
           "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
@@ -50712,8 +50783,8 @@ const LEARNING_PATHS = [
           "question": "Which is a saturation signal?",
           "options": [
             "Database connection pool occupancy and wait.",
-            "The name of the latest release.",
-            "A count of documentation pages."
+            "Completed database queries per second alone.",
+            "The proportion of application responses returning 5xx alone."
           ],
           "correct": 0,
           "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
@@ -50771,8 +50842,8 @@ const LEARNING_PATHS = [
           "question": "Why should parent and child durations not simply be added?",
           "options": [
             "Child elapsed time is already inside the parent and may overlap other children.",
-            "Every span always lasts the same amount.",
-            "Traces contain only counter values."
+            "Child spans measure CPU exclusively, while parents measure elapsed time.",
+            "A parent always starts after all of its children finish."
           ],
           "correct": 0,
           "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it."
@@ -51092,8 +51163,8 @@ const LEARNING_PATHS = [
           "question": "Does hashing a unique ID solve metric cardinality?",
           "options": [
             "No; unique hashes still create distinct label values.",
-            "Yes; all hashes become one time series.",
-            "Only if the hash is printed in hexadecimal."
+            "Yes; equal-length hashes necessarily share one label value.",
+            "Yes; hashing removes cardinality costs because the original identifier is hidden."
           ],
           "correct": 0,
           "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
@@ -51572,8 +51643,8 @@ const LEARNING_PATHS = [
           "question": "Does tracemalloc measure all process memory?",
           "options": [
             "No; its tracked allocations are not a complete RSS measurement.",
-            "Yes; it includes all operating-system caches.",
-            "Only when output is formatted as JSON."
+            "Yes; a traced peak includes every native extension allocation.",
+            "Yes; traced allocation totals also include all kernel file-cache pages."
           ],
           "correct": 0,
           "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage."
@@ -51623,8 +51694,8 @@ const LEARNING_PATHS = [
           "question": "What happens to offered rate in a fixed-worker closed-loop test as responses slow?",
           "options": [
             "It generally decreases because workers wait longer.",
-            "It remains a guaranteed constant arrival rate.",
-            "It automatically proves infinite capacity."
+            "It remains a constant arrival rate while workers block.",
+            "It increases to preserve the configured worker count."
           ],
           "correct": 0,
           "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
@@ -51797,8 +51868,8 @@ const LEARNING_PATHS = [
           "question": "What makes a hypothesis useful during investigation?",
           "options": [
             "It predicts evidence that can distinguish it from alternatives.",
-            "It sounds confident.",
-            "It always blames the most recent author."
+            "It names the latest deployment as the cause before comparing other signals.",
+            "It explains one correlated chart without a test that could reject it."
           ],
           "correct": 0,
           "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."
@@ -52944,6 +53015,7 @@ const LEARNING_PATHS = [
           {
             "title": "Reconcile what remains before moving blocks",
             "paragraphs": [
+              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
               "Sam began with 11 project hours, eight for the event pack and three reserved. By Wednesday, four event hours are complete. An essential extra meeting removes two remaining hours. Start the revision from seven remaining hours, not the original eleven.",
               "Five hours now remain: four for event work and one uncommitted. If Lee's venue confirmation also slips past the print cutoff, spare effort cannot fix release. Separate reduced capacity from a missing prerequisite."
             ],
@@ -53118,6 +53190,7 @@ const LEARNING_PATHS = [
           {
             "title": "Change the message when the constraint changes",
             "paragraphs": [
+              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
               "Sam reports: \"The pack needs four more hours and I have five, but venue confirmation arrives after the print cutoff. I can finish confirmed content today; we need a decision on venue details.\" This identifies the constraint rather than saying only that the week is busy.",
               "The organiser explains that printed directions are essential for attendees unable to use the digital version. A digital-only substitute is not equivalent. Sam offers a confirmed alternative venue or a later distribution decision instead of assuming the first workaround is acceptable."
             ],
@@ -53588,6 +53661,7 @@ const LEARNING_PATHS = [
           {
             "title": "Choose an experiment that could disappoint you",
             "paragraphs": [
+              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
               "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. An earlier dependency request is a candidate improvement. The evidence does not justify rebuilding every part of the planning system.",
               "Next week Sam requests the key confirmation two working days earlier while keeping estimation unchanged. The observation is whether a usable answer arrives before the decision point. If the source cannot confirm earlier, the experiment may fail and a fallback release decision becomes more relevant."
             ],
@@ -53627,14 +53701,14 @@ const LEARNING_PATHS = [
       },
       {
         "id": "next-week-portfolio",
-        "title": "15. Prepare next week from the evidence",
+        "title": "15. Make a usable plan for next week",
         "stage": "advanced",
         "takeaway": "Carry forward lessons and commitments, not every unfinished item automatically.",
         "sections": [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "The advanced project is a week portfolio: baseline, revision, event log, review and next-week proposal. Include links to the five companion topics and explain the concrete contribution of each. The portfolio is evidence of reasoning and adaptation; it is not a score of personal worth.",
+              "The final task is one usable next-week plan and one sentence explaining a change. Choose accepted work that fits, preserve needed recovery time, and name what you are deferring. A baseline, event log and five-topic portfolio are optional ways to explore your reasoning further; no topic IDs or written cross-references are required.",
               "Carry forward only work that is still relevant and accepted. Recheck deadlines and available capacity, keep recovery time and learning realistic, and name unresolved dependencies. Stop when you have a usable plan rather than polishing a tracker indefinitely."
             ]
           },
@@ -53647,13 +53721,13 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Write a five-topic explanation for the portfolio and state one conclusion the results do not support.",
-          "solution": "Time-attention-energy supplied capacity and suitable windows. Task-project-management supplied next actions and dependencies. Habits-behaviour-change supplied the small close-of-day routine. Self-awareness-communication supplied a factual trade-off request and reaction note. Learning-how-to-learn supplied a target, retrieval and later check. All outcomes in the filled sample are synthetic; an actual learner must record their own week before claiming personal improvement.",
+          "prompt": "Using the supplied seven-hour next-week capacity, choose work and reserve that fit. Explain one change from the previous week and name a condition that would make you revise the plan.",
+          "solution": "Plan the accepted four-hour task and keep three hours uncommitted. Defer the noticeboard redesign. I reduced the commitment because fixed work and carried routine tasks leave seven hours, not eleven. If the four-hour task grows or a required input is late, agree a scope or timing change. These are synthetic scenario numbers, not evidence of personal improvement.",
           "solutionFormat": "prose",
           "checks": [
-            "Each of five exact companion IDs is tied to a concrete action.",
-            "Synthetic outcomes are distinguished from actual learner evidence.",
-            "State the scenario-specific condition that would change the decision."
+            "Work and reserve fit the seven-hour budget without counting carried work twice.",
+            "One reason for the change and one revision condition are clear.",
+            "Synthetic facts are not presented as personal results."
           ]
         },
         "quiz": {
@@ -53739,29 +53813,29 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Review the week and choose an experiment",
-        "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+        "description": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
         "exitCriteria": [
-          "Observed 12 hours versus planned 11 is explained, not hidden.",
-          "Review includes outcome, cost and conditions without global self-judgement.",
-          "All five companion connections use a concrete action.",
-          "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+          "Chosen work and reserve fit the revised capacity.",
+          "One change has a reason grounded in the scenario.",
+          "Deferred work and an unresolved dependency remain visible.",
+          "Synthetic observations are distinguished from personal evidence."
         ],
         "project": {
-          "title": "Evidence, review and next-week experiment",
-          "brief": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+          "title": "One plan for next week",
+          "brief": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
           "requirements": [
-            "Use advanced-kit.md and review-and-next-week.md.",
-            "Reconcile observed seven pack hours, two urgent and three service hours.",
-            "Name the displaced optional visit and the three-of-five habit result.",
-            "Explain all five companion contributions and choose one next-week experiment with a review point."
+            "Use the seven-hour scenario in advanced-kit.md, or calculate your own available capacity.",
+            "Write the selected work, reserve and one deferral on a single page or note.",
+            "Add one sentence explaining a change and a condition that would make you revise it.",
+            "The larger review worksheet and five-topic portfolio are optional."
           ],
           "rubric": [
-            "Observed 12 hours versus planned 11 is explained, not hidden.",
-            "Review includes outcome, cost and conditions without global self-judgement.",
-            "All five companion connections use a concrete action.",
-            "Next-week proposal rechecks capacity and distinguishes synthetic sample from actual evidence."
+            "Chosen work and reserve fit the revised capacity.",
+            "One change has a reason grounded in the scenario.",
+            "Deferred work and an unresolved dependency remain visible.",
+            "Synthetic observations are distinguished from personal evidence."
           ],
-          "solution": "The pack overrun displaced an optional visit mistakenly retained in the calendar. The sample records delivery, three of five habit occasions and cancelled Thursday learning, then removes deferred blocks and checks commitments Wednesday. See advanced-kit.md for the full evidence-led review and a new-week proposal.",
+          "solution": "The supplied next week has 35 - 14 - 12 - 2 = seven available hours. Choose the accepted four-hour task and three hours of reserve; defer the noticeboard redesign. Explain that fixed work and carried routine tasks reduced capacity. Check whether carried work is already in the routine estimate before subtracting it. See advanced-kit.md for an optional longer worked review.",
           "solutionFormat": "prose"
         }
       }
@@ -53914,7 +53988,7 @@ const LEARNING_PATHS = [
         {
           "id": "advanced",
           "title": "Evidence, review and next-week experiment",
-          "goal": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+          "goal": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
           "fileIds": [
             "readme-md",
             "advanced-kit-md",
@@ -53925,12 +53999,10 @@ const LEARNING_PATHS = [
             "lab-model-js"
           ],
           "steps": [
-            "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
-            "Open README.md; no installation is needed.",
-            "Complete the exact numbered tasks in advanced-kit.md.",
-            "Record your own answers in the blank worksheet before reading the filled sample.",
-            "Compare with the rubric and revise a missed criterion.",
-            "Keep completed work; mark future checks pending rather than complete."
+            "Read the seven-hour next-week scenario in advanced-kit.md.",
+            "Write one plan showing selected work, reserve and a deferral. Add one reason for a change.",
+            "Check that the plan fits and state when it would need revising.",
+            "Use the longer worksheet, companion map or practice studio only if useful."
           ],
           "commands": [],
           "prerequisites": [
@@ -54299,7 +54371,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Strings are sequences of characters. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts characters, and methods such as strip and lower return transformed strings.",
+              "Strings are sequences of Unicode code points. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts code points, which may differ from the number of visible characters. Methods such as strip and lower return transformed strings.",
               "input displays an optional prompt and returns a string, even when a user types digits. int converts suitable text to an integer; float converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
             ]
           },
@@ -54583,7 +54655,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A for loop iterates over items in a sequence or other iterable. range(3) produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
-              "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown, but the body must eventually make the condition false. break exits a loop and continue skips the remainder of the current iteration."
+              "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown. To terminate normally, the loop must eventually make the condition false or reach break; return or an exception can also leave the loop. break exits a loop and continue skips the remainder of the current iteration."
             ]
           },
           {
@@ -55045,8 +55117,8 @@ const LEARNING_PATHS = [
           "starter": "# helpers.py: define format_label\n# main.py: import and call it",
           "solution": "See practice/helpers.py and practice/main.py for the runnable two-file reference. The helper has no top-level print; main.py calls it only under __main__. Run python main.py to print functions: 20 min.",
           "checks": [
-            "One-file output is functions: 20 min.",
-            "After splitting files, python main.py gives the same output.",
+            "Running main.py prints functions: 20 min.",
+            "Keep helpers.py and main.py in the same folder so the import resolves.",
             "Importing helpers in the interactive prompt does not print anything.",
             "Run the program with the virtual environment interpreter and inspect sys.executable."
           ]
@@ -55235,12 +55307,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Build a Playlist dataclass with an independent tracks list and add method rejecting blank titles. Prove two instances do not share state.",
-          "starter": "# Implement the contract and edge-case checks.",
+          "starter": "from dataclasses import dataclass, field\n\n@dataclass\nclass Playlist:\n    # TODO: declare tracks as a list[str] with a fresh list per instance.\n    def add(self, title: str):\n        # TODO: trim the title, reject blanks, then append it.\n        raise NotImplementedError\n\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"]\nassert b.tracks == []\ntry:\n    a.add(\"   \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank title accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
           "solution": "from dataclasses import dataclass, field\n@dataclass\nclass Playlist:\n    tracks: list[str] = field(default_factory=list)\n    def add(self, title):\n        if not title.strip():\n            raise ValueError(\"title required\")\n        self.tracks.append(title.strip())\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"] and b.tracks == []\ntry:\n    a.add(\" \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
           "checks": [
-            "Run the solution assertions; each checks a behavior, not only printed output.",
-            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-            "Explain the normal case, boundary and failure policy in your own words."
+            "A trimmed title appears only in the playlist you changed; the second playlist stays empty.",
+            "A blank title raises ValueError and leaves existing tracks unchanged. Successful checks print playlist checks passed."
           ]
         },
         "quiz": {
@@ -55293,12 +55364,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Write normalize_minutes(value: object) -> int accepting actual nonnegative integers. Test zero, True, a string and negative input.",
-          "starter": "# Implement the contract and edge-case checks.",
-          "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+          "starter": "def normalize_minutes(value: object) -> int:\n    # TODO: accept only nonnegative integers; otherwise raise ValueError.\n    raise NotImplementedError\n\nassert normalize_minutes(0) == 0\nassert normalize_minutes(12) == 12\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+          "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nassert normalize_minutes(12) == 12\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
           "checks": [
-            "Run the solution assertions; each checks a behavior, not only printed output.",
-            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-            "Explain the normal case, boundary and failure policy in your own words."
+            "Zero and 12 return unchanged. True, \"3\", -1 and 2.5 each raise ValueError.",
+            "Try replacing an exact int check with isinstance(value, int). The True case should expose the difference."
           ]
         },
         "quiz": {
@@ -55351,12 +55421,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Implement running_totals(values) yielding cumulative sums; check empty and partially consumed streams.",
-          "starter": "# Implement the contract and edge-case checks.",
-          "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nprint(\"generator checks passed\")",
+          "starter": "def running_totals(values):\n    # TODO: keep a total and yield it after each input value.\n    raise NotImplementedError\n\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\nstream = running_totals([1, 2])\nassert next(stream) == 1\nassert list(stream) == [3]\nassert list(stream) == []\nprint(\"generator checks passed\")",
+          "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nassert list(g) == []\nprint(\"generator checks passed\")",
           "checks": [
-            "Run the solution assertions; each checks a behavior, not only printed output.",
-            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-            "Explain the normal case, boundary and failure policy in your own words."
+            "The inputs [2, 3, -1] produce [2, 5, 4]; an empty input produces no values.",
+            "After next() returns 1, the remaining stream contains only 3. Reading the exhausted stream again produces an empty list."
           ]
         },
         "quiz": {
@@ -55487,12 +55556,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Manage a StringIO buffer and prove it closes while preserving an exception raised by its body.",
-          "starter": "# Implement the contract and edge-case checks.",
-          "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nassert stream.closed\nprint(\"cleanup checks passed\")",
+          "starter": "from contextlib import contextmanager\nfrom io import StringIO\n\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    # TODO: yield stream exactly once and close it in finally.\n    raise NotImplementedError\n\nwith buffer() as normal:\n    normal.write(\"data\")\n    assert normal.getvalue() == \"data\"\nassert normal.closed\n\ntry:\n    with buffer() as failed:\n        failed.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nelse:\n    raise AssertionError(\"body exception was suppressed\")\nassert failed.closed\nprint(\"cleanup checks passed\")",
+          "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\nwith buffer() as normal:\n    normal.write(\"data\")\n    assert normal.getvalue() == \"data\"\nassert normal.closed\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nelse:\n    raise AssertionError(\"body exception was suppressed\")\nassert stream.closed\nprint(\"cleanup checks passed\")",
           "checks": [
-            "Run the solution assertions; each checks a behavior, not only printed output.",
-            "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-            "Explain the normal case, boundary and failure policy in your own words."
+            "The buffer accepts writes inside with and is closed after a normal exit.",
+            "If the body raises ValueError(\"original\"), the same error reaches the caller and the buffer still closes."
           ]
         },
         "quiz": {
@@ -55649,13 +55717,12 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Prove zero is accepted and a negative exits with status 2.",
-          "starter": "# Implement the contract and edge-case checks.",
-          "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\np = argparse.ArgumentParser()\np.add_argument(\"--topic\", required=True)\np.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nwith redirect_stderr(StringIO()):\n    try:\n        p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"-1\"])\n    except SystemExit as error:\n        assert error.code == 2\n    else:\n        raise AssertionError(\"negative accepted\")\nprint(\"CLI checks passed\")",
+          "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Check zero, negative and nonnumeric input using the supplied cases.",
+          "starter": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\n\ndef nonnegative(text):\n    # TODO: convert text to int; reject negatives with ArgumentTypeError.\n    raise NotImplementedError\n\nparser = argparse.ArgumentParser()\n# TODO: add required --topic and --minutes arguments.\n# Use nonnegative as the type converter for --minutes.\n\nargs = parser.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nfor minutes in [\"-1\", \"oops\"]:\n    with redirect_stderr(StringIO()) as errors:\n        try:\n            parser.parse_args([\"--topic\", \"Python\", \"--minutes\", minutes])\n        except SystemExit as error:\n            assert error.code == 2\n            assert errors.getvalue()\n        else:\n            raise AssertionError(f\"accepted {minutes!r}\")\nprint(\"CLI checks passed\")",
+          "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--topic\", required=True)\nparser.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = parser.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nfor minutes in [\"-1\", \"oops\"]:\n    with redirect_stderr(StringIO()) as errors:\n        try:\n            parser.parse_args([\"--topic\", \"Python\", \"--minutes\", minutes])\n        except SystemExit as error:\n            assert error.code == 2\n            assert errors.getvalue()\n        else:\n            raise AssertionError(f\"accepted {minutes!r}\")\nprint(\"CLI checks passed\")",
           "checks": [
-            "Run the solution assertions and explain the failure cases.",
-            "Introduce one deliberate defect, confirm its check fails, then restore it.",
-            "Compare with the relevant staged project; state what your checks do not prove."
+            "The sample arguments produce topic \"Python\" and integer minutes 0.",
+            "Both -1 and oops cause argparse to write an error and exit with status 2. Argument parsing handles ValueError from int as an invalid argument too."
           ]
         },
         "quiz": {
@@ -55813,13 +55880,12 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Build a unittest validation suite using subTest for True, negatives, strings and fractional input; assert that its runner succeeds.",
-          "starter": "# Implement the contract and edge-case checks.",
+          "prompt": "Complete the unittest suite for the supplied validator. Use subTest and assertRaises for True, negatives, strings and fractional input, then run the suite.",
+          "starter": "import unittest\n\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\n\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        # TODO: assert that validate(0) returns 0.\n        raise NotImplementedError\n\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                # TODO: use assertRaises to require ValueError for this value.\n                raise NotImplementedError\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
           "solution": "import unittest\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        self.assertEqual(validate(0), 0)\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                with self.assertRaises(ValueError):\n                    validate(value)\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
           "checks": [
-            "Run the solution assertions and explain the failure cases.",
-            "Introduce one deliberate defect, confirm its check fails, then restore it.",
-            "Compare with the relevant staged project; state what your checks do not prove."
+            "The runner reports 2 tests passed. The four invalid inputs are subtests within one test method.",
+            "Change the validator to accept bool by using isinstance(value, int). Your suite should now fail for True; restore the validator afterward."
           ]
         },
         "quiz": {
@@ -55863,6 +55929,14 @@ const LEARNING_PATHS = [
             "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
           },
           {
+            "title": "From threads to async tasks",
+            "paragraphs": [
+              "Calling an async def function creates a coroutine. asyncio.run starts an event loop and runs the top-level coroutine in a normal script. Inside it, await suspends the current coroutine while other tasks can make progress. The supplied read_minutes uses sleep(0) only to give another task a turn.",
+              "Enter a TaskGroup with async with. Call group.create_task(read_minutes(value)) to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read task.result(). Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
+              "TaskGroup owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
+            ]
+          },
+          {
             "title": "Tradeoffs",
             "paragraphs": [
               "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
@@ -55878,12 +55952,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
-          "starter": "# Implement the contract and edge-case checks.",
+          "starter": "import asyncio\n\nasync def read_minutes(value):\n    await asyncio.sleep(0)  # Yield to another task without using a service.\n    return value\n\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = []\n        # TODO: for each value in [10, 20], create a task and save its handle.\n        # group.create_task(read_minutes(value)) returns that handle.\n    # TODO: after the group exits, return each task.result() in list order.\n    raise NotImplementedError\n\nvalues = asyncio.run(collect())\nassert values == [10, 20]\nassert sum(values) == 30\nprint(\"async checks passed\")",
           "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
           "checks": [
-            "Run the solution assertions and explain the failure cases.",
-            "Introduce one deliberate defect, confirm its check fails, then restore it.",
-            "Compare with the relevant staged project; state what your checks do not prove."
+            "Run this as a .py script with Python 3.11+. The result must be [10, 20] with total 30, regardless of completion order.",
+            "This checks successful collection only. The optional async_failure_lab.py and its tests cover child failure and cancellation."
           ]
         },
         "quiz": {
@@ -55936,12 +56009,11 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Implement repeated-scan and one-pass totals; assert equivalent results, then repeat timings on 2,000 rows. Inspect times locally without asserting a winner.",
-          "starter": "# Implement the contract and edge-case checks.",
-          "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nassert rescans([]) == one_pass([]) == {}\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nassert len(scan_times) == len(pass_times) == 3\nprint(\"equivalence and timing checks passed\")",
+          "starter": "from timeit import repeat\n\ndef rescans(rows):\n    topics = dict.fromkeys(topic for topic, _ in rows)\n    # TODO: for each distinct topic, scan rows and sum its minutes.\n    raise NotImplementedError\n\ndef one_pass(rows):\n    result = {}\n    # TODO: visit rows once, accumulating minutes under each topic.\n    raise NotImplementedError\n\nsample = [(\"Python\", 10), (\"Reading\", 5), (\"Python\", 20)]\nexpected = {\"Python\": 30, \"Reading\": 5}\nfor calculate in [rescans, one_pass]:\n    assert calculate(sample) == expected\n    assert calculate([]) == {}\n    assert calculate([(\"Python\", 0)]) == {\"Python\": 0}\n\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nprint(\"Repeated scans, seconds for two calls:\", scan_times)\nprint(\"One pass, seconds for two calls:\", pass_times)",
+          "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nsample = [(\"Python\", 10), (\"Reading\", 5), (\"Python\", 20)]\nexpected = {\"Python\": 30, \"Reading\": 5}\nfor calculate in [rescans, one_pass]:\n    assert calculate(sample) == expected\n    assert calculate([]) == {}\n    assert calculate([(\"Python\", 0)]) == {\"Python\": 0}\n\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nprint(\"Repeated scans, seconds for two calls:\", scan_times)\nprint(\"One pass, seconds for two calls:\", pass_times)",
           "checks": [
-            "Run the solution assertions and explain the failure cases.",
-            "Introduce one deliberate defect, confirm its check fails, then restore it.",
-            "Compare with the relevant staged project; state what your checks do not prove."
+            "Both functions must independently produce {\"Python\": 30, \"Reading\": 5} for the small sample, {} for no rows and {\"Python\": 0} for a zero-minute row.",
+            "Each timing list contains three measurements, each for two calls on 2,000 rows with 50 topics. Times vary; do not assert a winner. Try more distinct topics to compare growth."
           ]
         },
         "quiz": {
@@ -57907,7 +57979,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "A slide uses unexplained abbreviations, and two readers ask what the labels mean. Write specific feedback that invites a response.",
-          "solution": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
+          "solution": "In the summary slide, ABC and QRT are not defined, and two readers asked what the labels mean. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This reports the supplied evidence and proposes a change without inventing the speaker's experience.",
           "solutionFormat": "prose",
           "checks": [
             "A specific artefact or event is identified.",
@@ -58048,7 +58120,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Ana hears that her meeting updates are too detailed but does not know which part to change. Write a reply and one small experiment.",
-          "solution": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
+          "solution": "Could you point to a recent update that was difficult to follow? Was the main decision hard to find, or was another detail the problem? If the decision was buried, next time I will state it first and ask whether that helps. Ana checks the proposed explanation before choosing the experiment.",
           "solutionFormat": "prose",
           "checks": [
             "The reply asks for an example before deciding.",
@@ -58105,7 +58177,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "One classmate wants an evening meeting; another insists on mornings because of caring responsibilities. Map the positions, underlying concerns and a shared aim.",
-          "solution": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
+          "solution": "Positions: evening versus morning. The morning preference is linked to caring responsibilities; the reason for evening is still unknown and needs a question. Shared aim: enough time to prepare the presentation. Ask what prevents a morning meeting, then compare an asynchronous outline and a short overlap slot if both people can use them.",
           "solutionFormat": "prose",
           "checks": [
             "Positions and underlying concerns are distinguished.",
@@ -58362,7 +58434,7 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "Written messages preserve a record but remove immediate opportunities to clarify tone. Live conversations allow questions but may be inaccessible or difficult to schedule. A combined approach can work: exchange facts in writing, discuss the unresolved point in an agreed format, then record decisions. Ask about access needs instead of assuming one format suits everyone."
+              "Written messages preserve a record, but delayed replies can make tone or meaning slower to clarify. Live conversations allow questions but may be inaccessible or difficult to schedule. A combined approach can work: exchange facts in writing, discuss the unresolved point in an agreed format, then record decisions. Ask about access needs instead of assuming one format suits everyone."
             ]
           },
           {
@@ -58490,7 +58562,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "A practice partner agrees to send a draft Thursday but still disagrees about the introduction. Write a short review and follow-up that preserves the unresolved point.",
-          "solution": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
+          "solution": "We agreed that the draft will arrive Thursday. The introduction remains undecided; I propose comparing two versions Friday and will check whether that time works. I will send this summary and invite correction. The review separates the actual agreement from a proposed next step.",
           "solutionFormat": "prose",
           "checks": [
             "Agreement and unresolved issue remain separate.",
@@ -63575,8 +63647,8 @@ const LEARNING_PATHS = [
           "question": "Which statement is an invariant?",
           "options": [
             "Confirmed bookings never exceed capacity.",
-            "Use three microservices.",
-            "The page should feel modern."
+            "At least 99.9% of eligible booking requests succeed over 28 days.",
+            "The booking service uses one database instance."
           ],
           "correct": 0,
           "explanation": "An invariant must remain true across valid operations, including concurrent ones; component choices are implementation decisions."
@@ -63629,8 +63701,8 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "A request-based error budget directly measures what?",
           "options": [
-            "Exact downtime minutes.",
-            "The number of servers required.",
+            "Allowed downtime minutes independently of request volume.",
+            "The observed number of requests currently failing.",
             "Allowed bad requests within the defined window."
           ],
           "correct": 2,
@@ -63684,9 +63756,9 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Which assumption most directly changes burst sizing?",
           "options": [
-            "The length of a class name.",
+            "The number of registered accounts, holding daily active users fixed.",
             "The peak-to-average multiplier.",
-            "The color of the API diagram."
+            "The retained history size, holding request arrivals fixed."
           ],
           "correct": 1,
           "explanation": "The peak multiplier estimates how concentrated arrivals are relative to the daily average; scheduled bursts require separate evidence."
@@ -63740,8 +63812,8 @@ const LEARNING_PATHS = [
           "question": "Can the average of two servers' p99 latencies be treated as fleet p99?",
           "options": [
             "No; aggregate the underlying latency distribution.",
-            "Yes, always.",
-            "Only if there are two servers."
+            "Yes, if each server receives the same number of requests.",
+            "Yes, if each p99 is weighted by its server request count."
           ],
           "correct": 0,
           "explanation": "Percentiles are positions in a distribution, so averages of subgroup percentiles do not reconstruct the combined distribution."
@@ -64246,8 +64318,8 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Adding an index usually introduces which tradeoff?",
           "options": [
-            "Guaranteed faster writes.",
-            "Automatic authorization.",
+            "Lower write cost because every write becomes an index lookup.",
+            "No maintenance cost when a query does not use the index.",
             "Additional write work and storage."
           ],
           "correct": 2,
@@ -64551,8 +64623,8 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Does durable queueing alone guarantee one external email per job?",
           "options": [
-            "Yes, for every broker.",
-            "Only if workers are fast.",
+            "Yes, if the broker stores each message durably.",
+            "Yes, if the consumer acknowledges immediately before sending.",
             "No; delivery and effect contracts must handle duplicates."
           ],
           "correct": 2,
@@ -65004,12 +65076,12 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "What does CAP force you to examine?",
           "options": [
-            "Behavior under a network partition.",
-            "A rule that every database can choose to prevent partitions.",
-            "Whether the website has a dark theme."
+            "Whether operations retain linearizable results and availability when communication is partitioned.",
+            "Whether the service meets a measured monthly uptime percentage.",
+            "Whether transactions preserve a database schema constraint when the network is healthy."
           ],
           "correct": 0,
-          "explanation": "CAP analyzes whether its consistency and availability properties can both hold when communication partitions occur."
+          "explanation": "CAP uses technical definitions of consistency and availability during communication partitions. A monthly SLO and a database constraint describe different properties."
         },
         "references": [
           {
@@ -65114,9 +65186,9 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Why is checking remaining > 0 before a separate later write unsafe?",
           "options": [
-            "Transactions cannot update counters.",
+            "A transaction automatically makes every earlier read current at the later write.",
             "Another transaction can change the value between the operations.",
-            "SELECT always deletes rows."
+            "A unique booking ID alone prevents two different bookings from decrementing the same last seat."
           ],
           "correct": 1,
           "explanation": "Separate read and write steps allow interleaving. The decision and dependent changes need a correct concurrency boundary."
@@ -65247,8 +65319,8 @@ const LEARNING_PATHS = [
           "question": "A correct idempotency record must be scoped to what?",
           "options": [
             "The caller and operation intent.",
-            "Only the current process ID.",
-            "The browser window size."
+            "Only the event arrival time, rounded to the nearest second.",
+            "Only the workshop ID, shared across every learner."
           ],
           "correct": 0,
           "explanation": "The record must distinguish caller identity and operation intent, including mismatched payloads and concurrent duplicates."
@@ -65920,8 +65992,8 @@ const LEARNING_PATHS = [
           "question": "What does a transactional outbox make atomic?",
           "options": [
             "The domain write and local event record in one database transaction.",
-            "Every external side effect across the internet.",
-            "The user reading an email and a database commit."
+            "The database commit and delivery acknowledgement from every subscriber.",
+            "The broker publication and external email effect in the same transaction."
           ],
           "correct": 0,
           "explanation": "An outbox transaction couples the local domain change with its event record; publishing and external effects happen later."
@@ -66073,8 +66145,8 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Why can a healthy API success rate hide an export incident?",
           "options": [
-            "Metrics never apply to queues.",
-            "A 202 response proves the file exists.",
+            "A low queue depth always proves pending jobs meet their age objective.",
+            "A 202 response counts a background export as completed.",
             "Acceptance can succeed while background completion fails."
           ],
           "correct": 2,
@@ -66134,9 +66206,9 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Does knowing an unguessable object ID replace authorization?",
           "options": [
-            "Only for mobile clients.",
+            "Yes, provided the identifier has enough random bits.",
             "No; enforce the resource policy on the server.",
-            "Yes, always."
+            "Yes, if the UI only lists objects owned by the user."
           ],
           "correct": 1,
           "explanation": "Unpredictable identifiers are useful defense in depth, but they do not decide whether a caller is allowed to access a resource."
@@ -66570,9 +66642,9 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "What information is needed to check a capacity claim?",
           "options": [
-            "An unqualified claim of infinite scale.",
+            "Peak request rate without payload, latency or failure assumptions.",
             "Assumptions, units, measurements and a falsifiable test plan.",
-            "A diagram with many cloud icons."
+            "A provider quota, treated as measured application throughput."
           ],
           "correct": 1,
           "explanation": "Explicit assumptions and a test that can fail make the claim inspectable; a diagram alone supplies no capacity evidence."
@@ -73298,7 +73370,7 @@ const LEARNING_PATHS = [
           {
             "title": "Evidence and adaptation",
             "paragraphs": [
-              "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
             ]
           },
           {
@@ -73322,7 +73394,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which evidence challenges the 40-minute prediction?",
+          "question": "What supports a realistic completion estimate?",
           "options": [
             "Durations of comparable completed drafts",
             "The hope to finish sooner",
@@ -73338,6 +73410,13 @@ const LEARNING_PATHS = [
             "section": "Original 1994 experiments on completion-time predictions",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          },
+          {
+            "title": "Buehler, Griffin and Ross: original article, university-hosted full text",
+            "url": "https://bear.warrington.ufl.edu/brenner/mar7588/Papers/buehler-et-al-1994.pdf",
+            "section": "General discussion, journal page 380: directional optimism versus absolute accuracy",
+            "reviewed": "2026-10-02",
+            "scope": "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           }
         ],
         "diagram": {
@@ -73470,7 +73549,7 @@ const LEARNING_PATHS = [
           {
             "title": "Evidence and adaptation",
             "paragraphs": [
-              "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
             ]
           },
           {
@@ -73510,6 +73589,13 @@ const LEARNING_PATHS = [
             "section": "Original 1994 experiments on completion-time predictions",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          },
+          {
+            "title": "Buehler, Griffin and Ross: original article, university-hosted full text",
+            "url": "https://bear.warrington.ufl.edu/brenner/mar7588/Papers/buehler-et-al-1994.pdf",
+            "section": "General discussion, journal page 380: directional optimism versus absolute accuracy",
+            "reviewed": "2026-10-02",
+            "scope": "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           }
         ]
       },
@@ -73583,7 +73669,7 @@ const LEARNING_PATHS = [
           {
             "title": "Evidence and adaptation",
             "paragraphs": [
-              "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
             ]
           }
         ],
@@ -73611,9 +73697,9 @@ const LEARNING_PATHS = [
           {
             "title": "Iqbal and Horvitz: Disruption and Recovery of Computing Tasks",
             "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
-            "section": "Field study of suspension and resumption; context-specific evidence",
-            "reviewed": "2026-09-30",
-            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+            "section": "PDF pages 8–9: summary of findings, design implications and future work",
+            "reviewed": "2026-10-02",
+            "scope": "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
           }
         ]
       },

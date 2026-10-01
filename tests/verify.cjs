@@ -40,3 +40,5 @@ require('./personal-effectiveness.cjs');
 require('./reading-flow.cjs');
 require('./finance-regressions.cjs');
 require('./notebook-theme.cjs');
+
+require('./studio-backup.cjs');

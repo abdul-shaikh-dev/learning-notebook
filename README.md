@@ -28,7 +28,7 @@ Start at a course overview to see its prerequisites, learning outcomes and stage
 - Use **Read & continue** to mark a lesson as read and open the next one. Opening a lesson does not mark it complete. Quizzes do not block navigation.
 - Find a topic through search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
 
-The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/practice/personal-effectiveness-studio/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
+The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
 ## Offline access and progress
 

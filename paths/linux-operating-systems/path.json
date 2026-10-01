@@ -455,7 +455,7 @@
           "paragraphs": [
             "The importer prints a helpful message but exits 1 when validation fails. Automation should inspect the exit status as well as output. A shell command not found is different from an application rejecting input."
           ],
-          "example": "python3 -c \"import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)\"\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
+          "example": "python3 -c 'import sys; print(\"rejected\", file=sys.stderr); sys.exit(1)'\nprintf \"status=%s\\n\" \"$?\"\nps -p $$ -o pid,ppid,comm\n# First status is 1; the shell PID varies."
         },
         {
           "title": "PID reuse and effect evidence",
@@ -510,7 +510,7 @@
           "paragraphs": [
             "A service might find a different python than your interactive shell. Record the absolute interpreter path and configuration source. A DATABASE_URL in an environment is configuration, but still sensitive and should not be printed into a troubleshooting report."
           ],
-          "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c \"import os; print(os.environ[\"NOTEBOOK_MODE\"])\"\n# Expect practice, without permanent shell modification."
+          "example": "command -v python3\nprintf \"%s\\n\" \"$PATH\"\nNOTEBOOK_MODE=practice python3 -c 'import os; print(os.environ[\"NOTEBOOK_MODE\"])'\n# Expect practice, without permanent shell modification."
         },
         {
           "title": "Running children and secret exposure",

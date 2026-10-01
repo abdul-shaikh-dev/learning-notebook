@@ -306,7 +306,7 @@
             "State the method's contract: for example quantity and price must be nonnegative. Validate at the boundary rather than silently producing impossible results.",
             "Parameters are passed by value by default. For a reference type the copied value is a reference, so mutating an object's contents can still affect its caller. Avoid hidden mutation when a return value is enough."
           ],
-          "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0 || price < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Values must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
+          "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Quantity must be nonnegative\");\n    if (price < 0)\n        throw new ArgumentOutOfRangeException(nameof(price), \"Price must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
         },
         {
           "title": "Choose return and failure contracts together",

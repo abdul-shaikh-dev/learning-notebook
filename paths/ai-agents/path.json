@@ -23,7 +23,7 @@
     "Download workshop.py and test_workshop.py into one folder and run python -m unittest -v test_workshop.py.",
     "Run python workshop.py for the deterministic demonstration. The scripted source emits prepared proposals, not model-generated decisions.",
     "Download evaluation_cases.json and README.md for the project rubric and live-integration boundary checklist.",
-    "No live requests, credentials, package installation or cloud provisioning are part of this path."
+    "The standard-library workshop needs no credentials, package installation or live requests. The optional local-framework guide installs pinned LangChain, LangGraph and Deep Agents packages and can call an explicitly selected loopback llama.cpp server; it does not require cloud provisioning."
   ],
   "nextSteps": [
     "Complete the Agent Harnesses path to deepen executor, persistence, replay and operational design.",

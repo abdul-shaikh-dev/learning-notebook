@@ -342,9 +342,9 @@
       "quiz": {
         "question": "At t=15, which result matches the model?",
         "options": [
-          "Return cached address forever",
+          "Return the old address until a new one is explicitly inserted",
           "No cached answer",
-          "Open an encrypted connection"
+          "Return the old address once more because expiry comparisons use greater-than only"
         ],
         "correct": 1,
         "explanation": "This model expires the entry at now equal to its expiry; it does not keep stale data indefinitely."
@@ -401,8 +401,8 @@
         "question": "Why is one socket read insufficient as a general parser?",
         "options": [
           "Stream chunks need not match messages",
-          "TCP changes JSON fields",
-          "Ports define JSON length"
+          "A successful sendall forces the peer to return exactly that many bytes in its next recv",
+          "Receiving fewer bytes than requested always means the peer has finished its message"
         ],
         "correct": 0,
         "explanation": "TCP is a stream: reads may split or combine application messages."
@@ -481,7 +481,7 @@
         {
           "title": "Decoding and byte length",
           "paragraphs": [
-            "The supplied decoder passes bytes to Python's JSON reader and rejects decoding/syntax failures. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
+            "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to json.loads would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
           ],
           "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
         }
@@ -593,7 +593,7 @@
       ],
       "exercise": {
         "prompt": "Does a 404 identify a DNS failure?",
-        "solution": "No. It is an HTTP response from a server. Check the requested target or route; DNS already resolved enough for the exchange to happen.",
+        "solution": "No. A 404 is an HTTP response from a server or intermediary, not a DNS error. Check the target or route and which component answered. It does not prove a fresh DNS lookup occurred: the client may use a literal IP address, a cached answer, an existing connection or a proxy.",
         "solutionFormat": "prose",
         "checks": [
           "Identify the evidence supplied by the response and the layer that produced it.",
@@ -650,11 +650,11 @@
         ]
       },
       "quiz": {
-        "question": "Which alone justifies retrying an uncertain POST?",
+        "question": "Which provides the missing duplicate-effect protection for retrying an uncertain POST, once retryability and attempt/time budgets are also satisfied?",
         "options": [
-          "A timeout",
+          "A timeout after the request was sent",
           "A documented deduplication contract for that operation",
-          "A long TTL"
+          "An HTTP 5xx response regardless of the endpoint contract"
         ],
         "correct": 1,
         "explanation": "An uncertain POST needs its operation-specific deduplication contract; a timeout alone is insufficient."
@@ -874,7 +874,7 @@
         {
           "title": "Freshness and storage rules",
           "paragraphs": [
-            "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while private restricts shared-cache reuse. Our SharedCache is a deliberately small offline model with an explicit private flag."
+            "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our SharedCache is a deliberately small offline model with an explicit private flag."
           ]
         },
         {
@@ -947,8 +947,8 @@
         "question": "Where does the body after a legitimate 304 come from?",
         "options": [
           "The cached representation",
-          "The 304 content",
-          "DNS storage"
+          "The 304 response body after JSON decoding",
+          "A fresh representation generated from the ETag value"
         ],
         "correct": 0,
         "explanation": "A 304 validates an existing stored representation and does not supply a new body."

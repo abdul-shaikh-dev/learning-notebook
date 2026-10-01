@@ -349,7 +349,7 @@
             "items": [
               "index = 3"
             ],
-            "explanation": "Two comparisons found the target. This does not imply every search takes two comparisons."
+            "explanation": "Two loop iterations found the target. The code performs three value comparisons: equality and less-than for 8, then equality for 12. Other searches can take more iterations."
           }
         ]
       },

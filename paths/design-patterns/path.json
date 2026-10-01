@@ -226,6 +226,13 @@
           "section": "Introduction and catalog organization",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
+          "url": "https://www.informit.com/articles/article.aspx?p=1404056",
+          "section": "Authors discuss designing for change and refactoring toward patterns",
+          "reviewed": "2026-10-02",
+          "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
         }
       ]
     },
@@ -550,6 +557,13 @@
           "section": "Factory Method and Abstract Factory",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "GoF: Abstract Factory, publisher excerpt",
+          "url": "https://www.informit.com/articles/article.aspx?p=1398599",
+          "section": "Intent, consequences and implementation",
+          "reviewed": "2026-10-02",
+          "scope": "Original chapter excerpt supports related product families and overridable factory methods. The simple Python selection function remains a course adaptation."
         }
       ]
     },
@@ -662,6 +676,13 @@
           "section": "Adapter",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "GoF: Adapter, publisher excerpt",
+          "url": "https://www.informit.com/articles/article.aspx?p=1398600",
+          "section": "Intent and motivation; applicability on page 2",
+          "reviewed": "2026-10-02",
+          "scope": "Original excerpt supports interface translation and object composition. Seconds-to-minutes validation and rounding are course-specific policies."
         }
       ]
     },
@@ -787,7 +808,7 @@
           "title": "Intent",
           "paragraphs": [
             "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
-            "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and integer minute values already validated at creation."
+            "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and nonnegative integer minute values supplied by the caller. The dataclass constructors do not validate those values."
           ]
         },
         {
@@ -985,7 +1006,7 @@
           "title": "Contract and collaboration",
           "paragraphs": [
             "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
-            "Compare Observer, which broadcasts one event to all subscribers, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
+            "Compare Observer, which notifies registered subscribers under an explicit failure policy, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
           ]
         },
         {
@@ -998,7 +1019,7 @@
         {
           "title": "Compare failure and fan-out contracts",
           "paragraphs": [
-            "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when every subscriber must be notified. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+            "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
           ]
         }
       ],
@@ -1007,7 +1028,7 @@
         "solution": "from collaboration import handle_request\nassert handle_request('json',[lambda r:None,lambda r:'{}']) == '{}'\n# Run python -m unittest -v test_collaboration.py; add overlap-order tests.",
         "checks": [
           "The first accepting handler prevents later handlers from running.",
-          "Observer broadcasts to every subscriber.",
+          "Observer attempts notification in subscriber order; this fail-fast example skips later subscribers after an exception.",
           "Decline, valid falsey result and failure are distinct."
         ]
       },
@@ -1028,6 +1049,13 @@
           "section": "Chain Of Responsibility",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "GoF: Chain of Responsibility, publisher excerpt",
+          "url": "https://www.informit.com/articles/article.aspx?p=1398601",
+          "section": "Participants, collaborations and consequences",
+          "reviewed": "2026-10-02",
+          "scope": "Original excerpt supports forwarding until a handler accepts and possible unhandled requests. None, LookupError and exception propagation are this course implementation contract."
         }
       ]
     },
@@ -1583,6 +1611,13 @@
           "section": "How to use a design pattern",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "Martin Fowler: Definition of refactoring",
+          "url": "https://martinfowler.com/bliki/DefinitionOfRefactoring.html",
+          "section": "Definition of refactoring",
+          "reviewed": "2026-10-02",
+          "scope": "Author definition supports behavior-preserving restructuring; local examples executed separately."
         }
       ]
     },
@@ -1646,6 +1681,13 @@
           "section": "How to select a design pattern",
           "reviewed": "2026-09-27",
           "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+        },
+        {
+          "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
+          "url": "https://www.informit.com/articles/article.aspx?p=1404056",
+          "section": "Authors discuss designing for change and refactoring toward patterns",
+          "reviewed": "2026-10-02",
+          "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
         }
       ]
     }

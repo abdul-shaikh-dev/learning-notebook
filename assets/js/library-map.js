@@ -54,7 +54,7 @@ function libraryGraph(graph,ready){
 }
 function libraryMap(query=''){
  const ready=LEARNING_PATHS.filter(p=>p.status==='ready');
- const matching=ready.filter(p=>[p.title,p.category,p.description].join(' ').toLowerCase().includes(normalizedPathQuery(query)));
+ const matching=rankedPaths(ready,query);
  if(!matching.length)return '<p class="map-empty">No matching paths. Try a broader topic or search inside all lessons.</p>';
  if(query.trim())return `<ul class="map-results">${matching.map(p=>'<li class="route-green">'+libraryNode(p)+'</li>').join('')}</ul>`;
  const known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0])));

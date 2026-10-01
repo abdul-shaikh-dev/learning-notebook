@@ -32,3 +32,8 @@ assert.ok(roadmap.includes('Suggested next: Data Structures &amp; Algorithms or 
 assert.ok(!ctx.libraryMap('Python').includes('marker-end='),'Filtering never implies relationships between missing nodes');
 assert.equal((ctx.libraryMap('Python').match(/class="map-node"/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
 console.log('PASS: unique roadmap nodes, directed connections, accessible relationship text and filtered graph fallback.');
+
+for(const render of [ctx.cards,ctx.libraryMap]){
+ const filtered=render('Python');
+ assert(filtered.indexOf('#path/python') < filtered.indexOf('#path/agent-harnesses'),'Exact course title precedes matches in descriptions');
+}

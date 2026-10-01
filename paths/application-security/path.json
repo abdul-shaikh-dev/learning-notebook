@@ -637,7 +637,7 @@
       ],
       "exercise": {
         "prompt": "Write a state-changing endpoint contract covering authentication, CSRF, authorization and validation in a safe order. Use security_http.py and test_security_http.py to observe denied PATCH requests and unchanged SQLite rows.",
-        "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. Add real browser/HTTP tests separately; local token comparisons do not establish route integration.",
+        "solution": "Establish the session, verify the framework CSRF/origin policy, authorize the requested object/action, validate allowed fields, then apply the mutation and audit its outcome. Denials must leave state unchanged. The supplied HTTP tests exercise route integration. Add real browser and identity-provider tests separately; local token comparisons alone do not establish those boundaries.",
         "solutionFormat": "prose",
         "checks": [
           "Missing and cross-session tokens fail.",
@@ -1265,7 +1265,7 @@
         {
           "title": "Verification matrix and integration",
           "paragraphs": [
-            "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. It has no HTTP server or crypto validator.",
+            "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate test_security_http.py suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
             "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
           ],
           "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"

@@ -1352,14 +1352,14 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Where must a fencing token be enforced to prevent stale writes?",
+        "question": "Worker A holds token 7, its lease expires, and worker B receives token 8. Where must token 7 be rejected when A returns with a delayed write?",
         "options": [
-          "Only in an informational log line.",
-          "At the protected resource boundary.",
-          "Only in the model prompt."
+          "In a lease check performed only before A starts its work",
+          "At the protected resource, atomically with accepting or rejecting the write",
+          "Only in checkpoint compare-and-swap, while the external write remains unconditional"
         ],
         "correct": 1,
-        "explanation": "A token prevents nothing unless the receiver rejects outdated authority. Logging or displaying it is insufficient."
+        "explanation": "The protected resource must reject a stale token at the write boundary. An earlier lease check can become stale, and checkpoint fencing alone cannot protect a separate unconditional external effect."
       },
       "references": [
         {

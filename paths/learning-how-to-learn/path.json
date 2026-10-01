@@ -138,9 +138,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]
@@ -188,9 +188,9 @@
       "references": [
         {
           "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
-          "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
-          "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
-          "reviewed": "2026-09-30",
+          "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+          "section": "Author-hosted full text; experiments 1 and 2 and general discussion",
+          "reviewed": "2026-10-02",
           "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
         }
       ]
@@ -238,10 +238,17 @@
       "references": [
         {
           "title": "Roediger & Karpicke (2006), Test-Enhanced Learning",
-          "url": "https://www.psychologicalscience.org/journals/psychological-science/j.1467-9280.2006.01693.x/",
-          "section": "Prose-learning experiments: immediate versus delayed recall after testing and restudy",
-          "reviewed": "2026-09-30",
+          "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+          "section": "Author-hosted full text; experiments 1 and 2 and general discussion",
+          "reviewed": "2026-10-02",
           "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+        },
+        {
+          "title": "Dunlosky et al. (2013): Practice testing with feedback",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Section 8: practice testing, feedback and implementation",
+          "reviewed": "2026-10-02",
+          "scope": "Supports the correction step. Roediger and Karpicke (2006) used recall testing without feedback; this combined classroom routine is an adaptation."
         }
       ]
     },
@@ -288,9 +295,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]
@@ -341,9 +348,9 @@
       "references": [
         {
           "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
-          "url": "https://escholarship.org/uc/item/3rr6q10c",
-          "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
-          "reviewed": "2026-09-30",
+          "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+          "section": "University repository manuscript; inter-study interval analyses and discussion",
+          "reviewed": "2026-10-02",
           "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
         }
       ]
@@ -391,9 +398,9 @@
       "references": [
         {
           "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
-          "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
-          "reviewed": "2026-09-30",
+          "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+          "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
+          "reviewed": "2026-10-02",
           "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
         }
       ]
@@ -441,9 +448,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]
@@ -494,9 +501,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]
@@ -522,7 +529,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Arrange six practice cases that force choosing between the three request routes. Explain why labels should be removed.",
+        "prompt": "Arrange six practice cases that force choosing between the three request categories and their two approval routes. Explain why category labels should be removed.",
         "solution": "Use planned one-day, urgent one-day, planned three-day, planned one-day, planned two-day, urgent one-day. Remove category headings so the learner must read the details and choose. Keep answers in a separate key; mixing without knowing the basic rules may only produce confusion.",
         "solutionFormat": "prose",
         "checks": [
@@ -548,6 +555,13 @@
           "section": "Mathematics practice experiments comparing massed/spaced and blocked/shuffled problems",
           "reviewed": "2026-09-30",
           "scope": "College mathematics experiments; mixing related categories is different from switching unrelated work every few minutes."
+        },
+        {
+          "title": "Dunlosky et al. (2013): Interleaved practice",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Sections 10.4 and 10.5",
+          "reviewed": "2026-10-02",
+          "scope": "Broader review describes initial practice followed by mixing related problems and rates evidence as moderate. It does not establish a benefit for every task."
         }
       ]
     },
@@ -694,10 +708,17 @@
       "references": [
         {
           "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/",
-          "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
-          "reviewed": "2026-09-30",
+          "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+          "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
+          "reviewed": "2026-10-02",
           "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+        },
+        {
+          "title": "Roediger & Karpicke (2006): Predicted and delayed performance",
+          "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+          "section": "General discussion: predictions versus performance after a week",
+          "reviewed": "2026-10-02",
+          "scope": "Supports checking confidence against delayed results. Does not validate the low/medium/high worksheet or a diagnostic cutoff."
         }
       ]
     },
@@ -744,9 +765,9 @@
       "references": [
         {
           "title": "Gollwitzer (1999), Implementation intentions: Strong effects of simple plans",
-          "url": "https://doi.org/10.1037/0003-066X.54.7.493",
-          "section": "Implementation intentions: linking specified situations to goal-directed responses",
-          "reviewed": "2026-09-30",
+          "url": "https://www.socmot.uni-konstanz.de/sites/default/files/99_Gollwitzer_Implementation_Intentions.pdf",
+          "section": "Author university full text; implementation-intention framework",
+          "reviewed": "2026-10-02",
           "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
         }
       ]
@@ -794,10 +815,17 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+        },
+        {
+          "title": "Pashler et al. (2008), Learning Styles: Concepts and Evidence",
+          "url": "https://www.psychologicalscience.org/journals/pspi/j.1539-6053.2009.01038.x/",
+          "section": "Evidence required for matching instruction to assessed learning styles",
+          "reviewed": "2026-10-02",
+          "scope": "Review distinguishes format preferences from evidence for the learning-styles matching hypothesis. It does not dismiss accessibility needs."
         }
       ]
     },
@@ -897,9 +925,9 @@
       "references": [
         {
           "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
-          "url": "https://escholarship.org/uc/item/3rr6q10c",
-          "section": "Quantitative synthesis of distributed verbal-recall practice and retention-interval moderators",
-          "reviewed": "2026-09-30",
+          "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+          "section": "University repository manuscript; inter-study interval analyses and discussion",
+          "reviewed": "2026-10-02",
           "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
         }
       ]
@@ -947,9 +975,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]
@@ -1026,7 +1054,7 @@
       ],
       "exercise": {
         "prompt": "Write a four-sentence portfolio conclusion for a learner who improves from one of four to three of four and fails the changed-context case.",
-        "solution": "I answered one of four baseline cases and three of four comparable delayed cases after two practice occasions. I still missed the urgency exception once. I did not correctly apply the principle in the changed booking context, so transfer is not established. Next I will check the new rule and attempt a fresh changed case after feedback.",
+        "solution": "I answered one of four baseline cases and three of four comparable later cases. One answer remains incorrect, so I need to inspect that item before choosing a repair. I did not correctly apply the principle in the changed booking context, so transfer is not established. Next I will check the new rule and attempt a fresh changed case after feedback.",
         "solutionFormat": "prose",
         "checks": [
           "Conclusion retains counts one of four and three of four.",
@@ -1097,9 +1125,9 @@
       "references": [
         {
           "title": "Dunlosky et al. (2013), Improving Students’ Learning With Effective Learning Techniques",
-          "url": "https://journals.sagepub.com/doi/10.1177/1529100612453266",
-          "section": "Review of ten techniques: utility ratings, boundary conditions and generalisability",
-          "reviewed": "2026-09-30",
+          "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+          "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+          "reviewed": "2026-10-02",
           "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
         }
       ]

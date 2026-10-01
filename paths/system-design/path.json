@@ -219,8 +219,8 @@
         "question": "Which statement is an invariant?",
         "options": [
           "Confirmed bookings never exceed capacity.",
-          "Use three microservices.",
-          "The page should feel modern."
+          "At least 99.9% of eligible booking requests succeed over 28 days.",
+          "The booking service uses one database instance."
         ],
         "correct": 0,
         "explanation": "An invariant must remain true across valid operations, including concurrent ones; component choices are implementation decisions."
@@ -273,8 +273,8 @@
       "quiz": {
         "question": "A request-based error budget directly measures what?",
         "options": [
-          "Exact downtime minutes.",
-          "The number of servers required.",
+          "Allowed downtime minutes independently of request volume.",
+          "The observed number of requests currently failing.",
           "Allowed bad requests within the defined window."
         ],
         "correct": 2,
@@ -328,9 +328,9 @@
       "quiz": {
         "question": "Which assumption most directly changes burst sizing?",
         "options": [
-          "The length of a class name.",
+          "The number of registered accounts, holding daily active users fixed.",
           "The peak-to-average multiplier.",
-          "The color of the API diagram."
+          "The retained history size, holding request arrivals fixed."
         ],
         "correct": 1,
         "explanation": "The peak multiplier estimates how concentrated arrivals are relative to the daily average; scheduled bursts require separate evidence."
@@ -384,8 +384,8 @@
         "question": "Can the average of two servers' p99 latencies be treated as fleet p99?",
         "options": [
           "No; aggregate the underlying latency distribution.",
-          "Yes, always.",
-          "Only if there are two servers."
+          "Yes, if each server receives the same number of requests.",
+          "Yes, if each p99 is weighted by its server request count."
         ],
         "correct": 0,
         "explanation": "Percentiles are positions in a distribution, so averages of subgroup percentiles do not reconstruct the combined distribution."
@@ -603,8 +603,8 @@
       "quiz": {
         "question": "Adding an index usually introduces which tradeoff?",
         "options": [
-          "Guaranteed faster writes.",
-          "Automatic authorization.",
+          "Lower write cost because every write becomes an index lookup.",
+          "No maintenance cost when a query does not use the index.",
           "Additional write work and storage."
         ],
         "correct": 2,
@@ -817,8 +817,8 @@
       "quiz": {
         "question": "Does durable queueing alone guarantee one external email per job?",
         "options": [
-          "Yes, for every broker.",
-          "Only if workers are fast.",
+          "Yes, if the broker stores each message durably.",
+          "Yes, if the consumer acknowledges immediately before sending.",
           "No; delivery and effect contracts must handle duplicates."
         ],
         "correct": 2,
@@ -927,12 +927,12 @@
       "quiz": {
         "question": "What does CAP force you to examine?",
         "options": [
-          "Behavior under a network partition.",
-          "A rule that every database can choose to prevent partitions.",
-          "Whether the website has a dark theme."
+          "Whether operations retain linearizable results and availability when communication is partitioned.",
+          "Whether the service meets a measured monthly uptime percentage.",
+          "Whether transactions preserve a database schema constraint when the network is healthy."
         ],
         "correct": 0,
-        "explanation": "CAP analyzes whether its consistency and availability properties can both hold when communication partitions occur."
+        "explanation": "CAP uses technical definitions of consistency and availability during communication partitions. A monthly SLO and a database constraint describe different properties."
       },
       "references": [
         {
@@ -1037,9 +1037,9 @@
       "quiz": {
         "question": "Why is checking remaining > 0 before a separate later write unsafe?",
         "options": [
-          "Transactions cannot update counters.",
+          "A transaction automatically makes every earlier read current at the later write.",
           "Another transaction can change the value between the operations.",
-          "SELECT always deletes rows."
+          "A unique booking ID alone prevents two different bookings from decrementing the same last seat."
         ],
         "correct": 1,
         "explanation": "Separate read and write steps allow interleaving. The decision and dependent changes need a correct concurrency boundary."
@@ -1093,8 +1093,8 @@
         "question": "A correct idempotency record must be scoped to what?",
         "options": [
           "The caller and operation intent.",
-          "Only the current process ID.",
-          "The browser window size."
+          "Only the event arrival time, rounded to the nearest second.",
+          "Only the workshop ID, shared across every learner."
         ],
         "correct": 0,
         "explanation": "The record must distinguish caller identity and operation intent, including mismatched payloads and concurrent duplicates."
@@ -1349,8 +1349,8 @@
         "question": "What does a transactional outbox make atomic?",
         "options": [
           "The domain write and local event record in one database transaction.",
-          "Every external side effect across the internet.",
-          "The user reading an email and a database commit."
+          "The database commit and delivery acknowledgement from every subscriber.",
+          "The broker publication and external email effect in the same transaction."
         ],
         "correct": 0,
         "explanation": "An outbox transaction couples the local domain change with its event record; publishing and external effects happen later."
@@ -1403,8 +1403,8 @@
       "quiz": {
         "question": "Why can a healthy API success rate hide an export incident?",
         "options": [
-          "Metrics never apply to queues.",
-          "A 202 response proves the file exists.",
+          "A low queue depth always proves pending jobs meet their age objective.",
+          "A 202 response counts a background export as completed.",
           "Acceptance can succeed while background completion fails."
         ],
         "correct": 2,
@@ -1464,9 +1464,9 @@
       "quiz": {
         "question": "Does knowing an unguessable object ID replace authorization?",
         "options": [
-          "Only for mobile clients.",
+          "Yes, provided the identifier has enough random bits.",
           "No; enforce the resource policy on the server.",
-          "Yes, always."
+          "Yes, if the UI only lists objects owned by the user."
         ],
         "correct": 1,
         "explanation": "Unpredictable identifiers are useful defense in depth, but they do not decide whether a caller is allowed to access a resource."
@@ -1650,9 +1650,9 @@
       "quiz": {
         "question": "What information is needed to check a capacity claim?",
         "options": [
-          "An unqualified claim of infinite scale.",
+          "Peak request rate without payload, latency or failure assumptions.",
           "Assumptions, units, measurements and a falsifiable test plan.",
-          "A diagram with many cloud icons."
+          "A provider quota, treated as measured application throughput."
         ],
         "correct": 1,
         "explanation": "Explicit assumptions and a test that can fail make the claim inspectable; a diagram alone supplies no capacity evidence."

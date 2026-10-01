@@ -1,0 +1,143 @@
+{
+  "date": "2026-10-02",
+  "scope": "Targeted follow-up to source-access limitations in the earlier 108-lesson audit; not a new independent proof of all sentences.",
+  "sourceChecks": [
+    {
+      "name": "GoF: Abstract Factory, publisher excerpt",
+      "url": "https://www.informit.com/articles/article.aspx?p=1398599",
+      "access": "Publisher-hosted original chapter excerpt read",
+      "checked": "Intent, consequences and implementation",
+      "limit": "Original chapter excerpt supports related product families and overridable factory methods. The simple Python selection function remains a course adaptation."
+    },
+    {
+      "name": "GoF: Adapter, publisher excerpt",
+      "url": "https://www.informit.com/articles/article.aspx?p=1398600",
+      "access": "Publisher-hosted original chapter excerpt read",
+      "checked": "Intent and motivation; applicability on page 2",
+      "limit": "Original excerpt supports interface translation and object composition. Seconds-to-minutes validation and rounding are course-specific policies."
+    },
+    {
+      "name": "GoF: Chain of Responsibility, publisher excerpt",
+      "url": "https://www.informit.com/articles/article.aspx?p=1398601",
+      "access": "Publisher-hosted original chapter excerpt read",
+      "checked": "Participants, collaborations and consequences",
+      "limit": "Original excerpt supports forwarding until a handler accepts and possible unhandled requests. None, LookupError and exception propagation are this course implementation contract."
+    },
+    {
+      "name": "GoF author interview",
+      "url": "https://www.informit.com/articles/article.aspx?p=1404056",
+      "access": "Original author answers read",
+      "checked": "Design for change and refactoring discussions",
+      "limit": "Does not provide all individual pattern definitions."
+    },
+    {
+      "name": "Dunlosky",
+      "url": "https://acs.ist.psu.edu/ist521/dunloskyRMNW13.pdf",
+      "access": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
+      "checked": "Relevant claim-bearing sections read; broad findings and stated boundary conditions compared with lessons",
+      "limit": "No raw-data reanalysis or validation of fictional worksheets, exact timetable or confidence scale."
+    },
+    {
+      "name": "Roediger",
+      "url": "https://learninglab.psych.purdue.edu/downloads/2006/2006_Roediger_Karpicke_PsychSci.pdf",
+      "access": "Author-hosted full text; experiments 1 and 2 and general discussion",
+      "checked": "Relevant claim-bearing sections read; broad findings and stated boundary conditions compared with lessons",
+      "limit": "No raw-data reanalysis or validation of fictional worksheets, exact timetable or confidence scale."
+    },
+    {
+      "name": "Cepeda",
+      "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+      "access": "University repository manuscript; inter-study interval analyses and discussion",
+      "checked": "Relevant claim-bearing sections read; broad findings and stated boundary conditions compared with lessons",
+      "limit": "No raw-data reanalysis or validation of fictional worksheets, exact timetable or confidence scale."
+    },
+    {
+      "name": "Harkin",
+      "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+      "access": "Accepted manuscript; monitoring results, moderator analyses and limitations",
+      "checked": "Relevant claim-bearing sections read; broad findings and stated boundary conditions compared with lessons",
+      "limit": "No raw-data reanalysis or validation of fictional worksheets, exact timetable or confidence scale."
+    },
+    {
+      "name": "Gollwitzer",
+      "url": "https://www.socmot.uni-konstanz.de/sites/default/files/99_Gollwitzer_Implementation_Intentions.pdf",
+      "access": "Author university full text; implementation-intention framework",
+      "checked": "Relevant claim-bearing sections read; broad findings and stated boundary conditions compared with lessons",
+      "limit": "No raw-data reanalysis or validation of fictional worksheets, exact timetable or confidence scale."
+    }
+  ],
+  "changedLessons": [
+    "design-patterns/adapter",
+    "design-patterns/chain-of-responsibility",
+    "design-patterns/factories",
+    "design-patterns/intent",
+    "design-patterns/selection",
+    "learning-how-to-learn/calibrate-confidence",
+    "learning-how-to-learn/check-baseline",
+    "learning-how-to-learn/evaluate-advice",
+    "learning-how-to-learn/explain-connections",
+    "learning-how-to-learn/learning-target",
+    "learning-how-to-learn/maintain-learning",
+    "learning-how-to-learn/mix-related-cases",
+    "learning-how-to-learn/plan-practice-week",
+    "learning-how-to-learn/recognition-recall",
+    "learning-how-to-learn/retain-useful-notes",
+    "learning-how-to-learn/retrieval-loop",
+    "learning-how-to-learn/small-prompts",
+    "learning-how-to-learn/spaced-returns",
+    "learning-how-to-learn/study-environment",
+    "learning-how-to-learn/worked-to-independent"
+  ],
+  "remaining": [
+    {
+      "lessons": [
+        "design-patterns/composition",
+        "design-patterns/strategy",
+        "design-patterns/builder",
+        "design-patterns/facade",
+        "design-patterns/decorator",
+        "design-patterns/composite",
+        "design-patterns/proxy",
+        "design-patterns/observer",
+        "design-patterns/command",
+        "design-patterns/state",
+        "design-patterns/mediator",
+        "design-patterns/template-method"
+      ],
+      "gap": "Full original GoF chapters not obtained. Earlier executable-example verification stands; exact catalog intents and every tradeoff not newly source-verified by this follow-up. Publisher provenance references explicitly retain this limit."
+    },
+    {
+      "lessons": [
+        "design-patterns/contracts"
+      ],
+      "gap": "CMU original Liskov/Wing PDF retrieval failed; alternate MIT search did not locate the same original paper. No formal subtyping proof is claimed."
+    },
+    {
+      "lessons": [
+        "learning-how-to-learn/transfer-cases",
+        "learning-how-to-learn/delayed-demonstration"
+      ],
+      "gap": "Butler 2010 abstract remains the checked evidence for delayed transfer; author WashU publication page lists a PDF but retrieval failed. No new full-paper check."
+    },
+    {
+      "lessons": [
+        "learning-how-to-learn/mix-related-cases"
+      ],
+      "gap": "Rohrer/Taylor original 2007 paper remains abstract-only; added full Dunlosky review corroborates broad, qualified interleaving advice, not every original experimental detail."
+    },
+    {
+      "lessons": [
+        "learning-how-to-learn/retain-useful-notes"
+      ],
+      "gap": "Pashler original-author UCSD PDF found in search but open failed; prior official APS abstract supports the limited learning-style matching claim. Full-paper access not claimed."
+    },
+    {
+      "lessons": [
+        "learning-how-to-learn/worked-to-independent",
+        "learning-how-to-learn/calibrate-confidence"
+      ],
+      "gap": "Worked-example fading routine and low/medium/high rating are instructional adaptations, not independently validated by the cited review or monitoring meta-analysis."
+    }
+  ],
+  "verification": "JSON parsed after changes; reference-only update; no lesson code or quiz answers changed. Prior execution results are preserved, not rerun as evidence of sourcing."
+}

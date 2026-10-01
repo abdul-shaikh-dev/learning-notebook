@@ -146,7 +146,7 @@
     {
       "id": "advanced",
       "title": "Evidence, review and next-week experiment",
-      "goal": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
+      "goal": "Prepare one feasible next-week plan and explain one change using the supplied evidence.",
       "fileIds": [
         "readme-md",
         "advanced-kit-md",
@@ -157,12 +157,10 @@
         "lab-model-js"
       ],
       "steps": [
-        "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
-        "Open README.md; no installation is needed.",
-        "Complete the exact numbered tasks in advanced-kit.md.",
-        "Record your own answers in the blank worksheet before reading the filled sample.",
-        "Compare with the rubric and revise a missed criterion.",
-        "Keep completed work; mark future checks pending rather than complete."
+        "Read the seven-hour next-week scenario in advanced-kit.md.",
+        "Write one plan showing selected work, reserve and a deferral. Add one reason for a change.",
+        "Check that the plan fits and state when it would need revising.",
+        "Use the longer worksheet, companion map or practice studio only if useful."
       ],
       "commands": [],
       "prerequisites": [

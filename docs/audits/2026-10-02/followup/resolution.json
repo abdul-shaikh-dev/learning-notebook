@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-02",
+  "previousAudit": "../content-audit.json",
+  "scope": "Fix remaining actionable issues and close practical verification/source gaps from the completed lesson audit. Historical audit is unchanged.",
+  "fixed": [
+    "Studio exports can now be restored privately, with a preview and explicit replacement action.",
+    "New exports preserve exact capacity inputs and unfinished card/task drafts. Legacy exports restore equivalent capacity and explain reconstructed inputs.",
+    "Import rejects malformed/oversized/inconsistent files, unknown versions, invalid tasks/dates and duplicate IDs. A new file invalidates earlier previews; later page edits require renewed confirmation.",
+    "All six studio copies, guides and downloadable bundles include restore.",
+    "Planning estimate/buffer and return-cue lessons now distinguish the original findings from untested instructional suggestions.",
+    "Twenty design/learning lesson references and finance source-register entries now link to accessible primary material with precise scope."
+  ],
+  "verified": [
+    "Full node verify.cjs suite passed after changes, including new restore regression cases.",
+    "Browser downloaded a real v2 export, validated it, previewed it, protected newer edits and restored the saved reflection with status focus.",
+    "AI suite: all 33 tests passed with the existing pinned LangGraph environment.",
+    ".NET 10: builds plus 4 foundation, 15 database/authorization and 11 HTTP assertions passed.",
+    "Official adopted AASB 13/9 text corroborates the specified finance teaching claims; exact passages in attached evidence."
+  ],
+  "remainingLimits": [
+    "Some full original book chapters and research papers remain inaccessible; broad claims have qualified accessible support, not a claim of full-text verification for every reference.",
+    "Live cloud/Kubernetes/SQL Server, paid providers/Fleet, production identity and comprehensive assistive-technology evaluation are outside the executed local checks. No known notebook defect is inferred merely from those untested environments."
+  ],
+  "delivery": "Local changes only; not committed or pushed."
+}

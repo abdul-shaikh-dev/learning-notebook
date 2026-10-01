@@ -410,7 +410,7 @@
         {
           "title": "Build stages and runtime files",
           "paragraphs": [
-            "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes the same local suite, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
+            "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes test_release_app.py, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
           ]
         },
         {

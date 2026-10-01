@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-02",
+  "scope": "Freely accessible primary-source follow-up for cited IFRS 13/9, planning fallacy, and task resumption claims",
+  "historicalAuditUnchanged": true,
+  "generatedFilesChanged": false,
+  "repositoryChanges": ["paths/financial-foundations/content/source-register.js"],
+  "sources": [
+    {
+      "url": "https://standards.aasb.gov.au/aasb-13-dec-2022",
+      "type": "Official adopted full standard, accessible HTML",
+      "edition": "December 2022 amendments; compilation dated31 December2023, operative1 January2024",
+      "checkedPassages": [
+        {"paragraphs": "16–26", "supports": "Principal-market priority, market access, exit-price measurement, transaction versus transport costs."},
+        {"paragraphs": "42–44", "supports": "Liability measurement considers non-performance risk, including own credit."},
+        {"paragraphs": "69–71", "supports": "Unit-of-account consistency, prohibited blockage adjustments, representative bid–ask pricing and permitted mid-market conventions."},
+        {"paragraphs": "72–84", "supports": "Hierarchy follows the lowest significant input; Level2 comparability, term and significant adjustments matter."},
+        {"paragraphs": "86–89", "supports": "Unobservable inputs retain the market-participant objective and use available evidence."}
+      ],
+      "courseImpact": "Existing core claims corroborated; clarified compilation metadata and recorded current access. Australian-specific additions excluded."
+    },
+    {
+      "url": "https://standards.aasb.gov.au/aasb-9-dec-2022",
+      "type": "Official adopted full standard, accessible HTML",
+      "edition": "December2022 dated teaching companion",
+      "checkedPassages": [
+        {"paragraphs": "5.1.1–5.1.1A", "supports": "Initial measurement and referral of transaction-price differences to the day-one test."},
+        {"paragraphs": "B5.1.2A(a)", "supports": "Immediate recognition requires an identical active-market quote or a technique using only observable-market data."},
+        {"paragraphs": "B5.1.2A(b)", "supports": "Other differences are deferred; release depends on changes in factors market participants consider, including time."}
+      ],
+      "courseImpact": "Lesson16 claims corroborated; added accessible companion source and paragraph-level access record."
+    },
+    {
+      "url": "https://bear.warrington.ufl.edu/brenner/mar7588/Papers/buehler-et-al-1994.pdf",
+      "type": "Original published1994 research article, public university faculty course copy",
+      "provenance": "Buehler, Griffin and Ross, Journal of Personality and Social Psychology67(3),366–381; DOI10.1037/0022-3514.67.3.366",
+      "checkedPassages": [
+        {"pages": "368–369", "supports": "Five-study program investigating optimistic completion estimates."},
+        {"pages": "380 (PDF page15)", "supports": "The authors distinguish reduced optimism from improved absolute accuracy and do not establish that recalled past performance improves accuracy."}
+      ],
+      "suggestedClarificationSentToParent": "Describe comparable recorded work and buffers as local planning heuristics, not accuracy improvements established by this paper.",
+      "courseFilesChangedByThisReviewer": []
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
+      "landingPage": "https://www.microsoft.com/en-us/research/publication/disruption-recovery-computing-tasks-field-study-analysis-directions/",
+      "type": "Original CHI2007 article hosted by the authors' research organization",
+      "checkedPassages": [
+        {"pages": "PDF page4, Deployment and Data Collection", "supports": "Observed27 participants in one organization, not a universal population."},
+        {"pages": "PDF pages8–9, findings and design implications", "supports": "Context reconstruction and visible task cues relate to resumption; saving context is a design suggestion."},
+        {"pages": "PDF page9, Summary and Future Work", "supports": "Two-week field study with context-specific timing and limitations."}
+      ],
+      "suggestedClarificationSentToParent": "Keep the specific return-note format an original testable heuristic. This study does not prove its causal efficacy or a universal interruption penalty.",
+      "courseFilesChangedByThisReviewer": []
+    }
+  ],
+  "verification": ["node tests/study-pack.cjs passed", "git diff --check for source-register.js passed"],
+  "remainingActualLimits": [
+    "IFRS Foundation PDF access itself remains restricted; equivalent cited requirements were checked in freely accessible official adopted text without bypassing access controls.",
+    "Dated adopted text supports the specified teaching claims, not certification of every later amendment or jurisdiction/reporting-period applicability.",
+    "The original planning paper does not substantiate a guaranteed accuracy improvement from recalling prior work; parent was given a targeted qualification.",
+    "The interruption paper does not establish a universal numerical penalty or randomized causal benefit for the lesson's specific written return cue."
+  ],
+  "unresolvedExactFinanceTeachingClaimsInThisBoundedReview": []
+}

@@ -275,8 +275,8 @@
         "question": "Which signal naturally connects work across services?",
         "options": [
           "A distributed trace with related spans.",
-          "A single average CPU gauge.",
-          "An unlabeled screenshot of a dashboard."
+          "A per-service duration histogram without request correlation.",
+          "Independent service logs with no shared request context."
         ],
         "correct": 0,
         "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
@@ -530,8 +530,8 @@
         "question": "Which is a saturation signal?",
         "options": [
           "Database connection pool occupancy and wait.",
-          "The name of the latest release.",
-          "A count of documentation pages."
+          "Completed database queries per second alone.",
+          "The proportion of application responses returning 5xx alone."
         ],
         "correct": 0,
         "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
@@ -589,8 +589,8 @@
         "question": "Why should parent and child durations not simply be added?",
         "options": [
           "Child elapsed time is already inside the parent and may overlap other children.",
-          "Every span always lasts the same amount.",
-          "Traces contain only counter values."
+          "Child spans measure CPU exclusively, while parents measure elapsed time.",
+          "A parent always starts after all of its children finish."
         ],
         "correct": 0,
         "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it."
@@ -698,8 +698,8 @@
         "question": "Does hashing a unique ID solve metric cardinality?",
         "options": [
           "No; unique hashes still create distinct label values.",
-          "Yes; all hashes become one time series.",
-          "Only if the hash is printed in hexadecimal."
+          "Yes; equal-length hashes necessarily share one label value.",
+          "Yes; hashing removes cardinality costs because the original identifier is hidden."
         ],
         "correct": 0,
         "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
@@ -1070,8 +1070,8 @@
         "question": "Does tracemalloc measure all process memory?",
         "options": [
           "No; its tracked allocations are not a complete RSS measurement.",
-          "Yes; it includes all operating-system caches.",
-          "Only when output is formatted as JSON."
+          "Yes; a traced peak includes every native extension allocation.",
+          "Yes; traced allocation totals also include all kernel file-cache pages."
         ],
         "correct": 0,
         "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage."
@@ -1121,8 +1121,8 @@
         "question": "What happens to offered rate in a fixed-worker closed-loop test as responses slow?",
         "options": [
           "It generally decreases because workers wait longer.",
-          "It remains a guaranteed constant arrival rate.",
-          "It automatically proves infinite capacity."
+          "It remains a constant arrival rate while workers block.",
+          "It increases to preserve the configured worker count."
         ],
         "correct": 0,
         "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
@@ -1295,8 +1295,8 @@
         "question": "What makes a hypothesis useful during investigation?",
         "options": [
           "It predicts evidence that can distinguish it from alternatives.",
-          "It sounds confident.",
-          "It always blames the most recent author."
+          "It names the latest deployment as the cause before comparing other signals.",
+          "It explains one correlated chart without a test that could reject it."
         ],
         "correct": 0,
         "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."

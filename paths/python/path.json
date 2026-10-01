@@ -226,7 +226,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Strings are sequences of characters. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts characters, and methods such as strip and lower return transformed strings.",
+            "Strings are sequences of Unicode code points. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts code points, which may differ from the number of visible characters. Methods such as strip and lower return transformed strings.",
             "input displays an optional prompt and returns a string, even when a user types digits. int converts suitable text to an integer; float converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
           ]
         },
@@ -406,7 +406,7 @@
           "title": "Concept",
           "paragraphs": [
             "A for loop iterates over items in a sequence or other iterable. range(3) produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
-            "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown, but the body must eventually make the condition false. break exits a loop and continue skips the remainder of the current iteration."
+            "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown. To terminate normally, the loop must eventually make the condition false or reach break; return or an exception can also leave the loop. break exits a loop and continue skips the remainder of the current iteration."
           ]
         },
         {
@@ -670,8 +670,8 @@
         "starter": "# helpers.py: define format_label\n# main.py: import and call it",
         "solution": "See practice/helpers.py and practice/main.py for the runnable two-file reference. The helper has no top-level print; main.py calls it only under __main__. Run python main.py to print functions: 20 min.",
         "checks": [
-          "One-file output is functions: 20 min.",
-          "After splitting files, python main.py gives the same output.",
+          "Running main.py prints functions: 20 min.",
+          "Keep helpers.py and main.py in the same folder so the import resolves.",
           "Importing helpers in the interactive prompt does not print anything.",
           "Run the program with the virtual environment interpreter and inspect sys.executable."
         ]
@@ -860,12 +860,11 @@
       ],
       "exercise": {
         "prompt": "Build a Playlist dataclass with an independent tracks list and add method rejecting blank titles. Prove two instances do not share state.",
-        "starter": "# Implement the contract and edge-case checks.",
+        "starter": "from dataclasses import dataclass, field\n\n@dataclass\nclass Playlist:\n    # TODO: declare tracks as a list[str] with a fresh list per instance.\n    def add(self, title: str):\n        # TODO: trim the title, reject blanks, then append it.\n        raise NotImplementedError\n\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"]\nassert b.tracks == []\ntry:\n    a.add(\"   \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank title accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
         "solution": "from dataclasses import dataclass, field\n@dataclass\nclass Playlist:\n    tracks: list[str] = field(default_factory=list)\n    def add(self, title):\n        if not title.strip():\n            raise ValueError(\"title required\")\n        self.tracks.append(title.strip())\na, b = Playlist(), Playlist()\na.add(\"  Intro  \")\nassert a.tracks == [\"Intro\"] and b.tracks == []\ntry:\n    a.add(\" \")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"blank accepted\")\nassert a.tracks == [\"Intro\"]\nprint(\"playlist checks passed\")",
         "checks": [
-          "Run the solution assertions; each checks a behavior, not only printed output.",
-          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-          "Explain the normal case, boundary and failure policy in your own words."
+          "A trimmed title appears only in the playlist you changed; the second playlist stays empty.",
+          "A blank title raises ValueError and leaves existing tracks unchanged. Successful checks print playlist checks passed."
         ]
       },
       "quiz": {
@@ -918,12 +917,11 @@
       ],
       "exercise": {
         "prompt": "Write normalize_minutes(value: object) -> int accepting actual nonnegative integers. Test zero, True, a string and negative input.",
-        "starter": "# Implement the contract and edge-case checks.",
-        "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+        "starter": "def normalize_minutes(value: object) -> int:\n    # TODO: accept only nonnegative integers; otherwise raise ValueError.\n    raise NotImplementedError\n\nassert normalize_minutes(0) == 0\nassert normalize_minutes(12) == 12\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
+        "solution": "def normalize_minutes(value: object) -> int:\n    if type(value) is not int or value < 0:\n        raise ValueError(\"expected nonnegative integer\")\n    return value\nassert normalize_minutes(0) == 0\nassert normalize_minutes(12) == 12\nfor bad in [True, \"3\", -1, 2.5]:\n    try:\n        normalize_minutes(bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\"accepted {bad!r}\")\nprint(\"type boundary checks passed\")",
         "checks": [
-          "Run the solution assertions; each checks a behavior, not only printed output.",
-          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-          "Explain the normal case, boundary and failure policy in your own words."
+          "Zero and 12 return unchanged. True, \"3\", -1 and 2.5 each raise ValueError.",
+          "Try replacing an exact int check with isinstance(value, int). The True case should expose the difference."
         ]
       },
       "quiz": {
@@ -976,12 +974,11 @@
       ],
       "exercise": {
         "prompt": "Implement running_totals(values) yielding cumulative sums; check empty and partially consumed streams.",
-        "starter": "# Implement the contract and edge-case checks.",
-        "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nprint(\"generator checks passed\")",
+        "starter": "def running_totals(values):\n    # TODO: keep a total and yield it after each input value.\n    raise NotImplementedError\n\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\nstream = running_totals([1, 2])\nassert next(stream) == 1\nassert list(stream) == [3]\nassert list(stream) == []\nprint(\"generator checks passed\")",
+        "solution": "def running_totals(values):\n    total = 0\n    for value in values:\n        total += value\n        yield total\nassert list(running_totals([])) == []\nassert list(running_totals([2, 3, -1])) == [2, 5, 4]\ng = running_totals([1, 2])\nassert next(g) == 1\nassert list(g) == [3]\nassert list(g) == []\nprint(\"generator checks passed\")",
         "checks": [
-          "Run the solution assertions; each checks a behavior, not only printed output.",
-          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-          "Explain the normal case, boundary and failure policy in your own words."
+          "The inputs [2, 3, -1] produce [2, 5, 4]; an empty input produces no values.",
+          "After next() returns 1, the remaining stream contains only 3. Reading the exhausted stream again produces an empty list."
         ]
       },
       "quiz": {
@@ -1034,12 +1031,11 @@
       ],
       "exercise": {
         "prompt": "Manage a StringIO buffer and prove it closes while preserving an exception raised by its body.",
-        "starter": "# Implement the contract and edge-case checks.",
-        "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nassert stream.closed\nprint(\"cleanup checks passed\")",
+        "starter": "from contextlib import contextmanager\nfrom io import StringIO\n\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    # TODO: yield stream exactly once and close it in finally.\n    raise NotImplementedError\n\nwith buffer() as normal:\n    normal.write(\"data\")\n    assert normal.getvalue() == \"data\"\nassert normal.closed\n\ntry:\n    with buffer() as failed:\n        failed.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nelse:\n    raise AssertionError(\"body exception was suppressed\")\nassert failed.closed\nprint(\"cleanup checks passed\")",
+        "solution": "from contextlib import contextmanager\nfrom io import StringIO\n@contextmanager\ndef buffer():\n    stream = StringIO()\n    try:\n        yield stream\n    finally:\n        stream.close()\nwith buffer() as normal:\n    normal.write(\"data\")\n    assert normal.getvalue() == \"data\"\nassert normal.closed\ntry:\n    with buffer() as stream:\n        stream.write(\"data\")\n        raise ValueError(\"original\")\nexcept ValueError as error:\n    assert str(error) == \"original\"\nelse:\n    raise AssertionError(\"body exception was suppressed\")\nassert stream.closed\nprint(\"cleanup checks passed\")",
         "checks": [
-          "Run the solution assertions; each checks a behavior, not only printed output.",
-          "Change a relevant implementation rule and confirm its check fails, then restore the code.",
-          "Explain the normal case, boundary and failure policy in your own words."
+          "The buffer accepts writes inside with and is closed after a normal exit.",
+          "If the body raises ValueError(\"original\"), the same error reaches the caller and the buffer still closes."
         ]
       },
       "quiz": {
@@ -1097,13 +1093,12 @@
         }
       ],
       "exercise": {
-        "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Prove zero is accepted and a negative exits with status 2.",
-        "starter": "# Implement the contract and edge-case checks.",
-        "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\np = argparse.ArgumentParser()\np.add_argument(\"--topic\", required=True)\np.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nwith redirect_stderr(StringIO()):\n    try:\n        p.parse_args([\"--topic\", \"Python\", \"--minutes\", \"-1\"])\n    except SystemExit as error:\n        assert error.code == 2\n    else:\n        raise AssertionError(\"negative accepted\")\nprint(\"CLI checks passed\")",
+        "prompt": "Parse --topic and --minutes, rejecting negative minutes with ArgumentTypeError. Check zero, negative and nonnumeric input using the supplied cases.",
+        "starter": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\n\ndef nonnegative(text):\n    # TODO: convert text to int; reject negatives with ArgumentTypeError.\n    raise NotImplementedError\n\nparser = argparse.ArgumentParser()\n# TODO: add required --topic and --minutes arguments.\n# Use nonnegative as the type converter for --minutes.\n\nargs = parser.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nfor minutes in [\"-1\", \"oops\"]:\n    with redirect_stderr(StringIO()) as errors:\n        try:\n            parser.parse_args([\"--topic\", \"Python\", \"--minutes\", minutes])\n        except SystemExit as error:\n            assert error.code == 2\n            assert errors.getvalue()\n        else:\n            raise AssertionError(f\"accepted {minutes!r}\")\nprint(\"CLI checks passed\")",
+        "solution": "import argparse\nfrom contextlib import redirect_stderr\nfrom io import StringIO\ndef nonnegative(text):\n    value = int(text)\n    if value < 0:\n        raise argparse.ArgumentTypeError(\"must be nonnegative\")\n    return value\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--topic\", required=True)\nparser.add_argument(\"--minutes\", required=True, type=nonnegative)\nargs = parser.parse_args([\"--topic\", \"Python\", \"--minutes\", \"0\"])\nassert (args.topic, args.minutes) == (\"Python\", 0)\nfor minutes in [\"-1\", \"oops\"]:\n    with redirect_stderr(StringIO()) as errors:\n        try:\n            parser.parse_args([\"--topic\", \"Python\", \"--minutes\", minutes])\n        except SystemExit as error:\n            assert error.code == 2\n            assert errors.getvalue()\n        else:\n            raise AssertionError(f\"accepted {minutes!r}\")\nprint(\"CLI checks passed\")",
         "checks": [
-          "Run the solution assertions and explain the failure cases.",
-          "Introduce one deliberate defect, confirm its check fails, then restore it.",
-          "Compare with the relevant staged project; state what your checks do not prove."
+          "The sample arguments produce topic \"Python\" and integer minutes 0.",
+          "Both -1 and oops cause argparse to write an error and exit with status 2. Argument parsing handles ValueError from int as an invalid argument too."
         ]
       },
       "quiz": {
@@ -1162,13 +1157,12 @@
         }
       ],
       "exercise": {
-        "prompt": "Build a unittest validation suite using subTest for True, negatives, strings and fractional input; assert that its runner succeeds.",
-        "starter": "# Implement the contract and edge-case checks.",
+        "prompt": "Complete the unittest suite for the supplied validator. Use subTest and assertRaises for True, negatives, strings and fractional input, then run the suite.",
+        "starter": "import unittest\n\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\n\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        # TODO: assert that validate(0) returns 0.\n        raise NotImplementedError\n\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                # TODO: use assertRaises to require ValueError for this value.\n                raise NotImplementedError\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
         "solution": "import unittest\ndef validate(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"bad minutes\")\n    return value\nclass ValidationTests(unittest.TestCase):\n    def test_zero(self):\n        self.assertEqual(validate(0), 0)\n    def test_invalid(self):\n        for value in [True, -1, \"2\", 1.5]:\n            with self.subTest(value=value):\n                with self.assertRaises(ValueError):\n                    validate(value)\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(ValidationTests)\nresult = unittest.TestResult()\nsuite.run(result)\nassert result.wasSuccessful(), result.errors + result.failures\nprint(f\"{result.testsRun} tests passed\")",
         "checks": [
-          "Run the solution assertions and explain the failure cases.",
-          "Introduce one deliberate defect, confirm its check fails, then restore it.",
-          "Compare with the relevant staged project; state what your checks do not prove."
+          "The runner reports 2 tests passed. The four invalid inputs are subtests within one test method.",
+          "Change the validator to accept bool by using isinstance(value, int). Your suite should now fail for True; restore the validator afterward."
         ]
       },
       "quiz": {
@@ -1212,6 +1206,14 @@
           "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
         },
         {
+          "title": "From threads to async tasks",
+          "paragraphs": [
+            "Calling an async def function creates a coroutine. asyncio.run starts an event loop and runs the top-level coroutine in a normal script. Inside it, await suspends the current coroutine while other tasks can make progress. The supplied read_minutes uses sleep(0) only to give another task a turn.",
+            "Enter a TaskGroup with async with. Call group.create_task(read_minutes(value)) to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read task.result(). Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
+            "TaskGroup owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
+          ]
+        },
+        {
           "title": "Tradeoffs",
           "paragraphs": [
             "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
@@ -1227,12 +1229,11 @@
       ],
       "exercise": {
         "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
-        "starter": "# Implement the contract and edge-case checks.",
+        "starter": "import asyncio\n\nasync def read_minutes(value):\n    await asyncio.sleep(0)  # Yield to another task without using a service.\n    return value\n\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = []\n        # TODO: for each value in [10, 20], create a task and save its handle.\n        # group.create_task(read_minutes(value)) returns that handle.\n    # TODO: after the group exits, return each task.result() in list order.\n    raise NotImplementedError\n\nvalues = asyncio.run(collect())\nassert values == [10, 20]\nassert sum(values) == 30\nprint(\"async checks passed\")",
         "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
         "checks": [
-          "Run the solution assertions and explain the failure cases.",
-          "Introduce one deliberate defect, confirm its check fails, then restore it.",
-          "Compare with the relevant staged project; state what your checks do not prove."
+          "Run this as a .py script with Python 3.11+. The result must be [10, 20] with total 30, regardless of completion order.",
+          "This checks successful collection only. The optional async_failure_lab.py and its tests cover child failure and cancellation."
         ]
       },
       "quiz": {
@@ -1285,12 +1286,11 @@
       ],
       "exercise": {
         "prompt": "Implement repeated-scan and one-pass totals; assert equivalent results, then repeat timings on 2,000 rows. Inspect times locally without asserting a winner.",
-        "starter": "# Implement the contract and edge-case checks.",
-        "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nassert rescans([]) == one_pass([]) == {}\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nassert len(scan_times) == len(pass_times) == 3\nprint(\"equivalence and timing checks passed\")",
+        "starter": "from timeit import repeat\n\ndef rescans(rows):\n    topics = dict.fromkeys(topic for topic, _ in rows)\n    # TODO: for each distinct topic, scan rows and sum its minutes.\n    raise NotImplementedError\n\ndef one_pass(rows):\n    result = {}\n    # TODO: visit rows once, accumulating minutes under each topic.\n    raise NotImplementedError\n\nsample = [(\"Python\", 10), (\"Reading\", 5), (\"Python\", 20)]\nexpected = {\"Python\": 30, \"Reading\": 5}\nfor calculate in [rescans, one_pass]:\n    assert calculate(sample) == expected\n    assert calculate([]) == {}\n    assert calculate([(\"Python\", 0)]) == {\"Python\": 0}\n\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nprint(\"Repeated scans, seconds for two calls:\", scan_times)\nprint(\"One pass, seconds for two calls:\", pass_times)",
+        "solution": "from timeit import repeat\ndef rescans(rows):\n    return {topic: sum(m for t, m in rows if t == topic) for topic in dict.fromkeys(t for t, _ in rows)}\ndef one_pass(rows):\n    result = {}\n    for topic, minutes in rows:\n        result[topic] = result.get(topic, 0) + minutes\n    return result\nsample = [(\"Python\", 10), (\"Reading\", 5), (\"Python\", 20)]\nexpected = {\"Python\": 30, \"Reading\": 5}\nfor calculate in [rescans, one_pass]:\n    assert calculate(sample) == expected\n    assert calculate([]) == {}\n    assert calculate([(\"Python\", 0)]) == {\"Python\": 0}\n\nrows = [(f\"topic-{i % 50}\", i % 30) for i in range(2000)]\nassert rescans(rows) == one_pass(rows)\nscan_times = repeat(lambda: rescans(rows), number=2, repeat=3)\npass_times = repeat(lambda: one_pass(rows), number=2, repeat=3)\nprint(\"Repeated scans, seconds for two calls:\", scan_times)\nprint(\"One pass, seconds for two calls:\", pass_times)",
         "checks": [
-          "Run the solution assertions and explain the failure cases.",
-          "Introduce one deliberate defect, confirm its check fails, then restore it.",
-          "Compare with the relevant staged project; state what your checks do not prove."
+          "Both functions must independently produce {\"Python\": 30, \"Reading\": 5} for the small sample, {} for no rows and {\"Python\": 0} for a zero-minute row.",
+          "Each timing list contains three measurements, each for two calls on 2,000 rows with 50 topics. Times vary; do not assert a winner. Try more distinct topics to compare growth."
         ]
       },
       "quiz": {

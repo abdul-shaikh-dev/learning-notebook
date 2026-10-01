@@ -241,7 +241,7 @@
           "SQL Server Management Studio"
         ],
         "correct": 0,
-        "explanation": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md."
+        "explanation": "npm ci installs from the existing lockfile and fails when it disagrees with package.json. Use the same relevant npm configuration that created the lockfile."
       },
       "references": [
         {
@@ -289,7 +289,7 @@
           "Only when the title field is validated."
         ],
         "correct": 0,
-        "explanation": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list."
+        "explanation": "Browser code and configuration are visible to the user. Keep database credentials on the server; the API validates requests and enforces authorization before accessing SQL."
       },
       "references": [
         {
@@ -385,7 +385,7 @@
           "A database login identifier."
         ],
         "correct": 0,
-        "explanation": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express."
+        "explanation": "Version is incremented by the application after a successful update. Matching the expected version in the write predicate detects a stale update; it is not a clock or login identifier."
       },
       "references": [
         {
@@ -433,7 +433,7 @@
           "Whenever loading starts."
         ],
         "correct": 0,
-        "explanation": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension."
+        "explanation": "Keep the draft until the create response has succeeded and passed runtime validation. Clearing it before that point loses the learner's input when the request fails."
       },
       "references": [
         {
@@ -577,7 +577,7 @@
           "The record can never have been created."
         ],
         "correct": 0,
-        "explanation": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears."
+        "explanation": "Aborting stops the client fetch from completing normally, but the server may already have committed. Reconcile the operation outcome before retrying a mutation."
       },
       "references": [
         {
@@ -625,7 +625,7 @@
           "A URL query parameter sent to every browser."
         ],
         "correct": 0,
-        "explanation": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior."
+        "explanation": "The API reads its connection string from server configuration or secret storage. Putting it in browser source or URLs exposes credentials to clients and logs."
       },
       "references": [
         {
@@ -673,7 +673,7 @@
           "Only for uniqueidentifier IDs."
         ],
         "correct": 0,
-        "explanation": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values."
+        "explanation": "Parameters keep values separate from SQL syntax. They do not establish who owns a record; the API must derive identity from trusted authentication and enforce ownership in its access rules."
       },
       "references": [
         {
@@ -704,11 +704,11 @@
           ]
         },
         {
-          "title": "Preserve the draft after a stale update",
+          "title": "Extension: preserve an edit draft after a stale update",
           "paragraphs": [
-            "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A's row. The UI should keep B's unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
-            "Run two independent clients against the local reference with the same initial version. Check that only one update succeeds, then read the stored row through a third request. In the UI, enter a draft before injecting a 409. Check that the draft survives, the error appears and the stored winning update remains unchanged.",
-            "Extend planner-ui.test.tsx with controllable responses: first load version 4, return conflict on save, then offer version 5 on explicit refresh. A changed case edits different fields; explain why automatic merging still needs a stated field-level policy."
+            "The reference UI creates sessions and toggles completion; it does not yet edit an existing title or minutes. After adding an editor, try this case: two tabs read version 4. A changes the title and receives version 5. B submits version 4 with a minutes edit. The API must return a conflict and retain A's row. Keep B's unsaved minutes visible while offering deliberate reload or reconciliation. Automatically resending with version 5 would silently overwrite another decision.",
+            "In the existing reference, run two independent clients with the same initial version and check that only one update succeeds. Read the winning row through a third request. In the UI, enter a new-session draft before a completion toggle receives an injected 409; verify that draft and the displayed row survive and the conflict message appears.",
+            "After implementing the existing-session editor, extend planner-ui.test.tsx with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
           ]
         }
       ],
@@ -777,7 +777,7 @@
           "Only when XACT_ABORT is enabled."
         ],
         "correct": 0,
-        "explanation": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment."
+        "explanation": "SQL rollback covers changes in that database transaction, not an email already sent. A transactional outbox can record delivery intent with the data change, while delivery still needs retries and deduplication."
       },
       "references": [
         {
@@ -833,7 +833,7 @@
           "Retry must produce exactly one task without extra design."
         ],
         "correct": 0,
-        "explanation": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key."
+        "explanation": "A timeout does not establish whether the server committed. Reconcile a durable operation identity; an idempotency key and matching payload can make a retry safe only when the server implements that contract."
       },
       "references": [
         {
@@ -881,7 +881,7 @@
           "Yes; GUIDs are hard to guess."
         ],
         "correct": 0,
-        "explanation": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+        "explanation": "A caller can alter request fields. Derive the owner from verified identity and enforce that owner on reads and writes; a hidden field or hard-to-guess ID is not authorization."
       },
       "references": [
         {
@@ -929,7 +929,7 @@
           "Yes, when the request is JSON."
         ],
         "correct": 0,
-        "explanation": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy."
+        "explanation": "CORS controls browser access to cross-origin responses. It does not authenticate a person, and non-browser clients are not constrained by it. Authentication and authorization remain API responsibilities."
       },
       "references": [
         {
@@ -977,7 +977,7 @@
           "A SQL SELECT count alone."
         ],
         "correct": 0,
-        "explanation": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately."
+        "explanation": "Passing malformed values through decodeTask directly checks the runtime boundary. A valid screenshot or database count cannot show that the decoder rejects invalid fields."
       },
       "references": [
         {
@@ -1073,7 +1073,7 @@
           "It makes database migrations reversible automatically."
         ],
         "correct": 0,
-        "explanation": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained."
+        "explanation": "Promoting the same artifact preserves which bytes were tested. Rebuilding can produce different bytes; configuration, migration compatibility and rollback still require their own checks."
       },
       "references": [
         {

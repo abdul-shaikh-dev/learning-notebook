@@ -996,7 +996,7 @@
       ],
       "exercise": {
         "prompt": "A slide uses unexplained abbreviations, and two readers ask what the labels mean. Write specific feedback that invites a response.",
-        "solution": "In the summary slide, ABC and QRT are not defined. I could not interpret the comparison until I asked. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This points to a changeable artefact rather than judging the author.",
+        "solution": "In the summary slide, ABC and QRT are not defined, and two readers asked what the labels mean. Could we add a short legend? Is there a reason the labels need to stay abbreviated? This reports the supplied evidence and proposes a change without inventing the speaker's experience.",
         "solutionFormat": "prose",
         "checks": [
           "A specific artefact or event is identified.",
@@ -1053,7 +1053,7 @@
       ],
       "exercise": {
         "prompt": "Ana hears that her meeting updates are too detailed but does not know which part to change. Write a reply and one small experiment.",
-        "solution": "Could you point to a recent update that was difficult to follow? I hear that the key decision gets buried. Next time I will state the decision first and ask whether the detail level works. Ana tests a change without assuming every part of her communication is poor.",
+        "solution": "Could you point to a recent update that was difficult to follow? Was the main decision hard to find, or was another detail the problem? If the decision was buried, next time I will state it first and ask whether that helps. Ana checks the proposed explanation before choosing the experiment.",
         "solutionFormat": "prose",
         "checks": [
           "The reply asks for an example before deciding.",
@@ -1110,7 +1110,7 @@
       ],
       "exercise": {
         "prompt": "One classmate wants an evening meeting; another insists on mornings because of caring responsibilities. Map the positions, underlying concerns and a shared aim.",
-        "solution": "Positions: evening versus morning. Concerns: finishing work first versus availability around care. Shared aim: enough time to prepare the presentation. An asynchronous outline plus a short overlap slot may address both more than arguing over a single preferred time.",
+        "solution": "Positions: evening versus morning. The morning preference is linked to caring responsibilities; the reason for evening is still unknown and needs a question. Shared aim: enough time to prepare the presentation. Ask what prevents a morning meeting, then compare an asynchronous outline and a short overlap slot if both people can use them.",
         "solutionFormat": "prose",
         "checks": [
           "Positions and underlying concerns are distinguished.",
@@ -1283,7 +1283,7 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "Written messages preserve a record but remove immediate opportunities to clarify tone. Live conversations allow questions but may be inaccessible or difficult to schedule. A combined approach can work: exchange facts in writing, discuss the unresolved point in an agreed format, then record decisions. Ask about access needs instead of assuming one format suits everyone."
+            "Written messages preserve a record, but delayed replies can make tone or meaning slower to clarify. Live conversations allow questions but may be inaccessible or difficult to schedule. A combined approach can work: exchange facts in writing, discuss the unresolved point in an agreed format, then record decisions. Ask about access needs instead of assuming one format suits everyone."
           ]
         },
         {
@@ -1411,7 +1411,7 @@
       ],
       "exercise": {
         "prompt": "A practice partner agrees to send a draft Thursday but still disagrees about the introduction. Write a short review and follow-up that preserves the unresolved point.",
-        "solution": "We clarified that the draft arrives Thursday and assigned the chart check. The introduction remains undecided; we will compare two versions Friday. I summarised the deadline and invited correction. The review records an agreement and a remaining question without calling the whole discussion a failure.",
+        "solution": "We agreed that the draft will arrive Thursday. The introduction remains undecided; I propose comparing two versions Friday and will check whether that time works. I will send this summary and invite correction. The review separates the actual agreement from a proposed next step.",
         "solutionFormat": "prose",
         "checks": [
           "Agreement and unresolved issue remain separate.",

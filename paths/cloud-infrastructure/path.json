@@ -655,7 +655,7 @@
           "title": "Read the action before reading the totals",
           "paragraphs": [
             "Suppose a plan contains one tag update and one database replacement. The summary says two resources change, but only the replacement crosses the data-lifetime boundary. Read the address, before/after fields, action order and replacement reason. An unknown endpoint is normal during creation; an unknown backup destination is a missing recovery assumption. Neither observation is resolved by counting plus signs.",
-            "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. There is no provider, provisioner, cloud resource or cost. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
+            "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. The terraform_data resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
           ],
           "example": "initial: [create], exit 2\nafter local apply: [no-op], exit 0\ninput v1 -> v2: [update], exit 2\nidentity-1 -> identity-2: [delete, create], exit 2",
           "exampleFormat": "prose"
@@ -1004,9 +1004,9 @@
         {
           "title": "Invented teaching rates",
           "paragraphs": [
-            "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses."
+            "The offline model uses invented teaching rates: 2 units/hour times 10 hours plus 0.5 units/GB-month times 8 GB retained for one month equals 24 units. These are not Azure prices. A private endpoint or monitoring workspace can add costs beyond storage, and deleting compute may leave disks or addresses."
           ],
-          "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB = 4\n# Not Azure pricing or a bill forecast."
+          "example": "from infra_lab import estimate\n\nprint(estimate(2, 10, 0.5, 8))  # 24.0 fictional units\n# compute: 2 units/hour * 10 hours = 20\n# storage: 0.5 units/GB-month * 8 GB * 1 month = 4\n# Not Azure pricing or a bill forecast."
         }
       ],
       "quiz": {
