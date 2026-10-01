@@ -14,7 +14,7 @@ for(const query of [' Kubernetes ','\tKuBeRnEtEs\n']){
 }
 const input=node('path-search');input.value='   ';
 for(const listener of input.listeners.input)listener({target:input});
-assert.equal(node('path-count').textContent,paths.length+' matching paths · '+paths.length+' total');
+assert.equal(node('path-count').textContent,paths.length+' paths shown · '+paths.length+' total');
 const html=node('main').innerHTML;assert.ok(html.includes('Your learning map'));assert.ok(html.includes(paths.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0)+' lessons'));
 for(const p of paths.filter(p=>p.status==='ready'))assert.ok(html.includes(p.href||'#path/'+p.id),p.id);
 const buttons=['map','list'].map(view=>({dataset:{libraryView:view},setAttribute(k,v){this[k]=v;},addEventListener(k,v){this[k]=v;}}));
@@ -28,7 +28,7 @@ console.log('PASS: visual map course coverage, filtering, progress integrity, ma
 const roadmap=ctx.libraryMap();
 assert.equal((roadmap.match(/class="map-node"/g)||[]).length,paths.filter(p=>p.status==='ready').length,'Each ready course including the new path appears once');
 assert.equal((roadmap.match(/marker-end=/g)||[]).length,vm.runInContext('LIBRARY_GRAPHS.reduce((n,g)=>n+g.edges.filter(([a,b])=>LEARNING_PATHS.some(p=>p.id===a&&p.status==="ready")&&LEARNING_PATHS.some(p=>p.id===b&&p.status==="ready")).length,0)',ctx),'All available graph relationships render');
-assert.ok(roadmap.includes('Suggested next: Data Structures &amp; Algorithms or AI Agents'),'Relationships have a text equivalent');
+assert.ok(roadmap.includes('Suggested next: Python Problem Solving or AI Agents'),'Relationships have a text equivalent');
 assert.ok(!ctx.libraryMap('Python').includes('marker-end='),'Filtering never implies relationships between missing nodes');
 assert.equal((ctx.libraryMap('Python').match(/class="map-node"/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
 console.log('PASS: unique roadmap nodes, directed connections, accessible relationship text and filtered graph fallback.');
@@ -37,3 +37,21 @@ for(const render of [ctx.cards,ctx.libraryMap]){
  const filtered=render('Python');
  assert(filtered.indexOf('#path/python') < filtered.indexOf('#path/agent-harnesses'),'Exact course title precedes matches in descriptions');
 }
+
+// Focusing a route preserves its relationships; search temporarily spans all routes.
+node('map-route').value='programming';node('map-route').change();
+assert(node('learning-map').innerHTML.includes('#path/python-problem-solving'));
+assert(!node('learning-map').innerHTML.includes('#path/sql-server'));
+assert.equal(preferences.get('learning-notebook:map-route'),'programming');
+input.value='SQL';for(const listener of input.listeners.input)listener({target:input});
+assert(node('learning-map').innerHTML.includes('#path/sql-server'));
+assert.equal(node('map-route').disabled,true);
+input.value='';for(const listener of input.listeners.input)listener({target:input});
+assert(!node('learning-map').innerHTML.includes('#path/sql-server'));
+assert.equal(node('map-route').disabled,false);
+node('map-route').value='independent';node('map-route').change();
+assert(node('learning-map').innerHTML.includes('course.html'));
+assert(!node('learning-map').innerHTML.includes('#path/python'));
+preferences.set('learning-notebook:map-route','invalid');ctx.bindLibraryMap({querySelectorAll:()=>buttons});
+assert.equal(node('map-route').value,'all');
+console.log('PASS: focused routes, global search, restored selection and invalid preference fallback.');
