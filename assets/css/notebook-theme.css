@@ -128,3 +128,11 @@ html[data-theme=dark] .theme-toggle .theme-sun{display:block}
  html[data-theme=dark] :is(.course-tools a,.task-tabs a){background:var(--night-raised)!important;color:#a9c9e0!important;border-color:var(--night-line)!important}
  html[data-theme=dark] :not(pre)>code{background:var(--night-raised)!important;color:#e2d4b3!important}
 }
+
+/* Featured lesson links need themed interaction states as well as their card. */
+@media screen{
+ html[data-theme=dark] .atlas-open-page{box-shadow:7px 7px 0 var(--night-raised)}
+ html[data-theme=dark] .atlas-open-page>a{border-color:var(--night-line);background:transparent}
+ html[data-theme=dark] .atlas-open-page>a:is(:hover,:focus-visible){background:var(--night-hover);color:var(--night-text)}
+ html[data-theme=dark] .atlas-open-page>a:focus-visible{outline:2px solid var(--night-accent);outline-offset:2px}
+}
