@@ -60,3 +60,42 @@ body:has(.catalog) .header-note{color:#4d635d}body:has(.catalog) .notebook-nav a
 @media print{.practice-setup .download-action,.lesson-actions{display:none}}
 
 .atlas-cover:not(:has(.concept-preview)){grid-template-columns:minmax(0,1fr)}.atlas-cover:not(:has(.concept-preview)) .atlas-cover-copy{max-width:72ch}
+
+/* Keep discovery and reading actions compact. */
+.catalog .library-hero{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:0 0 18px}
+.catalog .library-hero h1{font-size:clamp(28px,3vw,38px);max-width:none;margin:0 0 8px}
+.catalog .library-hero .library-summary,.catalog .library-hero .library-search-link{margin:0}
+.catalog:has(.library-hero){padding-top:22px}
+.catalog:has(.library-hero) .resume-card{margin-bottom:22px;padding:14px 20px}
+.catalog .library-explorer{padding-top:16px}
+.catalog .explorer-heading h2{font-size:26px;margin:0}
+.catalog .map-guidance{margin:8px 0}
+.catalog .library-filter{margin:12px 0}
+.catalog>.atlas-open-page{margin-top:40px}
+.catalog>.atlas-open-page h2{font-size:28px}
+.catalog .course-tools .course-options{flex:0 1 auto}
+.catalog .course-options[open]>a{display:block;margin:8px 0}
+.catalog .reading-status{margin-top:20px;background:transparent}
+.catalog .lesson-actions>a:last-child{flex-basis:auto}
+@media(max-width:700px){
+ .catalog .library-hero{align-items:flex-start;flex-direction:column;gap:12px}
+ .catalog .course-tools{gap:8px;align-items:flex-start}
+ .catalog .course-tools details{flex:0 1 auto}
+ .catalog .course-tools .course-contents[open]{flex-basis:100%}
+ .catalog .course-tools a,.catalog .course-tools summary{font-size:13px;padding:10px;min-height:44px}
+ .catalog .course-tools .course-options[open]{flex-basis:100%}
+ body:has(.catalog)>header{padding:10px 18px;gap:8px}
+ body:has(.catalog) .notebook-nav{gap:4px}
+ body:has(.catalog) .notebook-nav a{font-size:12px;padding:8px;min-height:44px}
+}
+
+.catalog .roadmap-legend{padding:8px 20px;font-size:12px}
+.catalog .branch-section{padding:18px 28px}
+.catalog .branch-heading p{margin:6px 0 12px}
+
+@media(max-width:700px){.catalog .course-word{display:none}.catalog .course-tools{gap:6px}.catalog .course-tools summary{text-transform:capitalize;padding:8px}.catalog .course-tools>a{padding:8px}}
+
+.catalog .map-guidance{display:none}
+.catalog:has(.library-hero) .resume-card{padding:10px 18px;margin-bottom:16px}
+.catalog .resume-card h2{font-size:18px;margin:3px 0}
+.catalog .explorer-heading{margin-bottom:0}

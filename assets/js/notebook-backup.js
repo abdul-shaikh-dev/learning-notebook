@@ -177,7 +177,9 @@ const NotebookBackup = (() => {
   }
   const count = row => `${row.read} read · ${row.checks} self-checked`;
   function summary(value) {
-    return '<ul class="backup-counts">'+rows(value).map(row=>'<li><strong>'+esc(row.title)+'</strong><span>'+esc(count(row))+'</span></li>').join('')+'</ul>';
+    const all = rows(value), active = all.filter(row=>row.read || row.checks);
+    const list = items => '<ul class="backup-counts">'+items.map(row=>'<li><strong>'+esc(row.title)+'</strong><span>'+row.read+' of '+row.total+' read · '+row.checks+' self-checked</span></li>').join('')+'</ul>';
+    return '<p>'+all.reduce((n,row)=>n+row.read,0)+' lessons read across '+active.length+' paths.</p>'+(active.length?list(active):'<p>No lessons marked read yet. Use Read & continue at the end of a lesson to record your progress.</p>')+'<details><summary>All learning paths</summary>'+list(all)+'</details>';
   }
   function previewHtml(value, legacy) {
     const before = rows(value.before), incoming = rows(value.incoming), after = rows(value.after);
@@ -195,10 +197,11 @@ const NotebookBackup = (() => {
     let saved;
     try { saved = summary(read().progress); }
     catch (error) { saved = '<p role="alert">'+esc(error.message)+'</p>'; }
-    return '<section class="notebook-backup backup-panel"><p class="eyebrow">Your learning, portable</p><h1>Back up & restore progress</h1>'+
+    return '<section class="notebook-backup backup-panel"><p class="eyebrow">Your learning, portable</p><h1>Progress & backups</h1>'+
+      '<section aria-label="Saved progress"><h2>Your progress</h2><div id="nb-local">'+saved+'</div></section><h2>Back up progress</h2>'+
       '<p class="intro">Keep all learning paths together in one JSON backup. Downloads and imports happen in this browser; nothing is uploaded.</p>'+
       '<p>Progress belongs to this browser and site address. Move it between your phone and computer by downloading a backup, transferring the file yourself, then previewing and importing it here.</p>'+
-      '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div><details><summary>View progress saved in this browser</summary><div id="nb-local">'+saved+'</div></details>'+
+      '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div>'+
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Local quiz answers win conflicts. This is a merge, not a reset.</p>'+
       '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
       '<div id="nb-preview" aria-live="polite"></div><div class="backup-actions"><button type="button" class="primary" id="nb-apply" disabled>Merge reviewed progress</button></div>'+

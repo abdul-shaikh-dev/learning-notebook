@@ -14,8 +14,8 @@ function harness(initial){
     window:{scrollTo(){},addEventListener:(type,fn)=>{events[type]=fn;}},
     pathView:()=>'<h1>Lessons</h1>',lessonView:id=>'<h1>Lesson '+id+'</h1>',practiceView:()=>'<h1>Practice</h1>'});
   vm.runInContext(app.slice(0,app.indexOf('const MODULES')),ctx);
-  vm.runInContext(app.slice(app.indexOf('function render('),app.indexOf('function downloadProgress')),ctx);
-  vm.runInContext(app.slice(app.indexOf('async function importProgress'),app.indexOf("$('#import').addEventListener")),ctx);
+  vm.runInContext(app.slice(app.indexOf('function render('),app.indexOf("document.addEventListener('click',e=>")),ctx);
+  vm.runInContext(app.slice(app.indexOf('async function importProgress'),app.indexOf('const smallScreen=')),ctx);
   vm.runInContext(study.slice(study.indexOf("document.addEventListener('click'")),ctx);
   vm.runInContext(app.split('\n').find(line=>line.startsWith("window.addEventListener('hashchange'")),ctx);
   return {ctx,disk,node,events,failWrites:()=>{fail=true;},snapshot:()=>JSON.parse(vm.runInContext('JSON.stringify(state)',ctx)),focus:()=>focused};
@@ -50,6 +50,13 @@ function harness(initial){
   assert.equal(navigation.focus(),'#main h1');assert.equal(navigation.node('#main h1').tabIndex,-1);
   assert.match(navigation.node('#main').innerHTML,/Lesson 2/);
   const course=read('course.html');assert.match(course,/<details class="finance-extra-navigation"><summary>Practice &amp; reference/);
-  assert.match(course,/<a href="#learn">Lessons<\/a>/);
+  assert.match(course,/<a href="#explore">Course overview<\/a>/);
+  assert.match(course,/<a href="#learn">Course contents<\/a>/);
+  assert.match(course,/<a href="index.html#resources\/financial-foundations">Practice files<\/a>/);
+  assert.match(course,/<a href="#labs">Interactive labs<\/a>/);
+  assert.match(course,/<div class="study-tools-content">[\s\S]*?<a class="file-link" href="offline.html\?course=financial-foundations">Offline &amp; install<\/a>/);
+  assert.match(app,/document.querySelector\('\.course-menu'\)\.open=!smallScreen.matches/);
+  assert.doesNotMatch(course,/id="(?:export|restore|import)"/);
+  assert.match(course,/<a href="index.html#backup">Progress &amp; backups<\/a>/);
   console.log('PASS: finance study persistence, transactional restore (failure/success/invalid), route focus and reading-first navigation.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

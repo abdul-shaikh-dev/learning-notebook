@@ -4,12 +4,13 @@
  const vendorUrl=new URL('../vendor/mermaid.tiny.js',document.currentScript.src).href;
  let loading,serial=0;
  const label=s=>String(s).replaceAll('->','→').replaceAll('"','”').replace(/[&<>#\n\r;]/g,c=>'#'+c.charCodeAt(0)+';');
- function source(d){
+ function source(d,compact=false){
   const ids=new Map(d.nodes.map((n,i)=>[n.id,'n'+i]));
   const description=['accTitle: '+d.title.replace(/[\r\n]/g,' '),'accDescr: '+d.summary.replace(/[\r\n]/g,' ')];
   if(d.type==='sequence')return ['sequenceDiagram',...description,...d.nodes.map(n=>`participant ${ids.get(n.id)} as ${label(n.label)}`),...(d.sequenceOrder||d.edges.map((_,i)=>i)).map(i=>{const e=d.edges[i];return `${ids.get(e.from)}${e.reply?'-->>':'->>'}${ids.get(e.to)}: ${label(e.label)}`;})].join('\n');
   const shapes={decision:['{','}'],database:['[(',')]'],terminal:['([','])']};
-  return ['flowchart '+(d.direction==='LR'?'LR':'TB'),...description,...d.nodes.map(n=>{const [a,b]=shapes[n.shape]||['[',']'];return `${ids.get(n.id)}${a}"${label(n.label)}"${b}`;}),...d.edges.map(e=>`${ids.get(e.from)} -->|"${label(e.label)}"| ${ids.get(e.to)}`)].join('\n');
+  const mobileConfig='%%{init: {"flowchart":{"nodeSpacing":4,"rankSpacing":20,"padding":4,"wrappingWidth":78,"minNodeWidth":44}}}%%';
+  return [...(compact?[mobileConfig]:[]),'flowchart '+(!compact&&d.direction==='LR'?'LR':'TB'),...description,...d.nodes.map(n=>{const [a,b]=compact&&n.shape==='decision'?['(',')']:shapes[n.shape]||['[',']'];return `${ids.get(n.id)}${a}"${label(n.label)}"${b}`;}),...d.edges.map(e=>`${ids.get(e.from)} -->|"${label(e.label)}"| ${ids.get(e.to)}`)].join('\n');
  }
  // Mermaid's SVG text mode can leave its numeric escapes as literal text.
  // Decode only text nodes, never markup, and only the characters we escape.
@@ -27,7 +28,7 @@
  function load(){
   if(!loading)loading=new Promise((resolve,reject)=>{
    const script=document.createElement('script');script.src=vendorUrl;
-   script.onload=()=>{root.mermaid.initialize({startOnLoad:false,securityLevel:'strict',look:'classic',htmlLabels:false,theme:'base',fontFamily:'Arial, sans-serif',flowchart:{htmlLabels:false,useMaxWidth:false,curve:'linear'},sequence:{useMaxWidth:false,wrap:true},themeVariables:{primaryColor:'#e4eee9',primaryTextColor:'#17392f',primaryBorderColor:'#557767',lineColor:'#557767',secondaryColor:'#f3f6f2',tertiaryColor:'#fff',fontSize:'16px'}});resolve(root.mermaid);};
+   script.onload=()=>{root.mermaid.initialize({startOnLoad:false,securityLevel:'strict',look:'classic',htmlLabels:false,theme:'base',fontFamily:'Arial, sans-serif',flowchart:{htmlLabels:false,useMaxWidth:false,curve:'linear',nodeSpacing:8,rankSpacing:24,padding:6,wrappingWidth:130},sequence:{useMaxWidth:false,wrap:true},themeVariables:{primaryColor:'#e4eee9',primaryTextColor:'#17392f',primaryBorderColor:'#557767',lineColor:'#557767',secondaryColor:'#f3f6f2',tertiaryColor:'#fff',fontSize:'16px'}});resolve(root.mermaid);};
    script.onerror=()=>{loading=null;script.remove();reject(Error('Mermaid unavailable'));};document.head.append(script);
   });
   return loading;
@@ -76,8 +77,18 @@
    try{
     const api=await load();if(!panel.isConnected)continue;
     const result=await api.render('notebook-mermaid-'+(++serial),text);if(!panel.isConnected)continue;
-    view.innerHTML=result.svg;const drawing=view.querySelector('svg');readableLabels(drawing);const exportSvg=drawing.outerHTML;const naturalWidth=Number(drawing.getAttribute('viewBox').split(/\s+/)[2]);drawing.style.width=naturalWidth+'px';drawing.style.maxWidth='none';mapDrawing(d,drawing);panel.dataset.mermaidReady='ready';status.textContent='';
-    const expand=document.createElement('button');expand.type='button';expand.className='quiet';expand.textContent='Expand diagram';expand.dataset.mermaidExpand='';expand.addEventListener('click',()=>expanded(panel,view,drawing,d.title,expand));fit.after(expand);
+    view.innerHTML=result.svg;const drawing=view.querySelector('svg');readableLabels(drawing);const exportSvg=drawing.outerHTML;const naturalWidth=Number(drawing.getAttribute('viewBox').split(/\s+/)[2]);drawing.style.width=naturalWidth+'px';drawing.style.maxWidth='none';mapDrawing(d,drawing);
+    let mobileDrawing;
+    if(d.type!=='sequence'&&(d.direction==='LR'||d.nodes.some(n=>n.shape==='decision'))){
+     try{
+      const compact=await api.render('notebook-mermaid-'+(++serial),source(d,true));if(!panel.isConnected)continue;
+      view.insertAdjacentHTML('beforeend',compact.svg);mobileDrawing=view.lastElementChild;readableLabels(mobileDrawing);
+      const mobileWidth=Number(mobileDrawing.getAttribute('viewBox').split(/\s+/)[2]);mobileDrawing.style.width=mobileWidth+'px';mobileDrawing.style.maxWidth='none';
+      drawing.classList.add('mermaid-desktop');mobileDrawing.classList.add('mermaid-mobile');mapDrawing(d,mobileDrawing);
+     }catch{mobileDrawing?.remove();mobileDrawing=null;}
+    }
+    panel.dataset.mermaidReady='ready';status.textContent='';
+    const expand=document.createElement('button');expand.type='button';expand.className='quiet';expand.textContent='Expand diagram';expand.dataset.mermaidExpand='';expand.addEventListener('click',()=>expanded(panel,view,mobileDrawing&&root.matchMedia?.('(max-width: 600px)').matches?mobileDrawing:drawing,d.title,expand));fit.after(expand);
     const hint=panel.querySelector('.mermaid-hint');if(hint)hint.textContent='Read at actual size; scroll across wide diagrams. Expand for zoom controls. Fit to screen may reduce label size.';
     const svg=panel.querySelector('[data-mermaid-svg]');svg.disabled=false;svg.addEventListener('click',()=>download(exportSvg,'image/svg+xml','learning-diagram.svg'));
     const section=panel.closest('.concept-diagram');active(section,d,{activeNodes:JSON.parse(section.dataset.mermaidActive||'[]'),activeEdges:JSON.parse(section.dataset.mermaidEdges||'[]')});

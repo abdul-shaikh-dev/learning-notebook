@@ -1,0 +1,50 @@
+/* Theme controls share the notebook's existing typography and focus styles. */
+body>header .theme-toggle,.theme-toggle{min-height:44px;padding:8px 12px;border:1px solid #78988a!important;border-radius:6px;background:#f3f6f3;color:#183731!important;font:600 13px/1.3 system-ui;white-space:nowrap;cursor:pointer}
+body>header .theme-toggle{margin-left:auto}
+.theme-toggle[aria-pressed=true]{background:#284537;color:#e4f2e8!important}
+@media(max-width:700px){body>header .theme-toggle{padding:8px;font-size:12px}body>header .brand{font-size:20px}}
+@media screen{
+ html[data-theme=dark]{color-scheme:dark;background:#121e1a}
+ html[data-theme=dark] body{--ink:#e4eee7;--navy:#254a3a;--muted:#b1c4b9;--teal:#8ed7b5;--mint:#284537;--blue:#9acbf7;--line:#425a4e;--paper:#121e1a;--white:#1b2c24;--amber:#f0c67e;--library-muted:#b1c4b9;--library-line:#425a4e;background:#121e1a;color:#e4eee7}
+ html[data-theme=dark] body>header,html[data-theme=dark] .finance-course main{background:#17271f;color:#e4eee7;border-color:#425a4e}
+ html[data-theme=dark] :is(h1,h2,h3,h4,.brand,.catalog .library-hero h1 em,.catalog .atlas-open-page h2 em){color:#e4eee7}
+ html[data-theme=dark] :is(.intro,.muted,.header-note,footer,.library-summary,.atlas-next,.node-meta,.node-open,.branch-heading p,.map-guidance,.course-label,.finance-sidebar-heading div>span){color:#b1c4b9!important}
+ html[data-theme=dark] a{color:#9acbf7}
+ html[data-theme=dark] :is(.card,.course-module,.path-card,.task-kit,.concept-diagram,.visual-explorer,.quiz,details,.atlas-itinerary,.roadmap-legend,.atlas-open-page,.atlas-page-tab,.takeaway,.lesson-references,.worked-example,.result,.backup-panel,.pwa-card,.pwa-course-card){background:#1b2c24;color:#e4eee7;border-color:#425a4e}
+ html[data-theme=dark] :is(.catalog .branch-stop .map-node,.catalog .resume-card,.finance-course aside,.finance-course .course-tools,.catalog .course-tools,.library-view-switch){background:#1b2c24;color:#e4eee7;border-color:#425a4e;box-shadow:none}
+ html[data-theme=dark] :is(.catalog .resume-card p,.catalog .resume-card small,.finance-sidebar-heading strong,.catalog .atlas-open-page>a,.finance-course #nav a,.finance-course .study-tools>summary,.finance-course .study-tools .file-link){color:#d8e9df}
+ html[data-theme=dark] :is(.catalog .course-tools,.catalog .walkthrough-reading,.reading-status){background:transparent}
+ html[data-theme=dark] :is(input,select,textarea){background:#15231c;color:#e4eee7;border-color:#6f8b7b}
+ html[data-theme=dark] input::placeholder{color:#acbfb3!important}
+ html[data-theme=dark] :is(button,.download-action,.course-tools>a,.notebook-nav>a,.task-tabs>a,.resume-card>a,.file-role,.badge,.subject-symbol){background:#284537!important;color:#e4eee7!important;border-color:#597464!important}
+ html[data-theme=dark] :is(button:hover,.download-action:hover,.course-tools>a:hover,.task-tabs>a:hover,.catalog .branch-stop .map-node:hover){background:#345943!important}
+ html[data-theme=dark] :is(.primary,.library-search-link,.finance-course .continue a){background:#addbbd!important;color:#12251a!important}
+ html[data-theme=dark] :is([aria-current=page],button[aria-pressed=true]){outline:1px solid #a5d9b7}
+ html[data-theme=dark] :focus-visible{outline:3px solid #f0c67e!important;outline-offset:3px}
+ html[data-theme=dark] :is(th,td,li,.branch-section,.finance-sidebar-heading){border-color:#425a4e}
+ html[data-theme=dark] :is(th,tr:nth-child(even)){background:#20372b}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog,.mermaid-dialog-header){background:#17271f;color:#e4eee7}
+ html[data-theme=dark] .mermaid-view svg .node :is(rect,polygon,path),html[data-theme=dark] .mermaid-dialog svg .node :is(rect,polygon,path){fill:#284537!important;stroke:#91b9a1!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(text,.nodeLabel,.edgeLabel){fill:#e4eee7!important;color:#e4eee7!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel rect{fill:#17271f!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(.flowchart-link,.messageLine0,.messageLine1){stroke:#91b9a1!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg marker path{fill:#91b9a1!important;stroke:#91b9a1!important}
+ /* Illustrated exercises retain their authored semantic colours on a light canvas. */
+ html[data-theme=dark] :is(.visual-frame,.visual-diagram,.scene-stage){background:#f3f6f3;color:#183731}
+ html[data-theme=dark] :is(.visual-frame,.visual-diagram,.scene-stage) :is(h2,h3,h4,p){color:#183731}
+ html[data-theme=dark] .code-panel button{background:transparent!important;color:#edf5ef!important}
+ html[data-theme=dark] .code-panel button:hover{background:#365c4d!important}
+}
+@media print{.theme-toggle{display:none!important}html{color-scheme:light}}
+
+@media screen{
+ html[data-theme=dark] :is(#learning-map,.branch-section,.independent-paths,.pwa-install,.preview-record,.preview-cycle span,.preview-vocabulary li){background:#1b2c24!important;color:#e4eee7!important;border-color:#425a4e!important}
+ html[data-theme=dark] :is(input,select,textarea){background:#15231c!important;color:#e4eee7!important;border-color:#6f8b7b!important}
+ html[data-theme=dark] :is(.takeaway,.atlas-lesson-rail summary,.atlas-category,.atlas-itinerary-title,.atlas-itinerary small,.atlas-itinerary strong,.library-filter p,.library-filter label,.map-node strong,.pwa-install p,.pwa-course-actions a,.pwa-offline-notes a){color:#d8e9df!important}
+ html[data-theme=dark] .atlas-lesson-rail details{background:transparent}
+ html[data-theme=dark] .atlas-lesson-rail button{background:transparent!important}
+ html[data-theme=dark] .atlas-lesson-rail button:hover{background:#284537!important}
+ html[data-theme=dark] .branch-connectors path{stroke:#8ab39a}
+ html[data-theme=dark] .catalog .takeaway{background:transparent}
+}
+@media screen{html[data-theme=dark] :is(.continue,.finance-sidebar-icon,.mark){background:#284537!important;color:#e4eee7!important}html[data-theme=dark] :is(.mermaid-hint,.mermaid-status,.catalog-return,.course-current,.finance-course .continue p,.finance-course .continue .eyebrow){color:#b1c4b9!important}html[data-theme=dark] .finance-course main>p a{background:transparent;color:#9acbf7}html[data-theme=dark] input[type=file]::file-selector-button{background:#284537;color:#e4eee7}}

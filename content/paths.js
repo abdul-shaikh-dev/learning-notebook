@@ -56592,13 +56592,11 @@ const LEARNING_PATHS = [
             "depth-summary-challenge-md"
           ],
           "steps": [
-            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the reference and check its output.",
-            "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
             "Build the project described in the reader: Accept nonblank topics and actual nonnegative whole minutes. Preserve existing records when validation fails. Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
             "Check your result: Correct repeated-topic and empty totals. Explicit validation and unchanged state on errors. Explains that simple JSON persistence assumes one process.",
-            "Build the independent summary from summary-challenge.md, then run the same contract checks against your module."
+            "Build the independent summary from summary-challenge.md, then run the same contract checks against your module.",
+            "After attempting the project, run the reference and compare its output with your result."
           ],
           "commands": [
             {
@@ -56612,9 +56610,9 @@ const LEARNING_PATHS = [
               "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
-              "label": "Run the focused depth lab from the extracted bundle root",
-              "command": "python summary_checks.py",
-              "expected": "Five unittest methods pass against the reference; use my_summary to assess your own implementation."
+              "label": "Optional summary challenge: check your own implementation",
+              "command": "python summary_checks.py my_summary",
+              "expected": "Save your implementation as my_summary.py in this folder. All five checks should pass; failures identify cases to fix."
             }
           ],
           "prerequisites": [
@@ -56641,12 +56639,10 @@ const LEARNING_PATHS = [
             "README-md"
           ],
           "steps": [
-            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the reference and check its output.",
-            "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
             "Build the project described in the reader: Use a frozen Session dataclass with explicit range/shape rules. Bound file reads and close handles on errors. Separate main argument parsing from importable calculation functions. Return 0 on success and 1 on expected read/validation failure. Document how to split into a package and add pyproject.toml; no package publication is required.",
-            "Check your result: Valid zero and trimmed topics work. Invalid shapes and minutes fail without rewriting input. Tests use temporary files and verify output/status. Explains why a type hint is not schema validation."
+            "Check your result: Valid zero and trimmed topics work. Invalid shapes and minutes fail without rewriting input. Tests use temporary files and verify output/status. Explains why a type hint is not schema validation.",
+            "After attempting the project, run the reference and compare its output with your result."
           ],
           "commands": [
             {
@@ -56689,12 +56685,10 @@ const LEARNING_PATHS = [
             "test_installed_package-py"
           ],
           "steps": [
-            "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the reference and check its output.",
-            "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
             "Build the project described in the reader: Bound bytes, records, fields and worker count. Reject duplicate keys, duplicate IDs and invalid minutes. Keep worker output order deterministic and commit only after batch validation. Write a same-directory temporary file, fsync contents, replace once and clean on failure. Validate loaded report version and recomputed totals. Profile sequential versus threaded validation; do not promise a speedup.",
-            "Check your result: Round-trip, empty, boundary and corruption tests pass. Injected replacement failure preserves exact prior bytes and leaves no temporary files. CLI error status and safe logging are explained. Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+            "Check your result: Round-trip, empty, boundary and corruption tests pass. Injected replacement failure preserves exact prior bytes and leaves no temporary files. CLI error status and safe logging are explained. Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim.",
+            "After attempting the project, run the reference and compare its output with your result."
           ],
           "commands": [
             {

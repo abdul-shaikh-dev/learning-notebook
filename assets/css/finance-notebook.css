@@ -86,7 +86,10 @@
   .finance-course .course-menu>summary::after{content:'+';float:right}
   .finance-course .course-menu[open]>summary::after{content:'−'}
   .finance-course #nav{display:block;margin:0 0 12px;overflow:visible}
+  .finance-course .finance-extra-navigation{margin:0 0 10px;padding:8px 10px}
+  .finance-course .finance-extra-navigation>summary{min-height:44px;padding:8px 0}
   .finance-course .finance-nav-group{margin:10px 0 16px}
+  .finance-course .finance-nav-group.finance-primary-navigation{margin:0 0 6px}
   .finance-course .finance-nav-group p{padding:0 4px}
   .finance-course #nav a{min-height:44px;padding:10px 8px}
   .finance-course .study-tools{margin:0;padding:0}
