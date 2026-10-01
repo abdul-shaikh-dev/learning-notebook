@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate → advanced practice",
   "prerequisites": [
     "Basic file editing and running a terminal command. No prior specialist knowledge required.",
-    "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+    "Basic HTML and JavaScript help you edit the UI lab and understand its Node.js checks. Python is optional and used only to run a local HTTP server; no Python programming or measurement lab is required."
   ],
   "outcomes": [
     "Organise content around user tasks and clear hierarchy.",

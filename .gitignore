@@ -7,6 +7,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 # Personal learning progress exports
+learning-notebook-guided*.json
 valuation-lab-progress*.json
 
 # Generated GitHub Pages artifact

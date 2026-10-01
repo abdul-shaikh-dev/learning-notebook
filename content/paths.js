@@ -14282,21 +14282,20 @@ const LEARNING_PATHS = [
           "prompt": "Define order count, customer count and revenue for these rows and write their grains.",
           "solution": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Calculate two orders, one distinct customer and 2000 cents of revenue.",
+            "Identify order-grain input and calendar-day output under the UTC rule."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Two orders from one customer total 2000 cents. What must be fixed before comparing a joined report with those orders?",
           "options": [
-            "Define row grain first",
-            "A joined row always equals one order",
-            "Column names settle business meaning"
+            "The meaning of each row and the aggregation grain",
+            "The displayed column labels, without checking row meaning",
+            "The joined row count as the order count, without checking cardinality"
           ],
           "correct": 0,
-          "explanation": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule. The other options ignore the mechanism or its stated boundary."
+          "explanation": "One source row is an order, while the daily output groups orders by UTC day. The sample has two orders, one distinct customer and 2000 cents. A join can multiply rows, so its output count is not automatically an order count."
         },
         "references": [
           {
@@ -14338,21 +14337,20 @@ const LEARNING_PATHS = [
           "prompt": "Choose where to reject malformed timestamps in ETL and ELT and explain how rejected evidence is retained safely.",
           "solution": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Place timestamp rejection before curated publication in both ETL and ELT.",
+            "Retain rejection evidence with an explicit access policy."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An ELT pipeline lands rows with malformed timestamps. When should it validate them?",
           "options": [
-            "Both need quality and ownership",
-            "ELT makes validation unnecessary",
-            "Raw data should always be public"
+            "Before publishing curated results, with governed rejection evidence",
+            "Only after consumers report incorrect totals",
+            "At ingestion only; later transformations need no checks"
           ],
           "correct": 0,
-          "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy. The other options ignore the mechanism or its stated boundary."
+          "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy."
         },
         "references": [
           {
@@ -14501,21 +14499,20 @@ const LEARNING_PATHS = [
           "prompt": "Give three reasons a CSV importer should reject a file before writing the destination.",
           "solution": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Name incompatible headers, invalid encoding and exceeded size or row limits as rejection reasons.",
+            "Reject before destination writes so existing curated data remains intact."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A CSV contains a quoted comma and an unexpected header. How should the importer handle it?",
           "options": [
-            "Use a parser with an explicit contract",
-            "split comma handles quoted fields",
-            "Ignore unexpected fields silently"
+            "Use the agreed CSV parser and reject the header mismatch",
+            "Split each line on commas and use the first expected fields",
+            "Parse the quoted value but silently discard the unexpected field"
           ],
           "correct": 0,
-          "explanation": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state. The other options ignore the mechanism or its stated boundary."
+          "explanation": "A CSV parser handles the quoted comma as part of one field. The strict header contract still rejects the unexpected column before writing the destination; parsing correctly does not waive schema validation."
         },
         "references": [
           {
@@ -14557,21 +14554,20 @@ const LEARNING_PATHS = [
           "prompt": "Define whether an unknown customer ID may be blank and what should happen to a missing amount.",
           "solution": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Require a known nonblank customer identifier and a present integer amount.",
+            "Reject a missing amount rather than converting it to zero."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An order has an empty amount field under the integer-cents contract. What should happen?",
           "options": [
-            "Unknown is different from zero",
-            "Every empty value means zero",
-            "A column label enforces its type"
+            "Reject the missing amount instead of inventing zero revenue",
+            "Convert the empty field to zero because the column is numeric",
+            "Keep the empty field and let the report decide its meaning"
           ],
           "correct": 0,
-          "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue. The other options ignore the mechanism or its stated boundary."
+          "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue."
         },
         "references": [
           {
@@ -14613,21 +14609,20 @@ const LEARNING_PATHS = [
           "prompt": "Compare all-or-nothing and partial-success import for a financial total.",
           "solution": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Explain that whole-batch rejection preserves a coherent snapshot but delays availability.",
+            "Make rejected contributions and completeness visible if partial results are published."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A pipeline publishes valid rows and quarantines one sale. What must accompany the reported revenue?",
           "options": [
-            "Publish completeness alongside totals",
-            "Rejected rows never affect interpretation",
-            "A quarantine needs no access policy"
+            "Accepted and rejected counts plus a completeness rule",
+            "A complete label because every published row passed validation",
+            "Only the accepted row count because the rejected sale is outside the output"
           ],
           "correct": 0,
-          "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled. The other options ignore the mechanism or its stated boundary."
+          "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled."
         },
         "references": [
           {
@@ -14669,21 +14664,20 @@ const LEARNING_PATHS = [
           "prompt": "Why might ingestion-date totals disagree with event-date totals even if every row is valid?",
           "solution": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Use delayed delivery or replay to explain different event-day and ingestion-day totals.",
+            "Label the chosen time definition and day-bucketing rule."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A September 1 order is ingested on September 3. Why can two valid daily reports place it on different days?",
           "options": [
-            "Event time differs from ingestion time",
-            "A naive timestamp identifies UTC automatically",
-            "Every business day is a UTC day"
+            "One groups event time and the other ingestion time",
+            "Validation requires replacing the event timestamp with arrival time",
+            "A valid timestamp always has the same calendar date in every timezone"
           ],
           "correct": 0,
-          "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled."
         },
         "references": [
           {
@@ -14725,21 +14719,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain how adding a refund changes the contract and regression tests.",
           "solution": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Define a refund event and its signed-amount and duplicate-handling rules.",
+            "Add net-total and reconciliation cases instead of merely allowing negative inputs."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "The cents-only importer must now accept refunds. What change preserves a clear money contract?",
           "options": [
-            "Units and rounding belong in the contract",
-            "All currencies use two decimals",
-            "Floating point is exact for every decimal"
+            "Define signed refund events, duplicate handling and net-total tests",
+            "Allow negative numbers without changing the order-only contract",
+            "Convert amounts to floating point so refunds need no separate rule"
           ],
           "correct": 0,
-          "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule."
         },
         "references": [
           {
@@ -14788,21 +14781,20 @@ const LEARNING_PATHS = [
           "prompt": "Why must the run marker and data writes share the same transaction?",
           "solution": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Describe both crash gaps: a marker without data and data without a marker.",
+            "Place the run marker and its data writes in the same transaction."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An importer commits a completed-run marker before writing the orders. What prevents a crash from leaving a false completion?",
           "options": [
-            "Commit marker and effect together",
-            "A connection context always closes the connection",
-            "Transactions automatically include HTTP calls"
+            "Commit the marker and order effects in one transaction",
+            "Check for the marker before starting a separate data transaction",
+            "Write the marker first so a retry can skip unfinished data writes"
           ],
           "correct": 0,
-          "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects."
         },
         "references": [
           {
@@ -14844,21 +14836,20 @@ const LEARNING_PATHS = [
           "prompt": "Describe the failure when an ID is checked outside the write transaction and two workers race.",
           "solution": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Show how two workers can both observe a missing run ID before either writes.",
+            "Use database uniqueness and one atomic effect/marker boundary rather than a pre-check alone."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Two workers check the same missing batch ID before either writes. Which design prevents duplicate committed effects?",
           "options": [
-            "A replay key must bind to content",
-            "Same ID should accept different payload silently",
-            "Pre-checking avoids every race"
+            "Database uniqueness plus an atomic effect and replay-marker transaction",
+            "A second application pre-check before each separate write",
+            "Different run IDs for the two workers so neither waits"
           ],
           "correct": 0,
-          "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient."
         },
         "references": [
           {
@@ -15002,21 +14993,20 @@ const LEARNING_PATHS = [
           "prompt": "When should an extraction watermark advance if target writes fail after half the batch?",
           "solution": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Keep the previous committed watermark when target writes fail halfway.",
+            "Roll back or reconcile partial effects and retry with deduplication."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Target writes fail halfway through an extracted batch. What should happen to its watermark?",
           "options": [
-            "Advance only after committed downstream success",
-            "Advance before writing for speed",
-            "Timestamps cannot tie"
+            "Keep the prior committed boundary until downstream success is established",
+            "Advance to the last extracted row because extraction succeeded",
+            "Advance halfway based on the number of attempted writes"
           ],
           "correct": 0,
-          "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication. The other options ignore the mechanism or its stated boundary."
+          "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication."
         },
         "references": [
           {
@@ -15065,21 +15055,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain what a consumer should do when its checkpoint predates the retained change range.",
           "solution": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Identify the gap between the checkpoint and retained changes as missing completeness evidence.",
+            "Rebaseline with a consistent snapshot and reconcile using the source protocol."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A CDC checkpoint is older than the earliest retained change. What should the consumer do?",
           "options": [
-            "Deletion and retention are explicit concerns",
-            "CDC retains every event forever",
-            "CDC automatically proves exactly-once effects"
+            "Stop claiming completeness and obtain a consistent rebaseline",
+            "Resume at the earliest available change and mark the gap complete",
+            "Treat missing change records as evidence that nothing changed"
           ],
           "correct": 0,
-          "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap."
         },
         "references": [
           {
@@ -15121,21 +15110,20 @@ const LEARNING_PATHS = [
           "prompt": "Write two checks that guard the join before a revenue report is published.",
           "solution": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Check customer-key uniqueness and count orders without a customer match.",
+            "Compare source and joined fact counts and sums for the intended cardinality."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Two orders total 2000 cents, but a customer join reports 4000. What should be checked first?",
           "options": [
-            "Check join cardinality before totals",
-            "Every join preserves row count",
-            "Surrogate keys eliminate history rules"
+            "Whether duplicate customer keys multiplied the order rows",
+            "Whether summing only distinct amount values restores the correct grain",
+            "Whether dividing every joined total by two is a valid general correction"
           ],
           "correct": 0,
-          "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality."
         },
         "references": [
           {
@@ -15263,21 +15251,20 @@ const LEARNING_PATHS = [
           "prompt": "Give tests for a boundary event and overlapping dimension intervals.",
           "solution": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Make an event exactly on September 10 match only the new version.",
+            "Reject overlapping intervals and require one matching version per fact."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A customer version ends exactly when the next begins on September 10. How should an event at that boundary join?",
           "options": [
-            "History needs interval rules",
-            "Type 1 preserves every prior attribute",
-            "Overlapping intervals never affect sums"
+            "To the new version once under half-open interval rules",
+            "To both versions because both include September 10",
+            "To neither version to avoid double counting"
           ],
           "correct": 0,
-          "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version. The other options ignore the mechanism or its stated boundary."
+          "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version."
         },
         "references": [
           {
@@ -15326,21 +15313,20 @@ const LEARNING_PATHS = [
           "prompt": "Should publication depend on reconciliation? Explain whether a failed email should undo the database commit.",
           "solution": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Require successful reconciliation before publication.",
+            "Retry a failed notification separately from the valid committed data."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Data commits successfully, but the optional email task fails. What follows from the DAG alone?",
           "options": [
-            "Dependencies do not establish cross-task atomicity",
-            "A DAG prevents every retry duplicate",
-            "A scheduled task always finishes on time"
+            "Dependencies do not undo the commit; notification needs its own failure policy",
+            "The DAG automatically rolls back the earlier database task",
+            "Rerunning the whole DAG cannot duplicate any external effect"
           ],
           "correct": 0,
-          "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit."
         },
         "references": [
           {
@@ -15482,21 +15468,20 @@ const LEARNING_PATHS = [
           "prompt": "Choose a policy for late sales and specify what a dashboard user should see.",
           "solution": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Assign the late sale to the chosen event-day correction policy.",
+            "Show a revision or updated timestamp and count accepted late events."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A September 1 sale arrives after that day has been published. Under the lesson correction policy, what should users see?",
           "options": [
-            "Late data requires a correction policy",
-            "Published means no earlier event can arrive",
-            "Ingestion date always equals event date"
+            "A revised September 1 total with update evidence",
+            "An unchanged September 1 total and silent reassignment to arrival day",
+            "A changed historical total with no revision information"
           ],
           "correct": 0,
-          "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail. The other options ignore the mechanism or its stated boundary."
+          "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail."
         },
         "references": [
           {
@@ -15538,21 +15523,20 @@ const LEARNING_PATHS = [
           "prompt": "Why should a limit be checked before a complete unbounded read? State two partition tradeoffs.",
           "solution": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Explain that a limit checked after an unbounded read cannot prevent that read exhausting memory.",
+            "Contrast reduced scanning with tiny-partition metadata and management overhead."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A loader reads an entire file into memory before checking its size. What change enforces the intended bound?",
           "options": [
-            "Bound input before materializing it",
-            "File extensions validate content",
-            "More partitions are always better"
+            "Check or enforce limits before materializing unbounded input",
+            "Check the size after parsing, before the database write",
+            "Choose a CSV extension so the input size is predictable"
           ],
           "correct": 0,
-          "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity. The other options ignore the mechanism or its stated boundary."
+          "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity."
         },
         "references": [
           {
@@ -15594,21 +15578,20 @@ const LEARNING_PATHS = [
           "prompt": "Write a migration checklist for cents to amount_minor plus currency.",
           "solution": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Version the new amount_minor and currency contract, including currency scale and consumer updates.",
+            "Test old and new fixtures and define rebaseline and rollback behavior."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A producer replaces cents with amount_minor and currency. What is needed before existing totals can be trusted?",
           "options": [
-            "Compatibility includes meaning and consumers",
-            "Extra columns can always be ignored",
-            "A default currency is universally valid"
+            "Versioned meaning, currency-scale rules and consumer compatibility tests",
+            "Renaming the field while retaining every existing aggregation rule",
+            "Ignoring currency when older consumers do not recognize the column"
           ],
           "correct": 0,
-          "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity."
         },
         "references": [
           {
@@ -15650,21 +15633,20 @@ const LEARNING_PATHS = [
           "prompt": "Give a pair of errors that preserve a total but change the result incorrectly.",
           "solution": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Give offsetting errors, such as +100 and -100, that preserve a total.",
+            "Identify a key or field-level comparison that detects the incorrect rows."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Two order amounts change by +100 and -100, leaving the total unchanged. Which check can expose the error?",
           "options": [
-            "Reconcile keys and measures",
-            "A correct sum proves every row is correct",
-            "Successful execution proves source truth"
+            "Compare order identifiers and individual values as well as totals",
+            "Compare only the overall sum with the source",
+            "Compare only the row count with the source"
           ],
           "correct": 0,
-          "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values."
         },
         "references": [
           {
@@ -15706,21 +15688,20 @@ const LEARNING_PATHS = [
           "prompt": "Design a minimal diagnostic record for a rejected batch and identify its owner.",
           "solution": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Keep run ID, schema version, sanitized category, bounded row index and observation time.",
+            "Assign a dataset owner and retention rule without storing full rejected customer rows."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A shared diagnostic log records a rejected customer batch. Which record is appropriate?",
           "options": [
-            "Ownership and retention need explicit rules",
-            "Encryption replaces authorization",
-            "Debug logs should contain every row"
+            "Minimal sanitized metadata with an owner and retention rule",
+            "The full rejected rows because the log is useful for debugging",
+            "An encrypted full-file copy with no access or retention decision"
           ],
           "correct": 0,
-          "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule."
         },
         "references": [
           {
@@ -15769,21 +15750,20 @@ const LEARNING_PATHS = [
           "prompt": "List the integration evidence needed before claiming the SQL Server adapter works.",
           "solution": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Name clean-load, replay, payload-conflict, duplicate rollback and invalid-input target tests.",
+            "Verify stored keys and totals using the selected SQL Server and driver versions."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "SQLite tests pass and a matching T-SQL schema is written. What evidence is still needed for the SQL Server adapter?",
           "options": [
-            "Porting needs target-specific execution tests",
-            "SQLite proves SQL Server integration",
-            "DATETIME2 enforces UTC itself"
+            "Execution tests against the selected SQL Server and driver",
+            "A visual comparison showing similar table definitions",
+            "A DATETIME2 column, which alone proves UTC input handling"
           ],
           "correct": 0,
-          "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals."
         },
         "references": [
           {
@@ -15825,21 +15805,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain how to handle a timeout immediately after a server commit.",
           "solution": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Treat a post-commit timeout as an unknown outcome and inspect durable run identity and fingerprint.",
+            "Preserve the same intended batch identity when safely replaying."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "The client times out immediately after the server may have committed a batch. What should happen next?",
           "options": [
-            "A timeout can leave an uncertain outcome",
-            "Every error should retry forever",
-            "Backfill never changes published totals"
+            "Inspect the durable run identity before deciding on safe replay",
+            "Create a new run ID because the timeout proves no commit occurred",
+            "Report success because sending the commit request proves it completed"
           ],
           "correct": 0,
-          "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch."
         },
         "references": [
           {
@@ -15881,21 +15860,20 @@ const LEARNING_PATHS = [
           "prompt": "Deliver contract.md, the runnable importer, test results, lineage/reconciliation note and one independently implemented extension.",
           "solution": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Show replay without extra orders and preserved prior state after a failed import.",
+            "Explain the independently implemented extension tests and distinguish local evidence from untested integrations."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "The demo prints committed, replay, and 2000 cents. What additional evidence supports the capstone?",
           "options": [
-            "Evidence includes failure and reconciliation tests",
-            "A green demo proves distributed readiness",
-            "Copying the reference completes every extension"
+            "Failure-preservation, reconciliation and independently implemented extension tests",
+            "The same successful demo repeated without inspecting stored records",
+            "A claim of distributed readiness based on the local SQLite result"
           ],
           "correct": 0,
-          "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference."
         },
         "references": [
           {
@@ -18584,7 +18562,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dynamic-programming",
-        "title": "11. Dynamic programming and a capstone",
+        "title": "11. Dynamic programming",
         "takeaway": "Reuse solutions to overlapping subproblems with a clearly defined state.",
         "sections": [
           {
@@ -18603,13 +18581,11 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Capstone: model topics as an unweighted directed graph and find hop distances from Python. Use the downloaded BFS implementation and explain whether edges mean prerequisites or possible next topics.",
-          "solution": "graph = {'Python':['Algorithms','Automation'], 'Algorithms':['Graphs'], 'Automation':[], 'Graphs':[]}\nresult = distances(graph, 'Python')\nassert result['Graphs'] == 2\n# Here edges mean possible next topics, not proof that all prerequisites are complete.",
+          "prompt": "Change the stair-count problem to allow moves of one or three steps. Write ways_one_or_three(n) for a nonnegative integer n, using a table where counts[i] is the number of ordered move sequences that reach step i. Start with counts[0]=1; each state adds counts[i-1] and, when i >= 3, counts[i-3].",
+          "solution": "def ways_one_or_three(n):\n    if not isinstance(n, int) or isinstance(n, bool) or n < 0:\n        raise ValueError('nonnegative integer required')\n    counts = [0] * (n + 1)\n    counts[0] = 1\n    for i in range(1, n + 1):\n        counts[i] = counts[i - 1]\n        if i >= 3:\n            counts[i] += counts[i - 3]\n    return counts[n]\n\nassert [ways_one_or_three(n) for n in range(7)] == [1, 1, 1, 2, 3, 4, 6]\n# For four steps: 1+1+1+1, 1+3 and 3+1 are the three sequences.\n# O(n) additions and O(n) stored counts; integer sizes grow with n.",
           "checks": [
-            "Define the edge meaning before traversing.",
-            "Handle cycles and unreachable topics.",
-            "Explain O(V+E) under the stated representation.",
-            "Passing a reachability check is not the same as completing all prerequisites."
+            "For n=0 through n=6, the results are 1, 1, 1, 2, 3, 4, 6; n=4 counts 1+3 and 3+1 separately.",
+            "Negative numbers, booleans and non-integers raise ValueError; no negative table index is used to handle the first two steps."
           ]
         },
         "quiz": {
@@ -27241,8 +27217,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Write three acceptance statements for adding and completing a session. Include a rejected input and state what the local reference does not promise.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "Creating SQL study with 25 minutes returns 201 and the same record appears in the list; completing it returns version 2.",
+            "A blank title returns 400 without adding a record. The acceptance statements exclude login, public deployment and multi-user isolation."
           ],
           "solution": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions.",
           "solutionFormat": "prose"
@@ -27289,8 +27265,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Create a setup note that distinguishes the notebook host, UI development server and API process.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The note identifies three separate processes: the static notebook host, Vite for the UI and /api proxy, and Kestrel for the API.",
+            "The note includes the SDK/Node versions, npm ci and the start commands, and identifies SQL Server as optional for the foundation stage."
           ],
           "solution": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md.",
           "solutionFormat": "prose"
@@ -27337,8 +27313,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Locate the failure when a reverse proxy returns status 200 with text/html instead of JSON.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "A 200 response with text/html is rejected at the media-type check before decodeTask runs.",
+            "The UI retains the draft and reports the failure instead of displaying an empty task list."
           ],
           "solution": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list.",
           "solutionFormat": "prose"
@@ -27501,8 +27477,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Predict the result of minutes=0, minutes=true, missing minutes and done=false on a valid PUT.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "With all other required fields valid, minutes=0 is accepted; minutes=true and omitted minutes return 400.",
+            "A valid PUT with done=false sets the task to incomplete; false is not treated as a missing value."
           ],
           "solution": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases.",
           "solutionFormat": "prose"
@@ -27549,8 +27525,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Explain why a UI-only minutes check is insufficient and name a check enforced in SQL.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The explanation identifies a direct HTTP client or import as a way to bypass React validation.",
+            "The SQL CHECK constraint accepts Minutes=0 and Minutes=1440, and rejects -1 and 1441."
           ],
           "solution": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express.",
           "solutionFormat": "prose"
@@ -27597,8 +27573,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Stop the API, submit a valid draft, then inspect what remains in the form.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "After the failed submission, the title and minutes still match the draft and the status reports a recoverable problem.",
+            "Once the API restarts, a deliberate retry can create the record; an uncertain earlier commit is checked before retrying."
           ],
           "solution": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension.",
           "solutionFormat": "prose"
@@ -27645,8 +27621,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Compare browser refresh with API restart in memory mode.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "A created session remains after browser refresh while the same memory-mode API process is running.",
+            "After the memory-mode API restarts, the session is absent from the list."
           ],
           "solution": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state.",
           "solutionFormat": "prose"
@@ -27693,8 +27669,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Why is response.json() as StudyTask[] insufficient? Write two invalid payloads it could hide.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "Two otherwise valid task payloads with minutes=true and version=0 are rejected by the decoder.",
+            "The explanation identifies that a TypeScript assertion performs no runtime validation."
           ],
           "solution": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape.",
           "solutionFormat": "prose"
@@ -27741,8 +27717,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Explain why POST should not run merely because a component mounted.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "Mounting or remounting the component does not issue a create POST; submitting the form does.",
+            "The design prevents another submit while one is pending and cancels or disregards reads whose component has unmounted."
           ],
           "solution": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears.",
           "solutionFormat": "prose"
@@ -27789,8 +27765,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Write an observation that proves the UI is using SQL instead of memory.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The health endpoint reports sql-server, and a UI-created record has the same ID in the SQL table.",
+            "After restarting the API, GET returns that record with the same ID and version."
           ],
           "solution": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior.",
           "solutionFormat": "prose"
@@ -27837,8 +27813,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Store a title containing an apostrophe and explain why concatenating it into SQL would be risky.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "A title such as O'Brien is stored and returned with its apostrophe intact.",
+            "The command uses @title with a separately bound value; the title is not concatenated into SQL text."
           ],
           "solution": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values.",
           "solutionFormat": "prose"
@@ -27885,8 +27861,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Run acceptance.py and explain why its two competing writers must produce exactly one 200 and one 409.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The two writers using version 1 produce exactly one 200 and one 409.",
+            "Reading the task afterward returns version 2, not version 3."
           ],
           "solution": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation.",
           "solutionFormat": "prose"
@@ -28033,8 +28009,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Design an added task-created event without a task/event mismatch.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The design commits the task and its outbox row together, so a failed transaction leaves neither row.",
+            "The crash scenarios retain an unpublished event after commit and prevent duplicate consumer effects after publication is retried."
           ],
           "solution": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment.",
           "solutionFormat": "prose"
@@ -28081,8 +28057,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Specify two tests for idempotent creation before implementing it.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "Repeating the same key and validated payload returns the same task ID and leaves exactly one task row.",
+            "Reusing that key with a different payload returns a conflict and creates no second task."
           ],
           "solution": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key.",
           "solutionFormat": "prose"
@@ -28245,8 +28221,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Describe the negative test that a happy-path login demo misses.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "User B cannot update user A's task: the request is denied and A's row and version remain unchanged.",
+            "User B's list excludes A's task, and requests with missing or expired credentials are denied."
           ],
           "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
           "solutionFormat": "prose"
@@ -28372,8 +28348,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Explain why acceptance.py cannot prove the frontend CORS policy works.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The explanation states that Python requests do not enforce browser same-origin or CORS rules.",
+            "The proposed browser check uses the intended UI origin and observes the preflight/request result; a passing acceptance.py run is not treated as CORS evidence."
           ],
           "solution": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy.",
           "solutionFormat": "prose"
@@ -28420,8 +28396,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Build an evidence matrix for decoder, HTTP contract, SQL persistence and keyboard access.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The matrix maps malformed payloads to decoder tests, HTTP behavior to acceptance.py, SQL durability to a restart plus row query, and keyboard/status access to browser and screen-reader checks.",
+            "Each result names the runtime and storage mode, and distinguishes executed checks from checks still unexecuted."
           ],
           "solution": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately.",
           "solutionFormat": "prose"
@@ -28468,8 +28444,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Design a diagnostic record for a failed SQL-backed update.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The diagnostic record contains an operation name, error/status category, duration and correlation ID.",
+            "The record excludes task titles, tokens and connection strings, while its correlation ID links to the failed request timeline."
           ],
           "solution": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line.",
           "solutionFormat": "prose"
@@ -28516,8 +28492,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Write a release checklist with a rollback compatibility question.",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "The checklist identifies the tested artifact, configuration, migration order, health checks and rollback owner.",
+            "It explicitly checks whether the previous API version can use the migrated schema before claiming rollback is available."
           ],
           "solution": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained.",
           "solutionFormat": "prose"
@@ -28663,8 +28639,8 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "What evidence would support a ten-minute recovery objective?",
           "checks": [
-            "State your prediction before running or inspecting the reference.",
-            "Compare the actual result with the stated contract and explain any difference."
+            "A timed restore drill into an isolated database meets ten minutes under representative conditions and independently verifies the restored content.",
+            "The evidence records tolerated data loss and any untested infrastructure or identity dependencies; a scheduled backup alone is not counted as proof."
           ],
           "solution": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested.",
           "solutionFormat": "prose"
@@ -42939,21 +42915,20 @@ const LEARNING_PATHS = [
           "prompt": "Draw where Python, Bash and a filesystem driver belong. Explain how a container differs from a VM.",
           "solution": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Place Python and Bash in user space and the filesystem driver in kernel-managed I/O.",
+            "Distinguish a shared container kernel from a VM guest kernel."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A Python importer requests bytes from a file. Which component mediates access to the filesystem resource?",
           "options": [
-            "Kernel mediates resource access",
-            "Every application contains its own kernel",
-            "A terminal and kernel are the same"
+            "The kernel, reached through the application library call",
+            "Bash, even when Python was launched without a shell",
+            "A private kernel embedded in the Python interpreter"
           ],
           "correct": 0,
-          "explanation": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel."
         },
         "references": [
           {
@@ -43069,21 +43044,20 @@ const LEARNING_PATHS = [
           "prompt": "From notebook-lab, explain input/sample.csv and ../notebook-lab/input/sample.csv. Predict what happens after cd input.",
           "solution": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Resolve both supplied paths to the sample while in notebook-lab.",
+            "After cd input, identify sample.csv as the relative path and input/sample.csv as a nested lookup."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A service runs from / while its script lives in /home/learner/app. Where does ./data.csv resolve?",
           "options": [
-            "Relative paths depend on working directory",
-            "Relative paths depend only on script location",
-            "Linux ignores filename case"
+            "Under the service working directory /",
+            "Beside the script in /home/learner/app",
+            "Under the user home directory regardless of working directory"
           ],
           "correct": 0,
-          "explanation": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path."
         },
         "references": [
           {
@@ -43125,21 +43099,20 @@ const LEARNING_PATHS = [
           "prompt": "Write a three-step checklist before overwriting backup.csv; distinguish local copy from recovery backup.",
           "solution": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Verify the target, retain a prior version and compare the result after overwriting.",
+            "Require independent storage and a restore check for recovery beyond a same-disk copy."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Before overwriting backup.csv, which sequence preserves recoverable evidence?",
           "options": [
-            "Inspect targets and preserve prior data",
-            "Use sudo for every copy",
-            "A same-disk copy survives every disaster"
+            "Verify the target, retain a separate prior version, then compare the written result",
+            "Overwrite first, then copy the new file as the prior version",
+            "Check only the filename because a same-disk backup covers disk failure"
           ],
           "correct": 0,
-          "explanation": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check."
         },
         "references": [
           {
@@ -43181,21 +43154,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain why subprocess.run([\"echo\", name]) differs from joining strings into a shell command.",
           "solution": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Explain that an argument list preserves a filename containing spaces as one argument.",
+            "Contrast shell parsing of substitutions and operators with passing those characters as data."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "The filename is quarterly report.csv. Why pass it in a subprocess argument list with shell=False?",
           "options": [
-            "An argument list preserves boundaries",
-            "Joining input into shell source is always safe",
-            "Double quotes work identically in every shell"
+            "It remains one argument without shell expansion",
+            "The subprocess automatically removes spaces from the filename",
+            "The argument list applies Bash quoting in every operating system"
           ],
           "correct": 0,
-          "explanation": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators. The other options ignore the mechanism or its stated boundary."
+          "explanation": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators."
         },
         "references": [
           {
@@ -43244,21 +43216,20 @@ const LEARNING_PATHS = [
           "prompt": "Design separate destinations for a report and diagnostic log. Explain why merging stderr into CSV can corrupt it.",
           "solution": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Send report data to stdout or its file and diagnostics to stderr or a log.",
+            "Explain how a diagnostic line would violate the CSV schema if streams were merged."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An importer emits CSV plus a validation message. How should those outputs be routed?",
           "options": [
-            "Separate diagnostics from structured data",
-            "All output is always CSV",
-            "A successful last stage proves upstream success"
+            "CSV to the data stream and diagnostics to a separate error stream",
+            "Both to stdout so the CSV consumer can infer which lines are errors",
+            "Both to stderr so every line is treated as diagnostic evidence"
           ],
           "correct": 0,
-          "explanation": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream."
         },
         "references": [
           {
@@ -43365,21 +43336,20 @@ const LEARNING_PATHS = [
           "prompt": "Decode 640 and explain why a readable file inside a non-traversable parent remains inaccessible.",
           "solution": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Decode 640 as owner read/write, group read and no access for others.",
+            "Identify missing parent-directory traversal as a separate reason file access can fail."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A user has read permission on a file but no traversal permission on its parent. What explains the failed read?",
           "options": [
-            "Parent traversal also matters",
-            "chmod 777 is the recommended default",
-            "Read permission implies write permission"
+            "The path cannot be traversed to reach the readable file",
+            "File read permission must always include file write permission",
+            "The file must have execute permission before its bytes can be read"
           ],
           "correct": 0,
-          "explanation": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached. The other options ignore the mechanism or its stated boundary."
+          "explanation": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached."
         },
         "references": [
           {
@@ -43421,21 +43391,20 @@ const LEARNING_PATHS = [
           "prompt": "Define success and invalid-input exit statuses for a CLI, then identify which stream should carry the failure explanation.",
           "solution": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Assign 0 to success and a documented nonzero value to invalid input.",
+            "Send the failure explanation to stderr without claiming an output commit."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An importer rejects invalid input after printing a helpful explanation. What should automation use to detect the failure?",
           "options": [
-            "Nonzero can communicate expected failure",
-            "Printed text determines exit status automatically",
-            "A PID never gets reused"
+            "A documented nonzero exit status together with the diagnostic",
+            "The presence of any printed text as proof of failure",
+            "A zero exit status because the error was handled intentionally"
           ],
           "correct": 0,
-          "explanation": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed."
         },
         "references": [
           {
@@ -43477,21 +43446,20 @@ const LEARNING_PATHS = [
           "prompt": "List three facts to capture when a scheduled command works interactively but fails as a service.",
           "solution": "Capture effective user, absolute executable/version, and working directory/configuration source. Redact secret values.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Capture effective user, absolute executable and version, and working directory or configuration source.",
+            "Redact secret configuration values from the comparison."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A parent shell changes a variable after starting a child. What does the running child normally see?",
           "options": [
-            "Children inherit a snapshot",
-            "PATH determines data-file paths",
-            "Environment values are automatically typed"
+            "Its inherited environment snapshot unless it changes its own value",
+            "The new parent value immediately through shared environment memory",
+            "The new value only when its PATH contains the parent shell"
           ],
           "correct": 0,
-          "explanation": "Capture effective user, absolute executable/version, and working directory/configuration source. Redact secret values. The other options ignore the mechanism or its stated boundary."
+          "explanation": "A child normally inherits a snapshot when it starts. Changing a variable in the parent shell does not retroactively change the running child environment; PATH is an executable-search setting, not a synchronization mechanism."
         },
         "references": [
           {
@@ -43540,21 +43508,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain how you would contain an untrusted tool that creates grandchildren and unlimited output.",
           "solution": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Include sandbox or supervisor controls, resource bounds and bounded streamed output.",
+            "Include descendant/process-group cleanup rather than relying on a direct-child timeout alone."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A timed-out tool spawned grandchildren and produced large output. What is still needed beyond a direct-child timeout?",
           "options": [
-            "Timeout needs a cleanup policy",
-            "Timeout proves no child effects happened",
-            "capture_output has unlimited safe capacity"
+            "A descendant cleanup policy and explicit output/resource bounds",
+            "Only a longer timeout so the grandchildren can finish",
+            "Unbounded in-memory capture so no diagnostic output is lost"
           ],
           "correct": 0,
-          "explanation": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient."
         },
         "references": [
           {
@@ -43675,21 +43642,20 @@ const LEARNING_PATHS = [
           "prompt": "Sketch shutdown when one task finishes and a second exceeds the deadline. Which state must survive abrupt termination?",
           "solution": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Stop intake and complete only work that fits the shutdown deadline.",
+            "Keep unfinished work identity durable so retry remains possible without cleanup."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A worker receives SIGKILL before its cleanup code runs. Which recovery assumption is valid?",
           "options": [
-            "SIGKILL cannot be caught",
-            "Every signal allows cleanup",
-            "Shutdown can wait forever without consequence"
+            "SIGKILL cannot be caught, so unfinished work identity must already be durable",
+            "A finally block will always save unfinished work before termination",
+            "A termination handler can extend the deadline after SIGKILL"
           ],
           "correct": 0,
-          "explanation": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup."
         },
         "references": [
           {
@@ -43731,21 +43697,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain why VSZ=2 GiB and RSS=120 MiB is not evidence of a 2 GiB physical leak.",
           "solution": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Distinguish the 2 GiB virtual mapping from the 120 MiB resident measurement.",
+            "Request resident or heap trends under equivalent workload before diagnosing a leak."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A process shows VSZ 2 GiB and RSS 120 MiB. What can you conclude from these values alone?",
           "options": [
-            "Virtual size differs from resident use",
-            "All mapped bytes are resident",
-            "Host free memory overrides container limits"
+            "Virtual address space differs from current resident use; a leak is not established",
+            "The process is consuming 2 GiB of physical RAM",
+            "The 120 MiB RSS proves that no allocation leak can exist"
           ],
           "correct": 0,
-          "explanation": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak. The other options ignore the mechanism or its stated boundary."
+          "explanation": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak."
         },
         "references": [
           {
@@ -43794,21 +43759,20 @@ const LEARNING_PATHS = [
           "prompt": "State the smallest critical section needed to preserve count += 1 and why locking just the final write fails.",
           "solution": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Protect the read, calculation and write as one critical section.",
+            "Show how both workers can compute 6 from 5 when only final writes are locked."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Two workers read count=5 and each writes 6. Which locking boundary preserves both increments?",
           "options": [
-            "Protect the complete invariant",
-            "Lock only printing",
-            "More threads always improve throughput"
+            "One lock covering read, calculation and write",
+            "A lock covering only each final write",
+            "A lock covering only the printed result"
           ],
           "correct": 0,
-          "explanation": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads."
         },
         "references": [
           {
@@ -43850,21 +43814,20 @@ const LEARNING_PATHS = [
           "prompt": "Explain why 1,000 successful opens followed by a failure can indicate a leak rather than a corrupt file.",
           "solution": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Connect accumulated unclosed handles to eventual resource-limit failure.",
+            "Inspect handle counts and closure paths before blaming the failing file contents."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Repeated file opens eventually fail after many successes. What change addresses a possible descriptor leak?",
           "options": [
-            "Close handles on every path",
-            "Removing a name always closes open handles",
-            "Handles have no resource limit"
+            "Close handles on success and exception paths",
+            "Unlink each filename after opening it to close the descriptor",
+            "Increase the descriptor limit without checking resource lifetimes"
           ],
           "correct": 0,
-          "explanation": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename."
         },
         "references": [
           {
@@ -43906,21 +43869,20 @@ const LEARNING_PATHS = [
           "prompt": "Classify partial-write prevention, concurrent-writer serialization and power-loss survival as three separate requirements.",
           "solution": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Match complete-file visibility to replacement and writer coordination to locks or transactions.",
+            "Treat power-loss survival as a separate synchronization and storage guarantee."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A writer atomically replaces a report file. Which guarantee still needs separate evidence?",
           "options": [
-            "Atomic visibility differs from durability",
-            "rename proves power-loss survival everywhere",
-            "Cross-device copy is always atomic"
+            "Survival after power loss under the filesystem and storage policy",
+            "Readers observing either the old or new complete file under the stated replacement assumptions",
+            "The pathname switching to the new file after successful replacement"
           ],
           "correct": 0,
-          "explanation": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three."
         },
         "references": [
           {
@@ -43969,21 +43931,20 @@ const LEARNING_PATHS = [
           "prompt": "Order checks for a refused local connection: hostname, listener, HTTP response, business authorization.",
           "solution": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Check the resolved destination and listener before HTTP response and business authorization.",
+            "Locate connection refusal before application-level authorization."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A process is listening on the expected port. Which further check is needed before claiming the application is healthy?",
           "options": [
-            "Listener and application health are separate",
-            "A port proves authentication works",
-            "Loopback is your public internet address"
+            "Check its protocol response and required application behavior",
+            "Treat the listener as proof that authentication succeeds",
+            "Treat the port number as proof that TLS is configured"
           ],
           "correct": 0,
-          "explanation": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization."
         },
         "references": [
           {
@@ -44032,21 +43993,20 @@ const LEARNING_PATHS = [
           "prompt": "Specify executable, identity, working directory and restart conditions for a practice importer. Which failures should not retry rapidly?",
           "solution": "Use an absolute executable, unprivileged account and explicit working directory. Invalid permanent configuration should stop/alert rather than rapidly repeat.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Specify an absolute executable, unprivileged identity and explicit working directory.",
+            "Stop or alert on permanent invalid configuration instead of rapidly restarting it."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A supervisor reports a process running. What does this establish about readiness?",
           "options": [
-            "Supervisor lifecycle differs from readiness",
-            "Restart loops repair malformed configuration",
-            "Every Linux environment runs systemd"
+            "Lifecycle state is known; application readiness needs its own check",
+            "The application can already serve every required request",
+            "Its configuration is valid because the executable started"
           ],
           "correct": 0,
-          "explanation": "Use an absolute executable, unprivileged account and explicit working directory. Invalid permanent configuration should stop/alert rather than rapidly repeat. The other options ignore the mechanism or its stated boundary."
+          "explanation": "A supervisor can establish that a process started or is running. Readiness requires separate evidence that the application can perform its required work; a running process can still have missing dependencies or invalid configuration."
         },
         "references": [
           {
@@ -44095,21 +44055,20 @@ const LEARNING_PATHS = [
           "prompt": "Write an evidence note for an importer failure without including the database password or entire customer file.",
           "solution": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Include time and timezone, operation ID, sanitized error category, schema version and relevant path or identity.",
+            "Exclude the database password and complete customer file from the evidence note."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An importer fails and a teammate requests diagnostic evidence. Which response supports investigation?",
           "options": [
-            "Evidence needs context and redaction",
-            "A missing log proves no event occurred",
-            "Wall time can never move backwards"
+            "Context and correlation metadata with secrets and customer records redacted",
+            "The full environment and input file so no context can be missing",
+            "Only the error sentence, omitting time, identity and operation details"
           ],
           "correct": 0,
-          "explanation": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage."
         },
         "references": [
           {
@@ -44158,21 +44117,20 @@ const LEARNING_PATHS = [
           "prompt": "Predict backlog after arrival returns to 8/second for 60 seconds. State the model assumptions.",
           "solution": "Spare capacity is 2/second, clearing 120 in 60 seconds. Rates are constant, service remains 10 and there are no retries or size differences.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Calculate 2 jobs/second spare capacity and removal of the 120-job backlog in 60 seconds.",
+            "State constant rates, service capacity of 10, and no retries or job-size differences."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "Arrival is 14 jobs/second and service is 10 for 30 seconds, starting empty. What is the modeled backlog?",
           "options": [
-            "Backlog grows when arrivals exceed service",
-            "A queue creates unlimited capacity",
-            "Every additional worker adds full throughput"
+            "120 jobs, because arrivals exceed service by 4 each second",
+            "420 jobs, counting all arrivals without completed work",
+            "Zero jobs, because placing work in a queue increases service capacity"
           ],
           "correct": 0,
-          "explanation": "Spare capacity is 2/second, clearing 120 in 60 seconds. Rates are constant, service remains 10 and there are no retries or size differences. The other options ignore the mechanism or its stated boundary."
+          "explanation": "The queue grows by 14 minus 10 = 4 jobs per second. Over 30 seconds that adds 120 jobs, assuming an empty initial queue and constant rates. Queue storage does not increase service capacity."
         },
         "references": [
           {
@@ -44221,21 +44179,20 @@ const LEARNING_PATHS = [
           "prompt": "Match PID visibility and memory budget to their mechanisms. Explain why seeing PID 1 is not proof of host administrator access.",
           "solution": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Match PID visibility to a PID namespace and memory budget to a cgroup.",
+            "Explain why PID 1 alone establishes neither host identity nor administrator capabilities."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A container sees PID 1 but has less memory available than the host. Which mechanisms explain these facts?",
           "options": [
-            "Namespaces and cgroups solve different problems",
-            "PID 1 always means host root",
-            "A namespace automatically grants more memory"
+            "PID namespace for the view and a memory cgroup for the budget",
+            "The PID namespace sets both process numbering and the memory budget",
+            "The cgroup assigns PID 1 and grants host administrator identity"
           ],
           "correct": 0,
-          "explanation": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities. The other options ignore the mechanism or its stated boundary."
+          "explanation": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities."
         },
         "references": [
           {
@@ -44379,21 +44336,20 @@ const LEARNING_PATHS = [
           "prompt": "Create a permission matrix for input CSV, report directory and application code.",
           "solution": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Give the runtime read access to input, write access to reports and read/execute access to installed code.",
+            "Exclude application-code modification and general administrator rights."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A report importer reads CSV and writes reports. Which permission set matches its work?",
           "options": [
-            "Grant task-specific rights",
-            "Every app needs root",
-            "Package updates never change behavior"
+            "Read input, write the report directory, and read/execute installed code",
+            "Write input and application code to simplify any future changes",
+            "Run as administrator to avoid diagnosing output-directory permissions"
           ],
           "correct": 0,
-          "explanation": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights."
         },
         "references": [
           {
@@ -44435,21 +44391,20 @@ const LEARNING_PATHS = [
           "prompt": "Create a decision table separating FileNotFoundError, PermissionError, TimeoutExpired and ValueError. Give each a next observation.",
           "solution": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Map missing-file and permission errors to path/cwd and identity/parent-access observations respectively.",
+            "Map timeout and validation errors to process/deadline and schema/rejected-row observations respectively."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "An importer opens the file but raises ValueError for an invalid amount. What should be inspected next?",
           "options": [
-            "Match evidence to a failure layer",
-            "Every failure is a permission problem",
-            "Restarting proves the root cause"
+            "The input schema and rejected-value category",
+            "The parent directory traversal bits before checking the value",
+            "Administrator privileges because all file-processing errors concern access"
           ],
           "correct": 0,
-          "explanation": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix."
         },
         "references": [
           {
@@ -44491,21 +44446,20 @@ const LEARNING_PATHS = [
           "prompt": "Produce a one-page report with reproducible commands, failure timeline, safe fix and recovery verification.",
           "solution": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries.",
           "checks": [
-            "Address the stated scenario with explicit assumptions.",
-            "Explain the failure or boundary case, not only the happy path.",
-            "Compare your own reasoning with the reference and document any different valid policy."
+            "Include versions, reproducible bounded commands, failure timeline and before/after recovery evidence.",
+            "Show preserved prior state and label modeled, executed and untested Linux behavior separately."
           ],
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which statement correctly describes this lesson?",
+          "question": "A portable child-process suite passes. What is an accurate capstone conclusion?",
           "options": [
-            "Separate actual evidence from modeled behavior",
-            "A unit suite certifies production mastery",
-            "Hide environment differences from the report"
+            "The named portable behaviors passed; Linux-only and production claims need separate evidence",
+            "Linux service supervision is verified because both use processes",
+            "Production capacity is verified because each small test completed"
           ],
           "correct": 0,
-          "explanation": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries. The other options ignore the mechanism or its stated boundary."
+          "explanation": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries."
         },
         "references": [
           {
@@ -74061,7 +74015,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate → advanced practice",
     "prerequisites": [
       "Basic file editing and running a terminal command. No prior specialist knowledge required.",
-      "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+      "Basic HTML and JavaScript help you edit the UI lab and understand its Node.js checks. Python is optional and used only to run a local HTTP server; no Python programming or measurement lab is required."
     ],
     "outcomes": [
       "Organise content around user tasks and clear hierarchy.",

@@ -11,6 +11,19 @@
   const shapes={decision:['{','}'],database:['[(',')]'],terminal:['([','])']};
   return ['flowchart '+(d.direction==='LR'?'LR':'TB'),...description,...d.nodes.map(n=>{const [a,b]=shapes[n.shape]||['[',']'];return `${ids.get(n.id)}${a}"${label(n.label)}"${b}`;}),...d.edges.map(e=>`${ids.get(e.from)} -->|"${label(e.label)}"| ${ids.get(e.to)}`)].join('\n');
  }
+ // Mermaid's SVG text mode can leave its numeric escapes as literal text.
+ // Decode only text nodes, never markup, and only the characters we escape.
+ function readableLabels(drawing){
+  drawing.querySelectorAll('text,tspan').forEach(element=>{
+   element.childNodes.forEach(node=>{
+    if(node.nodeType===3)node.textContent=node.textContent.replace(/&#(38|60|62|35|10|13|59);/g,(_,code)=>String.fromCharCode(Number(code)));
+   });
+  });
+ }
+ function showTextFallback(panel){
+  const alternative=panel.closest('.concept-diagram')?.querySelector('[data-diagram-alternative]');
+  if(alternative){alternative.classList.remove('diagram-accessible-text');if(alternative.tagName==='DETAILS')alternative.open=true;}
+ }
  function load(){
   if(!loading)loading=new Promise((resolve,reject)=>{
    const script=document.createElement('script');script.src=vendorUrl;
@@ -63,13 +76,13 @@
    try{
     const api=await load();if(!panel.isConnected)continue;
     const result=await api.render('notebook-mermaid-'+(++serial),text);if(!panel.isConnected)continue;
-    view.innerHTML=result.svg;const drawing=view.querySelector('svg');const naturalWidth=Number(drawing.getAttribute('viewBox').split(/\s+/)[2]);drawing.style.width=naturalWidth+'px';drawing.style.maxWidth='none';mapDrawing(d,drawing);panel.dataset.mermaidReady='ready';status.textContent='';
+    view.innerHTML=result.svg;const drawing=view.querySelector('svg');readableLabels(drawing);const exportSvg=drawing.outerHTML;const naturalWidth=Number(drawing.getAttribute('viewBox').split(/\s+/)[2]);drawing.style.width=naturalWidth+'px';drawing.style.maxWidth='none';mapDrawing(d,drawing);panel.dataset.mermaidReady='ready';status.textContent='';
     const expand=document.createElement('button');expand.type='button';expand.className='quiet';expand.textContent='Expand diagram';expand.dataset.mermaidExpand='';expand.addEventListener('click',()=>expanded(panel,view,drawing,d.title,expand));fit.after(expand);
-    const hint=panel.querySelector('.mermaid-hint');if(hint)hint.textContent='Read at actual size; scroll across wide diagrams. Expand for zoom controls. Fit to screen may reduce label size.'+(d.steps?.length?' Steps highlight nodes and connecting arrows.':'');
-    const svg=panel.querySelector('[data-mermaid-svg]');svg.disabled=false;svg.addEventListener('click',()=>download(result.svg,'image/svg+xml','learning-diagram.svg'));
+    const hint=panel.querySelector('.mermaid-hint');if(hint)hint.textContent='Read at actual size; scroll across wide diagrams. Expand for zoom controls. Fit to screen may reduce label size.';
+    const svg=panel.querySelector('[data-mermaid-svg]');svg.disabled=false;svg.addEventListener('click',()=>download(exportSvg,'image/svg+xml','learning-diagram.svg'));
     const section=panel.closest('.concept-diagram');active(section,d,{activeNodes:JSON.parse(section.dataset.mermaidActive||'[]'),activeEdges:JSON.parse(section.dataset.mermaidEdges||'[]')});
-   }catch{panel.dataset.mermaidReady='failed';status.textContent='Diagram unavailable. The full explanation and connections are available below.';}
+   }catch{showTextFallback(panel);panel.dataset.mermaidReady='failed';status.textContent='Diagram unavailable. The full explanation and connections are available below.';}
   }
  }
- root.NotebookMermaid={source,render,active};
+ root.NotebookMermaid={source,render,active,readableLabels,showTextFallback};
 })(globalThis);

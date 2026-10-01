@@ -102,21 +102,20 @@
         "prompt": "Define order count, customer count and revenue for these rows and write their grains.",
         "solution": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Calculate two orders, one distinct customer and 2000 cents of revenue.",
+          "Identify order-grain input and calendar-day output under the UTC rule."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Two orders from one customer total 2000 cents. What must be fixed before comparing a joined report with those orders?",
         "options": [
-          "Define row grain first",
-          "A joined row always equals one order",
-          "Column names settle business meaning"
+          "The meaning of each row and the aggregation grain",
+          "The displayed column labels, without checking row meaning",
+          "The joined row count as the order count, without checking cardinality"
         ],
         "correct": 0,
-        "explanation": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule. The other options ignore the mechanism or its stated boundary."
+        "explanation": "One source row is an order, while the daily output groups orders by UTC day. The sample has two orders, one distinct customer and 2000 cents. A join can multiply rows, so its output count is not automatically an order count."
       },
       "references": [
         {
@@ -158,21 +157,20 @@
         "prompt": "Choose where to reject malformed timestamps in ETL and ELT and explain how rejected evidence is retained safely.",
         "solution": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Place timestamp rejection before curated publication in both ETL and ELT.",
+          "Retain rejection evidence with an explicit access policy."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "An ELT pipeline lands rows with malformed timestamps. When should it validate them?",
         "options": [
-          "Both need quality and ownership",
-          "ELT makes validation unnecessary",
-          "Raw data should always be public"
+          "Before publishing curated results, with governed rejection evidence",
+          "Only after consumers report incorrect totals",
+          "At ingestion only; later transformations need no checks"
         ],
         "correct": 0,
-        "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy. The other options ignore the mechanism or its stated boundary."
+        "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy."
       },
       "references": [
         {
@@ -221,21 +219,20 @@
         "prompt": "Give three reasons a CSV importer should reject a file before writing the destination.",
         "solution": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Name incompatible headers, invalid encoding and exceeded size or row limits as rejection reasons.",
+          "Reject before destination writes so existing curated data remains intact."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A CSV contains a quoted comma and an unexpected header. How should the importer handle it?",
         "options": [
-          "Use a parser with an explicit contract",
-          "split comma handles quoted fields",
-          "Ignore unexpected fields silently"
+          "Use the agreed CSV parser and reject the header mismatch",
+          "Split each line on commas and use the first expected fields",
+          "Parse the quoted value but silently discard the unexpected field"
         ],
         "correct": 0,
-        "explanation": "Reject incompatible headers, invalid encoding or an exceeded size/row limit before the transaction; preserve prior curated state. The other options ignore the mechanism or its stated boundary."
+        "explanation": "A CSV parser handles the quoted comma as part of one field. The strict header contract still rejects the unexpected column before writing the destination; parsing correctly does not waive schema validation."
       },
       "references": [
         {
@@ -277,21 +274,20 @@
         "prompt": "Define whether an unknown customer ID may be blank and what should happen to a missing amount.",
         "solution": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Require a known nonblank customer identifier and a present integer amount.",
+          "Reject a missing amount rather than converting it to zero."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "An order has an empty amount field under the integer-cents contract. What should happen?",
         "options": [
-          "Unknown is different from zero",
-          "Every empty value means zero",
-          "A column label enforces its type"
+          "Reject the missing amount instead of inventing zero revenue",
+          "Convert the empty field to zero because the column is numeric",
+          "Keep the empty field and let the report decide its meaning"
         ],
         "correct": 0,
-        "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue. The other options ignore the mechanism or its stated boundary."
+        "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue."
       },
       "references": [
         {
@@ -333,21 +329,20 @@
         "prompt": "Compare all-or-nothing and partial-success import for a financial total.",
         "solution": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Explain that whole-batch rejection preserves a coherent snapshot but delays availability.",
+          "Make rejected contributions and completeness visible if partial results are published."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A pipeline publishes valid rows and quarantines one sale. What must accompany the reported revenue?",
         "options": [
-          "Publish completeness alongside totals",
-          "Rejected rows never affect interpretation",
-          "A quarantine needs no access policy"
+          "Accepted and rejected counts plus a completeness rule",
+          "A complete label because every published row passed validation",
+          "Only the accepted row count because the rejected sale is outside the output"
         ],
         "correct": 0,
-        "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled. The other options ignore the mechanism or its stated boundary."
+        "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled."
       },
       "references": [
         {
@@ -389,21 +384,20 @@
         "prompt": "Why might ingestion-date totals disagree with event-date totals even if every row is valid?",
         "solution": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Use delayed delivery or replay to explain different event-day and ingestion-day totals.",
+          "Label the chosen time definition and day-bucketing rule."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A September 1 order is ingested on September 3. Why can two valid daily reports place it on different days?",
         "options": [
-          "Event time differs from ingestion time",
-          "A naive timestamp identifies UTC automatically",
-          "Every business day is a UTC day"
+          "One groups event time and the other ingestion time",
+          "Validation requires replacing the event timestamp with arrival time",
+          "A valid timestamp always has the same calendar date in every timezone"
         ],
         "correct": 0,
-        "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled."
       },
       "references": [
         {
@@ -445,21 +439,20 @@
         "prompt": "Explain how adding a refund changes the contract and regression tests.",
         "solution": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Define a refund event and its signed-amount and duplicate-handling rules.",
+          "Add net-total and reconciliation cases instead of merely allowing negative inputs."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "The cents-only importer must now accept refunds. What change preserves a clear money contract?",
         "options": [
-          "Units and rounding belong in the contract",
-          "All currencies use two decimals",
-          "Floating point is exact for every decimal"
+          "Define signed refund events, duplicate handling and net-total tests",
+          "Allow negative numbers without changing the order-only contract",
+          "Convert amounts to floating point so refunds need no separate rule"
         ],
         "correct": 0,
-        "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule."
       },
       "references": [
         {
@@ -508,21 +501,20 @@
         "prompt": "Why must the run marker and data writes share the same transaction?",
         "solution": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Describe both crash gaps: a marker without data and data without a marker.",
+          "Place the run marker and its data writes in the same transaction."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "An importer commits a completed-run marker before writing the orders. What prevents a crash from leaving a false completion?",
         "options": [
-          "Commit marker and effect together",
-          "A connection context always closes the connection",
-          "Transactions automatically include HTTP calls"
+          "Commit the marker and order effects in one transaction",
+          "Check for the marker before starting a separate data transaction",
+          "Write the marker first so a retry can skip unfinished data writes"
         ],
         "correct": 0,
-        "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects."
       },
       "references": [
         {
@@ -564,21 +556,20 @@
         "prompt": "Describe the failure when an ID is checked outside the write transaction and two workers race.",
         "solution": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Show how two workers can both observe a missing run ID before either writes.",
+          "Use database uniqueness and one atomic effect/marker boundary rather than a pre-check alone."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Two workers check the same missing batch ID before either writes. Which design prevents duplicate committed effects?",
         "options": [
-          "A replay key must bind to content",
-          "Same ID should accept different payload silently",
-          "Pre-checking avoids every race"
+          "Database uniqueness plus an atomic effect and replay-marker transaction",
+          "A second application pre-check before each separate write",
+          "Different run IDs for the two workers so neither waits"
         ],
         "correct": 0,
-        "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient."
       },
       "references": [
         {
@@ -620,21 +611,20 @@
         "prompt": "When should an extraction watermark advance if target writes fail after half the batch?",
         "solution": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Keep the previous committed watermark when target writes fail halfway.",
+          "Roll back or reconcile partial effects and retry with deduplication."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Target writes fail halfway through an extracted batch. What should happen to its watermark?",
         "options": [
-          "Advance only after committed downstream success",
-          "Advance before writing for speed",
-          "Timestamps cannot tie"
+          "Keep the prior committed boundary until downstream success is established",
+          "Advance to the last extracted row because extraction succeeded",
+          "Advance halfway based on the number of attempted writes"
         ],
         "correct": 0,
-        "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication. The other options ignore the mechanism or its stated boundary."
+        "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication."
       },
       "references": [
         {
@@ -683,21 +673,20 @@
         "prompt": "Explain what a consumer should do when its checkpoint predates the retained change range.",
         "solution": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Identify the gap between the checkpoint and retained changes as missing completeness evidence.",
+          "Rebaseline with a consistent snapshot and reconcile using the source protocol."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A CDC checkpoint is older than the earliest retained change. What should the consumer do?",
         "options": [
-          "Deletion and retention are explicit concerns",
-          "CDC retains every event forever",
-          "CDC automatically proves exactly-once effects"
+          "Stop claiming completeness and obtain a consistent rebaseline",
+          "Resume at the earliest available change and mark the gap complete",
+          "Treat missing change records as evidence that nothing changed"
         ],
         "correct": 0,
-        "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap."
       },
       "references": [
         {
@@ -739,21 +728,20 @@
         "prompt": "Write two checks that guard the join before a revenue report is published.",
         "solution": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Check customer-key uniqueness and count orders without a customer match.",
+          "Compare source and joined fact counts and sums for the intended cardinality."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Two orders total 2000 cents, but a customer join reports 4000. What should be checked first?",
         "options": [
-          "Check join cardinality before totals",
-          "Every join preserves row count",
-          "Surrogate keys eliminate history rules"
+          "Whether duplicate customer keys multiplied the order rows",
+          "Whether summing only distinct amount values restores the correct grain",
+          "Whether dividing every joined total by two is a valid general correction"
         ],
         "correct": 0,
-        "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality."
       },
       "references": [
         {
@@ -802,21 +790,20 @@
         "prompt": "Give tests for a boundary event and overlapping dimension intervals.",
         "solution": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Make an event exactly on September 10 match only the new version.",
+          "Reject overlapping intervals and require one matching version per fact."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A customer version ends exactly when the next begins on September 10. How should an event at that boundary join?",
         "options": [
-          "History needs interval rules",
-          "Type 1 preserves every prior attribute",
-          "Overlapping intervals never affect sums"
+          "To the new version once under half-open interval rules",
+          "To both versions because both include September 10",
+          "To neither version to avoid double counting"
         ],
         "correct": 0,
-        "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version. The other options ignore the mechanism or its stated boundary."
+        "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version."
       },
       "references": [
         {
@@ -865,21 +852,20 @@
         "prompt": "Should publication depend on reconciliation? Explain whether a failed email should undo the database commit.",
         "solution": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Require successful reconciliation before publication.",
+          "Retry a failed notification separately from the valid committed data."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Data commits successfully, but the optional email task fails. What follows from the DAG alone?",
         "options": [
-          "Dependencies do not establish cross-task atomicity",
-          "A DAG prevents every retry duplicate",
-          "A scheduled task always finishes on time"
+          "Dependencies do not undo the commit; notification needs its own failure policy",
+          "The DAG automatically rolls back the earlier database task",
+          "Rerunning the whole DAG cannot duplicate any external effect"
         ],
         "correct": 0,
-        "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit."
       },
       "references": [
         {
@@ -921,21 +907,20 @@
         "prompt": "Choose a policy for late sales and specify what a dashboard user should see.",
         "solution": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Assign the late sale to the chosen event-day correction policy.",
+          "Show a revision or updated timestamp and count accepted late events."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A September 1 sale arrives after that day has been published. Under the lesson correction policy, what should users see?",
         "options": [
-          "Late data requires a correction policy",
-          "Published means no earlier event can arrive",
-          "Ingestion date always equals event date"
+          "A revised September 1 total with update evidence",
+          "An unchanged September 1 total and silent reassignment to arrival day",
+          "A changed historical total with no revision information"
         ],
         "correct": 0,
-        "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail. The other options ignore the mechanism or its stated boundary."
+        "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail."
       },
       "references": [
         {
@@ -977,21 +962,20 @@
         "prompt": "Why should a limit be checked before a complete unbounded read? State two partition tradeoffs.",
         "solution": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Explain that a limit checked after an unbounded read cannot prevent that read exhausting memory.",
+          "Contrast reduced scanning with tiny-partition metadata and management overhead."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A loader reads an entire file into memory before checking its size. What change enforces the intended bound?",
         "options": [
-          "Bound input before materializing it",
-          "File extensions validate content",
-          "More partitions are always better"
+          "Check or enforce limits before materializing unbounded input",
+          "Check the size after parsing, before the database write",
+          "Choose a CSV extension so the input size is predictable"
         ],
         "correct": 0,
-        "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity. The other options ignore the mechanism or its stated boundary."
+        "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity."
       },
       "references": [
         {
@@ -1033,21 +1017,20 @@
         "prompt": "Write a migration checklist for cents to amount_minor plus currency.",
         "solution": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Version the new amount_minor and currency contract, including currency scale and consumer updates.",
+          "Test old and new fixtures and define rebaseline and rollback behavior."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A producer replaces cents with amount_minor and currency. What is needed before existing totals can be trusted?",
         "options": [
-          "Compatibility includes meaning and consumers",
-          "Extra columns can always be ignored",
-          "A default currency is universally valid"
+          "Versioned meaning, currency-scale rules and consumer compatibility tests",
+          "Renaming the field while retaining every existing aggregation rule",
+          "Ignoring currency when older consumers do not recognize the column"
         ],
         "correct": 0,
-        "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity."
       },
       "references": [
         {
@@ -1089,21 +1072,20 @@
         "prompt": "Give a pair of errors that preserve a total but change the result incorrectly.",
         "solution": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Give offsetting errors, such as +100 and -100, that preserve a total.",
+          "Identify a key or field-level comparison that detects the incorrect rows."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "Two order amounts change by +100 and -100, leaving the total unchanged. Which check can expose the error?",
         "options": [
-          "Reconcile keys and measures",
-          "A correct sum proves every row is correct",
-          "Successful execution proves source truth"
+          "Compare order identifiers and individual values as well as totals",
+          "Compare only the overall sum with the source",
+          "Compare only the row count with the source"
         ],
         "correct": 0,
-        "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values."
       },
       "references": [
         {
@@ -1145,21 +1127,20 @@
         "prompt": "Design a minimal diagnostic record for a rejected batch and identify its owner.",
         "solution": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Keep run ID, schema version, sanitized category, bounded row index and observation time.",
+          "Assign a dataset owner and retention rule without storing full rejected customer rows."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "A shared diagnostic log records a rejected customer batch. Which record is appropriate?",
         "options": [
-          "Ownership and retention need explicit rules",
-          "Encryption replaces authorization",
-          "Debug logs should contain every row"
+          "Minimal sanitized metadata with an owner and retention rule",
+          "The full rejected rows because the log is useful for debugging",
+          "An encrypted full-file copy with no access or retention decision"
         ],
         "correct": 0,
-        "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule."
       },
       "references": [
         {
@@ -1208,21 +1189,20 @@
         "prompt": "List the integration evidence needed before claiming the SQL Server adapter works.",
         "solution": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Name clean-load, replay, payload-conflict, duplicate rollback and invalid-input target tests.",
+          "Verify stored keys and totals using the selected SQL Server and driver versions."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "SQLite tests pass and a matching T-SQL schema is written. What evidence is still needed for the SQL Server adapter?",
         "options": [
-          "Porting needs target-specific execution tests",
-          "SQLite proves SQL Server integration",
-          "DATETIME2 enforces UTC itself"
+          "Execution tests against the selected SQL Server and driver",
+          "A visual comparison showing similar table definitions",
+          "A DATETIME2 column, which alone proves UTC input handling"
         ],
         "correct": 0,
-        "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals."
       },
       "references": [
         {
@@ -1264,21 +1244,20 @@
         "prompt": "Explain how to handle a timeout immediately after a server commit.",
         "solution": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Treat a post-commit timeout as an unknown outcome and inspect durable run identity and fingerprint.",
+          "Preserve the same intended batch identity when safely replaying."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "The client times out immediately after the server may have committed a batch. What should happen next?",
         "options": [
-          "A timeout can leave an uncertain outcome",
-          "Every error should retry forever",
-          "Backfill never changes published totals"
+          "Inspect the durable run identity before deciding on safe replay",
+          "Create a new run ID because the timeout proves no commit occurred",
+          "Report success because sending the commit request proves it completed"
         ],
         "correct": 0,
-        "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch."
       },
       "references": [
         {
@@ -1320,21 +1299,20 @@
         "prompt": "Deliver contract.md, the runnable importer, test results, lineage/reconciliation note and one independently implemented extension.",
         "solution": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference.",
         "checks": [
-          "Address the stated scenario with explicit assumptions.",
-          "Explain the failure or boundary case, not only the happy path.",
-          "Compare your own reasoning with the reference and document any different valid policy."
+          "Show replay without extra orders and preserved prior state after a failed import.",
+          "Explain the independently implemented extension tests and distinguish local evidence from untested integrations."
         ],
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which statement correctly describes this lesson?",
+        "question": "The demo prints committed, replay, and 2000 cents. What additional evidence supports the capstone?",
         "options": [
-          "Evidence includes failure and reconciliation tests",
-          "A green demo proves distributed readiness",
-          "Copying the reference completes every extension"
+          "Failure-preservation, reconciliation and independently implemented extension tests",
+          "The same successful demo repeated without inspecting stored records",
+          "A claim of distributed readiness based on the local SQLite result"
         ],
         "correct": 0,
-        "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference. The other options ignore the mechanism or its stated boundary."
+        "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference."
       },
       "references": [
         {

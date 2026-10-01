@@ -4,3 +4,17 @@ let count=0,sequences=0,decisions=0,horizontal=0;for(const p of require('../scri
 const sample={title:'T',summary:'S',nodes:[{id:'untrusted id',label:'A "quoted" <tag> # &'}],edges:[]};const source=ctx.NotebookMermaid.source(sample);assert(source.includes('n0['));assert(!source.includes('<tag>'));assert(source.includes('”quoted”'));
 let selected=false,edgeSelected=false;const section={dataset:{},querySelectorAll:s=>s==='.node'?[{id:'notebook-mermaid-1-flowchart-n0-0',classList:{toggle:(name,on)=>selected=on}}]:s==='[data-diagram-edge]'?[{dataset:{diagramEdge:'0'},classList:{toggle:(name,on)=>edgeSelected=on}}]:[]};ctx.NotebookMermaid.active(section,sample,{activeNodes:['untrusted id'],activeEdges:[0]});assert(selected);assert(edgeSelected);ctx.NotebookMermaid.active(section,sample,{activeNodes:[],activeEdges:[]});assert(!selected);assert(!edgeSelected);assert.equal(section.dataset.mermaidEdges,'[]');
 assert(count>=125, "Existing diagrams plus new journey diagrams must remain covered");assert(sequences>0);assert(decisions>0);assert(horizontal>0);assert(fs.readFileSync('assets/js/notebook-mermaid.js','utf8').includes('htmlLabels:false'));console.log(`PASS: ${count} Mermaid diagrams preserve graph relationships across ${sequences} sequence and ${horizontal} horizontal layouts; ${decisions} decisions; node and edge steps track together.`);
+
+const labelText={nodeType:3,textContent:'score &#62;= 80? & &#60;tag&#62;'};
+const nestedElement={nodeType:1,textContent:'unchanged'};
+ctx.NotebookMermaid.readableLabels({querySelectorAll:()=>[{childNodes:[labelText,nestedElement]}]});
+assert.equal(labelText.textContent,'score >= 80? & <tag>');
+assert.equal(nestedElement.textContent,'unchanged','never reinterpret markup');
+assert(fs.readFileSync('assets/js/notebook-mermaid.js','utf8').includes("download(exportSvg,'image/svg+xml'"));
+
+let hiddenClass=true;const alternative={tagName:'DIV',classList:{remove(name){assert.equal(name,'diagram-accessible-text');hiddenClass=false;}}};
+ctx.NotebookMermaid.showTextFallback({closest(){return {querySelector(){return alternative;}};}});
+assert.equal(hiddenClass,false,'render failures reveal the complete text alternative');
+const details={tagName:'DETAILS',open:false,classList:{remove(){}}};
+ctx.NotebookMermaid.showTextFallback({closest(){return {querySelector(){return details;}};}});
+assert.equal(details.open,true,'complex diagram fallback opens automatically');

@@ -14,7 +14,20 @@ const element=id=>{if(!elements.has(id))elements.set(id,{innerHTML:'',textConten
 const context={LEARNING_PATHS:paths,document:{getElementById:element},location:{hash:'#resources/python/foundation'},window:{addEventListener(){},scrollTo(){}},localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)}};
 vm.createContext(context);vm.runInContext(fs.readFileSync('assets/js/learning-tools.js','utf8')+'\n'+fs.readFileSync('assets/js/catalog.js','utf8'),context);
 for(const p of paths.filter(p=>p.status==='ready'))for(const t of p.resources.tasks){context.location.hash='#resources/'+p.id+'/'+t.id;vm.runInContext('renderCatalog()',context);const html=element('main').innerHTML;assert.ok(html.includes(p.resources.bundle.href));for(const f of p.resources.files.filter(f=>t.fileIds.includes(f.id)))assert.ok(html.includes(f.href));assert.ok(html.includes('Expected:')||t.commands.length===0);}
-context.location.hash='#topic/python/values-and-names';vm.runInContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Stage project:'));assert.ok(element('main').innerHTML.includes('Read all diagram steps'));assert.ok(element('diagram-prev').disabled);element('diagram-next').click();assert.ok(element('diagram-step').innerHTML.includes('Step 2 of'));assert.equal(element('diagram-prev').disabled,false);
+// Simple diagrams are explained once, without step controls.
+context.location.hash='#topic/python/values-and-names';context.renderCatalog();
+assert.ok(element('main').innerHTML.includes('Stage project:'));
+assert.ok(element('main').innerHTML.includes('How it works'));
+assert.ok(!element('main').innerHTML.includes('id="diagram-next"'));
+// More involved diagrams keep an opt-in walkthrough with working boundaries.
+const complexPath=paths.find(p=>Array.isArray(p.lessons)&&p.lessons.some(l=>l.diagram&&context.diagramHasSteps(l.diagram)));
+const complexLesson=complexPath.lessons.find(l=>l.diagram&&context.diagramHasSteps(l.diagram));
+const controls={open:true,addEventListener(type,fn){this[type]=fn;}};
+element('main').querySelector=()=>controls;
+context.location.hash='#topic/'+complexPath.id+'/'+complexLesson.id;context.renderCatalog();controls.toggle();
+assert.ok(element('diagram-prev').disabled);element('diagram-next').click();
+assert.ok(element('diagram-step').innerHTML.includes('Step 2 of'));assert.equal(element('diagram-prev').disabled,false);
+context.location.hash='#topic/python/values-and-names';context.renderCatalog();
 context.location.hash='';vm.runInContext('renderCatalog()',context);assert.ok(element('main').innerHTML.includes('Continue 2. Values'));element('path-search').input({target:{value:'Python'}});const count=paths.filter(p=>[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).length;assert.equal(element('path-count').textContent,`${count} matching paths · ${paths.length} total`);
 console.log(`PASS: ${tasks} task routes, ${diagrams} diagram relationships, step controls, resume and live search counts.`);
 

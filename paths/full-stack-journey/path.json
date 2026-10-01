@@ -179,8 +179,8 @@
       "exercise": {
         "prompt": "Write three acceptance statements for adding and completing a session. Include a rejected input and state what the local reference does not promise.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "Creating SQL study with 25 minutes returns 201 and the same record appears in the list; completing it returns version 2.",
+          "A blank title returns 400 without adding a record. The acceptance statements exclude login, public deployment and multi-user isolation."
         ],
         "solution": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions.",
         "solutionFormat": "prose"
@@ -227,8 +227,8 @@
       "exercise": {
         "prompt": "Create a setup note that distinguishes the notebook host, UI development server and API process.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The note identifies three separate processes: the static notebook host, Vite for the UI and /api proxy, and Kestrel for the API.",
+          "The note includes the SDK/Node versions, npm ci and the start commands, and identifies SQL Server as optional for the foundation stage."
         ],
         "solution": "The notebook is static learning content. Vite serves the React UI and proxies /api. Kestrel runs .NET. SQL Server is optional at foundation stage. Record dotnet --info, node --version, npm ci and the three terminal commands in README.md.",
         "solutionFormat": "prose"
@@ -275,8 +275,8 @@
       "exercise": {
         "prompt": "Locate the failure when a reverse proxy returns status 200 with text/html instead of JSON.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "A 200 response with text/html is rejected at the media-type check before decodeTask runs.",
+          "The UI retains the draft and reports the failure instead of displaying an empty task list."
         ],
         "solution": "Transport succeeded but the representation contract failed. request rejects its media type before decodeTask runs. Keep the draft, report the problem and inspect the proxy route rather than treating the HTML as an empty task list.",
         "solutionFormat": "prose"
@@ -323,8 +323,8 @@
       "exercise": {
         "prompt": "Predict the result of minutes=0, minutes=true, missing minutes and done=false on a valid PUT.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "With all other required fields valid, minutes=0 is accepted; minutes=true and omitted minutes return 400.",
+          "A valid PUT with done=false sets the task to incomplete; false is not treated as a missing value."
         ],
         "solution": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases.",
         "solutionFormat": "prose"
@@ -371,8 +371,8 @@
       "exercise": {
         "prompt": "Explain why a UI-only minutes check is insufficient and name a check enforced in SQL.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The explanation identifies a direct HTTP client or import as a way to bypass React validation.",
+          "The SQL CHECK constraint accepts Minutes=0 and Minutes=1440, and rejects -1 and 1441."
         ],
         "solution": "HTTP clients and imports can bypass React. .NET validates before writing and SQL CHECK(Minutes BETWEEN 0 AND 1440) protects all table writers. SQL cannot decide every product rule; retain service validation and use constraints for invariants it can express.",
         "solutionFormat": "prose"
@@ -419,8 +419,8 @@
       "exercise": {
         "prompt": "Stop the API, submit a valid draft, then inspect what remains in the form.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "After the failed submission, the title and minutes still match the draft and the status reports a recoverable problem.",
+          "Once the API restarts, a deliberate retry can create the record; an uncertain earlier commit is checked before retrying."
         ],
         "solution": "The request fails, the status reports a recoverable problem and the title/minutes remain. Restart the API and intentionally retry. If the original POST may have committed, resolve that uncertainty before retrying; idempotent creation is a later extension.",
         "solutionFormat": "prose"
@@ -467,8 +467,8 @@
       "exercise": {
         "prompt": "Compare browser refresh with API restart in memory mode.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "A created session remains after browser refresh while the same memory-mode API process is running.",
+          "After the memory-mode API restarts, the session is absent from the list."
         ],
         "solution": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state.",
         "solutionFormat": "prose"
@@ -515,8 +515,8 @@
       "exercise": {
         "prompt": "Why is response.json() as StudyTask[] insufficient? Write two invalid payloads it could hide.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "Two otherwise valid task payloads with minutes=true and version=0 are rejected by the decoder.",
+          "The explanation identifies that a TypeScript assertion performs no runtime validation."
         ],
         "solution": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape.",
         "solutionFormat": "prose"
@@ -563,8 +563,8 @@
       "exercise": {
         "prompt": "Explain why POST should not run merely because a component mounted.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "Mounting or remounting the component does not issue a create POST; submitting the form does.",
+          "The design prevents another submit while one is pending and cancels or disregards reads whose component has unmounted."
         ],
         "solution": "Mount/cleanup cycles may repeat and duplicate side effects. Run create from the submit handler, with a pending guard and later an idempotency contract. Use effects to synchronize observed state, and cancel or disregard obsolete reads when their owner disappears.",
         "solutionFormat": "prose"
@@ -611,8 +611,8 @@
       "exercise": {
         "prompt": "Write an observation that proves the UI is using SQL instead of memory.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The health endpoint reports sql-server, and a UI-created record has the same ID in the SQL table.",
+          "After restarting the API, GET returns that record with the same ID and version."
         ],
         "solution": "Observe sql-server from /health, create a record through the UI, locate the ID in SSMS, restart the API and see the same ID/version from GET. The health label alone proves configuration selection, while the write and restart read establish persistence behavior.",
         "solutionFormat": "prose"
@@ -659,8 +659,8 @@
       "exercise": {
         "prompt": "Store a title containing an apostrophe and explain why concatenating it into SQL would be risky.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "A title such as O'Brien is stored and returned with its apostrophe intact.",
+          "The command uses @title with a separately bound value; the title is not concatenated into SQL text."
         ],
         "solution": "Bind the complete title with @title. The SQL parser sees one parameter placeholder and the provider sends the value separately. A concatenated string changes parsing when quote boundaries are broken. Do not implement dynamic table/column names from untrusted values.",
         "solutionFormat": "prose"
@@ -707,8 +707,8 @@
       "exercise": {
         "prompt": "Run acceptance.py and explain why its two competing writers must produce exactly one 200 and one 409.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The two writers using version 1 produce exactly one 200 and one 409.",
+          "Reading the task afterward returns version 2, not version 3."
         ],
         "solution": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation.",
         "solutionFormat": "prose"
@@ -755,8 +755,8 @@
       "exercise": {
         "prompt": "Design an added task-created event without a task/event mismatch.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The design commits the task and its outbox row together, so a failed transaction leaves neither row.",
+          "The crash scenarios retain an unpublished event after commit and prevent duplicate consumer effects after publication is retried."
         ],
         "solution": "Insert StudyTasks and Outbox in one transaction. Commit before publishing. A worker retries publication and marks evidence durably; consumers deduplicate stable event IDs. Test crash after commit before publish, and after publish before acknowledgment.",
         "solutionFormat": "prose"
@@ -803,8 +803,8 @@
       "exercise": {
         "prompt": "Specify two tests for idempotent creation before implementing it.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "Repeating the same key and validated payload returns the same task ID and leaves exactly one task row.",
+          "Reusing that key with a different payload returns a conflict and creates no second task."
         ],
         "solution": "Same key and same validated payload sent twice returns the same task ID with one persisted task. Same key with a different payload returns conflict without a second write. Also simulate a committed write with a lost response and retry the original key.",
         "solutionFormat": "prose"
@@ -851,8 +851,8 @@
       "exercise": {
         "prompt": "Describe the negative test that a happy-path login demo misses.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "User B cannot update user A's task: the request is denied and A's row and version remain unchanged.",
+          "User B's list excludes A's task, and requests with missing or expired credentials are denied."
         ],
         "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
         "solutionFormat": "prose"
@@ -899,8 +899,8 @@
       "exercise": {
         "prompt": "Explain why acceptance.py cannot prove the frontend CORS policy works.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The explanation states that Python requests do not enforce browser same-origin or CORS rules.",
+          "The proposed browser check uses the intended UI origin and observes the preflight/request result; a passing acceptance.py run is not treated as CORS evidence."
         ],
         "solution": "Python is not constrained by browser same-origin enforcement. Use a real browser from the intended UI origin and inspect preflight/request outcomes. Passing the API contract tests says nothing about browser cookie or cross-origin policy.",
         "solutionFormat": "prose"
@@ -947,8 +947,8 @@
       "exercise": {
         "prompt": "Build an evidence matrix for decoder, HTTP contract, SQL persistence and keyboard access.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The matrix maps malformed payloads to decoder tests, HTTP behavior to acceptance.py, SQL durability to a restart plus row query, and keyboard/status access to browser and screen-reader checks.",
+          "Each result names the runtime and storage mode, and distinguishes executed checks from checks still unexecuted."
         ],
         "solution": "Decoder: node tests with malformed fixtures. HTTP: acceptance.py against temporary loopback host. SQL: same acceptance plus observed restart and row query. Keyboard: Tab through controls, submit and hear status with a screen reader. Record runtime/mode and unexecuted checks separately.",
         "solutionFormat": "prose"
@@ -995,8 +995,8 @@
       "exercise": {
         "prompt": "Design a diagnostic record for a failed SQL-backed update.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The diagnostic record contains an operation name, error/status category, duration and correlation ID.",
+          "The record excludes task titles, tokens and connection strings, while its correlation ID links to the failed request timeline."
         ],
         "solution": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line.",
         "solutionFormat": "prose"
@@ -1043,8 +1043,8 @@
       "exercise": {
         "prompt": "Write a release checklist with a rollback compatibility question.",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "The checklist identifies the tested artifact, configuration, migration order, health checks and rollback owner.",
+          "It explicitly checks whether the previous API version can use the migrated schema before claiming rollback is available."
         ],
         "solution": "Identify artifact hashes and test evidence, runtime configuration, SQL migration order, health checks and rollback owner. Ask whether the old API still understands the new schema; use additive expand/contract changes if rolling versions coexist. Never promise rollback solely because old binaries are retained.",
         "solutionFormat": "prose"
@@ -1091,8 +1091,8 @@
       "exercise": {
         "prompt": "What evidence would support a ten-minute recovery objective?",
         "checks": [
-          "State your prediction before running or inspecting the reference.",
-          "Compare the actual result with the stated contract and explain any difference."
+          "A timed restore drill into an isolated database meets ten minutes under representative conditions and independently verifies the restored content.",
+          "The evidence records tolerated data loss and any untested infrastructure or identity dependencies; a scheduled backup alone is not counted as proof."
         ],
         "solution": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested.",
         "solutionFormat": "prose"

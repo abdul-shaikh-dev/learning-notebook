@@ -38,3 +38,4 @@ require('./new-learning-paths.cjs');
 require('./personal-effectiveness.cjs');
 
 require('./reading-flow.cjs');
+require('./finance-regressions.cjs');
