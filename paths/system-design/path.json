@@ -1174,15 +1174,23 @@
           "paragraphs": [
             "A circuit breaker temporarily avoids calls to a failing dependency and probes recovery; it does not replace deadlines, idempotency or an error response. Separate resource pools can prevent a slow export dependency from consuming all interactive connections. Aggressive identical retry schedules create bursts. Timeouts must include the phases the client library actually covers, and cancellation does not prove a remote operation stopped."
           ]
+        },
+        {
+          "title": "Spend one deadline across attempts",
+          "paragraphs": [
+            "Assume a request has 1,000 ms total, reserves 100 ms for its response, and each dependency attempt can consume at most 300 ms. The first attempt uses 300 ms; a chosen 100 ms backoff leaves 500 ms of attempt budget. A second full attempt leaves 200 ms, so another 100 ms backoff leaves only 100 ms for a third attempt. Giving that third call a fresh 300 ms timeout would overrun the budget.",
+            "A policy can stop after the second failure or cap the third attempt at the remaining 100 ms. Before each wait and call, recompute remaining time from a monotonic deadline. Real overhead consumes time too. A clock calculation bounds what the caller waits for; it does not establish whether a remote side effect completed."
+          ]
         }
       ],
       "exercise": {
-        "prompt": "An API allows three total attempts including the first when calling a worker, and each worker call allows three total storage attempts including the first. What is the maximum number of storage attempts for one API call?",
-        "solution": "With three total attempts at each of two layers, the maximum is nine storage attempts. Clarify attempts versus retries: three retries after the first would mean four attempts at each layer and sixteen deepest attempts. Assign one owner and fit attempts plus waiting inside the deadline.",
+        "prompt": "An API allows three total attempts including the first when calling a worker, and each worker call allows three total storage attempts including the first. What is the maximum number of storage attempts for one API call? Then suppose 700 ms has elapsed in a 1,000 ms deadline, 100 ms must remain for the response, and the proposed backoff is 150 ms. What timeout can a further attempt receive?",
+        "solution": "With three total attempts at each of two layers, the maximum is nine storage attempts. Clarify attempts versus retries: three retries after the first would mean four attempts at each layer and sixteen deepest attempts. Assign one owner and fit attempts plus waiting inside the deadline. The remaining call budget after that backoff is 1,000 - 700 - 100 - 150 = 50 ms. Cap the attempt at 50 ms, less any additional elapsed overhead, or stop if the operation cannot usefully complete within that budget. Never reset the overall deadline for a retry.",
         "checks": [
           "Count original attempts explicitly.",
           "Test persistent as well as transient failure.",
-          "Keep total time and additional load bounded."
+          "Keep total time and additional load bounded.",
+          "Account for elapsed time, backoff and response reserve before choosing the next timeout."
         ]
       },
       "quiz": {
@@ -1333,6 +1341,13 @@
           "paragraphs": [
             "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
             "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
+          ]
+        },
+        {
+          "title": "Try the crash sequence before opening the lab",
+          "paragraphs": [
+            "Use the optional booking lab to connect lessons 15 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
+            "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run python -m unittest -v test_booking_lab.py from the extracted System Design practice folder, then inspect test_response_loss_replay_and_intent_conflict and test_outbox_replay_requires_consumer_deduplication. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
           ]
         }
       ],

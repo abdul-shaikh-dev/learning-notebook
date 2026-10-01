@@ -44,3 +44,5 @@ require('./notebook-theme.cjs');
 require('./studio-backup.cjs');
 
 require('./problem-solving.cjs');
+
+require('./browser-practice.cjs');

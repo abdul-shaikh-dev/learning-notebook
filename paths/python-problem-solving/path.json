@@ -17,10 +17,10 @@
     "Apply familiar patterns to logs, records and scheduling problems."
   ],
   "setup": [
-    "Download the practice ZIP and extract it into a folder you control.",
+    "Use the browser editor in each challenge, or download and extract the practice ZIP to work in your own editor.",
     "Open solutions.py and complete one function. The remaining starters may stay unfinished.",
     "Run python check.py --list, then python check.py followed by the challenge identifier shown in the lesson. On some systems use py or python3 instead of python.",
-    "Tests run locally in your terminal, not inside the browser. No packages or model are required.",
+    "Run Python tests in the lesson editor, or use your terminal. Browser Python loads on the first run; save this course for offline execution. No account or model is required.",
     "Start with a simple correct approach. Use a hint only when it helps; compare the worked reasoning after an attempt. Reading progress does not claim that your code passed."
   ],
   "nextSteps": [
@@ -140,7 +140,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete sum_approved. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete sum_approved below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def sum_approved(minutes: list[int], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -205,7 +205,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete clamp_readings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete clamp_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def clamp_readings(readings: list[int], low: int, high: int) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -270,7 +270,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete first_long_label. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete first_long_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_long_label(labels: list[str], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -335,7 +335,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete longest_active_run. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete longest_active_run below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def longest_active_run(flags: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -400,7 +400,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete clean_label. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete clean_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def clean_label(text: str) -> str:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -465,7 +465,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete reading_changes. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete reading_changes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def reading_changes(readings: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -530,7 +530,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete keep_first_labels. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete keep_first_labels below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def keep_first_labels(labels: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -595,7 +595,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete stock_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete stock_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def stock_totals(deliveries: list[list]) -> dict[str, int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -660,7 +660,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete column_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete column_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def column_totals(rows: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -725,7 +725,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete group_by_initial. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete group_by_initial below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def group_by_initial(names: list[str]) -> dict[str, list[str]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -790,7 +790,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete most_requested. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete most_requested below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def most_requested(labels: list[str]) -> str | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -855,7 +855,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete can_fill_pair. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete can_fill_pair below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def can_fill_pair(sizes: list[int], target: int) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -920,7 +920,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete shared_readings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete shared_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def shared_readings(left: list[int], right: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -985,7 +985,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete busiest_block. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete busiest_block below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def busiest_block(counts: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1050,7 +1050,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete affordable_stretch. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete affordable_stretch below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def affordable_stretch(costs: list[int], budget: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1115,7 +1115,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete range_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete range_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1180,7 +1180,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete balance_marker. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete balance_marker below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def balance_marker(values: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1245,7 +1245,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete first_suitable. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete first_suitable below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_suitable(capacities: list[int], required: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1317,7 +1317,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete balanced_groups. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete balanced_groups below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def balanced_groups(text: str) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1382,7 +1382,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete undo_notes. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete undo_notes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def undo_notes(commands: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1447,7 +1447,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete read_settings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete read_settings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def read_settings(lines: list[str]) -> dict[str, str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1512,7 +1512,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete latest_samples. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete latest_samples below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def latest_samples(samples: list[list]) -> dict[str, list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1577,7 +1577,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete maintenance_coverage. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete maintenance_coverage below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1642,7 +1642,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete first_open_slot. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete first_open_slot below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1707,7 +1707,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete peak_requests. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete peak_requests below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def peak_requests(timestamps: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1772,7 +1772,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete parse_price. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete parse_price below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def parse_price(text: str) -> int | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1837,7 +1837,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete compare_releases. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete compare_releases below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def compare_releases(left: str, right: str) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1902,7 +1902,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete ready_order. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete ready_order below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1967,7 +1967,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete fulfill_orders. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete fulfill_orders below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -2032,7 +2032,7 @@
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Extract the practice ZIP once. In solutions.py, complete book_most_sessions. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+        "prompt": "Complete book_most_sessions below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def book_most_sessions(sessions: list[list[int]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -2075,7 +2075,14 @@
     "practice/reference.py",
     "practice/README.md",
     "practice/test_runner.py",
-    "practice/test_reference.py"
+    "practice/test_reference.py",
+    "runtime/pyodide.js",
+    "runtime/pyodide.asm.js",
+    "runtime/pyodide.asm.wasm",
+    "runtime/python_stdlib.zip",
+    "runtime/pyodide-lock.json",
+    "runtime/LICENSE.txt",
+    "runtime/provenance.json"
   ],
   "downloads": [
     {

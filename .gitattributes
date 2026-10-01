@@ -6,3 +6,5 @@
 *.md text eol=lf
 *.csv text eol=lf
 *.png binary
+paths/python-problem-solving/runtime/** -text
+paths/python-problem-solving/runtime/provenance.json text eol=lf

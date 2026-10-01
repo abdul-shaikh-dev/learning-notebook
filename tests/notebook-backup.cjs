@@ -7,10 +7,12 @@ const source = fs.readFileSync(path.join(__dirname,'../assets/js/notebook-backup
 const paths = [
   {id:'financial-foundations',title:'Financial foundations',status:'ready',lessons:24},
   {id:'python',title:'Python',status:'ready',lessons:[{id:'first'},{id:'second'}],stages:[{id:'foundation'},{id:'advanced'}]},
+  {id:'problems',title:'Python Problem Solving',status:'ready',lessons:[{id:'one',exercise:{challenge:true}},{id:'two',exercise:{challenge:true}},{id:'reading'}],stages:[]},
   {id:'sql-server',title:'SQL Server',status:'ready',lessons:[{id:'joins'}],stages:[{id:'foundation'}]}
 ];
 const pk = id=>'learning-notebook:path:'+id+':v1';
 const sk = id=>'learning-notebook:path:'+id+':assessments:v1';
+const ck = id=>'learning-notebook:challenges:'+id+':v1';
 const fk = 'valuation-lab-v1', last='learning-notebook:last-lesson:v1';
 const plain = value=>JSON.parse(JSON.stringify(value));
 function make(initial={}) {
@@ -108,7 +110,7 @@ test('deduplicates valid IDs and imports missing last location',()=>{
 test('byte size and malformed JSON limits run before writes',()=>{
   const env=make();
   assert.throws(()=>env.api.parse('{broken'));
-  assert.throws(()=>env.api.parse('é'.repeat(600000)),/too large/);
+  assert.throws(()=>env.api.parse('Ã©'.repeat(600000)),/too large/);
   assert.throws(()=>env.api.parse('x'.repeat(env.api.LIMIT+1)),/too large/);
   assert.equal(env.writes.length,0);
 });
@@ -175,5 +177,89 @@ test('backup download uses a JSON Blob and makes no storage writes',async()=>{
   const env=make(),main=dom();env.context.bindNotebookBackup(main);main.nodes['nb-export'].events.click();
   assert.equal(env.downloads.length,1);
   assert.equal(JSON.parse(await env.downloads[0].text()).app,'learning-notebook');assert.equal(env.writes.length,0);
+});
+test('challenge drafts and statuses round trip while ordinary course entries stay unchanged',()=>{
+  const state={one:{code:'def one():\n    return "<script>"',status:'solved'},two:{code:'',status:'not-started'}};
+  const env=make({[ck('problems')]:JSON.stringify(state),[ck('python')]:'ignored non-challenge storage'});
+  const raw=env.api.create(), exported=JSON.parse(raw);
+  assert.deepEqual(exported.progress.paths.problems.challenges,state);
+  assert.equal(Object.hasOwn(exported.progress.paths.python,'challenges'),false);
+  assert.equal(Object.hasOwn(env.api.read().raw,ck('python')),false);
+  const target=make();target.api.apply(target.api.plan(target.api.parse(raw).progress));
+  assert.deepEqual(JSON.parse(target.data.get(ck('problems'))),state);
+  assert.match(env.api.view(),/2 code drafts · 0 attempted · 1 solved/);
+  assert(!env.api.view().includes('<script>'));
+});
+test('older course backups omit challenges and preserve local drafts',()=>{
+  const state={one:{code:'return 5',status:'attempted'}};
+  const env=make({[ck('problems')]:JSON.stringify(state)});
+  const imported=env.api.parse(envelope(progress({paths:{problems:{read:['one'],assessed:[]}}}))).progress;
+  env.api.apply(env.api.plan(imported));
+  assert.deepEqual(JSON.parse(env.data.get(ck('problems'))),state);
+  assert(!env.writes.includes(ck('problems')));
+});
+test('challenge merge keeps local entries whole and imports only missing entries',async()=>{
+  const local={one:{code:'local unfinished code',status:'attempted'}};
+  const remote={one:{code:'remote completed code',status:'solved'},two:{code:'new code',status:'attempted'}};
+  const env=make({[ck('problems')]:JSON.stringify(local)}), main=dom();
+  env.context.bindNotebookBackup(main);
+  const raw=envelope(progress({paths:{problems:{read:[],assessed:[],challenges:remote}}}));
+  main.nodes['nb-file'].files=[{size:raw.length,text:async()=>raw}];
+  await main.nodes['nb-file'].events.change();
+  assert.match(main.nodes['nb-preview'].innerHTML,/Conflicting challenge drafts kept from this browser: 1/);
+  assert.match(main.nodes['nb-preview'].innerHTML,/code drafts/);
+  main.nodes['nb-apply'].events.click();
+  assert.deepEqual(JSON.parse(env.data.get(ck('problems'))),{...remote,...local});
+});
+test('challenge fields validate lesson identity code limits exact fields and status',()=>{
+  const env=make();
+  const invalid=[
+    {reading:{code:'',status:'attempted'}},{missing:{code:'',status:'solved'}},
+    {one:{code:'x'.repeat(20001),status:'attempted'}},{one:{code:7,status:'attempted'}},
+    {one:{code:'',status:'complete'}},{one:{code:'',status:null}},{one:{code:''}},
+    {one:{status:'solved'}},{one:{code:'',status:'solved',arbitrary:'key'}},null,[],
+    JSON.parse('{"__proto__":{"code":"","status":"solved"}}')
+  ];
+  for(const challenges of invalid) {
+    const value=progress({paths:{problems:{read:[],assessed:[],challenges}}});
+    assert.throws(()=>env.api.parse(envelope(value)));
+    assert.throws(()=>env.api.plan(value));
+  }
+  assert.throws(()=>env.api.parse(envelope(progress({paths:{python:{read:[],assessed:[],challenges:{}}}}))));
+  const valid=progress({paths:{problems:{read:[],assessed:[],challenges:{one:{code:'x'.repeat(20000),status:'not-started'}}}}});
+  assert.equal(env.api.parse(envelope(valid)).progress.paths.problems.challenges.one.code.length,20000);
+  assert.equal(env.writes.length,0);
+});
+test('challenge edits invalidate preview and malformed local drafts cannot be exported',()=>{
+  const env=make(),value=progress({paths:{problems:{read:[],assessed:[],challenges:{one:{code:'remote',status:'solved'}}}}});
+  const preview=env.api.plan(value);
+  env.data.set(ck('problems'),JSON.stringify({one:{code:'new local edit',status:'attempted'}}));
+  assert.throws(()=>env.api.apply(preview),/Progress changed/);
+  assert.equal(env.writes.length,0);
+  env.data.set(ck('problems'),JSON.stringify({one:{code:'bad status',status:'complete'}}));
+  assert.throws(()=>env.api.create(),/status is invalid/);
+});
+test('export enforces the import byte limit for large Unicode code drafts',()=>{
+  const large={id:'large',title:'Large challenge course',status:'ready',stages:[],
+    lessons:Array.from({length:30},(_,i)=>({id:'lesson-'+i,exercise:{challenge:true}}))};
+  paths.push(large);
+  try {
+    const state=Object.fromEntries(large.lessons.map(l=>[l.id,{code:'漢'.repeat(20000),status:'attempted'}]));
+    const env=make({[ck('large')]:JSON.stringify(state)});
+    assert.throws(()=>env.api.create(),/backup exceeds 1 MB/);
+    assert.equal(env.writes.length,0);
+  } finally { paths.pop(); }
+});
+test('rollback restores both existing and newly imported challenge drafts',()=>{
+  for(const existing of [false,true]) {
+    const initial=existing?{[ck('problems')]:JSON.stringify({one:{code:'old',status:'attempted'}})}:{};
+    const env=make(initial),value=progress({paths:{problems:{read:['one'],assessed:[],challenges:{two:{code:'incoming',status:'solved'}}},'sql-server':{read:['joins'],assessed:[]}}});
+    const preview=env.api.plan(value);
+    const challengeWrite=plain(preview.writes).findIndex(([name])=>name===ck('problems'));
+    assert(challengeWrite>=0);
+    env.failWrite(challengeWrite+2);
+    assert.throws(()=>env.api.apply(preview),/previous progress was restored/);
+    assert.deepEqual(Object.fromEntries(env.data),initial);
+  }
 });
 (async()=>{for(const {name,run} of tests){await run();console.log('✓ '+name);}console.log(tests.length+' notebook backup checks passed.');})().catch(error=>{console.error(error);process.exitCode=1;});

@@ -28,7 +28,13 @@ console.log('PASS: visual map course coverage, filtering, progress integrity, ma
 const roadmap=ctx.libraryMap();
 assert.equal((roadmap.match(/class="map-node"/g)||[]).length,paths.filter(p=>p.status==='ready').length,'Each ready course including the new path appears once');
 assert.equal((roadmap.match(/marker-end=/g)||[]).length,vm.runInContext('LIBRARY_GRAPHS.reduce((n,g)=>n+g.edges.filter(([a,b])=>LEARNING_PATHS.some(p=>p.id===a&&p.status==="ready")&&LEARNING_PATHS.some(p=>p.id===b&&p.status==="ready")).length,0)',ctx),'All available graph relationships render');
-assert.ok(roadmap.includes('Suggested next: Python Problem Solving or AI Agents'),'Relationships have a text equivalent');
+assert.ok(roadmap.includes('aria-label="Course relationships"'),'Relationships have a visible text equivalent');
+for(const label of ['Suggested order','Useful background','Alternative direction'])assert.ok(roadmap.includes('<dt>'+label+'</dt>'));
+const graph=vm.runInContext('LIBRARY_GRAPHS.find(g=>g.id==="programming")',ctx);
+assert(!graph.edges.some(([a,b])=>a==='data-structures-algorithms'&&b==='design-patterns'),'Design patterns does not imply an algorithms prerequisite');
+assert(graph.edges.some(([a,b,type])=>a==='python'&&b==='design-patterns'&&type==='alternative'));
+assert(roadmap.includes('class="relationship-background" d='));
+assert(roadmap.includes('class="relationship-alternative" d='));
 assert.ok(!ctx.libraryMap('Python').includes('marker-end='),'Filtering never implies relationships between missing nodes');
 assert.equal((ctx.libraryMap('Python').match(/class="map-node"/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
 console.log('PASS: unique roadmap nodes, directed connections, accessible relationship text and filtered graph fallback.');

@@ -54605,14 +54605,6 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
             ]
-          },
-          {
-            "title": "Work through a grouping operation",
-            "paragraphs": [
-              "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
-              "Do not use a set to remove duplicate sessions before defining identity. Two distinct sessions can have equal topic and minutes. In the summary challenge, repeated IDs are rejected while repeated topics are accumulated. That distinction keeps a valid second session from disappearing."
-            ],
-            "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nassert totals == {\"Python\": 30, \"SQL\": 30}"
           }
         ],
         "exercise": {
@@ -54670,6 +54662,21 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Resetting total inside the loop discards earlier work. Avoid removing list items while iterating over that same list; build a new filtered list. Watch for infinite while loops whose counters never change."
             ]
+          },
+          {
+            "title": "Work through a grouping operation",
+            "paragraphs": [
+              "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
+              "Each item is a two-value tuple. The loop assigns its first value to topic and its second to minutes. totals.get(topic, 0) starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
+            ],
+            "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n# Expected: {\"Python\": 30, \"SQL\": 30}"
+          },
+          {
+            "title": "Keep the index when you need it",
+            "paragraphs": [
+              "enumerate pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
+            ],
+            "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n# 0 read\n# 1 code"
           }
         ],
         "exercise": {
@@ -54734,6 +54741,15 @@ const LEARNING_PATHS = [
               "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into summarize(rows), returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
               "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise ValueError. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
             ]
+          },
+          {
+            "title": "Move from an example to a checked function",
+            "paragraphs": [
+              "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need input() or print() inside the function. A starter that raises NotImplementedError is deliberately unfinished; replace that line with your calculation.",
+              "In a signature such as total(values: list[int]) -> int, list[int] describes the expected input and -> int describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
+              "An assert checks a claim while you develop: it does nothing if the comparison is true and raises AssertionError if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
+            ],
+            "example": "def doubled(value: int) -> int:\n    return value * 2\n\nassert doubled(3) == 6\nassert doubled(0) == 0\nassert doubled(-2) == -4\n# All three checks pass without output."
           }
         ],
         "exercise": {
@@ -56836,10 +56852,10 @@ const LEARNING_PATHS = [
       "Apply familiar patterns to logs, records and scheduling problems."
     ],
     "setup": [
-      "Download the practice ZIP and extract it into a folder you control.",
+      "Use the browser editor in each challenge, or download and extract the practice ZIP to work in your own editor.",
       "Open solutions.py and complete one function. The remaining starters may stay unfinished.",
       "Run python check.py --list, then python check.py followed by the challenge identifier shown in the lesson. On some systems use py or python3 instead of python.",
-      "Tests run locally in your terminal, not inside the browser. No packages or model are required.",
+      "Run Python tests in the lesson editor, or use your terminal. Browser Python loads on the first run; save this course for offline execution. No account or model is required.",
       "Start with a simple correct approach. Use a hint only when it helps; compare the worked reasoning after an attempt. Reading progress does not claim that your code passed."
     ],
     "nextSteps": [
@@ -56959,7 +56975,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete sum_approved. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete sum_approved below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def sum_approved(minutes: list[int], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57024,7 +57040,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete clamp_readings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete clamp_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def clamp_readings(readings: list[int], low: int, high: int) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57089,7 +57105,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete first_long_label. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete first_long_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_long_label(labels: list[str], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57154,7 +57170,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete longest_active_run. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete longest_active_run below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def longest_active_run(flags: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57219,7 +57235,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete clean_label. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete clean_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def clean_label(text: str) -> str:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57284,7 +57300,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete reading_changes. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete reading_changes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def reading_changes(readings: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57349,7 +57365,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete keep_first_labels. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete keep_first_labels below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def keep_first_labels(labels: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57414,7 +57430,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete stock_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete stock_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def stock_totals(deliveries: list[list]) -> dict[str, int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57479,7 +57495,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete column_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete column_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def column_totals(rows: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57544,7 +57560,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete group_by_initial. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete group_by_initial below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def group_by_initial(names: list[str]) -> dict[str, list[str]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57609,7 +57625,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete most_requested. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete most_requested below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def most_requested(labels: list[str]) -> str | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57674,7 +57690,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete can_fill_pair. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete can_fill_pair below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def can_fill_pair(sizes: list[int], target: int) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57739,7 +57755,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete shared_readings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete shared_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def shared_readings(left: list[int], right: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57804,7 +57820,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete busiest_block. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete busiest_block below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def busiest_block(counts: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57869,7 +57885,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete affordable_stretch. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete affordable_stretch below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def affordable_stretch(costs: list[int], budget: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57934,7 +57950,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete range_totals. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete range_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -57999,7 +58015,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete balance_marker. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete balance_marker below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def balance_marker(values: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58064,7 +58080,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete first_suitable. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete first_suitable below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_suitable(capacities: list[int], required: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58136,7 +58152,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete balanced_groups. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete balanced_groups below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def balanced_groups(text: str) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58201,7 +58217,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete undo_notes. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete undo_notes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def undo_notes(commands: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58266,7 +58282,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete read_settings. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete read_settings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def read_settings(lines: list[str]) -> dict[str, str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58331,7 +58347,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete latest_samples. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete latest_samples below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def latest_samples(samples: list[list]) -> dict[str, list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58396,7 +58412,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete maintenance_coverage. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete maintenance_coverage below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58461,7 +58477,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete first_open_slot. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete first_open_slot below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58526,7 +58542,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete peak_requests. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete peak_requests below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def peak_requests(timestamps: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58591,7 +58607,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete parse_price. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete parse_price below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def parse_price(text: str) -> int | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58656,7 +58672,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete compare_releases. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete compare_releases below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def compare_releases(left: str, right: str) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58721,7 +58737,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete ready_order. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete ready_order below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58786,7 +58802,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete fulfill_orders. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete fulfill_orders below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -58851,7 +58867,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Extract the practice ZIP once. In solutions.py, complete book_most_sessions. Run the command below from the extracted folder. Other unfinished functions do not affect this challenge.",
+          "prompt": "Complete book_most_sessions below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def book_most_sessions(sessions: list[list[int]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -61931,7 +61947,7 @@ const LEARNING_PATHS = [
       "Run setup.sql in SSMS and keep that query window open. All #LN fixture tables are session-local. In another window run setup.sql again to create a separate fixture.",
       "Examples assume the setup fixture is unchanged. Start a new query window and run setup.sql to reset without modifying another session.",
       "Run snippets or solutions.sql in the same session. GO is a client batch separator. Do not paste GO into an application driver call.",
-      "The browser does not execute T-SQL. Expected results were checked arithmetically and the content/schema reviewed; no SQL Server engine execution is claimed.",
+      "The browser does not execute T-SQL. Selected downloadable fixtures have SQL Server execution evidence in engine-verification.md; this does not establish execution of every lesson snippet or optional extension.",
       "Advanced practice uses advanced-lab.sql and advanced-solutions.sql in the same session after setup.sql. It has a different payment-event dataset from the foundation fixture.",
       "Stage exit projects require explained evidence. Selected downloadable fixtures, two-session races and Query Store were executed on SQL Server 2025 Express; see engine-verification.md. Crash durability and optional extensions remain unverified."
     ],
@@ -62257,7 +62273,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "DISTINCT is not a repair for an unexplained join expansion. It can hide duplicate evidence or discard legitimate repeated values. If the desired grain is one row per order, aggregate payments to that grain before joining; the next lesson builds that stage."
+              "DISTINCT is not a repair for an unexplained join expansion. It can hide duplicate evidence or discard legitimate repeated values. If the desired grain is one row per order, aggregate payments to that grain before joining; lesson 5 introduces grouping and lesson 6 combines the grouped payments with orders."
             ],
             "example": ""
           }
@@ -62265,10 +62281,10 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Find customers with no orders. Use an anti-match and return identifier/name.",
           "starter": "SELECT c.CustomerId, c.CustomerName FROM #LNCustomers c\nLEFT JOIN #LNOrders o ON o.CustomerId=c.CustomerId\nWHERE /* missing right-side key */;",
-          "solution": "SELECT c.CustomerId, c.CustomerName FROM #LNCustomers c\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.CustomerId=c.CustomerId)\nORDER BY c.CustomerId;",
+          "solution": "SELECT c.CustomerId, c.CustomerName\nFROM #LNCustomers c\nLEFT JOIN #LNOrders o ON o.CustomerId=c.CustomerId\nWHERE o.OrderId IS NULL\nORDER BY c.CustomerId;",
           "checks": [
             "Only 4/Dia.",
-            "A LEFT JOIN with WHERE o.OrderId IS NULL is also correct."
+            "Test the non-NULL order key, not a nullable description. NOT EXISTS is an alternative introduced in lesson 6."
           ]
         },
         "quiz": {
@@ -62925,6 +62941,13 @@ const LEARNING_PATHS = [
               "NOT IN against a list containing NULL can unexpectedly reject rows because of UNKNOWN comparisons. NOT EXISTS with an explicit equality is usually a clearer expression for unmatched keys. Never discard unknown keys before recording their exception count."
             ],
             "example": ""
+          },
+          {
+            "title": "Trace the payment grain before combining queries",
+            "paragraphs": [
+              "Order 101 has payments 60 and 40. A direct join produces two rows carrying the same order amount of 100. Grouping payments first produces one row, OrderId 101 with PaidAmount 100, so the later join keeps one row for that order.",
+              "Before the capstone, optionally adapt the example to return OrderId, Due, Paid and Outstanding for all five orders. Outstanding is Due minus Paid. Keep unpaid orders and report unmatched incoming payments separately using this lesson's exercise. Check five order rows, Due 390, matched Paid 265 and Outstanding 125. The orphan payment of 20 belongs in the exception output and must not reduce those balances."
+            ]
           }
         ],
         "exercise": {
@@ -63750,6 +63773,13 @@ const LEARNING_PATHS = [
             "example": ""
           },
           {
+            "title": "Choose a status with CASE",
+            "paragraphs": [
+              "A searched CASE expression evaluates WHEN conditions in order and returns the result of the first true condition. ELSE supplies the fallback and END closes the expression. Put the missing-payment test first, then compare the matched payment total with the amount due. COALESCE can supply zero for balance arithmetic, but it would hide the distinction between no payment record and a recorded zero payment if you used it alone for status."
+            ],
+            "example": "SELECT OrderId,\n CASE WHEN Amount >= 100 THEN 'large' ELSE 'small' END AS Size\nFROM #LNOrders ORDER BY OrderId;\n-- 101 large; 102 small; 103 small; 104 large; 105 small"
+          },
+          {
             "title": "Example",
             "paragraphs": [
               "Expected order statuses: 101 paid, 102 paid, 103 underpaid by 10, 104 missing with 120 outstanding, 105 overpaid by 5. The orphan list contains 206/999/20. Check both row counts and values; a result containing the right total but duplicated rows is not acceptable."
@@ -63794,6 +63824,13 @@ const LEARNING_PATHS = [
             "section": "GROUP BY and aggregate expressions",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+          },
+          {
+            "title": "Microsoft Learn: CASE expressions",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/case-transact-sql?view=sql-server-ver17",
+            "section": "Searched CASE and scalar condition order",
+            "reviewed": "2026-10-02",
+            "scope": "Added CASE teaching example and reconciliation queries executed on the local SQL Server Express fixture; see docs/journey-review-2026-10-02.md."
           }
         ],
         "diagram": {
@@ -67842,15 +67879,23 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A circuit breaker temporarily avoids calls to a failing dependency and probes recovery; it does not replace deadlines, idempotency or an error response. Separate resource pools can prevent a slow export dependency from consuming all interactive connections. Aggressive identical retry schedules create bursts. Timeouts must include the phases the client library actually covers, and cancellation does not prove a remote operation stopped."
             ]
+          },
+          {
+            "title": "Spend one deadline across attempts",
+            "paragraphs": [
+              "Assume a request has 1,000 ms total, reserves 100 ms for its response, and each dependency attempt can consume at most 300 ms. The first attempt uses 300 ms; a chosen 100 ms backoff leaves 500 ms of attempt budget. A second full attempt leaves 200 ms, so another 100 ms backoff leaves only 100 ms for a third attempt. Giving that third call a fresh 300 ms timeout would overrun the budget.",
+              "A policy can stop after the second failure or cap the third attempt at the remaining 100 ms. Before each wait and call, recompute remaining time from a monotonic deadline. Real overhead consumes time too. A clock calculation bounds what the caller waits for; it does not establish whether a remote side effect completed."
+            ]
           }
         ],
         "exercise": {
-          "prompt": "An API allows three total attempts including the first when calling a worker, and each worker call allows three total storage attempts including the first. What is the maximum number of storage attempts for one API call?",
-          "solution": "With three total attempts at each of two layers, the maximum is nine storage attempts. Clarify attempts versus retries: three retries after the first would mean four attempts at each layer and sixteen deepest attempts. Assign one owner and fit attempts plus waiting inside the deadline.",
+          "prompt": "An API allows three total attempts including the first when calling a worker, and each worker call allows three total storage attempts including the first. What is the maximum number of storage attempts for one API call? Then suppose 700 ms has elapsed in a 1,000 ms deadline, 100 ms must remain for the response, and the proposed backoff is 150 ms. What timeout can a further attempt receive?",
+          "solution": "With three total attempts at each of two layers, the maximum is nine storage attempts. Clarify attempts versus retries: three retries after the first would mean four attempts at each layer and sixteen deepest attempts. Assign one owner and fit attempts plus waiting inside the deadline. The remaining call budget after that backoff is 1,000 - 700 - 100 - 150 = 50 ms. Cap the attempt at 50 ms, less any additional elapsed overhead, or stop if the operation cannot usefully complete within that budget. Never reset the overall deadline for a retry.",
           "checks": [
             "Count original attempts explicitly.",
             "Test persistent as well as transient failure.",
-            "Keep total time and additional load bounded."
+            "Keep total time and additional load bounded.",
+            "Account for elapsed time, backoff and response reserve before choosing the next timeout."
           ]
         },
         "quiz": {
@@ -68281,6 +68326,13 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
               "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
+            ]
+          },
+          {
+            "title": "Try the crash sequence before opening the lab",
+            "paragraphs": [
+              "Use the optional booking lab to connect lessons 15 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
+              "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run python -m unittest -v test_booking_lab.py from the extracted System Design practice folder, then inspect test_response_loss_replay_and_intent_conflict and test_outbox_replay_requires_consumer_deduplication. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
             ]
           }
         ],

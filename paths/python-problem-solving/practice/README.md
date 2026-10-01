@@ -1,7 +1,7 @@
 # Python problem solving
 
-Thirty original challenges for Python 3.11 or newer. Use any editor and a terminal.
-There are no third-party packages, accounts, network calls or browser runtimes.
+Thirty original challenges for Python 3.11 or newer. The notebook also has a browser Python editor; these files are for local terminal practice.
+The terminal files use no third-party packages or accounts. Browser practice uses the bundled Pyodide runtime and saves drafts with your progress.
 
 ## Try one problem
 

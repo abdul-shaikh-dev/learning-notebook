@@ -116,3 +116,7 @@ The build publishes an allowlisted `_site/` directory containing the ready cours
 ## Scope
 
 This is a personal learning resource, with sources, worked examples and practice to support understanding. Course stages describe the material's depth; completing them is not certification or proof of production experience. Financial examples use synthetic data, and deployment, security, live integrations and operation under load need experience beyond the notebook exercises.
+
+## Browser Python practice
+
+Python Problem Solving now includes an in-browser editor with Run tests, Stop, saved drafts and separate practice status. Downloadable terminal exercises remain available. Saving the course offline includes its approximately 12 MB Python runtime. Progress backups include challenge code and status. See [browser Python implementation and verification](docs/browser-python.md) and the [selected learning journey review](docs/journey-review-2026-10-02.md).

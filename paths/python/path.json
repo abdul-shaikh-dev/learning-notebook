@@ -356,14 +356,6 @@
           "paragraphs": [
             "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
           ]
-        },
-        {
-          "title": "Work through a grouping operation",
-          "paragraphs": [
-            "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
-            "Do not use a set to remove duplicate sessions before defining identity. Two distinct sessions can have equal topic and minutes. In the summary challenge, repeated IDs are rejected while repeated topics are accumulated. That distinction keeps a valid second session from disappearing."
-          ],
-          "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nassert totals == {\"Python\": 30, \"SQL\": 30}"
         }
       ],
       "exercise": {
@@ -421,6 +413,21 @@
           "paragraphs": [
             "Resetting total inside the loop discards earlier work. Avoid removing list items while iterating over that same list; build a new filtered list. Watch for infinite while loops whose counters never change."
           ]
+        },
+        {
+          "title": "Work through a grouping operation",
+          "paragraphs": [
+            "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
+            "Each item is a two-value tuple. The loop assigns its first value to topic and its second to minutes. totals.get(topic, 0) starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
+          ],
+          "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n# Expected: {\"Python\": 30, \"SQL\": 30}"
+        },
+        {
+          "title": "Keep the index when you need it",
+          "paragraphs": [
+            "enumerate pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
+          ],
+          "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n# 0 read\n# 1 code"
         }
       ],
       "exercise": {
@@ -485,6 +492,15 @@
             "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into summarize(rows), returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
             "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise ValueError. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
           ]
+        },
+        {
+          "title": "Move from an example to a checked function",
+          "paragraphs": [
+            "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need input() or print() inside the function. A starter that raises NotImplementedError is deliberately unfinished; replace that line with your calculation.",
+            "In a signature such as total(values: list[int]) -> int, list[int] describes the expected input and -> int describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
+            "An assert checks a claim while you develop: it does nothing if the comparison is true and raises AssertionError if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
+          ],
+          "example": "def doubled(value: int) -> int:\n    return value * 2\n\nassert doubled(3) == 6\nassert doubled(0) == 0\nassert doubled(-2) == -4\n# All three checks pass without output."
         }
       ],
       "exercise": {
