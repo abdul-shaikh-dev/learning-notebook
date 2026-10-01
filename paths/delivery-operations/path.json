@@ -3,7 +3,7 @@
   "title": "Delivery & Operations",
   "category": "Software engineering",
   "status": "ready",
-  "description": "24 lessons bridge checked code to reviewable release, health, compatible rollout, telemetry and recovery, with a tested local service and concrete React/.NET/SQL integration runbook.",
+  "description": "Practise releasing and recovering a service across 24 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Use the existing React (react), C#/.NET (dotnet), SQL Server (sql-server) and Networking & the Web (networking-web) paths for their application/data/network boundaries.",
@@ -14,7 +14,7 @@
     "Run HTTP/storage and operational arithmetic checks on a synthetic local service.",
     "Package a non-root container and plan same-origin frontend/API/private-database topology.",
     "Review secrets, CI permissions, migration compatibility and promotion/rollback gates.",
-    "Interpret logs/metrics/SLOs and bounded workload evidence honestly.",
+    "Use logs, metrics and SLOs to explain workload results and the limits of the test.",
     "Verify independent restoration and coordinate a synthetic incident with recorded limits."
   ],
   "setup": [
@@ -116,7 +116,7 @@
         {
           "title": "Release behavior and rollback",
           "paragraphs": [
-            "A release joins code, configuration, data compatibility and an operational decision. A green build proves a particular artifact can be produced; it does not prove requests succeed in the target environment. Name one user operation, its owner and a rollback trigger before choosing automation. The course follows a small note service so every claim has an observable boundary."
+            "A build can succeed while requests fail in the deployment environment. Before automating a release, identify the user operation you will test, who owns the rollout and what result should trigger rollback. Then check the build, configuration and data compatibility together. This course uses a small note service for those checks."
           ]
         },
         {
@@ -165,7 +165,7 @@
         {
           "title": "Environment identities and data",
           "paragraphs": [
-            "An environment is a set of endpoints, identities, data and configuration. Calling a machine staging does not isolate it if its connection string reaches production. Make boundaries inspectable: loopback-only service, disposable test database and synthetic records. Promote an artifact between environments while changing only reviewed configuration, rather than rebuilding different binaries for each environment."
+            "An environment includes endpoints, identities, data and configuration. A machine named staging is not isolated if its connection string points to production. For this lab, use a loopback-only service, a disposable database and synthetic records. Promote the same tested build between environments and change its configuration separately."
           ]
         },
         {
@@ -720,7 +720,7 @@
         {
           "title": "Artifact identity and provenance",
           "paragraphs": [
-            "Rebuilding from a tag at deployment can select different dependencies than the tested build. Promote the same approved bytes, record their digest and retain the previous compatible artifact. Provenance connects the source and builder to those bytes; checksums detect changes but do not by themselves authenticate who produced them. Retention must cover the rollback window and incident investigation needs."
+            "Rebuilding from a tag during deployment can select different dependencies from the tested build. Deploy the approved bytes, record their digest and retain the previous compatible build. Provenance records which source and builder produced those bytes. A checksum detects changes but does not authenticate the builder. Keep releases for the rollback period and any required incident investigation."
           ]
         },
         {
@@ -1263,25 +1263,25 @@
     },
     {
       "id": "release-review",
-      "title": "24. Produce a release evidence packet and runbook",
-      "takeaway": "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence.",
+      "title": "24. Document release tests and recovery steps",
+      "takeaway": "A release record identifies the tested build, supported schema and configuration, access controls, rollout checks and recovery results.",
       "sections": [
         {
           "title": "Release evidence and decisions",
           "paragraphs": [
-            "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence. Keep commands and expected results close to the decision they justify. Distinguish local tests, optional Docker checks, staging integrations and planned production work. Completing this path is selected operations practice, not a claim of operating a production platform."
+            "Record the behavior users depend on and the build you tested. State which schema and configuration it supports, which access controls it needs, and which checks govern rollout or rollback. Include commands and expected results. Separate local tests from Docker, staging and production checks so another operator can see what remains untested."
           ]
         },
         {
           "title": "The service's remaining deployment work",
           "paragraphs": [
-            "Use release-workbook.md and integration-runbook.md to assemble the packet. The smallest shipped service remains learning-only and unauthenticated. Real TLS, identity providers, monitored SQL, real collectors, proxy routing and provider-specific deployment must be implemented and checked separately before exposure."
+            "Use release-workbook.md and integration-runbook.md to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
           ],
           "example": "Packet: commit/digest + tests + topology + schema plan\nCandidate: version/readiness/smoke evidence\nObserve: eligible errors/latency + release attribution\nRecover: compatible v1 + validated snapshot + incident timeline"
         }
       ],
       "exercise": {
-        "prompt": "Make one claim in the final packet falsifiable.",
+        "prompt": "Choose one release claim and specify a test result that would disprove it.",
         "solution": "Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim.",
         "checks": [
           "Tie each claim to a named executed or planned check.",
@@ -1290,7 +1290,7 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Which is the most honest release claim?",
+        "question": "Which release claim do the tests support?",
         "options": [
           "All deployment risks are solved because unit tests pass",
           "The named local behaviors passed; staging and production boundaries have separate evidence",
@@ -1323,7 +1323,7 @@
       ],
       "project": {
         "title": "Local release contract and evidence",
-        "brief": "Run the synthetic note service and create an evidence packet for a compatible change.",
+        "brief": "Run the synthetic note service, make a compatible change and record the test results.",
         "requirements": [
           "Run the local checks and capture actual results.",
           "Write the user invariant and environment/data boundaries.",
@@ -1417,43 +1417,43 @@
   ],
   "downloads": [
     {
-      "title": "release_app.py — local reference or guided exercise",
+      "title": "release_app.py. Local reference or exercise",
       "href": "paths/delivery-operations/practice/release_app.py"
     },
     {
-      "title": "test_release_app.py — local reference or guided exercise",
+      "title": "test_release_app.py. Local reference or exercise",
       "href": "paths/delivery-operations/practice/test_release_app.py"
     },
     {
-      "title": "release_tools.py — local reference or guided exercise",
+      "title": "release_tools.py. Local reference or exercise",
       "href": "paths/delivery-operations/practice/release_tools.py"
     },
     {
-      "title": "test_release_tools.py — local reference or guided exercise",
+      "title": "test_release_tools.py. Local reference or exercise",
       "href": "paths/delivery-operations/practice/test_release_tools.py"
     },
     {
-      "title": "Dockerfile — local reference or guided exercise",
+      "title": "Dockerfile. Local reference or exercise",
       "href": "paths/delivery-operations/practice/Dockerfile"
     },
     {
-      "title": ".dockerignore — local reference or guided exercise",
+      "title": ".dockerignore. Local reference or exercise",
       "href": "paths/delivery-operations/practice/.dockerignore"
     },
     {
-      "title": "README.md — local reference or guided exercise",
+      "title": "README.md. Local reference or exercise",
       "href": "paths/delivery-operations/practice/README.md"
     },
     {
-      "title": "ci-example.yaml — local reference or guided exercise",
+      "title": "ci-example.yaml. Local reference or exercise",
       "href": "paths/delivery-operations/practice/ci-example.yaml"
     },
     {
-      "title": "integration-runbook.md — local reference or guided exercise",
+      "title": "integration-runbook.md. Local reference or exercise",
       "href": "paths/delivery-operations/practice/integration-runbook.md"
     },
     {
-      "title": "release-workbook.md — local reference or guided exercise",
+      "title": "release-workbook.md. Local reference or exercise",
       "href": "paths/delivery-operations/practice/release-workbook.md"
     }
   ]

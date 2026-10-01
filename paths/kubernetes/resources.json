@@ -193,12 +193,12 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results."
+        "Build the stage project and test your changes."
       ]
     },
     {
       "id": "intermediate",
-      "title": "Controlled failure and access packet",
+      "title": "Failure and access test results",
       "goal": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
       "fileIds": [
         "release_app-py",
@@ -263,14 +263,14 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results.",
+        "Build the stage project and test your changes.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
       "id": "advanced",
       "title": "Selected operational cluster review",
-      "goal": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+      "goal": "Collect the results of the optional storage, Job and metrics exercises. Explain how you would use Helm, GitOps and backups for this workload.",
       "fileIds": [
         "release_app-py",
         "test_release_app-py",
@@ -336,7 +336,7 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results.",
+        "Build the stage project and test your changes.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }

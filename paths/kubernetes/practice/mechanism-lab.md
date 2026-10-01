@@ -1,7 +1,6 @@
 # Optional mechanism lab
 
-This extends the existing course exercise. Read the worked lesson first; run this
-only when you want to inspect the actual mechanism. No extra form is required.
+Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
 Requirements: Python 3.11+, kubectl, and the existing disposable kind-notebook-lab from README.md with two Ready release-demo Pods.
 
@@ -13,9 +12,8 @@ python readiness_drill.py
 
 Expected: PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script.
 
-Read `readiness_drill.py` to follow the assertion sequence. An assertion failure is evidence
-to investigate, not a prompt to weaken the expected outcome. Use the changed case
-in the linked lesson to explain why the outcome follows.
+Read `readiness_drill.py` to follow the checks. If one fails, inspect the Pod and
+EndpointSlice state before changing the code. Then try the changed case in the lesson.
 
 ## Cleanup and scope
 

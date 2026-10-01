@@ -84,7 +84,7 @@
         "Explain refresh versus process restart."
       ],
       "project": {
-        "title": "Build one vertical slice — study planner",
+        "title": "Build one study planner feature across the stack",
         "brief": "Create an accessible form, HTTP contract and complete memory-backed feature.",
         "requirements": [
           "Demonstrate a valid add and completion through React and .NET.",
@@ -111,7 +111,7 @@
         "Specify atomic idempotent creation and ownership boundaries."
       ],
       "project": {
-        "title": "Persist and resolve conflicts — study planner",
+        "title": "Persist study planner data and resolve conflicts",
         "brief": "Use SQL Server, atomic expected-version updates and a tested retry design.",
         "requirements": [
           "Show persisted IDs after API restart.",
@@ -134,21 +134,21 @@
       "description": "Assemble tests, diagnostics, a release plan and recovery evidence.",
       "exitCriteria": [
         "Separate browser, HTTP and SQL evidence.",
-        "Explain authentication and deployment extensions honestly.",
+        "Explain which authentication and deployment features still need implementation and testing.",
         "Defend a recovery plan with measured results where executed."
       ],
       "project": {
-        "title": "Verify, operate and defend — study planner",
+        "title": "Test, release and recover the study planner",
         "brief": "Assemble tests, diagnostics, a release plan and recovery evidence.",
         "requirements": [
           "Separate browser, HTTP and SQL evidence.",
-          "Explain authentication and deployment extensions honestly.",
+          "Explain which authentication and deployment features still need implementation and testing.",
           "Defend a recovery plan with measured results where executed.",
           "Use the milestone workbook and record the observed result before comparing the reference."
         ],
         "rubric": [
           "Separate browser, HTTP and SQL evidence.",
-          "Explain authentication and deployment extensions honestly.",
+          "Explain which authentication and deployment features still need implementation and testing.",
           "Defend a recovery plan with measured results where executed.",
           "Explain each remaining boundary and identify the exact task files."
         ],
@@ -399,7 +399,7 @@
     },
     {
       "id": "ui-state",
-      "title": "6. Build an accessible form and honest states",
+      "title": "6. Build an accessible form with clear request states",
       "stage": "foundation",
       "takeaway": "A retained draft lets a learner recover from failure.",
       "sections": [
@@ -502,7 +502,7 @@
         {
           "title": "Unknown data and decoding",
           "paragraphs": [
-            "request returns unknown. decodeTask checks a GUID-shaped ID, title, integer minutes, boolean done and positive integer version before producing a StudyTask. A list additionally checks duplicate IDs because React keys and update targeting assume identity is unique."
+            "request returns unknown. decodeTask checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a StudyTask. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
           ]
         },
         {
@@ -652,7 +652,7 @@
         {
           "title": "Sort keys and authorization",
           "paragraphs": [
-            "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user’s records."
+            "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user's records."
           ]
         }
       ],
@@ -706,8 +706,8 @@
         {
           "title": "Preserve the draft after a stale update",
           "paragraphs": [
-            "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A’s row. The UI should keep B’s unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
-            "Run two independent clients against the local reference with the same initial version. Confirm only one update succeeds, then fetch the stored row through a third request. For the UI case, keep a draft before injecting a 409. The acceptance condition is not just an error message: the draft survives and the persisted winner remains unchanged.",
+            "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A's row. The UI should keep B's unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
+            "Run two independent clients against the local reference with the same initial version. Check that only one update succeeds, then read the stored row through a third request. In the UI, enter a draft before injecting a 409. Check that the draft survives, the error appears and the stored winning update remains unchanged.",
             "Extend planner-ui.test.tsx with controllable responses: first load version 4, return conflict on save, then offer version 5 on explicit refresh. A changed case edits different fields; explain why automatic merging still needs a stated field-level policy."
           ]
         }
@@ -811,7 +811,7 @@
           "title": "Recover an unknown create without guessing",
           "paragraphs": [
             "The server commits a new session, but its response is lost. The UI sees a timeout. A second POST with a new identity can create two sessions. A disabled button only prevents a second click while the page remains alive; it does not identify the operation after a reload.",
-            "An extension can persist one client operation key for one intended create, send it on retries, and bind the server’s receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
+            "An extension can persist one client operation key for one intended create, send it on retries, and bind the server's receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
             "Reproduce the ambiguity with a proxy or test adapter that allows the first server commit but drops only its response. Query the database independently. Implement receipt replay, then repeat the fault: there should be one session and the same returned identity. Do not mark this complete merely because a mocked fetch was called once."
           ]
         }
@@ -870,7 +870,7 @@
           "User B cannot update user A's task: the request is denied and A's row and version remain unchanged.",
           "User B's list excludes A's task, and requests with missing or expired credentials are denied."
         ],
-        "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
+        "solution": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -881,7 +881,7 @@
           "Yes; GUIDs are hard to guess."
         ],
         "correct": 0,
-        "explanation": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+        "explanation": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
       },
       "references": [
         {

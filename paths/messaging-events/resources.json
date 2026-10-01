@@ -42,7 +42,7 @@
     {
       "id": "foundation",
       "title": "Message contract map",
-      "goal": "Design the notebook export workflow and identify its honest status transitions.",
+      "goal": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
       "fileIds": [
         "event_lab-py",
         "test_event_lab-py",

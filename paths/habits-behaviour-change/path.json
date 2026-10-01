@@ -3,7 +3,7 @@
   "title": "Habits & Behaviour Change",
   "category": "Personal development",
   "status": "ready",
-  "description": "Design realistic everyday routines using context, small actions and honest observations.",
+  "description": "Design everyday routines around available time and materials, then check whether they help.",
   "level": "Foundations → everyday experiments → adaptation and review",
   "prerequisites": [
     "No specialist knowledge required.",
@@ -12,7 +12,7 @@
   "outcomes": [
     "A factual baseline and a feasible target",
     "A small routine experiment",
-    "An evidence-based maintenance decision"
+    "Decide whether to keep or change a routine"
   ],
   "setup": [
     "Download and extract the practice bundle; every worksheet is flat in habits-behaviour-change-practice.",
@@ -83,95 +83,95 @@
       "href": "paths/habits-behaviour-change/practice/sources-and-limits.md"
     },
     {
-      "title": "Describe actions without judging identity worksheet and worked case",
+      "title": "Describe actions without judging identity: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/01-behaviour-not-identity.md"
     },
     {
-      "title": "Separate an outcome from its next action worksheet and worked case",
+      "title": "Separate an outcome from its next action: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/02-goals-and-actions.md"
     },
     {
-      "title": "Observe a baseline before redesigning worksheet and worked case",
+      "title": "Observe a baseline before redesigning: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/03-baseline-observation.md"
     },
     {
-      "title": "Map the cue and surrounding context worksheet and worked case",
+      "title": "Map the cue and surrounding context: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/04-cue-map.md"
     },
     {
-      "title": "Distinguish repetition from automaticity worksheet and worked case",
+      "title": "Distinguish repetition from automaticity: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/05-habit-or-routine.md"
     },
     {
-      "title": "Choose a version that fits a real opportunity worksheet and worked case",
+      "title": "Choose a version that fits a real opportunity: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/06-small-start.md"
     },
     {
-      "title": "Reject fixed habit deadlines worksheet and worked case",
+      "title": "Reject fixed habit deadlines: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/07-time-variation.md"
     },
     {
-      "title": "Turn an intention into a situation/action plan worksheet and worked case",
+      "title": "Turn an intention into a situation/action plan: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/08-if-then.md"
     },
     {
-      "title": "Change the effort around the action worksheet and worked case",
+      "title": "Change the effort around the action: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/09-friction.md"
     },
     {
-      "title": "Use reminders as useful signals worksheet and worked case",
+      "title": "Use reminders as useful signals: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/10-prompt-design.md"
     },
     {
-      "title": "Offer an alternative that serves the same immediate need worksheet and worked case",
+      "title": "Offer an alternative that serves the same immediate need: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/11-replacement.md"
     },
     {
-      "title": "Prepare for a likely obstacle worksheet and worked case",
+      "title": "Prepare for a likely obstacle: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/12-obstacle-plan.md"
     },
     {
-      "title": "Measure opportunities, completion and ease separately worksheet and worked case",
+      "title": "Measure opportunities, completion and ease separately: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/13-measurement.md"
     },
     {
-      "title": "Notice immediate usefulness without inventing brain claims worksheet and worked case",
+      "title": "Notice immediate usefulness without inventing brain claims: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/14-feedback-reward.md"
     },
     {
-      "title": "Respond to a missed action with information worksheet and worked case",
+      "title": "Respond to a missed action with information: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/15-missed-opportunity.md"
     },
     {
-      "title": "Change one practical element at a time worksheet and worked case",
+      "title": "Change one practical element at a time: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/16-one-change-test.md"
     },
     {
-      "title": "Rebuild the plan when the environment changes worksheet and worked case",
+      "title": "Rebuild the plan when the environment changes: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/17-changed-context.md"
     },
     {
-      "title": "Ask for support without handing over control worksheet and worked case",
+      "title": "Ask for support without handing over control: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/18-support-consent.md"
     },
     {
-      "title": "Decide whether to keep, change or retire a routine worksheet and worked case",
+      "title": "Decide whether to keep, change or retire a routine: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/19-maintain-or-retire.md"
     },
     {
-      "title": "Make an honest maintenance plan worksheet and worked case",
+      "title": "Keeping or changing a routine: worksheet and worked case",
       "href": "paths/habits-behaviour-change/practice/20-evidence-review.md"
     },
     {
-      "title": "A factual baseline and a feasible target project sheet",
+      "title": "A factual baseline and a feasible target: project sheet",
       "href": "paths/habits-behaviour-change/practice/foundation-project.md"
     },
     {
-      "title": "A small routine experiment project sheet",
+      "title": "A small routine experiment: project sheet",
       "href": "paths/habits-behaviour-change/practice/intermediate-project.md"
     },
     {
-      "title": "An evidence-based maintenance decision project sheet",
+      "title": "Keeping or changing a routine: project sheet",
       "href": "paths/habits-behaviour-change/practice/advanced-project.md"
     },
     {
@@ -194,7 +194,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation — observe and define",
+      "title": "Observe and define",
       "description": "A factual baseline and a feasible target",
       "exitCriteria": [
         "State a useful outcome and a controllable action.",
@@ -222,7 +222,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate — practise and compare",
+      "title": "Practise and compare",
       "description": "A small routine experiment",
       "exitCriteria": [
         "Write a cue/action plan and an obstacle branch.",
@@ -250,8 +250,8 @@
     },
     {
       "id": "advanced",
-      "title": "Applied transfer — adapt and review",
-      "description": "An evidence-based maintenance decision",
+      "title": "Adapt and review",
+      "description": "Decide whether to keep or change a routine",
       "exitCriteria": [
         "Compare benefit, effort and context fit.",
         "State what was observed and what cannot be inferred.",
@@ -259,7 +259,7 @@
         "Record known facts and uncertainty separately, using the relevant stage measures."
       ],
       "project": {
-        "title": "An evidence-based maintenance decision",
+        "title": "Decide whether to keep or change a routine",
         "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
         "requirements": [
           "Compare benefit, effort and context fit.",
@@ -306,7 +306,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Rewrite Mira’s label as an observable action and choose one low-cost target.",
+        "prompt": "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Rewrite Mira's label as an observable action and choose one low-cost target.",
         "solution": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
         "solutionFormat": "prose",
         "checks": [
@@ -380,7 +380,7 @@
           "Calmness itself is a specific repeated action"
         ],
         "correct": 0,
-        "explanation": "Packing may reduce searching, while bus delays remain outside the action’s control. Performing the action does not guarantee a calm morning."
+        "explanation": "Packing may reduce searching, while bus delays remain outside the action's control. Performing the action does not guarantee a calm morning."
       },
       "references": [
         {
@@ -567,13 +567,13 @@
     {
       "id": "small-start",
       "title": "6. Choose a version that fits a real opportunity",
-      "takeaway": "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose.",
+      "takeaway": "Choose a small first action that contributes to the goal.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
+            "Choose a small first action that contributes to the goal. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
           ]
         },
         {
@@ -636,7 +636,7 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study’s fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
+            "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study's fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
           ]
         },
         {
@@ -649,7 +649,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Dev reaches day 21 of placing his notebook out and still needs to think about it. Write a fair interpretation of Dev’s experience and a next check.",
+        "prompt": "Dev reaches day 21 of placing his notebook out and still needs to think about it. Write a fair interpretation of Dev's experience and a next check.",
         "solution": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
         "solutionFormat": "prose",
         "checks": [
@@ -718,12 +718,12 @@
       "quiz": {
         "question": "Which is an implementation intention?",
         "options": [
-          "If Tuesday’s session ends, then file its handouts",
+          "If Tuesday's session ends, then file its handouts",
           "I really intend to be organised",
           "I will succeed if I care enough"
         ],
         "correct": 0,
-        "explanation": "The plan links an identifiable situation—Tuesday’s session ending—to an immediately possible action: filing its handouts."
+        "explanation": "The end of Tuesday's session is the cue to file its handouts. The action can happen as soon as that cue occurs."
       },
       "references": [
         {
@@ -744,7 +744,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people’s needs."
+            "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people's needs."
           ]
         },
         {
@@ -813,14 +813,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Owen’s reminder to return library books appears while he is already travelling away from home."
+            "Owen's reminder to return library books appears while he is already travelling away from home."
           ],
           "example": "Owen moves the reminder to the previous evening and labels it “put library books beside tomorrow’s bag”. He notes whether he saw it, could reach the books and packed them. A noticed alert without access to the books is not an actionable opportunity.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Redesign the prompt and define what to observe.",
+        "prompt": "Tess's filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Redesign the prompt and define what to observe.",
         "solution": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
         "solutionFormat": "prose",
         "checks": [
@@ -864,7 +864,7 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative’s immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
+            "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative's immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
           ]
         },
         {
@@ -881,7 +881,7 @@
         "solution": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
         "solutionFormat": "prose",
         "checks": [
-          "The original action’s immediate function is named.",
+          "The original action's immediate function is named.",
           "The replacement fits the break duration.",
           "The worked response is used for comparison, with any justified alternative explained."
         ]
@@ -927,14 +927,14 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Diego normally checks tomorrow’s appointments on his home computer, but sometimes spends the night away."
+            "Diego normally checks tomorrow's appointments on his home computer, but sometimes spends the night away."
           ],
           "example": "Normal: after dinner, check the calendar on the computer and note the first appointment. Away: after the evening meal, check the same calendar on the phone. Without access, record the missing opportunity and check when access returns; do not invent a completed review.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Aisha’s normal note-review cue disappears on days she works at a different desk. Write a normal plan and a travel-day branch.",
+        "prompt": "Aisha's normal note-review cue disappears on days she works at a different desk. Write a normal plan and a travel-day branch.",
         "solution": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
         "solutionFormat": "prose",
         "checks": [
@@ -972,7 +972,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Add an outcome measure only if it is meaningful and cheap to collect. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
+            "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Measure an outcome only if it helps you decide what to change and takes little effort to record. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
           ]
         },
         {
@@ -1008,7 +1008,7 @@
           "The probability of success for everyone"
         ],
         "correct": 0,
-        "explanation": "The rate describes completion among recorded available opportunities. It does not measure permanent automaticity or predict everyone’s success."
+        "explanation": "The rate describes completion among recorded available opportunities. It does not measure permanent automaticity or predict everyone's success."
       },
       "references": [
         {
@@ -1029,7 +1029,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action’s own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
+            "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action's own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
           ]
         },
         {
@@ -1041,7 +1041,7 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Leo puts tomorrow’s cooking utensils on a tray after washing up and finds breakfast setup easier."
+            "Leo puts tomorrow's cooking utensils on a tray after washing up and finds breakfast setup easier."
           ],
           "example": "Immediate result: the required utensils are visible together. Longer-term outcome: less searching during breakfast preparation. Leo samples setup time on several mornings and checks whether the tray adds clutter before deciding to keep it.",
           "exampleFormat": "prose"
@@ -1086,7 +1086,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally’s study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
+            "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally's study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
           ]
         },
         {
@@ -1271,7 +1271,7 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Nico wants a friend’s help maintaining a receipt routine, but does not want purchases inspected."
+            "Nico wants a friend's help maintaining a receipt routine, but does not want purchases inspected."
           ],
           "example": "Nico asks: “Could we have one check-in next Saturday about whether the receipt pocket is useful? I will share the result, not the receipts. Either of us can stop the check-in.” The friend agrees to that limited role; additional monitoring needs a new agreement.",
           "exampleFormat": "prose"
@@ -1282,7 +1282,7 @@
         "solution": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
         "solutionFormat": "prose",
         "checks": [
-          "The helper’s role and frequency are agreed.",
+          "The helper's role and frequency are agreed.",
           "Either person can stop the arrangement.",
           "The worked response is used for comparison, with any justified alternative explained."
         ]
@@ -1347,7 +1347,7 @@
       "quiz": {
         "question": "When is retirement sensible?",
         "options": [
-          "When the routine’s benefit no longer justifies its cost",
+          "When the routine's benefit no longer justifies its cost",
           "Never, because a streak must be preserved",
           "Whenever one action is missed"
         ],
@@ -1366,33 +1366,33 @@
     },
     {
       "id": "evidence-review",
-      "title": "20. Make an honest maintenance plan",
-      "takeaway": "A final review joins the target, observations, changes and limits into a reusable plan.",
+      "title": "20. Make a plan for keeping or changing the routine",
+      "takeaway": "Use the review to decide what to keep, what to change and when to check again.",
       "stage": "advanced",
       "sections": [
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A final review joins the target, observations, changes and limits into a reusable plan. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
+            "Use the review to decide what to keep, what to change and when to check again. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
           ]
         },
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "A reusable plan names the evidence that would trigger revision: an absent cue, rising setup cost or a changed goal. Review dates prevent indefinite tracking without a decision. Keep uncertainty visible while committing to a modest next action. The quality of the review rests on accurate records and a feasible adjustment, not an impressive transformation claim."
+            "Name the conditions that would make you revise the plan, such as a missing cue, more setup work or a changed goal. Review dates prevent indefinite tracking without a decision. Say what you do not yet know, then choose the next action. Base the adjustment on what you observed. Do not claim a lasting change from a short trial."
           ]
         },
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Jon’s ten-day desk-clearance log shows quicker morning setup, but his workload also became lighter."
+            "Jon's ten-day desk-clearance log shows quicker morning setup, but his workload also became lighter."
           ],
           "example": "Jon keeps the small clearance action, adds a fallback for late finishes and reviews after another fortnight. He reports the quicker setup and the changed workload together. A busier comparison may clarify usefulness; the current log does not isolate the routine as the cause.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
+        "prompt": "Wen's two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
         "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
         "solutionFormat": "prose",
         "checks": [
@@ -1402,14 +1402,14 @@
         ]
       },
       "quiz": {
-        "question": "Which review is most honest?",
+        "question": "Which review stays within what the observations show?",
         "options": [
           "Describe observations, alternate explanations and the next decision",
           "Claim a permanent habit from two weeks",
           "Hide missed and unavailable opportunities"
         ],
         "correct": 0,
-        "explanation": "Observed results, alternate explanations and a next decision make the plan reusable. A short log cannot establish permanent change."
+        "explanation": "Use the results and possible alternative explanations to decide what to try next. A short log cannot establish permanent change."
       },
       "references": [
         {

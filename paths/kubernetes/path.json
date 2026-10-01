@@ -132,7 +132,7 @@
         {
           "title": "Workloads and controllers",
           "paragraphs": [
-            "Kubernetes coordinates container workloads through declarative API objects and controllers. It schedules instances, replaces failed Pods and exposes services, but it does not make application transactions correct or produce backups automatically. Begin with a working container from Delivery & Operations and distinguish application failure from scheduler/control-plane failure. The supplied image runs a small Python/SQLite lab, not the React/.NET/SQL stack."
+            "Kubernetes uses API objects and controllers to schedule containers, replace failed Pods and route service traffic. Applications still need correct transactions and backups. Start with the working container from Delivery & Operations, then distinguish application failures from scheduler or control-plane failures. The supplied image runs the Python/SQLite lab. It does not run the React/.NET/SQL stack."
           ]
         },
         {
@@ -475,7 +475,7 @@
         {
           "title": "Configuration delivery",
           "paragraphs": [
-            "A ConfigMap carries non-confidential configuration separately from container bytes. The kit injects RELEASE_VERSION through envFrom; this teaches the boundary but the value is only a label, not artifact identity. Values supplied as environment variables are captured at container start. Updating the ConfigMap does not automatically rewrite the environment of an already running process."
+            "A ConfigMap stores non-confidential configuration outside the container image. The kit injects RELEASE_VERSION through envFrom. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
           ]
         },
         {
@@ -659,7 +659,7 @@
           "100MiB memory"
         ],
         "correct": 1,
-        "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application’s measured CPU use."
+        "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application's measured CPU use."
       },
       "references": [
         {
@@ -1198,7 +1198,7 @@
           "The database password in a public commit"
         ],
         "correct": 1,
-        "explanation": "A durable rollback changes the reviewed desired state in the controller’s source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
+        "explanation": "A durable rollback changes the reviewed desired state in the controller's source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
       },
       "references": [
         {
@@ -1358,7 +1358,7 @@
         "Verify allowed/denied rules with enforcement prerequisites."
       ],
       "project": {
-        "title": "Controlled failure and access packet",
+        "title": "Failure and access test results",
         "brief": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
         "requirements": [
           "Explain and observe the synthetic readiness gate where a cluster exists.",
@@ -1388,11 +1388,11 @@
       ],
       "project": {
         "title": "Selected operational cluster review",
-        "brief": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+        "brief": "Collect the results of the optional storage, Job and metrics exercises. Explain how you would use Helm, GitOps and backups for this workload.",
         "requirements": [
           "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
           "Run bounded Job and capture completion/logs before TTL if opted in.",
-          "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+          "Check the HPA metrics, resource requests and scaling range of two to four replicas. Identify any required metrics that are unavailable.",
           "Explain voluntary eviction versus node outage and rollout constraints.",
           "Render a learner-generated Helm chart and compare to known workload contracts.",
           "Draw GitOps drift/revert timeline without installing a controller.",
@@ -1434,71 +1434,71 @@
   ],
   "downloads": [
     {
-      "title": "release_app.py — local reference or guided exercise",
+      "title": "release_app.py. Local reference or exercise",
       "href": "paths/kubernetes/practice/release_app.py"
     },
     {
-      "title": "test_release_app.py — local reference or guided exercise",
+      "title": "test_release_app.py. Local reference or exercise",
       "href": "paths/kubernetes/practice/test_release_app.py"
     },
     {
-      "title": "Dockerfile — local reference or guided exercise",
+      "title": "Dockerfile. Local reference or exercise",
       "href": "paths/kubernetes/practice/Dockerfile"
     },
     {
-      "title": ".dockerignore — local reference or guided exercise",
+      "title": ".dockerignore. Local reference or exercise",
       "href": "paths/kubernetes/practice/.dockerignore"
     },
     {
-      "title": "README.md — local reference or guided exercise",
+      "title": "README.md. Local reference or exercise",
       "href": "paths/kubernetes/practice/README.md"
     },
     {
-      "title": "cluster-workbook.md — local reference or guided exercise",
+      "title": "cluster-workbook.md. Local reference or exercise",
       "href": "paths/kubernetes/practice/cluster-workbook.md"
     },
     {
-      "title": "check_manifests.py — local reference or guided exercise",
+      "title": "check_manifests.py. Local reference or exercise",
       "href": "paths/kubernetes/practice/check_manifests.py"
     },
     {
-      "title": "lab.ps1 — local reference or guided exercise",
+      "title": "lab.ps1. Local reference or exercise",
       "href": "paths/kubernetes/practice/lab.ps1"
     },
     {
-      "title": "namespace.json — local reference or guided exercise",
+      "title": "namespace.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/namespace.json"
     },
     {
-      "title": "workload.json — local reference or guided exercise",
+      "title": "workload.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/workload.json"
     },
     {
-      "title": "network-policy.json — local reference or guided exercise",
+      "title": "network-policy.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/network-policy.json"
     },
     {
-      "title": "rbac.json — local reference or guided exercise",
+      "title": "rbac.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/rbac.json"
     },
     {
-      "title": "demo-secret.json — local reference or guided exercise",
+      "title": "demo-secret.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/demo-secret.json"
     },
     {
-      "title": "hpa.json — local reference or guided exercise",
+      "title": "hpa.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/hpa.json"
     },
     {
-      "title": "disruption-budget.json — local reference or guided exercise",
+      "title": "disruption-budget.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/disruption-budget.json"
     },
     {
-      "title": "job.json — local reference or guided exercise",
+      "title": "job.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/job.json"
     },
     {
-      "title": "storage.json — local reference or guided exercise",
+      "title": "storage.json. Local reference or exercise",
       "href": "paths/kubernetes/practice/storage.json"
     },
     {

@@ -151,7 +151,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation — interpretable signals",
+      "title": "Foundation. Interpretable signals",
       "description": "Define boundaries and distinguish events, aggregates and related work.",
       "exitCriteria": [
         "Every metric has a population and unit.",
@@ -180,7 +180,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate — objectives and experiments",
+      "title": "Intermediate. Objectives and experiments",
       "description": "Connect signals to reliability objectives and controlled comparisons.",
       "exitCriteria": [
         "Commands and environment are recorded.",
@@ -210,7 +210,7 @@
     },
     {
       "id": "advanced",
-      "title": "Applied extension — diagnosis and operating evidence",
+      "title": "Applied extension. Diagnosis and operational test results",
       "description": "Investigate bottlenecks, memory, load models and telemetry failure boundaries.",
       "exitCriteria": [
         "One change is justified by measured evidence.",
@@ -279,7 +279,7 @@
           "An unlabeled screenshot of a dashboard."
         ],
         "correct": 0,
-        "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement. The other choices miss the decision or assumption described above."
+        "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
       },
       "references": [
         {
@@ -330,7 +330,7 @@
           "Two unsynchronised host timestamps."
         ],
         "correct": 0,
-        "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added. The other choices miss the decision or assumption described above."
+        "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added."
       },
       "references": [
         {
@@ -381,7 +381,7 @@
           "Every raw user field copied into the message."
         ],
         "correct": 0,
-        "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling. The other choices miss the decision or assumption described above."
+        "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling."
       },
       "references": [
         {
@@ -432,7 +432,7 @@
           "A log containing the last queue item only."
         ],
         "correct": 0,
-        "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios. The other choices miss the decision or assumption described above."
+        "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios."
       },
       "references": [
         {
@@ -483,7 +483,7 @@
           "By taking the smallest host median."
         ],
         "correct": 0,
-        "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator. The other choices miss the decision or assumption described above."
+        "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
       },
       "references": [
         {
@@ -534,7 +534,7 @@
           "A count of documentation pages."
         ],
         "correct": 0,
-        "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt. The other choices miss the decision or assumption described above."
+        "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
       },
       "references": [
         {
@@ -555,7 +555,7 @@
         {
           "title": "Span relationships and overlap",
           "paragraphs": [
-            "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent’s elapsed time; adding parent and child durations double-counts.",
+            "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent's elapsed time; adding parent and child durations double-counts.",
             "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
           ],
           "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
@@ -563,7 +563,7 @@
         {
           "title": "Missing work and sampled traces",
           "paragraphs": [
-            "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
+            "A trace may omit queued work, retries or spans excluded by sampling. Check where instrumentation starts and stops, then use logs and aggregate metrics to investigate the gaps."
           ]
         },
         {
@@ -593,7 +593,7 @@
           "Traces contain only counter values."
         ],
         "correct": 0,
-        "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it. The other choices miss the decision or assumption described above."
+        "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it."
       },
       "references": [
         {
@@ -629,7 +629,7 @@
         {
           "title": "Concurrent request ownership",
           "paragraphs": [
-            "Global mutable current_trace_id leaks one request’s identity into another under concurrency. Use the runtime or SDK’s context model and test concurrent requests."
+            "Global mutable current_trace_id leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
           ]
         }
       ],
@@ -647,11 +647,11 @@
         "question": "What does a trace ID establish?",
         "options": [
           "Correlation between recorded work.",
-          "The caller’s permission to read records.",
+          "The caller's permission to read records.",
           "The authenticity of every HTTP header."
         ],
         "correct": 0,
-        "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks. The other choices miss the decision or assumption described above."
+        "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks."
       },
       "references": [
         {
@@ -702,7 +702,7 @@
           "Only if the hash is printed in hexadecimal."
         ],
         "correct": 0,
-        "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted. The other choices miss the decision or assumption described above."
+        "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
       },
       "references": [
         {
@@ -753,7 +753,7 @@
           "It guarantees that every request is successful."
         ],
         "correct": 0,
-        "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations. The other choices miss the decision or assumption described above."
+        "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations."
       },
       "references": [
         {
@@ -804,7 +804,7 @@
           "5%."
         ],
         "correct": 0,
-        "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee. The other choices miss the decision or assumption described above."
+        "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee."
       },
       "references": [
         {
@@ -855,7 +855,7 @@
           "400 requests per second."
         ],
         "correct": 0,
-        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified. The other choices miss the decision or assumption described above."
+        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
       },
       "references": [
         {
@@ -906,7 +906,7 @@
           "That all clients received responses."
         ],
         "correct": 0,
-        "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened. The other choices miss the decision or assumption described above."
+        "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened."
       },
       "references": [
         {
@@ -957,7 +957,7 @@
           "Only the best run from one implementation."
         ],
         "correct": 0,
-        "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case. The other choices miss the decision or assumption described above."
+        "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case."
       },
       "references": [
         {
@@ -978,7 +978,7 @@
         {
           "title": "CPU time versus waiting",
           "paragraphs": [
-            "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool’s overhead.",
+            "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool's overhead.",
             "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than an individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
           ],
           "example": "python -m cProfile -s cumulative benchmark.py\nInspect total vs cumulative attribution and call counts.\nDo not add cumulative times of parents and children."
@@ -992,7 +992,7 @@
         {
           "title": "Separate a waiting request from CPU saturation",
           "paragraphs": [
-            "In the concurrent span drill, process CPU time excludes the time threads spend sleeping, while parent wall time includes it. A large wall/CPU gap is consistent with waiting in this controlled workload. In a real service it does not identify which dependency is slow; inspect spans and queue/connection-pool evidence. Under concurrency process_time includes CPU used by all threads in the process, so it cannot be assigned to one request without further instrumentation.",
+            "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. process_time counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
             "Now profile a compute-bound lookup batch from benchmark.py. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
           ],
           "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
@@ -1016,7 +1016,7 @@
           "Because the slowest single call is always the best target."
         ],
         "correct": 0,
-        "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately. The other choices miss the decision or assumption described above."
+        "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately."
       },
       "references": [
         {
@@ -1045,7 +1045,7 @@
           "title": "Allocation and retained objects",
           "paragraphs": [
             "A program may allocate many temporary objects without leaking them. A leak-like problem occurs when objects remain reachable beyond their intended lifetime, or external resources are not released. Compare snapshots across a controlled workload and inspect retained references rather than assuming every peak increase is a leak.",
-            "Python tracemalloc tracks allocations in Python’s managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
+            "Python tracemalloc tracks allocations in Python's managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
           ],
           "example": "tracemalloc.start()\nbefore = tracemalloc.take_snapshot()\n# execute controlled workload\nafter = tracemalloc.take_snapshot()\n# compare by source location; explain tracked-domain limits"
         },
@@ -1058,7 +1058,7 @@
       ],
       "exercise": {
         "prompt": "Design a repeated import memory experiment with and without retaining processed rows. Specify the limitations of tracemalloc.",
-        "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage.",
+        "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage.",
         "solutionFormat": "prose",
         "checks": [
           "Retained and temporary memory are distinguished.",
@@ -1074,7 +1074,7 @@
           "Only when output is formatted as JSON."
         ],
         "correct": 0,
-        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage. The other choices miss the decision or assumption described above."
+        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage."
       },
       "references": [
         {
@@ -1095,7 +1095,7 @@
         {
           "title": "Offered rate and coordinated omission",
           "paragraphs": [
-            "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator’s capacity. Neither is automatically representative; choose according to the real workload.",
+            "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator's capacity. Neither is automatically representative; choose according to the real workload.",
             "Coordinated omission occurs when delays suppress observations that would have arrived during the delay. Record offered and achieved rate, concurrency, client errors and latency. Do not run uncontrolled tests against systems you do not own or have permission to test. The supplied lab targets loopback only and has bounded counts and timeouts."
           ],
           "example": "Closed loop: 4 workers wait for each response before sending next\nReport: completed count / elapsed seconds, errors, percentile estimator\nThis is not a constant-arrival-rate production capacity test."
@@ -1125,7 +1125,7 @@
           "It automatically proves infinite capacity."
         ],
         "correct": 0,
-        "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity. The other choices miss the decision or assumption described above."
+        "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
       },
       "references": [
         {
@@ -1154,7 +1154,7 @@
           "title": "Queue growth and Little's law",
           "paragraphs": [
             "A queue absorbs temporary bursts but also creates waiting time and memory pressure. If arrival rate exceeds completion capacity for long enough, backlog grows until a limit is reached. Bound queues, reject or defer work deliberately, and expose queue depth, age and waiting time rather than only worker CPU.",
-            "Little’s law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
+            "Little's law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
           ],
           "example": "Stable average arrival 20 jobs/s × average time in system 0.5 s = 10 jobs in system\nIf service falls below arrivals persistently, do not treat this stable relation as a capacity guarantee."
         },
@@ -1183,7 +1183,7 @@
           "Automatic improvement from more client retries."
         ],
         "correct": 0,
-        "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time. The other choices miss the decision or assumption described above."
+        "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time."
       },
       "references": [
         {
@@ -1244,11 +1244,11 @@
         "question": "What should guide the first optimisation?",
         "options": [
           "The measured bottleneck in the actual user journey.",
-          "The team’s favourite subsystem.",
+          "The team's favourite subsystem.",
           "The shortest function in the codebase."
         ],
         "correct": 0,
-        "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering. The other choices miss the decision or assumption described above."
+        "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering."
       },
       "references": [
         {
@@ -1299,7 +1299,7 @@
           "It always blames the most recent author."
         ],
         "correct": 0,
-        "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly. The other choices miss the decision or assumption described above."
+        "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."
       },
       "references": [
         {
@@ -1350,7 +1350,7 @@
           "Every real alert reaches an on-call engineer."
         ],
         "correct": 0,
-        "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan. The other choices miss the decision or assumption described above."
+        "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan."
       },
       "references": [
         {

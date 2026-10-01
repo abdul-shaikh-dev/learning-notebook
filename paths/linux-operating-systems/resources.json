@@ -78,7 +78,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library only.",
-        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+        "These tests cover the local reference. Add checks for your changes and target environment."
       ]
     },
     {
@@ -128,7 +128,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library only.",
-        "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+        "These tests cover the local reference. Add checks for your changes and target environment.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
@@ -180,7 +180,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library only.",
-        "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+        "These tests cover the local reference. Add checks for your changes and target environment.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }

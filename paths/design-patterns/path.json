@@ -3,7 +3,7 @@
   "title": "Design Patterns",
   "category": "Software design",
   "status": "ready",
-  "description": "Learn to choose and apply patterns through 24 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
+  "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 24 lessons. Use three projects to compare named patterns with simpler designs.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
@@ -76,7 +76,7 @@
     {
       "id": "foundation",
       "title": "Foundations: recognize a useful boundary",
-      "description": "Start from small functions, contracts and a real source of change before introducing a named pattern.",
+      "description": "Start with small functions and a specific source of change before choosing a named pattern.",
       "exitCriteria": [
         "Explain a contract including side effects and failures.",
         "Distinguish a strategy from construction and a protocol from runtime validation.",
@@ -103,7 +103,7 @@
     {
       "id": "intermediate",
       "title": "Intermediate: compose and translate behavior",
-      "description": "Build adapters and wrappers, explain traversal and notification policies, and avoid hidden lifecycle assumptions.",
+      "description": "Build adapters and wrappers. Define traversal, notification and resource-lifetime behavior.",
       "exitCriteria": [
         "Translate units and errors explicitly at an adapter.",
         "Explain wrapper ordering and callback failure policy.",
@@ -130,7 +130,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice: failure-aware design and refactoring",
-      "description": "Combine a few justified patterns, test negative paths and state the limits of in-memory implementations.",
+      "description": "Combine patterns where the requirements need them. Test failure paths and distinguish in-memory behavior from database guarantees.",
       "exitCriteria": [
         "Model legal and illegal state transitions.",
         "Separate unit tests from real-provider integration guarantees.",
@@ -217,7 +217,7 @@
           "Whether the implementation can be made object-oriented"
         ],
         "correct": 0,
-        "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
+        "explanation": "Choose a pattern to address a specific source of change or coupling. A pattern name alone does not explain why the extra abstraction is needed."
       },
       "references": [
         {
@@ -245,7 +245,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "minutes accepts nonnegative integers and explicitly rejects bool, even though bool subclasses int. The assertions check both acceptance and rejection."
+            "minutes accepts nonnegative integers but rejects bool, which subclasses int. The assertions check both acceptance and rejection."
           ],
           "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
         },
@@ -309,7 +309,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Prefer a small function when it expresses the entire variation clearly."
+            "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Use a small function when it covers the required variation."
           ]
         },
         {
@@ -619,7 +619,7 @@
           "title": "Intent",
           "paragraphs": [
             "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
-            "A legacy progress system reports seconds while the notebook expects whole minutes. The adapter explicitly chooses floor conversion for this example. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
+            "A legacy progress system reports seconds while the notebook expects whole minutes. This adapter rounds down when converting seconds to minutes. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
           ]
         },
         {
@@ -800,7 +800,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not actually a tree."
+            "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not a tree."
           ]
         }
       ],
@@ -1012,11 +1012,11 @@
         ]
       },
       "quiz": {
-        "question": "Which evidence demonstrates this contract?",
+        "question": "What should happen after a handler accepts the request?",
         "options": [
-          "The first accepting handler prevents later handlers from running.",
-          "A pattern or algorithm name alone",
-          "A single successful sample without failures"
+          "Later handlers do not run.",
+          "Every later handler receives the same request.",
+          "The chain restarts with the first handler."
         ],
         "correct": 0,
         "explanation": "The first accepting handler prevents later handlers from running."
@@ -1041,13 +1041,13 @@
           "title": "Intent",
           "paragraphs": [
             "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
-            "Renaming a local notebook can store the previous title and restore it if nothing else has changed. That is a deliberately narrow undo contract. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
+            "Renaming a local notebook can store the previous title and restore it if nothing else has changed. Undo is limited to that case. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
           ]
         },
         {
           "title": "Collaboration",
           "paragraphs": [
-            "Rename captures the prior title during execution. undo restores it only if the current title still matches the command’s result, avoiding an unrelated overwrite."
+            "Rename captures the prior title during execution. undo restores it only if the current title still matches the command's result, avoiding an unrelated overwrite."
           ],
           "example": "class Rename:\n    def __init__(self, book, title):\n        self.book, self.title, self.before = book, title, None\n    def execute(self):\n        if self.before is not None:\n            raise ValueError(\"already executed\")\n        self.before = self.book[\"title\"]\n        self.book[\"title\"] = self.title\n    def undo(self):\n        if self.before is None or self.book[\"title\"] != self.title:\n            raise ValueError(\"cannot safely undo\")\n        self.book[\"title\"] = self.before\n        self.before = None\nbook = {\"title\": \"A\"}\ncmd = Rename(book, \"B\")\ncmd.execute(); cmd.undo()\nassert book[\"title\"] == \"A\""
         },
@@ -1096,7 +1096,7 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+            "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table can express the allowed transitions without separate state classes.",
             "A study session starts as draft, becomes active, then completes. Pause returns active to draft here; complete from draft is illegal. A State object pattern delegates state-specific behavior to objects when transitions and operations become substantial. The table below is the simpler alternative for a small finite lifecycle."
           ]
         },
@@ -1166,7 +1166,7 @@
         {
           "title": "Keep the coordinator boundary honest",
           "paragraphs": [
-            "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+            "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller's input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
           ]
         }
       ],
@@ -1180,11 +1180,11 @@
         ]
       },
       "quiz": {
-        "question": "Which evidence demonstrates this contract?",
+        "question": "What should the mediator do when prerequisite validation fails?",
         "options": [
-          "Failed prerequisite validation leaves state and notification records unchanged.",
-          "A pattern or algorithm name alone",
-          "A single successful sample without failures"
+          "Leave state and notification records unchanged.",
+          "Update the state but skip the notification.",
+          "Send the notification and validate again later."
         ],
         "correct": 0,
         "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
@@ -1418,7 +1418,7 @@
           "That all future repository implementations satisfy the same contract"
         ],
         "correct": 0,
-        "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
+        "explanation": "These tests cover the in-memory implementation. Run separate database tests for provider constraints and transaction isolation."
       },
       "references": [
         {
@@ -1532,7 +1532,7 @@
           "title": "Intent",
           "paragraphs": [
             "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
-            "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible so a changed expectation is deliberate and reviewable."
+            "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible, so the reviewer can distinguish a behavior change from the refactor."
           ]
         },
         {
@@ -1637,7 +1637,7 @@
           "Every known future feature is supported immediately"
         ],
         "correct": 0,
-        "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
+        "explanation": "Explain why the chosen design meets the current requirements, compare a simpler option, and name the requirement that would justify a change."
       },
       "references": [
         {

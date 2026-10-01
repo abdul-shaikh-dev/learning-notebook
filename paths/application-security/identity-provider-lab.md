@@ -2,7 +2,7 @@
 
 This exercise is opt-in learner work, separate from the offline baseline. Use only an authorized training tenant/application and your own synthetic accounts. It requires the chosen provider's current official setup instructions and a maintained OIDC/client and API validator library for the actual framework. Do not target other users or services. Do not write a fake JWT signature/verifier to make the evidence look complete.
 
-## Reviewable setup record before execution
+## Record the setup before running the lab
 
 Record provider and training issuer, framework/library versions, client type (public or confidential), exact permitted redirect URI, document API audience, requested least scopes, supported authorization-code flow with PKCE S256, and the principal mapping. Record configuration names, never secret values. A confidential client's credential remains server-side. Choose the provider's documented HTTPS development arrangement; any permitted loopback exception must match that provider/library's official instructions. Avoid broad wildcard redirects and do not put a confidential secret in browser code.
 

@@ -33,4 +33,4 @@ Thursday learning cancelled; Monday check retained. Close-of-day cue: after desk
 
 ## Rubric
 
-0 missing / 1 partial / 2 complete: no double counting of reserve or elapsed time; explicit owner agreement and temporal feasibility; comparable baseline/revision records; respected care duties and honestly recorded learning/habit changes. All four need 2. A different feasible solution is valid if it makes the necessary routine deferral or scope decision explicit.
+0 missing / 1 partial / 2 complete: no double counting of reserve or elapsed time; explicit owner agreement and temporal feasibility; comparable baseline/revision records; respected care duties and recorded changes to learning and habit plans. All four need 2. A different feasible solution is valid if it makes the necessary routine deferral or scope decision explicit.

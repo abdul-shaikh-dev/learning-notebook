@@ -203,7 +203,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation",
+      "title": "Define a small project",
       "description": "Turn a synthetic workshop request into a scoped plan.",
       "exitCriteria": [
         "Beneficiary, deliverables and excluded scope are explicit.",
@@ -232,7 +232,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate",
+      "title": "Manage work in progress",
       "description": "Operate a synthetic board through a week of changes.",
       "exitCriteria": [
         "Workflow states have clear entry and exit policies.",
@@ -261,7 +261,7 @@
     },
     {
       "id": "advanced",
-      "title": "Applied review — deliver and improve a small project",
+      "title": "Deliver and improve a small project",
       "description": "Close a project using acceptance and improvement evidence.",
       "exitCriteria": [
         "Age, cycle time and throughput use consistent boundaries.",
@@ -352,7 +352,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
-            "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday’s attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
+            "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday's attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
           ],
           "example": "Sending a library reservation request is a task; preparing a reading-group launch is a project; checking registrations every Monday is a routine. Link the reservation to the project and give the routine a recurring trigger.",
           "exampleFormat": "prose"
@@ -434,7 +434,7 @@
           "Resolve every uncertainty immediately"
         ],
         "correct": 0,
-        "explanation": "Asking the venue for seated capacity names an action, an object and a usable result. “Work on workshop” leaves the starting step unclear."
+        "explanation": "Asking the venue for seated capacity names an action, an object and a usable result. \"Work on workshop\" leaves the starting step unclear."
       },
       "references": [
         {
@@ -560,7 +560,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
-            "Use a coverage check for every deliverable: can you point to creation, review and handoff work? Then ask whether any listed action contributes to no deliverable. This reveals both omissions and unnecessary activity. Split work at a boundary that leaves inspectable state rather than arbitrary equal chunks of time. Venue confirmation, exercise drafting and invitation publication can have different owners and effort. Avoid an oversized tree that takes longer to maintain than the project; expand a branch when uncertainty prevents someone from starting or checking its actions."
+            "For each deliverable, identify the work needed to create, check and hand it over. Remove actions that contribute to none of the deliverables. Split work where someone can check a result, such as a confirmed venue or a reviewed invitation. Different pieces can have different owners and take different amounts of time. Add detail when someone lacks enough information to start or check the work; avoid maintaining a task tree larger than the project needs."
           ],
           "example": "A reading-group launch has three deliverables: a confirmed room, a reading guide and a joining notice. Request the room booking, draft the guide’s questions and verify the notice’s details; add review and publication actions with owners.",
           "exampleFormat": "prose"
@@ -777,7 +777,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Pull means selecting ready work when the workflow has capacity. It differs from assigning an unlimited queue of simultaneous promises. Selection still considers value, risk and deadlines; a vacant slot does not require starting a low-value item.",
-            "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. If the vacant slot cannot be used meaningfully, it may remain empty while the team resolves a constraint or prepares a clearer item. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
+            "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. Leave the slot empty if no item has the inputs or scope needed to start. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
           ],
           "example": "With a WIP limit of three, finishing one of three started cards creates one slot. Pull the ready room-confirmation task that unblocks the notice; leave an unclear optional logo redesign in the backlog until its purpose and action are defined.",
           "exampleFormat": "prose"
@@ -881,7 +881,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Estimate with historical work that uses the same start and finish definitions. A duration includes waiting if the metric measures elapsed time. A few examples give a rough range, not a statistically reliable promise.",
-            "Waiting for a reviewer belongs in elapsed cycle time when review lies between start and finish. Work effort may be much smaller, so do not substitute hours of writing for calendar duration when forecasting a handoff. Compare items with similar size, review requirements and availability. Three completed examples show variation but cannot justify a reliable probability statement. If the new deadline falls below all comparable durations, discuss earlier inputs, smaller scope or additional review availability. A forecast describes uncertainty; a commitment requires a conscious decision about the risk of missing it."
+            "Include reviewer waiting time in elapsed cycle time when review falls between start and finish. Hours spent writing are not the same as calendar time until handoff. Compare work of similar size with similar review needs and availability. Three examples show variation but cannot support a reliable probability. If the deadline is shorter than every comparable duration, discuss earlier inputs, reduced scope or more review capacity. Agree how to handle the risk before committing to the date."
           ],
           "example": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. Use 1–5 days as a provisional observed range and check whether reviewer availability is comparable. Three samples cannot support a reliable percentile forecast.",
           "exampleFormat": "prose"
@@ -1051,7 +1051,7 @@
         {
           "title": "A new request changes the acceptance conditions",
           "paragraphs": [
-            "The invitation is ready for review when the organiser adds a second workshop session. The change needs session selection, separate capacities and matching confirmations, not just a new title. Existing completion criteria cover one session.",
+            "The invitation is ready for review when the organiser adds a second workshop session. The change needs session selection, separate capacities and matching confirmations, as well as a new title. Existing completion criteria cover one session.",
             "Identify changed acceptance conditions and dependencies, then decide scope and date. Reuse completed work where applicable, but a one-session form test does not verify two-session routing."
           ],
           "example": "Option A: publish the checked single session today and announce the second later. Option B: delay, add selection, confirm capacities and test both paths. The organiser chooses B, so the team retains old work and adds the checks made necessary by the decision.",
@@ -1098,7 +1098,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period. Keep item sizes and boundaries visible. Counts help discuss the system and should not become rankings of individual worth.",
-            "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person’s overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
+            "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person's overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
           ],
           "example": "Using elapsed date differences, a card started Tuesday and completed Saturday has a cycle time of four days. Another started Thursday and remains unfinished Sunday, so its age is three days. Only the completed card contributes to that week’s throughput.",
           "exampleFormat": "prose"
@@ -1315,7 +1315,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine. Archive decisions where the next person can find them. A closed board should not conceal unfulfilled promises or imply that attendance alone proved learning.",
-            "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; honest closure makes that obligation visible rather than declaring every aspect successful."
+            "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; the closure record should name that obligation."
           ],
           "example": "The reading-group launch has accepted guides, collected feedback and one unresolved room-signage problem. Link the delivered outputs, assign a signage owner and follow-up date, and transfer Monday registration checks to a routine. Record delivery with the issue still visible.",
           "exampleFormat": "prose"
@@ -1338,7 +1338,7 @@
         ]
       },
       "quiz": {
-        "question": "What belongs in honest closure?",
+        "question": "What should the closure record say about unfinished work?",
         "options": [
           "Accepted outputs and remaining obligations",
           "Only a celebration image",
@@ -1360,14 +1360,14 @@
     {
       "id": "system-review",
       "title": "21. Select a proportionate management system",
-      "takeaway": "A useful system supports the project’s decisions with modest maintenance.",
+      "takeaway": "A useful system supports the project's decisions with modest maintenance.",
       "stage": "advanced",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A useful system supports the project’s decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
-            "Evaluate maintenance burden with the same care as the project work. Retain a report when it changes a decision or exposes an obligation, and consolidate repeated status entry that supplies no new information. A small board can be enough for twelve tasks if it represents owners, completion and waiting truthfully. When borrowing a method name, check its defining practices rather than using the label because the interface looks familiar. You may legitimately use selected ideas in a simple task board; that honest description leaves room to adopt fuller practices when they become useful."
+            "A useful system supports the project's decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
+            "Keep a report if it changes a decision or reveals unfinished work. Combine duplicate status reports. A small board may be enough for twelve tasks if it shows owners, completion and waiting. If you use the name of a method, check that you follow its defining practices. Otherwise, name the practices you use without claiming to implement the whole method."
           ],
           "example": "A three-person reading-group project has nine cards and takes 40 minutes daily to maintain five reports. Keep one board with owner, finish criteria and blockers plus a short weekly review; remove reports that support no decision. Call it a task board unless the required Kanban workflow and metrics are maintained.",
           "exampleFormat": "prose"
@@ -1392,7 +1392,7 @@
       "quiz": {
         "question": "What is an accurate method claim?",
         "options": [
-          "A task board unless the method’s full defining practices are present",
+          "A task board unless the method's full defining practices are present",
           "Full Kanban because cards exist",
           "Full Scrum because a meeting occurs"
         ],

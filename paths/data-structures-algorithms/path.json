@@ -3,7 +3,7 @@
   "title": "Data Structures & Algorithms",
   "category": "Computer science",
   "status": "ready",
-  "description": "From collections to algorithm design: invariants, graph traversal, greedy proofs, dynamic programming and tested projects.",
+  "description": "Choose data structures and algorithms using their preconditions, invariants and costs. Practise graph traversal, greedy reasoning and dynamic programming in tested projects.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
@@ -250,7 +250,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "A structure’s ordering policy is part of correctness, not just performance. Replacing a queue with a stack changes graph traversal order."
+            "A structure's ordering policy affects correctness as well as performance. Replacing a queue with a stack changes graph traversal order."
           ]
         }
       ],
@@ -372,7 +372,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Sorting enables grouped display, merging and efficient search. Python’s sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
+            "Sorting enables grouped display, merging and efficient search. Python's sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
             "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
           ],
           "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
@@ -493,7 +493,7 @@
         {
           "title": "Verify the invariant beyond a sample",
           "paragraphs": [
-            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
           ]
         }
       ],
@@ -507,14 +507,14 @@
         ]
       },
       "quiz": {
-        "question": "Which evidence demonstrates this contract?",
+        "question": "How should insert and delete tests check the tree?",
         "options": [
-          "All insert/delete orders preserve a set oracle and global ordering.",
-          "A pattern or algorithm name alone",
-          "A single successful sample without failures"
+          "Compare membership with a set and check ordering throughout the tree after each operation.",
+          "Check only that the root has a left and a right child.",
+          "Check only one insertion sequence with no deletions."
         ],
         "correct": 0,
-        "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+        "explanation": "A set provides the expected membership. Checking each node against its permitted range catches ordering errors below the root."
       },
       "references": [
         {
@@ -770,7 +770,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Test sorting against Python’s sorted for all permutations of four distinct values.",
+        "prompt": "Test sorting against Python's sorted for all permutations of four distinct values.",
         "solution": "from itertools import permutations\nfor row in permutations([0, 1, 2, 3]):\n    assert merge_sort(row) == sorted(row)\nassert merge_sort([]) == []\nassert merge_sort([2, 2]) == [2, 2]",
         "checks": [
           "All permutations match the oracle.",
@@ -916,7 +916,7 @@
         {
           "title": "Model",
           "paragraphs": [
-            "An edge A→B means A must precede B. Kahn’s algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
+            "An edge A→B means A must precede B. Kahn's algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
           ]
         },
         {
@@ -993,7 +993,7 @@
         {
           "title": "Correctness and cost",
           "paragraphs": [
-            "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
+            "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation's space bound. The sequence ticket avoids comparing vertex objects on ties."
           ]
         },
         {
@@ -1040,7 +1040,7 @@
         {
           "title": "Model",
           "paragraphs": [
-            "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution’s first interval with this one without reducing the count."
+            "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution's first interval with this one without reducing the count."
           ]
         },
         {
@@ -1172,7 +1172,7 @@
         {
           "title": "Correctness and cost",
           "paragraphs": [
-            "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
+            "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W's numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
           ]
         },
         {
@@ -1220,7 +1220,7 @@
         {
           "title": "Model",
           "paragraphs": [
-            "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a deliberately simple oracle for small instances and compare the optimized algorithm across generated cases. This finds edge cases without assuming that random success proves correctness."
+            "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a simple reference calculation for small inputs, then compare the optimized algorithm with it across generated cases. This finds edge cases without assuming that random success proves correctness."
           ]
         },
         {
@@ -1278,10 +1278,10 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundations · Represent and reason",
-      "description": "Choose basic structures and state what correctness and cost mean.",
+      "title": "Foundations: representation and cost",
+      "description": "Choose basic data structures and define their expected results and costs.",
       "exitCriteria": [
-        "Distinguish a structure’s operations from a problem’s contract.",
+        "Distinguish a structure's operations from a problem's contract.",
         "Trace arrays, hash tables, stacks and queues by hand.",
         "Explain expected versus worst-case time and auxiliary space."
       ],
@@ -1305,8 +1305,8 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate · Search, traversal and invariants",
-      "description": "Implement algorithms with explicit preconditions, loop invariants and small reference oracles.",
+      "title": "Intermediate: search, traversal and invariants",
+      "description": "Implement search and traversal algorithms. Check preconditions and loop invariants, and compare small cases with a reference calculation.",
       "exitCriteria": [
         "Explain binary-search and two-pointer invariants.",
         "Traverse cyclic graphs safely and detect impossible dependency orders.",
@@ -1335,7 +1335,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice",
-      "description": "Choose algorithms by assumptions, prove or challenge greedy choices and design dynamic-programming states.",
+      "description": "Test algorithm assumptions, challenge greedy choices with counterexamples, and derive dynamic-programming states.",
       "exitCriteria": [
         "Explain why Dijkstra requires nonnegative weights.",
         "Construct a counterexample to an invalid greedy rule.",
@@ -1344,7 +1344,7 @@
       ],
       "project": {
         "title": "Algorithm decision portfolio",
-        "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+        "brief": "Implement scheduling, weighted routing and knapsack. Choose an algorithm for each task and test the assumptions it requires.",
         "requirements": [
           "Find routes on a nonnegative weighted graph and reject unsupported weights.",
           "Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.",

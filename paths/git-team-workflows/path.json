@@ -3,7 +3,7 @@
   "title": "Git & Team Workflows",
   "category": "Engineering practice",
   "status": "ready",
-  "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three executable projects with retained learner workspaces.",
+  "description": "Learn Git state, team review, history integration and recovery in 20 lessons. Three executable projects create local workspaces you can inspect after each run.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
@@ -158,12 +158,12 @@
       "quiz": {
         "question": "Why does the fixture use command-scoped identity?",
         "options": [
-          "It gives fixture commits an identity without changing the user’s global configuration.",
+          "It gives fixture commits an identity without changing the user's global configuration.",
           "It authenticates the learner to every remote server.",
           "It makes all repositories use the fixture identity permanently."
         ],
         "correct": 0,
-        "explanation": "It gives fixture commits an identity without changing the user’s global configuration."
+        "explanation": "It gives fixture commits an identity without changing the user's global configuration."
       },
       "references": [
         {
@@ -185,7 +185,7 @@
           "title": "Working tree, index and HEAD",
           "paragraphs": [
             "The working tree is the editable files you see. The index, often called the staging area, is the proposed next snapshot. HEAD normally points to the current branch tip commit. These three states can differ even for one file.",
-            "git add copies the file’s current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
+            "git add copies the file's current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
           ]
         },
         {
@@ -296,7 +296,7 @@
           "title": "Partial staging and amendments",
           "paragraphs": [
             "The sandbox stages explicit fixture content and commits with synthetic metadata. Outside the sandbox, selective staging or git add -p can split independent hunks; inspect the result because a partially staged file may differ from the version you tested.",
-            "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people’s references. Coordinate rather than assuming every local improvement authorizes history rewriting."
+            "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people's references. Coordinate rather than assuming every local improvement authorizes history rewriting."
           ],
           "example": "git diff --cached\ngit commit -m \"Preserve staged note snapshot\"\ngit show --stat --oneline HEAD"
         }
@@ -347,8 +347,8 @@
         {
           "title": "Synthetic secrets and tracked files",
           "paragraphs": [
-            "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token text is explicitly not a credential. Inspect an example config template before sharing it: placeholders must not be live values.",
-            "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else’s repository."
+            "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token is fake. Inspect an example config template before sharing it: placeholders must not be live values.",
+            "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else's repository."
           ],
           "example": "git check-ignore -v local.env\ngit ls-files -- local.env\n# If previously tracked, ignore rules alone do not remove it."
         }
@@ -444,7 +444,7 @@
         {
           "title": "Branch snapshots",
           "paragraphs": [
-            "A topic branch names a line of development. Creating a branch is cheap because it initially points at an existing commit. Switching updates HEAD and the working tree to that branch’s snapshot; uncommitted edits may be carried along or block the switch if they would be overwritten.",
+            "A topic branch names a line of development. Creating a branch is cheap because it initially points at an existing commit. Switching updates HEAD and the working tree to that branch's snapshot; uncommitted edits may be carried along or block the switch if they would be overwritten.",
             "Start from an agreed base and a clear understanding of the working-tree status. A branch name communicates purpose but does not guarantee that unrelated changes are absent. Keep changes coherent and inspect the branch diff against its base."
           ]
         },
@@ -452,7 +452,7 @@
           "title": "Divergent fixture branches",
           "paragraphs": [
             "The fixture creates feature from the base, edits policy.txt, then switches to main and edits the same line differently. Neither commit disappears: the two branch tips preserve both histories.",
-            "If switching is blocked, understand the local changes first. Commit useful work or deliberately stash it in training; do not reach for forced checkout to hide uncertainty."
+            "If switching is blocked, understand the local changes first. Commit useful work or stash it in the training repository. Inspect the changes before using a command that could discard them."
           ],
           "example": "git switch -c feature\ngit branch --show-current\ngit switch main\ngit log --all --oneline --decorate"
         }
@@ -496,7 +496,7 @@
         {
           "title": "Restore destinations",
           "paragraphs": [
-            "git restore --staged removes a path’s staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
+            "git restore --staged removes a path's staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
             "Discarding working edits loses those uncommitted contents unless another copy exists. Git does not promise a reflog for every untracked or unstaged file. Inspect diffs and preserve useful edits before a destructive restore."
           ]
         },
@@ -504,7 +504,7 @@
           "title": "Keeping an unfinished edit",
           "paragraphs": [
             "In the fixture the commit contains two and the working tree contains three. Restoring notes.txt from the index changes the file back to two without moving the branch tip.",
-            "The sandbox deliberately discards only generated synthetic content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
+            "The sandbox discards only its generated content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
           ],
           "example": "git diff -- notes.txt\ngit restore --staged -- notes.txt\n# Only in the disposable fixture after inspecting the diff:\ngit restore -- notes.txt"
         }
@@ -556,7 +556,7 @@
           "title": "Integration policy and verification",
           "paragraphs": [
             "The intermediate fixture diverges feature and main and records a two-parent merge after resolution. Later a reviewer clone fetches a descendant and integrates it with --ff-only, which refuses unexpected divergence.",
-            "Choose integration policy deliberately. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
+            "Agree on an integration policy. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
           ],
           "example": "git log --graph --oneline --all\ngit merge feature\ngit rev-list --parents -n 1 HEAD\n# Strict update when divergence is unexpected:\ngit merge --ff-only origin/main"
         },
@@ -614,7 +614,7 @@
         {
           "title": "Resolution and abort behavior",
           "paragraphs": [
-            "The fixture first aborts a merge and verifies main’s file is restored, then repeats the conflict and writes main and feature as a deliberate resolution. It asserts that the final merge commit has two parents.",
+            "The fixture first aborts a merge and verifies main's file is restored, then repeats the conflict and writes main and feature as a deliberate resolution. It asserts that the final merge commit has two parents.",
             "Abort recovery is most predictable when the working tree was clean before starting. Preserve unrelated local edits before integration. A resolved file still needs review and tests for the combined requirement."
           ],
           "example": "git diff --name-only --diff-filter=U\ngit show :1:policy.txt\ngit show :2:policy.txt\ngit show :3:policy.txt\n# Choose a real resolution, then:\ngit add policy.txt\ngit commit"
@@ -628,7 +628,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Trace the fixture’s base/main/feature versions. Propose a resolution when both sides represent necessary requirements, then explain the abort path.",
+        "prompt": "Trace the fixture's base/main/feature versions. Propose a resolution when both sides represent necessary requirements, then explain the abort path.",
         "solution": "The base is base, ours is main and theirs is feature for this merge. The fixture writes main and feature to preserve both illustrative intents. git merge --abort exits the unresolved merge; a real application resolution must satisfy its own requirements and checks.",
         "solutionFormat": "prose",
         "checks": [
@@ -666,7 +666,7 @@
         {
           "title": "Remote-tracking references",
           "paragraphs": [
-            "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote’s state at the last fetch; they can be stale.",
+            "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote's state at the last fetch; they can be stale.",
             "git fetch retrieves objects and updates tracking references. git pull combines fetch with integration according to explicit options/configuration. A push asks the remote to update references and requires separate authorization; the sandbox never pushes."
           ]
         },
@@ -732,7 +732,7 @@
         {
           "title": "An offline review record",
           "paragraphs": [
-            "Use the local fixture’s feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. This produces a reviewable artifact without publishing a pull request or sending a message.",
+            "Use the local fixture's feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. The file lets you practise reviewing the change without publishing a pull request or sending a message.",
             "A later change can invalidate earlier review or checks. Recheck the final candidate against the current target, especially after a rebase or conflict resolution. Approval of an old commit is not automatic evidence for a new one."
           ],
           "example": "git diff main...feature\ngit log --oneline main..feature\n# Offline review.md fields:\n# Problem / Behavior / Base / Candidate / Checks / Remaining limits"
@@ -749,14 +749,14 @@
         ]
       },
       "quiz": {
-        "question": "A reviewed branch is rebased after approval. What evidence needs attention?",
+        "question": "A branch is rebased after approval. What needs to happen next?",
         "options": [
           "The old approval proves every future version is correct.",
           "Rebasing automatically reruns every hosted check.",
-          "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+          "The new candidate should be rechecked and reviewed under the repository's policy because its identity and integration context changed."
         ],
         "correct": 2,
-        "explanation": "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+        "explanation": "Rebasing changes commit IDs and may change how the branch combines with its new base. Recheck the new candidate under the repository's review policy."
       },
       "references": [
         {
@@ -791,7 +791,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A shared bug commit is followed by useful unrelated work. Explain why resetting to the bug’s parent is a poor default.",
+        "prompt": "A shared bug commit is followed by useful unrelated work. Explain why resetting to the bug's parent is a poor default.",
         "solution": "Resetting the shared branch drops later references and can discard useful work. A targeted revert preserves ancestry and the unrelated commit, though the result still needs tests. A merge revert needs an additional mainline decision.",
         "solutionFormat": "prose",
         "checks": [
@@ -829,15 +829,15 @@
         {
           "title": "Local reflog lifetime",
           "paragraphs": [
-            "A reflog records updates to a reference in a repository. HEAD’s reflog also records switches. A commit lost from the visible branch graph may still be named by a reflog entry, allowing you to inspect it and create a branch at it.",
-            "Reflogs are local and expire; unreachable objects may later be pruned. A teammate’s clone does not automatically contain your reflog. Never promise that reflog recovery can restore arbitrary deleted untracked files or unstaged editor contents."
+            "A reflog records updates to a reference in a repository. HEAD's reflog also records switches. A commit lost from the visible branch graph may still be named by a reflog entry, allowing you to inspect it and create a branch at it.",
+            "Reflogs are local and expire; unreachable objects may later be pruned. A teammate's clone does not automatically contain your reflog. Never promise that reflog recovery can restore arbitrary deleted untracked files or unstaged editor contents."
           ]
         },
         {
           "title": "Recovering a named commit",
           "paragraphs": [
             "The advanced fixture remembers a committed private experiment, resets its private tip back one parent, verifies the old commit remains in the reflog, and creates recovered at that exact commit. It later cherry-picks the useful change.",
-            "Recover by inspection before another destructive move: identify the candidate, show its files and give it a named branch. This is more reviewable than immediately resetting your main branch to an uncertain reflog position."
+            "Recover by inspection before another destructive move: identify the candidate, show its files and give it a named branch. A recovery branch lets you inspect the candidate without moving main."
           ],
           "example": "git reflog --format=\"%h %gs\"\ngit show <candidate>\ngit branch recovered <candidate>\ngit log --all --oneline --decorate"
         }
@@ -856,11 +856,11 @@
         "question": "Why is a reflog not a permanent team backup?",
         "options": [
           "Every reflog entry is automatically pushed to all teammates.",
-          "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements.",
+          "It is local, expires, and does not preserve every uncommitted file or another clone's reference movements.",
           "It contains only remote pull requests."
         ],
         "correct": 1,
-        "explanation": "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements."
+        "explanation": "It is local, expires, and does not preserve every uncommitted file or another clone's reference movements."
       },
       "references": [
         {
@@ -985,8 +985,8 @@
         {
           "title": "Rewritten ancestry",
           "paragraphs": [
-            "A rebase takes selected commits and reapplies them after another base, producing a different history. This can simplify a private topic branch before review. It is not simply a display preference: parent changes create new commit identities.",
-            "Rewriting already shared work can disrupt other branches and approvals. Know who depends on the old history and follow the team’s publication policy. A force-with-lease mechanism can reduce accidental overwrite, but is not permission to rewrite someone else’s work."
+            "A rebase takes selected commits and reapplies them after another base, producing a different history. This can simplify a private topic branch before review. Changing the parents creates new commit identities.",
+            "Rewriting already shared work can disrupt other branches and approvals. Know who depends on the old history and follow the team's publication policy. A force-with-lease mechanism can reduce accidental overwrite, but is not permission to rewrite someone else's work."
           ]
         },
         {
@@ -1148,7 +1148,7 @@
         {
           "title": "Reviewing the complete fixture",
           "paragraphs": [
-            "The advanced kit asks for an offline release-review record tied to the sandbox’s candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
+            "The advanced kit asks for an offline release-review record tied to the sandbox's candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
             "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
           ],
           "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
@@ -1179,7 +1179,7 @@
           "Nothing: local mechanics automatically authorize production publication."
         ],
         "correct": 1,
-        "explanation": "Repository policy, review/approval, artifact and deployment evidence must still be established for the actual candidate."
+        "explanation": "Check the actual candidate against the repository's approval rules, built artifact and deployment tests. The local sandbox has not exercised those steps."
       },
       "references": [
         {
@@ -1195,8 +1195,8 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation: Three-state snapshot investigation",
-      "description": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+      "title": "Foundation: three-state snapshot investigation",
+      "description": "Inspect the note versions stored in the working tree, index and commit.",
       "exitCriteria": [
         "The two diff baselines and committed snapshot are correct.",
         "No existing repository or global config is changed.",
@@ -1223,8 +1223,8 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate: Two-developer integration review",
-      "description": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+      "title": "Intermediate: two-developer integration review",
+      "description": "Resolve a fixture conflict and update a local reviewer clone without contacting a server.",
       "exitCriteria": [
         "Conflict/abort/resolution states are supported by actual outputs.",
         "The resolved contents preserve both stated intents.",
@@ -1235,7 +1235,7 @@
         "title": "Two-developer integration review",
         "brief": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
         "requirements": [
-          "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+          "Run the intermediate fixture's deliberate conflict, abort and resolution.",
           "Explain base/ours/theirs and preserve both fixture intents.",
           "Verify a two-parent merge.",
           "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
@@ -1252,8 +1252,8 @@
     },
     {
       "id": "advanced",
-      "title": "Selected advanced practice: Local recovery and release portfolio",
-      "description": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+      "title": "Selected advanced practice: local recovery and release portfolio",
+      "description": "Find a regression, recover committed work, integrate a patch and identify the release commit.",
       "exitCriteria": [
         "Bisect result identifies the known synthetic defect.",
         "Recovery branches retain the intended committed work.",
@@ -1266,7 +1266,7 @@
         "requirements": [
           "Run the advanced fixture and verify the first bad commit with its predicate.",
           "Compare targeted revert with the private reset/reflog recovery.",
-          "Explain the cherry-picked change and rebased topic’s changed identity.",
+          "Explain the cherry-picked change and rebased topic's changed identity.",
           "Verify the annotated tag object.",
           "Produce an offline release record including artifact/hosting checks not executed."
         ],

@@ -124,7 +124,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     },
     {
@@ -171,13 +171,13 @@
       ],
       "notes": [
         "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     },
     {
       "id": "advanced",
       "title": "Security verification and identity integration review",
-      "goal": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+      "goal": "Write a control checklist and incident runbook. If you choose the real-provider extension, plan its setup and tests separately from the offline checks.",
       "fileIds": [
         "security_lab-py",
         "test_security_lab-py",
@@ -226,7 +226,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     }
   ],

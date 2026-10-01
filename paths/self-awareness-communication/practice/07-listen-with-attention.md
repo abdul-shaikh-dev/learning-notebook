@@ -8,7 +8,7 @@ Ask whether the time and setting work, reduce avoidable interruptions and agree 
 
 ## Mechanism and practical trade-off
 
-Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. A time limit is compatible with care when stated honestly; pretending unlimited attention while distracted gives the speaker less reliable information about your availability.
+Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. Say how much time you have. If you are distracted, offer another time to listen.
 
 ## Fictional case
 

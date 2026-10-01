@@ -5,7 +5,7 @@ const LEARNING_PATHS = [
     "title": "Agent Harnesses",
     "category": "AI engineering",
     "status": "ready",
-    "description": "Build the runtime around an agent: 24 lessons on controlled tool dispatch, scoped approvals, bounded loops, state recovery and operational evidence, with three projects and a fully offline Python workshop.",
+    "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
     "level": "Intermediate runtime engineering → selected recovery extensions",
     "prerequisites": [
       "Basic Python functions, dictionaries, classes, exceptions and tests; the Python path provides preparation.",
@@ -75,8 +75,8 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundations · make control explicit",
-        "description": "Learn the run contract, state machine and trusted boundaries before writing a loop.",
+        "title": "Foundations: tool dispatch and run state",
+        "description": "Define the run contract, states and permission checks before writing the loop.",
         "exitCriteria": [
           "Distinguish model proposal, authorization, approval and confirmed effect.",
           "Explain runtime state versus context and business state.",
@@ -103,8 +103,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate · pause and recover safely",
-        "description": "Add exact-intent approval, budgets, cooperative cancellation, checkpoints and uncertain-effect reconciliation.",
+        "title": "Intermediate: approvals and recovery",
+        "description": "Add approval matching, budgets, cancellation and checkpoints. Recover when a note commits but its response is lost.",
         "exitCriteria": [
           "Bind approval to exact intent and recheck current policy.",
           "Preserve counters and run identity through checkpoint restore.",
@@ -131,8 +131,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied extension · prove and operate the boundary",
-        "description": "Design isolation, concurrency, telemetry, regression and incident processes beyond the single-worker toy.",
+        "title": "Applied extension: isolation and operations",
+        "description": "Plan isolation, concurrent execution, telemetry and recovery beyond the single-worker workshop.",
         "exitCriteria": [
           "Separate deterministic policy evidence from LLM quality and production security.",
           "Explain fencing, replay and external effect recovery boundaries.",
@@ -140,7 +140,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Harness assurance and operations packet",
-          "brief": "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+          "brief": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
           "requirements": [
             "Run the provided suite and add two adversarial proposal fixtures.",
             "Write an ADR for a durable checkpoint/receipt service with concurrency ownership.",
@@ -935,7 +935,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Do not ask the model whether it has user approval and accept the answer as evidence. A real approval service needs authenticated reviewer identity, expiry, revocation, persistence and concurrency handling. The workshop host method demonstrates scope matching, not a production authorization protocol. It deliberately drops approvals from checkpoints so restored pending work needs fresh review."
+              "Do not ask the model whether it has user approval and accept the answer as evidence. A real approval service needs authenticated reviewer identity, expiry, revocation, persistence and concurrency handling. The workshop host method demonstrates scope matching, not a production authorization protocol. It drops approvals from checkpoints, so restored pending work needs fresh review."
             ]
           }
         ],
@@ -1271,7 +1271,7 @@ const LEARNING_PATHS = [
             "The model predicting it probably worked."
           ],
           "correct": 0,
-          "explanation": "A receipt ties the observed effect to the original intent. Confidence, silence and unrelated success are not equivalent evidence."
+          "explanation": "The receipt identifies the original operation and its payload. An unrelated successful call cannot confirm whether that operation committed."
         },
         "trace": {
           "title": "The response is lost after the save",
@@ -1451,7 +1451,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
+              "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the workshop runtime discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
               "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
             ]
           },
@@ -1966,7 +1966,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A production scheduler may deliver the same run to two workers. A lease grants temporary ownership, but a paused worker can wake after its lease expires. A monotonically increasing fencing token lets the protected storage reject writes from an older owner. The downstream boundary must enforce that token; merely attaching it to logs does not prevent stale writes. The workshop is explicitly single-process and single-worker."
+              "A production scheduler may deliver the same run to two workers. A lease grants temporary ownership, but a paused worker can wake after its lease expires. A monotonically increasing fencing token lets the protected storage reject writes from an older owner. The downstream boundary must enforce that token; merely attaching it to logs does not prevent stale writes. The workshop uses one process and one worker."
             ]
           },
           {
@@ -1991,7 +1991,7 @@ const LEARNING_PATHS = [
           {
             "title": "A version conflict is a useful outcome",
             "paragraphs": [
-              "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A’s state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
+              "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A's state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
               "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in durable_state.py and add a second connection that attempts the stale save.",
               "Use the owner_version_lab.py exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
             ]
@@ -2673,7 +2673,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Do not simply rename FakeStore to ProductionStore. A strong capstone includes an ADR explaining the next boundary to add and a test that could falsify its correctness."
+              "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming FakeStore to ProductionStore does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
             ]
           },
           {
@@ -2694,14 +2694,14 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "What is the strongest honest claim after this workshop passes?",
+          "question": "What do the passing workshop tests establish?",
           "options": [
             "Any connected model will now behave correctly.",
             "The documented offline runtime policies passed their deterministic fixtures.",
             "The harness is production secure against all attacks."
           ],
           "correct": 1,
-          "explanation": "Evidence must match the tested boundary. Mocks validate orchestration policies but do not certify external services, isolation or model behavior."
+          "explanation": "The tests exercise the offline runtime policies. They do not test external services, process isolation or a live model."
         },
         "references": [
           {
@@ -2852,10 +2852,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Build a scripted read-only loop for synthetic lessons. No model API or external execution is needed.",
-            "Complete the assessment requirements in the reader: Define trusted subject, readable lesson IDs and a proposal budget.; Create an explicit registry with read_lesson only.; Validate exact argument fields and bounded strings.; Return structured states and metadata events.; Test unknown tools, forbidden lessons and malformed proposals.",
-            "Compare your evidence with the stage rubric: No invalid or forbidden proposal changes the fake store.; The authenticated subject cannot be overridden by arguments.; Events distinguish proposal, denial and confirmation.; The final result does not claim a write occurred."
+            "Build the project described in the reader: Define trusted subject, readable lesson IDs and a proposal budget. Create an explicit registry with read_lesson only. Validate exact argument fields and bounded strings. Return structured states and metadata events. Test unknown tools, forbidden lessons and malformed proposals.",
+            "Check your result: No invalid or forbidden proposal changes the fake store. The authenticated subject cannot be overridden by arguments. Events distinguish proposal, denial and confirmation. The final result does not claim a write occurred."
           ],
           "commands": [
             {
@@ -2866,7 +2866,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from agent-harnesses-practice folder root",
               "command": "python -m unittest -v test_harness_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -2878,7 +2878,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -2895,10 +2895,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Extend the read-only runtime with an in-memory note effect that can lose its response after committing.",
-            "Complete the assessment requirements in the reader: Pause writes until the trusted host reviews exact arguments.; Reject a stale approval and a permission revoked while waiting.; Implement stable operation identity and fake receipt lookup.; Serialize a versioned checkpoint without approval authority.; Test budget exhaustion, cancellation, unknown checkpoint versions and response-loss recovery.",
-            "Compare your evidence with the stage rubric: A same-intent recovery leaves exactly one fake note.; Changed arguments cannot reuse approval.; Restoring does not reset step usage.; Uncertain state is visible until a receipt resolves it."
+            "Build the project described in the reader: Pause writes until the trusted host reviews exact arguments. Reject a stale approval and a permission revoked while waiting. Implement stable operation identity and fake receipt lookup. Serialize a versioned checkpoint without approval authority. Test budget exhaustion, cancellation, unknown checkpoint versions and response-loss recovery.",
+            "Check your result: A same-intent recovery leaves exactly one fake note. Changed arguments cannot reuse approval. Restoring does not reset step usage. Uncertain state is visible until a receipt resolves it."
           ],
           "commands": [
             {
@@ -2909,7 +2909,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from agent-harnesses-practice folder root",
               "command": "python -m unittest -v test_harness_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -2921,13 +2921,13 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
           "id": "advanced",
           "title": "Harness assurance and operations packet",
-          "goal": "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+          "goal": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
           "fileIds": [
             "harness_workshop-py",
             "test_harness_workshop-py",
@@ -2946,10 +2946,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Defend the offline harness and design its next production boundary without deploying infrastructure.",
-            "Complete the assessment requirements in the reader: Run the provided suite and add two adversarial proposal fixtures.; Write an ADR for a durable checkpoint/receipt service with concurrency ownership.; Draw the trusted host, model, tool and optional compute boundaries.; Specify safe telemetry fields, retention and operator authority.; Write a response-loss incident timeline and controlled release/rollback plan.; Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
-            "Compare your evidence with the stage rubric: Claims match executed fixtures; no sandbox or intelligence certification is implied.; The ADR distinguishes CAS/fencing from external-effect idempotency.; Runbook actions preserve evidence and avoid blind retries.; Every new permission or external adapter has a verification plan.",
+            "Build the project described in the reader: Run the provided suite and add two adversarial proposal fixtures. Write an ADR for a durable checkpoint/receipt service with concurrency ownership. Draw the trusted host, model, tool and optional compute boundaries. Specify safe telemetry fields, retention and operator authority. Write a response-loss incident timeline and controlled release/rollback plan. Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
+            "Check your result: Claims match executed fixtures; no sandbox or intelligence certification is implied. The ADR distinguishes CAS/fencing from external-effect idempotency. Runbook actions preserve evidence and avoid blind retries. Every new permission or external adapter has a verification plan.",
             "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
           ],
           "commands": [
@@ -2961,7 +2961,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from agent-harnesses-practice folder root",
               "command": "python -m unittest -v test_harness_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Optional depth exercise · extracted kit root",
@@ -2978,7 +2978,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -3018,7 +3018,7 @@ const LEARNING_PATHS = [
     "title": "AI Agents",
     "category": "AI engineering",
     "status": "ready",
-    "description": "Build a clear mental model of agents through 24 lessons on tools, state, grounding, permissions, failures and evaluation. Three staged projects use a fully offline scripted workshop, then define what a real model integration still needs.",
+    "description": "Learn how agents use tools, state, retrieved sources and permissions in 24 lessons. Three projects start with an offline scripted workshop, then examine what changes when a real model chooses actions.",
     "level": "Foundations → intermediate agents → local framework practice",
     "prerequisites": [
       "No prior AI knowledge required; begin with the vocabulary lessons.",
@@ -3085,7 +3085,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Foundations: understand the loop",
-        "description": "Learn the vocabulary and trace a bounded search-and-answer task without a live model.",
+        "description": "Learn the terms and trace a search-and-answer task with a fixed tool-call limit and no live model.",
         "exitCriteria": [
           "Distinguish model proposals from executor actions.",
           "Explain context, task state and evidence.",
@@ -3093,7 +3093,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Trace a lesson assistant",
-          "brief": "Run the scripted search-and-answer example and explain every boundary.",
+          "brief": "Run the scripted search-and-answer example. Trace the proposal, validation, tool call and returned result.",
           "requirements": [
             "Draw user -> decision source -> validator -> tool -> observation -> decision source.",
             "Identify which fields are trusted policy and which are evidence.",
@@ -3110,7 +3110,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Intermediate: make boundaries explicit",
-        "description": "Validate proposals and observations, manage ambiguity and define failure behavior.",
+        "description": "Validate proposed calls and returned data. Decide when to ask for clarification and how to report failures.",
         "exitCriteria": [
           "Reject malformed inputs before execution.",
           "Distinguish empty results from tool failures.",
@@ -3136,8 +3136,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied extension: evaluate and release deliberately",
-        "description": "Design evidence-based evaluation and a safe path from deterministic mechanics to a live model.",
+        "title": "Applied extension: evaluation and local models",
+        "description": "Evaluate the scripted workflow, then test the same research task with a local model.",
         "exitCriteria": [
           "Separate outcome checks, traces and judge calibration.",
           "Set explicit budgets and recognize deadline limits.",
@@ -3490,7 +3490,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Separate trusted application instructions from user requests and untrusted content. A retrieved page may contain text that looks like an instruction without having authority to change the task.",
-              "A study assistant may receive a page saying ignore earlier rules and export the learner profile. That sentence is document content, not a grant of permission. Keep the page in an explicitly identified evidence field. Define the actual allowed capabilities in code. Clear prompts help behavior, but prompts alone do not establish isolation or authorization."
+              "A study assistant may receive a page saying ignore earlier rules and export the learner profile. That sentence is document content, not a grant of permission. Keep the page in a field marked as retrieved content. Define the actual allowed capabilities in code. Clear prompts help behavior, but prompts alone do not establish isolation or authorization."
             ]
           },
           {
@@ -3929,7 +3929,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "State records what the application knows about a task: validated inputs, observed results, pending work and terminal status. Keep operational state separate from conversational prose.",
-              "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as running, needs_input, completed and failed. If a task resumes later, it needs enough information to distinguish a proposed action from one that actually executed."
+              "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as running, needs_input, completed and failed. If a task resumes later, it needs enough information to distinguish a proposed action from a completed tool call."
             ]
           },
           {
@@ -3971,7 +3971,7 @@ const LEARNING_PATHS = [
             "The presence of the tool name in the prompt"
           ],
           "correct": 0,
-          "explanation": "Operational progress is established by execution evidence, not by generated narration."
+          "explanation": "Mark the operation complete when the executor returns and records its result. A model-generated progress message cannot confirm execution."
         },
         "references": [
           {
@@ -4186,7 +4186,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A research question asks how to recover a failed import. Document A describes setup; document B describes rollback; document C contains an old rollback policy. A fluent answer from A alone is a retrieval failure before it is a writing failure. Keep the selected IDs visible and distinguish missing evidence from contradictory evidence.",
               "Try three questions against the same small corpus: one answerable verbatim, one paraphrase, and one absent topic. A lexical baseline may miss the paraphrase; returning any nonempty list must not automatically permit an answer. First inspect selection, then generation, then whether each claim is supported. An embedding model can change ranking without solving document freshness or access control.",
-              "In local_framework_lab.py, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable simply because the retriever always returns something."
+              "In local_framework_lab.py, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable because the retriever always returns something."
             ]
           }
         ],
@@ -4441,7 +4441,7 @@ const LEARNING_PATHS = [
             "Mark the step complete to preserve progress"
           ],
           "correct": 0,
-          "explanation": "Plans coordinate work; evidence determines whether their assumptions still hold."
+          "explanation": "Revise the next step when retrieved results contradict the plan. Record which actions ran and which remain proposals."
         },
         "references": [
           {
@@ -4569,7 +4569,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The two interpretations change different scheduling constraints, so the dependent edit waits for the learner’s answer."
+              "The two interpretations change different scheduling constraints, so the dependent edit waits for the learner's answer."
             ],
             "example": "User: \"Make my plan faster.\"\nAmbiguity: shorter daily sessions or earlier completion date?\nQuestion: \"Do you want fewer minutes per day, or to finish sooner?\"\nIndependent work: inspect the current plan if authorized\nDependent change: waits for the answer"
           },
@@ -4855,7 +4855,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Define budgets for proposals, tool calls, elapsed time and provider usage. Stop with an honest outcome when the task is complete, blocked or out of budget.",
+              "Define budgets for proposals, tool calls, elapsed time and provider usage. When the task is complete, blocked or out of budget, stop and report that status.",
               "A maximum step count prevents an endless sequence of model decisions but does not bound one hanging tool call. A deadline needs enforcement in the executor and cancellation semantics. Token and monetary costs depend on provider usage and configuration; avoid estimating exact bills from character counts. Measure end-to-end latency, including tool and queue time."
             ]
           },
@@ -5011,7 +5011,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Small synthetic datasets are useful for development but may not represent real traffic. Record provenance, revisions and labeling rules. Protect personal data in production-derived cases. A pass on a scripted source checks harness behavior; a real model evaluation requires actually running the model on the dataset and measuring variation."
+              "Small synthetic datasets are useful for development but may not represent real traffic. Record provenance, revisions and labeling rules. Protect personal data in production-derived cases. A pass on a scripted source checks harness behavior; a real model evaluation requires running the model on the dataset and measuring variation."
             ]
           }
         ],
@@ -5310,7 +5310,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "Workers return evidence and uncertainty; the coordinator resolves conflicts. Independent failure does not turn another worker’s result into proof."
+              "Workers return evidence and uncertainty; the coordinator resolves conflicts. Independent failure does not turn another worker's result into proof."
             ],
             "example": "Coordinator: compare prerequisites, no writes\n  -> Python worker: return sources + claims + uncertainties\n  -> SQL worker: return sources + claims + uncertainties\n  <- structured results, possibly conflicting\nCoordinator: reconcile evidence, cite claims, stop\nOne worker failing does not automatically validate the other."
           },
@@ -5710,7 +5710,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "Trace a lesson assistant",
-          "goal": "Run the scripted search-and-answer example and explain every boundary.",
+          "goal": "Run the scripted search-and-answer example. Trace the proposal, validation, tool call and returned result.",
           "fileIds": [
             "workshop-py",
             "test_workshop-py",
@@ -5720,10 +5720,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Run the scripted search-and-answer example and explain every boundary.",
-            "Complete the assessment requirements in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source.; Identify which fields are trusted policy and which are evidence.; Run one successful answer and one missing-evidence case.",
-            "Compare your evidence with the stage rubric: No scripted behavior is called model intelligence.; Citations are tied to observed IDs.; Missing evidence is reported without invented support."
+            "Build the project described in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source. Identify which fields are trusted policy and which are evidence. Run one successful answer and one missing-evidence case.",
+            "Check your result: No scripted behavior is called model intelligence. Citations are tied to observed IDs. Missing evidence is reported without invented support."
           ],
           "commands": [
             {
@@ -5734,7 +5734,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from ai-agents-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -5746,7 +5746,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; no model credentials or external services.",
             "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -5762,10 +5762,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Extend the offline test suite with malformed and unauthorized proposals.",
-            "Complete the assessment requirements in the reader: Add unknown tool, extra argument, oversized query and malformed output cases.; Assert invalid requests produce no tool execution.; Use a failing source and check explicit failure status.; Write an approval design for a hypothetical send tool; do not implement external delivery.",
-            "Compare your evidence with the stage rubric: Tests include accepted and rejected values.; Authority remains outside model output.; Failure statuses are not mislabeled success.; Hypothetical delivery has concrete approval and unknown-outcome handling."
+            "Build the project described in the reader: Add unknown tool, extra argument, oversized query and malformed output cases. Assert invalid requests produce no tool execution. Use a failing source and check explicit failure status. Write an approval design for a hypothetical send tool; do not implement external delivery.",
+            "Check your result: Tests include accepted and rejected values. Authority remains outside model output. Failure statuses are not mislabeled success. Hypothetical delivery has concrete approval and unknown-outcome handling."
           ],
           "commands": [
             {
@@ -5776,7 +5776,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from ai-agents-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -5788,7 +5788,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; no model credentials or external services.",
             "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -5829,12 +5829,12 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from ai-agents-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Optional depth exercise · extracted kit root",
               "command": "python -m unittest -v test_local_framework_lab.py",
-              "expected": "After installing the guide’s pinned dependencies, six real graph tests pass without a model."
+              "expected": "After installing the guide's pinned dependencies, six real graph tests pass without a model."
             }
           ],
           "prerequisites": [
@@ -5886,7 +5886,7 @@ const LEARNING_PATHS = [
     "title": "Application Security",
     "category": "Security",
     "status": "ready",
-    "description": "Learn trusted identity, object authorization, web input and session defenses, OAuth/OIDC boundaries and security verification through 21 lessons and three synthetic offline projects.",
+    "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 21 lessons. Three offline projects test these controls with synthetic records.",
     "level": "Foundations → intermediate application controls → integration extensions",
     "prerequisites": [
       "Basic programming and HTTP concepts; complete Python or web foundations if functions, dictionaries and requests are unfamiliar."
@@ -6037,7 +6037,7 @@ const LEARNING_PATHS = [
           {
             "title": "A cross-owner threat model",
             "paragraphs": [
-              "The synthetic notebook stores Alice’s and Bob’s private documents across two tenants. If Alice guesses Bob’s document ID, the unwanted action is reading another owner’s private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
+              "The synthetic notebook stores Alice's and Bob's private documents across two tenants. If Alice guesses Bob's document ID, the unwanted action is reading another owner's private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
               "Write asset -> entry point -> trust boundary -> abuse case -> control -> verification. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
             ],
             "example": "Asset: Bob private document\nEntry: GET /documents/b\nBoundary: request identity -> server policy -> stored object\nAbuse: Alice changes requested ID to b\nControl: tenant + ownership check\nEvidence: denied response and no document data"
@@ -6082,8 +6082,8 @@ const LEARNING_PATHS = [
           {
             "title": "Verified identity and policy",
             "paragraphs": [
-              "Authentication establishes who is acting under a particular mechanism. A principal is the server’s representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
-              "The offline Principal dataclass represents an identity already verified by a trusted adapter. It deliberately does not parse tokens, compare passwords or claim cryptographic verification. Only tests and trusted application code construct it; accepting this object’s fields from request JSON would defeat the boundary."
+              "Authentication establishes who is acting under a particular mechanism. A principal is the server's representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
+              "The offline Principal dataclass represents an identity already verified by a trusted adapter. It does not parse tokens, compare passwords or verify cryptographic signatures. Only tests and trusted application code construct it; accepting this object's fields from request JSON would defeat the boundary."
             ]
           },
           {
@@ -6106,7 +6106,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Can an API trust a caller’s JSON field subject=alice?",
+          "question": "Can an API trust a caller's JSON field subject=alice?",
           "options": [
             "Yes, because JSON has a defined syntax.",
             "No; trusted server authentication must establish the principal before authorization uses it.",
@@ -6141,7 +6141,7 @@ const LEARNING_PATHS = [
           {
             "title": "Anonymous access and login errors",
             "paragraphs": [
-              "An anonymous request cannot read Alice’s private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
+              "An anonymous request cannot read Alice's private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
               "Public login errors should avoid revealing whether an account exists. Internal monitoring still needs structured failure reasons and rate evidence without storing passwords. Recovery verification should be at least as carefully designed as ordinary login."
             ],
             "example": "from security_lab import read_document\ntry:\n    read_document(None,'a')\nexcept PermissionError:\n    pass\nelse:\n    raise AssertionError('anonymous read allowed')"
@@ -6193,14 +6193,14 @@ const LEARNING_PATHS = [
           {
             "title": "Principal, resource and action",
             "paragraphs": [
-              "Authorization is a decision over principal, resource, action and relevant context. Roles alone often miss object relationships: a member may update their own document but not another member’s. Tenant checks prevent a same-named subject from crossing organizational boundaries.",
+              "Authorization is a decision over principal, resource, action and relevant context. Roles alone often miss object relationships: a member may update their own document but not another member's. Tenant checks prevent a same-named subject from crossing organizational boundaries.",
               "The reference policy accepts only read/update, requires matching tenant, then grants owners both actions and readers read-only access. Every other action defaults to denial. UI visibility and unpredictable identifiers are usability measures, not authorization enforcement."
             ]
           },
           {
             "title": "The ownership policy matrix",
             "paragraphs": [
-              "Alice in red can read a, cannot read Bob’s b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
+              "Alice in red can read a, cannot read Bob's b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
               "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
             ],
             "example": "from security_lab import Principal, DOCUMENTS, authorized\nassert authorized(Principal('alice','red'),DOCUMENTS['a'],'update')\nassert not authorized(Principal('alice','red'),DOCUMENTS['c'],'read')\nassert not authorized(Principal('reviewer','red','reader'),DOCUMENTS['b'],'update')"
@@ -6208,7 +6208,7 @@ const LEARNING_PATHS = [
           {
             "title": "Break a convincing but incomplete ownership check",
             "paragraphs": [
-              "Alice in tenant Red requests document a. The request has a valid session and a valid CSRF token. Now change only the path to Bob’s document b: the session is still valid, but object authorization must fail. Next use Alice’s identity in tenant Blue against a. Checking only the owner name now fails to separate tenants. The predicate needs the authenticated tenant, owner and permitted action together.",
+              "Alice in tenant Red requests document a. The request has a valid session and a valid CSRF token. Now change only the path to Bob's document b: the session is still valid, but object authorization must fail. Next use Alice's identity in tenant Blue against a. Checking only the owner name now fails to separate tenants. The predicate needs the authenticated tenant, owner and permitted action together.",
               "Run test_security_http.py and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
               "Changed case: add a read-only collaborator. Decide whether they may read, rename or delete before altering the code. A role called member cannot replace action-specific requirements. Add one allowed read and one denied mutation; avoid solving the negative test by denying every request."
             ]
@@ -6582,7 +6582,7 @@ const LEARNING_PATHS = [
             "title": "Cookie attributes",
             "paragraphs": [
               "A browser sends cookies according to scope and attributes. Secure limits transmission to secure contexts; HttpOnly prevents ordinary JavaScript cookie reads; SameSite influences cross-site sending. Path/domain scope and expiry also matter. None of these attributes establishes object authorization.",
-              "Prefer a deliberately scoped session cookie over exposing a session ID to application JavaScript without need. For a __Host- prefixed cookie, browsers require Secure, Path=/ and no Domain. A real integration must be tested under HTTPS and the browser’s current behavior."
+              "Set the session cookie's scope to match the application. Avoid exposing the session ID to JavaScript unless the application requires it. For a __Host- prefixed cookie, browsers require Secure, Path=/ and no Domain. A real integration must be tested under HTTPS and the browser's current behavior."
             ]
           },
           {
@@ -6648,7 +6648,7 @@ const LEARNING_PATHS = [
           {
             "title": "Password hashing and factors",
             "paragraphs": [
-              "Passwords must be stored using a suitable password-hashing mechanism with salts and an appropriate work factor, not encryption for later recovery or a fast general-purpose hash. Established libraries/providers handle these details; the course deliberately provides no homemade password hash.",
+              "Passwords must be stored using a suitable password-hashing mechanism with salts and an appropriate work factor, not encryption for later recovery or a fast general-purpose hash. Established libraries/providers handle these details; the course provides no custom password-hashing implementation.",
               "Multi-factor authentication combines factors with distinct compromise properties. Two passwords are not two independent factor types. Recovery, factor enrollment and replacement can become weaker bypasses if they are not protected and monitored."
             ]
           },
@@ -6656,7 +6656,7 @@ const LEARNING_PATHS = [
             "title": "Login and recovery policy",
             "paragraphs": [
               "Design a login-and-recovery table: operation, required proof, throttling, session effect and safe audit outcome. A password change or account recovery may require revoking prior sessions. The offline module can test the downstream revocation policy but cannot prove a real factor ceremony.",
-              "Choose phishing-resistant mechanisms where the application’s risk and provider support justify them. Avoid treating an SMS code or authenticator code as identical to a passkey’s properties. Record the actual provider mechanism and tested failure paths."
+              "Choose phishing-resistant mechanisms where the application's risk and provider support justify them. Avoid treating an SMS code or authenticator code as identical to a passkey's properties. Record the actual provider mechanism and tested failure paths."
             ],
             "example": "Operation: factor replacement\nRequired proof: strong reauthentication + provider policy\nFailure: do not change factor or issue privileged session\nEvidence: old factor revoked, new enrollment verified, sanitized audit"
           }
@@ -6707,14 +6707,14 @@ const LEARNING_PATHS = [
           {
             "title": "Ambient credentials and intent",
             "paragraphs": [
-              "Cross-site request forgery exploits ambient browser credentials to cause an unwanted action. A victim’s browser may attach a valid session cookie to an attacker-initiated request. Authentication alone therefore does not establish deliberate user intent for a state-changing operation.",
+              "Cross-site request forgery exploits ambient browser credentials to cause an unwanted action. A victim's browser may attach a valid session cookie to an attacker-initiated request. Authentication alone therefore does not establish deliberate user intent for a state-changing operation.",
               "The synthetic session stores an unpredictable CSRF token and requires a matching token for a mutation. This illustrates the server-side synchronizer-token decision. A real implementation also defines safe methods, origin checks, SameSite policy and framework integration; GET should not mutate state."
             ]
           },
           {
             "title": "Session-bound CSRF checks",
             "paragraphs": [
-              "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B’s token, and reject an expired session. ASCII validation ensures malformed input fails as PermissionError rather than leaking an internal comparison exception.",
+              "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation ensures malformed input fails as PermissionError rather than leaking an internal comparison exception.",
               "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
             ],
             "example": "from security_lab import Sessions, Principal\ns=Sessions(); sid=s.login(Principal('alice','red'),0)\ntoken=s.records[sid][2]  # trusted fixture inspection\ns.csrf(sid,token,1)\n# A missing or another session's token is denied."
@@ -6914,7 +6914,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Explain why reusing title_html’s escaping inside a JavaScript string or an href is unsafe. Propose a safe sink for plain text.",
+          "prompt": "Explain why reusing title_html's escaping inside a JavaScript string or an href is unsafe. Propose a safe sink for plain text.",
           "solution": "Use textContent or the template engine’s escaped text context for plain text. JavaScript and URL contexts require their own APIs/validation and should not receive copied HTML escaping. Test the actual rendering sink in a browser integration rather than claiming the local text fixture covers every context.",
           "solutionFormat": "prose",
           "checks": [
@@ -6960,13 +6960,13 @@ const LEARNING_PATHS = [
             "title": "SQL values and structure",
             "paragraphs": [
               "SQL injection occurs when untrusted input changes the structure of a database instruction. Bind parameters with the driver rather than concatenate quoted values. Parameters handle values; identifiers or sort directions require an explicit allowlist mapping because they are part of structure.",
-              "find_title uses SQLite’s ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
+              "find_title uses SQLite's ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
             ]
           },
           {
             "title": "Real parameter-binding evidence",
             "paragraphs": [
-              "The synthetic input apostrophe OR 1=1 is searched literally and matches no title. The normal Alice private value returns one row, and the total row count remains two. This exercises a real local SQL engine’s binding, not merely a mock query string.",
+              "The synthetic input apostrophe OR 1=1 is searched literally and matches no title. The normal Alice private value returns one row, and the total row count remains two. This exercises a real local SQL engine's binding, not merely a mock query string.",
               "Prepared queries do not establish object authorization. Scope the queried records to the trusted principal/tenant and apply least database privileges. An ORM can still expose injection if raw SQL strings are assembled unsafely."
             ],
             "example": "from security_lab import synthetic_database, find_title\nc=synthetic_database()\ntry:\n    assert find_title(c,\"' OR 1=1 --\") == []\nfinally:\n    c.close()"
@@ -7019,7 +7019,7 @@ const LEARNING_PATHS = [
             "title": "OAuth participants",
             "paragraphs": [
               "OAuth has a resource owner, client, authorization server and resource server. The client obtains an access token with an intended scope and audience so it can access a protected resource. Different participants have different trust relationships and credentials.",
-              "Do not assume that receiving an access token means the client has authenticated the user for its own login purposes. OpenID Connect adds a standardized identity layer. An access token’s scope is also not a substitute for application ownership policy."
+              "Do not assume that receiving an access token means the client has authenticated the user for its own login purposes. OpenID Connect adds a standardized identity layer. An access token's scope is also not a substitute for application ownership policy."
             ]
           },
           {
@@ -7042,7 +7042,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Does an OAuth access token automatically prove a client’s user-login identity?",
+          "question": "Does an OAuth access token automatically prove a client's user-login identity?",
           "options": [
             "Yes; every access token is an ID token with the same audience.",
             "Yes; any decoded subject field is sufficient.",
@@ -7206,14 +7206,14 @@ const LEARNING_PATHS = [
           {
             "title": "Identity tokens and recipients",
             "paragraphs": [
-              "OpenID Connect builds an identity layer on OAuth. An ID token communicates authentication claims to its intended client. The client must validate it under the issuer’s documented metadata, key and claim rules; it should not treat a decoded payload as a verified identity.",
+              "OpenID Connect builds an identity layer on OAuth. An ID token communicates authentication claims to its intended client. The client must validate it under the issuer's documented metadata, key and claim rules; it should not treat a decoded payload as a verified identity.",
               "ID tokens and access tokens serve different recipients and purposes. An ID token for the client is not a bearer access token for every API. Stable subject identity includes the issuer context; email is not universally a permanent account key."
             ]
           },
           {
             "title": "Provider validation and local limits",
             "paragraphs": [
-              "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library’s integration tests.",
+              "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library's integration tests.",
               "The local Principal is a downstream test seam only. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
             ],
             "example": "OIDC login adapter -> verified (issuer, subject)\nApplication account mapping -> internal principal\nDocument policy -> permitted action\n# An unverified payload cannot enter this pipeline as a principal."
@@ -7378,7 +7378,7 @@ const LEARNING_PATHS = [
             "title": "Tracing the authorization callback",
             "paragraphs": [
               "Trace the training flow: initiation stores correlation, authorization sends challenge/state/nonce as applicable, callback checks correlation and redeems the code with the verifier, and the client validates the ID token. Replay and mismatched redirect/correlation cases must fail.",
-              "The worksheet deliberately has no cryptographic implementation or live endpoint. Real tests use the provider’s supported flow and record sanitized outcomes. A passing authorization policy unit test says nothing about PKCE verification."
+              "The worksheet has no cryptographic implementation or live endpoint. Real tests use the provider's supported flow and record sanitized outcomes. A passing authorization policy unit test says nothing about PKCE verification."
             ],
             "example": "Authorization: code_challenge=<S256 challenge>, state=<correlation>\nRedemption: code_verifier=<per-flow verifier>\nOIDC request/ID token: nonce under the chosen library contract\n# Do not log these values or implement fake redemption."
           },
@@ -7386,8 +7386,8 @@ const LEARNING_PATHS = [
             "title": "Track two browser login attempts independently",
             "paragraphs": [
               "Two tabs begin login. Tab A stores state A and verifier A; tab B stores state B and verifier B. If your implementation keeps one global verifier, B overwrites A. The response for A may then be associated with the wrong initiating transaction. Store pending flows by unpredictable state with expiry and one-time consumption, rather than one shared current-login value.",
-              "A local transaction-binding test can create A and B, complete B first, and then complete A. Completing A again must fail; an unknown state must fail before exchanging a code. This test proves your state bookkeeping, not an identity provider’s signature validation. Keep the provider adapter separate so a fake successful token response cannot bypass issuer, audience or nonce checks.",
-              "Use login_flow_lab.py for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library’s documented token-validation path."
+              "A local transaction-binding test can create A and B, complete B first, and then complete A. Completing A again must fail; an unknown state must fail before exchanging a code. This test proves your state bookkeeping, not an identity provider's signature validation. Keep the provider adapter separate so a fake successful token response cannot bypass issuer, audience or nonce checks.",
+              "Use login_flow_lab.py for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library's documented token-validation path."
             ]
           }
         ],
@@ -7553,7 +7553,7 @@ const LEARNING_PATHS = [
             "title": "Trusted validation rules",
             "paragraphs": [
               "A JWT payload can be decoded without establishing who created it. A resource server must use a maintained validator configured for allowed algorithms, trusted issuer/key sources, intended audience and relevant lifetime/type rules. Accepting whichever algorithm or key URL a token suggests can cross a trust boundary.",
-              "Signature success alone is insufficient: a correctly signed token for another audience or issuer must still fail. Token purpose and expected claim rules matter. Opaque access tokens require the provider’s documented mechanism, which may be introspection rather than local JWT validation."
+              "Signature success alone is insufficient: a correctly signed token for another audience or issuer must still fail. Token purpose and expected claim rules matter. Opaque access tokens require the provider's documented mechanism, which may be introspection rather than local JWT validation."
             ]
           },
           {
@@ -7579,7 +7579,7 @@ const LEARNING_PATHS = [
           "question": "Is a parsed payload with exp in the future a verified token?",
           "options": [
             "Yes; expiry is the only required token property.",
-            "Yes; base64 text proves the issuer’s identity.",
+            "Yes; base64 text proves the issuer's identity.",
             "No; parsing and one claim check do not establish signature, issuer, audience or token-purpose validity."
           ],
           "correct": 2,
@@ -7927,14 +7927,14 @@ const LEARNING_PATHS = [
           {
             "title": "Dependency identity and advisories",
             "paragraphs": [
-              "Your application includes code and packages you did not author. Pin and lock dependencies under an explicit update policy, retain provenance and inventory what is actually shipped. A package version in a README does not prove the deployed artifact uses that version.",
+              "Your application includes code and packages you did not author. Pin and lock dependencies under an explicit update policy, retain provenance and inventory the packages in the shipped artifact. A package version in a README does not prove the deployed artifact uses that version.",
               "An advisory scanner reports known signals, not a complete exploitability assessment or a guarantee that everything unreported is safe. Consider affected versions, reachable use, deployment context and available fixes. Test upgrades rather than ignoring breaking changes indefinitely."
             ]
           },
           {
             "title": "Runtime inventory and updates",
             "paragraphs": [
-              "The local kit uses only Python’s standard library and the installed Git binary, so its inventory starts with those runtime versions and local source files. This reduces setup but does not mean the runtimes have no vulnerabilities.",
+              "The local kit uses only Python's standard library and the installed Git binary, so its inventory starts with those runtime versions and local source files. This reduces setup but does not mean the runtimes have no vulnerabilities.",
               "For a real OIDC adapter, record library/provider/runtime versions and follow their maintenance notices. Map an advisory to the shipped lockfile/artifact, assess impact, update, run security regression checks, and document unresolved exposure."
             ],
             "example": "Inventory: component / version / source / shipped artifact / owner\nAdvisory: affected range / reachable use / exposure / fix\nEvidence: updated lockfile + candidate tests + artifact version\nRemaining risk: explicit decision and review date"
@@ -7955,10 +7955,10 @@ const LEARNING_PATHS = [
           "options": [
             "Yes; zero findings is equivalent to complete security verification.",
             "Yes; runtime maintenance is unnecessary once source is tested.",
-            "No; it reports the scanner’s known coverage, while design, configuration and unknown vulnerabilities still matter."
+            "No; it reports the scanner's known coverage, while design, configuration and unknown vulnerabilities still matter."
           ],
           "correct": 2,
-          "explanation": "No; it reports the scanner’s known coverage, while design, configuration and unknown vulnerabilities still matter."
+          "explanation": "No; it reports the scanner's known coverage, while design, configuration and unknown vulnerabilities still matter."
         },
         "references": [
           {
@@ -8031,7 +8031,7 @@ const LEARNING_PATHS = [
           {
             "title": "Adversarial control tests",
             "paragraphs": [
-              "Security tests should challenge each control’s actual failure mode. A successful request demonstrates functionality; foreign ownership, malformed input, expired session and injected text demonstrate selected defenses. Keep assertions about effects as well as status: a denied mutation must not change stored state.",
+              "Security tests should challenge each control's actual failure mode. A successful request demonstrates functionality; foreign ownership, malformed input, expired session and injected text demonstrate selected defenses. Keep assertions about effects as well as status: a denied mutation must not change stored state.",
               "ASVS is a verification standard with a larger scope than this selected course. Choose applicable requirements and a suitable level for the actual application. Do not call a handful of local tests ASVS certification or assume every requirement is applicable to every architecture."
             ]
           },
@@ -8104,8 +8104,8 @@ const LEARNING_PATHS = [
           {
             "title": "An offline incident runbook",
             "paragraphs": [
-              "For a cross-owner read defect, stop the affected exposure, establish the scope, fix server authorization and test every alternate endpoint. For a leaked bearer or key, revocation/rotation is necessary even after source cleanup. Communication and destructive operations require the organization’s actual authority.",
-              "The advanced kit produces an offline runbook with triggers, actions, ownership, validation, rollback and remaining risk. It sends no messages or scans live systems. The runbook is reviewable practice, not evidence of an executed incident response."
+              "For a cross-owner read defect, stop the affected exposure, establish the scope, fix server authorization and test every alternate endpoint. For a leaked bearer or key, revocation/rotation is necessary even after source cleanup. Communication and destructive operations require the organization's actual authority.",
+              "The advanced kit produces an offline runbook with triggers, actions, ownership, validation, rollback and remaining risk. It sends no messages or scans live systems. Writing the runbook prepares the response; it does not show that anyone has executed it."
             ],
             "example": "Trigger: cross-tenant read observed\nContainment: restrict affected route under approved authority\nEvidence: sanitized request IDs and candidate versions\nCorrection: tenant + object policy at data boundary\nVerification: foreign subject/tenant denial + legitimate success\nRecovery: approved rollout and monitoring"
           }
@@ -8144,8 +8144,8 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation: Private-document authorization contract",
-        "description": "Verify tenant/owner/action decisions and narrow update shapes on synthetic records.",
+        "title": "Foundation: private-document authorization contract",
+        "description": "Test tenant, owner and action checks on synthetic records. Reject unexpected update fields.",
         "exitCriteria": [
           "Cross-owner and cross-tenant reads are denied without private data.",
           "Unknown actions default to denial.",
@@ -8173,8 +8173,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate: Validated content and session defense portfolio",
-        "description": "Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF decision with negative assertions.",
+        "title": "Intermediate: validated content and session defense portfolio",
+        "description": "Test text encoding, SQL parameters, session state and CSRF decisions, including rejected requests.",
         "exitCriteria": [
           "Synthetic attack strings remain data in the documented contexts.",
           "SQL binding executes against a real in-memory SQLite fixture.",
@@ -8203,8 +8203,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied extension: Security verification and identity integration review",
-        "description": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+        "title": "Applied extension: security verification and identity integration review",
+        "description": "Write an incident runbook and identify which controls still need a real provider or browser test.",
         "exitCriteria": [
           "No raw token, cookie, credential or private body enters evidence.",
           "Local test claims match their actual boundary.",
@@ -8214,7 +8214,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Security verification and identity integration review",
-          "brief": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+          "brief": "Write a control checklist and incident runbook. If you choose the real-provider extension, plan its setup and tests separately from the offline checks.",
           "requirements": [
             "Run the entire local regression suite and OperationsTests.",
             "Document log fields and single-process rate-limit limitations.",
@@ -8360,7 +8360,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         },
         {
@@ -8407,13 +8407,13 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         },
         {
           "id": "advanced",
           "title": "Security verification and identity integration review",
-          "goal": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
+          "goal": "Write a control checklist and incident runbook. If you choose the real-provider extension, plan its setup and tests separately from the offline checks.",
           "fileIds": [
             "security_lab-py",
             "test_security_lab-py",
@@ -8462,7 +8462,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly."
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         }
       ],
@@ -8499,7 +8499,7 @@ const LEARNING_PATHS = [
     "title": "C# & .NET",
     "category": "Programming",
     "status": "ready",
-    "description": "Progress from C# fundamentals to tested APIs, then practice cancellation, concurrency, secure resource access, schema evolution, observability and deployment decisions.",
+    "description": "Learn C# and build tested APIs. Practise cancellation, concurrency, resource authorization, schema changes, telemetry and deployment checks.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Comfort using a terminal and editing a text file.",
@@ -9204,7 +9204,7 @@ const LEARNING_PATHS = [
             "title": "Dispose owned resources",
             "paragraphs": [
               "Some objects hold operating-system resources. using ensures Dispose runs even if the operation throws. The scope should be short and ownership clear.",
-              "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether data was actually saved."
+              "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether the save succeeded."
             ],
             "example": "using var reader = new StringReader(\"Read\\nPractice\");\nConsole.WriteLine(reader.ReadLine());\n// Expected: Read; reader is disposed when its scope ends"
           }
@@ -10550,7 +10550,7 @@ const LEARNING_PATHS = [
             "title": "A successful status does not validate the response body",
             "paragraphs": [
               "The client expects id7 and integer minutes0..1440. The handler returns200 with a missing minutes field, a wrong ID, negative minutes or numeric text. Each shape is rejected. A deserialized object with default values could otherwise turn missing data into a believable result.",
-              "The lesson reference deliberately allows unknown extra JSON fields for additive compatibility, and uses JSON parser semantics for duplicate properties. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement that explicitly and add corresponding tests."
+              "The reference allows extra JSON fields so the service can add fields without breaking this client. Duplicate properties follow the JSON parser's behavior. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement those rules and test them."
             ]
           }
         ],
@@ -11616,7 +11616,7 @@ const LEARNING_PATHS = [
           {
             "title": "Make a safe release sequence",
             "paragraphs": [
-              "A rollout needs passing tests, reviewed schema changes applied by a dedicated deployment process, and readiness checks in the target environment. Multiple replicas need shared durable data; the practice app’s memory store is local to each process.",
+              "A rollout needs passing tests, reviewed schema changes applied by a dedicated deployment process, and readiness checks in the target environment. Multiple replicas need shared durable data; the practice app's memory store is local to each process.",
               "A rollback of code is not automatically a rollback of a destructive schema change. Favor compatible expand-and-contract migrations: add a new representation, migrate data, switch readers, then remove the old representation in a later release."
             ],
             "example": "// Release checklist as an executable workflow outline:\n// build -> tests -> publish -> reviewed migration -> start new instance\n// readiness succeeds -> direct limited traffic -> observe error rate/latency\n// unhealthy -> stop traffic to new instance and restore prior compatible build\n// Validate reverse proxy headers, HTTPS and authorization in staging."
@@ -11953,7 +11953,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Foundations",
-        "description": "Write and explain small C# programs with deliberate types, validation, methods, objects and asynchronous control flow.",
+        "description": "Write C# programs with types, validation, methods, objects and asynchronous control flow.",
         "exitCriteria": [
           "Run the console reference and explain each output.",
           "Reject blank task titles and handle missing IDs without a null-reference failure.",
@@ -11962,7 +11962,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Console task notebook",
-          "brief": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+          "brief": "Build a console task list. Complete a task, list the remaining tasks, and assert that invalid input is rejected.",
           "requirements": [
             "Task IDs are positive and titles are trimmed and nonblank.",
             "Completion changes only the intended task.",
@@ -11982,7 +11982,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Intermediate application practice",
-        "description": "Assemble a predictable HTTP API, verify its boundary, and evolve a persistent relational implementation safely.",
+        "description": "Build an HTTP API, test its requests and responses, and add relational persistence.",
         "exitCriteria": [
           "Run the package-free API and all 11 HTTP acceptance assertions.",
           "Add unit tests for title normalization and boundary rules.",
@@ -11992,7 +11992,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Versioned task API with persistent storage",
-          "brief": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+          "brief": "Add SQLite persistence to the downloadable API. Preserve its request and response behavior, test version conflicts, and verify the schema migration.",
           "requirements": [
             "Create, page, fetch and complete tasks with validated DTOs.",
             "Return 400, 404 and 409 consistently; the POST Location is retrievable.",
@@ -12014,7 +12014,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice",
-        "description": "Work through cancellation, overload, identity, operations and recovery using measured evidence. Completion establishes experience with these scenarios, not comprehensive .NET expertise.",
+        "description": "Test cancellation, overload, authorization and recovery. These exercises cover selected scenarios, not the full .NET platform.",
         "exitCriteria": [
           "Prove cancellation reaches downstream I/O and permits are released after failure.",
           "Demonstrate bounded work and a database-backed concurrency conflict across separate contexts.",
@@ -12025,7 +12025,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Operational and secure task service",
-          "brief": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+          "brief": "Extend the persistent API and run its failure tests. Prepare deployment and recovery instructions, separating executed checks from those that still need a staging environment.",
           "requirements": [
             "Use a real authentication handler with issuer/audience/lifetime validation.",
             "Set ownership from trusted identity and authorize every task read/write.",
@@ -12095,19 +12095,19 @@ const LEARNING_PATHS = [
           "id": "PersistenceChecks-csproj",
           "href": "paths/dotnet/practice/PersistenceChecks.csproj",
           "role": "test",
-          "description": "PersistenceChecks.csproj — guided executable scaffold"
+          "description": "PersistenceChecks.csproj. guided executable scaffold"
         },
         {
           "id": "persistence-api-cs",
           "href": "paths/dotnet/practice/persistence-api.cs",
           "role": "reference",
-          "description": "persistence-api.cs — guided executable scaffold"
+          "description": "persistence-api.cs. guided executable scaffold"
         },
         {
           "id": "persistence-checks-cs",
           "href": "paths/dotnet/practice/persistence-checks.cs",
           "role": "test",
-          "description": "persistence-checks.cs — guided executable scaffold"
+          "description": "persistence-checks.cs. guided executable scaffold"
         },
         {
           "id": "depth-HttpBoundary-cs",
@@ -12132,7 +12132,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "Console task notebook",
-          "goal": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+          "goal": "Build a console task list. Complete a task, list the remaining tasks, and assert that invalid input is rejected.",
           "fileIds": [
             "README-md",
             "foundation-cs",
@@ -12147,8 +12147,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
             "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
-            "Complete the assessment requirements in the reader: Task IDs are positive and titles are trimmed and nonblank.; Completion changes only the intended task.; An empty list and unknown ID have explicit behavior.; Four or more assertions cover a normal case and boundary failures.; Explain one nullable value and one disposable resource from your implementation.",
-            "Compare your evidence with the stage rubric: Correctness: expected output and assertions pass.; Boundaries: blank title, invalid ID and missing lookup are handled deliberately.; Design: presentation is separate from reusable task behavior.; Explanation: learner can trace state changes and describe why validation lives at the boundary.",
+            "Build the project described in the reader: Task IDs are positive and titles are trimmed and nonblank. Completion changes only the intended task. An empty list and unknown ID have explicit behavior. Four or more assertions cover a normal case and boundary failures. Explain one nullable value and one disposable resource from your implementation.",
+            "Check your result: Correctness: expected output and assertions pass. Boundaries: blank title, invalid ID and missing lookup are handled deliberately. Design: presentation is separate from reusable task behavior. Explanation: learner can trace state changes and describe why validation lives at the boundary.",
             "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
           ],
           "commands": [
@@ -12172,13 +12172,13 @@ const LEARNING_PATHS = [
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
             "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
           "id": "intermediate",
           "title": "Versioned task API with persistent storage",
-          "goal": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+          "goal": "Add SQLite persistence to the downloadable API. Preserve its request and response behavior, test version conflicts, and verify the schema migration.",
           "fileIds": [
             "README-md",
             "foundation-cs",
@@ -12196,8 +12196,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
             "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
-            "Complete the assessment requirements in the reader: Create, page, fetch and complete tasks with validated DTOs.; Return 400, 404 and 409 consistently; the POST Location is retrievable.; Use scoped DbContext and parameterized queries.; Review migration code/SQL and test upgrade from a previous schema.; Persist task state across restart and protect competing updates.; Make task plus audit creation atomic and test rollback from a new context.",
-            "Compare your evidence with the stage rubric: HTTP behavior: executable acceptance checks verify successful and rejected requests.; Persistence: restart and fresh-context tests establish stored state.; Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.; Maintainability: typed storage boundary, scope ownership and package versions are explained.; Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
+            "Build the project described in the reader: Create, page, fetch and complete tasks with validated DTOs. Return 400, 404 and 409 consistently; the POST Location is retrievable. Use scoped DbContext and parameterized queries. Review migration code/SQL and test upgrade from a previous schema. Persist task state across restart and protect competing updates. Make task plus audit creation atomic and test rollback from a new context.",
+            "Check your result: HTTP behavior: executable acceptance checks verify successful and rejected requests. Persistence: restart and fresh-context tests establish stored state. Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts. Maintainability: typed storage boundary, scope ownership and package versions are explained. Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
             "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
           ],
           "commands": [
@@ -12231,13 +12231,13 @@ const LEARNING_PATHS = [
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
             "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
           "id": "advanced",
           "title": "Operational and secure task service",
-          "goal": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+          "goal": "Extend the persistent API and run its failure tests. Prepare deployment and recovery instructions, separating executed checks from those that still need a staging environment.",
           "fileIds": [
             "README-md",
             "foundation-cs",
@@ -12255,8 +12255,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
             "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
-            "Complete the assessment requirements in the reader: Use a real authentication handler with issuer/audience/lifetime validation.; Set ownership from trusted identity and authorize every task read/write.; Propagate request cancellation, bound dependency work and avoid unobserved tasks.; Add structured problem responses, logs, traces/metrics collection and readiness checks.; Test migrations, transaction failures, stale versions and authorization denials.; Publish a release build, measure bounded queries and document backup/rollback and limitations.",
-            "Compare your evidence with the stage rubric: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.; Resilience: controlled cancellation/failure scenarios terminate work and release resources.; Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.; Performance: before/after measurements use the same workload and preserve correctness.; Delivery: published build checks succeed and the rollback plan handles persistent data.; Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
+            "Build the project described in the reader: Use a real authentication handler with issuer/audience/lifetime validation. Set ownership from trusted identity and authorize every task read/write. Propagate request cancellation, bound dependency work and avoid unobserved tasks. Add structured problem responses, logs, traces/metrics collection and readiness checks. Test migrations, transaction failures, stale versions and authorization denials. Publish a release build, measure bounded queries and document backup/rollback and limitations.",
+            "Check your result: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement. Resilience: controlled cancellation/failure scenarios terminate work and release resources. Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable. Performance: before/after measurements use the same workload and preserve correctness. Delivery: published build checks succeed and the rollback plan handles persistent data. Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
             "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
           ],
           "commands": [
@@ -12290,7 +12290,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Install the .NET 10 SDK. Commands below use PowerShell.",
             "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -12350,7 +12350,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Choose a disposable subscription scope deliberately; review costs, identity and cleanup before optional real cloud work.",
-      "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+      "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
     ],
     "sources": [
       {
@@ -13540,7 +13540,7 @@ const LEARNING_PATHS = [
           {
             "title": "Separate observed state, desired configuration and ownership",
             "paragraphs": [
-              "Imagine configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh learns the live value; a normal plan can then propose false because configuration still owns the desired value. A refresh-only operation would update observations without enforcing that intent. Treat an emergency change as an ownership decision: codify it with a reason or restore the intended control.",
+              "Configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
               "Adopting an existing account adds a mapping between a Terraform address and the remote identity. If the configuration omits a required encryption or network property, the first post-import plan may propose an unexpected change. Compare the observed account, configuration and proposed actions before accepting management. Two state owners can each try to undo the other's changes; importing twice does not create high availability."
             ],
             "example": "configuration: public_access=false\nremote observation: public_access=true\nnormal plan: restore false\nrefresh-only: record true, do not remediate remote access",
@@ -13766,7 +13766,7 @@ const LEARNING_PATHS = [
           {
             "title": "Validation, plan and promotion",
             "paragraphs": [
-              "Run formatting, validation and policy checks before credentialed actions. Pull-request code may be untrusted and should not receive deployment secrets. Review plan artifacts, commit identity, environment and provider selection. Promotion should bind the reviewed code and configuration to the target environment and permit a deliberate rollback or recovery path."
+              "Run formatting, validation and policy checks before using deployment credentials. Pull-request code may be untrusted, so it should not receive deployment secrets. Check the saved plan, source commit, environment and provider selection. Apply the reviewed code and configuration to the intended environment, with a defined rollback or recovery procedure."
             ]
           },
           {
@@ -13963,7 +13963,7 @@ const LEARNING_PATHS = [
           "prompt": "Build an evidence table with syntax, static policy, provider validation and deployed positive/negative tests. Mark the latter as not executed. Do not equate a mocked provider result with a successful live deployment.",
           "checks": [
             "Create distinct syntax, model, provider and deployed-service evidence rows.",
-            "Mark unexecuted live tests honestly and explain Terraform-test cost behavior."
+            "Identify live tests you have not run and explain which Terraform tests can create billable resources."
           ],
           "solution": "JSON parsing establishes syntax; local Python tests establish this inventory model's rules; initialized Terraform validate checks language/provider schema. A real plan/deployment and allowed/denied endpoint tests require a chosen environment. Terraform test can provision by default unless explicitly configured for planned/mocked behavior with compatible versions.",
           "solutionFormat": "prose"
@@ -14087,7 +14087,7 @@ const LEARNING_PATHS = [
           {
             "title": "Infrastructure decisions and evidence",
             "paragraphs": [
-              "A reviewable portfolio has an ADR, scope and identity map, resource graph, plan classification, data restore plan, cost categories, cleanup procedure and evidence ledger. Record which local tests passed, which provider checks ran and which real deployment questions remain."
+              "Document the architecture decision, resource relationships, account scope and permissions. Include the proposed changes, restore procedure, expected costs and cleanup commands. List the local tests and provider checks you ran, with their results. Identify deployment questions those checks cannot answer."
             ]
           },
           {
@@ -14520,7 +14520,7 @@ const LEARNING_PATHS = [
           {
             "title": "Consumers and row grain",
             "paragraphs": [
-              "A data pipeline moves and transforms records for an identifiable consumer. Define the question, owner, refresh interval and acceptable errors before choosing tools. Grain means what one row represents; a unique order, order line and daily total have different grains."
+              "A data pipeline moves and transforms records for a specific consumer. Define the question it answers, who owns it, how often it refreshes and which errors are acceptable. Grain means what one row represents. A row for an order, an order line and a daily total each has a different grain."
             ]
           },
           {
@@ -14575,7 +14575,7 @@ const LEARNING_PATHS = [
           {
             "title": "Extraction, transformation and loading",
             "paragraphs": [
-              "ETL extracts data, transforms it and loads a target. ELT extracts and loads before target-side transformation. Both require contracts, lineage and quality checks. A raw zone preserves source evidence; a curated zone carries validated, consumer-specific meaning."
+              "ETL extracts data, transforms it, then loads the target. ELT loads the extracted data before transforming it in the target system. Both need input contracts, lineage and quality checks. Keep source records in the raw zone. Put validated data prepared for a specific consumer in the curated zone."
             ]
           },
           {
@@ -14902,7 +14902,7 @@ const LEARNING_PATHS = [
           {
             "title": "Event time and business calendars",
             "paragraphs": [
-              "Event time records when an event occurred; ingestion time records when your system received it. Aware timestamps include a timezone offset. Normalize instants before comparing them, then choose an explicit business calendar for daily aggregation."
+              "Event time records when an event occurred. Ingestion time records when your system received it. Timezone-aware timestamps include an offset. Normalize instants before comparing them, then choose the business calendar used for daily totals."
             ]
           },
           {
@@ -15231,7 +15231,7 @@ const LEARNING_PATHS = [
           {
             "title": "Composite extraction cursors",
             "paragraphs": [
-              "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple. Persist it only after downstream commit succeeds. Timestamp-only comparisons can miss tied rows; ordering and a tie-breaker must be part of the contract."
+              "A watermark records how far extraction has progressed, using a source sequence number or an (updated_at, id) tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
             ]
           },
           {
@@ -15949,7 +15949,7 @@ const LEARNING_PATHS = [
           {
             "title": "Data ownership and deletion",
             "paragraphs": [
-              "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate. Minimize data collected for the learning goal. Separate sensitive source records from aggregate outputs and restrict debugging artifacts."
+              "Name the dataset owner, permitted users and retention period. Define how corrections and deletions reach downstream copies. Collect only the data needed for the learning exercise. Keep sensitive source records separate from aggregate outputs, and restrict access to debug files."
             ]
           },
           {
@@ -16357,7 +16357,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+            "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
         {
@@ -16401,7 +16401,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+            "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
         {
@@ -16453,7 +16453,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+            "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         }
       ],
@@ -16491,7 +16491,7 @@ const LEARNING_PATHS = [
     "title": "Data Structures & Algorithms",
     "category": "Computer science",
     "status": "ready",
-    "description": "From collections to algorithm design: invariants, graph traversal, greedy proofs, dynamic programming and tested projects.",
+    "description": "Choose data structures and algorithms using their preconditions, invariants and costs. Practise graph traversal, greedy reasoning and dynamic programming in tested projects.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
@@ -16727,7 +16727,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "A structure’s ordering policy is part of correctness, not just performance. Replacing a queue with a stack changes graph traversal order."
+              "A structure's ordering policy affects correctness as well as performance. Replacing a queue with a stack changes graph traversal order."
             ]
           }
         ],
@@ -17177,7 +17177,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Sorting enables grouped display, merging and efficient search. Python’s sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
+              "Sorting enables grouped display, merging and efficient search. Python's sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
               "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
             ],
             "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
@@ -18022,7 +18022,7 @@ const LEARNING_PATHS = [
           {
             "title": "Verify the invariant beyond a sample",
             "paragraphs": [
-              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain’s linear search cost."
+              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
             ]
           }
         ],
@@ -18036,14 +18036,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which evidence demonstrates this contract?",
+          "question": "How should insert and delete tests check the tree?",
           "options": [
-            "All insert/delete orders preserve a set oracle and global ordering.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
+            "Compare membership with a set and check ordering throughout the tree after each operation.",
+            "Check only that the root has a left and a right child.",
+            "Check only one insertion sequence with no deletions."
           ],
           "correct": 0,
-          "explanation": "All insert/delete orders preserve a set oracle and global ordering."
+          "explanation": "A set provides the expected membership. Checking each node against its permitted range catches ordering errors below the root."
         },
         "references": [
           {
@@ -19280,7 +19280,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Test sorting against Python’s sorted for all permutations of four distinct values.",
+          "prompt": "Test sorting against Python's sorted for all permutations of four distinct values.",
           "solution": "from itertools import permutations\nfor row in permutations([0, 1, 2, 3]):\n    assert merge_sort(row) == sorted(row)\nassert merge_sort([]) == []\nassert merge_sort([2, 2]) == [2, 2]",
           "checks": [
             "All permutations match the oracle.",
@@ -19535,7 +19535,7 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "An edge A→B means A must precede B. Kahn’s algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
+              "An edge A→B means A must precede B. Kahn's algorithm counts incoming edges, starts with nodes having no remaining prerequisites, then removes their outgoing dependencies. Include nodes appearing only as neighbors in the vertex set."
             ]
           },
           {
@@ -19732,7 +19732,7 @@ const LEARNING_PATHS = [
           {
             "title": "Correctness and cost",
             "paragraphs": [
-              "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation’s space bound. The sequence ticket avoids comparing vertex objects on ties."
+              "Contract: finite nonnegative numeric weights. This lazy-duplicate heap can store O(E) candidates and has O((V+E) log(V+E)) time as a conservative bound, rather than claiming a decrease-key implementation's space bound. The sequence ticket avoids comparing vertex objects on ties."
             ]
           },
           {
@@ -19876,7 +19876,7 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution’s first interval with this one without reducing the count."
+              "For unweighted interval scheduling, choose the interval finishing earliest among compatible intervals. Its end leaves at least as much remaining room as another first choice. An exchange argument can replace an optimal solution's first interval with this one without reducing the count."
             ]
           },
           {
@@ -20110,7 +20110,7 @@ const LEARNING_PATHS = [
           {
             "title": "Correctness and cost",
             "paragraphs": [
-              "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W’s numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
+              "Contract: integer capacity ≥0, positive integer weights and numeric values. Empty selection is permitted. Complexity O(nW) time and O(W) space is pseudo-polynomial: W's numeric value can be large relative to its digit count. Reconstructing the selected items requires additional bookkeeping."
             ]
           },
           {
@@ -20248,7 +20248,7 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a deliberately simple oracle for small instances and compare the optimized algorithm across generated cases. This finds edge cases without assuming that random success proves correctness."
+              "For a scheduling or routing project, define the graph/interval model and preconditions first. Implement a simple reference calculation for small inputs, then compare the optimized algorithm with it across generated cases. This finds edge cases without assuming that random success proves correctness."
             ]
           },
           {
@@ -20387,10 +20387,10 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundations · Represent and reason",
-        "description": "Choose basic structures and state what correctness and cost mean.",
+        "title": "Foundations: representation and cost",
+        "description": "Choose basic data structures and define their expected results and costs.",
         "exitCriteria": [
-          "Distinguish a structure’s operations from a problem’s contract.",
+          "Distinguish a structure's operations from a problem's contract.",
           "Trace arrays, hash tables, stacks and queues by hand.",
           "Explain expected versus worst-case time and auxiliary space."
         ],
@@ -20414,8 +20414,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate · Search, traversal and invariants",
-        "description": "Implement algorithms with explicit preconditions, loop invariants and small reference oracles.",
+        "title": "Intermediate: search, traversal and invariants",
+        "description": "Implement search and traversal algorithms. Check preconditions and loop invariants, and compare small cases with a reference calculation.",
         "exitCriteria": [
           "Explain binary-search and two-pointer invariants.",
           "Traverse cyclic graphs safely and detect impossible dependency orders.",
@@ -20444,7 +20444,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice",
-        "description": "Choose algorithms by assumptions, prove or challenge greedy choices and design dynamic-programming states.",
+        "description": "Test algorithm assumptions, challenge greedy choices with counterexamples, and derive dynamic-programming states.",
         "exitCriteria": [
           "Explain why Dijkstra requires nonnegative weights.",
           "Construct a counterexample to an invalid greedy rule.",
@@ -20453,7 +20453,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Algorithm decision portfolio",
-          "brief": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+          "brief": "Implement scheduling, weighted routing and knapsack. Choose an algorithm for each task and test the assumptions it requires.",
           "requirements": [
             "Find routes on a nonnegative weighted graph and reject unsupported weights.",
             "Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.",
@@ -20545,10 +20545,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
             "Read the reference source and its input contracts before running its checks.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Process a list of events and generate counts, repeated IDs and an undo history.",
-            "Complete the assessment requirements in the reader: Use a dictionary for counts and a set for seen IDs.; Define what an undo operation reverses.; Handle empty input and duplicate events explicitly.; Explain operation costs and memory growth.",
-            "Compare your evidence with the stage rubric: Counts match a hand-calculated fixture.; Undo respects last-in-first-out order.; No duplicate is silently counted as a new unique event.; Complexity claims name their assumptions."
+            "Build the project described in the reader: Use a dictionary for counts and a set for seen IDs. Define what an undo operation reverses. Handle empty input and duplicate events explicitly. Explain operation costs and memory growth.",
+            "Check your result: Counts match a hand-calculated fixture. Undo respects last-in-first-out order. No duplicate is silently counted as a new unique event. Complexity claims name their assumptions."
           ],
           "commands": [
             {
@@ -20566,7 +20566,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -20585,10 +20585,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
             "Read the reference source and its input contracts before running its checks.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
-            "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
-            "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites.",
+            "Build the project described in the reader: Preserve isolated topics and neighbor-only vertices. Return an order satisfying every dependency or an explicit cycle error. Use BFS separately to explain reachability, not prerequisite completion. Test multiple valid orders without asserting one arbitrary sequence. Document complexity for your chosen representation.",
+            "Check your result: Every edge is checked against the output order. Cycles fail reliably. Disconnected topics are not lost. Tests cover empty input, one vertex and shared prerequisites.",
             "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge.",
             "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
           ],
@@ -20618,13 +20618,13 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
           "id": "advanced",
           "title": "Algorithm decision portfolio",
-          "goal": "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
+          "goal": "Implement scheduling, weighted routing and knapsack. Choose an algorithm for each task and test the assumptions it requires.",
           "fileIds": [
             "algorithms-py",
             "advanced_algorithms-py",
@@ -20639,10 +20639,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
             "Read the reference source and its input contracts before running its checks.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
-            "Complete the assessment requirements in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights.; Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.; Choose items under an integer budget with each item used at most once.; Compare small cases against independent brute-force oracles.; Write invariants, termination arguments and representation-specific complexity.; Define input size limits and document remaining limitations.",
-            "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations.",
+            "Build the project described in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights. Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals. Choose items under an integer budget with each item used at most once. Compare small cases against independent brute-force oracles. Write invariants, termination arguments and representation-specific complexity. Define input size limits and document remaining limitations.",
+            "Check your result: Each task uses the correct objective and preconditions. Counterexamples explain why plausible alternatives fail. Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs. Pseudo-polynomial and exponential costs are described honestly. Results remain correct without performance optimizations.",
             "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation.",
             "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
           ],
@@ -20667,7 +20667,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -20704,7 +20704,7 @@ const LEARNING_PATHS = [
     "title": "Delivery & Operations",
     "category": "Software engineering",
     "status": "ready",
-    "description": "24 lessons bridge checked code to reviewable release, health, compatible rollout, telemetry and recovery, with a tested local service and concrete React/.NET/SQL integration runbook.",
+    "description": "Practise releasing and recovering a service across 24 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Use the existing React (react), C#/.NET (dotnet), SQL Server (sql-server) and Networking & the Web (networking-web) paths for their application/data/network boundaries.",
@@ -20715,7 +20715,7 @@ const LEARNING_PATHS = [
       "Run HTTP/storage and operational arithmetic checks on a synthetic local service.",
       "Package a non-root container and plan same-origin frontend/API/private-database topology.",
       "Review secrets, CI permissions, migration compatibility and promotion/rollback gates.",
-      "Interpret logs/metrics/SLOs and bounded workload evidence honestly.",
+      "Use logs, metrics and SLOs to explain workload results and the limits of the test.",
       "Verify independent restoration and coordinate a synthetic incident with recorded limits."
     ],
     "setup": [
@@ -20817,7 +20817,7 @@ const LEARNING_PATHS = [
           {
             "title": "Release behavior and rollback",
             "paragraphs": [
-              "A release joins code, configuration, data compatibility and an operational decision. A green build proves a particular artifact can be produced; it does not prove requests succeed in the target environment. Name one user operation, its owner and a rollback trigger before choosing automation. The course follows a small note service so every claim has an observable boundary."
+              "A build can succeed while requests fail in the deployment environment. Before automating a release, identify the user operation you will test, who owns the rollout and what result should trigger rollback. Then check the build, configuration and data compatibility together. This course uses a small note service for those checks."
             ]
           },
           {
@@ -20970,7 +20970,7 @@ const LEARNING_PATHS = [
           {
             "title": "Environment identities and data",
             "paragraphs": [
-              "An environment is a set of endpoints, identities, data and configuration. Calling a machine staging does not isolate it if its connection string reaches production. Make boundaries inspectable: loopback-only service, disposable test database and synthetic records. Promote an artifact between environments while changing only reviewed configuration, rather than rebuilding different binaries for each environment."
+              "An environment includes endpoints, identities, data and configuration. A machine named staging is not isolated if its connection string points to production. For this lab, use a loopback-only service, a disposable database and synthetic records. Promote the same tested build between environments and change its configuration separately."
             ]
           },
           {
@@ -21814,7 +21814,7 @@ const LEARNING_PATHS = [
           {
             "title": "Artifact identity and provenance",
             "paragraphs": [
-              "Rebuilding from a tag at deployment can select different dependencies than the tested build. Promote the same approved bytes, record their digest and retain the previous compatible artifact. Provenance connects the source and builder to those bytes; checksums detect changes but do not by themselves authenticate who produced them. Retention must cover the rollback window and incident investigation needs."
+              "Rebuilding from a tag during deployment can select different dependencies from the tested build. Deploy the approved bytes, record their digest and retain the previous compatible build. Provenance records which source and builder produced those bytes. A checksum detects changes but does not authenticate the builder. Keep releases for the rollback period and any required incident investigation."
             ]
           },
           {
@@ -22782,25 +22782,25 @@ const LEARNING_PATHS = [
       },
       {
         "id": "release-review",
-        "title": "24. Produce a release evidence packet and runbook",
-        "takeaway": "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence.",
+        "title": "24. Document release tests and recovery steps",
+        "takeaway": "A release record identifies the tested build, supported schema and configuration, access controls, rollout checks and recovery results.",
         "sections": [
           {
             "title": "Release evidence and decisions",
             "paragraphs": [
-              "A reviewable release packet connects the user invariant to artifact identity, compatible schema, config/security boundaries, rollout gates and recovery evidence. Keep commands and expected results close to the decision they justify. Distinguish local tests, optional Docker checks, staging integrations and planned production work. Completing this path is selected operations practice, not a claim of operating a production platform."
+              "Record the behavior users depend on and the build you tested. State which schema and configuration it supports, which access controls it needs, and which checks govern rollout or rollback. Include commands and expected results. Separate local tests from Docker, staging and production checks so another operator can see what remains untested."
             ]
           },
           {
             "title": "The service's remaining deployment work",
             "paragraphs": [
-              "Use release-workbook.md and integration-runbook.md to assemble the packet. The smallest shipped service remains learning-only and unauthenticated. Real TLS, identity providers, monitored SQL, real collectors, proxy routing and provider-specific deployment must be implemented and checked separately before exposure."
+              "Use release-workbook.md and integration-runbook.md to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
             ],
             "example": "Packet: commit/digest + tests + topology + schema plan\nCandidate: version/readiness/smoke evidence\nObserve: eligible errors/latency + release attribution\nRecover: compatible v1 + validated snapshot + incident timeline"
           }
         ],
         "exercise": {
-          "prompt": "Make one claim in the final packet falsifiable.",
+          "prompt": "Choose one release claim and specify a test result that would disprove it.",
           "solution": "Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim.",
           "checks": [
             "Tie each claim to a named executed or planned check.",
@@ -22809,7 +22809,7 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Which is the most honest release claim?",
+          "question": "Which release claim do the tests support?",
           "options": [
             "All deployment risks are solved because unit tests pass",
             "The named local behaviors passed; staging and production boundaries have separate evidence",
@@ -22842,7 +22842,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Local release contract and evidence",
-          "brief": "Run the synthetic note service and create an evidence packet for a compatible change.",
+          "brief": "Run the synthetic note service, make a compatible change and record the test results.",
           "requirements": [
             "Run the local checks and capture actual results.",
             "Write the user invariant and environment/data boundaries.",
@@ -22920,43 +22920,43 @@ const LEARNING_PATHS = [
     ],
     "downloads": [
       {
-        "title": "release_app.py — local reference or guided exercise",
+        "title": "release_app.py. Local reference or exercise",
         "href": "paths/delivery-operations/practice/release_app.py"
       },
       {
-        "title": "test_release_app.py — local reference or guided exercise",
+        "title": "test_release_app.py. Local reference or exercise",
         "href": "paths/delivery-operations/practice/test_release_app.py"
       },
       {
-        "title": "release_tools.py — local reference or guided exercise",
+        "title": "release_tools.py. Local reference or exercise",
         "href": "paths/delivery-operations/practice/release_tools.py"
       },
       {
-        "title": "test_release_tools.py — local reference or guided exercise",
+        "title": "test_release_tools.py. Local reference or exercise",
         "href": "paths/delivery-operations/practice/test_release_tools.py"
       },
       {
-        "title": "Dockerfile — local reference or guided exercise",
+        "title": "Dockerfile. Local reference or exercise",
         "href": "paths/delivery-operations/practice/Dockerfile"
       },
       {
-        "title": ".dockerignore — local reference or guided exercise",
+        "title": ".dockerignore. Local reference or exercise",
         "href": "paths/delivery-operations/practice/.dockerignore"
       },
       {
-        "title": "README.md — local reference or guided exercise",
+        "title": "README.md. Local reference or exercise",
         "href": "paths/delivery-operations/practice/README.md"
       },
       {
-        "title": "ci-example.yaml — local reference or guided exercise",
+        "title": "ci-example.yaml. Local reference or exercise",
         "href": "paths/delivery-operations/practice/ci-example.yaml"
       },
       {
-        "title": "integration-runbook.md — local reference or guided exercise",
+        "title": "integration-runbook.md. Local reference or exercise",
         "href": "paths/delivery-operations/practice/integration-runbook.md"
       },
       {
-        "title": "release-workbook.md — local reference or guided exercise",
+        "title": "release-workbook.md. Local reference or exercise",
         "href": "paths/delivery-operations/practice/release-workbook.md"
       }
     ],
@@ -23052,7 +23052,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "Local release contract and evidence",
-          "goal": "Run the synthetic note service and create an evidence packet for a compatible change.",
+          "goal": "Run the synthetic note service, make a compatible change and record the test results.",
           "fileIds": [
             "release_app-py",
             "test_release_app-py",
@@ -23099,7 +23099,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results."
+            "Build the stage project and test your changes."
           ]
         },
         {
@@ -23167,7 +23167,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results.",
+            "Build the stage project and test your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         },
@@ -23230,7 +23230,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results.",
+            "Build the stage project and test your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         }
@@ -23271,7 +23271,7 @@ const LEARNING_PATHS = [
     "title": "Design Patterns",
     "category": "Software design",
     "status": "ready",
-    "description": "Learn to choose and apply patterns through 24 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
+    "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 24 lessons. Use three projects to compare named patterns with simpler designs.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
@@ -23344,7 +23344,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Foundations: recognize a useful boundary",
-        "description": "Start from small functions, contracts and a real source of change before introducing a named pattern.",
+        "description": "Start with small functions and a specific source of change before choosing a named pattern.",
         "exitCriteria": [
           "Explain a contract including side effects and failures.",
           "Distinguish a strategy from construction and a protocol from runtime validation.",
@@ -23371,7 +23371,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Intermediate: compose and translate behavior",
-        "description": "Build adapters and wrappers, explain traversal and notification policies, and avoid hidden lifecycle assumptions.",
+        "description": "Build adapters and wrappers. Define traversal, notification and resource-lifetime behavior.",
         "exitCriteria": [
           "Translate units and errors explicitly at an adapter.",
           "Explain wrapper ordering and callback failure policy.",
@@ -23398,7 +23398,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice: failure-aware design and refactoring",
-        "description": "Combine a few justified patterns, test negative paths and state the limits of in-memory implementations.",
+        "description": "Combine patterns where the requirements need them. Test failure paths and distinguish in-memory behavior from database guarantees.",
         "exitCriteria": [
           "Model legal and illegal state transitions.",
           "Separate unit tests from real-provider integration guarantees.",
@@ -23485,7 +23485,7 @@ const LEARNING_PATHS = [
             "Whether the implementation can be made object-oriented"
           ],
           "correct": 0,
-          "explanation": "The pressure and constraints determine whether an abstraction pays for itself; a pattern name or class hierarchy cannot supply that evidence."
+          "explanation": "Choose a pattern to address a specific source of change or coupling. A pattern name alone does not explain why the extra abstraction is needed."
         },
         "references": [
           {
@@ -23513,7 +23513,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "minutes accepts nonnegative integers and explicitly rejects bool, even though bool subclasses int. The assertions check both acceptance and rejection."
+              "minutes accepts nonnegative integers but rejects bool, which subclasses int. The assertions check both acceptance and rejection."
             ],
             "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
           },
@@ -23577,7 +23577,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Prefer a small function when it expresses the entire variation clearly."
+              "Composition is not automatically simpler: too many tiny collaborators can hide a straightforward flow. Inheritance can be useful for a stable framework contract, but base-class changes may affect many subclasses. Use a small function when it covers the required variation."
             ]
           },
           {
@@ -24428,7 +24428,7 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
-              "A legacy progress system reports seconds while the notebook expects whole minutes. The adapter explicitly chooses floor conversion for this example. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
+              "A legacy progress system reports seconds while the notebook expects whole minutes. This adapter rounds down when converting seconds to minutes. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
             ]
           },
           {
@@ -25210,7 +25210,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not actually a tree."
+              "Real graphs may contain cycles or shared nodes. A shared lesson is counted twice by this tree traversal; that may or may not match the intended meaning. Deep recursion can exceed Python recursion limits. Choose explicit graph traversal and identity tracking if the data is not a tree."
             ]
           }
         ],
@@ -25867,11 +25867,11 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which evidence demonstrates this contract?",
+          "question": "What should happen after a handler accepts the request?",
           "options": [
-            "The first accepting handler prevents later handlers from running.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
+            "Later handlers do not run.",
+            "Every later handler receives the same request.",
+            "The chain restarts with the first handler."
           ],
           "correct": 0,
           "explanation": "The first accepting handler prevents later handlers from running."
@@ -25993,13 +25993,13 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Command packages an operation and its inputs so a caller can pass, queue or record it separately from execution. Undo requires a valid inverse or compensation strategy.",
-              "Renaming a local notebook can store the previous title and restore it if nothing else has changed. That is a deliberately narrow undo contract. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
+              "Renaming a local notebook can store the previous title and restore it if nothing else has changed. Undo is limited to that case. Commands sent to a service need validation and authorization again at execution time; a serialized object is not permission to act."
             ]
           },
           {
             "title": "Collaboration",
             "paragraphs": [
-              "Rename captures the prior title during execution. undo restores it only if the current title still matches the command’s result, avoiding an unrelated overwrite."
+              "Rename captures the prior title during execution. undo restores it only if the current title still matches the command's result, avoiding an unrelated overwrite."
             ],
             "example": "class Rename:\n    def __init__(self, book, title):\n        self.book, self.title, self.before = book, title, None\n    def execute(self):\n        if self.before is not None:\n            raise ValueError(\"already executed\")\n        self.before = self.book[\"title\"]\n        self.book[\"title\"] = self.title\n    def undo(self):\n        if self.before is None or self.book[\"title\"] != self.title:\n            raise ValueError(\"cannot safely undo\")\n        self.book[\"title\"] = self.before\n        self.before = None\nbook = {\"title\": \"A\"}\ncmd = Rename(book, \"B\")\ncmd.execute(); cmd.undo()\nassert book[\"title\"] == \"A\""
           },
@@ -26048,7 +26048,7 @@ const LEARNING_PATHS = [
           {
             "title": "Intent",
             "paragraphs": [
-              "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table often expresses the idea more clearly than many state classes.",
+              "State organizes legal behavior around a lifecycle. For small workflows, an explicit transition table can express the allowed transitions without separate state classes.",
               "A study session starts as draft, becomes active, then completes. Pause returns active to draft here; complete from draft is illegal. A State object pattern delegates state-specific behavior to objects when transitions and operations become substantial. The table below is the simpler alternative for a small finite lifecycle."
             ]
           },
@@ -26203,7 +26203,7 @@ const LEARNING_PATHS = [
           {
             "title": "Keep the coordinator boundary honest",
             "paragraphs": [
-              "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller’s input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+              "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller's input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
             ]
           }
         ],
@@ -26217,11 +26217,11 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which evidence demonstrates this contract?",
+          "question": "What should the mediator do when prerequisite validation fails?",
           "options": [
-            "Failed prerequisite validation leaves state and notification records unchanged.",
-            "A pattern or algorithm name alone",
-            "A single successful sample without failures"
+            "Leave state and notification records unchanged.",
+            "Update the state but skip the notification.",
+            "Send the notification and validate again later."
           ],
           "correct": 0,
           "explanation": "Failed prerequisite validation leaves state and notification records unchanged."
@@ -26623,7 +26623,7 @@ const LEARNING_PATHS = [
             "That all future repository implementations satisfy the same contract"
           ],
           "correct": 0,
-          "explanation": "The test verifies the implementation and cases actually exercised; real provider constraints and isolation require separate evidence."
+          "explanation": "These tests cover the in-memory implementation. Run separate database tests for provider constraints and transaction isolation."
         },
         "references": [
           {
@@ -26827,7 +26827,7 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Refactoring changes structure while preserving externally relevant behavior. Introduce a pattern through small, observable steps rather than replacing working code in one leap.",
-              "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible so a changed expectation is deliberate and reviewable."
+              "Start with characterization tests: record current outputs, exceptions and side effects even if the code is untidy. Extract a pure formatter, pass it into the workflow, then move format selection to the boundary. Keep bug fixes separate where possible, so the reviewer can distinguish a behavior change from the refactor."
             ]
           },
           {
@@ -27031,7 +27031,7 @@ const LEARNING_PATHS = [
             "Every known future feature is supported immediately"
           ],
           "correct": 0,
-          "explanation": "A review should justify the current boundary and costs, consider a simpler option, and state evidence that would trigger revisiting it."
+          "explanation": "Explain why the chosen design meets the current requirements, compare a simpler option, and name the requirement that would justify a change."
         },
         "references": [
           {
@@ -27175,10 +27175,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
-            "Complete the assessment requirements in the reader: Validate all titles before producing output.; Use two compatible formatting strategies selected at one entry point.; Reject unknown formats and preserve input order.; Include an empty-input test and a malformed-title test.",
-            "Compare your evidence with the stage rubric: Both output formats are correct for the same input.; No mutation of caller records occurs.; The design note explains why a simple factory/function is enough.; Tests assert observable behavior, including failures.",
+            "Build the project described in the reader: Validate all titles before producing output. Use two compatible formatting strategies selected at one entry point. Reject unknown formats and preserve input order. Include an empty-input test and a malformed-title test.",
+            "Check your result: Both output formats are correct for the same input. No mutation of caller records occurs. The design note explains why a simple factory/function is enough. Tests assert observable behavior, including failures.",
             "Use batch-refactor.md to preserve complete-batch behavior through extraction, then add a CSV strategy."
           ],
           "commands": [
@@ -27190,7 +27190,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from design-patterns-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Run the focused depth lab from the extracted bundle root",
@@ -27207,7 +27207,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -27224,10 +27224,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
-            "Complete the assessment requirements in the reader: Adapt a legacy seconds field with an explicit conversion policy.; Use a measurement decorator that delegates once and records only success.; Test wrapper failure and input immutability.; Write a note comparing facade, adapter, decorator and proxy intentions.",
-            "Compare your evidence with the stage rubric: Boundary conversion is correct at 59/60/61 seconds.; Failures are propagated and not counted as successful output.; Facade remains focused on the preview workflow.; The design note explains one case where each wrapper would be unnecessary.",
+            "Build the project described in the reader: Adapt a legacy seconds field with an explicit conversion policy. Use a measurement decorator that delegates once and records only success. Test wrapper failure and input immutability. Write a note comparing facade, adapter, decorator and proxy intentions.",
+            "Check your result: Boundary conversion is correct at 59/60/61 seconds. Failures are propagated and not counted as successful output. Facade remains focused on the preview workflow. The design note explains one case where each wrapper would be unnecessary.",
             "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation."
           ],
           "commands": [
@@ -27239,7 +27239,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from design-patterns-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Run behavioral collaboration contrasts",
@@ -27256,7 +27256,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -27281,10 +27281,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
-            "Complete the assessment requirements in the reader: Reject missing IDs and repeated completion according to a stated policy.; Commit a valid transition and keep the original store unchanged when validation fails.; Run the provided rollback tests and add a failing repository substitute.; Propose provider integration tests and a notification failure policy.; Write a decision record rejecting at least one unnecessary pattern.",
-            "Compare your evidence with the stage rubric: Success changes exactly the intended record.; The failure path does not leak a working-copy update.; Limitations explicitly include concurrency, durability and external effects.; A fake repository is not presented as proof of database behavior.; The refactoring plan preserves public contracts and can be reviewed in small changes.",
+            "Build the project described in the reader: Reject missing IDs and repeated completion according to a stated policy. Commit a valid transition and keep the original store unchanged when validation fails. Run the provided rollback tests and add a failing repository substitute. Propose provider integration tests and a notification failure policy. Write a decision record rejecting at least one unnecessary pattern.",
+            "Check your result: Success changes exactly the intended record. The failure path does not leak a working-copy update. Limitations explicitly include concurrency, durability and external effects. A fake repository is not presented as proof of database behavior. The refactoring plan preserves public contracts and can be reviewed in small changes.",
             "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation.",
             "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract.",
             "Use batch-refactor.md to preserve complete-batch behavior through extraction, then add a CSV strategy."
@@ -27298,7 +27298,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from design-patterns-practice folder root",
               "command": "python -m unittest -v test_workshop.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Run behavioral collaboration contrasts",
@@ -27320,7 +27320,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -27640,7 +27640,7 @@ const LEARNING_PATHS = [
           "Explain refresh versus process restart."
         ],
         "project": {
-          "title": "Build one vertical slice — study planner",
+          "title": "Build one study planner feature across the stack",
           "brief": "Create an accessible form, HTTP contract and complete memory-backed feature.",
           "requirements": [
             "Demonstrate a valid add and completion through React and .NET.",
@@ -27667,7 +27667,7 @@ const LEARNING_PATHS = [
           "Specify atomic idempotent creation and ownership boundaries."
         ],
         "project": {
-          "title": "Persist and resolve conflicts — study planner",
+          "title": "Persist study planner data and resolve conflicts",
           "brief": "Use SQL Server, atomic expected-version updates and a tested retry design.",
           "requirements": [
             "Show persisted IDs after API restart.",
@@ -27690,21 +27690,21 @@ const LEARNING_PATHS = [
         "description": "Assemble tests, diagnostics, a release plan and recovery evidence.",
         "exitCriteria": [
           "Separate browser, HTTP and SQL evidence.",
-          "Explain authentication and deployment extensions honestly.",
+          "Explain which authentication and deployment features still need implementation and testing.",
           "Defend a recovery plan with measured results where executed."
         ],
         "project": {
-          "title": "Verify, operate and defend — study planner",
+          "title": "Test, release and recover the study planner",
           "brief": "Assemble tests, diagnostics, a release plan and recovery evidence.",
           "requirements": [
             "Separate browser, HTTP and SQL evidence.",
-            "Explain authentication and deployment extensions honestly.",
+            "Explain which authentication and deployment features still need implementation and testing.",
             "Defend a recovery plan with measured results where executed.",
             "Use the milestone workbook and record the observed result before comparing the reference."
           ],
           "rubric": [
             "Separate browser, HTTP and SQL evidence.",
-            "Explain authentication and deployment extensions honestly.",
+            "Explain which authentication and deployment features still need implementation and testing.",
             "Defend a recovery plan with measured results where executed.",
             "Explain each remaining boundary and identify the exact task files."
           ],
@@ -28071,7 +28071,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "ui-state",
-        "title": "6. Build an accessible form and honest states",
+        "title": "6. Build an accessible form with clear request states",
         "stage": "foundation",
         "takeaway": "A retained draft lets a learner recover from failure.",
         "sections": [
@@ -28174,7 +28174,7 @@ const LEARNING_PATHS = [
           {
             "title": "Unknown data and decoding",
             "paragraphs": [
-              "request returns unknown. decodeTask checks a GUID-shaped ID, title, integer minutes, boolean done and positive integer version before producing a StudyTask. A list additionally checks duplicate IDs because React keys and update targeting assume identity is unique."
+              "request returns unknown. decodeTask checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a StudyTask. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
             ]
           },
           {
@@ -28324,7 +28324,7 @@ const LEARNING_PATHS = [
           {
             "title": "Sort keys and authorization",
             "paragraphs": [
-              "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user’s records."
+              "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user's records."
             ]
           }
         ],
@@ -28378,8 +28378,8 @@ const LEARNING_PATHS = [
           {
             "title": "Preserve the draft after a stale update",
             "paragraphs": [
-              "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A’s row. The UI should keep B’s unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
-              "Run two independent clients against the local reference with the same initial version. Confirm only one update succeeds, then fetch the stored row through a third request. For the UI case, keep a draft before injecting a 409. The acceptance condition is not just an error message: the draft survives and the persisted winner remains unchanged.",
+              "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A's row. The UI should keep B's unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
+              "Run two independent clients against the local reference with the same initial version. Check that only one update succeeds, then read the stored row through a third request. In the UI, enter a draft before injecting a 409. Check that the draft survives, the error appears and the stored winning update remains unchanged.",
               "Extend planner-ui.test.tsx with controllable responses: first load version 4, return conflict on save, then offer version 5 on explicit refresh. A changed case edits different fields; explain why automatic merging still needs a stated field-level policy."
             ]
           }
@@ -28583,7 +28583,7 @@ const LEARNING_PATHS = [
             "title": "Recover an unknown create without guessing",
             "paragraphs": [
               "The server commits a new session, but its response is lost. The UI sees a timeout. A second POST with a new identity can create two sessions. A disabled button only prevents a second click while the page remains alive; it does not identify the operation after a reload.",
-              "An extension can persist one client operation key for one intended create, send it on retries, and bind the server’s receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
+              "An extension can persist one client operation key for one intended create, send it on retries, and bind the server's receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
               "Reproduce the ambiguity with a proxy or test adapter that allows the first server commit but drops only its response. Query the database independently. Implement receipt replay, then repeat the fault: there should be one session and the same returned identity. Do not mark this complete merely because a mocked fetch was called once."
             ]
           }
@@ -28758,7 +28758,7 @@ const LEARNING_PATHS = [
             "User B cannot update user A's task: the request is denied and A's row and version remain unchanged.",
             "User B's list excludes A's task, and requests with missing or expired credentials are denied."
           ],
-          "solution": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
+          "solution": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity.",
           "solutionFormat": "prose"
         },
         "quiz": {
@@ -28769,7 +28769,7 @@ const LEARNING_PATHS = [
             "Yes; GUIDs are hard to guess."
           ],
           "correct": 0,
-          "explanation": "Create a task as user A. Authenticate as user B and request an update of A’s ID. The request must be denied and A’s row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
+          "explanation": "Create a task as user A. Authenticate as user B and request an update of A's ID. The request must be denied and A's row/version must remain unchanged. Repeat list checks and test missing/expired credentials. Do not use forged browser-supplied owner labels as test identity."
         },
         "references": [
           {
@@ -29322,7 +29322,7 @@ const LEARNING_PATHS = [
       "tasks": [
         {
           "id": "foundation",
-          "title": "Build one vertical slice",
+          "title": "Build one study planner feature across the stack",
           "goal": "Create an accessible form, HTTP contract and complete memory-backed feature.",
           "fileIds": [
             "acceptance-py",
@@ -29398,7 +29398,7 @@ const LEARNING_PATHS = [
         },
         {
           "id": "intermediate",
-          "title": "Persist and resolve conflicts",
+          "title": "Persist study planner data and resolve conflicts",
           "goal": "Use SQL Server, atomic expected-version updates and a tested retry design.",
           "fileIds": [
             "acceptance-py",
@@ -29474,7 +29474,7 @@ const LEARNING_PATHS = [
         },
         {
           "id": "advanced",
-          "title": "Verify, operate and defend",
+          "title": "Test, release and recover the study planner",
           "goal": "Assemble tests, diagnostics, a release plan and recovery evidence.",
           "fileIds": [
             "acceptance-py",
@@ -29581,7 +29581,7 @@ const LEARNING_PATHS = [
     "title": "Git & Team Workflows",
     "category": "Engineering practice",
     "status": "ready",
-    "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three executable projects with retained learner workspaces.",
+    "description": "Learn Git state, team review, history integration and recovery in 20 lessons. Three executable projects create local workspaces you can inspect after each run.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
@@ -29723,12 +29723,12 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Why does the fixture use command-scoped identity?",
           "options": [
-            "It gives fixture commits an identity without changing the user’s global configuration.",
+            "It gives fixture commits an identity without changing the user's global configuration.",
             "It authenticates the learner to every remote server.",
             "It makes all repositories use the fixture identity permanently."
           ],
           "correct": 0,
-          "explanation": "It gives fixture commits an identity without changing the user’s global configuration."
+          "explanation": "It gives fixture commits an identity without changing the user's global configuration."
         },
         "references": [
           {
@@ -29750,7 +29750,7 @@ const LEARNING_PATHS = [
             "title": "Working tree, index and HEAD",
             "paragraphs": [
               "The working tree is the editable files you see. The index, often called the staging area, is the proposed next snapshot. HEAD normally points to the current branch tip commit. These three states can differ even for one file.",
-              "git add copies the file’s current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
+              "git add copies the file's current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
             ]
           },
           {
@@ -29942,7 +29942,7 @@ const LEARNING_PATHS = [
             "title": "Partial staging and amendments",
             "paragraphs": [
               "The sandbox stages explicit fixture content and commits with synthetic metadata. Outside the sandbox, selective staging or git add -p can split independent hunks; inspect the result because a partially staged file may differ from the version you tested.",
-              "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people’s references. Coordinate rather than assuming every local improvement authorizes history rewriting."
+              "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people's references. Coordinate rather than assuming every local improvement authorizes history rewriting."
             ],
             "example": "git diff --cached\ngit commit -m \"Preserve staged note snapshot\"\ngit show --stat --oneline HEAD"
           }
@@ -29993,8 +29993,8 @@ const LEARNING_PATHS = [
           {
             "title": "Synthetic secrets and tracked files",
             "paragraphs": [
-              "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token text is explicitly not a credential. Inspect an example config template before sharing it: placeholders must not be live values.",
-              "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else’s repository."
+              "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token is fake. Inspect an example config template before sharing it: placeholders must not be live values.",
+              "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else's repository."
             ],
             "example": "git check-ignore -v local.env\ngit ls-files -- local.env\n# If previously tracked, ignore rules alone do not remove it."
           }
@@ -30187,7 +30187,7 @@ const LEARNING_PATHS = [
           {
             "title": "Branch snapshots",
             "paragraphs": [
-              "A topic branch names a line of development. Creating a branch is cheap because it initially points at an existing commit. Switching updates HEAD and the working tree to that branch’s snapshot; uncommitted edits may be carried along or block the switch if they would be overwritten.",
+              "A topic branch names a line of development. Creating a branch is cheap because it initially points at an existing commit. Switching updates HEAD and the working tree to that branch's snapshot; uncommitted edits may be carried along or block the switch if they would be overwritten.",
               "Start from an agreed base and a clear understanding of the working-tree status. A branch name communicates purpose but does not guarantee that unrelated changes are absent. Keep changes coherent and inspect the branch diff against its base."
             ]
           },
@@ -30195,7 +30195,7 @@ const LEARNING_PATHS = [
             "title": "Divergent fixture branches",
             "paragraphs": [
               "The fixture creates feature from the base, edits policy.txt, then switches to main and edits the same line differently. Neither commit disappears: the two branch tips preserve both histories.",
-              "If switching is blocked, understand the local changes first. Commit useful work or deliberately stash it in training; do not reach for forced checkout to hide uncertainty."
+              "If switching is blocked, understand the local changes first. Commit useful work or stash it in the training repository. Inspect the changes before using a command that could discard them."
             ],
             "example": "git switch -c feature\ngit branch --show-current\ngit switch main\ngit log --all --oneline --decorate"
           }
@@ -30239,7 +30239,7 @@ const LEARNING_PATHS = [
           {
             "title": "Restore destinations",
             "paragraphs": [
-              "git restore --staged removes a path’s staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
+              "git restore --staged removes a path's staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
               "Discarding working edits loses those uncommitted contents unless another copy exists. Git does not promise a reflog for every untracked or unstaged file. Inspect diffs and preserve useful edits before a destructive restore."
             ]
           },
@@ -30247,7 +30247,7 @@ const LEARNING_PATHS = [
             "title": "Keeping an unfinished edit",
             "paragraphs": [
               "In the fixture the commit contains two and the working tree contains three. Restoring notes.txt from the index changes the file back to two without moving the branch tip.",
-              "The sandbox deliberately discards only generated synthetic content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
+              "The sandbox discards only its generated content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
             ],
             "example": "git diff -- notes.txt\ngit restore --staged -- notes.txt\n# Only in the disposable fixture after inspecting the diff:\ngit restore -- notes.txt"
           }
@@ -30299,7 +30299,7 @@ const LEARNING_PATHS = [
             "title": "Integration policy and verification",
             "paragraphs": [
               "The intermediate fixture diverges feature and main and records a two-parent merge after resolution. Later a reviewer clone fetches a descendant and integrates it with --ff-only, which refuses unexpected divergence.",
-              "Choose integration policy deliberately. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
+              "Agree on an integration policy. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
             ],
             "example": "git log --graph --oneline --all\ngit merge feature\ngit rev-list --parents -n 1 HEAD\n# Strict update when divergence is unexpected:\ngit merge --ff-only origin/main"
           },
@@ -30357,7 +30357,7 @@ const LEARNING_PATHS = [
           {
             "title": "Resolution and abort behavior",
             "paragraphs": [
-              "The fixture first aborts a merge and verifies main’s file is restored, then repeats the conflict and writes main and feature as a deliberate resolution. It asserts that the final merge commit has two parents.",
+              "The fixture first aborts a merge and verifies main's file is restored, then repeats the conflict and writes main and feature as a deliberate resolution. It asserts that the final merge commit has two parents.",
               "Abort recovery is most predictable when the working tree was clean before starting. Preserve unrelated local edits before integration. A resolved file still needs review and tests for the combined requirement."
             ],
             "example": "git diff --name-only --diff-filter=U\ngit show :1:policy.txt\ngit show :2:policy.txt\ngit show :3:policy.txt\n# Choose a real resolution, then:\ngit add policy.txt\ngit commit"
@@ -30371,7 +30371,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Trace the fixture’s base/main/feature versions. Propose a resolution when both sides represent necessary requirements, then explain the abort path.",
+          "prompt": "Trace the fixture's base/main/feature versions. Propose a resolution when both sides represent necessary requirements, then explain the abort path.",
           "solution": "The base is base, ours is main and theirs is feature for this merge. The fixture writes main and feature to preserve both illustrative intents. git merge --abort exits the unresolved merge; a real application resolution must satisfy its own requirements and checks.",
           "solutionFormat": "prose",
           "checks": [
@@ -30511,7 +30511,7 @@ const LEARNING_PATHS = [
           {
             "title": "Remote-tracking references",
             "paragraphs": [
-              "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote’s state at the last fetch; they can be stale.",
+              "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote's state at the last fetch; they can be stale.",
               "git fetch retrieves objects and updates tracking references. git pull combines fetch with integration according to explicit options/configuration. A push asks the remote to update references and requires separate authorization; the sandbox never pushes."
             ]
           },
@@ -30679,7 +30679,7 @@ const LEARNING_PATHS = [
           {
             "title": "An offline review record",
             "paragraphs": [
-              "Use the local fixture’s feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. This produces a reviewable artifact without publishing a pull request or sending a message.",
+              "Use the local fixture's feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. The file lets you practise reviewing the change without publishing a pull request or sending a message.",
               "A later change can invalidate earlier review or checks. Recheck the final candidate against the current target, especially after a rebase or conflict resolution. Approval of an old commit is not automatic evidence for a new one."
             ],
             "example": "git diff main...feature\ngit log --oneline main..feature\n# Offline review.md fields:\n# Problem / Behavior / Base / Candidate / Checks / Remaining limits"
@@ -30696,14 +30696,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "A reviewed branch is rebased after approval. What evidence needs attention?",
+          "question": "A branch is rebased after approval. What needs to happen next?",
           "options": [
             "The old approval proves every future version is correct.",
             "Rebasing automatically reruns every hosted check.",
-            "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+            "The new candidate should be rechecked and reviewed under the repository's policy because its identity and integration context changed."
           ],
           "correct": 2,
-          "explanation": "The new candidate should be rechecked and reviewed under the repository’s policy because its identity and integration context changed."
+          "explanation": "Rebasing changes commit IDs and may change how the branch combines with its new base. Recheck the new candidate under the repository's review policy."
         },
         "references": [
           {
@@ -30738,7 +30738,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "A shared bug commit is followed by useful unrelated work. Explain why resetting to the bug’s parent is a poor default.",
+          "prompt": "A shared bug commit is followed by useful unrelated work. Explain why resetting to the bug's parent is a poor default.",
           "solution": "Resetting the shared branch drops later references and can discard useful work. A targeted revert preserves ancestry and the unrelated commit, though the result still needs tests. A merge revert needs an additional mainline decision.",
           "solutionFormat": "prose",
           "checks": [
@@ -30776,15 +30776,15 @@ const LEARNING_PATHS = [
           {
             "title": "Local reflog lifetime",
             "paragraphs": [
-              "A reflog records updates to a reference in a repository. HEAD’s reflog also records switches. A commit lost from the visible branch graph may still be named by a reflog entry, allowing you to inspect it and create a branch at it.",
-              "Reflogs are local and expire; unreachable objects may later be pruned. A teammate’s clone does not automatically contain your reflog. Never promise that reflog recovery can restore arbitrary deleted untracked files or unstaged editor contents."
+              "A reflog records updates to a reference in a repository. HEAD's reflog also records switches. A commit lost from the visible branch graph may still be named by a reflog entry, allowing you to inspect it and create a branch at it.",
+              "Reflogs are local and expire; unreachable objects may later be pruned. A teammate's clone does not automatically contain your reflog. Never promise that reflog recovery can restore arbitrary deleted untracked files or unstaged editor contents."
             ]
           },
           {
             "title": "Recovering a named commit",
             "paragraphs": [
               "The advanced fixture remembers a committed private experiment, resets its private tip back one parent, verifies the old commit remains in the reflog, and creates recovered at that exact commit. It later cherry-picks the useful change.",
-              "Recover by inspection before another destructive move: identify the candidate, show its files and give it a named branch. This is more reviewable than immediately resetting your main branch to an uncertain reflog position."
+              "Recover by inspection before another destructive move: identify the candidate, show its files and give it a named branch. A recovery branch lets you inspect the candidate without moving main."
             ],
             "example": "git reflog --format=\"%h %gs\"\ngit show <candidate>\ngit branch recovered <candidate>\ngit log --all --oneline --decorate"
           }
@@ -30803,11 +30803,11 @@ const LEARNING_PATHS = [
           "question": "Why is a reflog not a permanent team backup?",
           "options": [
             "Every reflog entry is automatically pushed to all teammates.",
-            "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements.",
+            "It is local, expires, and does not preserve every uncommitted file or another clone's reference movements.",
             "It contains only remote pull requests."
           ],
           "correct": 1,
-          "explanation": "It is local, expires, and does not preserve every uncommitted file or another clone’s reference movements."
+          "explanation": "It is local, expires, and does not preserve every uncommitted file or another clone's reference movements."
         },
         "references": [
           {
@@ -31041,8 +31041,8 @@ const LEARNING_PATHS = [
           {
             "title": "Rewritten ancestry",
             "paragraphs": [
-              "A rebase takes selected commits and reapplies them after another base, producing a different history. This can simplify a private topic branch before review. It is not simply a display preference: parent changes create new commit identities.",
-              "Rewriting already shared work can disrupt other branches and approvals. Know who depends on the old history and follow the team’s publication policy. A force-with-lease mechanism can reduce accidental overwrite, but is not permission to rewrite someone else’s work."
+              "A rebase takes selected commits and reapplies them after another base, producing a different history. This can simplify a private topic branch before review. Changing the parents creates new commit identities.",
+              "Rewriting already shared work can disrupt other branches and approvals. Know who depends on the old history and follow the team's publication policy. A force-with-lease mechanism can reduce accidental overwrite, but is not permission to rewrite someone else's work."
             ]
           },
           {
@@ -31301,7 +31301,7 @@ const LEARNING_PATHS = [
           {
             "title": "Reviewing the complete fixture",
             "paragraphs": [
-              "The advanced kit asks for an offline release-review record tied to the sandbox’s candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
+              "The advanced kit asks for an offline release-review record tied to the sandbox's candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
               "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
             ],
             "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
@@ -31332,7 +31332,7 @@ const LEARNING_PATHS = [
             "Nothing: local mechanics automatically authorize production publication."
           ],
           "correct": 1,
-          "explanation": "Repository policy, review/approval, artifact and deployment evidence must still be established for the actual candidate."
+          "explanation": "Check the actual candidate against the repository's approval rules, built artifact and deployment tests. The local sandbox has not exercised those steps."
         },
         "references": [
           {
@@ -31348,8 +31348,8 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation: Three-state snapshot investigation",
-        "description": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
+        "title": "Foundation: three-state snapshot investigation",
+        "description": "Inspect the note versions stored in the working tree, index and commit.",
         "exitCriteria": [
           "The two diff baselines and committed snapshot are correct.",
           "No existing repository or global config is changed.",
@@ -31376,8 +31376,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate: Two-developer integration review",
-        "description": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
+        "title": "Intermediate: two-developer integration review",
+        "description": "Resolve a fixture conflict and update a local reviewer clone without contacting a server.",
         "exitCriteria": [
           "Conflict/abort/resolution states are supported by actual outputs.",
           "The resolved contents preserve both stated intents.",
@@ -31388,7 +31388,7 @@ const LEARNING_PATHS = [
           "title": "Two-developer integration review",
           "brief": "Resolve a synthetic conflict and update a local reviewer clone without contacting a server.",
           "requirements": [
-            "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+            "Run the intermediate fixture's deliberate conflict, abort and resolution.",
             "Explain base/ours/theirs and preserve both fixture intents.",
             "Verify a two-parent merge.",
             "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
@@ -31405,8 +31405,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Selected advanced practice: Local recovery and release portfolio",
-        "description": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
+        "title": "Selected advanced practice: local recovery and release portfolio",
+        "description": "Find a regression, recover committed work, integrate a patch and identify the release commit.",
         "exitCriteria": [
           "Bisect result identifies the known synthetic defect.",
           "Recovery branches retain the intended committed work.",
@@ -31419,7 +31419,7 @@ const LEARNING_PATHS = [
           "requirements": [
             "Run the advanced fixture and verify the first bad commit with its predicate.",
             "Compare targeted revert with the private reset/reflog recovery.",
-            "Explain the cherry-picked change and rebased topic’s changed identity.",
+            "Explain the cherry-picked change and rebased topic's changed identity.",
             "Verify the annotated tag object.",
             "Produce an offline release record including artifact/hosting checks not executed."
           ],
@@ -31543,7 +31543,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         },
@@ -31568,7 +31568,7 @@ const LEARNING_PATHS = [
             "Extract the full bundle into an empty folder; all listed files are flat at its root.",
             "Read README.md and intermediate-kit.md before running the references.",
             "Run the commands below and record actual results separately from expected results.",
-            "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+            "Run the intermediate fixture's deliberate conflict, abort and resolution.",
             "Explain base/ours/theirs and preserve both fixture intents.",
             "Verify a two-parent merge.",
             "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
@@ -31596,7 +31596,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         },
@@ -31623,7 +31623,7 @@ const LEARNING_PATHS = [
             "Run the commands below and record actual results separately from expected results.",
             "Run the advanced fixture and verify the first bad commit with its predicate.",
             "Compare targeted revert with the private reset/reflog recovery.",
-            "Explain the cherry-picked change and rebased topic’s changed identity.",
+            "Explain the cherry-picked change and rebased topic's changed identity.",
             "Verify the annotated tag object.",
             "Produce an offline release record including artifact/hosting checks not executed.",
             "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
@@ -31655,7 +31655,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-            "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+            "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
         }
@@ -31692,7 +31692,7 @@ const LEARNING_PATHS = [
     "title": "Habits & Behaviour Change",
     "category": "Personal development",
     "status": "ready",
-    "description": "Design realistic everyday routines using context, small actions and honest observations.",
+    "description": "Design everyday routines around available time and materials, then check whether they help.",
     "level": "Foundations → everyday experiments → adaptation and review",
     "prerequisites": [
       "No specialist knowledge required.",
@@ -31701,7 +31701,7 @@ const LEARNING_PATHS = [
     "outcomes": [
       "A factual baseline and a feasible target",
       "A small routine experiment",
-      "An evidence-based maintenance decision"
+      "Decide whether to keep or change a routine"
     ],
     "setup": [
       "Download and extract the practice bundle; every worksheet is flat in habits-behaviour-change-practice.",
@@ -31741,95 +31741,95 @@ const LEARNING_PATHS = [
         "href": "paths/habits-behaviour-change/practice/sources-and-limits.md"
       },
       {
-        "title": "Describe actions without judging identity worksheet and worked case",
+        "title": "Describe actions without judging identity: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/01-behaviour-not-identity.md"
       },
       {
-        "title": "Separate an outcome from its next action worksheet and worked case",
+        "title": "Separate an outcome from its next action: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/02-goals-and-actions.md"
       },
       {
-        "title": "Observe a baseline before redesigning worksheet and worked case",
+        "title": "Observe a baseline before redesigning: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/03-baseline-observation.md"
       },
       {
-        "title": "Map the cue and surrounding context worksheet and worked case",
+        "title": "Map the cue and surrounding context: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/04-cue-map.md"
       },
       {
-        "title": "Distinguish repetition from automaticity worksheet and worked case",
+        "title": "Distinguish repetition from automaticity: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/05-habit-or-routine.md"
       },
       {
-        "title": "Choose a version that fits a real opportunity worksheet and worked case",
+        "title": "Choose a version that fits a real opportunity: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/06-small-start.md"
       },
       {
-        "title": "Reject fixed habit deadlines worksheet and worked case",
+        "title": "Reject fixed habit deadlines: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/07-time-variation.md"
       },
       {
-        "title": "Turn an intention into a situation/action plan worksheet and worked case",
+        "title": "Turn an intention into a situation/action plan: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/08-if-then.md"
       },
       {
-        "title": "Change the effort around the action worksheet and worked case",
+        "title": "Change the effort around the action: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/09-friction.md"
       },
       {
-        "title": "Use reminders as useful signals worksheet and worked case",
+        "title": "Use reminders as useful signals: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/10-prompt-design.md"
       },
       {
-        "title": "Offer an alternative that serves the same immediate need worksheet and worked case",
+        "title": "Offer an alternative that serves the same immediate need: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/11-replacement.md"
       },
       {
-        "title": "Prepare for a likely obstacle worksheet and worked case",
+        "title": "Prepare for a likely obstacle: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/12-obstacle-plan.md"
       },
       {
-        "title": "Measure opportunities, completion and ease separately worksheet and worked case",
+        "title": "Measure opportunities, completion and ease separately: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/13-measurement.md"
       },
       {
-        "title": "Notice immediate usefulness without inventing brain claims worksheet and worked case",
+        "title": "Notice immediate usefulness without inventing brain claims: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/14-feedback-reward.md"
       },
       {
-        "title": "Respond to a missed action with information worksheet and worked case",
+        "title": "Respond to a missed action with information: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/15-missed-opportunity.md"
       },
       {
-        "title": "Change one practical element at a time worksheet and worked case",
+        "title": "Change one practical element at a time: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/16-one-change-test.md"
       },
       {
-        "title": "Rebuild the plan when the environment changes worksheet and worked case",
+        "title": "Rebuild the plan when the environment changes: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/17-changed-context.md"
       },
       {
-        "title": "Ask for support without handing over control worksheet and worked case",
+        "title": "Ask for support without handing over control: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/18-support-consent.md"
       },
       {
-        "title": "Decide whether to keep, change or retire a routine worksheet and worked case",
+        "title": "Decide whether to keep, change or retire a routine: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/19-maintain-or-retire.md"
       },
       {
-        "title": "Make an honest maintenance plan worksheet and worked case",
+        "title": "Keeping or changing a routine: worksheet and worked case",
         "href": "paths/habits-behaviour-change/practice/20-evidence-review.md"
       },
       {
-        "title": "A factual baseline and a feasible target project sheet",
+        "title": "A factual baseline and a feasible target: project sheet",
         "href": "paths/habits-behaviour-change/practice/foundation-project.md"
       },
       {
-        "title": "A small routine experiment project sheet",
+        "title": "A small routine experiment: project sheet",
         "href": "paths/habits-behaviour-change/practice/intermediate-project.md"
       },
       {
-        "title": "An evidence-based maintenance decision project sheet",
+        "title": "Keeping or changing a routine: project sheet",
         "href": "paths/habits-behaviour-change/practice/advanced-project.md"
       },
       {
@@ -31852,7 +31852,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation — observe and define",
+        "title": "Observe and define",
         "description": "A factual baseline and a feasible target",
         "exitCriteria": [
           "State a useful outcome and a controllable action.",
@@ -31880,7 +31880,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate — practise and compare",
+        "title": "Practise and compare",
         "description": "A small routine experiment",
         "exitCriteria": [
           "Write a cue/action plan and an obstacle branch.",
@@ -31908,8 +31908,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied transfer — adapt and review",
-        "description": "An evidence-based maintenance decision",
+        "title": "Adapt and review",
+        "description": "Decide whether to keep or change a routine",
         "exitCriteria": [
           "Compare benefit, effort and context fit.",
           "State what was observed and what cannot be inferred.",
@@ -31917,7 +31917,7 @@ const LEARNING_PATHS = [
           "Record known facts and uncertainty separately, using the relevant stage measures."
         ],
         "project": {
-          "title": "An evidence-based maintenance decision",
+          "title": "Decide whether to keep or change a routine",
           "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "requirements": [
             "Compare benefit, effort and context fit.",
@@ -31964,7 +31964,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Rewrite Mira’s label as an observable action and choose one low-cost target.",
+          "prompt": "Mira calls herself disorganised after searching for her keys twice. The observable event is leaving keys in different places after arriving home. Rewrite Mira's label as an observable action and choose one low-cost target.",
           "solution": "Mira writes: after entering home, place keys in the bowl by the door. She checks whether the bowl is reachable while holding bags. The aim is easier retrieval, not becoming a different person.",
           "solutionFormat": "prose",
           "checks": [
@@ -32038,7 +32038,7 @@ const LEARNING_PATHS = [
             "Calmness itself is a specific repeated action"
           ],
           "correct": 0,
-          "explanation": "Packing may reduce searching, while bus delays remain outside the action’s control. Performing the action does not guarantee a calm morning."
+          "explanation": "Packing may reduce searching, while bus delays remain outside the action's control. Performing the action does not guarantee a calm morning."
         },
         "references": [
           {
@@ -32309,13 +32309,13 @@ const LEARNING_PATHS = [
       {
         "id": "small-start",
         "title": "6. Choose a version that fits a real opportunity",
-        "takeaway": "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose.",
+        "takeaway": "Choose a small first action that contributes to the goal.",
         "stage": "foundation",
         "sections": [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A small starting action lowers the practical demand of beginning; it should still serve a meaningful purpose. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
+              "Choose a small first action that contributes to the goal. Choose a minimum that is useful rather than symbolic busywork. Name an optional larger version, but do not silently turn it into the required minimum. If circumstances prevent even the minimum, adjust the plan instead of assigning blame."
             ]
           },
           {
@@ -32378,7 +32378,7 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study’s fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
+              "A modelled automaticity threshold is a research convention, not a visible switch that turns effort off. The 18–254-day estimates describe variation in the study's fitted trajectories. Personal logs cannot reproduce those models merely by counting days, so review practical fit instead of treating a calendar milestone as a pass/fail test."
             ]
           },
           {
@@ -32391,7 +32391,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Dev reaches day 21 of placing his notebook out and still needs to think about it. Write a fair interpretation of Dev’s experience and a next check.",
+          "prompt": "Dev reaches day 21 of placing his notebook out and still needs to think about it. Write a fair interpretation of Dev's experience and a next check.",
           "solution": "Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whether the cue is noticed and whether the action remains useful. He continues or changes it based on fit, without predicting the date of automaticity.",
           "solutionFormat": "prose",
           "checks": [
@@ -32460,12 +32460,12 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "Which is an implementation intention?",
           "options": [
-            "If Tuesday’s session ends, then file its handouts",
+            "If Tuesday's session ends, then file its handouts",
             "I really intend to be organised",
             "I will succeed if I care enough"
           ],
           "correct": 0,
-          "explanation": "The plan links an identifiable situation—Tuesday’s session ending—to an immediately possible action: filing its handouts."
+          "explanation": "The end of Tuesday's session is the cue to file its handouts. The action can happen as soon as that cue occurs."
         },
         "references": [
           {
@@ -32597,7 +32597,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people’s needs."
+              "Friction is the extra work between noticing a cue and completing an action. Walk through the task physically: locate materials, open them, decide what to do and put them away. Remove one unnecessary step for a desired action. Adding a modest step to an unwanted action can create a pause, but it should not block essential access or other people's needs."
             ]
           },
           {
@@ -32666,14 +32666,14 @@ const LEARNING_PATHS = [
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Owen’s reminder to return library books appears while he is already travelling away from home."
+              "Owen's reminder to return library books appears while he is already travelling away from home."
             ],
             "example": "Owen moves the reminder to the previous evening and labels it “put library books beside tomorrow’s bag”. He notes whether he saw it, could reach the books and packed them. A noticed alert without access to the books is not an actionable opportunity.",
             "exampleFormat": "prose"
           }
         ],
         "exercise": {
-          "prompt": "Tess’s filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Redesign the prompt and define what to observe.",
+          "prompt": "Tess's filing alarm sounds during a daily meeting, so she dismisses it and forgets later. Redesign the prompt and define what to observe.",
           "solution": "Move the prompt to the end of her desk session and label it “file today’s handout”. For a week, note seen, opportunity available and filed. If the meeting overruns, that is a context exception rather than evidence the label failed.",
           "solutionFormat": "prose",
           "checks": [
@@ -32717,7 +32717,7 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative’s immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
+              "A replacement must fit both the need and the available duration. Reading can provide stimulation but may not meet a desire for contact; chatting may provide contact but run over time. Compare the alternative's immediate usefulness and its downstream cost. If it solves neither, revise the hypothesis about what the original action provides."
             ]
           },
           {
@@ -32734,7 +32734,7 @@ const LEARNING_PATHS = [
           "solution": "Omar sends one message before the break and sets a visible end time, or talks briefly with a classmate. He checks whether the break still feels social and whether he returns on time. The aim is a workable option, not forbidding connection.",
           "solutionFormat": "prose",
           "checks": [
-            "The original action’s immediate function is named.",
+            "The original action's immediate function is named.",
             "The replacement fits the break duration.",
             "The worked response is used for comparison, with any justified alternative explained."
           ]
@@ -32780,14 +32780,14 @@ const LEARNING_PATHS = [
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Diego normally checks tomorrow’s appointments on his home computer, but sometimes spends the night away."
+              "Diego normally checks tomorrow's appointments on his home computer, but sometimes spends the night away."
             ],
             "example": "Normal: after dinner, check the calendar on the computer and note the first appointment. Away: after the evening meal, check the same calendar on the phone. Without access, record the missing opportunity and check when access returns; do not invent a completed review.",
             "exampleFormat": "prose"
           }
         ],
         "exercise": {
-          "prompt": "Aisha’s normal note-review cue disappears on days she works at a different desk. Write a normal plan and a travel-day branch.",
+          "prompt": "Aisha's normal note-review cue disappears on days she works at a different desk. Write a normal plan and a travel-day branch.",
           "solution": "Normal: after lunch at the usual desk, review three notes. Different desk: after unpacking, put the note card beside the keyboard and review one note. If the shift has no break, record no opportunity and resume at the next normal cue.",
           "solutionFormat": "prose",
           "checks": [
@@ -32825,7 +32825,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Add an outcome measure only if it is meaningful and cheap to collect. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
+              "One number rarely captures whether a routine is working. Track available opportunities, completed actions and optional ease of starting. Measure an outcome only if it helps you decide what to change and takes little effort to record. Do not equate streak length with benefit. A personal log helps decide what to try next; it does not establish that a design caused the change."
             ]
           },
           {
@@ -32861,7 +32861,7 @@ const LEARNING_PATHS = [
             "The probability of success for everyone"
           ],
           "correct": 0,
-          "explanation": "The rate describes completion among recorded available opportunities. It does not measure permanent automaticity or predict everyone’s success."
+          "explanation": "The rate describes completion among recorded available opportunities. It does not measure permanent automaticity or predict everyone's success."
         },
         "references": [
           {
@@ -32966,7 +32966,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action’s own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
+              "A routine is easier to evaluate when its immediate result is visible. A modest satisfying consequence can be the action's own benefit: a clear desk, a found key or a completed note. Keep rewards proportionate and avoid turning the plan into a costly incentive scheme. You do not need a story about brain chemicals to decide whether a practical consequence is helpful."
             ]
           },
           {
@@ -32978,7 +32978,7 @@ const LEARNING_PATHS = [
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Leo puts tomorrow’s cooking utensils on a tray after washing up and finds breakfast setup easier."
+              "Leo puts tomorrow's cooking utensils on a tray after washing up and finds breakfast setup easier."
             ],
             "example": "Immediate result: the required utensils are visible together. Longer-term outcome: less searching during breakfast preparation. Leo samples setup time on several mornings and checks whether the tray adds clutter before deciding to keep it.",
             "exampleFormat": "prose"
@@ -33023,7 +33023,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally’s study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
+              "A missed action is a chance to inspect conditions and resume at the next feasible opportunity. Separate cue absent, cue missed, resources unavailable and choosing another priority. The categories suggest different changes. Avoid punitive catch-up rules that make the next action larger. Lally's study found one missed opportunity did not materially disrupt the modelled process; that finding is not permission to ignore all patterns."
             ]
           },
           {
@@ -33325,7 +33325,7 @@ const LEARNING_PATHS = [
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Nico wants a friend’s help maintaining a receipt routine, but does not want purchases inspected."
+              "Nico wants a friend's help maintaining a receipt routine, but does not want purchases inspected."
             ],
             "example": "Nico asks: “Could we have one check-in next Saturday about whether the receipt pocket is useful? I will share the result, not the receipts. Either of us can stop the check-in.” The friend agrees to that limited role; additional monitoring needs a new agreement.",
             "exampleFormat": "prose"
@@ -33336,7 +33336,7 @@ const LEARNING_PATHS = [
           "solution": "Could you ask once on Sunday whether my bag setup is working? Please do not check daily or read my log. If either of us finds this unhelpful, we will stop. The agreed role supports Uma’s choice without surveillance.",
           "solutionFormat": "prose",
           "checks": [
-            "The helper’s role and frequency are agreed.",
+            "The helper's role and frequency are agreed.",
             "Either person can stop the arrangement.",
             "The worked response is used for comparison, with any justified alternative explained."
           ]
@@ -33401,7 +33401,7 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "When is retirement sensible?",
           "options": [
-            "When the routine’s benefit no longer justifies its cost",
+            "When the routine's benefit no longer justifies its cost",
             "Never, because a streak must be preserved",
             "Whenever one action is missed"
           ],
@@ -33420,33 +33420,33 @@ const LEARNING_PATHS = [
       },
       {
         "id": "evidence-review",
-        "title": "20. Make an honest maintenance plan",
-        "takeaway": "A final review joins the target, observations, changes and limits into a reusable plan.",
+        "title": "20. Make a plan for keeping or changing the routine",
+        "takeaway": "Use the review to decide what to keep, what to change and when to check again.",
         "stage": "advanced",
         "sections": [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A final review joins the target, observations, changes and limits into a reusable plan. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
+              "Use the review to decide what to keep, what to change and when to check again. State what you actually tried, what you observed and what remains uncertain. Include a next review date and a recovery branch. Do not claim treatment effects or guaranteed transformation. The goal is a modest self-management system that can adapt when life changes."
             ]
           },
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "A reusable plan names the evidence that would trigger revision: an absent cue, rising setup cost or a changed goal. Review dates prevent indefinite tracking without a decision. Keep uncertainty visible while committing to a modest next action. The quality of the review rests on accurate records and a feasible adjustment, not an impressive transformation claim."
+              "Name the conditions that would make you revise the plan, such as a missing cue, more setup work or a changed goal. Review dates prevent indefinite tracking without a decision. Say what you do not yet know, then choose the next action. Base the adjustment on what you observed. Do not claim a lasting change from a short trial."
             ]
           },
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Jon’s ten-day desk-clearance log shows quicker morning setup, but his workload also became lighter."
+              "Jon's ten-day desk-clearance log shows quicker morning setup, but his workload also became lighter."
             ],
             "example": "Jon keeps the small clearance action, adds a fallback for late finishes and reviews after another fortnight. He reports the quicker setup and the changed workload together. A busier comparison may clarify usefulness; the current log does not isolate the routine as the cause.",
             "exampleFormat": "prose"
           }
         ],
         "exercise": {
-          "prompt": "Wen’s two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
+          "prompt": "Wen's two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
           "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
           "solutionFormat": "prose",
           "checks": [
@@ -33456,14 +33456,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which review is most honest?",
+          "question": "Which review stays within what the observations show?",
           "options": [
             "Describe observations, alternate explanations and the next decision",
             "Claim a permanent habit from two weeks",
             "Hide missed and unavailable opportunities"
           ],
           "correct": 0,
-          "explanation": "Observed results, alternate explanations and a next decision make the plan reusable. A short log cannot establish permanent change."
+          "explanation": "Use the results and possible alternative explanations to decide what to try next. A short log cannot establish permanent change."
         },
         "references": [
           {
@@ -33727,7 +33727,7 @@ const LEARNING_PATHS = [
           "id": "20-evidence-review",
           "href": "paths/habits-behaviour-change/practice/20-evidence-review.md",
           "role": "worksheet",
-          "description": "Make an honest maintenance plan worksheet and worked case"
+          "description": "Decide whether to keep or change the routine worksheet and worked case"
         },
         {
           "id": "foundation-project",
@@ -33776,7 +33776,7 @@ const LEARNING_PATHS = [
         {
           "id": "practice-behaviour-not-identity",
           "title": "Describe actions without judging identity practice",
-          "goal": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+          "goal": "Rewrite Mira's label as an observable action and choose one low-cost target.",
           "fileIds": [
             "README",
             "01-behaviour-not-identity",
@@ -33789,7 +33789,7 @@ const LEARNING_PATHS = [
           "steps": [
             "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
             "Read the fictional case in 01-behaviour-not-identity.md.",
-            "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+            "Rewrite Mira's label as an observable action and choose one low-cost target.",
             "Write a response before revealing the worked example.",
             "Compare the response with the self-check; record one adjustment."
           ],
@@ -33950,7 +33950,7 @@ const LEARNING_PATHS = [
         {
           "id": "practice-time-variation",
           "title": "Reject fixed habit deadlines practice",
-          "goal": "Write a fair interpretation of Dev’s experience and a next check.",
+          "goal": "Write a fair interpretation of Dev's experience and a next check.",
           "fileIds": [
             "README",
             "07-time-variation",
@@ -33963,7 +33963,7 @@ const LEARNING_PATHS = [
           "steps": [
             "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
             "Read the fictional case in 07-time-variation.md.",
-            "Write a fair interpretation of Dev’s experience and a next check.",
+            "Write a fair interpretation of Dev's experience and a next check.",
             "Write a response before revealing the worked example.",
             "Compare the response with the self-check; record one adjustment."
           ],
@@ -34326,7 +34326,7 @@ const LEARNING_PATHS = [
         },
         {
           "id": "practice-evidence-review",
-          "title": "Make an honest maintenance plan practice",
+          "title": "Decide whether to keep or change the routine practice",
           "goal": "Write a keep/change decision with an uncertainty statement.",
           "fileIds": [
             "README",
@@ -34356,7 +34356,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "A factual baseline and a feasible target",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "foundation-project",
@@ -34391,7 +34391,7 @@ const LEARNING_PATHS = [
         {
           "id": "intermediate",
           "title": "A small routine experiment",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "intermediate-project",
@@ -34425,8 +34425,8 @@ const LEARNING_PATHS = [
         },
         {
           "id": "advanced",
-          "title": "An evidence-based maintenance decision",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "title": "Decide whether to keep or change a routine",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "advanced-project",
@@ -34494,7 +34494,7 @@ const LEARNING_PATHS = [
     "title": "JavaScript → TypeScript → React",
     "category": "Web development",
     "status": "ready",
-    "description": "Build typed web features, then practise state architecture, async correctness, testing and resilient delivery.",
+    "description": "Learn JavaScript and TypeScript, then build React features with tested state updates, asynchronous loading and local persistence.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "No React experience required. Be comfortable creating folders and editing text files.",
@@ -34507,14 +34507,14 @@ const LEARNING_PATHS = [
       "Explain loading, error and empty states, then test a small tracker."
     ],
     "setup": [
-      "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website’s console.",
-      "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool’s requirements.",
+      "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website's console.",
+      "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool's requirements.",
       "A learning-only Vite setup: npm create vite@latest notebook-practice -- --template react-ts; cd notebook-practice; npm install; npm run dev. These commands download tools; this notebook does not run them.",
       "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build.",
       "The downloadable kit now includes a pinned runnable Vite/Vitest project: npm ci, npm test, npm run build, npm run dev from the extracted folder root."
     ],
     "nextSteps": [
-      "Study your chosen production framework’s server rendering, caching and deployment model.",
+      "Study your chosen production framework's server rendering, caching and deployment model.",
       "Implement and test the advanced project against a real authenticated API.",
       "Continue with design systems, internationalization and production observability."
     ],
@@ -34681,7 +34681,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Input values arrive as strings even when they look numeric. Convert deliberately, then validate. Number('') is zero, so check for blank input before conversion.",
+              "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. Number('') is zero, so check for blank input before conversion.",
               "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
             ],
             "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
@@ -34689,7 +34689,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Treating every falsy value as missing rejects valid zero. Check the condition you actually mean."
+              "Treating every falsy value as missing rejects valid zero. Check for missing input separately from zero."
             ]
           },
           {
@@ -34702,7 +34702,7 @@ const LEARNING_PATHS = [
             "title": "Follow conversion before choosing a fallback",
             "paragraphs": [
               "An HTML number input still exposes text through its value property. Number(\"\") becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, value || 20 replaces a valid zero; value ?? 20 replaces only null and undefined.",
-              "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser deliberately rejects \"20\" instead of coercing it. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
+              "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser rejects the string \"20\" rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
             ],
             "example": "const text = \"\";\nconst missing = text.trim() === \"\";\nconsole.log(Number(text), missing); // 0, true\nconsole.log(0 || 20, 0 ?? 20); // 20, 0"
           }
@@ -34922,7 +34922,7 @@ const LEARNING_PATHS = [
           {
             "title": "Narrow unknown data step by step",
             "paragraphs": [
-              "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. That type describes a runtime branch you actually executed.",
+              "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. The type follows the runtime check.",
               "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
             ],
             "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
@@ -34960,7 +34960,7 @@ const LEARNING_PATHS = [
       {
         "id": "components",
         "title": "7. Components, props and lists",
-        "takeaway": "Pass data down and keep each component’s responsibility clear.",
+        "takeaway": "Pass data down and keep each component's responsibility clear.",
         "sections": [
           {
             "title": "Concept",
@@ -35327,7 +35327,7 @@ const LEARNING_PATHS = [
             "Requests a future render with updated state"
           ],
           "correct": 1,
-          "explanation": "The current render’s snapshot remains unchanged; a new render receives the next state."
+          "explanation": "The current render's snapshot remains unchanged; a new render receives the next state."
         },
         "trace": {
           "title": "Step through a state update",
@@ -35338,7 +35338,7 @@ const LEARNING_PATHS = [
                 "count = 0",
                 "button: Sessions 0"
               ],
-              "explanation": "The handler closes over this render’s snapshot."
+              "explanation": "The handler closes over this render's snapshot."
             },
             {
               "label": "User clicks",
@@ -35782,7 +35782,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A controlled input receives its value from state and reports changes through an event handler. Keep the input’s accessible label visible. A form can handle submission from both a button and the Enter key.",
+              "A controlled input receives its value from state and reports changes through an event handler. Keep the input's accessible label visible. A form can handle submission from both a button and the Enter key.",
               "Search results are derived from records plus the search query. There is no need to copy them into another state variable. Validate on submit, and explain errors in text near the field."
             ],
             "example": "const [query, setQuery] = useState(\"\");\nconst visible = lessons.filter(row => row.title.toLowerCase().includes(query.toLowerCase()));\n// Inside a component with lessons and useState:\n<label htmlFor=\"search\">Find a lesson</label>\n<input id=\"search\" value={query} onChange={e => setQuery(e.target.value)} />\n// Render visible.map(...) below the input."
@@ -36283,7 +36283,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It deliberately keeps data in memory so state behavior is visible without storage complications.",
+              "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
               "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
             ],
             "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
@@ -36347,7 +36347,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users’ data."
+              "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
             ]
           }
         ],
@@ -36535,7 +36535,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; choose that behavior deliberately."
+              "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; document and test that choice."
             ]
           }
         ],
@@ -36661,7 +36661,7 @@ const LEARNING_PATHS = [
         "id": "context-hooks",
         "title": "Context, custom Hooks and ownership",
         "stage": "intermediate",
-        "takeaway": "Share state deliberately; sharing a Hook does not automatically share its state.",
+        "takeaway": "When a custom Hook calls useState, each invocation gets its own state. Lift state to a shared owner when components need the same value.",
         "sections": [
           {
             "title": "Contract",
@@ -36672,7 +36672,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "Share state deliberately; sharing a Hook does not automatically share its state.",
+              "When a custom Hook calls useState, each invocation gets its own state. Lift state to a shared owner when components need the same value.",
               "This Hook fragment gives each invocation its own state. The functional update flips the current value; sharing the Hook implementation does not couple its callers."
             ],
             "example": "// Component/Hook fragment; import useState from React.\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  return {on, toggle: () => setOn(value => !value)};\n}\n// const first = useToggle(); const second = useToggle();\n// Toggling first does not toggle second."
@@ -36716,18 +36716,18 @@ const LEARNING_PATHS = [
         "id": "identity",
         "title": "Component identity and form resets",
         "stage": "intermediate",
-        "takeaway": "State belongs to a component’s position and identity in the rendered tree.",
+        "takeaway": "State belongs to a component's position and identity in the rendered tree.",
         "sections": [
           {
             "title": "Contract",
             "paragraphs": [
-              "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record’s draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
+              "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record's draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "State belongs to a component’s position and identity in the rendered tree.",
+              "State belongs to a component's position and identity in the rendered tree.",
               "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
             ],
             "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
@@ -36749,7 +36749,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What does changing a component’s key generally do?",
+          "question": "What does changing a component's key generally do?",
           "options": [
             "Preserves the old component state by default",
             "Gives it a new identity and resets local state"
@@ -36776,7 +36776,7 @@ const LEARNING_PATHS = [
           {
             "title": "Contract",
             "paragraphs": [
-              "If a user selects A and then B, A’s slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
+              "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
             ]
           },
           {
@@ -37220,7 +37220,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Create a test matrix for the tracker’s add/remove/filter behavior.",
+          "prompt": "Create a test matrix for the tracker's add/remove/filter behavior.",
           "solution": "Unit: blank title, duplicate ID, unknown toggle, input immutability.\nComponent: labeled input, Enter submission, visible validation error, empty filter result.\nBrowser: refresh policy, keyboard-only operation, URL Back/Forward if routing is added.\nRegression: reproduce one real bug with the smallest meaningful test.",
           "checks": [
             "Each test has an observable expected result.",
@@ -37271,7 +37271,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "React’s ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
+              "React's ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
             ]
           }
         ],
@@ -37337,7 +37337,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Use practice/performance-fixture.ts for a separate 10,000-record synthetic filter. Keep the tracker’s 1,000-record validation limit. Record repeated filter and UI Profiler measurements, correctness and device/build.",
+          "prompt": "Use practice/performance-fixture.ts for a separate 10,000-record synthetic filter. Keep the tracker's 1,000-record validation limit. Record repeated filter and UI Profiler measurements, correctness and device/build.",
           "solution": "Use a fixed synthetic dataset and the same device/build.\nMeasure typing-to-update latency and render/calculate time.\nTry removing redundant state first.\nCompare a memoized filter or deferred presentation only if warranted.\nCheck result correctness and keyboard behavior after optimization.",
           "checks": [
             "Report workload and build mode.",
@@ -37387,7 +37387,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record what was actually tested; a green build is not evidence that every user journey works."
+              "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record the user interactions you tested. A successful build alone does not test those interactions."
             ]
           },
           {
@@ -37529,11 +37529,11 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundations · JavaScript and typed data",
-        "description": "Build comfort with the language, browser semantics and runtime boundaries before adding React state.",
+        "title": "Foundations: JavaScript and typed data",
+        "description": "Practise JavaScript values, browser behavior and runtime validation before adding React state.",
         "exitCriteria": [
           "Write small pure functions and test invalid as well as normal input.",
-          "Explain strings versus numbers, asynchronous completion and TypeScript’s runtime limits.",
+          "Explain strings versus numbers, asynchronous completion and TypeScript's runtime limits.",
           "Use semantic labeled controls and distinguish data from its display."
         ],
         "project": {
@@ -37556,8 +37556,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate · State and feature design",
-        "description": "Develop features with explicit state ownership, predictable transitions and accessible interactions.",
+        "title": "Intermediate: state and feature design",
+        "description": "Build features with defined state ownership, tested transitions and accessible controls.",
         "exitCriteria": [
           "Choose between local state, lifted state, reducers and context.",
           "Implement forms with visible validation and stable list identity.",
@@ -37586,7 +37586,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice",
-        "description": "Reason about asynchronous races, persistence, security and measured performance in a bounded application.",
+        "description": "Test asynchronous races, local persistence, security assumptions and performance in a small application.",
         "exitCriteria": [
           "Prevent stale requests from overwriting newer intent.",
           "Distinguish render boundaries, async failures and server authorization.",
@@ -37595,7 +37595,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Resilient tracker release",
-          "brief": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+          "brief": "Add versioned persistence and recovery to the workshop. Test the release candidate and list the checks that still need a deployed application.",
           "requirements": [
             "Add persistence with explicit save/read failure handling and schema version checks.",
             "Implement a controllable API adapter with loading, error and stale-response tests.",
@@ -37622,7 +37622,7 @@ const LEARNING_PATHS = [
           "id": "App-tsx",
           "href": "paths/react/practice/App.tsx",
           "role": "reference",
-          "description": "Runnable React tracker — App.tsx"
+          "description": "Runnable React tracker. App.tsx"
         },
         {
           "id": "AdvancedApp-tsx",
@@ -37652,49 +37652,49 @@ const LEARNING_PATHS = [
           "id": "RemoteLesson-tsx",
           "href": "paths/react/practice/RemoteLesson.tsx",
           "role": "reference",
-          "description": "RemoteLesson.tsx — guided executable scaffold"
+          "description": "RemoteLesson.tsx. guided executable scaffold"
         },
         {
           "id": "ui-test-tsx",
           "href": "paths/react/practice/ui.test.tsx",
           "role": "test",
-          "description": "ui.test.tsx — guided executable scaffold"
+          "description": "ui.test.tsx. guided executable scaffold"
         },
         {
           "id": "vite-config-ts",
           "href": "paths/react/practice/vite.config.ts",
           "role": "reference",
-          "description": "vite.config.ts — guided executable scaffold"
+          "description": "vite.config.ts. guided executable scaffold"
         },
         {
           "id": "main-tsx",
           "href": "paths/react/practice/main.tsx",
           "role": "reference",
-          "description": "main.tsx — guided executable scaffold"
+          "description": "main.tsx. guided executable scaffold"
         },
         {
           "id": "index-html",
           "href": "paths/react/practice/index.html",
           "role": "reference",
-          "description": "index.html — guided executable scaffold"
+          "description": "index.html. guided executable scaffold"
         },
         {
           "id": "package-json",
           "href": "paths/react/practice/package.json",
           "role": "reference",
-          "description": "package.json — guided executable scaffold"
+          "description": "package.json. guided executable scaffold"
         },
         {
           "id": "package-lock-json",
           "href": "paths/react/practice/package-lock.json",
           "role": "reference",
-          "description": "package-lock.json — guided executable scaffold"
+          "description": "package-lock.json. guided executable scaffold"
         },
         {
           "id": "tsconfig-json",
           "href": "paths/react/practice/tsconfig.json",
           "role": "reference",
-          "description": "tsconfig.json — guided executable scaffold"
+          "description": "tsconfig.json. guided executable scaffold"
         },
         {
           "id": "practice-performance-fixture-ts",
@@ -37769,10 +37769,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
+            "Run the reference and check its output. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
             "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
-            "Complete the assessment requirements in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans.; Reject malformed JSON, duplicate IDs, blank titles and unsupported versions.; Return a completion summary without modifying caller-owned records.; Write repeatable valid and invalid-input tests.",
-            "Compare your evidence with the stage rubric: Every malformed case produces an explicit failure.; Zero and false are not treated as missing.; Original data is unchanged.; Explain where runtime validation ends and static typing begins.",
+            "Build the project described in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans. Reject malformed JSON, duplicate IDs, blank titles and unsupported versions. Return a completion summary without modifying caller-owned records. Write repeatable valid and invalid-input tests.",
+            "Check your result: Every malformed case produces an explicit failure. Zero and false are not treated as missing. Original data is unchanged. Explain where runtime validation ends and static typing begins.",
             "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
           ],
           "commands": [
@@ -37801,7 +37801,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
             "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -37829,10 +37829,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+            "Run the reference and check its output. Create the Vite directory once, then reuse it for later runs.",
             "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
-            "Complete the assessment requirements in the reader: Use stable IDs and immutable reducer transitions.; Show blank-title errors and an empty search result.; Keep completion counts derived from all records.; Decide whether changing selection preserves unsaved drafts.; Run domain tests and manually verify Enter, Tab and checkbox behavior.",
-            "Compare your evidence with the stage rubric: No duplicated records or mutation of old state.; Filtering does not lose completion changes.; Controls have accessible names.; A failed input cannot appear as a successful update.; Explain the ownership of each state value.",
+            "Build the project described in the reader: Use stable IDs and immutable reducer transitions. Show blank-title errors and an empty search result. Keep completion counts derived from all records. Decide whether changing selection preserves unsaved drafts. Run domain tests and manually verify Enter, Tab and checkbox behavior.",
+            "Check your result: No duplicated records or mutation of old state. Filtering does not lose completion changes. Controls have accessible names. A failed input cannot appear as a successful update. Explain the ownership of each state value.",
             "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
           ],
           "commands": [
@@ -37866,13 +37866,13 @@ const LEARNING_PATHS = [
           "notes": [
             "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
             "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
           "id": "advanced",
           "title": "Resilient tracker release",
-          "goal": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+          "goal": "Add versioned persistence and recovery to the workshop. Test the release candidate and list the checks that still need a deployed application.",
           "fileIds": [
             "App-tsx",
             "AdvancedApp-tsx",
@@ -37891,10 +37891,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
+            "Run the reference and check its output. Create the Vite directory once, then reuse it for later runs.",
             "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
-            "Complete the assessment requirements in the reader: Add persistence with explicit save/read failure handling and schema version checks.; Implement a controllable API adapter with loading, error and stale-response tests.; Add URL-selected records and verify Back/Forward and direct-link refresh.; Prevent unsaved edits being silently overwritten.; Document server authorization assumptions and keep secrets out of the client.; Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
-            "Compare your evidence with the stage rubric: Delayed response A cannot overwrite newer record B.; Malformed storage remains visible as an error rather than silently trusted data.; Keyboard and empty/error journeys pass.; Release notes distinguish executed tests from reviewed-only code.; Rollback/migration behavior is specified."
+            "Build the project described in the reader: Add persistence with explicit save/read failure handling and schema version checks. Implement a controllable API adapter with loading, error and stale-response tests. Add URL-selected records and verify Back/Forward and direct-link refresh. Prevent unsaved edits being silently overwritten. Document server authorization assumptions and keep secrets out of the client. Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
+            "Check your result: Delayed response A cannot overwrite newer record B. Malformed storage remains visible as an error rather than silently trusted data. Keyboard and empty/error journeys pass. Release notes distinguish executed tests from reviewed-only code. Rollback/migration behavior is specified."
           ],
           "commands": [
             {
@@ -37917,7 +37917,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Node.js 24 and npm for the reference checks; the bundled pinned Vite/Vitest project for UI checks.",
             "The supplied UI supports in-memory edits and backup validation. The bundled remote demo covers loading, stale responses and URL selection; persistence and real server integration remain extensions. App.tsx is the smaller introductory reference; AdvancedApp.tsx is the editable tracker.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -38084,7 +38084,7 @@ const LEARNING_PATHS = [
           {
             "title": "Workloads and controllers",
             "paragraphs": [
-              "Kubernetes coordinates container workloads through declarative API objects and controllers. It schedules instances, replaces failed Pods and exposes services, but it does not make application transactions correct or produce backups automatically. Begin with a working container from Delivery & Operations and distinguish application failure from scheduler/control-plane failure. The supplied image runs a small Python/SQLite lab, not the React/.NET/SQL stack."
+              "Kubernetes uses API objects and controllers to schedule containers, replace failed Pods and route service traffic. Applications still need correct transactions and backups. Start with the working container from Delivery & Operations, then distinguish application failures from scheduler or control-plane failures. The supplied image runs the Python/SQLite lab. It does not run the React/.NET/SQL stack."
             ]
           },
           {
@@ -39440,7 +39440,7 @@ const LEARNING_PATHS = [
           {
             "title": "Configuration delivery",
             "paragraphs": [
-              "A ConfigMap carries non-confidential configuration separately from container bytes. The kit injects RELEASE_VERSION through envFrom; this teaches the boundary but the value is only a label, not artifact identity. Values supplied as environment variables are captured at container start. Updating the ConfigMap does not automatically rewrite the environment of an already running process."
+              "A ConfigMap stores non-confidential configuration outside the container image. The kit injects RELEASE_VERSION through envFrom. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
             ]
           },
           {
@@ -39794,7 +39794,7 @@ const LEARNING_PATHS = [
             "100MiB memory"
           ],
           "correct": 1,
-          "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application’s measured CPU use."
+          "explanation": "100m is one tenth of a CPU core. Requests influence scheduling and resource allocation; this notation does not itself describe the application's measured CPU use."
         },
         "references": [
           {
@@ -40843,7 +40843,7 @@ const LEARNING_PATHS = [
             "The database password in a public commit"
           ],
           "correct": 1,
-          "explanation": "A durable rollback changes the reviewed desired state in the controller’s source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
+          "explanation": "A durable rollback changes the reviewed desired state in the controller's source of truth. An imperative change can be overwritten by reconciliation; data and schema compatibility require separate recovery evidence."
         },
         "references": [
           {
@@ -41187,7 +41187,7 @@ const LEARNING_PATHS = [
           "Verify allowed/denied rules with enforcement prerequisites."
         ],
         "project": {
-          "title": "Controlled failure and access packet",
+          "title": "Failure and access test results",
           "brief": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
           "requirements": [
             "Explain and observe the synthetic readiness gate where a cluster exists.",
@@ -41217,11 +41217,11 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Selected operational cluster review",
-          "brief": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+          "brief": "Collect the results of the optional storage, Job and metrics exercises. Explain how you would use Helm, GitOps and backups for this workload.",
           "requirements": [
             "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
             "Run bounded Job and capture completion/logs before TTL if opted in.",
-            "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+            "Check the HPA metrics, resource requests and scaling range of two to four replicas. Identify any required metrics that are unavailable.",
             "Explain voluntary eviction versus node outage and rollout constraints.",
             "Render a learner-generated Helm chart and compare to known workload contracts.",
             "Draw GitOps drift/revert timeline without installing a controller.",
@@ -41239,71 +41239,71 @@ const LEARNING_PATHS = [
     ],
     "downloads": [
       {
-        "title": "release_app.py — local reference or guided exercise",
+        "title": "release_app.py. Local reference or exercise",
         "href": "paths/kubernetes/practice/release_app.py"
       },
       {
-        "title": "test_release_app.py — local reference or guided exercise",
+        "title": "test_release_app.py. Local reference or exercise",
         "href": "paths/kubernetes/practice/test_release_app.py"
       },
       {
-        "title": "Dockerfile — local reference or guided exercise",
+        "title": "Dockerfile. Local reference or exercise",
         "href": "paths/kubernetes/practice/Dockerfile"
       },
       {
-        "title": ".dockerignore — local reference or guided exercise",
+        "title": ".dockerignore. Local reference or exercise",
         "href": "paths/kubernetes/practice/.dockerignore"
       },
       {
-        "title": "README.md — local reference or guided exercise",
+        "title": "README.md. Local reference or exercise",
         "href": "paths/kubernetes/practice/README.md"
       },
       {
-        "title": "cluster-workbook.md — local reference or guided exercise",
+        "title": "cluster-workbook.md. Local reference or exercise",
         "href": "paths/kubernetes/practice/cluster-workbook.md"
       },
       {
-        "title": "check_manifests.py — local reference or guided exercise",
+        "title": "check_manifests.py. Local reference or exercise",
         "href": "paths/kubernetes/practice/check_manifests.py"
       },
       {
-        "title": "lab.ps1 — local reference or guided exercise",
+        "title": "lab.ps1. Local reference or exercise",
         "href": "paths/kubernetes/practice/lab.ps1"
       },
       {
-        "title": "namespace.json — local reference or guided exercise",
+        "title": "namespace.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/namespace.json"
       },
       {
-        "title": "workload.json — local reference or guided exercise",
+        "title": "workload.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/workload.json"
       },
       {
-        "title": "network-policy.json — local reference or guided exercise",
+        "title": "network-policy.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/network-policy.json"
       },
       {
-        "title": "rbac.json — local reference or guided exercise",
+        "title": "rbac.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/rbac.json"
       },
       {
-        "title": "demo-secret.json — local reference or guided exercise",
+        "title": "demo-secret.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/demo-secret.json"
       },
       {
-        "title": "hpa.json — local reference or guided exercise",
+        "title": "hpa.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/hpa.json"
       },
       {
-        "title": "disruption-budget.json — local reference or guided exercise",
+        "title": "disruption-budget.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/disruption-budget.json"
       },
       {
-        "title": "job.json — local reference or guided exercise",
+        "title": "job.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/job.json"
       },
       {
-        "title": "storage.json — local reference or guided exercise",
+        "title": "storage.json. Local reference or exercise",
         "href": "paths/kubernetes/practice/storage.json"
       },
       {
@@ -41506,12 +41506,12 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results."
+            "Build the stage project and test your changes."
           ]
         },
         {
           "id": "intermediate",
-          "title": "Controlled failure and access packet",
+          "title": "Failure and access test results",
           "goal": "Review and optionally execute specific safe local probe/rollout/RBAC/policy experiments.",
           "fileIds": [
             "release_app-py",
@@ -41576,14 +41576,14 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results.",
+            "Build the stage project and test your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         },
         {
           "id": "advanced",
           "title": "Selected operational cluster review",
-          "goal": "Build a reviewable packet for optional storage/job/metrics work plus Helm/GitOps/recovery plans.",
+          "goal": "Collect the results of the optional storage, Job and metrics exercises. Explain how you would use Helm, GitOps and backups for this workload.",
           "fileIds": [
             "release_app-py",
             "test_release_app-py",
@@ -41649,7 +41649,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
             "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-            "Build the stage requirements and document evidence separately from reference results.",
+            "Build the stage project and test your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         }
@@ -41858,7 +41858,7 @@ const LEARNING_PATHS = [
             "Highlight the exception twice."
           ],
           "correct": 1,
-          "explanation": "Closing the source removes the visible answer cue. Highlighting or rereading may increase familiarity while leaving the exception unretrievable."
+          "explanation": "Closing the source removes the visible answer. Rereading can make the rule familiar without making its exception easy to recall."
         },
         "references": [
           {
@@ -42024,7 +42024,7 @@ const LEARNING_PATHS = [
         "id": "small-prompts",
         "title": "4. Build clear practice prompts",
         "stage": "foundation",
-        "takeaway": "A prompt should test one meaningful decision and have a checkable answer.",
+        "takeaway": "A prompt should ask for a specific decision and have an answer you can check.",
         "sections": [
           {
             "title": "Understand and try it",
@@ -42100,7 +42100,7 @@ const LEARNING_PATHS = [
           "checks": [
             "Handles the one-day boundary and urgent exception.",
             "Distinguishes immediate application from a later check.",
-            "Reports help and corrections honestly."
+            "States whether the learner used help or corrected an earlier answer."
           ]
         },
         "quiz": {
@@ -42343,7 +42343,7 @@ const LEARNING_PATHS = [
             "Copying a complete worked solution."
           ],
           "correct": 1,
-          "explanation": "A new checked attempt with reduced support shows what the learner can produce. Copying a worked solution only establishes access to the displayed answer."
+          "explanation": "Try a new case with less help to check what you can do independently. Copying the displayed solution cannot show that."
         },
         "references": [
           {
@@ -42704,7 +42704,7 @@ const LEARNING_PATHS = [
             "Recording the original question."
           ],
           "correct": 1,
-          "explanation": "One attempt supports a tentative explanation, not a permanent ability judgement. Keeping the original question makes the repair inspectable."
+          "explanation": "One attempt supports a tentative explanation, not a permanent ability judgement. Keep the original question so you can check whether the correction answers it."
         },
         "references": [
           {
@@ -42754,7 +42754,7 @@ const LEARNING_PATHS = [
             "Every answer equally forever regardless of results."
           ],
           "correct": 0,
-          "explanation": "A confidently wrong item is easy to skip if confidence alone directs review. Checked accuracy supplies the missing calibration evidence."
+          "explanation": "If you review only answers you feel unsure about, you may skip confidently wrong ones. Compare confidence with checked answers to find those gaps."
         },
         "references": [
           {
@@ -42876,7 +42876,7 @@ const LEARNING_PATHS = [
             "title": "Understand and try it",
             "paragraphs": [
               "Transfer means using knowledge in a different situation. Change surface details while preserving the principle, then explain why the principle still applies. Also include a case where it does not apply so the learner practices boundaries rather than repeating a slogan.",
-              "The policy rules here belong to one fictional organisation. Another organisation may use different approvers. Transfer is recognising that you must find and apply its actual rules, not carrying Maya’s exact policy everywhere. New contexts can need instruction, equipment or supervised practice."
+              "The policy rules here belong to one fictional organisation. Another organisation may use different approvers. Transfer is recognising that you must find and apply its actual rules, not carrying Maya's exact policy everywhere. New contexts can need instruction, equipment or supervised practice."
             ]
           },
           {
@@ -42902,7 +42902,7 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "What supports transfer?",
           "options": [
-            "Explain the shared principle and verify the new context’s rules.",
+            "Explain the shared principle and verify the new context's rules.",
             "Assume every organisation has identical policies.",
             "Repeat only the original example forever."
           ],
@@ -43036,7 +43036,7 @@ const LEARNING_PATHS = [
             "Reduce scope while preserving a useful later check."
           ],
           "correct": 2,
-          "explanation": "Reducing scope can preserve a meaningful delayed check within real capacity. Automatic doubling ignores the reason a session was missed."
+          "explanation": "Checking fewer cases later may fit the available time. Automatic doubling ignores the reason a session was missed."
         },
         "references": [
           {
@@ -43058,7 +43058,7 @@ const LEARNING_PATHS = [
             "title": "Understand and try it",
             "paragraphs": [
               "Advice such as this method doubles learning is incomplete without the task, comparison, learners, time horizon and outcome. Look for the primary study or research review. A laboratory result can guide a practical experiment without proving the exact workplace result.",
-              "Distinguish research findings from this course’s design choices. Retrieval and spacing have evidence across many studied conditions; the specific number of questions and weekly dates used here are teaching examples. No method guarantees perfect memory, and more effort or discomfort is not always better."
+              "Distinguish research findings from this course's design choices. Retrieval and spacing have evidence across many studied conditions; the specific number of questions and weekly dates used here are teaching examples. No method guarantees perfect memory, and more effort or discomfort is not always better."
             ]
           },
           {
@@ -43164,7 +43164,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Maya’s portfolio includes one of three baseline, two of three Thursday and three of three Monday, plus a new booking case. She missed Thursday’s second planned session and names that fact. A new organisation’s real approval policy remains untested."
+              "Maya's portfolio includes one of three baseline, two of three Thursday and three of three Monday, plus a new booking case. She missed Thursday's second planned session and names that fact. A new organisation's real approval policy remains untested."
             ]
           }
         ],
@@ -43186,7 +43186,7 @@ const LEARNING_PATHS = [
             "Improved on these cases; transfer still needs work."
           ],
           "correct": 2,
-          "explanation": "The new-context failure limits the transfer conclusion while the comparable-case improvement remains recorded. Neither result proves permanent universal skill."
+          "explanation": "Keep the improved score on comparable cases, but also report the mistake in the new setting. The results show progress on those cases without establishing that the skill transfers everywhere."
         },
         "references": [
           {
@@ -43214,7 +43214,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Maya keeps the urgent exception in occasional mixed practice, saves the current policy link and retires last year’s threshold. Before a rare unfamiliar case she checks the source instead of trusting an old card."
+              "Maya keeps the urgent exception in occasional mixed practice, saves the current policy link and retires last year's threshold. Before a rare unfamiliar case she checks the source instead of trusting an old card."
             ]
           }
         ],
@@ -43252,7 +43252,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation: A first checked learning loop",
+        "title": "A first checked learning loop",
         "description": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
         "exitCriteria": [
           "Target describes recall or application, not content consumed.",
@@ -43281,7 +43281,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate: A flexible two-week practice plan",
+        "title": "A flexible two-week practice plan",
         "description": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
         "exitCriteria": [
           "Each occasion has a specific practice purpose.",
@@ -43310,8 +43310,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Transfer: Delayed application and evidence",
-        "description": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+        "title": "Delayed application and transfer",
+        "description": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
         "exitCriteria": [
           "Comparable delayed evidence is retained, including errors.",
           "Changed-case explanation checks new rules rather than assuming identical policy.",
@@ -43320,7 +43320,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Delayed application and transfer portfolio",
-          "brief": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+          "brief": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
           "requirements": [
             "Use advanced-kit.md and retain the earlier baseline.",
             "Answer comparable new cases after a gap with support labelled.",
@@ -43432,7 +43432,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -43466,7 +43466,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -43474,7 +43474,7 @@ const LEARNING_PATHS = [
         {
           "id": "advanced",
           "title": "Delayed application and transfer portfolio",
-          "goal": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+          "goal": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
           "fileIds": [
             "readme-md",
             "advanced-kit-md",
@@ -43500,7 +43500,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -44492,7 +44492,7 @@ const LEARNING_PATHS = [
           {
             "title": "A lost increment",
             "paragraphs": [
-              "Two workers both read count=5 and both write 6; one increment is lost. A lock around the entire operation can protect a local invariant. Separate processes need an appropriate shared coordination boundary, not just an in-process lock."
+              "Two workers both read count=5 and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
             ],
             "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
           },
@@ -45153,7 +45153,7 @@ const LEARNING_PATHS = [
           {
             "title": "Use errno to choose the next observation",
             "paragraphs": [
-              "Consider an importer that opens its first 29 files and then cannot open another. The pathname exists and permissions are unchanged. If the captured errno is EMFILE, changing ownership is unrelated; compare descriptor growth and look for missing closure on an exception path. If the same failure is ENOENT, inspect the absolute path and working directory instead. The user-visible phrase cannot open file is not enough to select a repair.",
+              "An importer opens its first 29 files but cannot open the next one. The path exists and permissions are unchanged. If errno is EMFILE, inspect descriptor growth and handles left open after exceptions. Changing ownership will not release descriptors. If errno is ENOENT, inspect the absolute path and working directory. The message \"cannot open file\" alone does not identify the cause.",
               "A minimal incident record keeps operation, errno, process identity and resource count with the timestamp. Avoid logging file contents to diagnose a resource boundary. Repeat one bounded operation after releasing the suspected handles, and verify the same process recovers. Restart can clear symptoms while hiding the leak; a regression test must also check cleanup on failed work."
             ],
             "example": "same symptom: cannot open input\nENOENT -> resolve path/cwd\nEACCES -> identity and parent traversal\nEMFILE -> owned descriptor counts/lifetimes\nvalid open + ValueError -> schema/content category",
@@ -45417,7 +45417,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+            "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
         {
@@ -45467,7 +45467,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+            "These tests cover the local reference. Add checks for your changes and target environment.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         },
@@ -45519,7 +45519,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "Python 3.11+ standard library only.",
-            "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+            "These tests cover the local reference. Add checks for your changes and target environment.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         }
@@ -45578,7 +45578,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Connect one real broker and test reconnect, persistence and denied access with synthetic data.",
-      "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+      "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
     ],
     "sources": [
       {
@@ -47118,7 +47118,7 @@ const LEARNING_PATHS = [
           {
             "title": "Queue wait versus API latency",
             "paragraphs": [
-              "At 10:00 an export is accepted. At 10:01 its consumer retries. At 10:03 it completes. The user-perceived duration includes queue wait and processing, not just API acceptance latency. A duplicate delivery can increment delivery count without incrementing business completion count."
+              "An export is accepted at 10:00, retries at 10:01 and completes at 10:03. The user waits for queueing and processing as well as API acceptance. Count duplicate deliveries separately from completed exports, since another delivery need not produce another business result."
             ]
           }
         ],
@@ -47167,7 +47167,7 @@ const LEARNING_PATHS = [
           {
             "title": "Failure injection and durable state",
             "paragraphs": [
-              "Inject failures before commit, after commit and before publication bookkeeping. Assert durable state after reopening the database, not just an in-memory return value. Duplicate and malformed tests are necessary but do not establish broker failover, cross-process lease behavior or ordering under real parallel load."
+              "Inject failures before commit, after commit and before publication bookkeeping. Reopen the database and check what persisted. An in-memory return value does not establish durability. Duplicate and malformed-message tests do not test broker failover, cross-process leases or ordering under parallel load."
             ]
           },
           {
@@ -47344,7 +47344,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Message contract map",
-        "description": "Design the notebook export workflow and identify its honest status transitions.",
+        "description": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
         "exitCriteria": [
           "Acceptance is not completion.",
           "Every participant owns a specific responsibility.",
@@ -47352,7 +47352,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "Message contract map",
-          "brief": "Design the notebook export workflow and identify its honest status transitions.",
+          "brief": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
           "requirements": [
             "Classify commands, facts and queries.",
             "Sketch queue and independent subscriber responsibilities.",
@@ -47473,7 +47473,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "Message contract map",
-          "goal": "Design the notebook export workflow and identify its honest status transitions.",
+          "goal": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
           "fileIds": [
             "event_lab-py",
             "test_event_lab-py",
@@ -48179,7 +48179,7 @@ const LEARNING_PATHS = [
           {
             "title": "Byte streams and framing",
             "paragraphs": [
-              "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read. Applications define message boundaries through a protocol. HTTP framing tells a recipient where headers and content end, so a client must not infer completeness from a single packet."
+              "TCP exposes an ordered byte stream while a connection is healthy. One write need not match one read. The application protocol defines message boundaries. HTTP framing identifies where headers and content end, so a single packet cannot establish that a message is complete."
             ]
           },
           {
@@ -48550,7 +48550,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Which report is honest after these assertions pass?",
+          "prompt": "What do these passing assertions establish?",
           "solution": "The default context requires identity checks. No server certificate was presented and no encrypted session was established; a handshake test remains unexecuted.",
           "solutionFormat": "prose",
           "checks": [
@@ -49754,7 +49754,7 @@ const LEARNING_PATHS = [
           {
             "title": "Layered incident evidence",
             "paragraphs": [
-              "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata. Request ID, status, attempt and timings can locate a failure without copying cookies or full bodies. Compare client and server observations: a timeout on one side may coexist with completed work on the other."
+              "Identify which request stage completed and which failed. Record the request ID, status, attempt number and timings without copying cookies or full bodies. Compare client and server observations. A client timeout can occur even when the server completes the work."
             ]
           },
           {
@@ -50033,7 +50033,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions.",
+            "The supplied tests check the reference implementation. Add tests for your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         },
@@ -50091,7 +50091,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+            "The supplied tests check the reference implementation. Add tests for your changes."
           ]
         },
         {
@@ -50157,7 +50157,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions.",
+            "The supplied tests check the reference implementation. Add tests for your changes.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
         }
@@ -50333,7 +50333,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation — interpretable signals",
+        "title": "Foundation. Interpretable signals",
         "description": "Define boundaries and distinguish events, aggregates and related work.",
         "exitCriteria": [
           "Every metric has a population and unit.",
@@ -50362,7 +50362,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate — objectives and experiments",
+        "title": "Intermediate. Objectives and experiments",
         "description": "Connect signals to reliability objectives and controlled comparisons.",
         "exitCriteria": [
           "Commands and environment are recorded.",
@@ -50392,7 +50392,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied extension — diagnosis and operating evidence",
+        "title": "Applied extension. Diagnosis and operational test results",
         "description": "Investigate bottlenecks, memory, load models and telemetry failure boundaries.",
         "exitCriteria": [
           "One change is justified by measured evidence.",
@@ -50461,7 +50461,7 @@ const LEARNING_PATHS = [
             "An unlabeled screenshot of a dashboard."
           ],
           "correct": 0,
-          "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement. The other choices miss the decision or assumption described above."
+          "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
         },
         "references": [
           {
@@ -50512,7 +50512,7 @@ const LEARNING_PATHS = [
             "Two unsynchronised host timestamps."
           ],
           "correct": 0,
-          "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added. The other choices miss the decision or assumption described above."
+          "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added."
         },
         "references": [
           {
@@ -50563,7 +50563,7 @@ const LEARNING_PATHS = [
             "Every raw user field copied into the message."
           ],
           "correct": 0,
-          "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling. The other choices miss the decision or assumption described above."
+          "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling."
         },
         "references": [
           {
@@ -50614,7 +50614,7 @@ const LEARNING_PATHS = [
             "A log containing the last queue item only."
           ],
           "correct": 0,
-          "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios. The other choices miss the decision or assumption described above."
+          "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios."
         },
         "references": [
           {
@@ -50665,7 +50665,7 @@ const LEARNING_PATHS = [
             "By taking the smallest host median."
           ],
           "correct": 0,
-          "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator. The other choices miss the decision or assumption described above."
+          "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
         },
         "references": [
           {
@@ -50716,7 +50716,7 @@ const LEARNING_PATHS = [
             "A count of documentation pages."
           ],
           "correct": 0,
-          "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt. The other choices miss the decision or assumption described above."
+          "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
         },
         "references": [
           {
@@ -50737,7 +50737,7 @@ const LEARNING_PATHS = [
           {
             "title": "Span relationships and overlap",
             "paragraphs": [
-              "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent’s elapsed time; adding parent and child durations double-counts.",
+              "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent's elapsed time; adding parent and child durations double-counts.",
               "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
             ],
             "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
@@ -50745,7 +50745,7 @@ const LEARNING_PATHS = [
           {
             "title": "Missing work and sampled traces",
             "paragraphs": [
-              "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
+              "A trace may omit queued work, retries or spans excluded by sampling. Check where instrumentation starts and stops, then use logs and aggregate metrics to investigate the gaps."
             ]
           },
           {
@@ -50775,7 +50775,7 @@ const LEARNING_PATHS = [
             "Traces contain only counter values."
           ],
           "correct": 0,
-          "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it. The other choices miss the decision or assumption described above."
+          "explanation": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it."
         },
         "references": [
           {
@@ -50920,7 +50920,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concurrent request ownership",
             "paragraphs": [
-              "Global mutable current_trace_id leaks one request’s identity into another under concurrency. Use the runtime or SDK’s context model and test concurrent requests."
+              "Global mutable current_trace_id leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
             ]
           }
         ],
@@ -50938,11 +50938,11 @@ const LEARNING_PATHS = [
           "question": "What does a trace ID establish?",
           "options": [
             "Correlation between recorded work.",
-            "The caller’s permission to read records.",
+            "The caller's permission to read records.",
             "The authenticity of every HTTP header."
           ],
           "correct": 0,
-          "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks. The other choices miss the decision or assumption described above."
+          "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks."
         },
         "references": [
           {
@@ -51096,7 +51096,7 @@ const LEARNING_PATHS = [
             "Only if the hash is printed in hexadecimal."
           ],
           "correct": 0,
-          "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted. The other choices miss the decision or assumption described above."
+          "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
         },
         "references": [
           {
@@ -51147,7 +51147,7 @@ const LEARNING_PATHS = [
             "It guarantees that every request is successful."
           ],
           "correct": 0,
-          "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations. The other choices miss the decision or assumption described above."
+          "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations."
         },
         "references": [
           {
@@ -51198,7 +51198,7 @@ const LEARNING_PATHS = [
             "5%."
           ],
           "correct": 0,
-          "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee. The other choices miss the decision or assumption described above."
+          "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee."
         },
         "references": [
           {
@@ -51357,7 +51357,7 @@ const LEARNING_PATHS = [
             "400 requests per second."
           ],
           "correct": 0,
-          "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified. The other choices miss the decision or assumption described above."
+          "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
         },
         "references": [
           {
@@ -51408,7 +51408,7 @@ const LEARNING_PATHS = [
             "That all clients received responses."
           ],
           "correct": 0,
-          "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened. The other choices miss the decision or assumption described above."
+          "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened."
         },
         "references": [
           {
@@ -51459,7 +51459,7 @@ const LEARNING_PATHS = [
             "Only the best run from one implementation."
           ],
           "correct": 0,
-          "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case. The other choices miss the decision or assumption described above."
+          "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case."
         },
         "references": [
           {
@@ -51480,7 +51480,7 @@ const LEARNING_PATHS = [
           {
             "title": "CPU time versus waiting",
             "paragraphs": [
-              "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool’s overhead.",
+              "A profiler attributes execution cost to functions or stack samples. CPU-heavy work and elapsed waiting are different phenomena: a request can take one second while using little CPU because it waits on a dependency. Use CPU and wall-time views according to the question and understand the tool's overhead.",
               "Optimise a measured bottleneck and rerun the same correctness and workload checks. A function called frequently may matter more than an individually slow rare function. Profiles are evidence about the captured workload, so production differences in input size, concurrency and caches can change the result."
             ],
             "example": "python -m cProfile -s cumulative benchmark.py\nInspect total vs cumulative attribution and call counts.\nDo not add cumulative times of parents and children."
@@ -51494,7 +51494,7 @@ const LEARNING_PATHS = [
           {
             "title": "Separate a waiting request from CPU saturation",
             "paragraphs": [
-              "In the concurrent span drill, process CPU time excludes the time threads spend sleeping, while parent wall time includes it. A large wall/CPU gap is consistent with waiting in this controlled workload. In a real service it does not identify which dependency is slow; inspect spans and queue/connection-pool evidence. Under concurrency process_time includes CPU used by all threads in the process, so it cannot be assigned to one request without further instrumentation.",
+              "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. process_time counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
               "Now profile a compute-bound lookup batch from benchmark.py. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
             ],
             "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
@@ -51518,7 +51518,7 @@ const LEARNING_PATHS = [
             "Because the slowest single call is always the best target."
           ],
           "correct": 0,
-          "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately. The other choices miss the decision or assumption described above."
+          "explanation": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately."
         },
         "references": [
           {
@@ -51547,7 +51547,7 @@ const LEARNING_PATHS = [
             "title": "Allocation and retained objects",
             "paragraphs": [
               "A program may allocate many temporary objects without leaking them. A leak-like problem occurs when objects remain reachable beyond their intended lifetime, or external resources are not released. Compare snapshots across a controlled workload and inspect retained references rather than assuming every peak increase is a leak.",
-              "Python tracemalloc tracks allocations in Python’s managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
+              "Python tracemalloc tracks allocations in Python's managed allocation domain and can compare snapshots by source location. It is not a complete operating-system resident-memory measurement and may miss native allocations. Report current and peak traced bytes separately, release expected references, and repeat comparable runs."
             ],
             "example": "tracemalloc.start()\nbefore = tracemalloc.take_snapshot()\n# execute controlled workload\nafter = tracemalloc.take_snapshot()\n# compare by source location; explain tracked-domain limits"
           },
@@ -51560,7 +51560,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Design a repeated import memory experiment with and without retaining processed rows. Specify the limitations of tracemalloc.",
-          "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage.",
+          "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage.",
           "solutionFormat": "prose",
           "checks": [
             "Retained and temporary memory are distinguished.",
@@ -51576,7 +51576,7 @@ const LEARNING_PATHS = [
             "Only when output is formatted as JSON."
           ],
           "correct": 0,
-          "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool’s complete coverage. The other choices miss the decision or assumption described above."
+          "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage."
         },
         "references": [
           {
@@ -51597,7 +51597,7 @@ const LEARNING_PATHS = [
           {
             "title": "Offered rate and coordinated omission",
             "paragraphs": [
-              "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator’s capacity. Neither is automatically representative; choose according to the real workload.",
+              "A closed-loop test sends a new request after an earlier one finishes, often with a fixed number of workers. When the service slows, the offered request rate also falls. An open-loop test targets an arrival rate independently of responses, subject to the generator's capacity. Neither is automatically representative; choose according to the real workload.",
               "Coordinated omission occurs when delays suppress observations that would have arrived during the delay. Record offered and achieved rate, concurrency, client errors and latency. Do not run uncontrolled tests against systems you do not own or have permission to test. The supplied lab targets loopback only and has bounded counts and timeouts."
             ],
             "example": "Closed loop: 4 workers wait for each response before sending next\nReport: completed count / elapsed seconds, errors, percentile estimator\nThis is not a constant-arrival-rate production capacity test."
@@ -51627,7 +51627,7 @@ const LEARNING_PATHS = [
             "It automatically proves infinite capacity."
           ],
           "correct": 0,
-          "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity. The other choices miss the decision or assumption described above."
+          "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
         },
         "references": [
           {
@@ -51656,7 +51656,7 @@ const LEARNING_PATHS = [
             "title": "Queue growth and Little's law",
             "paragraphs": [
               "A queue absorbs temporary bursts but also creates waiting time and memory pressure. If arrival rate exceeds completion capacity for long enough, backlog grows until a limit is reached. Bound queues, reject or defer work deliberately, and expose queue depth, age and waiting time rather than only worker CPU.",
-              "Little’s law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
+              "Little's law relates average items in a stable system to average arrival rate multiplied by average time in that system: L=lambda*W. The boundaries and units must match. It is a steady-state average relationship, not a prediction that any unstable queue will remain safe."
             ],
             "example": "Stable average arrival 20 jobs/s × average time in system 0.5 s = 10 jobs in system\nIf service falls below arrivals persistently, do not treat this stable relation as a capacity guarantee."
           },
@@ -51685,7 +51685,7 @@ const LEARNING_PATHS = [
             "Automatic improvement from more client retries."
           ],
           "correct": 0,
-          "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time. The other choices miss the decision or assumption described above."
+          "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time."
         },
         "references": [
           {
@@ -51746,11 +51746,11 @@ const LEARNING_PATHS = [
           "question": "What should guide the first optimisation?",
           "options": [
             "The measured bottleneck in the actual user journey.",
-            "The team’s favourite subsystem.",
+            "The team's favourite subsystem.",
             "The shortest function in the codebase."
           ],
           "correct": 0,
-          "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering. The other choices miss the decision or assumption described above."
+          "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering."
         },
         "references": [
           {
@@ -51801,7 +51801,7 @@ const LEARNING_PATHS = [
             "It always blames the most recent author."
           ],
           "correct": 0,
-          "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly. The other choices miss the decision or assumption described above."
+          "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."
         },
         "references": [
           {
@@ -51961,7 +51961,7 @@ const LEARNING_PATHS = [
             "Every real alert reaches an on-call engineer."
           ],
           "correct": 0,
-          "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan. The other choices miss the decision or assumption described above."
+          "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan."
         },
         "references": [
           {
@@ -52099,7 +52099,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -52149,7 +52149,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline."
           ]
         },
@@ -52201,7 +52201,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -52240,7 +52240,7 @@ const LEARNING_PATHS = [
     "title": "Plan and Review Your Week",
     "category": "Personal effectiveness",
     "status": "ready",
-    "description": "Connect five personal-effectiveness topics through Sam’s fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
+    "description": "Connect five personal-effectiveness topics through Sam's fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
     "level": "Beginner → applied practice → independent review",
     "prerequisites": [
       "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
@@ -52320,7 +52320,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Sam’s working hours are 09:00–17:00 with a one-hour lunch. Across five days that is 35 working hours. Twelve hours are fixed meetings and duties; routine service work takes an estimated 12. That leaves 11 hours before allowing for uncertainty."
+              "Sam's working hours are 09:00–17:00 with a one-hour lunch. Across five days that is 35 working hours. Twelve hours are fixed meetings and duties; routine service work takes an estimated 12. That leaves 11 hours before allowing for uncertainty."
             ]
           }
         ],
@@ -52342,7 +52342,7 @@ const LEARNING_PATHS = [
             "Actual commitments and constraints."
           ],
           "correct": 2,
-          "explanation": "Commitments and unavailable time constrain the feasible plan. Unlimited ambitions do not establish the hours needed to deliver them."
+          "explanation": "Subtract commitments and unavailable time before choosing work for the week. Adding another goal does not add the hours it needs."
         },
         "references": [
           {
@@ -52413,7 +52413,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "An outcome is the completed result; a project is a result requiring multiple actions. Sam’s event pack needs venue details, attendee list and a final check. List dependencies before booking time so a waiting item does not occupy a fictional work slot.",
+              "An outcome is the completed result; a project is a result requiring multiple actions. Sam's event pack needs venue details, attendee list and a final check. List dependencies before booking time so a waiting item does not occupy a fictional work slot.",
               "Use a concrete verb and object: ask Lee for the attendee list or check the venue address against the booking. If an item depends on another person, record the request, the response needed and a follow-up date. The companion task-project-management path offers more practice."
             ]
           },
@@ -52616,7 +52616,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "Sam’s event work is estimated at eight hours and optional noticeboard work at four. With 11 remaining hours, both would total 12 before any buffer. Choose based on actual deadline, consequences and agreement. A short list is useful only if the work fits the available windows.",
+              "Sam's event work is estimated at eight hours and optional noticeboard work at four. With 11 remaining hours, both would total 12 before any buffer. Choose based on actual deadline, consequences and agreement. A short list is useful only if the work fits the available windows.",
               "Reserve some capacity for uncertainty, then say what will not fit this week. These numbers are a fictional budgeting example, not a universal percentage rule. The time-attention-energy path explores capacity; this journey applies it to a concrete calendar."
             ]
           },
@@ -52832,7 +52832,7 @@ const LEARNING_PATHS = [
         "id": "baseline-plan-project",
         "title": "6. Finish a baseline week plan",
         "stage": "foundation",
-        "takeaway": "A reviewable plan states assumptions and trade-offs.",
+        "takeaway": "State what the plan depends on and which work you have deferred.",
         "sections": [
           {
             "title": "Understand and try it",
@@ -52844,7 +52844,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Sam’s baseline plan names eight event hours, Lee’s Tuesday response, the Thursday appointment and two short learning occasions outside working hours when available. Noticeboard redesign is deferred. Friday delivery assumes the list arrives by Thursday morning."
+              "Sam's baseline plan names eight event hours, Lee's Tuesday response, the Thursday appointment and two short learning occasions outside working hours when available. Noticeboard redesign is deferred. Friday delivery assumes the list arrives by Thursday morning."
             ]
           }
         ],
@@ -52859,14 +52859,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What belongs in a reviewable plan?",
+          "question": "What should the plan say about dependencies?",
           "options": [
             "Dependencies, reserve, deferrals and a fallback.",
             "Only colourful calendar blocks.",
             "Unstated assumptions about other people."
           ],
           "correct": 0,
-          "explanation": "Dependencies and fallbacks expose what could prevent delivery. Colourful blocks alone conceal assumptions about other people."
+          "explanation": "State which inputs you need from other people and what you will do if they are late. Calendar blocks alone do not show those dependencies."
         },
         "references": [
           {
@@ -52894,7 +52894,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Normal: after desk close, note outstanding requests and tomorrow’s first action. Fallback after a late close: write only the most important waiting request before leaving. Sam records whether the action helped the next morning."
+              "Normal: after desk close, note outstanding requests and tomorrow's first action. Fallback after a late close: write only the most important waiting request before leaving. Sam records whether the action helped the next morning."
             ]
           }
         ],
@@ -53111,8 +53111,8 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "A useful update separates facts, needs and requests. Sam can say the service issue used three hours; adding this request puts Friday’s pack at risk; can we use a shorter layout or move the request? Avoid promising both outcomes before checking capacity.",
-              "Choose a recipient who can decide the scope or deadline. State what needs an answer and by when. Record any agreement in the plan. A prepared script is practice, not an instruction to send messages without the learner’s own decision and authority."
+              "A useful update separates facts, needs and requests. Sam can say the service issue used three hours; adding this request puts Friday's pack at risk; can we use a shorter layout or move the request? Avoid promising both outcomes before checking capacity.",
+              "Choose a recipient who can decide the scope or deadline. State what needs an answer and by when. Record any agreement in the plan. A prepared script is practice, not an instruction to send messages without the learner's own decision and authority."
             ]
           },
           {
@@ -53164,7 +53164,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "The learning-how-to-learn path contributes a target, retrieval, correction and a later check. Sam is learning the three leave-request rules. Tuesday’s 12-minute study happened; Thursday’s eight-minute review may be lost after disruption.",
+              "The learning-how-to-learn path contributes a target, retrieval, correction and a later check. Sam is learning the three leave-request rules. Tuesday's 12-minute study happened; Thursday's eight-minute review may be lost after disruption.",
               "Choose an available later check instead of cramming all missed practice into an already full evening. A short closed-source attempt can reveal what remains, but it does not replace every form of skill practice. Record which plan actually happened."
             ]
           },
@@ -53176,7 +53176,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Write a revised learning plan after Thursday’s review is cancelled. Include what evidence you can still collect.",
+          "prompt": "Write a revised learning plan after Thursday's review is cancelled. Include what evidence you can still collect.",
           "solution": "Keep next Monday’s ten-minute new-case check with the source closed, followed by correction. Optionally answer one Friday case in two minutes if genuinely available. Record Tuesday practice, cancelled Thursday and actual Friday status. Monday provides delayed evidence; it does not show what an uncompleted Thursday review would have added.",
           "solutionFormat": "prose",
           "checks": [
@@ -53186,7 +53186,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What is honest after a missed review?",
+          "question": "What should you record after missing a review?",
           "options": [
             "Record it as complete to preserve a streak.",
             "Double work into a care commitment.",
@@ -53337,8 +53337,8 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Sam’s revised plan uses six hours for the shorter pack, two for the urgent request and three already used for service. The total remains 11. The plan notes no remaining reserve and a need to flag any further change.",
-              "The day-level kit also checks elapsed time. Because Monday’s spare hour cannot be reused, the service owner agrees to defer one noncritical routine hour. Record that additional timing decision alongside the aggregate 11-hour equation."
+              "Sam's revised plan uses six hours for the shorter pack, two for the urgent request and three already used for service. The total remains 11. The plan notes no remaining reserve and a need to flag any further change.",
+              "The day-level kit also checks elapsed time. Because Monday's spare hour cannot be reused, the service owner agrees to defer one noncritical routine hour. Record that additional timing decision alongside the aggregate 11-hour equation."
             ]
           }
         ],
@@ -53382,13 +53382,13 @@ const LEARNING_PATHS = [
             "title": "Understand and try it",
             "paragraphs": [
               "At the end of a day, note completed actions, unexpected demands, approximate time and one observation about conditions. Separate estimated from observed time. You do not need minute-by-minute surveillance or a productivity score for every activity.",
-              "Use evidence to answer next week’s question. For Sam, the important questions are whether the pack estimate held, whether the waiting-list routine prevented omissions and whether learning happened. Personal information can stay private; the practice scenario uses fictional names and data."
+              "Use evidence to answer next week's question. For Sam, the important questions are whether the pack estimate held, whether the waiting-list routine prevented omissions and whether learning happened. Personal information can stay private; the practice scenario uses fictional names and data."
             ]
           },
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Friday log: shorter pack delivered; estimated six hours, observed seven; urgent task two hours; service issue three. Project/change work totals 12 against the original 11-hour budget. The temporal revision had already deferred one routine hour; the extra pack hour requires a second agreed routine deferral. Monday’s unused past hour stays unused."
+              "Friday log: shorter pack delivered; estimated six hours, observed seven; urgent task two hours; service issue three. Project/change work totals 12 against the original 11-hour budget. The temporal revision had already deferred one routine hour; the extra pack hour requires a second agreed routine deferral. Monday's unused past hour stays unused."
             ]
           }
         ],
@@ -53581,7 +53581,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and try it",
             "paragraphs": [
-              "Choose one change linked to an observed issue. Sam’s pack estimate was too low and deferred work remained on the calendar. Rather than installing a complex new system, Sam removes deferred blocks at planning time and checks midweek for conflicting commitments.",
+              "Choose one change linked to an observed issue. Sam's pack estimate was too low and deferred work remained on the calendar. Rather than installing a complex new system, Sam removes deferred blocks at planning time and checks midweek for conflicting commitments.",
               "State the prediction, what you will observe and when to review. Keep other changes limited so you can interpret the result. One week is a small sample; a quiet week may hide the problem, while a disrupted week may reveal new constraints."
             ]
           },
@@ -53606,14 +53606,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What makes an experiment reviewable?",
+          "question": "What lets you compare the predicted and actual results?",
           "options": [
             "Declaring success before the week occurs.",
             "A specific change, prediction, observation and review date.",
             "Changing every routine simultaneously."
           ],
           "correct": 1,
-          "explanation": "Prediction and observation make a small change assessable. Simultaneous changes or advance success claims obscure the evidence."
+          "explanation": "Predict what the change should do, then compare it with what happened. If several things change at once, you may not know which caused the result."
         },
         "references": [
           {
@@ -53641,13 +53641,13 @@ const LEARNING_PATHS = [
           {
             "title": "Worked scenario",
             "paragraphs": [
-              "Sam carries forward Monday’s learning check and Lee’s unresolved follow-up, parks noticeboard redesign for a later decision and removes its calendar block. Next week reserves uncertainty using the new commitments rather than copying last week’s numbers blindly.",
+              "Sam carries forward Monday's learning check and Lee's unresolved follow-up, parks noticeboard redesign for a later decision and removes its calendar block. Next week reserves uncertainty using the new commitments rather than copying last week's numbers blindly.",
               "The filled next-week scenario changes fixed hours to 14 and carries two additional routine hours. Its budget is 35 minus 14 minus 12 minus two, leaving seven hours before reserve. Confirm carried work is not already included in the new routine estimate before subtracting it twice."
             ]
           }
         ],
         "exercise": {
-          "prompt": "Write a five-topic explanation for the portfolio and name one honest boundary.",
+          "prompt": "Write a five-topic explanation for the portfolio and state one conclusion the results do not support.",
           "solution": "Time-attention-energy supplied capacity and suitable windows. Task-project-management supplied next actions and dependencies. Habits-behaviour-change supplied the small close-of-day routine. Self-awareness-communication supplied a factual trade-off request and reaction note. Learning-how-to-learn supplied a target, retrieval and later check. All outcomes in the filled sample are synthetic; an actual learner must record their own week before claiming personal improvement.",
           "solutionFormat": "prose",
           "checks": [
@@ -53664,7 +53664,7 @@ const LEARNING_PATHS = [
             "An unchanged copy of a week with different commitments."
           ],
           "correct": 0,
-          "explanation": "Carry-forward requires renewed relevance and acceptance. Copying every unfinished idea ignores changed commitments and capacity."
+          "explanation": "Before carrying work forward, check that it is still needed and agreed. Some unfinished ideas no longer fit the next week."
         },
         "references": [
           {
@@ -53680,8 +53680,8 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation: A feasible baseline week",
-        "description": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+        "title": "A feasible baseline week",
+        "description": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
         "exitCriteria": [
           "Working-hour arithmetic is correct and breaks are accounted for.",
           "Next actions and dependencies have owners.",
@@ -53690,12 +53690,12 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "A feasible baseline week",
-          "brief": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+          "brief": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
           "requirements": [
             "Use foundation-kit.md and week-planner.md.",
             "Reconcile 35 working hours minus 24 fixed/routine hours.",
             "Place eight event hours and preserve three reserve hours.",
-            "Identify Lee’s dependency, a late-response fallback and the deferred noticeboard idea."
+            "Identify Lee's dependency, a late-response fallback and the deferred noticeboard idea."
           ],
           "rubric": [
             "Working-hour arithmetic is correct and breaks are accounted for.",
@@ -53709,7 +53709,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate: A disruption and revised agreement",
+        "title": "A disruption and revised agreement",
         "description": "Revise the plan after three service hours and a new two-hour urgent request.",
         "exitCriteria": [
           "Used reserve is not counted twice.",
@@ -53738,7 +53738,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied review: Evidence and next-week experiment",
+        "title": "Review the week and choose an experiment",
         "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
         "exitCriteria": [
           "Observed 12 hours versus planned 11 is explained, not hidden.",
@@ -53846,7 +53846,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "A feasible baseline week",
-          "goal": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+          "goal": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
           "fileIds": [
             "readme-md",
             "foundation-kit-md",
@@ -53872,7 +53872,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -53906,7 +53906,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -53940,7 +53940,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "The filled examples are synthetic, not the learner’s results.",
+            "The filled examples are synthetic, not the learner's results.",
             "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
             "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
           ]
@@ -53977,7 +53977,7 @@ const LEARNING_PATHS = [
     "title": "Python",
     "category": "Programming",
     "status": "ready",
-    "description": "Progress through 23 Python lessons from first scripts to typed domain models, reusable CLI tools, resource management, concurrency, profiling and a bounded import pipeline. Three staged projects provide practice and review criteria.",
+    "description": "Learn Python through 23 lessons and three projects. Write scripts, model validated records, build a CLI, manage resources, and test concurrent imports and file replacement.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Comfort creating files and opening a terminal; no programming experience required.",
@@ -54809,7 +54809,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. Valid input and invalid input are deliberately tried in the same example."
+              "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. The example tries both valid and invalid input."
             ],
             "example": "def parse_minutes(text):\n    minutes = int(text)\n    if minutes < 0:\n        raise ValueError(\"minutes must be nonnegative\")\n    return minutes\n\nfor text in [\"15\", \"-2\"]:\n    try:\n        print(parse_minutes(text))\n    except ValueError as error:\n        print(f\"Invalid: {error}\")\n\n# Expected output:\n# 15\n# Invalid: minutes must be nonnegative"
           },
@@ -55345,7 +55345,7 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "Generators are not automatically faster; choose streaming for its memory/lifetime properties and measure relevant workloads.",
-              "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it deliberately on early exit."
+              "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it on early exit."
             ]
           }
         ],
@@ -55891,7 +55891,7 @@ const LEARNING_PATHS = [
           "options": [
             "The worker is killed before any later effects can occur",
             "The waiting caller gets TimeoutError; the worker can continue",
-            "The caller gets the worker’s partial return value"
+            "The caller gets the worker's partial return value"
           ],
           "correct": 1,
           "explanation": "The timeout bounds that wait. It does not preempt a running worker; operation-level cooperative cancellation is a separate contract."
@@ -56351,7 +56351,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Foundations",
-        "description": "First scripts through a persistent study log; learn to explain basic behavior.",
+        "description": "Write scripts and build a persistent study log. Explain how each operation changes the data.",
         "exitCriteria": [
           "Explain names, conditions, loops and function return values.",
           "Reject invalid minutes without changing the log.",
@@ -56376,7 +56376,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Intermediate",
-        "description": "Reusable domain models, resource lifetimes and a tested command tool.",
+        "description": "Build a tested command-line tool with domain models and resource cleanup.",
         "exitCriteria": [
           "Explain dataclass invariants and static versus runtime contracts.",
           "Trace a one-pass generator and cleanup after failure.",
@@ -56404,7 +56404,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice",
-        "description": "Measured concurrency, bounded inputs and failure-aware batch publishing. This is applied practice rather than professional certification.",
+        "description": "Measure concurrency, limit input size and publish complete batches. The exercises cover selected failure cases; they do not establish production readiness.",
         "exitCriteria": [
           "Explain worker ordering, cancellation limits and when concurrency may hurt.",
           "Compare equivalent algorithms before interpreting timing results.",
@@ -56594,10 +56594,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
-            "Complete the assessment requirements in the reader: Accept nonblank topics and actual nonnegative whole minutes.; Preserve existing records when validation fails.; Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
-            "Compare your evidence with the stage rubric: Correct repeated-topic and empty totals.; Explicit validation and unchanged state on errors.; Explains that simple JSON persistence assumes one process.",
+            "Build the project described in the reader: Accept nonblank topics and actual nonnegative whole minutes. Preserve existing records when validation fails. Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
+            "Check your result: Correct repeated-topic and empty totals. Explicit validation and unchanged state on errors. Explains that simple JSON persistence assumes one process.",
             "Build the independent summary from summary-challenge.md, then run the same contract checks against your module."
           ],
           "commands": [
@@ -56609,7 +56609,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from python-practice folder root",
               "command": "python -m unittest -v test_projects.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             },
             {
               "label": "Run the focused depth lab from the extracted bundle root",
@@ -56626,7 +56626,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -56643,10 +56643,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Build an importable tool that reads a JSON study log, validates records and prints topic totals. Give expected failures a useful log and nonzero status.",
-            "Complete the assessment requirements in the reader: Use a frozen Session dataclass with explicit range/shape rules.; Bound file reads and close handles on errors.; Separate main argument parsing from importable calculation functions.; Return 0 on success and 1 on expected read/validation failure.; Document how to split into a package and add pyproject.toml; no package publication is required.",
-            "Compare your evidence with the stage rubric: Valid zero and trimmed topics work.; Invalid shapes and minutes fail without rewriting input.; Tests use temporary files and verify output/status.; Explains why a type hint is not schema validation."
+            "Build the project described in the reader: Use a frozen Session dataclass with explicit range/shape rules. Bound file reads and close handles on errors. Separate main argument parsing from importable calculation functions. Return 0 on success and 1 on expected read/validation failure. Document how to split into a package and add pyproject.toml; no package publication is required.",
+            "Check your result: Valid zero and trimmed topics work. Invalid shapes and minutes fail without rewriting input. Tests use temporary files and verify output/status. Explains why a type hint is not schema validation."
           ],
           "commands": [
             {
@@ -56657,7 +56657,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from python-practice folder root",
               "command": "python -m unittest -v test_projects.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -56669,7 +56669,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -56691,10 +56691,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Build an all-or-nothing JSONL importer producing a versioned report with totals. Prove rejected batches and replacement failures preserve the prior report.",
-            "Complete the assessment requirements in the reader: Bound bytes, records, fields and worker count.; Reject duplicate keys, duplicate IDs and invalid minutes.; Keep worker output order deterministic and commit only after batch validation.; Write a same-directory temporary file, fsync contents, replace once and clean on failure.; Validate loaded report version and recomputed totals.; Profile sequential versus threaded validation; do not promise a speedup.",
-            "Compare your evidence with the stage rubric: Round-trip, empty, boundary and corruption tests pass.; Injected replacement failure preserves exact prior bytes and leaves no temporary files.; CLI error status and safe logging are explained.; Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
+            "Build the project described in the reader: Bound bytes, records, fields and worker count. Reject duplicate keys, duplicate IDs and invalid minutes. Keep worker output order deterministic and commit only after batch validation. Write a same-directory temporary file, fsync contents, replace once and clean on failure. Validate loaded report version and recomputed totals. Profile sequential versus threaded validation; do not promise a speedup.",
+            "Check your result: Round-trip, empty, boundary and corruption tests pass. Injected replacement failure preserves exact prior bytes and leaves no temporary files. CLI error status and safe logging are explained. Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
           ],
           "commands": [
             {
@@ -56705,7 +56705,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from python-practice folder root",
               "command": "python -m unittest -v test_projects.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -56717,7 +56717,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.11 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -56809,95 +56809,95 @@ const LEARNING_PATHS = [
         "href": "paths/self-awareness-communication/practice/sources-and-limits.md"
       },
       {
-        "title": "Separate what happened from what it means worksheet and worked case",
+        "title": "Separate what happened from what it means: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/01-observation-interpretation.md"
       },
       {
-        "title": "Name a feeling without making it an instruction worksheet and worked case",
+        "title": "Name a feeling without making it an instruction: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/02-feeling-and-action.md"
       },
       {
-        "title": "Translate a value into an everyday choice worksheet and worked case",
+        "title": "Translate a value into an everyday choice: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/03-values-and-priorities.md"
       },
       {
-        "title": "Use a short reflection record worksheet and worked case",
+        "title": "Use a short reflection record: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/04-reflection-record.md"
       },
       {
-        "title": "Hold an alternative explanation lightly worksheet and worked case",
+        "title": "Hold an alternative explanation lightly: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/05-perspective-check.md"
       },
       {
-        "title": "Pause long enough to choose the purpose worksheet and worked case",
+        "title": "Pause long enough to choose the purpose: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/06-pause-and-purpose.md"
       },
       {
-        "title": "Create conditions for attentive listening worksheet and worked case",
+        "title": "Create conditions for attentive listening: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/07-listen-with-attention.md"
       },
       {
-        "title": "Ask questions that invite useful detail worksheet and worked case",
+        "title": "Ask questions that invite useful detail: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/08-open-questions.md"
       },
       {
-        "title": "Paraphrase and invite correction worksheet and worked case",
+        "title": "Paraphrase and invite correction: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/09-paraphrase.md"
       },
       {
-        "title": "Acknowledge experience while keeping your own view worksheet and worked case",
+        "title": "Acknowledge experience while keeping your own view: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/10-validate-without-agreeing.md"
       },
       {
-        "title": "Make a request someone can answer worksheet and worked case",
+        "title": "Make a request someone can answer: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/11-clear-request.md"
       },
       {
-        "title": "State a boundary as your own available action worksheet and worked case",
+        "title": "State a boundary as your own available action: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/12-boundaries.md"
       },
       {
-        "title": "Give feedback about a specific event worksheet and worked case",
+        "title": "Give feedback about a specific event: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/13-give-feedback.md"
       },
       {
-        "title": "Receive feedback by checking the example worksheet and worked case",
+        "title": "Receive feedback by checking the example: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/14-receive-feedback.md"
       },
       {
-        "title": "Map positions, concerns and constraints worksheet and worked case",
+        "title": "Map positions, concerns and constraints: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/15-conflict-map.md"
       },
       {
-        "title": "Compare options with agreed criteria worksheet and worked case",
+        "title": "Compare options with agreed criteria: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/16-negotiate-options.md"
       },
       {
-        "title": "Repair a specific communication mistake worksheet and worked case",
+        "title": "Repair a specific communication mistake: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/17-repair.md"
       },
       {
-        "title": "Choose a channel that fits the issue worksheet and worked case",
+        "title": "Choose a channel that fits the issue: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/18-written-channel.md"
       },
       {
-        "title": "Recognise when informal conversation is insufficient worksheet and worked case",
+        "title": "Recognise when informal conversation is insufficient: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/19-power-and-help.md"
       },
       {
-        "title": "Review a conversation using observable evidence worksheet and worked case",
+        "title": "Review a conversation using observable evidence: worksheet and worked case",
         "href": "paths/self-awareness-communication/practice/20-conversation-review.md"
       },
       {
-        "title": "A factual reflection and a listening plan project sheet",
+        "title": "A factual reflection and a listening plan: project sheet",
         "href": "paths/self-awareness-communication/practice/foundation-project.md"
       },
       {
-        "title": "A listening and feedback role-play project sheet",
+        "title": "A listening and feedback role-play: project sheet",
         "href": "paths/self-awareness-communication/practice/intermediate-project.md"
       },
       {
-        "title": "A difficult-conversation plan and review project sheet",
+        "title": "A difficult-conversation plan and review: project sheet",
         "href": "paths/self-awareness-communication/practice/advanced-project.md"
       },
       {
@@ -56920,7 +56920,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation — observe and define",
+        "title": "Observe and define",
         "description": "A factual reflection and a listening plan",
         "exitCriteria": [
           "Separate observations and interpretations in a fictional case.",
@@ -56948,12 +56948,12 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate — practise and compare",
+        "title": "Practise listening and feedback",
         "description": "A listening and feedback role-play",
         "exitCriteria": [
           "Use a voluntary fictional role-play with permission to pause.",
           "Practise a question, paraphrase, clear request and feedback example.",
-          "Record the partner’s correction and revise the message.",
+          "Record the partner's correction and revise the message.",
           "Preserve consent, practical limits and unresolved disagreement in the record."
         ],
         "project": {
@@ -56962,12 +56962,12 @@ const LEARNING_PATHS = [
           "requirements": [
             "Use a voluntary fictional role-play with permission to pause.",
             "Practise a question, paraphrase, clear request and feedback example.",
-            "Record the partner’s correction and revise the message."
+            "Record the partner's correction and revise the message."
           ],
           "rubric": [
             "Use a voluntary fictional role-play with permission to pause.",
             "Practise a question, paraphrase, clear request and feedback example.",
-            "Record the partner’s correction and revise the message.",
+            "Record the partner's correction and revise the message.",
             "Preserve consent, practical limits and unresolved disagreement in the record."
           ],
           "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
@@ -56976,7 +56976,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied transfer — adapt and review a conversation",
+        "title": "Adapt and review a conversation",
         "description": "A difficult-conversation plan and review",
         "exitCriteria": [
           "Map positions, concerns, constraints and power differences.",
@@ -57013,7 +57013,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "An observation describes what could be seen or heard; an interpretation explains it and may be wrong. Both are useful, but keeping them separate creates room to ask questions. Avoid treating a guess about someone’s motives as a fact. A precise observation can be checked together without requiring the other person to accept your whole explanation."
+              "An observation describes what could be seen or heard; an interpretation explains it and may be wrong. Both are useful, but keeping them separate creates room to ask questions. Avoid treating a guess about someone's motives as a fact. A precise observation can be checked together without requiring the other person to accept your whole explanation."
             ]
           },
           {
@@ -57049,7 +57049,7 @@ const LEARNING_PATHS = [
             "She does not value teamwork"
           ],
           "correct": 0,
-          "explanation": "An observation describes what happened; an explanation of someone’s intention remains an interpretation to check."
+          "explanation": "An observation describes what happened; an explanation of someone's intention remains an interpretation to check."
         },
         "references": [
           {
@@ -57190,7 +57190,7 @@ const LEARNING_PATHS = [
             "Feeling angry requires sending the message immediately"
           ],
           "correct": 0,
-          "explanation": "Naming a feeling helps clarify your experience. It neither proves another person’s intention nor determines what you must do next."
+          "explanation": "Naming a feeling helps clarify your experience. It neither proves another person's intention nor determines what you must do next."
         },
         "references": [
           {
@@ -57280,7 +57280,7 @@ const LEARNING_PATHS = [
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Dev sees a colleague use someone else’s suggestion in a meeting and assumes his own idea was ignored."
+              "Dev sees a colleague use someone else's suggestion in a meeting and assumes his own idea was ignored."
             ],
             "example": "Event: another suggestion was chosen. First account: my contribution was ignored. Supporting evidence: nobody discussed it aloud. Alternative: the chosen option met a constraint Dev has not heard. He asks which criterion decided the choice; the missing information remains uncertain.",
             "exampleFormat": "prose"
@@ -57301,7 +57301,7 @@ const LEARNING_PATHS = [
           "options": [
             "Examining an interpretation and choosing a next step",
             "Proving all unpleasant feelings are irrational",
-            "Diagnosing the tutor’s personality"
+            "Diagnosing the tutor's personality"
           ],
           "correct": 0,
           "explanation": "Separate the event, your first explanation and possible alternatives. This keeps an interpretation open to checking rather than treating it as fact."
@@ -57445,20 +57445,20 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. A time limit is compatible with care when stated honestly; pretending unlimited attention while distracted gives the speaker less reliable information about your availability."
+              "Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. State how much time you have. If you are distracted, offer another time rather than pretending you can listen now."
             ]
           },
           {
             "title": "Work through an everyday case",
             "paragraphs": [
-              "Inez’s neighbour wants to explain a shared-garden problem while Inez is about to leave."
+              "Inez's neighbour wants to explain a shared-garden problem while Inez is about to leave."
             ],
             "example": "Inez says, “I have five minutes now, or fifteen after six. Which would work?” In the agreed slot she puts her phone aside and summarises the concern for correction. Stating available time supports attention without promising a listening posture or unlimited availability.",
             "exampleFormat": "prose"
           }
         ],
         "exercise": {
-          "prompt": "Bea’s friend explains a timetable problem while Bea keeps glancing at notifications. Write a short listening setup that respects both people.",
+          "prompt": "Bea's friend explains a timetable problem while Bea keeps glancing at notifications. Write a short listening setup that respects both people.",
           "solution": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
           "solutionFormat": "prose",
           "checks": [
@@ -57475,7 +57475,7 @@ const LEARNING_PATHS = [
             "Immediate advice before the speaker finishes"
           ],
           "correct": 0,
-          "explanation": "A checked summary gives evidence of understanding. Eye contact or immediate advice alone does not establish that the message was understood."
+          "explanation": "Summarise what you heard and ask whether you understood. Eye contact or immediate advice alone cannot show that you understood the message."
         },
         "references": [
           {
@@ -57532,7 +57532,7 @@ const LEARNING_PATHS = [
             "You just did not try, did you?"
           ],
           "correct": 0,
-          "explanation": "“What is making tonight difficult?” invites context without embedding blame. A focused factual check can follow once the constraint is clearer."
+          "explanation": "\"What is making tonight difficult?\" invites context without embedding blame. A focused factual check can follow once the constraint is clearer."
         },
         "references": [
           {
@@ -57547,13 +57547,13 @@ const LEARNING_PATHS = [
       {
         "id": "paraphrase",
         "title": "9. Paraphrase and invite correction",
-        "takeaway": "A paraphrase restates the speaker’s meaning in your own words and checks it.",
+        "takeaway": "A paraphrase restates the speaker's meaning in your own words and checks it.",
         "stage": "intermediate",
         "sections": [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A paraphrase restates the speaker’s meaning in your own words and checks it. Keep the summary short enough that the other person can correct it. Distinguish the facts they reported from your interpretation of their concern. Checking meaning is more useful than mechanically repeating every sentence or announcing that you know exactly how they feel."
+              "A paraphrase restates the speaker's meaning in your own words and checks it. Keep the summary short enough that the other person can correct it. Distinguish the facts they reported from your interpretation of their concern. Checking meaning is more useful than mechanically repeating every sentence or announcing that you know exactly how they feel."
             ]
           },
           {
@@ -57587,7 +57587,7 @@ const LEARNING_PATHS = [
           "options": [
             "An invitation to correct the summary",
             "A statement that no further explanation is needed",
-            "A judgement about the speaker’s attitude"
+            "A judgement about the speaker's attitude"
           ],
           "correct": 0,
           "explanation": "Invite correction so the speaker can confirm or repair your summary. Preserve conditions such as needing the figures before noon."
@@ -57716,13 +57716,13 @@ const LEARNING_PATHS = [
       {
         "id": "validate-without-agreeing",
         "title": "10. Acknowledge experience while keeping your own view",
-        "takeaway": "Acknowledging someone’s concern is different from accepting every claim or proposed solution.",
+        "takeaway": "Acknowledging someone's concern is different from accepting every claim or proposed solution.",
         "stage": "intermediate",
         "sections": [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "Acknowledging someone’s concern is different from accepting every claim or proposed solution. Name what you have heard without pretending certainty about their feelings. You can understand why a delay matters and still disagree about who should do the task. This helps keep the practical disagreement visible instead of turning listening into a demand for agreement."
+              "Acknowledging someone's concern is different from accepting every claim or proposed solution. Name what you have heard without pretending certainty about their feelings. You can understand why a delay matters and still disagree about who should do the task. This helps keep the practical disagreement visible instead of turning listening into a demand for agreement."
             ]
           },
           {
@@ -57741,7 +57741,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Mo is upset that a shared room was unavailable and asks Pat to cancel another group’s booking. Write acknowledgment followed by an honest limit.",
+          "prompt": "Mo is upset that a shared room was unavailable and asks Pat to cancel another group's booking. Acknowledge the disruption, then state what Pat can and cannot offer.",
           "solution": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
           "solutionFormat": "prose",
           "checks": [
@@ -57798,7 +57798,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Isha needs a teammate’s chart before preparing slides. Write a specific request with a feasible response option.",
+          "prompt": "Isha needs a teammate's chart before preparing slides. Write a specific request with a feasible response option.",
           "solution": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
           "solutionFormat": "prose",
           "checks": [
@@ -57842,7 +57842,7 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person’s behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
+              "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person's behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
             ]
           },
           {
@@ -57859,7 +57859,7 @@ const LEARNING_PATHS = [
           "solution": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
           "solutionFormat": "prose",
           "checks": [
-            "The boundary describes the learner’s own action.",
+            "The boundary describes the learner's own action.",
             "An available alternative is stated without coercion.",
             "The worked response is used for comparison, with any justified alternative explained."
           ]
@@ -57872,7 +57872,7 @@ const LEARNING_PATHS = [
             "If you cared, you would read my mind"
           ],
           "correct": 0,
-          "explanation": "State when you can respond—a choice you can carry out. A boundary cannot guarantee another person will never need help."
+          "explanation": "State when you can respond. That is a choice you can carry out. A boundary cannot guarantee another person will never need help."
         },
         "references": [
           {
@@ -57929,7 +57929,7 @@ const LEARNING_PATHS = [
             "Everyone knows you are careless"
           ],
           "correct": 0,
-          "explanation": "Naming undefined labels and their effect points to a repair. A judgement of the author’s character does not identify what to change."
+          "explanation": "Naming undefined labels and their effect points to a repair. A judgement of the author's character does not identify what to change."
         },
         "references": [
           {
@@ -58040,7 +58040,7 @@ const LEARNING_PATHS = [
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "Receiving feedback involves two separate decisions: whether you understand it and whether you will act on it. Clarify the first before debating the second. A small test can reveal whether a proposed change improves the task. If you decline part of the advice, explain the relevant constraint rather than dismissing the person’s experience."
+              "Receiving feedback involves two separate decisions: whether you understand it and whether you will act on it. Clarify the first before debating the second. A small test can reveal whether a proposed change improves the task. If you decline part of the advice, explain the relevant constraint rather than dismissing the person's experience."
             ]
           },
           {
@@ -58239,7 +58239,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "Negotiation becomes clearer when people agree what an option needs to satisfy. Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Be honest when an option does not meet a constraint. A fair process permits disagreement and does not require equal division when tasks have different demands."
+              "Negotiation becomes clearer when people agree what an option needs to satisfy. Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Say which constraint an option fails to meet. A fair process permits disagreement and does not require equal division when tasks have different demands."
             ]
           },
           {
@@ -58259,7 +58259,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Changed case: essential client data arrives at 9:30 and the alternate is unavailable. Respond while preserving review and an honest deadline.",
+          "prompt": "Changed case: essential client data arrives at 9:30 and the alternate is unavailable. Respond with a deadline that allows the required review.",
           "solution": "Identify changes needing review, contact the authorised reviewer and surface the ten o'clock conflict. Offer revised timing or an agreed limited update. Yesterday's approval cannot silently cover changed essential data. Without an available reviewer, a checked release by ten is not a credible promise.",
           "solutionFormat": "prose",
           "checks": [
@@ -58271,7 +58271,7 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "What should guide option selection?",
           "options": [
-            "Agreed practical criteria and people’s actual availability",
+            "Agreed practical criteria and people's actual availability",
             "Which person argues longest",
             "Exactly equal page counts regardless of effort"
           ],
@@ -58324,7 +58324,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Transfer: Dev replies, \"Do not message me again about this today, but correct the team thread.\" Choose the next action and define an honest success claim.",
+          "prompt": "Transfer: Dev replies, \"Do not message me again about this today, but correct the team thread.\" Choose the next action and say what it would accomplish.",
           "solution": "Correct the factual claim without sharing private details, then stop requesting discussion today. Do not condition correction on forgiveness. Success is an inaccurate statement corrected and the requested boundary respected; it does not establish restored trust.",
           "solutionFormat": "prose",
           "checks": [
@@ -58419,7 +58419,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "Communication tools are options, and context can make direct discussion unsuitable. Power differences, repeated disrespect or a formal process can change the available choices. You may ask a teacher, supervisor or relevant support office about procedures instead of negotiating alone. Do not use this course to excuse mistreatment or assign responsibility for another person’s behaviour."
+              "Communication tools are options, and context can make direct discussion unsuitable. Power differences, repeated disrespect or a formal process can change the available choices. You may ask a teacher, supervisor or relevant support office about procedures instead of negotiating alone. Do not use this course to excuse mistreatment or assign responsibility for another person's behaviour."
             ]
           },
           {
@@ -58512,7 +58512,7 @@ const LEARNING_PATHS = [
             "Assume silence proves consent"
           ],
           "correct": 0,
-          "explanation": "Record explicit agreements, unresolved issues and follow-up. Silence is not consent, and clarification can be useful even without agreement."
+          "explanation": "Record what people agreed, what remains unresolved and who will follow up. Do not treat silence as consent. Clarifying a disagreement can still help."
         },
         "references": [
           {
@@ -59080,7 +59080,7 @@ const LEARNING_PATHS = [
         {
           "id": "practice-validate-without-agreeing",
           "title": "Acknowledge experience while keeping your own view practice",
-          "goal": "Write acknowledgment followed by an honest limit.",
+          "goal": "Acknowledge the concern, then state what you can and cannot do.",
           "fileIds": [
             "README",
             "10-validate-without-agreeing",
@@ -59093,7 +59093,7 @@ const LEARNING_PATHS = [
           "steps": [
             "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
             "Read the fictional case in 10-validate-without-agreeing.md.",
-            "Write acknowledgment followed by an honest limit.",
+            "Acknowledge the concern, then state what you can and cannot do.",
             "Write a response before revealing the worked example.",
             "Compare the response with the self-check; record one adjustment."
           ],
@@ -59399,7 +59399,7 @@ const LEARNING_PATHS = [
         {
           "id": "foundation",
           "title": "A factual reflection and a listening plan",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "foundation-project",
@@ -59434,7 +59434,7 @@ const LEARNING_PATHS = [
         {
           "id": "intermediate",
           "title": "A listening and feedback role-play",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "intermediate-project",
@@ -59456,7 +59456,7 @@ const LEARNING_PATHS = [
             "Open intermediate-project.md.",
             "Use a voluntary fictional role-play with permission to pause.",
             "Practise a question, paraphrase, clear request and feedback example.",
-            "Record the partner’s correction and revise the message.",
+            "Record the partner's correction and revise the message.",
             "Compare the record with the exit criteria and revise any unsupported claim."
           ],
           "commands": [],
@@ -59469,7 +59469,7 @@ const LEARNING_PATHS = [
         {
           "id": "advanced",
           "title": "A difficult-conversation plan and review",
-          "goal": "Complete a written project record and compare it with the stage exit criteria.",
+          "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
           "fileIds": [
             "README",
             "advanced-project",
@@ -59694,7 +59694,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A SQL Server instance is a running database engine. One instance can contain several databases. A database contains objects such as tables; a schema groups named objects inside it. A row records one thing at a defined level of detail, and columns describe its attributes. In this course, one order row represents one order, not one payment or one customer.",
-              "T-SQL is Microsoft’s SQL dialect. SELECT retrieves a result; INSERT, UPDATE and DELETE change data. SQL Server Management Studio (SSMS) is a client, not the engine itself. Installing a query tool alone does not create a running server. Connect to an existing local or training SQL Server instance for these exercises; do not use a work production connection.",
+              "T-SQL is Microsoft's SQL dialect. SELECT retrieves a result; INSERT, UPDATE and DELETE change data. SQL Server Management Studio (SSMS) is a client, not the engine itself. Installing a query tool alone does not create a running server. Connect to an existing local or training SQL Server instance for these exercises; do not use a work production connection.",
               "The browser displays examples and checks your quiz answers; it does not execute SQL. Read setup.sql, run it in SSMS on your training instance, and keep that query window open. It creates LearningNotebook only if absent and uses session-local #LN tables. Opening a second window creates a different session, so its temporary tables are separate."
             ],
             "example": ""
@@ -59813,7 +59813,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "SELECT chooses output columns; FROM identifies input rows; WHERE keeps rows meeting a condition. ORDER BY is the output ordering contract. Without it, a familiar-looking order is not guaranteed. TOP without an ORDER BY does not mean the earliest or largest rows.",
               "Use AND for conditions that must both hold and OR for alternatives; parentheses make mixed expressions unambiguous. Date predicates are easier to reason about as a lower bound inclusive and an upper bound exclusive. This also works when a date column later becomes a timestamp.",
-              "A computed column alias is available to ORDER BY, but generally not to WHERE in the same query because of SQL’s logical binding order. Logical order explains name scope; it is not a diagram of the optimizer’s physical execution plan."
+              "A computed column alias is available to ORDER BY, but generally not to WHERE in the same query because of SQL's logical binding order. Logical order explains name scope; it is not a diagram of the optimizer's physical execution plan."
             ],
             "example": ""
           },
@@ -60477,7 +60477,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Grouping by CustomerId returns one row per customer represented in the orders. SUM adds amounts; COUNT(*) counts rows; AVG calculates a mean of non-NULL values. Aggregates generally ignore NULL values, while COUNT(*) counts rows regardless of column values. An absent group is different from a group whose known amounts sum to zero.",
-              "WHERE limits input rows before grouping. HAVING limits groups after aggregate values exist. To count a customer’s orders after a LEFT JOIN, COUNT(o.OrderId) counts the matched non-NULL identifiers; COUNT(*) would count the placeholder row for a customer with no order.",
+              "WHERE limits input rows before grouping. HAVING limits groups after aggregate values exist. To count a customer's orders after a LEFT JOIN, COUNT(o.OrderId) counts the matched non-NULL identifiers; COUNT(*) would count the placeholder row for a customer with no order.",
               "Always label the denominator: average order value is total amount divided by order count, not by customer count. A mean of customer means is not the overall order mean unless the weights happen to match."
             ],
             "example": ""
@@ -60680,7 +60680,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "Ben’s two orders occur on January 2 and 3, so his running total is 80 then 200. Ada’s is 100 then 150; Chen’s is 40. The result still has five order rows."
+              "Ben's two orders occur on January 2 and 3, so his running total is 80 then 200. Ada's is 100 then 150; Chen's is 40. The result still has five order rows."
             ],
             "example": "SELECT CustomerId, OrderId, Amount,\n SUM(Amount) OVER (PARTITION BY CustomerId ORDER BY OrderDate,OrderId\n ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS RunningTotal\nFROM #LNOrders ORDER BY CustomerId,OrderDate,OrderId;"
           },
@@ -60732,7 +60732,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A parameter is a named input with a declared SQL type. Parameters make the value contract explicit and avoid building SQL by concatenating user text. Applications should bind parameters through their database driver. Parameterization helps prevent value-based SQL injection; it is not a replacement for access control or input validation.",
               "A stored procedure is a named database program invoked with EXEC. It can contain queries and control flow. SET NOCOUNT ON suppresses row-count messages, not the query result. The lesson example creates a local temporary procedure, so it disappears when this SQL session ends and changes no permanent application code.",
-              "In SSMS, CREATE PROCEDURE belongs in its own batch. The GO separators below are important. The procedure relies on the caller’s temporary fixture only for this lesson; a deployed procedure normally uses explicitly qualified permanent tables with a designed permission model."
+              "In SSMS, CREATE PROCEDURE belongs in its own batch. The GO separators below are important. The procedure relies on the caller's temporary fixture only for this lesson; a deployed procedure normally uses explicitly qualified permanent tables with a designed permission model."
             ],
             "example": ""
           },
@@ -60848,9 +60848,9 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "BEGIN TRAN starts an explicit transaction; COMMIT completes it; ROLLBACK undoes its transactional changes. Atomicity means the unit succeeds together or is undone. Keep transactions short and avoid waiting for a person while locks are held. A client disconnect or timeout is not a substitute for a designed error-handling strategy.",
+              "BEGIN TRAN starts an explicit transaction. COMMIT completes it, and ROLLBACK undoes its transactional changes. Atomicity means those changes succeed together or are undone together. Keep transactions short. Do not wait for a person while holding locks. Handle errors explicitly; a disconnect or timeout is not a rollback strategy.",
               "TRY/CATCH lets this example roll back when a statement fails. SET XACT_ABORT ON makes many runtime errors terminate and roll back the transaction. In CATCH, XACT_STATE reports whether a transaction remains and whether it is committable; THROW propagates the original error.",
-              "Isolation is about overlapping sessions. READ COMMITTED prevents dirty reads, but a later statement can see newly committed changes. Its implementation depends on the database’s READ_COMMITTED_SNAPSHOT setting. SNAPSHOT needs database configuration and gives a transaction-level versioned view; SERIALIZABLE protects ranges more strongly and can increase blocking. NOLOCK permits unreliable reads and is unsuitable as a reconciliation fix."
+              "Isolation is about overlapping sessions. READ COMMITTED prevents dirty reads, but a later statement can see newly committed changes. Its implementation depends on the database's READ_COMMITTED_SNAPSHOT setting. SNAPSHOT needs database configuration and gives a transaction-level versioned view; SERIALIZABLE protects ranges more strongly and can increase blocking. NOLOCK permits unreliable reads and is unsuitable as a reconciliation fix."
             ],
             "example": ""
           },
@@ -60877,7 +60877,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Inspect this database’s row-versioning settings without changing them. Explain why the result matters for READ COMMITTED.",
+          "prompt": "Inspect this database's row-versioning settings without changing them. Explain why the result matters for READ COMMITTED.",
           "starter": "SELECT name, /* row versioning flags */ FROM sys.databases WHERE name=DB_NAME();",
           "solution": "SELECT name,is_read_committed_snapshot_on,snapshot_isolation_state_desc FROM sys.databases WHERE name=DB_NAME();",
           "checks": [
@@ -61012,7 +61012,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "An index is an additional access structure the optimizer may use. A clustered rowstore index organizes the table’s rows by its key; a nonclustered index provides another ordered access path with a row locator. An INCLUDE column can cover output without being part of the search key. More indexes also mean more maintenance during writes.",
+              "An index is an additional access structure the optimizer may use. A clustered rowstore index organizes the table's rows by its key; a nonclustered index provides another ordered access path with a row locator. An INCLUDE column can cover output without being part of the search key. More indexes also mean more maintenance during writes.",
               "An execution plan shows chosen operators such as scans, seeks, sorts and joins. Estimated plans show predictions; actual plans add runtime information. Compare estimated and actual row counts, warnings and expensive work, not only the largest percentage label. A seek is not automatically good and a scan is not automatically bad.",
               "A predicate such as OrderDate >= @From AND OrderDate < @To can support an index range access more naturally than wrapping OrderDate in YEAR(). Whether an index is chosen still depends on data volume, distribution, statistics and required output. Our five-row fixture is too small to establish performance gains."
             ],
@@ -61550,7 +61550,7 @@ const LEARNING_PATHS = [
             "title": "Example",
             "paragraphs": [
               "Three units at 12.35 total 37.05. The timestamp is a different problem: a local January 1 observation corresponds to December 31 in UTC. A date bucket therefore requires a stated reporting zone, not simply stripping the offset.",
-              "datetimeoffset preserves an offset, not a named time-zone rule set. Store an event’s observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
+              "datetimeoffset preserves an offset, not a named time-zone rule set. Store an event's observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
             ],
             "example": "DECLARE @Price decimal(12,2)=12.35, @Quantity int=3;\nSELECT @Price*@Quantity AS Gross, CAST(@Price*@Quantity AS decimal(12,2)) AS Posted;\nDECLARE @Observed datetimeoffset(0)='2026-01-01T00:30:00+05:30';\nSELECT @Observed AS SourceTime, SWITCHOFFSET(@Observed,'+00:00') AS UtcTime;\n--37.05; UTC is 2025-12-31 19:00:00 +00:00"
           },
@@ -61608,7 +61608,7 @@ const LEARNING_PATHS = [
             "title": "Model",
             "paragraphs": [
               "UNION ALL concatenates input rows and preserves duplicates; UNION removes duplicates across all selected columns. EXCEPT returns distinct left-side rows absent from the right; INTERSECT returns distinct shared rows. These compare selected values, not hidden record identity. Matching keys alone can miss changed amounts.",
-              "EXISTS is a good fit for “does this customer have any order?” because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary TOP without deterministic ordering.",
+              "EXISTS is a good fit for \"does this customer have any order?\" because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary TOP without deterministic ordering.",
               "APPLY evaluates a right-side table expression in relation to each left row. CROSS APPLY retains rows with a right result; OUTER APPLY also preserves left rows without one. This is useful for a latest order per customer, but does not guarantee a particular physical execution strategy."
             ],
             "example": ""
@@ -61668,9 +61668,9 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "LAG accesses a preceding row in a specified order; LEAD accesses a following row. The first LAG result is NULL unless a default is supplied. Replacing this with zero changes the meaning from “no previous observation” to a numerical baseline, so choose deliberately.",
+              "LAG accesses a preceding row in a specified order; LEAD accesses a following row. The first LAG result is NULL unless a default is supplied. Replacing this with zero changes the meaning from \"no previous observation\" to a numerical baseline, so choose deliberately.",
               "ROWS BETWEEN 1 PRECEDING AND CURRENT ROW means at most two rows, even if they are minutes or months apart. A seven-row mean is not a seven-day mean when dates are missing or several observations share a date. For calendar windows, define a calendar or explicit time-range join.",
-              "With an ORDER BY, an aggregate window’s implicit frame can include peers under RANGE semantics. Explicit ROWS plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
+              "With an ORDER BY, an aggregate window's implicit frame can include peers under RANGE semantics. Explicit ROWS plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
             ],
             "example": ""
           },
@@ -61691,7 +61691,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "For each customer’s orders, return previous order amount and difference from it. Preserve NULL for a first order.",
+          "prompt": "For each customer's orders, return previous order amount and difference from it. Preserve NULL for a first order.",
           "starter": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount, /* LAG */ AS PreviousAmount FROM #LNOrders)\nSELECT *,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
           "solution": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount,LAG(Amount) OVER(PARTITION BY CustomerId ORDER BY OrderDate,OrderId) AS PreviousAmount FROM #LNOrders)\nSELECT CustomerId,OrderId,Amount,PreviousAmount,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
           "checks": [
@@ -61729,8 +61729,8 @@ const LEARNING_PATHS = [
             "title": "Model",
             "paragraphs": [
               "Sargability describes whether a predicate can support useful search arguments on an access structure. Avoid unnecessary functions or implicit conversions on indexed columns. Match parameter types to column types so the engine does not have to convert the column for comparison. This helps possibilities; it does not force an index seek.",
-              "For the query “one customer during a date range,” an index beginning with CustomerId then OrderDate is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
-              "Statistics help estimate cardinality, meaning how many rows flow through an operator. A histogram describes the leading statistics key and has limited steps; skew and correlation can still make estimates inaccurate. An index existing does not imply its estimates represent today’s data."
+              "For the query \"one customer during a date range,\" an index beginning with CustomerId then OrderDate is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
+              "Statistics help estimate cardinality, meaning how many rows flow through an operator. A histogram describes the leading statistics key and has limited steps; skew and correlation can still make estimates inaccurate. An index existing does not imply its estimates represent today's data."
             ],
             "example": ""
           },
@@ -61754,7 +61754,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Imagine 100,000 rows: 99,900 have status Closed and 100 have status Open. A noncovering index on status can be useful for Open but require many lookups for Closed. The predicate text is unchanged; the value distribution changes how much work each access path implies. An index is not automatically useful because a WHERE clause mentions its first column.",
               "In an isolated copy of the training data, compare the two parameter values with actual plans and logical reads. Record returned rows separately from rows read. Repeat after changing the distribution and updating statistics through the supported lab procedure. A tiny teaching table may legitimately scan; do not force an index to make the illustration look successful.",
-              "Now add a covering column and compare write cost and storage as well as read work. The question is whether this workload benefits, not whether a plan contains the word Seek. Use query-store-lab.sql to distinguish one execution’s observations from a historical change."
+              "Now add a covering column and compare write cost and storage as well as read work. The question is whether this workload benefits, not whether a plan contains the word Seek. Use query-store-lab.sql to distinguish one execution's observations from a historical change."
             ]
           }
         ],
@@ -61797,8 +61797,8 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. “It returned no SQL exception” is insufficient if an update silently matched zero rows. Check @@ROWCOUNT immediately after the modification.",
-              "Choose whether a procedure owns the transaction or participates in its caller’s transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested BEGIN TRAN statements do not provide independent inner transactions: an unqualified ROLLBACK can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
+              "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. \"It returned no SQL exception\" is insufficient if an update silently matched zero rows. Check @@ROWCOUNT immediately after the modification.",
+              "Choose whether a procedure owns the transaction or participates in its caller's transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested BEGIN TRAN statements do not provide independent inner transactions: an unqualified ROLLBACK can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
               "TRY/CATCH handles many execution errors, but not every failure at the same execution level. Compile errors and client disconnections need application handling too. In CATCH, inspect transaction state, roll back owned work as appropriate, and THROW so the caller does not mistake failure for success."
             ],
             "example": ""
@@ -61857,7 +61857,7 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "A watermark such as “latest ingestion timestamp” helps select work but does not identify an event. Events can arrive late, clocks can differ, and a retry can replay an earlier batch. Keep stable source/event identifiers and a defined revision policy.",
+              "A watermark such as \"latest ingestion timestamp\" helps select work but does not identify an event. Events can arrive late, clocks can differ, and a retry can replay an earlier batch. Keep stable source/event identifiers and a defined revision policy.",
               "Distinguish identical duplicates from conflicting reuse of the same identifier. Two copies of E1 with amount 10 are a replay; E1 with 10 and 11 is a conflict requiring investigation or an explicit correction event. Choosing MAX(amount) would invent a business decision.",
               "A target unique key is a last line of defence. NOT EXISTS avoids known rows in this single-session demonstration, but two simultaneous sessions can both observe absence. A production loader needs transaction/isolation design and duplicate-conflict handling; merely adding WHERE NOT EXISTS is not a concurrency proof."
             ],
@@ -61923,7 +61923,7 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "An actual plan reports operator runtime observations for an execution; Query Store retains historical query/plan/runtime information when enabled and capturing the workload. These answer different time scales. Availability, permissions and settings depend on the server version and database; do not assume the feature is enabled.",
+              "An actual plan reports runtime observations for one execution. When enabled and capturing the workload, Query Store retains earlier queries, plans and runtime statistics. Use it to compare behavior over time. Check the server version, permissions and database settings before assuming Query Store is available.",
               "Start with a symptom: which query, time interval, parameters, row counts and workload changed? CPU, duration, logical reads, waits and execution count describe different costs. A rise in total duration might be more executions rather than slower individual calls.",
               "Query Store runtime statistics are aggregated by intervals and execution types. If combining records, weight averages by execution count rather than averaging averages. Active intervals can have multiple entries for a plan; use the documented aggregation grain."
             ],
@@ -62020,7 +62020,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The sequential script simulates two requests holding revision 1. The first succeeds and advances to 2; the second affects zero rows. This validates the predicate’s intention but is not a live two-session test.",
+              "The sequential script simulates two requests holding revision 1. The first succeeds and advances to 2; the second affects zero rows. This validates the predicate's intention but is not a live two-session test.",
               "In a real concurrency test, coordinate two sessions on a dedicated shared fixture, record start/commit ordering and expected results, and test retry/cancel paths. Our session-local tables intentionally cannot demonstrate cross-session contention."
             ],
             "example": "IF OBJECT_ID('tempdb..#LNVersionWork') IS NOT NULL DROP TABLE #LNVersionWork;\nCREATE TABLE #LNVersionWork(Id int NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL,Revision int NOT NULL);\nINSERT #LNVersionWork VALUES(1,100,1);\nDECLARE @OriginalRevision int=1;\nUPDATE #LNVersionWork SET Amount=110,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS FirstUpdate; --1\nUPDATE #LNVersionWork SET Amount=120,Revision=Revision+1 WHERE Id=1 AND Revision=@OriginalRevision;\nSELECT @@ROWCOUNT AS StaleUpdate; --0\nSELECT * FROM #LNVersionWork; --1,110,2"
@@ -62590,7 +62590,7 @@ const LEARNING_PATHS = [
             "title": "Model",
             "paragraphs": [
               "Use parameters for values such as customer identifiers and amounts. A parameter cannot stand in for a table name or ORDER BY column identifier. If dynamic structure is required, select it from a fixed allowlist and quote the identifier; keep values parameterized.",
-              "A login authenticates at server scope and a database user represents access in a database, subject to the platform’s authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of db_owner or sysadmin for convenience.",
+              "A login authenticates at server scope and a database user represents access in a database, subject to the platform's authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of db_owner or sysadmin for convenience.",
               "Execution through a procedure can involve ownership chaining or other execution-context rules. Dynamic SQL can behave differently from static statements in that permission model. Test with the intended low-privilege identity, not only an administrator account."
             ],
             "example": ""
@@ -62598,7 +62598,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The example allows only Amount or OrderId as a sort column and passes @Minimum independently. QUOTENAME handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist’s purpose.",
+              "The example allows only Amount or OrderId as a sort column and passes @Minimum independently. QUOTENAME handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist's purpose.",
               "The exercise changes no users or grants. For a real training permissions lab, have an administrator provision a dedicated user/role and test allowed/denied actions against a disposable schema. Do not create a powerful account as a shortcut."
             ],
             "example": "DECLARE @RequestedSort sysname=N'Amount',@Minimum decimal(12,2)=80;\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\nDECLARE @Sql nvarchar(max)=N'SELECT OrderId,Amount FROM #LNOrders WHERE Amount>=@Min ORDER BY '\n +QUOTENAME(@RequestedSort)+CASE WHEN @RequestedSort=N'Amount' THEN N',OrderId;' ELSE N';' END;\nEXEC sys.sp_executesql @Sql,N'@Min decimal(12,2)',@Min=@Minimum;\n--103/80,101/100,104/120. Values are parameters; identifier is allowlisted then quoted."
@@ -63090,7 +63090,7 @@ const LEARNING_PATHS = [
             "Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.",
             "Replay:zero new rows on the second identical input;no silent overwrite on conflict.",
             "Operations:bounded retries,explicit side-effect delivery and recoverable deployment.",
-            "Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation."
+            "Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability."
           ],
           "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
         }
@@ -63228,8 +63228,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Open and execute setup.sql, then solutions.sql in the same SSMS query window. Expect five orders, due 390, matched payments 265, orphan payments 20 and net outstanding 125.",
             "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
-            "Complete the assessment requirements in the reader: Preserve all five orders and report Dia as a customer with no order.; Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid.; Reconcile incoming payments and known-order totals; include deterministic ordering.",
-            "Compare your evidence with the stage rubric: Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125.; Reasoning:explain why direct payment joins can duplicate order values.; Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+            "Build the project described in the reader: Preserve all five orders and report Dia as a customer with no order. Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid. Reconcile incoming payments and known-order totals; include deterministic ordering.",
+            "Check your result: Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125. Reasoning:explain why direct payment joins can duplicate order values. Evidence:show queries, outputs and at least one deliberately wrong query corrected."
           ],
           "commands": [],
           "prerequisites": [
@@ -63241,7 +63241,7 @@ const LEARNING_PATHS = [
           "notes": [
             "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -63269,8 +63269,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Execute setup.sql in SSMS, then copy the intermediate stage replay solution from the reader into that same query window. Run it twice: first two inserts, then zero; target remains two events totaling 30. E1 changed to 11 is a conflict.",
             "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
-            "Complete the assessment requirements in the reader: Define business keys, allowed amounts, currency, timestamp and correction semantics.; Use typed parameters and an explicit transaction-ownership policy.; Run the replay example twice and detect a changed E1 payload.; Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern.",
-            "Compare your evidence with the stage rubric: Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict.; Error behavior:unknown order failure is visible and leaves no open owned transaction.; Design quality:does not claim NOT EXISTS alone prevents concurrent races.; Evidence:documents expected results separately from results actually executed."
+            "Build the project described in the reader: Define business keys, allowed amounts, currency, timestamp and correction semantics. Use typed parameters and an explicit transaction-ownership policy. Run the replay example twice and detect a changed E1 payload. Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern.",
+            "Check your result: Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict. Error behavior:unknown order failure is visible and leaves no open owned transaction. Design quality:does not claim NOT EXISTS alone prevents concurrent races. Evidence:documents expected results separately from results actually executed."
           ],
           "commands": [],
           "prerequisites": [
@@ -63282,7 +63282,7 @@ const LEARNING_PATHS = [
           "notes": [
             "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -63310,8 +63310,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "In the same SSMS query window execute setup.sql, advanced-lab.sql, then advanced-solutions.sql twice. Expect three inserts then zero, ledger total 215 and net outstanding 175; six raw rows split into 3 accepted, 1 duplicate, 1 invalid and 1 orphan.",
             "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
-            "Complete the assessment requirements in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.; Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.; Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.; Specify security role boundaries,backward-compatible migration steps and incident diagnostics.; Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
-            "Compare your evidence with the stage rubric: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.; Replay:zero new rows on the second identical input;no silent overwrite on conflict.; Operations:bounded retries,explicit side-effect delivery and recoverable deployment.; Honesty:source review and arithmetic checks are distinguished from engine/concurrency/durability validation.",
+            "Build the project described in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay. Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios. Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders. Specify security role boundaries,backward-compatible migration steps and incident diagnostics. Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path. Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence.",
+            "Check your result: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175. Replay:zero new rows on the second identical input;no silent overwrite on conflict. Operations:bounded retries,explicit side-effect delivery and recoverable deployment. Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability.",
             "Read concurrency-lab.md; explicitly opt in only on an authorized training instance, follow two-session isolation/lost-update/deadlock schedules, capture Query Store evidence, and perform guarded cleanup. Run rounding-lab.sql to show accepted normalization separately from rejection."
           ],
           "commands": [],
@@ -63324,7 +63324,7 @@ const LEARNING_PATHS = [
           "notes": [
             "A training SQL Server instance and SSMS. Temporary-table baseline uses LearningNotebook; optional concurrency lab requires permission to create its separate disposable database.",
             "Run the SQL files in the same SSMS query window: temporary tables belong to that session. These are single-session teaching fixtures, not evidence of concurrency or crash durability. Do not run them against production data.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results.",
+            "Use the supplied code as a reference. Test your own project and report its results separately.",
             "Dedicated lab targets SQL Server 2019+ with Query Store permission. These scripts were source-inspected, not engine-executed by the content editor; submit your actual outputs and failed schedule attempts."
           ]
         }
@@ -63377,7 +63377,7 @@ const LEARNING_PATHS = [
       "Compare APIs, indexing, caches, queues, replicas and partitions.",
       "Reason about concurrent bookings, CAP, idempotency and uncertain outcomes.",
       "Plan bounded retries, observability, authorization, recovery and compatible evolution.",
-      "Create a reviewable architecture portfolio with failure tests and three stage projects."
+      "Complete three architecture projects with explicit assumptions and failure-test results."
     ],
     "setup": [
       "Read each scenario before opening the worked answer; sketches and calculations can be completed on paper.",
@@ -63550,7 +63550,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A system includes people, software, data and operational responsibilities. A box diagram alone is not a design. Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Our running example is a learning notebook with accounts, lesson progress and optional workshop bookings. The current static notebook is much simpler; these are hypothetical extensions, not claims about its infrastructure.",
+              "Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Include the people who operate the software and maintain its data. The running example adds accounts, lesson progress and workshop bookings to a learning notebook. These are hypothetical features. The current notebook is a simpler static site.",
               "Functional requirements describe behavior: a learner marks a lesson read. Quality requirements constrain that behavior: the saved state survives refresh, other users cannot change it, and a response arrives within a measured target. An invariant is a rule such as one active booking per learner per workshop. Scope excludes features deliberately; recording exclusions prevents accidental overbuilding."
             ]
           },
@@ -64352,7 +64352,7 @@ const LEARNING_PATHS = [
           {
             "title": "A cache key is part of the correctness contract",
             "paragraphs": [
-              "A public workshop list and a private learner’s bookings are different cache problems. Keying private results only by URL can return Alice’s bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
+              "A public workshop list and a private learner's bookings are different cache problems. Keying private results only by URL can return Alice's bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
               "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The booking_lab.py reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
               "Changed case: an administrator cancels the workshop. Describe which cached views may temporarily lag and which operations must consult authoritative state. A short TTL bounds some stale exposure; it does not turn a stale authorization decision into a correct one."
             ]
@@ -64981,7 +64981,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "In the CAP result, consistency means an atomic or linearizable view of operations, and availability means every request to a non-failing node eventually receives a valid result according to the operation under the model; merely returning an error does not meet that property. A partition means messages between parts of the system can be lost. The theorem is not a menu where a real service casually disables network failures, and its availability definition is not an operational uptime percentage."
+              "In the CAP result, consistency means an atomic or linearizable view of operations. Availability means every request to a non-failing node eventually receives a valid result under the model. Returning an error does not satisfy that property. A partition can lose messages between parts of the system. When that happens, the system cannot guarantee both properties. CAP availability is not an operational uptime percentage."
             ]
           },
           {
@@ -66526,7 +66526,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "design-review",
-        "title": "24. Make the design reviewable with experiments",
+        "title": "24. Test the design assumptions",
         "stage": "advanced",
         "takeaway": "A good design exposes assumptions and proposes tests that could prove it wrong.",
         "sections": [
@@ -66559,7 +66559,7 @@ const LEARNING_PATHS = [
             "title": "Use a counterexample to revise the design",
             "paragraphs": [
               "Start with the existing booking lab and one seat. The first design reads capacity, then inserts a reservation. Construct the interleaving where two callers both observe one seat before either writes. The revised design must move the condition into the protected write and test the final invariant: remaining capacity is nonnegative and at most one booking exists.",
-              "Next inject a crash after outbox publication but before its sent marker. A second delivery is now expected, so the consumer needs its own deduplication contract. Changing the producer’s transaction cannot erase this acknowledgement gap. Use the supplied relay-crash test to connect the architecture drawing to an observable duplicate.",
+              "Next inject a crash after outbox publication but before its sent marker. A second delivery is now expected, so the consumer needs its own deduplication contract. Changing the producer's transaction cannot erase this acknowledgement gap. Use the supplied relay-crash test to connect the architecture drawing to an observable duplicate.",
               "For transfer, change the requirement to two seats booked atomically by one learner. Work out the capacity predicate and rollback case before editing the code. This small requirement change is a better test of understanding than reproducing the original one-seat diagram."
             ]
           }
@@ -66570,11 +66570,11 @@ const LEARNING_PATHS = [
           "checks": [
             "Each important claim has a mechanism and verification plan.",
             "Unknowns have owners and next experiments.",
-            "Alternatives and costs are honestly compared."
+            "Compare alternatives using the same workload, cost assumptions and failure requirements."
           ]
         },
         "quiz": {
-          "question": "What makes a capacity claim reviewable?",
+          "question": "What information is needed to check a capacity claim?",
           "options": [
             "An unqualified claim of infinite scale.",
             "Assumptions, units, measurements and a falsifiable test plan.",
@@ -66708,10 +66708,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Design a hypothetical signed-in progress-sync service for 10,000 daily learners. Produce a design another developer could challenge.",
-            "Complete the assessment requirements in the reader: Write user flows, exclusions, ownership and two invariants.; Specify save/list API contracts, conflict behavior and a relational data model.; Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×.; Define availability and latency SLIs with windows and error classification.; Draw browser → API → database with trust boundaries.",
-            "Compare your evidence with the stage rubric: Every number includes units and assumptions.; A stale edit and timeout have documented user outcomes.; Data constraints match the stated invariants.; The simplest proposed architecture is justified and limitations are explicit."
+            "Build the project described in the reader: Write user flows, exclusions, ownership and two invariants. Specify save/list API contracts, conflict behavior and a relational data model. Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×. Define availability and latency SLIs with windows and error classification. Draw browser → API → database with trust boundaries.",
+            "Check your result: Every number includes units and assumptions. A stale edit and timeout have documented user outcomes. Data constraints match the stated invariants. The simplest proposed architecture is justified and limitations are explicit."
           ],
           "commands": [
             {
@@ -66722,7 +66722,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from system-design-practice folder root",
               "command": "python -m unittest -v test_capacity_calculator.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -66734,7 +66734,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -66751,10 +66751,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Extend the notebook with 20-seat workshops and asynchronous study-pack exports. Preserve seat correctness while keeping slow export work separate.",
-            "Complete the assessment requirements in the reader: Specify atomic booking/cancellation and duplicate-operation handling.; Draw a sequence for response loss after commit and retry with the same key.; Define export job states, acknowledgment, retry exhaustion and replay.; Model cache outage and replica lag, including user-visible behavior.; Compare one database with sharding and record a trigger before adding shards.",
-            "Compare your evidence with the stage rubric: Final-seat safety comes from a database or proven coordination mechanism.; Same-key concurrent requests and mismatched payloads are addressed.; Public cached counts never authorize bookings.; Queue age, replay responsibility and private export authorization are specified."
+            "Build the project described in the reader: Specify atomic booking/cancellation and duplicate-operation handling. Draw a sequence for response loss after commit and retry with the same key. Define export job states, acknowledgment, retry exhaustion and replay. Model cache outage and replica lag, including user-visible behavior. Compare one database with sharding and record a trigger before adding shards.",
+            "Check your result: Final-seat safety comes from a database or proven coordination mechanism. Same-key concurrent requests and mismatched payloads are addressed. Public cached counts never authorize bookings. Queue age, replay responsibility and private export authorization are specified."
           ],
           "commands": [
             {
@@ -66765,7 +66765,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from system-design-practice folder root",
               "command": "python -m unittest -v test_capacity_calculator.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -66777,7 +66777,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         },
         {
@@ -66798,10 +66798,10 @@ const LEARNING_PATHS = [
           "steps": [
             "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
             "Read README.md before running the references.",
-            "Run the provided baseline and record its actual results.",
+            "Run the reference and check its output.",
             "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
-            "Complete the assessment requirements in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals.; Document retries at every layer and a bounded end-to-end deadline.; Specify outbox/consumer crash handling and unresolved external-effect risks.; Threat-model cross-user data access, upload abuse and credential exposure.; Define RPO/RTO, an isolated restore drill and an expand-and-contract migration.; Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
-            "Compare your evidence with the stage rubric: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.; Every important claim identifies a verification method and a remaining unknown.; Runbooks identify ownership, rollback limits and validation criteria.; No benchmark, availability or cost claim is invented from calculator output.",
+            "Build the project described in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals. Document retries at every layer and a bounded end-to-end deadline. Specify outbox/consumer crash handling and unresolved external-effect risks. Threat-model cross-user data access, upload abuse and credential exposure. Define RPO/RTO, an isolated restore drill and an expand-and-contract migration. Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
+            "Check your result: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged. Every important claim identifies a verification method and a remaining unknown. Runbooks identify ownership, rollback limits and validation criteria. No benchmark, availability or cost claim is invented from calculator output.",
             "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
           ],
           "commands": [
@@ -66813,7 +66813,7 @@ const LEARNING_PATHS = [
             {
               "label": "Run baseline tests from system-design-practice folder root",
               "command": "python -m unittest -v test_capacity_calculator.py",
-              "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+              "expected": "The supplied regression suite should pass. Test your own changes separately."
             }
           ],
           "prerequisites": [
@@ -66825,7 +66825,7 @@ const LEARNING_PATHS = [
           "notes": [
             "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-            "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+            "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
         }
       ],
@@ -67034,7 +67034,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation",
+        "title": "Define a small project",
         "description": "Turn a synthetic workshop request into a scoped plan.",
         "exitCriteria": [
           "Beneficiary, deliverables and excluded scope are explicit.",
@@ -67063,7 +67063,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate",
+        "title": "Manage work in progress",
         "description": "Operate a synthetic board through a week of changes.",
         "exitCriteria": [
           "Workflow states have clear entry and exit policies.",
@@ -67092,7 +67092,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied review — deliver and improve a small project",
+        "title": "Deliver and improve a small project",
         "description": "Close a project using acceptance and improvement evidence.",
         "exitCriteria": [
           "Age, cycle time and throughput use consistent boundaries.",
@@ -67183,7 +67183,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
-              "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday’s attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
+              "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday's attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
             ],
             "example": "Sending a library reservation request is a task; preparing a reading-group launch is a project; checking registrations every Monday is a routine. Link the reservation to the project and give the routine a recurring trigger.",
             "exampleFormat": "prose"
@@ -67265,7 +67265,7 @@ const LEARNING_PATHS = [
             "Resolve every uncertainty immediately"
           ],
           "correct": 0,
-          "explanation": "Asking the venue for seated capacity names an action, an object and a usable result. “Work on workshop” leaves the starting step unclear."
+          "explanation": "Asking the venue for seated capacity names an action, an object and a usable result. \"Work on workshop\" leaves the starting step unclear."
         },
         "references": [
           {
@@ -67391,7 +67391,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
-              "Use a coverage check for every deliverable: can you point to creation, review and handoff work? Then ask whether any listed action contributes to no deliverable. This reveals both omissions and unnecessary activity. Split work at a boundary that leaves inspectable state rather than arbitrary equal chunks of time. Venue confirmation, exercise drafting and invitation publication can have different owners and effort. Avoid an oversized tree that takes longer to maintain than the project; expand a branch when uncertainty prevents someone from starting or checking its actions."
+              "For each deliverable, identify the work needed to create, check and hand it over. Remove actions that contribute to none of the deliverables. Split work where someone can check a result, such as a confirmed venue or a reviewed invitation. Different pieces can have different owners and take different amounts of time. Add detail when someone lacks enough information to start or check the work; avoid maintaining a task tree larger than the project needs."
             ],
             "example": "A reading-group launch has three deliverables: a confirmed room, a reading guide and a joining notice. Request the room booking, draft the guide’s questions and verify the notice’s details; add review and publication actions with owners.",
             "exampleFormat": "prose"
@@ -67998,7 +67998,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "Pull means selecting ready work when the workflow has capacity. It differs from assigning an unlimited queue of simultaneous promises. Selection still considers value, risk and deadlines; a vacant slot does not require starting a low-value item.",
-              "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. If the vacant slot cannot be used meaningfully, it may remain empty while the team resolves a constraint or prepares a clearer item. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
+              "A ready queue can be ordered without starting every item. Reorder it when value, dependency or a deadline consequence changes, while preserving the distinction between an option for later and a started commitment. Check that inputs are available before pulling a card into Doing. Leave the slot empty if no item has the inputs or scope needed to start. Starting vague redesign work merely to look busy creates WIP without a checkable result and can delay the useful dependency when it becomes ready."
             ],
             "example": "With a WIP limit of three, finishing one of three started cards creates one slot. Pull the ready room-confirmation task that unblocks the notice; leave an unclear optional logo redesign in the backlog until its purpose and action are defined.",
             "exampleFormat": "prose"
@@ -68102,7 +68102,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "Estimate with historical work that uses the same start and finish definitions. A duration includes waiting if the metric measures elapsed time. A few examples give a rough range, not a statistically reliable promise.",
-              "Waiting for a reviewer belongs in elapsed cycle time when review lies between start and finish. Work effort may be much smaller, so do not substitute hours of writing for calendar duration when forecasting a handoff. Compare items with similar size, review requirements and availability. Three completed examples show variation but cannot justify a reliable probability statement. If the new deadline falls below all comparable durations, discuss earlier inputs, smaller scope or additional review availability. A forecast describes uncertainty; a commitment requires a conscious decision about the risk of missing it."
+              "Include reviewer waiting time in elapsed cycle time when review falls between start and finish. Hours spent writing are not the same as calendar time until handoff. Compare work of similar size with similar review needs and availability. Three examples show variation but cannot support a reliable probability. If the deadline is shorter than every comparable duration, discuss earlier inputs, reduced scope or more review capacity. Agree how to handle the risk before committing to the date."
             ],
             "example": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. Use 1–5 days as a provisional observed range and check whether reviewer availability is comparable. Three samples cannot support a reliable percentile forecast.",
             "exampleFormat": "prose"
@@ -68409,7 +68409,7 @@ const LEARNING_PATHS = [
           {
             "title": "A new request changes the acceptance conditions",
             "paragraphs": [
-              "The invitation is ready for review when the organiser adds a second workshop session. The change needs session selection, separate capacities and matching confirmations, not just a new title. Existing completion criteria cover one session.",
+              "The invitation is ready for review when the organiser adds a second workshop session. The change needs session selection, separate capacities and matching confirmations, as well as a new title. Existing completion criteria cover one session.",
               "Identify changed acceptance conditions and dependencies, then decide scope and date. Reuse completed work where applicable, but a one-session form test does not verify two-session routing."
             ],
             "example": "Option A: publish the checked single session today and announce the second later. Option B: delay, add selection, confirm capacities and test both paths. The organiser chooses B, so the team retains old work and adds the checks made necessary by the decision.",
@@ -68456,7 +68456,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period. Keep item sizes and boundaries visible. Counts help discuss the system and should not become rankings of individual worth.",
-              "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person’s overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
+              "Splitting a card can increase throughput count without increasing useful output. Compare similarly sized items and pair counts with acceptance evidence. State the date convention, such as elapsed midnight-to-midnight differences, so people reproduce the calculation. An unfinished item has age, not a completed cycle time; it may become older than completed examples and require investigation. Metrics describe a defined workflow rather than a person's overall performance. Use them to ask whether waiting, item size or a policy needs attention rather than ranking people by how many cards they close."
             ],
             "example": "Using elapsed date differences, a card started Tuesday and completed Saturday has a cycle time of four days. Another started Thursday and remains unfinished Sunday, so its age is three days. Only the completed card contributes to that week’s throughput.",
             "exampleFormat": "prose"
@@ -68784,7 +68784,7 @@ const LEARNING_PATHS = [
             "title": "Understand and apply",
             "paragraphs": [
               "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine. Archive decisions where the next person can find them. A closed board should not conceal unfulfilled promises or imply that attendance alone proved learning.",
-              "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; honest closure makes that obligation visible rather than declaring every aspect successful."
+              "A remaining obligation should have an owner who accepts it. Moving a task into an archive without that agreement merely hides the work. Distinguish delivery, unresolved issue and ongoing routine in the closure record. Link accepted outputs and explain where future corrections belong. Attendance establishes participation, while feedback or an observed exercise offers different evidence about the learning outcome. Preserve the distinction in the report. A closed project can still have a named follow-up issue; the closure record should name that obligation."
             ],
             "example": "The reading-group launch has accepted guides, collected feedback and one unresolved room-signage problem. Link the delivered outputs, assign a signage owner and follow-up date, and transfer Monday registration checks to a routine. Record delivery with the issue still visible.",
             "exampleFormat": "prose"
@@ -68807,7 +68807,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What belongs in honest closure?",
+          "question": "What should the closure record say about unfinished work?",
           "options": [
             "Accepted outputs and remaining obligations",
             "Only a celebration image",
@@ -68931,14 +68931,14 @@ const LEARNING_PATHS = [
       {
         "id": "system-review",
         "title": "21. Select a proportionate management system",
-        "takeaway": "A useful system supports the project’s decisions with modest maintenance.",
+        "takeaway": "A useful system supports the project's decisions with modest maintenance.",
         "stage": "advanced",
         "sections": [
           {
             "title": "Understand and apply",
             "paragraphs": [
-              "A useful system supports the project’s decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
-              "Evaluate maintenance burden with the same care as the project work. Retain a report when it changes a decision or exposes an obligation, and consolidate repeated status entry that supplies no new information. A small board can be enough for twelve tasks if it represents owners, completion and waiting truthfully. When borrowing a method name, check its defining practices rather than using the label because the interface looks familiar. You may legitimately use selected ideas in a simple task board; that honest description leaves room to adopt fuller practices when they become useful."
+              "A useful system supports the project's decisions with modest maintenance. Combine scope, a visible workflow, WIP control, follow-up and review only as needed. Borrowing a practice does not mean the project implements all of Scrum or Kanban.",
+              "Keep a report if it changes a decision or reveals unfinished work. Combine duplicate status reports. A small board may be enough for twelve tasks if it shows owners, completion and waiting. If you use the name of a method, check that you follow its defining practices. Otherwise, name the practices you use without claiming to implement the whole method."
             ],
             "example": "A three-person reading-group project has nine cards and takes 40 minutes daily to maintain five reports. Keep one board with owner, finish criteria and blockers plus a short weekly review; remove reports that support no decision. Call it a task board unless the required Kanban workflow and metrics are maintained.",
             "exampleFormat": "prose"
@@ -68963,7 +68963,7 @@ const LEARNING_PATHS = [
         "quiz": {
           "question": "What is an accurate method claim?",
           "options": [
-            "A task board unless the method’s full defining practices are present",
+            "A task board unless the method's full defining practices are present",
             "Full Kanban because cards exist",
             "Full Scrum because a meeting occurs"
           ],
@@ -69867,7 +69867,7 @@ const LEARNING_PATHS = [
     "title": "Testing & Debugging",
     "category": "Software engineering",
     "status": "ready",
-    "description": "Learn to specify, test and diagnose behavior through 24 lessons and three runnable projects: strict parsing, failure-safe files and reproducible stale-writer tests.",
+    "description": "Write tests and diagnose failures in 24 lessons and three runnable projects. Test strict parsing, file replacement and competing stale writes.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
@@ -69931,7 +69931,7 @@ const LEARNING_PATHS = [
       {
         "id": "foundation",
         "title": "Foundation practice",
-        "description": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+        "description": "Test valid values, type restrictions and malformed records with a pure parser.",
         "exitCriteria": [
           "Boundary tests include zero, 1440, 1441 and true.",
           "Expected values are independent of the implementation.",
@@ -69958,7 +69958,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Intermediate practice",
-        "description": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+        "description": "Test the parser with temporary files. Verify that rejected batches leave the previous report unchanged.",
         "exitCriteria": [
           "The integration crosses a real filesystem boundary.",
           "Validation failure and replacement failure have separate fixtures.",
@@ -69985,7 +69985,7 @@ const LEARNING_PATHS = [
       {
         "id": "advanced",
         "title": "Selected advanced practice",
-        "description": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+        "description": "Test two competing stale edits against the version rule, then explain the observed failure and fix.",
         "exitCriteria": [
           "Ordering is established by synchronization rather than sleeps.",
           "Assertions tolerate either valid winning thread.",
@@ -70125,7 +70125,7 @@ const LEARNING_PATHS = [
           {
             "title": "Types beyond ordinary integers",
             "paragraphs": [
-              "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract explicitly rejects it. That decision must be tested rather than assumed."
+              "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
             ],
             "example": "0 -> accepted\n1440 -> accepted\n1441 -> rejected\ntrue -> rejected although isinstance(True, int) is true"
           }
@@ -70476,7 +70476,7 @@ const LEARNING_PATHS = [
           {
             "title": "Predictions and observations",
             "paragraphs": [
-              "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes deliberately admits booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
+              "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
             ]
           },
           {
@@ -71093,7 +71093,7 @@ const LEARNING_PATHS = [
           {
             "title": "Old behavior versus corrected behavior",
             "paragraphs": [
-              "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the deliberately buggy validator from parse_record's exact-type policy without requiring the entire importer to run."
+              "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the faulty validator from parse_record's exact-type policy without requiring the entire importer to run."
             ]
           },
           {
@@ -71121,14 +71121,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What is the strongest regression evidence?",
+          "question": "How can a test demonstrate that it catches the original bug?",
           "options": [
             "The old behavior fails the test and the fix passes",
             "The test runs twice",
             "The file has more assertions"
           ],
           "correct": 0,
-          "explanation": "A regression is strongest when it distinguishes the old failure from the intended correction."
+          "explanation": "Run the test against the old and fixed implementations. It should fail for the original defect and pass for the intended behavior."
         },
         "references": [
           {
@@ -71149,7 +71149,7 @@ const LEARNING_PATHS = [
           {
             "title": "Execution and assertion strength",
             "paragraphs": [
-              "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments deliberately alter behavior and ask whether a test notices; surviving mutants reveal weak assertions or equivalent changes."
+              "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments change behavior and check whether a test fails. A surviving mutant may indicate a weak assertion or a change that leaves behavior unchanged."
             ]
           },
           {
@@ -71322,7 +71322,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which creates the strongest reproducibility dependency?",
+          "question": "Which test input can change between runs without a code change?",
           "options": [
             "A fixed synthetic fixture",
             "Live production records queried each run",
@@ -71497,7 +71497,7 @@ const LEARNING_PATHS = [
           {
             "title": "Barriers and safety timeouts",
             "paragraphs": [
-              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, capture that failure clearly rather than letting a later join obscure the cause."
+              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
             ],
             "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
           }
@@ -71540,7 +71540,7 @@ const LEARNING_PATHS = [
           {
             "title": "Failure, cancellation and timeout",
             "paragraphs": [
-              "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless its contract deliberately converts it. Record whether cleanup completes before the operation reports its final result."
+              "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless the API defines another cancellation result. Record whether cleanup completes before the operation reports its final result."
             ]
           },
           {
@@ -72137,7 +72137,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+            "The supplied tests check the reference implementation. Add tests for your changes."
           ]
         },
         {
@@ -72201,7 +72201,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+            "The supplied tests check the reference implementation. Add tests for your changes."
           ]
         },
         {
@@ -72256,7 +72256,7 @@ const LEARNING_PATHS = [
           ],
           "notes": [
             "All files are flat at the root of the downloadable practice folder.",
-            "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+            "The supplied tests check the reference implementation. Add tests for your changes."
           ]
         },
         {
@@ -72521,7 +72521,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation",
+        "title": "Plan a study day",
         "description": "Plan a synthetic day with limited capacity and a clear output.",
         "exitCriteria": [
           "Capacity calculation includes essential commitments and transitions.",
@@ -72550,7 +72550,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate",
+        "title": "Plan a week of focused work",
         "description": "Design and evaluate a small scheduling experiment.",
         "exitCriteria": [
           "Estimates refer to comparable past durations and show variation.",
@@ -72579,8 +72579,8 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied review — adapt a personal schedule",
-        "description": "Produce a two-week routine and an honest evidence review.",
+        "title": "Adapt a personal schedule",
+        "description": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
         "exitCriteria": [
           "The routine has a minimum version for disrupted days.",
           "A conflicting request is resolved through explicit feasible alternatives.",
@@ -72589,7 +72589,7 @@ const LEARNING_PATHS = [
         ],
         "project": {
           "title": "A sustainable personal system",
-          "brief": "Produce a two-week routine and an honest evidence review.",
+          "brief": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
           "requirements": [
             "Capture obligations and review capacity twice.",
             "Renegotiate one synthetic conflicting request.",
@@ -72876,7 +72876,7 @@ const LEARNING_PATHS = [
             "Open many reference tabs"
           ],
           "correct": 0,
-          "explanation": "Three slides with one sentence each give the session an inspectable output and a stopping point."
+          "explanation": "The session ends when each of the three slides has a sentence. You can check that result directly."
         },
         "references": [
           {
@@ -73500,7 +73500,7 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "When is buffer meaningful?",
+          "question": "When can a buffer absorb extra work?",
           "options": [
             "After essential work and transitions fit",
             "When it hides an overfull plan",
@@ -73611,7 +73611,7 @@ const LEARNING_PATHS = [
             "It hides unresolved questions"
           ],
           "correct": 0,
-          "explanation": "An exact next step preserves the checking position. “Continue editing” leaves the returning person to reconstruct it."
+          "explanation": "An exact next step preserves the checking position. \"Continue editing\" leaves the returning person to reconstruct it."
         },
         "references": [
           {
@@ -73736,8 +73736,8 @@ const LEARNING_PATHS = [
           {
             "title": "Understand and apply",
             "paragraphs": [
-              "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.",
-              "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week’s priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
+              "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week's limited outcomes. A review should create decisions, not become another elaborate tracking task.",
+              "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week's priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
             ],
             "example": "A weekly list contains three completed tasks, two carried tasks and three new requests. With three available windows, archive the completed work and select three bounded outcomes from the five remaining candidates; defer or renegotiate the other two explicitly.",
             "exampleFormat": "prose"
@@ -73984,7 +73984,7 @@ const LEARNING_PATHS = [
           "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
           "solutionFormat": "prose",
           "checks": [
-            "Reduce a named part of the next day’s commitment.",
+            "Reduce a named part of the next day's commitment.",
             "Check actual durations of the essential outcomes.",
             "Avoid solving capacity shortage through sleep reduction."
           ]
@@ -74045,7 +74045,7 @@ const LEARNING_PATHS = [
           "question": "Which claim fits the trial?",
           "options": [
             "Batching looked useful in these four sessions",
-            "Batching doubles everyone’s productivity",
+            "Batching doubles everyone's productivity",
             "Any difference proves causation"
           ],
           "correct": 0,
@@ -74205,7 +74205,7 @@ const LEARNING_PATHS = [
           "solution": "Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.",
           "solutionFormat": "prose",
           "checks": [
-            "Account for the reviewer’s Tuesday absence.",
+            "Account for the reviewer's Tuesday absence.",
             "Give a specific input and reply window.",
             "Include independent work and an agreed fallback."
           ]
@@ -74218,7 +74218,7 @@ const LEARNING_PATHS = [
             "Assuming instant availability"
           ],
           "correct": 0,
-          "explanation": "Confirm the required input, reply window and fallback. Another person’s contribution remains a dependency until agreed."
+          "explanation": "Confirm the required input, reply window and fallback. Another person's contribution remains a dependency until agreed."
         },
         "references": [
           {
@@ -74284,7 +74284,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "evidence-review",
-        "title": "21. Report what changed with honest limits",
+        "title": "21. Report what changed and what remains uncertain",
         "takeaway": "A final review compares intended outcomes with observed results and costs.",
         "stage": "advanced",
         "sections": [
@@ -75056,7 +75056,7 @@ const LEARNING_PATHS = [
         },
         {
           "id": "practice-evidence-review",
-          "title": "Practise: Report what changed with honest limits",
+          "title": "Practise: Report what changed and what remains uncertain",
           "goal": "Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.",
           "fileIds": [
             "evidence-review-worksheet",
@@ -75152,7 +75152,7 @@ const LEARNING_PATHS = [
         {
           "id": "advanced",
           "title": "A sustainable personal system",
-          "goal": "Produce a two-week routine and an honest evidence review.",
+          "goal": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
           "fileIds": [
             "advanced-project",
             "README-md",
@@ -75221,7 +75221,7 @@ const LEARNING_PATHS = [
     "title": "UI Design & Accessibility",
     "category": "Product design",
     "status": "ready",
-    "description": "Create clear, responsive interfaces and verify keyboard, semantic, contrast and recovery behaviour with honest evidence.",
+    "description": "Build responsive interfaces, test their keyboard access and error recovery, and record the results of semantic and contrast checks.",
     "level": "Foundations → applied interaction practice → scoped release review",
     "prerequisites": [
       "Basic file editing and running a terminal command. No prior specialist knowledge required.",
@@ -75344,7 +75344,7 @@ const LEARNING_PATHS = [
     "stages": [
       {
         "id": "foundation",
-        "title": "Foundation — task and meaning",
+        "title": "Tasks and HTML meaning",
         "description": "Understand the person, structure, HTML semantics and visual rules.",
         "exitCriteria": [
           "The task and outcome are explicit.",
@@ -75372,7 +75372,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "intermediate",
-        "title": "Intermediate — resilient interaction",
+        "title": "Forms, dialogs and responsive layouts",
         "description": "Build usable form, dialog, responsive and visual explanation states.",
         "exitCriteria": [
           "Errors explain recovery without losing work.",
@@ -75401,7 +75401,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "advanced",
-        "title": "Applied review — maintained inclusive journeys",
+        "title": "Test and maintain accessible interactions",
         "description": "Evaluate complex interactions and produce bounded release evidence.",
         "exitCriteria": [
           "The same task works through equivalent input routes.",
@@ -75470,7 +75470,7 @@ const LEARNING_PATHS = [
             "Make every element look identical."
           ],
           "correct": 0,
-          "explanation": "Scenario A: return to an unfinished lesson after closing the browser; success means the same lesson and progress are visible. Scenario B: locate and download the relevant kit using keyboard navigation; success means the named files are found without help. Record the start, expected end and observed obstacles separately. The other choices miss the decision or assumption described above."
+          "explanation": "Locating the next exercise is a task you can observe someone complete. A visual preference alone does not tell you whether the learner can use the page."
         },
         "references": [
           {
@@ -75521,7 +75521,7 @@ const LEARNING_PATHS = [
             "A replacement for every task action."
           ],
           "correct": 0,
-          "explanation": "Group lessons by stage, keep the practice kit beside the exercise, and add a search result with course title and task context. The breadcrumb leads back to course overview. Use the same label and URL for a resource wherever it appears, rather than introducing multiple names for one download. The other choices miss the decision or assumption described above."
+          "explanation": "A breadcrumb shows where the current page sits in the course and provides a route to its parent pages."
         },
         "references": [
           {
@@ -75661,7 +75661,7 @@ const LEARNING_PATHS = [
             "To force every element to have the same margin."
           ],
           "correct": 0,
-          "explanation": "Place the title and outcome together, then a dominant Continue lesson action. Put progress nearby as supporting information and list resources under a separate heading. Align text and controls on a shared edge. Use a smaller gap inside a group and a larger gap between groups, then compare scanning at narrow width. The other choices miss the decision or assumption described above."
+          "explanation": "Consistent gaps help readers see which items belong together and where a new group starts."
         },
         "references": [
           {
@@ -75712,7 +75712,7 @@ const LEARNING_PATHS = [
             "A guaranteed accessible name."
           ],
           "correct": 0,
-          "explanation": "Use an anchor with href for moving to the practice page, a button for toggling a filter, and an h2 for a subsection. Keep a real text name inside each control. Inspect the browser accessibility tree and confirm the computed role and name; visual similarity alone is insufficient. The other choices miss the decision or assumption described above."
+          "explanation": "role=\"button\" supplies a role. It does not add keyboard activation or an accessible name. A native button already supplies the expected keyboard behavior."
         },
         "references": [
           {
@@ -75772,7 +75772,7 @@ const LEARNING_PATHS = [
             "A manually numbered tabindex on every control."
           ],
           "correct": 0,
-          "explanation": "The skip link reaches main; the form fields and buttons follow source order. Opening Preview moves focus into the dialog; Escape closes it and restores focus to Preview. Any invisible focus or unreachable control is a defect to reproduce and fix, even if the pointer interaction works. The other choices miss the decision or assumption described above."
+          "explanation": "Keep focus in the document's reading order. Positive tabindex values create a separate order that can become confusing as controls change."
         },
         "references": [
           {
@@ -75823,7 +75823,7 @@ const LEARNING_PATHS = [
             "Always passing because the font is bold."
           ],
           "correct": 0,
-          "explanation": "Run node contrast.cjs 777777 ffffff; its ratio is below 4.5:1 for ordinary text. Use a darker foreground such as 595959 and rerun. Add visible error text linked to the field, retaining colour as reinforcement rather than the sole signal. Record exact ratios, intended text size and tested state. The other choices miss the decision or assumption described above."
+          "explanation": "4.49:1 is below 4.5:1. Do not round a failing ratio up to the threshold."
         },
         "references": [
           {
@@ -75881,7 +75881,7 @@ const LEARNING_PATHS = [
             "More."
           ],
           "correct": 0,
-          "explanation": "Replace Here with Open practice files, Submit with Add lesson and Bad data with Title cannot be blank. Let the input row wrap and the error paragraph grow. Check that the action still matches its label and that no instruction is cut off after zoom or text-spacing changes. The other choices miss the decision or assumption described above."
+          "explanation": "\"Download SQL Server practice kit\" names both the action and the file's purpose. \"Here\" does not explain either."
         },
         "references": [
           {
@@ -75932,7 +75932,7 @@ const LEARNING_PATHS = [
             "The number of components in the application."
           ],
           "correct": 0,
-          "explanation": "The form becomes stacked, buttons remain readable and text wraps without whole-page horizontal scrolling. If a data table requires a scroll area, label that region, keep headers understandable and provide a summary. Record viewport width and zoom so the result can be reproduced. The other choices miss the decision or assumption described above."
+          "explanation": "Change the layout when its content stops fitting, such as when labels collide or controls become too narrow. A device category alone does not identify that point."
         },
         "references": [
           {
@@ -75954,7 +75954,7 @@ const LEARNING_PATHS = [
       {
         "id": "forms-validation",
         "title": "9. Form labels, instructions and recovery",
-        "takeaway": "Validation should explain what failed while preserving the person’s work.",
+        "takeaway": "Validation should explain what failed while preserving the person's work.",
         "stage": "intermediate",
         "sections": [
           {
@@ -75999,7 +75999,7 @@ const LEARNING_PATHS = [
             "It is the same as an associated label element."
           ],
           "correct": 0,
-          "explanation": "Whitespace is rejected with visible Title is required text; the input receives focus, aria-invalid=true and a described error. After valid input, the error clears and a status message confirms the change. The implementation never inserts learner input using innerHTML. The other choices miss the decision or assumption described above."
+          "explanation": "A placeholder disappears as someone types. Keep a visible label associated with the field so its purpose remains available during entry and correction."
         },
         "references": [
           {
@@ -76131,7 +76131,7 @@ const LEARNING_PATHS = [
           {
             "title": "Persistent outcome feedback",
             "paragraphs": [
-              "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Make persistent consequences inspectable after the announcement."
+              "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Keep the changed data or saved status visible after the announcement disappears."
             ]
           }
         ],
@@ -76153,7 +76153,7 @@ const LEARNING_PATHS = [
             "An endless spinner."
           ],
           "correct": 0,
-          "explanation": "Before import, explain accepted format. During parsing, show Reading file. Malformed input leaves existing data unchanged and gives a retry action. A valid empty file reports 0 records imported rather than an error. Successful imports state the count and where data was stored; announce only the final meaningful change. The other choices miss the decision or assumption described above."
+          "explanation": "No results can be a valid search outcome. Say that nothing matched and let the person change the query or filters."
         },
         "references": [
           {
@@ -76213,7 +76213,7 @@ const LEARNING_PATHS = [
             "To make any tooltip keyboard accessible."
           ],
           "correct": 0,
-          "explanation": "Focus enters the Preview dialog; Escape or Close dismisses it and returns to Preview. If that opener no longer exists, choose the next logical control or page heading and check it is connected before focusing. The dialog title is its accessible name; background interaction is inert while open. The other choices miss the decision or assumption described above."
+          "explanation": "aria-modal=\"true\" describes a modal interaction. It does not block background controls by itself, so the implementation must actually prevent that interaction."
         },
         "references": [
           {
@@ -76331,7 +76331,7 @@ const LEARNING_PATHS = [
       {
         "id": "images-diagrams",
         "title": "12. Images and diagrams that explain",
-        "takeaway": "Alternatives should communicate the image’s purpose in this context.",
+        "takeaway": "Alternatives should communicate the image's purpose in this context.",
         "stage": "intermediate",
         "sections": [
           {
@@ -76367,7 +76367,7 @@ const LEARNING_PATHS = [
             "Only the word image."
           ],
           "correct": 0,
-          "explanation": "Use empty alt for an icon beside an already complete heading. Name the icon button Download practice kit. Give the architecture diagram a concise title and a structured description of request, permission check and database query. Add an exception path if it teaches failure handling. The other choices miss the decision or assumption described above."
+          "explanation": "For a functional image, describe what activating it does or where it goes. Describing only its appearance leaves the action unclear."
         },
         "references": [
           {
@@ -76381,7 +76381,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "tables-charts",
-        "title": "13. Tables and charts with inspectable data",
+        "title": "13. Tables and charts with values you can check",
         "takeaway": "Visual summaries need explicit labels and a route to the underlying values.",
         "stage": "intermediate",
         "sections": [
@@ -76418,7 +76418,7 @@ const LEARNING_PATHS = [
             "It changes the mathematical percentage."
           ],
           "correct": 0,
-          "explanation": "Label the chart Completed lessons, state the snapshot date, and report completed/total for each course. Use direct series labels and patterns as well as colour. The summary identifies the largest unfinished workload, while the table preserves exact values and denominators for comparison. The other choices miss the decision or assumption described above."
+          "explanation": "50% could mean 1 of 2 lessons or 50 of 100. The denominator shows the workload behind the percentage."
         },
         "references": [
           {
@@ -76433,7 +76433,7 @@ const LEARNING_PATHS = [
       {
         "id": "motion-media",
         "title": "14. Motion, reduced motion and media alternatives",
-        "takeaway": "Motion should teach a change while respecting a person’s control.",
+        "takeaway": "Motion should teach a change while respecting a person's control.",
         "stage": "intermediate",
         "sections": [
           {
@@ -76469,7 +76469,7 @@ const LEARNING_PATHS = [
             "An automatic rapid flash of every frame."
           ],
           "correct": 0,
-          "explanation": "Animate a labelled request token between browser and API only after Start. Pause freezes the teaching step; Next advances with text narration. Reduced motion changes the highlighted participant immediately while preserving narration. Narrated video includes checked captions and a transcript describing information carried only by visuals. The other choices miss the decision or assumption described above."
+          "explanation": "Keep the explanation and controls available when motion is reduced. For example, replace animated travel with an immediate highlight and the same step text."
         },
         "references": [
           {
@@ -76520,7 +76520,7 @@ const LEARNING_PATHS = [
             "A fixed height for every possible error."
           ],
           "correct": 0,
-          "explanation": "Define text, muted-text, surface, focus and spacing tokens. The field contract accepts id, label, help, error and value; it associates descriptions and exposes invalid state. Test two instances for unique IDs, then blank, long-label, invalid, disabled and zoomed states. Document which colour pairs were measured. The other choices miss the decision or assumption described above."
+          "explanation": "A field component must connect its label, help and error text to the input. It also needs a defined invalid state and a way to correct the value."
         },
         "references": [
           {
@@ -76572,7 +76572,7 @@ const LEARNING_PATHS = [
             "Making every item tabindex=1."
           ],
           "correct": 0,
-          "explanation": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson’s control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate. The other choices miss the decision or assumption described above."
+          "explanation": "Provide an operation that reaches the same result without dragging. Move up and Move down buttons can do this for a lesson list."
         },
         "references": [
           {
@@ -76615,7 +76615,7 @@ const LEARNING_PATHS = [
           {
             "title": "Clear language selection",
             "paragraphs": [
-              "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person’s current task when switching."
+              "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person's current task when switching."
             ]
           }
         ],
@@ -76637,7 +76637,7 @@ const LEARNING_PATHS = [
             "Automatic RTL layout for every language."
           ],
           "correct": 0,
-          "explanation": "Let title and action text wrap, use logical spacing and inspect focus order. Translate complete phrases with plural support. A deadline includes the full date and stated zone rather than 03/04 at 9. Mark the page and changed-language passages correctly, then test actual translations rather than only pseudo-text. The other choices miss the decision or assumption described above."
+          "explanation": "The lang attribute identifies the content's language so software such as a screen reader can interpret and pronounce it appropriately."
         },
         "references": [
           {
@@ -76688,7 +76688,7 @@ const LEARNING_PATHS = [
             "To eliminate the need for an accessible button."
           ],
           "correct": 0,
-          "explanation": "Use labelled fields with appropriate autocomplete values, permit paste and provide clear recovery routes. The deletion prompt names exactly which progress will be removed and defaults focus to Cancel when opening is potentially destructive. Offline-file removal and progress deletion are distinct actions with distinct labels. The other choices miss the decision or assumption described above."
+          "explanation": "Naming the exact deletion target lets the person check what they are about to remove. \"Are you sure?\" alone does not describe the consequence."
         },
         "references": [
           {
@@ -76746,7 +76746,7 @@ const LEARNING_PATHS = [
             "Usability for every disabled person."
           ],
           "correct": 0,
-          "explanation": "Record the tested browser, viewport, input method and exact steps. For a defect, state the user impact and attach the failing state rather than a vague rating. After fixing it, repeat the same steps and record the result. Mark screen-reader checks not executed if no screen reader was available. The other choices miss the decision or assumption described above."
+          "explanation": "A passing scan covers only the rules and states the tool checked. It does not establish that a person can complete the task with a keyboard or screen reader."
         },
         "references": [
           {
@@ -76878,7 +76878,7 @@ const LEARNING_PATHS = [
             "Tell me that the design is intuitive."
           ],
           "correct": 0,
-          "explanation": "Start from course overview, ask the participant to locate the kit and requirements, then resume after closing the page. Introduce a malformed file and observe recovery. Record whether each goal is reached independently, what was misunderstood and whether any hint was supplied. Prioritise blocked tasks before decorative changes. The other choices miss the decision or assumption described above."
+          "explanation": "\"Find the practice files for the form exercise\" gives a goal without naming the control to use. You can observe whether the participant discovers the route."
         },
         "references": [
           {
@@ -76929,7 +76929,7 @@ const LEARNING_PATHS = [
             "A promise that future content will always be accessible."
           ],
           "correct": 0,
-          "explanation": "List browser/device combinations, core task journeys, automated checks, manual keyboard and assistive-technology results and known defects. A modal rewrite and a navigation layout change trigger manual retesting. Token updates rerun contrast combinations, while content changes check long titles, meaningful alternatives and resource discoverability. The other choices miss the decision or assumption described above."
+          "explanation": "State what was tested, the results, known defects and the checks not performed. This lets readers judge the release claim against its coverage."
         },
         "references": [
           {
@@ -77039,7 +77039,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline."
           ]
         },
@@ -77087,7 +77087,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline."
           ]
         },
@@ -77131,7 +77131,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+            "Test your changes separately from the reference. Deployment needs its own checks.",
             "No credentials, external providers or paid services are required for the baseline."
           ]
         }

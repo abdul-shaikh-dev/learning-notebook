@@ -23,7 +23,7 @@
   ],
   "nextSteps": [
     "Choose a disposable subscription scope deliberately; review costs, identity and cleanup before optional real cloud work.",
-    "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+    "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
   ],
   "sources": [
     {
@@ -828,7 +828,7 @@
         {
           "title": "Separate observed state, desired configuration and ownership",
           "paragraphs": [
-            "Imagine configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh learns the live value; a normal plan can then propose false because configuration still owns the desired value. A refresh-only operation would update observations without enforcing that intent. Treat an emergency change as an ownership decision: codify it with a reason or restore the intended control.",
+            "Configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
             "Adopting an existing account adds a mapping between a Terraform address and the remote identity. If the configuration omits a required encryption or network property, the first post-import plan may propose an unexpected change. Compare the observed account, configuration and proposed actions before accepting management. Two state owners can each try to undo the other's changes; importing twice does not create high availability."
           ],
           "example": "configuration: public_access=false\nremote observation: public_access=true\nnormal plan: restore false\nrefresh-only: record true, do not remediate remote access",
@@ -1054,7 +1054,7 @@
         {
           "title": "Validation, plan and promotion",
           "paragraphs": [
-            "Run formatting, validation and policy checks before credentialed actions. Pull-request code may be untrusted and should not receive deployment secrets. Review plan artifacts, commit identity, environment and provider selection. Promotion should bind the reviewed code and configuration to the target environment and permit a deliberate rollback or recovery path."
+            "Run formatting, validation and policy checks before using deployment credentials. Pull-request code may be untrusted, so it should not receive deployment secrets. Check the saved plan, source commit, environment and provider selection. Apply the reviewed code and configuration to the intended environment, with a defined rollback or recovery procedure."
           ]
         },
         {
@@ -1151,7 +1151,7 @@
         "prompt": "Build an evidence table with syntax, static policy, provider validation and deployed positive/negative tests. Mark the latter as not executed. Do not equate a mocked provider result with a successful live deployment.",
         "checks": [
           "Create distinct syntax, model, provider and deployed-service evidence rows.",
-          "Mark unexecuted live tests honestly and explain Terraform-test cost behavior."
+          "Identify live tests you have not run and explain which Terraform tests can create billable resources."
         ],
         "solution": "JSON parsing establishes syntax; local Python tests establish this inventory model's rules; initialized Terraform validate checks language/provider schema. A real plan/deployment and allowed/denied endpoint tests require a chosen environment. Terraform test can provision by default unless explicitly configured for planned/mocked behavior with compatible versions.",
         "solutionFormat": "prose"
@@ -1275,7 +1275,7 @@
         {
           "title": "Infrastructure decisions and evidence",
           "paragraphs": [
-            "A reviewable portfolio has an ADR, scope and identity map, resource graph, plan classification, data restore plan, cost categories, cleanup procedure and evidence ledger. Record which local tests passed, which provider checks ran and which real deployment questions remain."
+            "Document the architecture decision, resource relationships, account scope and permissions. Include the proposed changes, restore procedure, expected costs and cleanup commands. List the local tests and provider checks you ran, with their results. Identify deployment questions those checks cannot answer."
           ]
         },
         {

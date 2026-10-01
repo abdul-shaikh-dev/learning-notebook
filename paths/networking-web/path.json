@@ -368,7 +368,7 @@
         {
           "title": "Byte streams and framing",
           "paragraphs": [
-            "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read. Applications define message boundaries through a protocol. HTTP framing tells a recipient where headers and content end, so a client must not infer completeness from a single packet."
+            "TCP exposes an ordered byte stream while a connection is healthy. One write need not match one read. The application protocol defines message boundaries. HTTP framing identifies where headers and content end, so a single packet cannot establish that a message is complete."
           ]
         },
         {
@@ -739,7 +739,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Which report is honest after these assertions pass?",
+        "prompt": "What do these passing assertions establish?",
         "solution": "The default context requires identity checks. No server certificate was presented and no encrypted session was established; a handshake test remains unexecuted.",
         "solutionFormat": "prose",
         "checks": [
@@ -1226,7 +1226,7 @@
         {
           "title": "Layered incident evidence",
           "paragraphs": [
-            "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata. Request ID, status, attempt and timings can locate a failure without copying cookies or full bodies. Compare client and server observations: a timeout on one side may coexist with completed work on the other."
+            "Identify which request stage completed and which failed. Record the request ID, status, attempt number and timings without copying cookies or full bodies. Compare client and server observations. A client timeout can occur even when the server completes the work."
           ]
         },
         {

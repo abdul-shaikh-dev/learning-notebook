@@ -3,7 +3,7 @@
   "title": "JavaScript → TypeScript → React",
   "category": "Web development",
   "status": "ready",
-  "description": "Build typed web features, then practise state architecture, async correctness, testing and resilient delivery.",
+  "description": "Learn JavaScript and TypeScript, then build React features with tested state updates, asynchronous loading and local persistence.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "No React experience required. Be comfortable creating folders and editing text files.",
@@ -16,14 +16,14 @@
     "Explain loading, error and empty states, then test a small tracker."
   ],
   "setup": [
-    "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website’s console.",
-    "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool’s requirements.",
+    "JavaScript console examples run in a browser developer console or Node.js. Never paste untrusted code into a signed-in website's console.",
+    "For React lessons, create a separate practice project using the official React build-from-scratch guide and a current supported Node.js version that meets your chosen tool's requirements.",
     "A learning-only Vite setup: npm create vite@latest notebook-practice -- --template react-ts; cd notebook-practice; npm install; npm run dev. These commands download tools; this notebook does not run them.",
     "Replace src/App.tsx with the downloadable example for the capstone. Keep the generated main.tsx. Remove starter App.css imports if experimenting with appearance. Run npm run build to type-check/build.",
     "The downloadable kit now includes a pinned runnable Vite/Vitest project: npm ci, npm test, npm run build, npm run dev from the extracted folder root."
   ],
   "nextSteps": [
-    "Study your chosen production framework’s server rendering, caching and deployment model.",
+    "Study your chosen production framework's server rendering, caching and deployment model.",
     "Implement and test the advanced project against a real authenticated API.",
     "Continue with design systems, internationalization and production observability."
   ],
@@ -214,7 +214,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Input values arrive as strings even when they look numeric. Convert deliberately, then validate. Number('') is zero, so check for blank input before conversion.",
+            "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. Number('') is zero, so check for blank input before conversion.",
             "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
           ],
           "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
@@ -222,7 +222,7 @@
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Treating every falsy value as missing rejects valid zero. Check the condition you actually mean."
+            "Treating every falsy value as missing rejects valid zero. Check for missing input separately from zero."
           ]
         },
         {
@@ -235,7 +235,7 @@
           "title": "Follow conversion before choosing a fallback",
           "paragraphs": [
             "An HTML number input still exposes text through its value property. Number(\"\") becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, value || 20 replaces a valid zero; value ?? 20 replaces only null and undefined.",
-            "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser deliberately rejects \"20\" instead of coercing it. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
+            "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser rejects the string \"20\" rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
           ],
           "example": "const text = \"\";\nconst missing = text.trim() === \"\";\nconsole.log(Number(text), missing); // 0, true\nconsole.log(0 || 20, 0 ?? 20); // 20, 0"
         }
@@ -455,7 +455,7 @@
         {
           "title": "Narrow unknown data step by step",
           "paragraphs": [
-            "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. That type describes a runtime branch you actually executed.",
+            "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. The type follows the runtime check.",
             "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
           ],
           "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
@@ -493,7 +493,7 @@
     {
       "id": "components",
       "title": "7. Components, props and lists",
-      "takeaway": "Pass data down and keep each component’s responsibility clear.",
+      "takeaway": "Pass data down and keep each component's responsibility clear.",
       "sections": [
         {
           "title": "Concept",
@@ -583,7 +583,7 @@
           "Requests a future render with updated state"
         ],
         "correct": 1,
-        "explanation": "The current render’s snapshot remains unchanged; a new render receives the next state."
+        "explanation": "The current render's snapshot remains unchanged; a new render receives the next state."
       },
       "trace": {
         "title": "Step through a state update",
@@ -594,7 +594,7 @@
               "count = 0",
               "button: Sessions 0"
             ],
-            "explanation": "The handler closes over this render’s snapshot."
+            "explanation": "The handler closes over this render's snapshot."
           },
           {
             "label": "User clicks",
@@ -633,7 +633,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A controlled input receives its value from state and reports changes through an event handler. Keep the input’s accessible label visible. A form can handle submission from both a button and the Enter key.",
+            "A controlled input receives its value from state and reports changes through an event handler. Keep the input's accessible label visible. A form can handle submission from both a button and the Enter key.",
             "Search results are derived from records plus the search query. There is no need to copy them into another state variable. Validate on submit, and explain errors in text near the field."
           ],
           "example": "const [query, setQuery] = useState(\"\");\nconst visible = lessons.filter(row => row.title.toLowerCase().includes(query.toLowerCase()));\n// Inside a component with lessons and useState:\n<label htmlFor=\"search\">Find a lesson</label>\n<input id=\"search\" value={query} onChange={e => setQuery(e.target.value)} />\n// Render visible.map(...) below the input."
@@ -732,7 +732,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It deliberately keeps data in memory so state behavior is visible without storage complications.",
+            "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
             "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
           ],
           "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
@@ -796,7 +796,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users’ data."
+            "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
           ]
         }
       ],
@@ -906,7 +906,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; choose that behavior deliberately."
+            "A reducer does not make a state machine correct by itself. Write invariants such as unique IDs and nonblank titles, then test every action against them. Unknown IDs can be no-ops; document and test that choice."
           ]
         }
       ],
@@ -942,7 +942,7 @@
       "id": "context-hooks",
       "title": "Context, custom Hooks and ownership",
       "stage": "intermediate",
-      "takeaway": "Share state deliberately; sharing a Hook does not automatically share its state.",
+      "takeaway": "When a custom Hook calls useState, each invocation gets its own state. Lift state to a shared owner when components need the same value.",
       "sections": [
         {
           "title": "Contract",
@@ -953,7 +953,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Share state deliberately; sharing a Hook does not automatically share its state.",
+            "When a custom Hook calls useState, each invocation gets its own state. Lift state to a shared owner when components need the same value.",
             "This Hook fragment gives each invocation its own state. The functional update flips the current value; sharing the Hook implementation does not couple its callers."
           ],
           "example": "// Component/Hook fragment; import useState from React.\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  return {on, toggle: () => setOn(value => !value)};\n}\n// const first = useToggle(); const second = useToggle();\n// Toggling first does not toggle second."
@@ -997,18 +997,18 @@
       "id": "identity",
       "title": "Component identity and form resets",
       "stage": "intermediate",
-      "takeaway": "State belongs to a component’s position and identity in the rendered tree.",
+      "takeaway": "State belongs to a component's position and identity in the rendered tree.",
       "sections": [
         {
           "title": "Contract",
           "paragraphs": [
-            "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record’s draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
+            "Switching a prop does not necessarily reset local state. An editor initialized from props may still contain the previous record's draft when a different record is selected. Decide whether to preserve drafts, reset on identity change, or store drafts by record ID."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "State belongs to a component’s position and identity in the rendered tree.",
+            "State belongs to a component's position and identity in the rendered tree.",
             "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
           ],
           "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
@@ -1030,7 +1030,7 @@
         ]
       },
       "quiz": {
-        "question": "What does changing a component’s key generally do?",
+        "question": "What does changing a component's key generally do?",
         "options": [
           "Preserves the old component state by default",
           "Gives it a new identity and resets local state"
@@ -1057,7 +1057,7 @@
         {
           "title": "Contract",
           "paragraphs": [
-            "If a user selects A and then B, A’s slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
+            "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
           ]
         },
         {
@@ -1191,7 +1191,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Create a test matrix for the tracker’s add/remove/filter behavior.",
+        "prompt": "Create a test matrix for the tracker's add/remove/filter behavior.",
         "solution": "Unit: blank title, duplicate ID, unknown toggle, input immutability.\nComponent: labeled input, Enter submission, visible validation error, empty filter result.\nBrowser: refresh policy, keyboard-only operation, URL Back/Forward if routing is added.\nRegression: reproduce one real bug with the smallest meaningful test.",
         "checks": [
           "Each test has an observable expected result.",
@@ -1242,7 +1242,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "React’s ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
+            "React's ordinary text rendering escapes text, but that does not make arbitrary URLs, HTML injection or all third-party code safe. Validate destinations and data. Do not ship API secrets in client bundles. A hidden admin button cannot prevent someone sending the underlying request."
           ]
         }
       ],
@@ -1308,7 +1308,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Use practice/performance-fixture.ts for a separate 10,000-record synthetic filter. Keep the tracker’s 1,000-record validation limit. Record repeated filter and UI Profiler measurements, correctness and device/build.",
+        "prompt": "Use practice/performance-fixture.ts for a separate 10,000-record synthetic filter. Keep the tracker's 1,000-record validation limit. Record repeated filter and UI Profiler measurements, correctness and device/build.",
         "solution": "Use a fixed synthetic dataset and the same device/build.\nMeasure typing-to-update latency and render/calculate time.\nTry removing redundant state first.\nCompare a memoized filter or deferred presentation only if warranted.\nCheck result correctness and keyboard behavior after optimization.",
         "checks": [
           "Report workload and build mode.",
@@ -1358,7 +1358,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record what was actually tested; a green build is not evidence that every user journey works."
+            "Deploying static files does not create a backend. If APIs are added, configure origins, HTTPS, authentication and server-side validation. Keep configuration separate from secrets. Record the user interactions you tested. A successful build alone does not test those interactions."
           ]
         },
         {
@@ -1401,11 +1401,11 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundations · JavaScript and typed data",
-      "description": "Build comfort with the language, browser semantics and runtime boundaries before adding React state.",
+      "title": "Foundations: JavaScript and typed data",
+      "description": "Practise JavaScript values, browser behavior and runtime validation before adding React state.",
       "exitCriteria": [
         "Write small pure functions and test invalid as well as normal input.",
-        "Explain strings versus numbers, asynchronous completion and TypeScript’s runtime limits.",
+        "Explain strings versus numbers, asynchronous completion and TypeScript's runtime limits.",
         "Use semantic labeled controls and distinguish data from its display."
       ],
       "project": {
@@ -1428,8 +1428,8 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate · State and feature design",
-      "description": "Develop features with explicit state ownership, predictable transitions and accessible interactions.",
+      "title": "Intermediate: state and feature design",
+      "description": "Build features with defined state ownership, tested transitions and accessible controls.",
       "exitCriteria": [
         "Choose between local state, lifted state, reducers and context.",
         "Implement forms with visible validation and stable list identity.",
@@ -1458,7 +1458,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice",
-      "description": "Reason about asynchronous races, persistence, security and measured performance in a bounded application.",
+      "description": "Test asynchronous races, local persistence, security assumptions and performance in a small application.",
       "exitCriteria": [
         "Prevent stale requests from overwriting newer intent.",
         "Distinguish render boundaries, async failures and server authorization.",
@@ -1467,7 +1467,7 @@
       ],
       "project": {
         "title": "Resilient tracker release",
-        "brief": "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
+        "brief": "Add versioned persistence and recovery to the workshop. Test the release candidate and list the checks that still need a deployed application.",
         "requirements": [
           "Add persistence with explicit save/read failure handling and schema version checks.",
           "Implement a controllable API adapter with loading, error and stale-response tests.",

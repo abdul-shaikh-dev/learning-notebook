@@ -203,7 +203,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation",
+      "title": "Plan a study day",
       "description": "Plan a synthetic day with limited capacity and a clear output.",
       "exitCriteria": [
         "Capacity calculation includes essential commitments and transitions.",
@@ -232,7 +232,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate",
+      "title": "Plan a week of focused work",
       "description": "Design and evaluate a small scheduling experiment.",
       "exitCriteria": [
         "Estimates refer to comparable past durations and show variation.",
@@ -261,8 +261,8 @@
     },
     {
       "id": "advanced",
-      "title": "Applied review — adapt a personal schedule",
-      "description": "Produce a two-week routine and an honest evidence review.",
+      "title": "Adapt a personal schedule",
+      "description": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
       "exitCriteria": [
         "The routine has a minimum version for disrupted days.",
         "A conflicting request is resolved through explicit feasible alternatives.",
@@ -271,7 +271,7 @@
       ],
       "project": {
         "title": "A sustainable personal system",
-        "brief": "Produce a two-week routine and an honest evidence review.",
+        "brief": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
         "requirements": [
           "Capture obligations and review capacity twice.",
           "Renegotiate one synthetic conflicting request.",
@@ -434,7 +434,7 @@
           "Open many reference tabs"
         ],
         "correct": 0,
-        "explanation": "Three slides with one sentence each give the session an inspectable output and a stopping point."
+        "explanation": "The session ends when each of the three slides has a sentence. You can check that result directly."
       },
       "references": [
         {
@@ -809,7 +809,7 @@
         ]
       },
       "quiz": {
-        "question": "When is buffer meaningful?",
+        "question": "When can a buffer absorb extra work?",
         "options": [
           "After essential work and transitions fit",
           "When it hides an overfull plan",
@@ -920,7 +920,7 @@
           "It hides unresolved questions"
         ],
         "correct": 0,
-        "explanation": "An exact next step preserves the checking position. “Continue editing” leaves the returning person to reconstruct it."
+        "explanation": "An exact next step preserves the checking position. \"Continue editing\" leaves the returning person to reconstruct it."
       },
       "references": [
         {
@@ -1045,8 +1045,8 @@
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.",
-            "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week’s priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
+            "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week's limited outcomes. A review should create decisions, not become another elaborate tracking task.",
+            "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week's priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
           ],
           "example": "A weekly list contains three completed tasks, two carried tasks and three new requests. With three available windows, archive the completed work and select three bounded outcomes from the five remaining candidates; defer or renegotiate the other two explicitly.",
           "exampleFormat": "prose"
@@ -1176,7 +1176,7 @@
         "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
         "solutionFormat": "prose",
         "checks": [
-          "Reduce a named part of the next day’s commitment.",
+          "Reduce a named part of the next day's commitment.",
           "Check actual durations of the essential outcomes.",
           "Avoid solving capacity shortage through sleep reduction."
         ]
@@ -1237,7 +1237,7 @@
         "question": "Which claim fits the trial?",
         "options": [
           "Batching looked useful in these four sessions",
-          "Batching doubles everyone’s productivity",
+          "Batching doubles everyone's productivity",
           "Any difference proves causation"
         ],
         "correct": 0,
@@ -1280,7 +1280,7 @@
         "solution": "Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.",
         "solutionFormat": "prose",
         "checks": [
-          "Account for the reviewer’s Tuesday absence.",
+          "Account for the reviewer's Tuesday absence.",
           "Give a specific input and reply window.",
           "Include independent work and an agreed fallback."
         ]
@@ -1293,7 +1293,7 @@
           "Assuming instant availability"
         ],
         "correct": 0,
-        "explanation": "Confirm the required input, reply window and fallback. Another person’s contribution remains a dependency until agreed."
+        "explanation": "Confirm the required input, reply window and fallback. Another person's contribution remains a dependency until agreed."
       },
       "references": [
         {
@@ -1359,7 +1359,7 @@
     },
     {
       "id": "evidence-review",
-      "title": "21. Report what changed with honest limits",
+      "title": "21. Report what changed and what remains uncertain",
       "takeaway": "A final review compares intended outcomes with observed results and costs.",
       "stage": "advanced",
       "sections": [

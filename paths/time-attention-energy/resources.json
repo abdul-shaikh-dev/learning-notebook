@@ -719,7 +719,7 @@
     },
     {
       "id": "practice-evidence-review",
-      "title": "Practise: Report what changed with honest limits",
+      "title": "Practise: Report what changed and what remains uncertain",
       "goal": "Write a conclusion from a two-week trial with fewer missed deadlines but a lighter workload in week two.",
       "fileIds": [
         "evidence-review-worksheet",
@@ -815,7 +815,7 @@
     {
       "id": "advanced",
       "title": "A sustainable personal system",
-      "goal": "Produce a two-week routine and an honest evidence review.",
+      "goal": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
       "fileIds": [
         "advanced-project",
         "README-md",

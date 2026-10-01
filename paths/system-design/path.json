@@ -15,7 +15,7 @@
     "Compare APIs, indexing, caches, queues, replicas and partitions.",
     "Reason about concurrent bookings, CAP, idempotency and uncertain outcomes.",
     "Plan bounded retries, observability, authorization, recovery and compatible evolution.",
-    "Create a reviewable architecture portfolio with failure tests and three stage projects."
+    "Complete three architecture projects with explicit assumptions and failure-test results."
   ],
   "setup": [
     "Read each scenario before opening the worked answer; sketches and calculations can be completed on paper.",
@@ -188,7 +188,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A system includes people, software, data and operational responsibilities. A box diagram alone is not a design. Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Our running example is a learning notebook with accounts, lesson progress and optional workshop bookings. The current static notebook is much simpler; these are hypothetical extensions, not claims about its infrastructure.",
+            "Begin with the action a user needs to complete, what must remain true, and which failures they can tolerate. Include the people who operate the software and maintain its data. The running example adds accounts, lesson progress and workshop bookings to a learning notebook. These are hypothetical features. The current notebook is a simpler static site.",
             "Functional requirements describe behavior: a learner marks a lesson read. Quality requirements constrain that behavior: the saved state survives refresh, other users cannot change it, and a response arrives within a measured target. An invariant is a rule such as one active booking per learner per workshop. Scope excludes features deliberately; recording exclusions prevents accidental overbuilding."
           ]
         },
@@ -703,7 +703,7 @@
         {
           "title": "A cache key is part of the correctness contract",
           "paragraphs": [
-            "A public workshop list and a private learner’s bookings are different cache problems. Keying private results only by URL can return Alice’s bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
+            "A public workshop list and a private learner's bookings are different cache problems. Keying private results only by URL can return Alice's bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
             "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The booking_lab.py reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
             "Changed case: an administrator cancels the workshop. Describe which cached views may temporarily lag and which operations must consult authoritative state. A short TTL bounds some stale exposure; it does not turn a stale authorization decision into a correct one."
           ]
@@ -898,7 +898,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "In the CAP result, consistency means an atomic or linearizable view of operations, and availability means every request to a non-failing node eventually receives a valid result according to the operation under the model; merely returning an error does not meet that property. A partition means messages between parts of the system can be lost. The theorem is not a menu where a real service casually disables network failures, and its availability definition is not an operational uptime percentage."
+            "In the CAP result, consistency means an atomic or linearizable view of operations. Availability means every request to a non-failing node eventually receives a valid result under the model. Returning an error does not satisfy that property. A partition can lose messages between parts of the system. When that happens, the system cannot guarantee both properties. CAP availability is not an operational uptime percentage."
           ]
         },
         {
@@ -1600,7 +1600,7 @@
     },
     {
       "id": "design-review",
-      "title": "24. Make the design reviewable with experiments",
+      "title": "24. Test the design assumptions",
       "stage": "advanced",
       "takeaway": "A good design exposes assumptions and proposes tests that could prove it wrong.",
       "sections": [
@@ -1633,7 +1633,7 @@
           "title": "Use a counterexample to revise the design",
           "paragraphs": [
             "Start with the existing booking lab and one seat. The first design reads capacity, then inserts a reservation. Construct the interleaving where two callers both observe one seat before either writes. The revised design must move the condition into the protected write and test the final invariant: remaining capacity is nonnegative and at most one booking exists.",
-            "Next inject a crash after outbox publication but before its sent marker. A second delivery is now expected, so the consumer needs its own deduplication contract. Changing the producer’s transaction cannot erase this acknowledgement gap. Use the supplied relay-crash test to connect the architecture drawing to an observable duplicate.",
+            "Next inject a crash after outbox publication but before its sent marker. A second delivery is now expected, so the consumer needs its own deduplication contract. Changing the producer's transaction cannot erase this acknowledgement gap. Use the supplied relay-crash test to connect the architecture drawing to an observable duplicate.",
             "For transfer, change the requirement to two seats booked atomically by one learner. Work out the capacity predicate and rollback case before editing the code. This small requirement change is a better test of understanding than reproducing the original one-seat diagram."
           ]
         }
@@ -1644,11 +1644,11 @@
         "checks": [
           "Each important claim has a mechanism and verification plan.",
           "Unknowns have owners and next experiments.",
-          "Alternatives and costs are honestly compared."
+          "Compare alternatives using the same workload, cost assumptions and failure requirements."
         ]
       },
       "quiz": {
-        "question": "What makes a capacity claim reviewable?",
+        "question": "What information is needed to check a capacity claim?",
         "options": [
           "An unqualified claim of infinite scale.",
           "Assumptions, units, measurements and a falsifiable test plan.",

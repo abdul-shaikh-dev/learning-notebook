@@ -3,7 +3,7 @@
   "title": "Python",
   "category": "Programming",
   "status": "ready",
-  "description": "Progress through 23 Python lessons from first scripts to typed domain models, reusable CLI tools, resource management, concurrency, profiling and a bounded import pipeline. Three staged projects provide practice and review criteria.",
+  "description": "Learn Python through 23 lessons and three projects. Write scripts, model validated records, build a CLI, manage resources, and test concurrent imports and file replacement.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Comfort creating files and opening a terminal; no programming experience required.",
@@ -533,7 +533,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. Valid input and invalid input are deliberately tried in the same example."
+            "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. The example tries both valid and invalid input."
           ],
           "example": "def parse_minutes(text):\n    minutes = int(text)\n    if minutes < 0:\n        raise ValueError(\"minutes must be nonnegative\")\n    return minutes\n\nfor text in [\"15\", \"-2\"]:\n    try:\n        print(parse_minutes(text))\n    except ValueError as error:\n        print(f\"Invalid: {error}\")\n\n# Expected output:\n# 15\n# Invalid: minutes must be nonnegative"
         },
@@ -970,7 +970,7 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Generators are not automatically faster; choose streaming for its memory/lifetime properties and measure relevant workloads.",
-            "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it deliberately on early exit."
+            "Do not return an iterator over a file you already closed. Iterate within with or let the generator own a with block and close it on early exit."
           ]
         }
       ],
@@ -1240,7 +1240,7 @@
         "options": [
           "The worker is killed before any later effects can occur",
           "The waiting caller gets TimeoutError; the worker can continue",
-          "The caller gets the worker’s partial return value"
+          "The caller gets the worker's partial return value"
         ],
         "correct": 1,
         "explanation": "The timeout bounds that wait. It does not preempt a running worker; operation-level cooperative cancellation is a separate contract."
@@ -1512,7 +1512,7 @@
     {
       "id": "foundation",
       "title": "Foundations",
-      "description": "First scripts through a persistent study log; learn to explain basic behavior.",
+      "description": "Write scripts and build a persistent study log. Explain how each operation changes the data.",
       "exitCriteria": [
         "Explain names, conditions, loops and function return values.",
         "Reject invalid minutes without changing the log.",
@@ -1537,7 +1537,7 @@
     {
       "id": "intermediate",
       "title": "Intermediate",
-      "description": "Reusable domain models, resource lifetimes and a tested command tool.",
+      "description": "Build a tested command-line tool with domain models and resource cleanup.",
       "exitCriteria": [
         "Explain dataclass invariants and static versus runtime contracts.",
         "Trace a one-pass generator and cleanup after failure.",
@@ -1565,7 +1565,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice",
-      "description": "Measured concurrency, bounded inputs and failure-aware batch publishing. This is applied practice rather than professional certification.",
+      "description": "Measure concurrency, limit input size and publish complete batches. The exercises cover selected failure cases; they do not establish production readiness.",
       "exitCriteria": [
         "Explain worker ordering, cancellation limits and when concurrency may hurt.",
         "Compare equivalent algorithms before interpreting timing results.",

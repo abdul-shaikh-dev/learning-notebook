@@ -3,7 +3,7 @@
   "title": "Testing & Debugging",
   "category": "Software engineering",
   "status": "ready",
-  "description": "Learn to specify, test and diagnose behavior through 24 lessons and three runnable projects: strict parsing, failure-safe files and reproducible stale-writer tests.",
+  "description": "Write tests and diagnose failures in 24 lessons and three runnable projects. Test strict parsing, file replacement and competing stale writes.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
@@ -67,7 +67,7 @@
     {
       "id": "foundation",
       "title": "Foundation practice",
-      "description": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
+      "description": "Test valid values, type restrictions and malformed records with a pure parser.",
       "exitCriteria": [
         "Boundary tests include zero, 1440, 1441 and true.",
         "Expected values are independent of the implementation.",
@@ -94,7 +94,7 @@
     {
       "id": "intermediate",
       "title": "Intermediate practice",
-      "description": "Combine the parser with real temporary files and one deliberate replacement; preserve the old report on any rejected batch.",
+      "description": "Test the parser with temporary files. Verify that rejected batches leave the previous report unchanged.",
       "exitCriteria": [
         "The integration crosses a real filesystem boundary.",
         "Validation failure and replacement failure have separate fixtures.",
@@ -121,7 +121,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice",
-      "description": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
+      "description": "Test two competing stale edits against the version rule, then explain the observed failure and fix.",
       "exitCriteria": [
         "Ordering is established by synchronization rather than sleeps.",
         "Assertions tolerate either valid winning thread.",
@@ -261,7 +261,7 @@
         {
           "title": "Types beyond ordinary integers",
           "paragraphs": [
-            "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract explicitly rejects it. That decision must be tested rather than assumed."
+            "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
           ],
           "example": "0 -> accepted\n1440 -> accepted\n1441 -> rejected\ntrue -> rejected although isinstance(True, int) is true"
         }
@@ -507,7 +507,7 @@
         {
           "title": "Predictions and observations",
           "paragraphs": [
-            "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes deliberately admits booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
+            "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
           ]
         },
         {
@@ -821,7 +821,7 @@
         {
           "title": "Old behavior versus corrected behavior",
           "paragraphs": [
-            "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the deliberately buggy validator from parse_record's exact-type policy without requiring the entire importer to run."
+            "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the faulty validator from parse_record's exact-type policy without requiring the entire importer to run."
           ]
         },
         {
@@ -849,14 +849,14 @@
         ]
       },
       "quiz": {
-        "question": "What is the strongest regression evidence?",
+        "question": "How can a test demonstrate that it catches the original bug?",
         "options": [
           "The old behavior fails the test and the fix passes",
           "The test runs twice",
           "The file has more assertions"
         ],
         "correct": 0,
-        "explanation": "A regression is strongest when it distinguishes the old failure from the intended correction."
+        "explanation": "Run the test against the old and fixed implementations. It should fail for the original defect and pass for the intended behavior."
       },
       "references": [
         {
@@ -877,7 +877,7 @@
         {
           "title": "Execution and assertion strength",
           "paragraphs": [
-            "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments deliberately alter behavior and ask whether a test notices; surviving mutants reveal weak assertions or equivalent changes."
+            "Coverage reports which code ran; it does not measure how well expected behavior was checked. A test can execute every line without observing any result. Mutation experiments change behavior and check whether a test fails. A surviving mutant may indicate a weak assertion or a change that leaves behavior unchanged."
           ]
         },
         {
@@ -953,7 +953,7 @@
         ]
       },
       "quiz": {
-        "question": "Which creates the strongest reproducibility dependency?",
+        "question": "Which test input can change between runs without a code change?",
         "options": [
           "A fixed synthetic fixture",
           "Live production records queried each run",
@@ -1036,7 +1036,7 @@
         {
           "title": "Barriers and safety timeouts",
           "paragraphs": [
-            "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, capture that failure clearly rather than letting a later join obscure the cause."
+            "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
           ],
           "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
         }
@@ -1079,7 +1079,7 @@
         {
           "title": "Failure, cancellation and timeout",
           "paragraphs": [
-            "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless its contract deliberately converts it. Record whether cleanup completes before the operation reports its final result."
+            "Async tests must distinguish an operation failure, caller cancellation and timeout. A cancelled coroutine should release owned resources and propagate cancellation unless the API defines another cancellation result. Record whether cleanup completes before the operation reports its final result."
           ]
         },
         {

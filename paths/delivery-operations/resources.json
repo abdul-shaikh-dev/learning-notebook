@@ -90,7 +90,7 @@
     {
       "id": "foundation",
       "title": "Local release contract and evidence",
-      "goal": "Run the synthetic note service and create an evidence packet for a compatible change.",
+      "goal": "Run the synthetic note service, make a compatible change and record the test results.",
       "fileIds": [
         "release_app-py",
         "test_release_app-py",
@@ -137,7 +137,7 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results."
+        "Build the stage project and test your changes."
       ]
     },
     {
@@ -205,7 +205,7 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results.",
+        "Build the stage project and test your changes.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
@@ -268,7 +268,7 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results.",
+        "Build the stage project and test your changes.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }

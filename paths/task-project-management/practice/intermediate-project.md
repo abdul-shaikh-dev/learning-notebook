@@ -1,4 +1,4 @@
-# A visible controlled workflow
+# Track work and limit work in progress
 
 Operate a synthetic board through a week of changes.
 

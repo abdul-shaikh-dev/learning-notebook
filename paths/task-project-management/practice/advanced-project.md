@@ -1,4 +1,4 @@
-# A delivered and improved project
+# Deliver and improve a project
 
 Close a project using acceptance and improvement evidence.
 

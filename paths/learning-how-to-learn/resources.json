@@ -92,7 +92,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]
@@ -126,7 +126,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]
@@ -134,7 +134,7 @@
     {
       "id": "advanced",
       "title": "Delayed application and transfer portfolio",
-      "goal": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+      "goal": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
       "fileIds": [
         "readme-md",
         "advanced-kit-md",
@@ -160,7 +160,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]

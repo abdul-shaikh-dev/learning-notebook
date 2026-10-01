@@ -29,19 +29,19 @@
       "id": "PersistenceChecks-csproj",
       "href": "paths/dotnet/practice/PersistenceChecks.csproj",
       "role": "test",
-      "description": "PersistenceChecks.csproj — guided executable scaffold"
+      "description": "PersistenceChecks.csproj. guided executable scaffold"
     },
     {
       "id": "persistence-api-cs",
       "href": "paths/dotnet/practice/persistence-api.cs",
       "role": "reference",
-      "description": "persistence-api.cs — guided executable scaffold"
+      "description": "persistence-api.cs. guided executable scaffold"
     },
     {
       "id": "persistence-checks-cs",
       "href": "paths/dotnet/practice/persistence-checks.cs",
       "role": "test",
-      "description": "persistence-checks.cs — guided executable scaffold"
+      "description": "persistence-checks.cs. guided executable scaffold"
     },
     {
       "id": "depth-HttpBoundary-cs",
@@ -66,7 +66,7 @@
     {
       "id": "foundation",
       "title": "Console task notebook",
-      "goal": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+      "goal": "Build a console task list. Complete a task, list the remaining tasks, and assert that invalid input is rejected.",
       "fileIds": [
         "README-md",
         "foundation-cs",
@@ -81,8 +81,8 @@
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
-        "Complete the assessment requirements in the reader: Task IDs are positive and titles are trimmed and nonblank.; Completion changes only the intended task.; An empty list and unknown ID have explicit behavior.; Four or more assertions cover a normal case and boundary failures.; Explain one nullable value and one disposable resource from your implementation.",
-        "Compare your evidence with the stage rubric: Correctness: expected output and assertions pass.; Boundaries: blank title, invalid ID and missing lookup are handled deliberately.; Design: presentation is separate from reusable task behavior.; Explanation: learner can trace state changes and describe why validation lives at the boundary.",
+        "Build the project described in the reader: Task IDs are positive and titles are trimmed and nonblank. Completion changes only the intended task. An empty list and unknown ID have explicit behavior. Four or more assertions cover a normal case and boundary failures. Explain one nullable value and one disposable resource from your implementation.",
+        "Check your result: Correctness: expected output and assertions pass. Boundaries: blank title, invalid ID and missing lookup are handled deliberately. Design: presentation is separate from reusable task behavior. Explanation: learner can trace state changes and describe why validation lives at the boundary.",
         "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
@@ -106,13 +106,13 @@
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
         "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
       "id": "intermediate",
       "title": "Versioned task API with persistent storage",
-      "goal": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+      "goal": "Add SQLite persistence to the downloadable API. Preserve its request and response behavior, test version conflicts, and verify the schema migration.",
       "fileIds": [
         "README-md",
         "foundation-cs",
@@ -130,8 +130,8 @@
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
-        "Complete the assessment requirements in the reader: Create, page, fetch and complete tasks with validated DTOs.; Return 400, 404 and 409 consistently; the POST Location is retrievable.; Use scoped DbContext and parameterized queries.; Review migration code/SQL and test upgrade from a previous schema.; Persist task state across restart and protect competing updates.; Make task plus audit creation atomic and test rollback from a new context.",
-        "Compare your evidence with the stage rubric: HTTP behavior: executable acceptance checks verify successful and rejected requests.; Persistence: restart and fresh-context tests establish stored state.; Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.; Maintainability: typed storage boundary, scope ownership and package versions are explained.; Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
+        "Build the project described in the reader: Create, page, fetch and complete tasks with validated DTOs. Return 400, 404 and 409 consistently; the POST Location is retrievable. Use scoped DbContext and parameterized queries. Review migration code/SQL and test upgrade from a previous schema. Persist task state across restart and protect competing updates. Make task plus audit creation atomic and test rollback from a new context.",
+        "Check your result: HTTP behavior: executable acceptance checks verify successful and rejected requests. Persistence: restart and fresh-context tests establish stored state. Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts. Maintainability: typed storage boundary, scope ownership and package versions are explained. Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
         "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
@@ -165,13 +165,13 @@
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
         "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
       "id": "advanced",
       "title": "Operational and secure task service",
-      "goal": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+      "goal": "Extend the persistent API and run its failure tests. Prepare deployment and recovery instructions, separating executed checks from those that still need a staging environment.",
       "fileIds": [
         "README-md",
         "foundation-cs",
@@ -189,8 +189,8 @@
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
-        "Complete the assessment requirements in the reader: Use a real authentication handler with issuer/audience/lifetime validation.; Set ownership from trusted identity and authorize every task read/write.; Propagate request cancellation, bound dependency work and avoid unobserved tasks.; Add structured problem responses, logs, traces/metrics collection and readiness checks.; Test migrations, transaction failures, stale versions and authorization denials.; Publish a release build, measure bounded queries and document backup/rollback and limitations.",
-        "Compare your evidence with the stage rubric: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.; Resilience: controlled cancellation/failure scenarios terminate work and release resources.; Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.; Performance: before/after measurements use the same workload and preserve correctness.; Delivery: published build checks succeed and the rollback plan handles persistent data.; Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
+        "Build the project described in the reader: Use a real authentication handler with issuer/audience/lifetime validation. Set ownership from trusted identity and authorize every task read/write. Propagate request cancellation, bound dependency work and avoid unobserved tasks. Add structured problem responses, logs, traces/metrics collection and readiness checks. Test migrations, transaction failures, stale versions and authorization denials. Publish a release build, measure bounded queries and document backup/rollback and limitations.",
+        "Check your result: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement. Resilience: controlled cancellation/failure scenarios terminate work and release resources. Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable. Performance: before/after measurements use the same workload and preserve correctness. Delivery: published build checks succeed and the rollback plan handles persistent data. Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
         "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
@@ -224,7 +224,7 @@
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
         "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     }
   ],

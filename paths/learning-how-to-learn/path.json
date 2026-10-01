@@ -183,7 +183,7 @@
           "Highlight the exception twice."
         ],
         "correct": 1,
-        "explanation": "Closing the source removes the visible answer cue. Highlighting or rereading may increase familiarity while leaving the exception unretrievable."
+        "explanation": "Closing the source removes the visible answer. Rereading can make the rule familiar without making its exception easy to recall."
       },
       "references": [
         {
@@ -249,7 +249,7 @@
       "id": "small-prompts",
       "title": "4. Build clear practice prompts",
       "stage": "foundation",
-      "takeaway": "A prompt should test one meaningful decision and have a checkable answer.",
+      "takeaway": "A prompt should ask for a specific decision and have an answer you can check.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -325,7 +325,7 @@
         "checks": [
           "Handles the one-day boundary and urgent exception.",
           "Distinguishes immediate application from a later check.",
-          "Reports help and corrections honestly."
+          "States whether the learner used help or corrected an earlier answer."
         ]
       },
       "quiz": {
@@ -489,7 +489,7 @@
           "Copying a complete worked solution."
         ],
         "correct": 1,
-        "explanation": "A new checked attempt with reduced support shows what the learner can produce. Copying a worked solution only establishes access to the displayed answer."
+        "explanation": "Try a new case with less help to check what you can do independently. Copying the displayed solution cannot show that."
       },
       "references": [
         {
@@ -639,7 +639,7 @@
           "Recording the original question."
         ],
         "correct": 1,
-        "explanation": "One attempt supports a tentative explanation, not a permanent ability judgement. Keeping the original question makes the repair inspectable."
+        "explanation": "One attempt supports a tentative explanation, not a permanent ability judgement. Keep the original question so you can check whether the correction answers it."
       },
       "references": [
         {
@@ -689,7 +689,7 @@
           "Every answer equally forever regardless of results."
         ],
         "correct": 0,
-        "explanation": "A confidently wrong item is easy to skip if confidence alone directs review. Checked accuracy supplies the missing calibration evidence."
+        "explanation": "If you review only answers you feel unsure about, you may skip confidently wrong ones. Compare confidence with checked answers to find those gaps."
       },
       "references": [
         {
@@ -811,7 +811,7 @@
           "title": "Understand and try it",
           "paragraphs": [
             "Transfer means using knowledge in a different situation. Change surface details while preserving the principle, then explain why the principle still applies. Also include a case where it does not apply so the learner practices boundaries rather than repeating a slogan.",
-            "The policy rules here belong to one fictional organisation. Another organisation may use different approvers. Transfer is recognising that you must find and apply its actual rules, not carrying Maya’s exact policy everywhere. New contexts can need instruction, equipment or supervised practice."
+            "The policy rules here belong to one fictional organisation. Another organisation may use different approvers. Transfer is recognising that you must find and apply its actual rules, not carrying Maya's exact policy everywhere. New contexts can need instruction, equipment or supervised practice."
           ]
         },
         {
@@ -837,7 +837,7 @@
       "quiz": {
         "question": "What supports transfer?",
         "options": [
-          "Explain the shared principle and verify the new context’s rules.",
+          "Explain the shared principle and verify the new context's rules.",
           "Assume every organisation has identical policies.",
           "Repeat only the original example forever."
         ],
@@ -892,7 +892,7 @@
           "Reduce scope while preserving a useful later check."
         ],
         "correct": 2,
-        "explanation": "Reducing scope can preserve a meaningful delayed check within real capacity. Automatic doubling ignores the reason a session was missed."
+        "explanation": "Checking fewer cases later may fit the available time. Automatic doubling ignores the reason a session was missed."
       },
       "references": [
         {
@@ -914,7 +914,7 @@
           "title": "Understand and try it",
           "paragraphs": [
             "Advice such as this method doubles learning is incomplete without the task, comparison, learners, time horizon and outcome. Look for the primary study or research review. A laboratory result can guide a practical experiment without proving the exact workplace result.",
-            "Distinguish research findings from this course’s design choices. Retrieval and spacing have evidence across many studied conditions; the specific number of questions and weekly dates used here are teaching examples. No method guarantees perfect memory, and more effort or discomfort is not always better."
+            "Distinguish research findings from this course's design choices. Retrieval and spacing have evidence across many studied conditions; the specific number of questions and weekly dates used here are teaching examples. No method guarantees perfect memory, and more effort or discomfort is not always better."
           ]
         },
         {
@@ -1020,7 +1020,7 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Maya’s portfolio includes one of three baseline, two of three Thursday and three of three Monday, plus a new booking case. She missed Thursday’s second planned session and names that fact. A new organisation’s real approval policy remains untested."
+            "Maya's portfolio includes one of three baseline, two of three Thursday and three of three Monday, plus a new booking case. She missed Thursday's second planned session and names that fact. A new organisation's real approval policy remains untested."
           ]
         }
       ],
@@ -1042,7 +1042,7 @@
           "Improved on these cases; transfer still needs work."
         ],
         "correct": 2,
-        "explanation": "The new-context failure limits the transfer conclusion while the comparable-case improvement remains recorded. Neither result proves permanent universal skill."
+        "explanation": "Keep the improved score on comparable cases, but also report the mistake in the new setting. The results show progress on those cases without establishing that the skill transfers everywhere."
       },
       "references": [
         {
@@ -1070,7 +1070,7 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Maya keeps the urgent exception in occasional mixed practice, saves the current policy link and retires last year’s threshold. Before a rare unfamiliar case she checks the source instead of trusting an old card."
+            "Maya keeps the urgent exception in occasional mixed practice, saves the current policy link and retires last year's threshold. Before a rare unfamiliar case she checks the source instead of trusting an old card."
           ]
         }
       ],
@@ -1108,7 +1108,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation: A first checked learning loop",
+      "title": "A first checked learning loop",
       "description": "Learn the fictional three-rule approval policy and submit baseline, correction and delayed new-case evidence.",
       "exitCriteria": [
         "Target describes recall or application, not content consumed.",
@@ -1137,7 +1137,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate: A flexible two-week practice plan",
+      "title": "A flexible two-week practice plan",
       "description": "Use error patterns and available windows to plan retrieval, mixed cases and feedback.",
       "exitCriteria": [
         "Each occasion has a specific practice purpose.",
@@ -1166,8 +1166,8 @@
     },
     {
       "id": "advanced",
-      "title": "Transfer: Delayed application and evidence",
-      "description": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+      "title": "Delayed application and transfer",
+      "description": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
       "exitCriteria": [
         "Comparable delayed evidence is retained, including errors.",
         "Changed-case explanation checks new rules rather than assuming identical policy.",
@@ -1176,7 +1176,7 @@
       ],
       "project": {
         "title": "Delayed application and transfer portfolio",
-        "brief": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
+        "brief": "Apply the rule after a gap, try it in a changed case and use the results to choose the next practice.",
         "requirements": [
           "Use advanced-kit.md and retain the earlier baseline.",
           "Answer comparable new cases after a gap with support labelled.",

@@ -71,10 +71,10 @@
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Design a hypothetical signed-in progress-sync service for 10,000 daily learners. Produce a design another developer could challenge.",
-        "Complete the assessment requirements in the reader: Write user flows, exclusions, ownership and two invariants.; Specify save/list API contracts, conflict behavior and a relational data model.; Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×.; Define availability and latency SLIs with windows and error classification.; Draw browser → API → database with trust boundaries.",
-        "Compare your evidence with the stage rubric: Every number includes units and assumptions.; A stale edit and timeout have documented user outcomes.; Data constraints match the stated invariants.; The simplest proposed architecture is justified and limitations are explicit."
+        "Build the project described in the reader: Write user flows, exclusions, ownership and two invariants. Specify save/list API contracts, conflict behavior and a relational data model. Calculate average and peak traffic using 40 requests/user/day and peak factor 8; vary both by 2×. Define availability and latency SLIs with windows and error classification. Draw browser → API → database with trust boundaries.",
+        "Check your result: Every number includes units and assumptions. A stale edit and timeout have documented user outcomes. Data constraints match the stated invariants. The simplest proposed architecture is justified and limitations are explicit."
       ],
       "commands": [
         {
@@ -85,7 +85,7 @@
         {
           "label": "Run baseline tests from system-design-practice folder root",
           "command": "python -m unittest -v test_capacity_calculator.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -97,7 +97,7 @@
       "notes": [
         "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
@@ -114,10 +114,10 @@
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Extend the notebook with 20-seat workshops and asynchronous study-pack exports. Preserve seat correctness while keeping slow export work separate.",
-        "Complete the assessment requirements in the reader: Specify atomic booking/cancellation and duplicate-operation handling.; Draw a sequence for response loss after commit and retry with the same key.; Define export job states, acknowledgment, retry exhaustion and replay.; Model cache outage and replica lag, including user-visible behavior.; Compare one database with sharding and record a trigger before adding shards.",
-        "Compare your evidence with the stage rubric: Final-seat safety comes from a database or proven coordination mechanism.; Same-key concurrent requests and mismatched payloads are addressed.; Public cached counts never authorize bookings.; Queue age, replay responsibility and private export authorization are specified."
+        "Build the project described in the reader: Specify atomic booking/cancellation and duplicate-operation handling. Draw a sequence for response loss after commit and retry with the same key. Define export job states, acknowledgment, retry exhaustion and replay. Model cache outage and replica lag, including user-visible behavior. Compare one database with sharding and record a trigger before adding shards.",
+        "Check your result: Final-seat safety comes from a database or proven coordination mechanism. Same-key concurrent requests and mismatched payloads are addressed. Public cached counts never authorize bookings. Queue age, replay responsibility and private export authorization are specified."
       ],
       "commands": [
         {
@@ -128,7 +128,7 @@
         {
           "label": "Run baseline tests from system-design-practice folder root",
           "command": "python -m unittest -v test_capacity_calculator.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -140,7 +140,7 @@
       "notes": [
         "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
@@ -161,10 +161,10 @@
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Prepare a review package for the notebook booking extension. Do not provision cloud services; use the calculator, failure timelines and test designs.",
-        "Complete the assessment requirements in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals.; Document retries at every layer and a bounded end-to-end deadline.; Specify outbox/consumer crash handling and unresolved external-effect risks.; Threat-model cross-user data access, upload abuse and credential exposure.; Define RPO/RTO, an isolated restore drill and an expand-and-contract migration.; Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
-        "Compare your evidence with the stage rubric: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged.; Every important claim identifies a verification method and a remaining unknown.; Runbooks identify ownership, rollback limits and validation criteria.; No benchmark, availability or cost claim is invented from calculator output.",
+        "Build the project described in the reader: Model a 60-second burst at 120 jobs/s against 100/s processing, followed by 80/s arrivals. Document retries at every layer and a bounded end-to-end deadline. Specify outbox/consumer crash handling and unresolved external-effect risks. Threat-model cross-user data access, upload abuse and credential exposure. Define RPO/RTO, an isolated restore drill and an expand-and-contract migration. Write an ADR comparing modular deployment with export-service extraction and define a load/failure experiment that could reverse the choice.",
+        "Check your result: The burst produces 1200 jobs and a 60-second idealized drain, with assumptions acknowledged. Every important claim identifies a verification method and a remaining unknown. Runbooks identify ownership, rollback limits and validation criteria. No benchmark, availability or cost claim is invented from calculator output.",
         "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
       ],
       "commands": [
@@ -176,7 +176,7 @@
         {
           "label": "Run baseline tests from system-design-practice folder root",
           "command": "python -m unittest -v test_capacity_calculator.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -188,7 +188,7 @@
       "notes": [
         "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     }
   ],

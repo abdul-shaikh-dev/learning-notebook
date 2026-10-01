@@ -1,6 +1,6 @@
 # A sustainable personal system
 
-Produce a two-week routine and an honest evidence review.
+Try a two-week routine and compare what happened with your plan.
 
 ## Deliverables
 

@@ -1,7 +1,6 @@
 # Optional mechanism lab
 
-This extends the existing course exercise. Read the worked lesson first; run this
-only when you want to inspect the actual mechanism. No extra form is required.
+Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
 Requirements: Python 3.11+ standard library; permission to bind an ephemeral loopback TCP port.
 

@@ -742,7 +742,7 @@
         {
           "title": "A lost increment",
           "paragraphs": [
-            "Two workers both read count=5 and both write 6; one increment is lost. A lock around the entire operation can protect a local invariant. Separate processes need an appropriate shared coordination boundary, not just an in-process lock."
+            "Two workers both read count=5 and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
           ],
           "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
         },
@@ -1308,7 +1308,7 @@
         {
           "title": "Use errno to choose the next observation",
           "paragraphs": [
-            "Consider an importer that opens its first 29 files and then cannot open another. The pathname exists and permissions are unchanged. If the captured errno is EMFILE, changing ownership is unrelated; compare descriptor growth and look for missing closure on an exception path. If the same failure is ENOENT, inspect the absolute path and working directory instead. The user-visible phrase cannot open file is not enough to select a repair.",
+            "An importer opens its first 29 files but cannot open the next one. The path exists and permissions are unchanged. If errno is EMFILE, inspect descriptor growth and handles left open after exceptions. Changing ownership will not release descriptors. If errno is ENOENT, inspect the absolute path and working directory. The message \"cannot open file\" alone does not identify the cause.",
             "A minimal incident record keeps operation, errno, process identity and resource count with the timestamp. Avoid logging file contents to diagnose a resource boundary. Repeat one bounded operation after releasing the suspected handles, and verify the same process recovers. Restart can clear symptoms while hiding the leak; a regression test must also check cleanup on failed work."
           ],
           "example": "same symptom: cannot open input\nENOENT -> resolve path/cwd\nEACCES -> identity and parent traversal\nEMFILE -> owned descriptor counts/lifetimes\nvalid open + ValueError -> schema/content category",

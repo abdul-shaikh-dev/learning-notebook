@@ -3,7 +3,7 @@
   "title": "C# & .NET",
   "category": "Programming",
   "status": "ready",
-  "description": "Progress from C# fundamentals to tested APIs, then practice cancellation, concurrency, secure resource access, schema evolution, observability and deployment decisions.",
+  "description": "Learn C# and build tested APIs. Practise cancellation, concurrency, resource authorization, schema changes, telemetry and deployment checks.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Comfort using a terminal and editing a text file.",
@@ -417,7 +417,7 @@
           "title": "Dispose owned resources",
           "paragraphs": [
             "Some objects hold operating-system resources. using ensures Dispose runs even if the operation throws. The scope should be short and ownership clear.",
-            "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether data was actually saved."
+            "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether the save succeeded."
           ],
           "example": "using var reader = new StringReader(\"Read\\nPractice\");\nConsole.WriteLine(reader.ReadLine());\n// Expected: Read; reader is disposed when its scope ends"
         }
@@ -892,7 +892,7 @@
           "title": "A successful status does not validate the response body",
           "paragraphs": [
             "The client expects id7 and integer minutes0..1440. The handler returns200 with a missing minutes field, a wrong ID, negative minutes or numeric text. Each shape is rejected. A deserialized object with default values could otherwise turn missing data into a believable result.",
-            "The lesson reference deliberately allows unknown extra JSON fields for additive compatibility, and uses JSON parser semantics for duplicate properties. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement that explicitly and add corresponding tests."
+            "The reference allows extra JSON fields so the service can add fields without breaking this client. Duplicate properties follow the JSON parser's behavior. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement those rules and test them."
           ]
         }
       ],
@@ -1466,7 +1466,7 @@
         {
           "title": "Make a safe release sequence",
           "paragraphs": [
-            "A rollout needs passing tests, reviewed schema changes applied by a dedicated deployment process, and readiness checks in the target environment. Multiple replicas need shared durable data; the practice app’s memory store is local to each process.",
+            "A rollout needs passing tests, reviewed schema changes applied by a dedicated deployment process, and readiness checks in the target environment. Multiple replicas need shared durable data; the practice app's memory store is local to each process.",
             "A rollback of code is not automatically a rollback of a destructive schema change. Favor compatible expand-and-contract migrations: add a new representation, migrate data, switch readers, then remove the old representation in a later release."
           ],
           "example": "// Release checklist as an executable workflow outline:\n// build -> tests -> publish -> reviewed migration -> start new instance\n// readiness succeeds -> direct limited traffic -> observe error rate/latency\n// unhealthy -> stop traffic to new instance and restore prior compatible build\n// Validate reverse proxy headers, HTTPS and authorization in staging."
@@ -1592,7 +1592,7 @@
     {
       "id": "foundation",
       "title": "Foundations",
-      "description": "Write and explain small C# programs with deliberate types, validation, methods, objects and asynchronous control flow.",
+      "description": "Write C# programs with types, validation, methods, objects and asynchronous control flow.",
       "exitCriteria": [
         "Run the console reference and explain each output.",
         "Reject blank task titles and handle missing IDs without a null-reference failure.",
@@ -1601,7 +1601,7 @@
       ],
       "project": {
         "title": "Console task notebook",
-        "brief": "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
+        "brief": "Build a console task list. Complete a task, list the remaining tasks, and assert that invalid input is rejected.",
         "requirements": [
           "Task IDs are positive and titles are trimmed and nonblank.",
           "Completion changes only the intended task.",
@@ -1621,7 +1621,7 @@
     {
       "id": "intermediate",
       "title": "Intermediate application practice",
-      "description": "Assemble a predictable HTTP API, verify its boundary, and evolve a persistent relational implementation safely.",
+      "description": "Build an HTTP API, test its requests and responses, and add relational persistence.",
       "exitCriteria": [
         "Run the package-free API and all 11 HTTP acceptance assertions.",
         "Add unit tests for title normalization and boundary rules.",
@@ -1631,7 +1631,7 @@
       ],
       "project": {
         "title": "Versioned task API with persistent storage",
-        "brief": "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
+        "brief": "Add SQLite persistence to the downloadable API. Preserve its request and response behavior, test version conflicts, and verify the schema migration.",
         "requirements": [
           "Create, page, fetch and complete tasks with validated DTOs.",
           "Return 400, 404 and 409 consistently; the POST Location is retrievable.",
@@ -1653,7 +1653,7 @@
     {
       "id": "advanced",
       "title": "Selected advanced practice",
-      "description": "Work through cancellation, overload, identity, operations and recovery using measured evidence. Completion establishes experience with these scenarios, not comprehensive .NET expertise.",
+      "description": "Test cancellation, overload, authorization and recovery. These exercises cover selected scenarios, not the full .NET platform.",
       "exitCriteria": [
         "Prove cancellation reaches downstream I/O and permits are released after failure.",
         "Demonstrate bounded work and a database-backed concurrency conflict across separate contexts.",
@@ -1664,7 +1664,7 @@
       ],
       "project": {
         "title": "Operational and secure task service",
-        "brief": "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
+        "brief": "Extend the persistent API and run its failure tests. Prepare deployment and recovery instructions, separating executed checks from those that still need a staging environment.",
         "requirements": [
           "Use a real authentication handler with issuer/audience/lifetime validation.",
           "Set ownership from trusted identity and authorize every task read/write.",

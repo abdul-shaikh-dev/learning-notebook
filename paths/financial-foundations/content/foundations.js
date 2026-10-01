@@ -59,7 +59,7 @@ const FOUNDATIONS = [
     ],
     "paragraphs": [
       "Suppose the same counterparty owes the bank $100 on one contract and the bank owes it $80 on another. The arithmetic net is $20. Whether the bank may rely on that net after default depends on enforceable agreements and the applicable method. Matching a customer name in two rows does not establish legal netting.",
-      "Collateral is security supporting an obligation. If an eligible $15 collateral amount covers a $20 exposure, a deliberately simplified residual is $5. Real exposure calculations also consider timing, eligibility, haircuts, disputes, future changes and agreement terms. Collateral does not erase the original trades.",
+      "Collateral is security supporting an obligation. If an eligible $15 collateral amount covers a $20 exposure, the residual in this simplified example is $5. Real exposure calculations also consider timing, eligibility, haircuts, disputes, future changes and agreement terms. Collateral does not erase the original trades.",
       "Keep payment netting, close-out netting, accounting balance-sheet offset and valuation aggregation distinct. Permission for one does not automatically permit the others. These concepts explain why agreement and legal-entity identifiers matter to CVA, funding and risk systems."
     ],
     "example": "Contract A: bank is owed $100\nContract B: bank owes $80\nArithmetic net: $20, conditional on the relevant netting treatment\nEligible collateral: $15\nSimplified current uncovered amount: $5",

@@ -3,7 +3,7 @@
   "title": "UI Design & Accessibility",
   "category": "Product design",
   "status": "ready",
-  "description": "Create clear, responsive interfaces and verify keyboard, semantic, contrast and recovery behaviour with honest evidence.",
+  "description": "Build responsive interfaces, test their keyboard access and error recovery, and record the results of semantic and contrast checks.",
   "level": "Foundations → applied interaction practice → scoped release review",
   "prerequisites": [
     "Basic file editing and running a terminal command. No prior specialist knowledge required.",
@@ -137,7 +137,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation — task and meaning",
+      "title": "Tasks and HTML meaning",
       "description": "Understand the person, structure, HTML semantics and visual rules.",
       "exitCriteria": [
         "The task and outcome are explicit.",
@@ -165,7 +165,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate — resilient interaction",
+      "title": "Forms, dialogs and responsive layouts",
       "description": "Build usable form, dialog, responsive and visual explanation states.",
       "exitCriteria": [
         "Errors explain recovery without losing work.",
@@ -194,7 +194,7 @@
     },
     {
       "id": "advanced",
-      "title": "Applied review — maintained inclusive journeys",
+      "title": "Test and maintain accessible interactions",
       "description": "Evaluate complex interactions and produce bounded release evidence.",
       "exitCriteria": [
         "The same task works through equivalent input routes.",
@@ -263,7 +263,7 @@
           "Make every element look identical."
         ],
         "correct": 0,
-        "explanation": "Scenario A: return to an unfinished lesson after closing the browser; success means the same lesson and progress are visible. Scenario B: locate and download the relevant kit using keyboard navigation; success means the named files are found without help. Record the start, expected end and observed obstacles separately. The other choices miss the decision or assumption described above."
+        "explanation": "Locating the next exercise is a task you can observe someone complete. A visual preference alone does not tell you whether the learner can use the page."
       },
       "references": [
         {
@@ -314,7 +314,7 @@
           "A replacement for every task action."
         ],
         "correct": 0,
-        "explanation": "Group lessons by stage, keep the practice kit beside the exercise, and add a search result with course title and task context. The breadcrumb leads back to course overview. Use the same label and URL for a resource wherever it appears, rather than introducing multiple names for one download. The other choices miss the decision or assumption described above."
+        "explanation": "A breadcrumb shows where the current page sits in the course and provides a route to its parent pages."
       },
       "references": [
         {
@@ -365,7 +365,7 @@
           "To force every element to have the same margin."
         ],
         "correct": 0,
-        "explanation": "Place the title and outcome together, then a dominant Continue lesson action. Put progress nearby as supporting information and list resources under a separate heading. Align text and controls on a shared edge. Use a smaller gap inside a group and a larger gap between groups, then compare scanning at narrow width. The other choices miss the decision or assumption described above."
+        "explanation": "Consistent gaps help readers see which items belong together and where a new group starts."
       },
       "references": [
         {
@@ -416,7 +416,7 @@
           "A guaranteed accessible name."
         ],
         "correct": 0,
-        "explanation": "Use an anchor with href for moving to the practice page, a button for toggling a filter, and an h2 for a subsection. Keep a real text name inside each control. Inspect the browser accessibility tree and confirm the computed role and name; visual similarity alone is insufficient. The other choices miss the decision or assumption described above."
+        "explanation": "role=\"button\" supplies a role. It does not add keyboard activation or an accessible name. A native button already supplies the expected keyboard behavior."
       },
       "references": [
         {
@@ -476,7 +476,7 @@
           "A manually numbered tabindex on every control."
         ],
         "correct": 0,
-        "explanation": "The skip link reaches main; the form fields and buttons follow source order. Opening Preview moves focus into the dialog; Escape closes it and restores focus to Preview. Any invisible focus or unreachable control is a defect to reproduce and fix, even if the pointer interaction works. The other choices miss the decision or assumption described above."
+        "explanation": "Keep focus in the document's reading order. Positive tabindex values create a separate order that can become confusing as controls change."
       },
       "references": [
         {
@@ -527,7 +527,7 @@
           "Always passing because the font is bold."
         ],
         "correct": 0,
-        "explanation": "Run node contrast.cjs 777777 ffffff; its ratio is below 4.5:1 for ordinary text. Use a darker foreground such as 595959 and rerun. Add visible error text linked to the field, retaining colour as reinforcement rather than the sole signal. Record exact ratios, intended text size and tested state. The other choices miss the decision or assumption described above."
+        "explanation": "4.49:1 is below 4.5:1. Do not round a failing ratio up to the threshold."
       },
       "references": [
         {
@@ -585,7 +585,7 @@
           "More."
         ],
         "correct": 0,
-        "explanation": "Replace Here with Open practice files, Submit with Add lesson and Bad data with Title cannot be blank. Let the input row wrap and the error paragraph grow. Check that the action still matches its label and that no instruction is cut off after zoom or text-spacing changes. The other choices miss the decision or assumption described above."
+        "explanation": "\"Download SQL Server practice kit\" names both the action and the file's purpose. \"Here\" does not explain either."
       },
       "references": [
         {
@@ -636,7 +636,7 @@
           "The number of components in the application."
         ],
         "correct": 0,
-        "explanation": "The form becomes stacked, buttons remain readable and text wraps without whole-page horizontal scrolling. If a data table requires a scroll area, label that region, keep headers understandable and provide a summary. Record viewport width and zoom so the result can be reproduced. The other choices miss the decision or assumption described above."
+        "explanation": "Change the layout when its content stops fitting, such as when labels collide or controls become too narrow. A device category alone does not identify that point."
       },
       "references": [
         {
@@ -658,7 +658,7 @@
     {
       "id": "forms-validation",
       "title": "9. Form labels, instructions and recovery",
-      "takeaway": "Validation should explain what failed while preserving the person’s work.",
+      "takeaway": "Validation should explain what failed while preserving the person's work.",
       "stage": "intermediate",
       "sections": [
         {
@@ -703,7 +703,7 @@
           "It is the same as an associated label element."
         ],
         "correct": 0,
-        "explanation": "Whitespace is rejected with visible Title is required text; the input receives focus, aria-invalid=true and a described error. After valid input, the error clears and a status message confirms the change. The implementation never inserts learner input using innerHTML. The other choices miss the decision or assumption described above."
+        "explanation": "A placeholder disappears as someone types. Keep a visible label associated with the field so its purpose remains available during entry and correction."
       },
       "references": [
         {
@@ -732,7 +732,7 @@
         {
           "title": "Persistent outcome feedback",
           "paragraphs": [
-            "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Make persistent consequences inspectable after the announcement."
+            "A spinning icon without text provides no explanation, and a green toast may vanish before it is understood. Keep the changed data or saved status visible after the announcement disappears."
           ]
         }
       ],
@@ -754,7 +754,7 @@
           "An endless spinner."
         ],
         "correct": 0,
-        "explanation": "Before import, explain accepted format. During parsing, show Reading file. Malformed input leaves existing data unchanged and gives a retry action. A valid empty file reports 0 records imported rather than an error. Successful imports state the count and where data was stored; announce only the final meaningful change. The other choices miss the decision or assumption described above."
+        "explanation": "No results can be a valid search outcome. Say that nothing matched and let the person change the query or filters."
       },
       "references": [
         {
@@ -814,7 +814,7 @@
           "To make any tooltip keyboard accessible."
         ],
         "correct": 0,
-        "explanation": "Focus enters the Preview dialog; Escape or Close dismisses it and returns to Preview. If that opener no longer exists, choose the next logical control or page heading and check it is connected before focusing. The dialog title is its accessible name; background interaction is inert while open. The other choices miss the decision or assumption described above."
+        "explanation": "aria-modal=\"true\" describes a modal interaction. It does not block background controls by itself, so the implementation must actually prevent that interaction."
       },
       "references": [
         {
@@ -829,7 +829,7 @@
     {
       "id": "images-diagrams",
       "title": "12. Images and diagrams that explain",
-      "takeaway": "Alternatives should communicate the image’s purpose in this context.",
+      "takeaway": "Alternatives should communicate the image's purpose in this context.",
       "stage": "intermediate",
       "sections": [
         {
@@ -865,7 +865,7 @@
           "Only the word image."
         ],
         "correct": 0,
-        "explanation": "Use empty alt for an icon beside an already complete heading. Name the icon button Download practice kit. Give the architecture diagram a concise title and a structured description of request, permission check and database query. Add an exception path if it teaches failure handling. The other choices miss the decision or assumption described above."
+        "explanation": "For a functional image, describe what activating it does or where it goes. Describing only its appearance leaves the action unclear."
       },
       "references": [
         {
@@ -879,7 +879,7 @@
     },
     {
       "id": "tables-charts",
-      "title": "13. Tables and charts with inspectable data",
+      "title": "13. Tables and charts with values you can check",
       "takeaway": "Visual summaries need explicit labels and a route to the underlying values.",
       "stage": "intermediate",
       "sections": [
@@ -916,7 +916,7 @@
           "It changes the mathematical percentage."
         ],
         "correct": 0,
-        "explanation": "Label the chart Completed lessons, state the snapshot date, and report completed/total for each course. Use direct series labels and patterns as well as colour. The summary identifies the largest unfinished workload, while the table preserves exact values and denominators for comparison. The other choices miss the decision or assumption described above."
+        "explanation": "50% could mean 1 of 2 lessons or 50 of 100. The denominator shows the workload behind the percentage."
       },
       "references": [
         {
@@ -931,7 +931,7 @@
     {
       "id": "motion-media",
       "title": "14. Motion, reduced motion and media alternatives",
-      "takeaway": "Motion should teach a change while respecting a person’s control.",
+      "takeaway": "Motion should teach a change while respecting a person's control.",
       "stage": "intermediate",
       "sections": [
         {
@@ -967,7 +967,7 @@
           "An automatic rapid flash of every frame."
         ],
         "correct": 0,
-        "explanation": "Animate a labelled request token between browser and API only after Start. Pause freezes the teaching step; Next advances with text narration. Reduced motion changes the highlighted participant immediately while preserving narration. Narrated video includes checked captions and a transcript describing information carried only by visuals. The other choices miss the decision or assumption described above."
+        "explanation": "Keep the explanation and controls available when motion is reduced. For example, replace animated travel with an immediate highlight and the same step text."
       },
       "references": [
         {
@@ -1018,7 +1018,7 @@
           "A fixed height for every possible error."
         ],
         "correct": 0,
-        "explanation": "Define text, muted-text, surface, focus and spacing tokens. The field contract accepts id, label, help, error and value; it associates descriptions and exposes invalid state. Test two instances for unique IDs, then blank, long-label, invalid, disabled and zoomed states. Document which colour pairs were measured. The other choices miss the decision or assumption described above."
+        "explanation": "A field component must connect its label, help and error text to the input. It also needs a defined invalid state and a way to correct the value."
       },
       "references": [
         {
@@ -1070,7 +1070,7 @@
           "Making every item tabindex=1."
         ],
         "correct": 0,
-        "explanation": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson’s control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate. The other choices miss the decision or assumption described above."
+        "explanation": "Provide an operation that reaches the same result without dragging. Move up and Move down buttons can do this for a lesson list."
       },
       "references": [
         {
@@ -1113,7 +1113,7 @@
         {
           "title": "Clear language selection",
           "paragraphs": [
-            "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person’s current task when switching."
+            "A flag is not a reliable language label. Countries can share languages and one country can contain many languages. Name the language clearly and preserve the person's current task when switching."
           ]
         }
       ],
@@ -1135,7 +1135,7 @@
           "Automatic RTL layout for every language."
         ],
         "correct": 0,
-        "explanation": "Let title and action text wrap, use logical spacing and inspect focus order. Translate complete phrases with plural support. A deadline includes the full date and stated zone rather than 03/04 at 9. Mark the page and changed-language passages correctly, then test actual translations rather than only pseudo-text. The other choices miss the decision or assumption described above."
+        "explanation": "The lang attribute identifies the content's language so software such as a screen reader can interpret and pronounce it appropriately."
       },
       "references": [
         {
@@ -1186,7 +1186,7 @@
           "To eliminate the need for an accessible button."
         ],
         "correct": 0,
-        "explanation": "Use labelled fields with appropriate autocomplete values, permit paste and provide clear recovery routes. The deletion prompt names exactly which progress will be removed and defaults focus to Cancel when opening is potentially destructive. Offline-file removal and progress deletion are distinct actions with distinct labels. The other choices miss the decision or assumption described above."
+        "explanation": "Naming the exact deletion target lets the person check what they are about to remove. \"Are you sure?\" alone does not describe the consequence."
       },
       "references": [
         {
@@ -1244,7 +1244,7 @@
           "Usability for every disabled person."
         ],
         "correct": 0,
-        "explanation": "Record the tested browser, viewport, input method and exact steps. For a defect, state the user impact and attach the failing state rather than a vague rating. After fixing it, repeat the same steps and record the result. Mark screen-reader checks not executed if no screen reader was available. The other choices miss the decision or assumption described above."
+        "explanation": "A passing scan covers only the rules and states the tool checked. It does not establish that a person can complete the task with a keyboard or screen reader."
       },
       "references": [
         {
@@ -1295,7 +1295,7 @@
           "Tell me that the design is intuitive."
         ],
         "correct": 0,
-        "explanation": "Start from course overview, ask the participant to locate the kit and requirements, then resume after closing the page. Introduce a malformed file and observe recovery. Record whether each goal is reached independently, what was misunderstood and whether any hint was supplied. Prioritise blocked tasks before decorative changes. The other choices miss the decision or assumption described above."
+        "explanation": "\"Find the practice files for the form exercise\" gives a goal without naming the control to use. You can observe whether the participant discovers the route."
       },
       "references": [
         {
@@ -1346,7 +1346,7 @@
           "A promise that future content will always be accessible."
         ],
         "correct": 0,
-        "explanation": "List browser/device combinations, core task journeys, automated checks, manual keyboard and assistive-technology results and known defects. A modal rewrite and a navigation layout change trigger manual retesting. Token updates rerun contrast combinations, while content changes check long titles, meaningful alternatives and resource discoverability. The other choices miss the decision or assumption described above."
+        "explanation": "State what was tested, the results, known defects and the checks not performed. This lets readers judge the release claim against its coverage."
       },
       "references": [
         {

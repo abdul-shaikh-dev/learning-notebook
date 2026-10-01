@@ -107,7 +107,7 @@
   "tasks": [
     {
       "id": "foundation",
-      "title": "Build one vertical slice",
+      "title": "Build one study planner feature across the stack",
       "goal": "Create an accessible form, HTTP contract and complete memory-backed feature.",
       "fileIds": [
         "acceptance-py",
@@ -183,7 +183,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Persist and resolve conflicts",
+      "title": "Persist study planner data and resolve conflicts",
       "goal": "Use SQL Server, atomic expected-version updates and a tested retry design.",
       "fileIds": [
         "acceptance-py",
@@ -259,7 +259,7 @@
     },
     {
       "id": "advanced",
-      "title": "Verify, operate and defend",
+      "title": "Test, release and recover the study planner",
       "goal": "Assemble tests, diagnostics, a release plan and recovery evidence.",
       "fileIds": [
         "acceptance-py",

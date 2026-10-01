@@ -3,7 +3,7 @@
   "title": "Plan and Review Your Week",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Connect five personal-effectiveness topics through Sam’s fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
+  "description": "Connect five personal-effectiveness topics through Sam's fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
   "level": "Beginner → applied practice → independent review",
   "prerequisites": [
     "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
@@ -97,7 +97,7 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Sam’s working hours are 09:00–17:00 with a one-hour lunch. Across five days that is 35 working hours. Twelve hours are fixed meetings and duties; routine service work takes an estimated 12. That leaves 11 hours before allowing for uncertainty."
+            "Sam's working hours are 09:00–17:00 with a one-hour lunch. Across five days that is 35 working hours. Twelve hours are fixed meetings and duties; routine service work takes an estimated 12. That leaves 11 hours before allowing for uncertainty."
           ]
         }
       ],
@@ -119,7 +119,7 @@
           "Actual commitments and constraints."
         ],
         "correct": 2,
-        "explanation": "Commitments and unavailable time constrain the feasible plan. Unlimited ambitions do not establish the hours needed to deliver them."
+        "explanation": "Subtract commitments and unavailable time before choosing work for the week. Adding another goal does not add the hours it needs."
       },
       "references": [
         {
@@ -190,7 +190,7 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "An outcome is the completed result; a project is a result requiring multiple actions. Sam’s event pack needs venue details, attendee list and a final check. List dependencies before booking time so a waiting item does not occupy a fictional work slot.",
+            "An outcome is the completed result; a project is a result requiring multiple actions. Sam's event pack needs venue details, attendee list and a final check. List dependencies before booking time so a waiting item does not occupy a fictional work slot.",
             "Use a concrete verb and object: ask Lee for the attendee list or check the venue address against the booking. If an item depends on another person, record the request, the response needed and a follow-up date. The companion task-project-management path offers more practice."
           ]
         },
@@ -240,7 +240,7 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "Sam’s event work is estimated at eight hours and optional noticeboard work at four. With 11 remaining hours, both would total 12 before any buffer. Choose based on actual deadline, consequences and agreement. A short list is useful only if the work fits the available windows.",
+            "Sam's event work is estimated at eight hours and optional noticeboard work at four. With 11 remaining hours, both would total 12 before any buffer. Choose based on actual deadline, consequences and agreement. A short list is useful only if the work fits the available windows.",
             "Reserve some capacity for uncertainty, then say what will not fit this week. These numbers are a fictional budgeting example, not a universal percentage rule. The time-attention-energy path explores capacity; this journey applies it to a concrete calendar."
           ]
         },
@@ -335,7 +335,7 @@
       "id": "baseline-plan-project",
       "title": "6. Finish a baseline week plan",
       "stage": "foundation",
-      "takeaway": "A reviewable plan states assumptions and trade-offs.",
+      "takeaway": "State what the plan depends on and which work you have deferred.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -347,7 +347,7 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Sam’s baseline plan names eight event hours, Lee’s Tuesday response, the Thursday appointment and two short learning occasions outside working hours when available. Noticeboard redesign is deferred. Friday delivery assumes the list arrives by Thursday morning."
+            "Sam's baseline plan names eight event hours, Lee's Tuesday response, the Thursday appointment and two short learning occasions outside working hours when available. Noticeboard redesign is deferred. Friday delivery assumes the list arrives by Thursday morning."
           ]
         }
       ],
@@ -362,14 +362,14 @@
         ]
       },
       "quiz": {
-        "question": "What belongs in a reviewable plan?",
+        "question": "What should the plan say about dependencies?",
         "options": [
           "Dependencies, reserve, deferrals and a fallback.",
           "Only colourful calendar blocks.",
           "Unstated assumptions about other people."
         ],
         "correct": 0,
-        "explanation": "Dependencies and fallbacks expose what could prevent delivery. Colourful blocks alone conceal assumptions about other people."
+        "explanation": "State which inputs you need from other people and what you will do if they are late. Calendar blocks alone do not show those dependencies."
       },
       "references": [
         {
@@ -397,7 +397,7 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Normal: after desk close, note outstanding requests and tomorrow’s first action. Fallback after a late close: write only the most important waiting request before leaving. Sam records whether the action helped the next morning."
+            "Normal: after desk close, note outstanding requests and tomorrow's first action. Fallback after a late close: write only the most important waiting request before leaving. Sam records whether the action helped the next morning."
           ]
         }
       ],
@@ -493,8 +493,8 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "A useful update separates facts, needs and requests. Sam can say the service issue used three hours; adding this request puts Friday’s pack at risk; can we use a shorter layout or move the request? Avoid promising both outcomes before checking capacity.",
-            "Choose a recipient who can decide the scope or deadline. State what needs an answer and by when. Record any agreement in the plan. A prepared script is practice, not an instruction to send messages without the learner’s own decision and authority."
+            "A useful update separates facts, needs and requests. Sam can say the service issue used three hours; adding this request puts Friday's pack at risk; can we use a shorter layout or move the request? Avoid promising both outcomes before checking capacity.",
+            "Choose a recipient who can decide the scope or deadline. State what needs an answer and by when. Record any agreement in the plan. A prepared script is practice, not an instruction to send messages without the learner's own decision and authority."
           ]
         },
         {
@@ -546,7 +546,7 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "The learning-how-to-learn path contributes a target, retrieval, correction and a later check. Sam is learning the three leave-request rules. Tuesday’s 12-minute study happened; Thursday’s eight-minute review may be lost after disruption.",
+            "The learning-how-to-learn path contributes a target, retrieval, correction and a later check. Sam is learning the three leave-request rules. Tuesday's 12-minute study happened; Thursday's eight-minute review may be lost after disruption.",
             "Choose an available later check instead of cramming all missed practice into an already full evening. A short closed-source attempt can reveal what remains, but it does not replace every form of skill practice. Record which plan actually happened."
           ]
         },
@@ -558,7 +558,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Write a revised learning plan after Thursday’s review is cancelled. Include what evidence you can still collect.",
+        "prompt": "Write a revised learning plan after Thursday's review is cancelled. Include what evidence you can still collect.",
         "solution": "Keep next Monday’s ten-minute new-case check with the source closed, followed by correction. Optionally answer one Friday case in two minutes if genuinely available. Record Tuesday practice, cancelled Thursday and actual Friday status. Monday provides delayed evidence; it does not show what an uncompleted Thursday review would have added.",
         "solutionFormat": "prose",
         "checks": [
@@ -568,7 +568,7 @@
         ]
       },
       "quiz": {
-        "question": "What is honest after a missed review?",
+        "question": "What should you record after missing a review?",
         "options": [
           "Record it as complete to preserve a streak.",
           "Double work into a care commitment.",
@@ -603,8 +603,8 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Sam’s revised plan uses six hours for the shorter pack, two for the urgent request and three already used for service. The total remains 11. The plan notes no remaining reserve and a need to flag any further change.",
-            "The day-level kit also checks elapsed time. Because Monday’s spare hour cannot be reused, the service owner agrees to defer one noncritical routine hour. Record that additional timing decision alongside the aggregate 11-hour equation."
+            "Sam's revised plan uses six hours for the shorter pack, two for the urgent request and three already used for service. The total remains 11. The plan notes no remaining reserve and a need to flag any further change.",
+            "The day-level kit also checks elapsed time. Because Monday's spare hour cannot be reused, the service owner agrees to defer one noncritical routine hour. Record that additional timing decision alongside the aggregate 11-hour equation."
           ]
         }
       ],
@@ -648,13 +648,13 @@
           "title": "Understand and try it",
           "paragraphs": [
             "At the end of a day, note completed actions, unexpected demands, approximate time and one observation about conditions. Separate estimated from observed time. You do not need minute-by-minute surveillance or a productivity score for every activity.",
-            "Use evidence to answer next week’s question. For Sam, the important questions are whether the pack estimate held, whether the waiting-list routine prevented omissions and whether learning happened. Personal information can stay private; the practice scenario uses fictional names and data."
+            "Use evidence to answer next week's question. For Sam, the important questions are whether the pack estimate held, whether the waiting-list routine prevented omissions and whether learning happened. Personal information can stay private; the practice scenario uses fictional names and data."
           ]
         },
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Friday log: shorter pack delivered; estimated six hours, observed seven; urgent task two hours; service issue three. Project/change work totals 12 against the original 11-hour budget. The temporal revision had already deferred one routine hour; the extra pack hour requires a second agreed routine deferral. Monday’s unused past hour stays unused."
+            "Friday log: shorter pack delivered; estimated six hours, observed seven; urgent task two hours; service issue three. Project/change work totals 12 against the original 11-hour budget. The temporal revision had already deferred one routine hour; the extra pack hour requires a second agreed routine deferral. Monday's unused past hour stays unused."
           ]
         }
       ],
@@ -747,7 +747,7 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "Choose one change linked to an observed issue. Sam’s pack estimate was too low and deferred work remained on the calendar. Rather than installing a complex new system, Sam removes deferred blocks at planning time and checks midweek for conflicting commitments.",
+            "Choose one change linked to an observed issue. Sam's pack estimate was too low and deferred work remained on the calendar. Rather than installing a complex new system, Sam removes deferred blocks at planning time and checks midweek for conflicting commitments.",
             "State the prediction, what you will observe and when to review. Keep other changes limited so you can interpret the result. One week is a small sample; a quiet week may hide the problem, while a disrupted week may reveal new constraints."
           ]
         },
@@ -772,14 +772,14 @@
         ]
       },
       "quiz": {
-        "question": "What makes an experiment reviewable?",
+        "question": "What lets you compare the predicted and actual results?",
         "options": [
           "Declaring success before the week occurs.",
           "A specific change, prediction, observation and review date.",
           "Changing every routine simultaneously."
         ],
         "correct": 1,
-        "explanation": "Prediction and observation make a small change assessable. Simultaneous changes or advance success claims obscure the evidence."
+        "explanation": "Predict what the change should do, then compare it with what happened. If several things change at once, you may not know which caused the result."
       },
       "references": [
         {
@@ -807,13 +807,13 @@
         {
           "title": "Worked scenario",
           "paragraphs": [
-            "Sam carries forward Monday’s learning check and Lee’s unresolved follow-up, parks noticeboard redesign for a later decision and removes its calendar block. Next week reserves uncertainty using the new commitments rather than copying last week’s numbers blindly.",
+            "Sam carries forward Monday's learning check and Lee's unresolved follow-up, parks noticeboard redesign for a later decision and removes its calendar block. Next week reserves uncertainty using the new commitments rather than copying last week's numbers blindly.",
             "The filled next-week scenario changes fixed hours to 14 and carries two additional routine hours. Its budget is 35 minus 14 minus 12 minus two, leaving seven hours before reserve. Confirm carried work is not already included in the new routine estimate before subtracting it twice."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Write a five-topic explanation for the portfolio and name one honest boundary.",
+        "prompt": "Write a five-topic explanation for the portfolio and state one conclusion the results do not support.",
         "solution": "Time-attention-energy supplied capacity and suitable windows. Task-project-management supplied next actions and dependencies. Habits-behaviour-change supplied the small close-of-day routine. Self-awareness-communication supplied a factual trade-off request and reaction note. Learning-how-to-learn supplied a target, retrieval and later check. All outcomes in the filled sample are synthetic; an actual learner must record their own week before claiming personal improvement.",
         "solutionFormat": "prose",
         "checks": [
@@ -830,7 +830,7 @@
           "An unchanged copy of a week with different commitments."
         ],
         "correct": 0,
-        "explanation": "Carry-forward requires renewed relevance and acceptance. Copying every unfinished idea ignores changed commitments and capacity."
+        "explanation": "Before carrying work forward, check that it is still needed and agreed. Some unfinished ideas no longer fit the next week."
       },
       "references": [
         {
@@ -846,8 +846,8 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation: A feasible baseline week",
-      "description": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+      "title": "A feasible baseline week",
+      "description": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
       "exitCriteria": [
         "Working-hour arithmetic is correct and breaks are accounted for.",
         "Next actions and dependencies have owners.",
@@ -856,12 +856,12 @@
       ],
       "project": {
         "title": "A feasible baseline week",
-        "brief": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+        "brief": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
         "requirements": [
           "Use foundation-kit.md and week-planner.md.",
           "Reconcile 35 working hours minus 24 fixed/routine hours.",
           "Place eight event hours and preserve three reserve hours.",
-          "Identify Lee’s dependency, a late-response fallback and the deferred noticeboard idea."
+          "Identify Lee's dependency, a late-response fallback and the deferred noticeboard idea."
         ],
         "rubric": [
           "Working-hour arithmetic is correct and breaks are accounted for.",
@@ -875,7 +875,7 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate: A disruption and revised agreement",
+      "title": "A disruption and revised agreement",
       "description": "Revise the plan after three service hours and a new two-hour urgent request.",
       "exitCriteria": [
         "Used reserve is not counted twice.",
@@ -904,7 +904,7 @@
     },
     {
       "id": "advanced",
-      "title": "Applied review: Evidence and next-week experiment",
+      "title": "Review the week and choose an experiment",
       "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
       "exitCriteria": [
         "Observed 12 hours versus planned 11 is explained, not hidden.",

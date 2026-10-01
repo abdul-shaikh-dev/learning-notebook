@@ -16,7 +16,7 @@ Mo is upset that a shared room was unavailable and asks Pat to cancel another gr
 
 ## Your practice
 
-Write acknowledgment followed by an honest limit.
+Acknowledge the concern, then state what you can and cannot do.
 
 Observation / known facts: ________________________________________
 

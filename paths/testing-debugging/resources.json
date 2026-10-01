@@ -154,7 +154,7 @@
       ],
       "notes": [
         "All files are flat at the root of the downloadable practice folder.",
-        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+        "The supplied tests check the reference implementation. Add tests for your changes."
       ]
     },
     {
@@ -218,7 +218,7 @@
       ],
       "notes": [
         "All files are flat at the root of the downloadable practice folder.",
-        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+        "The supplied tests check the reference implementation. Add tests for your changes."
       ]
     },
     {
@@ -273,7 +273,7 @@
       ],
       "notes": [
         "All files are flat at the root of the downloadable practice folder.",
-        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+        "The supplied tests check the reference implementation. Add tests for your changes."
       ]
     },
     {

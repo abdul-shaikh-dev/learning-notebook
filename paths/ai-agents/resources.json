@@ -84,7 +84,7 @@
     {
       "id": "foundation",
       "title": "Trace a lesson assistant",
-      "goal": "Run the scripted search-and-answer example and explain every boundary.",
+      "goal": "Run the scripted search-and-answer example. Trace the proposal, validation, tool call and returned result.",
       "fileIds": [
         "workshop-py",
         "test_workshop-py",
@@ -94,10 +94,10 @@
       "steps": [
         "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Run the scripted search-and-answer example and explain every boundary.",
-        "Complete the assessment requirements in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source.; Identify which fields are trusted policy and which are evidence.; Run one successful answer and one missing-evidence case.",
-        "Compare your evidence with the stage rubric: No scripted behavior is called model intelligence.; Citations are tied to observed IDs.; Missing evidence is reported without invented support."
+        "Build the project described in the reader: Draw user -> decision source -> validator -> tool -> observation -> decision source. Identify which fields are trusted policy and which are evidence. Run one successful answer and one missing-evidence case.",
+        "Check your result: No scripted behavior is called model intelligence. Citations are tied to observed IDs. Missing evidence is reported without invented support."
       ],
       "commands": [
         {
@@ -108,7 +108,7 @@
         {
           "label": "Run baseline tests from ai-agents-practice folder root",
           "command": "python -m unittest -v test_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -120,7 +120,7 @@
       "notes": [
         "Python 3.11 or newer; no model credentials or external services.",
         "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
@@ -136,10 +136,10 @@
       "steps": [
         "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Extend the offline test suite with malformed and unauthorized proposals.",
-        "Complete the assessment requirements in the reader: Add unknown tool, extra argument, oversized query and malformed output cases.; Assert invalid requests produce no tool execution.; Use a failing source and check explicit failure status.; Write an approval design for a hypothetical send tool; do not implement external delivery.",
-        "Compare your evidence with the stage rubric: Tests include accepted and rejected values.; Authority remains outside model output.; Failure statuses are not mislabeled success.; Hypothetical delivery has concrete approval and unknown-outcome handling."
+        "Build the project described in the reader: Add unknown tool, extra argument, oversized query and malformed output cases. Assert invalid requests produce no tool execution. Use a failing source and check explicit failure status. Write an approval design for a hypothetical send tool; do not implement external delivery.",
+        "Check your result: Tests include accepted and rejected values. Authority remains outside model output. Failure statuses are not mislabeled success. Hypothetical delivery has concrete approval and unknown-outcome handling."
       ],
       "commands": [
         {
@@ -150,7 +150,7 @@
         {
           "label": "Run baseline tests from ai-agents-practice folder root",
           "command": "python -m unittest -v test_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -162,7 +162,7 @@
       "notes": [
         "Python 3.11 or newer; no model credentials or external services.",
         "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
@@ -203,12 +203,12 @@
         {
           "label": "Run baseline tests from ai-agents-practice folder root",
           "command": "python -m unittest -v test_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         },
         {
           "label": "Optional depth exercise · extracted kit root",
           "command": "python -m unittest -v test_local_framework_lab.py",
-          "expected": "After installing the guide’s pinned dependencies, six real graph tests pass without a model."
+          "expected": "After installing the guide's pinned dependencies, six real graph tests pass without a model."
         }
       ],
       "prerequisites": [

@@ -441,7 +441,7 @@
     {
       "id": "practice-validate-without-agreeing",
       "title": "Acknowledge experience while keeping your own view practice",
-      "goal": "Write acknowledgment followed by an honest limit.",
+      "goal": "Acknowledge the concern, then state what you can and cannot do.",
       "fileIds": [
         "README",
         "10-validate-without-agreeing",
@@ -454,7 +454,7 @@
       "steps": [
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
         "Read the fictional case in 10-validate-without-agreeing.md.",
-        "Write acknowledgment followed by an honest limit.",
+        "Acknowledge the concern, then state what you can and cannot do.",
         "Write a response before revealing the worked example.",
         "Compare the response with the self-check; record one adjustment."
       ],
@@ -760,7 +760,7 @@
     {
       "id": "foundation",
       "title": "A factual reflection and a listening plan",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "foundation-project",
@@ -795,7 +795,7 @@
     {
       "id": "intermediate",
       "title": "A listening and feedback role-play",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "intermediate-project",
@@ -817,7 +817,7 @@
         "Open intermediate-project.md.",
         "Use a voluntary fictional role-play with permission to pause.",
         "Practise a question, paraphrase, clear request and feedback example.",
-        "Record the partner’s correction and revise the message.",
+        "Record the partner's correction and revise the message.",
         "Compare the record with the exit criteria and revise any unsupported claim."
       ],
       "commands": [],
@@ -830,7 +830,7 @@
     {
       "id": "advanced",
       "title": "A difficult-conversation plan and review",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "advanced-project",

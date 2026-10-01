@@ -108,7 +108,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
         "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     },
@@ -133,7 +133,7 @@
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
         "Read README.md and intermediate-kit.md before running the references.",
         "Run the commands below and record actual results separately from expected results.",
-        "Run the intermediate fixture’s deliberate conflict, abort and resolution.",
+        "Run the intermediate fixture's deliberate conflict, abort and resolution.",
         "Explain base/ours/theirs and preserve both fixture intents.",
         "Verify a two-parent merge.",
         "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
@@ -161,7 +161,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
         "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     },
@@ -188,7 +188,7 @@
         "Run the commands below and record actual results separately from expected results.",
         "Run the advanced fixture and verify the first bad commit with its predicate.",
         "Compare targeted revert with the private reset/reflog recovery.",
-        "Explain the cherry-picked change and rebased topic’s changed identity.",
+        "Explain the cherry-picked change and rebased topic's changed identity.",
         "Verify the annotated tag object.",
         "Produce an offline release record including artifact/hosting checks not executed.",
         "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
@@ -220,7 +220,7 @@
       ],
       "notes": [
         "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
-        "Local reference evidence is deliberately scoped. Build the requested extension in a copy and label unexecuted integration/release/provider checks explicitly.",
+        "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
         "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
       ]
     }

@@ -131,7 +131,7 @@
       "id": "20-evidence-review",
       "href": "paths/habits-behaviour-change/practice/20-evidence-review.md",
       "role": "worksheet",
-      "description": "Make an honest maintenance plan worksheet and worked case"
+      "description": "Decide whether to keep or change the routine worksheet and worked case"
     },
     {
       "id": "foundation-project",
@@ -180,7 +180,7 @@
     {
       "id": "practice-behaviour-not-identity",
       "title": "Describe actions without judging identity practice",
-      "goal": "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+      "goal": "Rewrite Mira's label as an observable action and choose one low-cost target.",
       "fileIds": [
         "README",
         "01-behaviour-not-identity",
@@ -193,7 +193,7 @@
       "steps": [
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
         "Read the fictional case in 01-behaviour-not-identity.md.",
-        "Rewrite Mira’s label as an observable action and choose one low-cost target.",
+        "Rewrite Mira's label as an observable action and choose one low-cost target.",
         "Write a response before revealing the worked example.",
         "Compare the response with the self-check; record one adjustment."
       ],
@@ -354,7 +354,7 @@
     {
       "id": "practice-time-variation",
       "title": "Reject fixed habit deadlines practice",
-      "goal": "Write a fair interpretation of Dev’s experience and a next check.",
+      "goal": "Write a fair interpretation of Dev's experience and a next check.",
       "fileIds": [
         "README",
         "07-time-variation",
@@ -367,7 +367,7 @@
       "steps": [
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
         "Read the fictional case in 07-time-variation.md.",
-        "Write a fair interpretation of Dev’s experience and a next check.",
+        "Write a fair interpretation of Dev's experience and a next check.",
         "Write a response before revealing the worked example.",
         "Compare the response with the self-check; record one adjustment."
       ],
@@ -730,7 +730,7 @@
     },
     {
       "id": "practice-evidence-review",
-      "title": "Make an honest maintenance plan practice",
+      "title": "Decide whether to keep or change the routine practice",
       "goal": "Write a keep/change decision with an uncertainty statement.",
       "fileIds": [
         "README",
@@ -760,7 +760,7 @@
     {
       "id": "foundation",
       "title": "A factual baseline and a feasible target",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "foundation-project",
@@ -795,7 +795,7 @@
     {
       "id": "intermediate",
       "title": "A small routine experiment",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "intermediate-project",
@@ -829,8 +829,8 @@
     },
     {
       "id": "advanced",
-      "title": "An evidence-based maintenance decision",
-      "goal": "Complete a written project record and compare it with the stage exit criteria.",
+      "title": "Decide whether to keep or change a routine",
+      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
       "fileIds": [
         "README",
         "advanced-project",

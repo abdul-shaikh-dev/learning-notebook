@@ -78,7 +78,7 @@
     {
       "id": "foundation",
       "title": "A feasible baseline week",
-      "goal": "Create a one-page plan for Sam’s fixed commitments, eight-hour event pack and small learning target.",
+      "goal": "Create a one-page plan for Sam's fixed commitments, eight-hour event pack and small learning target.",
       "fileIds": [
         "readme-md",
         "foundation-kit-md",
@@ -104,7 +104,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]
@@ -138,7 +138,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]
@@ -172,7 +172,7 @@
         }
       ],
       "notes": [
-        "The filled examples are synthetic, not the learner’s results.",
+        "The filled examples are synthetic, not the learner's results.",
         "There is no automated assessment of personal improvement; use the stated scoring criteria and evidence.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ]

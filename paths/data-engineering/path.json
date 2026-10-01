@@ -81,7 +81,7 @@
         {
           "title": "Consumers and row grain",
           "paragraphs": [
-            "A data pipeline moves and transforms records for an identifiable consumer. Define the question, owner, refresh interval and acceptable errors before choosing tools. Grain means what one row represents; a unique order, order line and daily total have different grains."
+            "A data pipeline moves and transforms records for a specific consumer. Define the question it answers, who owns it, how often it refreshes and which errors are acceptable. Grain means what one row represents. A row for an order, an order line and a daily total each has a different grain."
           ]
         },
         {
@@ -136,7 +136,7 @@
         {
           "title": "Extraction, transformation and loading",
           "paragraphs": [
-            "ETL extracts data, transforms it and loads a target. ELT extracts and loads before target-side transformation. Both require contracts, lineage and quality checks. A raw zone preserves source evidence; a curated zone carries validated, consumer-specific meaning."
+            "ETL extracts data, transforms it, then loads the target. ELT loads the extracted data before transforming it in the target system. Both need input contracts, lineage and quality checks. Keep source records in the raw zone. Put validated data prepared for a specific consumer in the curated zone."
           ]
         },
         {
@@ -363,7 +363,7 @@
         {
           "title": "Event time and business calendars",
           "paragraphs": [
-            "Event time records when an event occurred; ingestion time records when your system received it. Aware timestamps include a timezone offset. Normalize instants before comparing them, then choose an explicit business calendar for daily aggregation."
+            "Event time records when an event occurred. Ingestion time records when your system received it. Timezone-aware timestamps include an offset. Normalize instants before comparing them, then choose the business calendar used for daily totals."
           ]
         },
         {
@@ -590,7 +590,7 @@
         {
           "title": "Composite extraction cursors",
           "paragraphs": [
-            "A watermark records an extraction boundary, such as a source sequence number or (updated_at, id) tuple. Persist it only after downstream commit succeeds. Timestamp-only comparisons can miss tied rows; ordering and a tie-breaker must be part of the contract."
+            "A watermark records how far extraction has progressed, using a source sequence number or an (updated_at, id) tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
           ]
         },
         {
@@ -1129,7 +1129,7 @@
         {
           "title": "Data ownership and deletion",
           "paragraphs": [
-            "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate. Minimize data collected for the learning goal. Separate sensitive source records from aggregate outputs and restrict debugging artifacts."
+            "Name the dataset owner, permitted users and retention period. Define how corrections and deletions reach downstream copies. Collect only the data needed for the learning exercise. Keep sensitive source records separate from aggregate outputs, and restrict access to debug files."
           ]
         },
         {

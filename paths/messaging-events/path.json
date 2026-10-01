@@ -23,7 +23,7 @@
   ],
   "nextSteps": [
     "Connect one real broker and test reconnect, persistence and denied access with synthetic data.",
-    "Integrate the full-stack project journey and retain an evidence ledger for remaining live boundary tests."
+    "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
   ],
   "sources": [
     {
@@ -1086,7 +1086,7 @@
         {
           "title": "Queue wait versus API latency",
           "paragraphs": [
-            "At 10:00 an export is accepted. At 10:01 its consumer retries. At 10:03 it completes. The user-perceived duration includes queue wait and processing, not just API acceptance latency. A duplicate delivery can increment delivery count without incrementing business completion count."
+            "An export is accepted at 10:00, retries at 10:01 and completes at 10:03. The user waits for queueing and processing as well as API acceptance. Count duplicate deliveries separately from completed exports, since another delivery need not produce another business result."
           ]
         }
       ],
@@ -1135,7 +1135,7 @@
         {
           "title": "Failure injection and durable state",
           "paragraphs": [
-            "Inject failures before commit, after commit and before publication bookkeeping. Assert durable state after reopening the database, not just an in-memory return value. Duplicate and malformed tests are necessary but do not establish broker failover, cross-process lease behavior or ordering under real parallel load."
+            "Inject failures before commit, after commit and before publication bookkeeping. Reopen the database and check what persisted. An in-memory return value does not establish durability. Duplicate and malformed-message tests do not test broker failover, cross-process leases or ordering under parallel load."
           ]
         },
         {
@@ -1312,7 +1312,7 @@
     {
       "id": "foundation",
       "title": "Message contract map",
-      "description": "Design the notebook export workflow and identify its honest status transitions.",
+      "description": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
       "exitCriteria": [
         "Acceptance is not completion.",
         "Every participant owns a specific responsibility.",
@@ -1320,7 +1320,7 @@
       ],
       "project": {
         "title": "Message contract map",
-        "brief": "Design the notebook export workflow and identify its honest status transitions.",
+        "brief": "Design the notebook export workflow. State when the user sees accepted, processing, completed or failed.",
         "requirements": [
           "Classify commands, facts and queries.",
           "Sketch queue and independent subscriber responsibilities.",

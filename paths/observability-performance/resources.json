@@ -116,7 +116,7 @@
         }
       ],
       "notes": [
-        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "Test your changes separately from the reference. Deployment needs its own checks.",
         "No credentials, external providers or paid services are required for the baseline.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
@@ -166,7 +166,7 @@
         }
       ],
       "notes": [
-        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "Test your changes separately from the reference. Deployment needs its own checks.",
         "No credentials, external providers or paid services are required for the baseline."
       ]
     },
@@ -218,7 +218,7 @@
         }
       ],
       "notes": [
-        "Reference files are a starting point; learner extensions and production deployment require separate verification.",
+        "Test your changes separately from the reference. Deployment needs its own checks.",
         "No credentials, external providers or paid services are required for the baseline.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]

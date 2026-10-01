@@ -1,4 +1,4 @@
-# 20. Make an honest maintenance plan
+# 20. Decide whether to keep or change the routine
 
 ## Aim
 

@@ -95,10 +95,10 @@
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Build a scripted read-only loop for synthetic lessons. No model API or external execution is needed.",
-        "Complete the assessment requirements in the reader: Define trusted subject, readable lesson IDs and a proposal budget.; Create an explicit registry with read_lesson only.; Validate exact argument fields and bounded strings.; Return structured states and metadata events.; Test unknown tools, forbidden lessons and malformed proposals.",
-        "Compare your evidence with the stage rubric: No invalid or forbidden proposal changes the fake store.; The authenticated subject cannot be overridden by arguments.; Events distinguish proposal, denial and confirmation.; The final result does not claim a write occurred."
+        "Build the project described in the reader: Define trusted subject, readable lesson IDs and a proposal budget. Create an explicit registry with read_lesson only. Validate exact argument fields and bounded strings. Return structured states and metadata events. Test unknown tools, forbidden lessons and malformed proposals.",
+        "Check your result: No invalid or forbidden proposal changes the fake store. The authenticated subject cannot be overridden by arguments. Events distinguish proposal, denial and confirmation. The final result does not claim a write occurred."
       ],
       "commands": [
         {
@@ -109,7 +109,7 @@
         {
           "label": "Run baseline tests from agent-harnesses-practice folder root",
           "command": "python -m unittest -v test_harness_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -121,7 +121,7 @@
       "notes": [
         "Python 3.10 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
@@ -138,10 +138,10 @@
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Extend the read-only runtime with an in-memory note effect that can lose its response after committing.",
-        "Complete the assessment requirements in the reader: Pause writes until the trusted host reviews exact arguments.; Reject a stale approval and a permission revoked while waiting.; Implement stable operation identity and fake receipt lookup.; Serialize a versioned checkpoint without approval authority.; Test budget exhaustion, cancellation, unknown checkpoint versions and response-loss recovery.",
-        "Compare your evidence with the stage rubric: A same-intent recovery leaves exactly one fake note.; Changed arguments cannot reuse approval.; Restoring does not reset step usage.; Uncertain state is visible until a receipt resolves it."
+        "Build the project described in the reader: Pause writes until the trusted host reviews exact arguments. Reject a stale approval and a permission revoked while waiting. Implement stable operation identity and fake receipt lookup. Serialize a versioned checkpoint without approval authority. Test budget exhaustion, cancellation, unknown checkpoint versions and response-loss recovery.",
+        "Check your result: A same-intent recovery leaves exactly one fake note. Changed arguments cannot reuse approval. Restoring does not reset step usage. Uncertain state is visible until a receipt resolves it."
       ],
       "commands": [
         {
@@ -152,7 +152,7 @@
         {
           "label": "Run baseline tests from agent-harnesses-practice folder root",
           "command": "python -m unittest -v test_harness_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         }
       ],
       "prerequisites": [
@@ -164,13 +164,13 @@
       "notes": [
         "Python 3.10 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     },
     {
       "id": "advanced",
       "title": "Harness assurance and operations packet",
-      "goal": "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+      "goal": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
       "fileIds": [
         "harness_workshop-py",
         "test_harness_workshop-py",
@@ -189,10 +189,10 @@
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
+        "Run the reference and check its output.",
         "Defend the offline harness and design its next production boundary without deploying infrastructure.",
-        "Complete the assessment requirements in the reader: Run the provided suite and add two adversarial proposal fixtures.; Write an ADR for a durable checkpoint/receipt service with concurrency ownership.; Draw the trusted host, model, tool and optional compute boundaries.; Specify safe telemetry fields, retention and operator authority.; Write a response-loss incident timeline and controlled release/rollback plan.; Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
-        "Compare your evidence with the stage rubric: Claims match executed fixtures; no sandbox or intelligence certification is implied.; The ADR distinguishes CAS/fencing from external-effect idempotency.; Runbook actions preserve evidence and avoid blind retries.; Every new permission or external adapter has a verification plan.",
+        "Build the project described in the reader: Run the provided suite and add two adversarial proposal fixtures. Write an ADR for a durable checkpoint/receipt service with concurrency ownership. Draw the trusted host, model, tool and optional compute boundaries. Specify safe telemetry fields, retention and operator authority. Write a response-loss incident timeline and controlled release/rollback plan. Define a separate real-model evaluation dataset and explicitly mark it unexecuted.",
+        "Check your result: Claims match executed fixtures; no sandbox or intelligence certification is implied. The ADR distinguishes CAS/fencing from external-effect idempotency. Runbook actions preserve evidence and avoid blind retries. Every new permission or external adapter has a verification plan.",
         "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
       ],
       "commands": [
@@ -204,7 +204,7 @@
         {
           "label": "Run baseline tests from agent-harnesses-practice folder root",
           "command": "python -m unittest -v test_harness_workshop.py",
-          "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+          "expected": "The supplied regression suite should pass. Test your own changes separately."
         },
         {
           "label": "Optional depth exercise · extracted kit root",
@@ -221,7 +221,7 @@
       "notes": [
         "Python 3.10 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
     }
   ],

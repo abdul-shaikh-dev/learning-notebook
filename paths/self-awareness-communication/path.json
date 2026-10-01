@@ -87,95 +87,95 @@
       "href": "paths/self-awareness-communication/practice/sources-and-limits.md"
     },
     {
-      "title": "Separate what happened from what it means worksheet and worked case",
+      "title": "Separate what happened from what it means: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/01-observation-interpretation.md"
     },
     {
-      "title": "Name a feeling without making it an instruction worksheet and worked case",
+      "title": "Name a feeling without making it an instruction: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/02-feeling-and-action.md"
     },
     {
-      "title": "Translate a value into an everyday choice worksheet and worked case",
+      "title": "Translate a value into an everyday choice: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/03-values-and-priorities.md"
     },
     {
-      "title": "Use a short reflection record worksheet and worked case",
+      "title": "Use a short reflection record: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/04-reflection-record.md"
     },
     {
-      "title": "Hold an alternative explanation lightly worksheet and worked case",
+      "title": "Hold an alternative explanation lightly: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/05-perspective-check.md"
     },
     {
-      "title": "Pause long enough to choose the purpose worksheet and worked case",
+      "title": "Pause long enough to choose the purpose: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/06-pause-and-purpose.md"
     },
     {
-      "title": "Create conditions for attentive listening worksheet and worked case",
+      "title": "Create conditions for attentive listening: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/07-listen-with-attention.md"
     },
     {
-      "title": "Ask questions that invite useful detail worksheet and worked case",
+      "title": "Ask questions that invite useful detail: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/08-open-questions.md"
     },
     {
-      "title": "Paraphrase and invite correction worksheet and worked case",
+      "title": "Paraphrase and invite correction: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/09-paraphrase.md"
     },
     {
-      "title": "Acknowledge experience while keeping your own view worksheet and worked case",
+      "title": "Acknowledge experience while keeping your own view: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/10-validate-without-agreeing.md"
     },
     {
-      "title": "Make a request someone can answer worksheet and worked case",
+      "title": "Make a request someone can answer: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/11-clear-request.md"
     },
     {
-      "title": "State a boundary as your own available action worksheet and worked case",
+      "title": "State a boundary as your own available action: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/12-boundaries.md"
     },
     {
-      "title": "Give feedback about a specific event worksheet and worked case",
+      "title": "Give feedback about a specific event: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/13-give-feedback.md"
     },
     {
-      "title": "Receive feedback by checking the example worksheet and worked case",
+      "title": "Receive feedback by checking the example: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/14-receive-feedback.md"
     },
     {
-      "title": "Map positions, concerns and constraints worksheet and worked case",
+      "title": "Map positions, concerns and constraints: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/15-conflict-map.md"
     },
     {
-      "title": "Compare options with agreed criteria worksheet and worked case",
+      "title": "Compare options with agreed criteria: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/16-negotiate-options.md"
     },
     {
-      "title": "Repair a specific communication mistake worksheet and worked case",
+      "title": "Repair a specific communication mistake: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/17-repair.md"
     },
     {
-      "title": "Choose a channel that fits the issue worksheet and worked case",
+      "title": "Choose a channel that fits the issue: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/18-written-channel.md"
     },
     {
-      "title": "Recognise when informal conversation is insufficient worksheet and worked case",
+      "title": "Recognise when informal conversation is insufficient: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/19-power-and-help.md"
     },
     {
-      "title": "Review a conversation using observable evidence worksheet and worked case",
+      "title": "Review a conversation using observable evidence: worksheet and worked case",
       "href": "paths/self-awareness-communication/practice/20-conversation-review.md"
     },
     {
-      "title": "A factual reflection and a listening plan project sheet",
+      "title": "A factual reflection and a listening plan: project sheet",
       "href": "paths/self-awareness-communication/practice/foundation-project.md"
     },
     {
-      "title": "A listening and feedback role-play project sheet",
+      "title": "A listening and feedback role-play: project sheet",
       "href": "paths/self-awareness-communication/practice/intermediate-project.md"
     },
     {
-      "title": "A difficult-conversation plan and review project sheet",
+      "title": "A difficult-conversation plan and review: project sheet",
       "href": "paths/self-awareness-communication/practice/advanced-project.md"
     },
     {
@@ -198,7 +198,7 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundation — observe and define",
+      "title": "Observe and define",
       "description": "A factual reflection and a listening plan",
       "exitCriteria": [
         "Separate observations and interpretations in a fictional case.",
@@ -226,12 +226,12 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate — practise and compare",
+      "title": "Practise listening and feedback",
       "description": "A listening and feedback role-play",
       "exitCriteria": [
         "Use a voluntary fictional role-play with permission to pause.",
         "Practise a question, paraphrase, clear request and feedback example.",
-        "Record the partner’s correction and revise the message.",
+        "Record the partner's correction and revise the message.",
         "Preserve consent, practical limits and unresolved disagreement in the record."
       ],
       "project": {
@@ -240,12 +240,12 @@
         "requirements": [
           "Use a voluntary fictional role-play with permission to pause.",
           "Practise a question, paraphrase, clear request and feedback example.",
-          "Record the partner’s correction and revise the message."
+          "Record the partner's correction and revise the message."
         ],
         "rubric": [
           "Use a voluntary fictional role-play with permission to pause.",
           "Practise a question, paraphrase, clear request and feedback example.",
-          "Record the partner’s correction and revise the message.",
+          "Record the partner's correction and revise the message.",
           "Preserve consent, practical limits and unresolved disagreement in the record."
         ],
         "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
@@ -254,7 +254,7 @@
     },
     {
       "id": "advanced",
-      "title": "Applied transfer — adapt and review a conversation",
+      "title": "Adapt and review a conversation",
       "description": "A difficult-conversation plan and review",
       "exitCriteria": [
         "Map positions, concerns, constraints and power differences.",
@@ -291,7 +291,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "An observation describes what could be seen or heard; an interpretation explains it and may be wrong. Both are useful, but keeping them separate creates room to ask questions. Avoid treating a guess about someone’s motives as a fact. A precise observation can be checked together without requiring the other person to accept your whole explanation."
+            "An observation describes what could be seen or heard; an interpretation explains it and may be wrong. Both are useful, but keeping them separate creates room to ask questions. Avoid treating a guess about someone's motives as a fact. A precise observation can be checked together without requiring the other person to accept your whole explanation."
           ]
         },
         {
@@ -327,7 +327,7 @@
           "She does not value teamwork"
         ],
         "correct": 0,
-        "explanation": "An observation describes what happened; an explanation of someone’s intention remains an interpretation to check."
+        "explanation": "An observation describes what happened; an explanation of someone's intention remains an interpretation to check."
       },
       "references": [
         {
@@ -384,7 +384,7 @@
           "Feeling angry requires sending the message immediately"
         ],
         "correct": 0,
-        "explanation": "Naming a feeling helps clarify your experience. It neither proves another person’s intention nor determines what you must do next."
+        "explanation": "Naming a feeling helps clarify your experience. It neither proves another person's intention nor determines what you must do next."
       },
       "references": [
         {
@@ -474,7 +474,7 @@
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Dev sees a colleague use someone else’s suggestion in a meeting and assumes his own idea was ignored."
+            "Dev sees a colleague use someone else's suggestion in a meeting and assumes his own idea was ignored."
           ],
           "example": "Event: another suggestion was chosen. First account: my contribution was ignored. Supporting evidence: nobody discussed it aloud. Alternative: the chosen option met a constraint Dev has not heard. He asks which criterion decided the choice; the missing information remains uncertain.",
           "exampleFormat": "prose"
@@ -495,7 +495,7 @@
         "options": [
           "Examining an interpretation and choosing a next step",
           "Proving all unpleasant feelings are irrational",
-          "Diagnosing the tutor’s personality"
+          "Diagnosing the tutor's personality"
         ],
         "correct": 0,
         "explanation": "Separate the event, your first explanation and possible alternatives. This keeps an interpretation open to checking rather than treating it as fact."
@@ -639,20 +639,20 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. A time limit is compatible with care when stated honestly; pretending unlimited attention while distracted gives the speaker less reliable information about your availability."
+            "Attention can be communicated through a checked summary even when eye contact or verbal responses differ. Ask about preferences rather than prescribing a single correct listening posture. State how much time you have. If you are distracted, offer another time rather than pretending you can listen now."
           ]
         },
         {
           "title": "Work through an everyday case",
           "paragraphs": [
-            "Inez’s neighbour wants to explain a shared-garden problem while Inez is about to leave."
+            "Inez's neighbour wants to explain a shared-garden problem while Inez is about to leave."
           ],
           "example": "Inez says, “I have five minutes now, or fifteen after six. Which would work?” In the agreed slot she puts her phone aside and summarises the concern for correction. Stating available time supports attention without promising a listening posture or unlimited availability.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Bea’s friend explains a timetable problem while Bea keeps glancing at notifications. Write a short listening setup that respects both people.",
+        "prompt": "Bea's friend explains a timetable problem while Bea keeps glancing at notifications. Write a short listening setup that respects both people.",
         "solution": "I have ten minutes and want to understand. I will silence notifications; is now a good time? If you need longer, we can find another slot. Bea does not promise unlimited availability, and asks rather than assumes what helps.",
         "solutionFormat": "prose",
         "checks": [
@@ -669,7 +669,7 @@
           "Immediate advice before the speaker finishes"
         ],
         "correct": 0,
-        "explanation": "A checked summary gives evidence of understanding. Eye contact or immediate advice alone does not establish that the message was understood."
+        "explanation": "Summarise what you heard and ask whether you understood. Eye contact or immediate advice alone cannot show that you understood the message."
       },
       "references": [
         {
@@ -726,7 +726,7 @@
           "You just did not try, did you?"
         ],
         "correct": 0,
-        "explanation": "“What is making tonight difficult?” invites context without embedding blame. A focused factual check can follow once the constraint is clearer."
+        "explanation": "\"What is making tonight difficult?\" invites context without embedding blame. A focused factual check can follow once the constraint is clearer."
       },
       "references": [
         {
@@ -741,13 +741,13 @@
     {
       "id": "paraphrase",
       "title": "9. Paraphrase and invite correction",
-      "takeaway": "A paraphrase restates the speaker’s meaning in your own words and checks it.",
+      "takeaway": "A paraphrase restates the speaker's meaning in your own words and checks it.",
       "stage": "intermediate",
       "sections": [
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A paraphrase restates the speaker’s meaning in your own words and checks it. Keep the summary short enough that the other person can correct it. Distinguish the facts they reported from your interpretation of their concern. Checking meaning is more useful than mechanically repeating every sentence or announcing that you know exactly how they feel."
+            "A paraphrase restates the speaker's meaning in your own words and checks it. Keep the summary short enough that the other person can correct it. Distinguish the facts they reported from your interpretation of their concern. Checking meaning is more useful than mechanically repeating every sentence or announcing that you know exactly how they feel."
           ]
         },
         {
@@ -781,7 +781,7 @@
         "options": [
           "An invitation to correct the summary",
           "A statement that no further explanation is needed",
-          "A judgement about the speaker’s attitude"
+          "A judgement about the speaker's attitude"
         ],
         "correct": 0,
         "explanation": "Invite correction so the speaker can confirm or repair your summary. Preserve conditions such as needing the figures before noon."
@@ -799,13 +799,13 @@
     {
       "id": "validate-without-agreeing",
       "title": "10. Acknowledge experience while keeping your own view",
-      "takeaway": "Acknowledging someone’s concern is different from accepting every claim or proposed solution.",
+      "takeaway": "Acknowledging someone's concern is different from accepting every claim or proposed solution.",
       "stage": "intermediate",
       "sections": [
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "Acknowledging someone’s concern is different from accepting every claim or proposed solution. Name what you have heard without pretending certainty about their feelings. You can understand why a delay matters and still disagree about who should do the task. This helps keep the practical disagreement visible instead of turning listening into a demand for agreement."
+            "Acknowledging someone's concern is different from accepting every claim or proposed solution. Name what you have heard without pretending certainty about their feelings. You can understand why a delay matters and still disagree about who should do the task. This helps keep the practical disagreement visible instead of turning listening into a demand for agreement."
           ]
         },
         {
@@ -824,7 +824,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Mo is upset that a shared room was unavailable and asks Pat to cancel another group’s booking. Write acknowledgment followed by an honest limit.",
+        "prompt": "Mo is upset that a shared room was unavailable and asks Pat to cancel another group's booking. Acknowledge the disruption, then state what Pat can and cannot offer.",
         "solution": "I hear that losing the room disrupted your plan. I cannot cancel their booking, but I can help check the spare room. Pat recognises the disruption and states what is actually possible.",
         "solutionFormat": "prose",
         "checks": [
@@ -881,7 +881,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Isha needs a teammate’s chart before preparing slides. Write a specific request with a feasible response option.",
+        "prompt": "Isha needs a teammate's chart before preparing slides. Write a specific request with a feasible response option.",
         "solution": "Could you send the chart by 4 pm so I can build the slides tonight? If that is not possible, please tell me by 2 pm which part is ready. The teammate can answer or negotiate rather than guess the expectation.",
         "solutionFormat": "prose",
         "checks": [
@@ -925,7 +925,7 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person’s behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
+            "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person's behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
           ]
         },
         {
@@ -942,7 +942,7 @@
         "solution": "I am not available for homework messages after 9 pm. I can look at one question during tomorrow’s lunch break. Theo can silence notifications at night; he cannot require everyone else never to send a message.",
         "solutionFormat": "prose",
         "checks": [
-          "The boundary describes the learner’s own action.",
+          "The boundary describes the learner's own action.",
           "An available alternative is stated without coercion.",
           "The worked response is used for comparison, with any justified alternative explained."
         ]
@@ -955,7 +955,7 @@
           "If you cared, you would read my mind"
         ],
         "correct": 0,
-        "explanation": "State when you can respond—a choice you can carry out. A boundary cannot guarantee another person will never need help."
+        "explanation": "State when you can respond. That is a choice you can carry out. A boundary cannot guarantee another person will never need help."
       },
       "references": [
         {
@@ -1012,7 +1012,7 @@
           "Everyone knows you are careless"
         ],
         "correct": 0,
-        "explanation": "Naming undefined labels and their effect points to a repair. A judgement of the author’s character does not identify what to change."
+        "explanation": "Naming undefined labels and their effect points to a repair. A judgement of the author's character does not identify what to change."
       },
       "references": [
         {
@@ -1039,7 +1039,7 @@
         {
           "title": "Mechanism and practical trade-off",
           "paragraphs": [
-            "Receiving feedback involves two separate decisions: whether you understand it and whether you will act on it. Clarify the first before debating the second. A small test can reveal whether a proposed change improves the task. If you decline part of the advice, explain the relevant constraint rather than dismissing the person’s experience."
+            "Receiving feedback involves two separate decisions: whether you understand it and whether you will act on it. Clarify the first before debating the second. A small test can reveal whether a proposed change improves the task. If you decline part of the advice, explain the relevant constraint rather than dismissing the person's experience."
           ]
         },
         {
@@ -1154,7 +1154,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "Negotiation becomes clearer when people agree what an option needs to satisfy. Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Be honest when an option does not meet a constraint. A fair process permits disagreement and does not require equal division when tasks have different demands."
+            "Negotiation becomes clearer when people agree what an option needs to satisfy. Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Say which constraint an option fails to meet. A fair process permits disagreement and does not require equal division when tasks have different demands."
           ]
         },
         {
@@ -1174,7 +1174,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Changed case: essential client data arrives at 9:30 and the alternate is unavailable. Respond while preserving review and an honest deadline.",
+        "prompt": "Changed case: essential client data arrives at 9:30 and the alternate is unavailable. Respond with a deadline that allows the required review.",
         "solution": "Identify changes needing review, contact the authorised reviewer and surface the ten o'clock conflict. Offer revised timing or an agreed limited update. Yesterday's approval cannot silently cover changed essential data. Without an available reviewer, a checked release by ten is not a credible promise.",
         "solutionFormat": "prose",
         "checks": [
@@ -1186,7 +1186,7 @@
       "quiz": {
         "question": "What should guide option selection?",
         "options": [
-          "Agreed practical criteria and people’s actual availability",
+          "Agreed practical criteria and people's actual availability",
           "Which person argues longest",
           "Exactly equal page counts regardless of effort"
         ],
@@ -1239,7 +1239,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Transfer: Dev replies, \"Do not message me again about this today, but correct the team thread.\" Choose the next action and define an honest success claim.",
+        "prompt": "Transfer: Dev replies, \"Do not message me again about this today, but correct the team thread.\" Choose the next action and say what it would accomplish.",
         "solution": "Correct the factual claim without sharing private details, then stop requesting discussion today. Do not condition correction on forgiveness. Success is an inaccurate statement corrected and the requested boundary respected; it does not establish restored trust.",
         "solutionFormat": "prose",
         "checks": [
@@ -1334,7 +1334,7 @@
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "Communication tools are options, and context can make direct discussion unsuitable. Power differences, repeated disrespect or a formal process can change the available choices. You may ask a teacher, supervisor or relevant support office about procedures instead of negotiating alone. Do not use this course to excuse mistreatment or assign responsibility for another person’s behaviour."
+            "Communication tools are options, and context can make direct discussion unsuitable. Power differences, repeated disrespect or a formal process can change the available choices. You may ask a teacher, supervisor or relevant support office about procedures instead of negotiating alone. Do not use this course to excuse mistreatment or assign responsibility for another person's behaviour."
           ]
         },
         {
@@ -1427,7 +1427,7 @@
           "Assume silence proves consent"
         ],
         "correct": 0,
-        "explanation": "Record explicit agreements, unresolved issues and follow-up. Silence is not consent, and clarification can be useful even without agreement."
+        "explanation": "Record what people agreed, what remains unresolved and who will follow up. Do not treat silence as consent. Clarifying a disagreement can still help."
       },
       "references": [
         {

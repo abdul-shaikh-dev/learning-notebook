@@ -1,4 +1,4 @@
-# Report what changed with honest limits — printable worksheet
+# Report what changed and what remains uncertain — printable worksheet
 
 Synthetic practice case. No account, app or private data required.
 

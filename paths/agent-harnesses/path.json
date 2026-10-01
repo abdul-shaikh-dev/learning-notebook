@@ -3,7 +3,7 @@
   "title": "Agent Harnesses",
   "category": "AI engineering",
   "status": "ready",
-  "description": "Build the runtime around an agent: 24 lessons on controlled tool dispatch, scoped approvals, bounded loops, state recovery and operational evidence, with three projects and a fully offline Python workshop.",
+  "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
   "level": "Intermediate runtime engineering → selected recovery extensions",
   "prerequisites": [
     "Basic Python functions, dictionaries, classes, exceptions and tests; the Python path provides preparation.",
@@ -73,8 +73,8 @@
   "stages": [
     {
       "id": "foundation",
-      "title": "Foundations · make control explicit",
-      "description": "Learn the run contract, state machine and trusted boundaries before writing a loop.",
+      "title": "Foundations: tool dispatch and run state",
+      "description": "Define the run contract, states and permission checks before writing the loop.",
       "exitCriteria": [
         "Distinguish model proposal, authorization, approval and confirmed effect.",
         "Explain runtime state versus context and business state.",
@@ -101,8 +101,8 @@
     },
     {
       "id": "intermediate",
-      "title": "Intermediate · pause and recover safely",
-      "description": "Add exact-intent approval, budgets, cooperative cancellation, checkpoints and uncertain-effect reconciliation.",
+      "title": "Intermediate: approvals and recovery",
+      "description": "Add approval matching, budgets, cancellation and checkpoints. Recover when a note commits but its response is lost.",
       "exitCriteria": [
         "Bind approval to exact intent and recheck current policy.",
         "Preserve counters and run identity through checkpoint restore.",
@@ -129,8 +129,8 @@
     },
     {
       "id": "advanced",
-      "title": "Applied extension · prove and operate the boundary",
-      "description": "Design isolation, concurrency, telemetry, regression and incident processes beyond the single-worker toy.",
+      "title": "Applied extension: isolation and operations",
+      "description": "Plan isolation, concurrent execution, telemetry and recovery beyond the single-worker workshop.",
       "exitCriteria": [
         "Separate deterministic policy evidence from LLM quality and production security.",
         "Explain fencing, replay and external effect recovery boundaries.",
@@ -138,7 +138,7 @@
       ],
       "project": {
         "title": "Harness assurance and operations packet",
-        "brief": "Defend the offline harness and design its next production boundary without deploying infrastructure.",
+        "brief": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
         "requirements": [
           "Run the provided suite and add two adversarial proposal fixtures.",
           "Write an ADR for a durable checkpoint/receipt service with concurrency ownership.",
@@ -691,7 +691,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Do not ask the model whether it has user approval and accept the answer as evidence. A real approval service needs authenticated reviewer identity, expiry, revocation, persistence and concurrency handling. The workshop host method demonstrates scope matching, not a production authorization protocol. It deliberately drops approvals from checkpoints so restored pending work needs fresh review."
+            "Do not ask the model whether it has user approval and accept the answer as evidence. A real approval service needs authenticated reviewer identity, expiry, revocation, persistence and concurrency handling. The workshop host method demonstrates scope matching, not a production authorization protocol. It drops approvals from checkpoints, so restored pending work needs fresh review."
           ]
         }
       ],
@@ -922,7 +922,7 @@
           "The model predicting it probably worked."
         ],
         "correct": 0,
-        "explanation": "A receipt ties the observed effect to the original intent. Confidence, silence and unrelated success are not equivalent evidence."
+        "explanation": "The receipt identifies the original operation and its payload. An unrelated successful call cannot confirm whether that operation committed."
       },
       "trace": {
         "title": "The response is lost after the save",
@@ -997,7 +997,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the toy runtime simply discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
+            "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the workshop runtime discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
             "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
           ]
         },
@@ -1310,7 +1310,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A production scheduler may deliver the same run to two workers. A lease grants temporary ownership, but a paused worker can wake after its lease expires. A monotonically increasing fencing token lets the protected storage reject writes from an older owner. The downstream boundary must enforce that token; merely attaching it to logs does not prevent stale writes. The workshop is explicitly single-process and single-worker."
+            "A production scheduler may deliver the same run to two workers. A lease grants temporary ownership, but a paused worker can wake after its lease expires. A monotonically increasing fencing token lets the protected storage reject writes from an older owner. The downstream boundary must enforce that token; merely attaching it to logs does not prevent stale writes. The workshop uses one process and one worker."
           ]
         },
         {
@@ -1335,7 +1335,7 @@
         {
           "title": "A version conflict is a useful outcome",
           "paragraphs": [
-            "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A’s state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
+            "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A's state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
             "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in durable_state.py and add a second connection that attempts the stale save.",
             "Use the owner_version_lab.py exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
           ]
@@ -1688,7 +1688,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Do not simply rename FakeStore to ProductionStore. A strong capstone includes an ADR explaining the next boundary to add and a test that could falsify its correctness."
+            "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming FakeStore to ProductionStore does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
           ]
         },
         {
@@ -1709,14 +1709,14 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "What is the strongest honest claim after this workshop passes?",
+        "question": "What do the passing workshop tests establish?",
         "options": [
           "Any connected model will now behave correctly.",
           "The documented offline runtime policies passed their deterministic fixtures.",
           "The harness is production secure against all attacks."
         ],
         "correct": 1,
-        "explanation": "Evidence must match the tested boundary. Mocks validate orchestration policies but do not certify external services, isolation or model behavior."
+        "explanation": "The tests exercise the offline runtime policies. They do not test external services, process isolation or a live model."
       },
       "references": [
         {

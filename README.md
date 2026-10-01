@@ -21,12 +21,12 @@ The notebook currently contains **29 learning paths and 638 lessons**. It is a s
 
 ## Study at your own pace
 
-Start at a course overview to see its prerequisites, learning outcomes and stages. The general course reader progresses through foundations, intermediate practice and advanced applications. Financial foundations has its own beginner introductions, main lessons, visual stories and labs.
+Start at a course overview to see its prerequisites, learning outcomes and stages. Courses cover foundations and intermediate practice, with selected advanced exercises. Financial foundations has its own beginner introductions, main lessons, visual stories and labs.
 
-- **Read first:** explanations, examples and diagram narratives are visible without stepping through an animation. Motion and interactive explorers are optional ways to investigate a concept.
-- **Practice nearby:** lesson practice files, task kits, setup instructions and downloadable bundles sit beside the exercises. Code examples have language highlighting and copy controls; programming workshops run with the local tools described in their guides.
-- **Continue easily:** **Read & continue** records a lesson as read and opens the next one. Viewing a lesson alone does not mark it complete, and quizzes do not block navigation.
-- **Find something again:** use notebook search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
+- Read the explanations and worked examples directly. Animations and interactive diagrams are optional.
+- Download practice files beside each exercise. The guides explain which local tools you need. Code examples include copy controls and syntax highlighting.
+- Use **Read & continue** to mark a lesson as read and open the next one. Opening a lesson does not mark it complete. Quizzes do not block navigation.
+- Find a topic through search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
 
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/practice/personal-effectiveness-studio/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 

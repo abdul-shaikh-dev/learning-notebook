@@ -4,7 +4,7 @@
 
 Negotiation becomes clearer when people agree what an option needs to satisfy.
 
-Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. Be honest when an option does not meet a constraint. A fair process permits disagreement and does not require equal division when tasks have different demands.
+Generate several possibilities before choosing one. Compare them against concrete criteria such as deadline, workload and access. State which constraint an option fails to meet. A fair process permits disagreement and does not require equal division when tasks have different demands.
 
 ## Mechanism and practical trade-off
 
