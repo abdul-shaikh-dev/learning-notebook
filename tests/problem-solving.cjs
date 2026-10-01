@@ -1,0 +1,33 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const paths=require('../scripts/manifest.cjs').readPaths();
+const p=paths.find(p=>p.id==='python-problem-solving');
+const originals=JSON.parse(fs.readFileSync('paths/python-problem-solving/challenges.json','utf8'));
+const cases=JSON.parse(fs.readFileSync('paths/python-problem-solving/practice/cases.json','utf8'));
+assert.equal(p.lessons.length,30);assert.equal(Object.keys(cases).length,30);
+assert.equal(new Set(originals.map(c=>c.function)).size,30);
+for(const stage of p.stages)assert.equal(p.lessons.filter(l=>l.stage===stage.id).length,10);
+const element=()=>({innerHTML:'',textContent:'',addEventListener(){},querySelectorAll(){return [];}});
+const ctx={LEARNING_PATHS:paths,document:{getElementById:element},location:{hash:''},window:{addEventListener(){},scrollTo(){}},localStorage:{getItem(){return null;}}};
+vm.createContext(ctx);vm.runInContext(fs.readFileSync('assets/js/learning-tools.js','utf8')+'\n'+fs.readFileSync('assets/js/catalog.js','utf8'),ctx);
+for(const l of p.lessons){
+ const source=originals.find(c=>c.id===l.id);
+ assert.equal(l.exercise.solution,source.solution);
+ assert.equal(l.exercise.hints.length,3);
+ assert(cases[l.id].cases.length>=6);assert.equal(cases[l.id].preserveInputs,true);
+ assert.deepEqual(cases[l.id].cases,source.cases);
+ assert(l.exercise.command.includes('python check.py '+l.id));
+ assert(l.exercise.starter.includes('NotImplementedError'));
+ const screen=ctx.exerciseView(l,false,p),print=ctx.exerciseView(l,true,p);
+ assert.equal((screen.match(/<details class="challenge-hint">/g)||[]).length,3);
+ assert(!screen.includes('<details open'));
+ assert(screen.indexOf('Compare with a worked solution')<screen.indexOf('Time and space'));
+ assert(print.includes('<h3>Worked solution')&&print.includes('<h4>Hint 3'));
+ assert(!print.includes('<details'),'All challenge support is visible in print');
+}
+const hostile={exercise:{prompt:'<script>bad</script>',solution:'<img>',starter:'<iframe>',checks:[],hints:['<script>hint</script>'],reasoning:['<svg>'],complexity:'<b>',pitfalls:['<i>'],transfer:'<a>'}};
+const rendered=ctx.exerciseView(hostile);
+for(const unsafe of ['<script>','<img>','<iframe>','<svg>','<b>','<i>','<a>'])assert(!rendered.includes(unsafe));
+assert(rendered.includes('&lt;script&gt;'));
+const attempts=fs.readFileSync('paths/python-problem-solving/practice/solutions.py','utf8');
+assert.equal((attempts.match(/raise NotImplementedError/g)||[]).length,30);
+console.log('PASS: 30 original challenges, progressive hints, separate attempts/references, runnable case contracts, escaped content and complete print support.');

@@ -4,13 +4,13 @@ A personal, customizable notebook for learning software, AI, financial concepts 
 
 **[Open the notebook](https://abdul-shaikh-dev.github.io/learning-notebook/)** · **[Browse the source](paths/)**
 
-The notebook currently contains **29 learning paths and 638 lessons**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
+The notebook currently contains **30 learning paths and 668 lessons and challenges**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
 
 ## Choose a learning path
 
 | Area | Courses |
 | --- | --- |
-| Programming | [Python](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/python) · [C# & .NET](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/dotnet) · [JavaScript → TypeScript → React](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/react) · [SQL Server & T-SQL](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/sql-server) · [Data Structures & Algorithms](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-structures-algorithms) |
+| Programming | [Python Problem Solving](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/python-problem-solving) · [Python](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/python) · [C# & .NET](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/dotnet) · [JavaScript → TypeScript → React](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/react) · [SQL Server & T-SQL](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/sql-server) · [Data Structures & Algorithms](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-structures-algorithms) |
 | Design and building products | [Design Patterns](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/design-patterns) · [System Design](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/system-design) · [UI Design & Accessibility](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/ui-accessibility) · [Full-Stack Project Journey](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/full-stack-journey) |
 | AI | [AI Agents](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/ai-agents) · [Agent Harnesses](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/agent-harnesses) |
 | Engineering foundations | [Git & Team Workflows](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/git-team-workflows) · [Testing & Debugging](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/testing-debugging) · [Application Security](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/application-security) · [Networking & the Web](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/networking-web) · [Linux & Operating Systems](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/linux-operating-systems) |
@@ -29,6 +29,8 @@ Start at a course overview to see its prerequisites, learning outcomes and stage
 - Find a topic through search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
 
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
+
+The Python Problem Solving path contains 30 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.
 
 ## Offline access and progress
 
@@ -87,7 +89,7 @@ node verify.cjs
 node scripts/build-pages.cjs
 ```
 
-If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the canonical financial CSV or answer key, first run `node scripts/sync-finance.cjs`. Commit the source and its regenerated outputs together.
+If editing problem-solving challenges, first run `python scripts/sync-problem-solving.py` to rebuild the lessons, starters, references and test cases from `paths/python-problem-solving/challenges.json`. Extract practice downloads into a separate learner folder before editing attempts. If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the canonical financial CSV or answer key, first run `node scripts/sync-finance.cjs`. Commit the source and its regenerated outputs together.
 
 Executable workshop checks are separate from site/content checks:
 

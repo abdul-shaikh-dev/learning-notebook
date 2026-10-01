@@ -16,12 +16,12 @@ for(const p of paths){
  for(const download of p.downloads||[]){assert.ok(fs.existsSync(download.href));assert.ok(p.publicFiles.includes(download.href.replace('paths/'+p.id+'/','')));}
  context.location.hash='#path/'+p.id;vm.runInContext('renderCatalog()',context);
  assert.ok(node('main').innerHTML.includes('Set up your practice environment'));
- for(const l of p.lessons){count++;assert.ok(l.sections.length>=2);assert.ok(l.exercise.prompt&&l.exercise.solution&&l.exercise.checks.length);assert.ok(l.exercise.solutionFormat===undefined||['prose','code'].includes(l.exercise.solutionFormat));assert.ok(l.quiz.options[l.quiz.correct]);
- const choices=l.quiz.options.map((_,i)=>({dataset:{choice:String(i)},addEventListener(t,fn){this[t]=fn;}}));
+ for(const l of p.lessons){count++;assert.ok(l.sections.length>=2);assert.ok(l.exercise.prompt&&l.exercise.solution&&l.exercise.checks.length);assert.ok(l.exercise.solutionFormat===undefined||['prose','code'].includes(l.exercise.solutionFormat));assert.ok(l.quiz?.options[l.quiz.correct]||l.exercise.challenge&&l.exercise.hints.length===3);
+ const choices=(l.quiz?.options||[]).map((_,i)=>({dataset:{choice:String(i)},addEventListener(t,fn){this[t]=fn;}}));
  node('main').querySelectorAll=selector=>selector==='[data-choice]'?choices:[];
  context.location.hash='#topic/'+p.id+'/'+l.id;vm.runInContext('renderCatalog()',context);
- choices[l.quiz.correct].click();assert.equal(node('feedback').textContent,'Correct. '+l.quiz.explanation);
- choices[(l.quiz.correct+1)%choices.length].click();assert.equal(node('feedback').textContent,'Not quite. '+l.quiz.explanation);
+ if(l.quiz){choices[l.quiz.correct].click();assert.equal(node('feedback').textContent,'Correct. '+l.quiz.explanation);
+ choices[(l.quiz.correct+1)%choices.length].click();assert.equal(node('feedback').textContent,'Not quite. '+l.quiz.explanation);}
  node('main').querySelectorAll=()=>[];
  assert.ok(node('main').innerHTML.includes('Compare with a worked solution'));
  assert.ok(!node('main').innerHTML.includes('<script>'));

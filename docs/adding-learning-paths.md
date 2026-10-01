@@ -84,3 +84,22 @@ and source detail when simplifying copy.
 “Read & continue” explicitly records reading and opens the next lesson in one action.
 The separate next-lesson link navigates without recording completion. Opening a page
 never counts as completing it. Keep reading, quiz and project assessment independent.
+
+
+## Problem-solving challenges
+
+`paths/python-problem-solving/challenges.json` owns the 30 original problems,
+examples, visible cases, optional hints and worked reasoning. Run
+`python scripts/sync-problem-solving.py` after edits; use `--check` to detect
+stale generated reader metadata, starters, reference code and cases. Do not edit
+that path's generated `path.json`, `resources.json`, `solutions.py`, `reference.py`,
+`cases.json` or practice README directly. Run attempts in an extracted learner folder.
+
+The shared exercise reader supports `challenge`, `command`, `hints`, `reasoning`,
+`complexity`, `pitfalls` and `transfer`. Hints and solutions start collapsed;
+the printable pack includes their complete text. Coding challenges use executable
+cases instead of a second quiz. Reading completion does not record a passing solution.
+
+The runner and its tests remain authored files. Register new problem contracts in
+the independent `test_reference.py` suite as needed. Run the supplied references
+and runner tests, then rebuild bundles, catalogs and the public site.

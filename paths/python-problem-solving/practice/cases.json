@@ -1,0 +1,2486 @@
+{
+  "sum-approved": {
+    "title": "Total approved minutes",
+    "function": "sum_approved",
+    "cases": [
+      {
+        "args": [
+          [
+            5,
+            20,
+            15
+          ],
+          15
+        ],
+        "expected": 35
+      },
+      {
+        "args": [
+          [],
+          10
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            4,
+            4
+          ],
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            7
+          ],
+          7
+        ],
+        "expected": 7
+      },
+      {
+        "args": [
+          [
+            10,
+            1,
+            10
+          ],
+          0
+        ],
+        "expected": 21
+      }
+    ],
+    "preserveInputs": true
+  },
+  "clamp-readings": {
+    "title": "Keep readings within limits",
+    "function": "clamp_readings",
+    "cases": [
+      {
+        "args": [
+          [
+            -3,
+            4,
+            12
+          ],
+          0,
+          10
+        ],
+        "expected": [
+          0,
+          4,
+          10
+        ]
+      },
+      {
+        "args": [
+          [],
+          1,
+          2
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            2,
+            5
+          ],
+          2,
+          5
+        ],
+        "expected": [
+          2,
+          5
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            9
+          ],
+          4,
+          4
+        ],
+        "expected": [
+          4,
+          4
+        ]
+      },
+      {
+        "args": [
+          [
+            -8,
+            -2
+          ],
+          -5,
+          -1
+        ],
+        "expected": [
+          -5,
+          -2
+        ]
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ],
+          -1,
+          1
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "first-long-label": {
+    "title": "Find the first label that fits",
+    "function": "first_long_label",
+    "cases": [
+      {
+        "args": [
+          [
+            "go",
+            "draft",
+            "publish"
+          ],
+          5
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "",
+            "a"
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            "a",
+            "bb"
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "x",
+            "long",
+            "longer"
+          ],
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "  ",
+            "z"
+          ],
+          2
+        ],
+        "expected": 0
+      }
+    ],
+    "preserveInputs": true
+  },
+  "longest-active-run": {
+    "title": "Measure an active streak",
+    "function": "longest_active_run",
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            1,
+            0,
+            1
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "expected": 2
+      }
+    ],
+    "preserveInputs": true
+  },
+  "clean-label": {
+    "title": "Normalize a display label",
+    "function": "clean_label",
+    "cases": [
+      {
+        "args": [
+          "  Team   NOTES "
+        ],
+        "expected": "team notes"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          "   "
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          "A"
+        ],
+        "expected": "a"
+      },
+      {
+        "args": [
+          "already clean"
+        ],
+        "expected": "already clean"
+      },
+      {
+        "args": [
+          " X  Y Z "
+        ],
+        "expected": "x y z"
+      }
+    ],
+    "preserveInputs": true
+  },
+  "reading-changes": {
+    "title": "Report changes between readings",
+    "function": "reading_changes",
+    "cases": [
+      {
+        "args": [
+          [
+            8,
+            12,
+            7
+          ]
+        ],
+        "expected": [
+          4,
+          -5
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            9
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            3,
+            3
+          ]
+        ],
+        "expected": [
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            -5,
+            0
+          ]
+        ],
+        "expected": [
+          -3,
+          5
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            4,
+            8
+          ]
+        ],
+        "expected": [
+          1,
+          2,
+          4
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "keep-first-labels": {
+    "title": "Keep the first occurrence",
+    "function": "keep_first_labels",
+    "cases": [
+      {
+        "args": [
+          [
+            "red",
+            "blue",
+            "red"
+          ]
+        ],
+        "expected": [
+          "red",
+          "blue"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "",
+            ""
+          ]
+        ],
+        "expected": [
+          ""
+        ]
+      },
+      {
+        "args": [
+          [
+            "A",
+            "a"
+          ]
+        ],
+        "expected": [
+          "A",
+          "a"
+        ]
+      },
+      {
+        "args": [
+          [
+            "x",
+            "x",
+            "y",
+            "x",
+            "z"
+          ]
+        ],
+        "expected": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "args": [
+          [
+            "solo"
+          ]
+        ],
+        "expected": [
+          "solo"
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "stock-totals": {
+    "title": "Combine delivery quantities",
+    "function": "stock_totals",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pad",
+              2
+            ],
+            [
+              "pen",
+              -1
+            ]
+          ]
+        ],
+        "expected": {
+          "pen": 2,
+          "pad": 2
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              0
+            ]
+          ]
+        ],
+        "expected": {
+          "x": 0
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              2
+            ],
+            [
+              "x",
+              -2
+            ]
+          ]
+        ],
+        "expected": {
+          "x": 0
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "A",
+              1
+            ],
+            [
+              "a",
+              2
+            ]
+          ]
+        ],
+        "expected": {
+          "A": 1,
+          "a": 2
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              -3
+            ],
+            [
+              "y",
+              4
+            ]
+          ]
+        ],
+        "expected": {
+          "x": -3,
+          "y": 4
+        }
+      }
+    ],
+    "preserveInputs": true
+  },
+  "column-totals": {
+    "title": "Total uneven rows",
+    "function": "column_totals",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          8,
+          7,
+          6
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [],
+            []
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          0,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            [],
+            [
+              2,
+              4
+            ],
+            []
+          ]
+        ],
+        "expected": [
+          2,
+          4
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "group-by-initial": {
+    "title": "Group names by initial",
+    "function": "group_by_initial",
+    "cases": [
+      {
+        "args": [
+          [
+            "Ada",
+            "Alan",
+            "Bo"
+          ]
+        ],
+        "expected": {
+          "A": [
+            "Ada",
+            "Alan"
+          ],
+          "B": [
+            "Bo"
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "",
+            ""
+          ]
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "a",
+            "A"
+          ]
+        ],
+        "expected": {
+          "a": [
+            "a"
+          ],
+          "A": [
+            "A"
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            "Bob",
+            "Bob"
+          ]
+        ],
+        "expected": {
+          "B": [
+            "Bob",
+            "Bob"
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            "Zoe",
+            "",
+            "Amy",
+            "Zed"
+          ]
+        ],
+        "expected": {
+          "Z": [
+            "Zoe",
+            "Zed"
+          ],
+          "A": [
+            "Amy"
+          ]
+        }
+      }
+    ],
+    "preserveInputs": true
+  },
+  "most-requested": {
+    "title": "Choose the most requested label",
+    "function": "most_requested",
+    "cases": [
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        "expected": "b"
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            ""
+          ]
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          [
+            "x",
+            "y",
+            "y"
+          ]
+        ],
+        "expected": "y"
+      },
+      {
+        "args": [
+          [
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        "expected": "a"
+      },
+      {
+        "args": [
+          [
+            "A",
+            "a",
+            "a"
+          ]
+        ],
+        "expected": "a"
+      }
+    ],
+    "preserveInputs": true
+  },
+  "can-fill-pair": {
+    "title": "Pack exactly two entries",
+    "function": "can_fill_pair",
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4,
+            8
+          ],
+          7
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          [
+            4
+          ],
+          8
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          [
+            4,
+            4
+          ],
+          8
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            -5,
+            -1,
+            2,
+            9
+          ],
+          4
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            5
+          ],
+          6
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            5
+          ],
+          10
+        ],
+        "expected": false
+      }
+    ],
+    "preserveInputs": true
+  },
+  "shared-readings": {
+    "title": "Match repeated readings",
+    "function": "shared_readings",
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            5
+          ],
+          [
+            2,
+            2,
+            2,
+            4
+          ]
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            1
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            1
+          ],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            1,
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "expected": [
+          1
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            0,
+            4
+          ],
+          [
+            -2,
+            4
+          ]
+        ],
+        "expected": [
+          -2,
+          4
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "preserveInputs": true
+  },
+  "busiest-block": {
+    "title": "Find the busiest fixed block",
+    "function": "busiest_block",
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            8,
+            4,
+            1
+          ],
+          2
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          1
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            3
+          ],
+          1
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            1,
+            1
+          ],
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            0,
+            2,
+            8
+          ],
+          1
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            2,
+            0,
+            3
+          ],
+          3
+        ],
+        "expected": 0
+      }
+    ],
+    "preserveInputs": true
+  },
+  "affordable-stretch": {
+    "title": "Fit consecutive costs into a budget",
+    "function": "affordable_stretch",
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            1,
+            3,
+            1,
+            1
+          ],
+          5
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            6
+          ],
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          6
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            2,
+            2,
+            2
+          ],
+          3
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            5,
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 2
+      }
+    ],
+    "preserveInputs": true
+  },
+  "range-totals": {
+    "title": "Answer several range totals",
+    "function": "range_totals",
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            -1,
+            5
+          ],
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          6,
+          4,
+          0
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            9
+          ],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            9
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          9,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          3,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            -3
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          -2,
+          -3
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "balance-marker": {
+    "title": "Place a balanced marker",
+    "function": "balance_marker",
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            3,
+            7,
+            5
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            9
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "expected": 1
+      }
+    ],
+    "preserveInputs": true
+  },
+  "first-suitable": {
+    "title": "Find the first suitable capacity",
+    "function": "first_suitable",
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            4,
+            4,
+            9
+          ],
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          3
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            2,
+            4
+          ],
+          5
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            2,
+            4
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            3,
+            3,
+            3
+          ],
+          3
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5,
+            8
+          ],
+          6
+        ],
+        "expected": 2
+      }
+    ],
+    "preserveInputs": true
+  },
+  "balanced-groups": {
+    "title": "Check nested groups",
+    "function": "balanced_groups",
+    "cases": [
+      {
+        "args": [
+          "a{b[c](d)}"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "([)]"
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          ")("
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          "(()"
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          "hello world"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "[]{}()"
+        ],
+        "expected": true
+      }
+    ],
+    "preserveInputs": true
+  },
+  "undo-notes": {
+    "title": "Apply note edits with undo",
+    "function": "undo_notes",
+    "cases": [
+      {
+        "args": [
+          [
+            "add:a",
+            "add:b",
+            "undo",
+            "add:c"
+          ]
+        ],
+        "expected": [
+          "a",
+          "c"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "undo"
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "add:"
+          ]
+        ],
+        "expected": [
+          ""
+        ]
+      },
+      {
+        "args": [
+          [
+            "add:undo",
+            "add:x:y"
+          ]
+        ],
+        "expected": [
+          "undo",
+          "x:y"
+        ]
+      },
+      {
+        "args": [
+          [
+            "add:a",
+            "undo",
+            "undo"
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "preserveInputs": true
+  },
+  "read-settings": {
+    "title": "Read small settings lines",
+    "function": "read_settings",
+    "cases": [
+      {
+        "args": [
+          [
+            " theme = dark ",
+            "bad line",
+            "theme=light",
+            "note=a=b"
+          ]
+        ],
+        "expected": {
+          "theme": "light",
+          "note": "a=b"
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            " # comment",
+            "   "
+          ]
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "=x",
+            "A=x",
+            "a-b=x",
+            "_ok=yes"
+          ]
+        ],
+        "expected": {
+          "_ok": "yes"
+        }
+      },
+      {
+        "args": [
+          [
+            "empty=",
+            "x=#text"
+          ]
+        ],
+        "expected": {
+          "empty": "",
+          "x": "#text"
+        }
+      },
+      {
+        "args": [
+          [
+            "x=1",
+            "x ?=2",
+            "x=3"
+          ]
+        ],
+        "expected": {
+          "x": "3"
+        }
+      }
+    ],
+    "preserveInputs": true
+  },
+  "latest-samples": {
+    "title": "Keep the latest device sample",
+    "function": "latest_samples",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              "a",
+              3,
+              8
+            ],
+            [
+              "a",
+              1,
+              9
+            ],
+            [
+              "b",
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            3,
+            8
+          ],
+          "b": [
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              2,
+              1
+            ],
+            [
+              "a",
+              2,
+              7
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            2,
+            7
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              5,
+              8
+            ],
+            [
+              "a",
+              4,
+              9
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            5,
+            8
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "A",
+              1,
+              -1
+            ],
+            [
+              "a",
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": {
+          "A": [
+            1,
+            -1
+          ],
+          "a": [
+            1,
+            2
+          ]
+        }
+      }
+    ],
+    "preserveInputs": true
+  },
+  "maintenance-coverage": {
+    "title": "Combine maintenance coverage",
+    "function": "maintenance_coverage",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              5,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            8
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            7
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "first-open-slot": {
+    "title": "Find time for a short appointment",
+    "function": "first_open_slot",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              2,
+              5
+            ],
+            [
+              7,
+              9
+            ]
+          ],
+          10,
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          5,
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          0,
+          1
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              6
+            ]
+          ],
+          10,
+          3
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          6,
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          7,
+          3
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ]
+          ],
+          5,
+          2
+        ],
+        "expected": 0
+      }
+    ],
+    "preserveInputs": true
+  },
+  "peak-requests": {
+    "title": "Measure a request burst",
+    "function": "peak_requests",
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            3,
+            5
+          ],
+          3
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0
+          ],
+          1
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            0,
+            3
+          ],
+          3
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            4,
+            4,
+            4
+          ],
+          1
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            0,
+            2,
+            3,
+            4,
+            10
+          ],
+          3
+        ],
+        "expected": 3
+      }
+    ],
+    "preserveInputs": true
+  },
+  "parse-price": {
+    "title": "Convert a price into cents",
+    "function": "parse_price",
+    "cases": [
+      {
+        "args": [
+          "12.05"
+        ],
+        "expected": 1205
+      },
+      {
+        "args": [
+          "12"
+        ],
+        "expected": 1200
+      },
+      {
+        "args": [
+          "0.00"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "0002.07"
+        ],
+        "expected": 207
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1.2"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          " 1.00"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1.00.00"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "+2"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1000000"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "999999.99"
+        ],
+        "expected": 99999999
+      }
+    ],
+    "preserveInputs": true
+  },
+  "compare-releases": {
+    "title": "Compare numeric release labels",
+    "function": "compare_releases",
+    "cases": [
+      {
+        "args": [
+          "1.10",
+          "1.2"
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          "1",
+          "1.0.0"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "0.9",
+          "1"
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          "01.002",
+          "1.2"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "2.0.1",
+          "2"
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          "0",
+          "0.0"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "3.4",
+          "3.4.1"
+        ],
+        "expected": -1
+      }
+    ],
+    "preserveInputs": true
+  },
+  "ready-order": {
+    "title": "Plan a small preparation list",
+    "function": "ready_order",
+    "cases": [
+      {
+        "args": [
+          [
+            "pack",
+            "wash",
+            "dry"
+          ],
+          [
+            [
+              "pack",
+              "dry"
+            ],
+            [
+              "dry",
+              "wash"
+            ]
+          ]
+        ],
+        "expected": [
+          "wash",
+          "dry",
+          "pack"
+        ]
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "b",
+            "a"
+          ],
+          []
+        ],
+        "expected": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "args": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            [
+              "a",
+              "b"
+            ],
+            [
+              "b",
+              "a"
+            ]
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            "a"
+          ],
+          [
+            [
+              "a",
+              "a"
+            ]
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "c"
+          ],
+          [
+            [
+              "c",
+              "a"
+            ],
+            [
+              "c",
+              "a"
+            ]
+          ]
+        ],
+        "expected": [
+          "a",
+          "b",
+          "c"
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "fulfill-orders": {
+    "title": "Process complete stock requests",
+    "function": "fulfill_orders",
+    "cases": [
+      {
+        "args": [
+          {
+            "pen": 4
+          },
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pen",
+              2
+            ],
+            [
+              "pen",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "args": [
+          {},
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          {},
+          [
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 0
+          },
+          [
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 2
+          },
+          [
+            [
+              "x",
+              2
+            ],
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          [
+            [
+              "y",
+              2
+            ],
+            [
+              "x",
+              1
+            ],
+            [
+              "y",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "book-most-sessions": {
+    "title": "Fit the most optional sessions",
+    "function": "book_most_sessions",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              0,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              10
+            ],
+            [
+              2,
+              9
+            ],
+            [
+              3,
+              8
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        ],
+        "expected": 3
+      }
+    ],
+    "preserveInputs": true
+  }
+}

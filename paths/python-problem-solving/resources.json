@@ -1,0 +1,228 @@
+{
+  "folder": "python-problem-solving-practice",
+  "files": [
+    {
+      "id": "attempts",
+      "href": "paths/python-problem-solving/practice/solutions.py",
+      "role": "starter",
+      "description": "Complete one named function at a time."
+    },
+    {
+      "id": "runner",
+      "href": "paths/python-problem-solving/practice/check.py",
+      "role": "test",
+      "description": "Run a challenge against its supplied cases."
+    },
+    {
+      "id": "cases",
+      "href": "paths/python-problem-solving/practice/cases.json",
+      "role": "test",
+      "description": "Readable test inputs and expected outputs; no hidden judge."
+    },
+    {
+      "id": "reference",
+      "href": "paths/python-problem-solving/practice/reference.py",
+      "role": "reference",
+      "description": "Worked implementations; opened only when you choose."
+    },
+    {
+      "id": "guide",
+      "href": "paths/python-problem-solving/practice/README.md",
+      "role": "guide",
+      "description": "Setup, workflow, failure messages and limits."
+    },
+    {
+      "id": "runner-tests",
+      "href": "paths/python-problem-solving/practice/test_runner.py",
+      "role": "test",
+      "description": "Regression tests for the local runner."
+    },
+    {
+      "id": "reference-tests",
+      "href": "paths/python-problem-solving/practice/test_reference.py",
+      "role": "test",
+      "description": "Independent boundary and oracle checks for the worked solutions."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Start with small functions",
+      "kind": "lesson",
+      "goal": "Build confidence with explicit inputs, loops, strings, lists and dictionaries.",
+      "fileIds": [
+        "attempts",
+        "runner",
+        "cases",
+        "reference",
+        "guide",
+        "runner-tests",
+        "reference-tests"
+      ],
+      "steps": [
+        "Download and extract the ZIP once. Open solutions.py in your editor.",
+        "Choose one challenge from the stage. Edit only its named function.",
+        "Run its command, inspect the first failing input and try again. Hints and reference solutions are optional."
+      ],
+      "commands": [
+        {
+          "label": "List the available challenges",
+          "command": "python check.py --list",
+          "expected": "The 30 challenge identifiers and titles."
+        },
+        {
+          "label": "Try the first challenge in this stage",
+          "command": "python check.py sum-approved",
+          "expected": "An unfinished starter reports NotImplementedError. After a correct implementation, all supplied cases pass."
+        },
+        {
+          "label": "Check the supplied references, when wanted",
+          "command": "python check.py --all --reference",
+          "expected": "Every supplied reference passes. This does not test your solutions.py attempts."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Python functions",
+          "href": "#topic/python/functions"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
+        "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Recognise reusable patterns",
+      "kind": "lesson",
+      "goal": "Practise counting, two pointers, windows, prefix sums, search and stacks.",
+      "fileIds": [
+        "attempts",
+        "runner",
+        "cases",
+        "reference",
+        "guide",
+        "runner-tests",
+        "reference-tests"
+      ],
+      "steps": [
+        "Download and extract the ZIP once. Open solutions.py in your editor.",
+        "Choose one challenge from the stage. Edit only its named function.",
+        "Run its command, inspect the first failing input and try again. Hints and reference solutions are optional."
+      ],
+      "commands": [
+        {
+          "label": "List the available challenges",
+          "command": "python check.py --list",
+          "expected": "The 30 challenge identifiers and titles."
+        },
+        {
+          "label": "Try the first challenge in this stage",
+          "command": "python check.py most-requested",
+          "expected": "An unfinished starter reports NotImplementedError. After a correct implementation, all supplied cases pass."
+        },
+        {
+          "label": "Check the supplied references, when wanted",
+          "command": "python check.py --all --reference",
+          "expected": "Every supplied reference passes. This does not test your solutions.py attempts."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Python functions",
+          "href": "#topic/python/functions"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
+        "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Choose the approach yourself",
+      "kind": "lesson",
+      "goal": "Solve practical tasks whose titles do not name the intended technique.",
+      "fileIds": [
+        "attempts",
+        "runner",
+        "cases",
+        "reference",
+        "guide",
+        "runner-tests",
+        "reference-tests"
+      ],
+      "steps": [
+        "Download and extract the ZIP once. Open solutions.py in your editor.",
+        "Choose one challenge from the stage. Edit only its named function.",
+        "Run its command, inspect the first failing input and try again. Hints and reference solutions are optional."
+      ],
+      "commands": [
+        {
+          "label": "List the available challenges",
+          "command": "python check.py --list",
+          "expected": "The 30 challenge identifiers and titles."
+        },
+        {
+          "label": "Try the first challenge in this stage",
+          "command": "python check.py read-settings",
+          "expected": "An unfinished starter reports NotImplementedError. After a correct implementation, all supplied cases pass."
+        },
+        {
+          "label": "Check the supplied references, when wanted",
+          "command": "python check.py --all --reference",
+          "expected": "Every supplied reference passes. This does not test your solutions.py attempts."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "Python functions",
+          "href": "#topic/python/functions"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
+        "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "sum-approved": "foundation",
+    "clamp-readings": "foundation",
+    "first-long-label": "foundation",
+    "longest-active-run": "foundation",
+    "clean-label": "foundation",
+    "reading-changes": "foundation",
+    "keep-first-labels": "foundation",
+    "stock-totals": "foundation",
+    "column-totals": "foundation",
+    "group-by-initial": "foundation",
+    "most-requested": "intermediate",
+    "can-fill-pair": "intermediate",
+    "shared-readings": "intermediate",
+    "busiest-block": "intermediate",
+    "affordable-stretch": "intermediate",
+    "range-totals": "intermediate",
+    "balance-marker": "intermediate",
+    "first-suitable": "intermediate",
+    "balanced-groups": "intermediate",
+    "undo-notes": "intermediate",
+    "read-settings": "advanced",
+    "latest-samples": "advanced",
+    "maintenance-coverage": "advanced",
+    "first-open-slot": "advanced",
+    "peak-requests": "advanced",
+    "parse-price": "advanced",
+    "compare-releases": "advanced",
+    "ready-order": "advanced",
+    "fulfill-orders": "advanced",
+    "book-most-sessions": "advanced"
+  },
+  "bundle": {
+    "href": "paths/python-problem-solving/practice-bundle.zip"
+  }
+}

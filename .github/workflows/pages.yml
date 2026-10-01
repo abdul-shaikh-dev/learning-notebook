@@ -32,6 +32,7 @@ jobs:
           python-version: "3.14"
       - name: Check complete practice bundles
         run: |
+          python scripts/sync-problem-solving.py --check
           python scripts/build-bundles.py --check
           python tests/resource-bundles.py
       - name: Verify lessons and calculations

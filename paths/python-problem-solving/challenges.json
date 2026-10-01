@@ -1,0 +1,4248 @@
+[
+  {
+    "id": "sum-approved",
+    "title": "Total approved minutes",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "sum_approved",
+    "signature": "minutes: list[int], minimum: int",
+    "returns": "int",
+    "statement": "Return the sum of entries that are at least minimum. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Durations and minimum are integers from 0 to 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            5,
+            20,
+            15
+          ],
+          15
+        ],
+        "expected": 35
+      },
+      {
+        "args": [
+          [],
+          10
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            5,
+            20,
+            15
+          ],
+          15
+        ],
+        "expected": 35
+      },
+      {
+        "args": [
+          [],
+          10
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            4,
+            4
+          ],
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            7
+          ],
+          7
+        ],
+        "expected": 7
+      },
+      {
+        "args": [
+          [
+            10,
+            1,
+            10
+          ],
+          0
+        ],
+        "expected": 21
+      }
+    ],
+    "hints": [
+      "Decide whether each duration contributes before adding it.",
+      "Keep one running total, initially zero.",
+      "For each duration, add it only when duration >= minimum."
+    ],
+    "approach": [
+      "The answer after a prefix of the list is the total of qualifying sessions in that prefix. Start with zero because an empty prefix has no sessions.",
+      "Inspect each duration once. The comparison includes equality, so a session exactly at the minimum must be added. Returning zero also handles both an empty input and an input with no qualifying sessions."
+    ],
+    "solution": "def sum_approved(minutes: list[int], minimum: int) -> int:\n    total = 0\n    for duration in minutes:\n        if duration >= minimum:\n            total += duration\n    return total\n",
+    "complexity": "O(n) time and O(1) extra space for n durations, treating bounded integer arithmetic as constant time.",
+    "pitfalls": [
+      "Counting sessions instead of summing durations.",
+      "Using > and losing the threshold boundary."
+    ],
+    "transfer": "Change the return value to include both qualifying count and total. What extra state is necessary?",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Numeric types: integer comparisons and addition",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "clamp-readings",
+    "title": "Keep readings within limits",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "clamp_readings",
+    "signature": "readings: list[int], low: int, high: int",
+    "returns": "list[int]",
+    "statement": "Return a new list. Replace readings below low with low and readings above high with high. Keep readings on either boundary unchanged. Preserve order and duplicates.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "-10,000 <= low <= high <= 10,000. Readings are integers in that same numeric range."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            -3,
+            4,
+            12
+          ],
+          0,
+          10
+        ],
+        "expected": [
+          0,
+          4,
+          10
+        ]
+      },
+      {
+        "args": [
+          [],
+          1,
+          2
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            -3,
+            4,
+            12
+          ],
+          0,
+          10
+        ],
+        "expected": [
+          0,
+          4,
+          10
+        ]
+      },
+      {
+        "args": [
+          [],
+          1,
+          2
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            2,
+            5
+          ],
+          2,
+          5
+        ],
+        "expected": [
+          2,
+          5
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            9
+          ],
+          4,
+          4
+        ],
+        "expected": [
+          4,
+          4
+        ]
+      },
+      {
+        "args": [
+          [
+            -8,
+            -2
+          ],
+          -5,
+          -1
+        ],
+        "expected": [
+          -5,
+          -2
+        ]
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ],
+          -1,
+          1
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      }
+    ],
+    "hints": [
+      "Separate values into below, within, and above the allowed range.",
+      "Append to a new result instead of assigning into readings.",
+      "Use if value < low, elif value > high, else keep value."
+    ],
+    "approach": [
+      "The two boundaries partition the possible readings. Since low never exceeds high, a reading cannot be both below low and above high.",
+      "Build a new list one element at a time. Every input position produces exactly one output position, which preserves order without changing the caller's data."
+    ],
+    "solution": "def clamp_readings(readings: list[int], low: int, high: int) -> list[int]:\n    result = []\n    for value in readings:\n        if value < low:\n            result.append(low)\n        elif value > high:\n            result.append(high)\n        else:\n            result.append(value)\n    return result\n",
+    "complexity": "O(n) time and O(n) output space, with O(1) auxiliary space beyond the output.",
+    "pitfalls": [
+      "Sorting the readings and changing their order.",
+      "Clamping the entire list to one value when low equals high is correct."
+    ],
+    "transfer": "Return the indices of changed readings as well. Keep indices tied to the original order.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Numeric comparisons; mutable sequence append",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "first-long-label",
+    "title": "Find the first label that fits",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "first_long_label",
+    "signature": "labels: list[str], minimum: int",
+    "returns": "int",
+    "statement": "Return the index of the first label whose length is at least minimum. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Labels contain ASCII characters only. minimum is from 0 to 1,001."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "go",
+            "draft",
+            "publish"
+          ],
+          5
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": -1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "go",
+            "draft",
+            "publish"
+          ],
+          5
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "",
+            "a"
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            "a",
+            "bb"
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "x",
+            "long",
+            "longer"
+          ],
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "  ",
+            "z"
+          ],
+          2
+        ],
+        "expected": 0
+      }
+    ],
+    "hints": [
+      "The first qualifying label settles the answer.",
+      "Use enumerate to keep each label paired with its index.",
+      "Return immediately for len(label) >= minimum; return -1 after the loop."
+    ],
+    "approach": [
+      "Visit labels in their existing order. When a label qualifies, every earlier one has already failed, so its index is the first valid answer.",
+      "An early return avoids examining the remaining labels. Put the fallback return after the loop so an early failure does not prevent a later success."
+    ],
+    "solution": "def first_long_label(labels: list[str], minimum: int) -> int:\n    for index, label in enumerate(labels):\n        if len(label) >= minimum:\n            return index\n    return -1\n",
+    "complexity": "O(n) worst-case time and O(1) extra space. Python stores string length, so len is constant time.",
+    "pitfalls": [
+      "Returning the label instead of its index.",
+      "Returning -1 inside the loop."
+    ],
+    "transfer": "Find the last qualifying index instead. Decide whether you would scan backward or remember the latest match.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Common sequence operations: len and indexing",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "longest-active-run",
+    "title": "Measure an active streak",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "longest_active_run",
+    "signature": "flags: list[int]",
+    "returns": "int",
+    "statement": "Return the greatest number of consecutive 1 entries. A 0 ends the current streak. Return zero for an empty list or a list containing only zeros.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Each flag is exactly the integer 0 or 1."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            1,
+            0,
+            1
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "expected": 2
+      }
+    ],
+    "hints": [
+      "You need both the streak ending here and the best streak seen anywhere.",
+      "Reset only the current streak when you see zero.",
+      "Increment current on a 1, then update best with max(best, current)."
+    ],
+    "approach": [
+      "After each entry, current records the streak that ends at that entry. A zero makes that streak length zero but must not erase an earlier best.",
+      "Update best as you scan rather than waiting for a zero. Otherwise a winning streak at the end of the input would never be recorded."
+    ],
+    "solution": "def longest_active_run(flags: list[int]) -> int:\n    current = 0\n    best = 0\n    for flag in flags:\n        if flag == 1:\n            current += 1\n            best = max(best, current)\n        else:\n            current = 0\n    return best\n",
+    "complexity": "O(n) time and O(1) extra space.",
+    "pitfalls": [
+      "Resetting best at every zero.",
+      "Forgetting a streak that reaches the final element."
+    ],
+    "transfer": "Return the start index and length of the earliest longest streak. Specify the output for an all-zero list.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Numeric types: integer comparisons and addition",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "clean-label",
+    "title": "Normalize a display label",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "clean_label",
+    "signature": "text: str",
+    "returns": "str",
+    "statement": "Remove leading and trailing ASCII spaces, reduce each internal run of ASCII spaces to one, and convert A-Z to lowercase. The empty result is allowed. Only the literal space character is whitespace in this contract.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "text contains only ASCII letters A-Z, a-z and literal spaces."
+    ],
+    "examples": [
+      {
+        "args": [
+          "  Team   NOTES "
+        ],
+        "expected": "team notes"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": ""
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          "  Team   NOTES "
+        ],
+        "expected": "team notes"
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          "   "
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          "A"
+        ],
+        "expected": "a"
+      },
+      {
+        "args": [
+          "already clean"
+        ],
+        "expected": "already clean"
+      },
+      {
+        "args": [
+          " X  Y Z "
+        ],
+        "expected": "x y z"
+      }
+    ],
+    "hints": [
+      "Decide whether spaces should become words or remain individual characters.",
+      "Split into nonempty pieces and join them with one space.",
+      "Use text.lower().split(\" \"), filter empty pieces, then \" \".join."
+    ],
+    "approach": [
+      "Splitting on the literal space produces empty pieces at repeated or outer spaces. Removing those pieces leaves exactly the words that should survive.",
+      "Lowercase the text under the ASCII-only input contract, then join the words once. A single join avoids repeatedly rebuilding a growing output string."
+    ],
+    "solution": "def clean_label(text: str) -> str:\n    words = []\n    for word in text.lower().split(\" \"):\n        if word:\n            words.append(word)\n    return \" \".join(words)\n",
+    "complexity": "O(n) time and O(n) space for n characters, including intermediate pieces and the result.",
+    "pitfalls": [
+      "Treating hyphens or punctuation as separators when they are outside this input contract.",
+      "Using replace(\"  \", \" \") once, which may leave longer runs."
+    ],
+    "transfer": "Extend the contract to permit tabs as separators. Decide explicitly whether all Unicode whitespace should count.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String methods: lower, split with an explicit separator, and join",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "reading-changes",
+    "title": "Report changes between readings",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "reading_changes",
+    "signature": "readings: list[int]",
+    "returns": "list[int]",
+    "statement": "Return each reading minus its immediate predecessor, beginning with the second reading. Do not include a made-up change for the first reading. Fewer than two readings gives an empty list.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Readings are integers from -10,000 to 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            8,
+            12,
+            7
+          ]
+        ],
+        "expected": [
+          4,
+          -5
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            8,
+            12,
+            7
+          ]
+        ],
+        "expected": [
+          4,
+          -5
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            9
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            3,
+            3
+          ]
+        ],
+        "expected": [
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            -5,
+            0
+          ]
+        ],
+        "expected": [
+          -3,
+          5
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            4,
+            8
+          ]
+        ],
+        "expected": [
+          1,
+          2,
+          4
+        ]
+      }
+    ],
+    "hints": [
+      "An output entry needs two neighboring inputs.",
+      "Start the index at 1, not 0.",
+      "At index i append readings[i] - readings[i - 1]."
+    ],
+    "approach": [
+      "Each difference belongs to the edge between two readings, so n readings have at most n-1 differences. Starting at index one makes the predecessor available.",
+      "Subtract in chronological order. A falling reading produces a negative change; absolute differences would discard that information."
+    ],
+    "solution": "def reading_changes(readings: list[int]) -> list[int]:\n    changes = []\n    for index in range(1, len(readings)):\n        changes.append(readings[index] - readings[index - 1])\n    return changes\n",
+    "complexity": "O(n) time and O(n) output space, with O(1) auxiliary space.",
+    "pitfalls": [
+      "Subtracting in the opposite order.",
+      "Comparing every reading with the first rather than the previous reading."
+    ],
+    "transfer": "Reconstruct readings when given the first reading and this list of changes.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Common sequence operations: indexing; integer subtraction",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "keep-first-labels",
+    "title": "Keep the first occurrence",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "keep_first_labels",
+    "signature": "labels: list[str]",
+    "returns": "list[str]",
+    "statement": "Return each distinct label once, in the order it first appears. Matching is exact and case-sensitive. An empty string is a valid label.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Labels contain ASCII characters only."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "red",
+            "blue",
+            "red"
+          ]
+        ],
+        "expected": [
+          "red",
+          "blue"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "red",
+            "blue",
+            "red"
+          ]
+        ],
+        "expected": [
+          "red",
+          "blue"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "",
+            ""
+          ]
+        ],
+        "expected": [
+          ""
+        ]
+      },
+      {
+        "args": [
+          [
+            "A",
+            "a"
+          ]
+        ],
+        "expected": [
+          "A",
+          "a"
+        ]
+      },
+      {
+        "args": [
+          [
+            "x",
+            "x",
+            "y",
+            "x",
+            "z"
+          ]
+        ],
+        "expected": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "args": [
+          [
+            "solo"
+          ]
+        ],
+        "expected": [
+          "solo"
+        ]
+      }
+    ],
+    "hints": [
+      "You must preserve order while remembering what appeared already.",
+      "Use a set for membership and a separate list for the answer.",
+      "Append a label only when it is absent from seen, then add it to seen."
+    ],
+    "approach": [
+      "A set answers whether a label appeared in the processed prefix. The result list records the first time each label passed that test.",
+      "Do not sort or convert a set directly into the answer. Neither operation expresses the required first-occurrence order."
+    ],
+    "solution": "def keep_first_labels(labels: list[str]) -> list[str]:\n    seen = set()\n    result = []\n    for label in labels:\n        if label not in seen:\n            seen.add(label)\n            result.append(label)\n    return result\n",
+    "complexity": "Expected O(c + n) time for n labels with c total characters, using hash sets. O(u) references for u distinct labels, plus output. Adversarial hash collisions can worsen lookup cost.",
+    "pitfalls": [
+      "Sorting removes the original order.",
+      "Lowercasing changes the matching contract."
+    ],
+    "transfer": "Keep the last occurrence of each label in the order those last occurrences appear.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Set types: membership and add; mutable sequence append",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "stock-totals",
+    "title": "Combine delivery quantities",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "stock_totals",
+    "signature": "deliveries: list[list]",
+    "returns": "dict[str, int]",
+    "statement": "Each delivery is [item, quantity]. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pad",
+              2
+            ],
+            [
+              "pen",
+              -1
+            ]
+          ]
+        ],
+        "expected": {
+          "pen": 2,
+          "pad": 2
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pad",
+              2
+            ],
+            [
+              "pen",
+              -1
+            ]
+          ]
+        ],
+        "expected": {
+          "pen": 2,
+          "pad": 2
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              0
+            ]
+          ]
+        ],
+        "expected": {
+          "x": 0
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              2
+            ],
+            [
+              "x",
+              -2
+            ]
+          ]
+        ],
+        "expected": {
+          "x": 0
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "A",
+              1
+            ],
+            [
+              "a",
+              2
+            ]
+          ]
+        ],
+        "expected": {
+          "A": 1,
+          "a": 2
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "x",
+              -3
+            ],
+            [
+              "y",
+              4
+            ]
+          ]
+        ],
+        "expected": {
+          "x": -3,
+          "y": 4
+        }
+      }
+    ],
+    "hints": [
+      "The item name determines which running total to update.",
+      "A missing item starts with total zero.",
+      "Use totals.get(item, 0) + quantity for every row."
+    ],
+    "approach": [
+      "Process each row as one adjustment to one item. A dictionary lets unrelated item totals grow independently.",
+      "Keep zero totals because the output also records which items appeared. Deleting zero entries would silently add an extra filtering rule."
+    ],
+    "solution": "def stock_totals(deliveries: list[list]) -> dict[str, int]:\n    totals = {}\n    for item, quantity in deliveries:\n        totals[item] = totals.get(item, 0) + quantity\n    return totals\n",
+    "complexity": "Expected O(c + n) time for n rows and c total item-name characters, with O(u) output entries for u items. Hash lookup costs are expected, not worst-case guarantees.",
+    "pitfalls": [
+      "Overwriting a previous quantity instead of adding to it.",
+      "Dropping zero or negative totals."
+    ],
+    "transfer": "Accept a starting inventory and return the adjusted inventory without changing the starting dictionary.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Mapping types: dict.get and assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "column-totals",
+    "title": "Total uneven rows",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "column_totals",
+    "signature": "rows: list[list[int]]",
+    "returns": "list[int]",
+    "statement": "Return column sums across rows of different lengths. A missing position contributes zero. Include every column that occurs in any row. No rows, or only empty rows, gives an empty list.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          8,
+          7,
+          6
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          8,
+          7,
+          6
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [],
+            []
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          0,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            [],
+            [
+              2,
+              4
+            ],
+            []
+          ]
+        ],
+        "expected": [
+          2,
+          4
+        ]
+      }
+    ],
+    "hints": [
+      "The output length is the length of the widest row.",
+      "You can grow the output when a row reaches a new column.",
+      "For each index and value, append a zero if needed, then add the value at that index."
+    ],
+    "approach": [
+      "Each number contributes to the column matching its position in its own row. Empty rows require no special arithmetic.",
+      "Growing the totals list on demand keeps every column that has appeared. A new column starts at zero because previous shorter rows contributed nothing there."
+    ],
+    "solution": "def column_totals(rows: list[list[int]]) -> list[int]:\n    totals = []\n    for row in rows:\n        for index, value in enumerate(row):\n            if index == len(totals):\n                totals.append(0)\n            totals[index] += value\n    return totals\n",
+    "complexity": "O(r + m) time for r rows and m total numbers. O(w) output space for maximum row width w.",
+    "pitfalls": [
+      "Using zip, which stops at the shortest row.",
+      "Removing a zero total even though that column exists."
+    ],
+    "transfer": "Return per-column counts as well, so a missing measurement can be distinguished from a measured zero.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Mutable sequence operations: indexing, append and assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "group-by-initial",
+    "title": "Group names by initial",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "group_by_initial",
+    "signature": "names: list[str]",
+    "returns": "dict[str, list[str]]",
+    "statement": "Group names by their first character in a dictionary. Preserve original order and duplicates within each group. Skip empty names. Matching is case-sensitive.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Names contain ASCII letters only, or are empty."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "Ada",
+            "Alan",
+            "Bo"
+          ]
+        ],
+        "expected": {
+          "A": [
+            "Ada",
+            "Alan"
+          ],
+          "B": [
+            "Bo"
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "Ada",
+            "Alan",
+            "Bo"
+          ]
+        ],
+        "expected": {
+          "A": [
+            "Ada",
+            "Alan"
+          ],
+          "B": [
+            "Bo"
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "",
+            ""
+          ]
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "a",
+            "A"
+          ]
+        ],
+        "expected": {
+          "a": [
+            "a"
+          ],
+          "A": [
+            "A"
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            "Bob",
+            "Bob"
+          ]
+        ],
+        "expected": {
+          "B": [
+            "Bob",
+            "Bob"
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            "Zoe",
+            "",
+            "Amy",
+            "Zed"
+          ]
+        ],
+        "expected": {
+          "Z": [
+            "Zoe",
+            "Zed"
+          ],
+          "A": [
+            "Amy"
+          ]
+        }
+      }
+    ],
+    "hints": [
+      "Check for an empty name before indexing its first character.",
+      "Each key needs its own list.",
+      "Create an empty list for a new initial, then append the name."
+    ],
+    "approach": [
+      "The initial chooses a bucket while the full name remains the stored value. Appending during the original scan preserves order inside each bucket.",
+      "Create a fresh list for each initial. Sharing one list between keys would mix groups even if the key selection were correct."
+    ],
+    "solution": "def group_by_initial(names: list[str]) -> dict[str, list[str]]:\n    groups = {}\n    for name in names:\n        if not name:\n            continue\n        initial = name[0]\n        if initial not in groups:\n            groups[initial] = []\n        groups[initial].append(name)\n    return groups\n",
+    "complexity": "Expected O(n) time for n names, since only their single-character initials are hashed. O(n) output references and O(g) group entries.",
+    "pitfalls": [
+      "Indexing an empty name.",
+      "Using one shared list for all groups."
+    ],
+    "transfer": "Group by the final character instead, but keep the original names and order.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String indexing; mapping membership and assignment; list append",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "most-requested",
+    "title": "Choose the most requested label",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "most_requested",
+    "signature": "labels: list[str]",
+    "returns": "str | None",
+    "statement": "Return the most frequent label. Break a frequency tie by the label that first appeared. Return None for no labels. An empty string counts as a label.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "ASCII labels; exact case-sensitive matching."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        "expected": "b"
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": null
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        "expected": "b"
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            ""
+          ]
+        ],
+        "expected": ""
+      },
+      {
+        "args": [
+          [
+            "x",
+            "y",
+            "y"
+          ]
+        ],
+        "expected": "y"
+      },
+      {
+        "args": [
+          [
+            "a",
+            "b",
+            "c"
+          ]
+        ],
+        "expected": "a"
+      },
+      {
+        "args": [
+          [
+            "A",
+            "a",
+            "a"
+          ]
+        ],
+        "expected": "a"
+      }
+    ],
+    "hints": [
+      "Count everything before deciding which frequency wins.",
+      "A second scan can resolve ties in original order.",
+      "Update the winner only when a count is strictly greater than the best count."
+    ],
+    "approach": [
+      "A label that leads halfway through the input may lose later, so first build complete counts. Then scan the original labels to select the winner.",
+      "The strict greater-than comparison preserves an earlier winner when counts tie. Empty input leaves the initial None result intact; using an empty string as a sentinel would confuse a valid label with absence."
+    ],
+    "solution": "def most_requested(labels: list[str]) -> str | None:\n    counts = {}\n    for label in labels:\n        counts[label] = counts.get(label, 0) + 1\n    winner = None\n    best = 0\n    for label in labels:\n        if counts[label] > best:\n            winner = label\n            best = counts[label]\n    return winner\n",
+    "complexity": "Expected O(n + c) time for n labels and c total characters; O(u) auxiliary entries for distinct labels. Assumes expected hash-table operations.",
+    "pitfalls": [
+      "Using >= makes the last tied label win.",
+      "Selecting from partial counts can produce the wrong tie order."
+    ],
+    "transfer": "Return all labels tied for first, once each, in first-occurrence order.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Mapping types: dict.get, indexing and assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "can-fill-pair",
+    "title": "Pack exactly two entries",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "can_fill_pair",
+    "signature": "sizes: list[int], target: int",
+    "returns": "bool",
+    "statement": "The sizes list is sorted in nondecreasing order. Return whether two different positions sum to target. Equal sizes may be used if they occur at least twice.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Sizes and target are integers from -10,000 to 10,000. Input is already sorted."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4,
+            8
+          ],
+          7
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": false
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4,
+            8
+          ],
+          7
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          [
+            4
+          ],
+          8
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          [
+            4,
+            4
+          ],
+          8
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            -5,
+            -1,
+            2,
+            9
+          ],
+          4
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            5
+          ],
+          6
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            5
+          ],
+          10
+        ],
+        "expected": false
+      }
+    ],
+    "hints": [
+      "Begin with the smallest and largest available sizes.",
+      "If their sum is too small, changing the larger endpoint downward cannot help.",
+      "Move left rightward for a small sum, right leftward for a large sum; stop when left >= right."
+    ],
+    "approach": [
+      "With sorted input, the endpoint sum tells you which candidates can be ruled out. If the sum is too small, the current smallest value cannot pair successfully with any remaining value, so discard it.",
+      "The symmetric argument discards the largest value when the sum is too large. Keeping left strictly below right prevents using one entry twice."
+    ],
+    "solution": "def can_fill_pair(sizes: list[int], target: int) -> bool:\n    left = 0\n    right = len(sizes) - 1\n    while left < right:\n        total = sizes[left] + sizes[right]\n        if total == target:\n            return True\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return False\n",
+    "complexity": "O(n) time and O(1) extra space. Each pointer moves at most n times.",
+    "pitfalls": [
+      "Using this elimination rule on unsorted input.",
+      "Allowing left == right and reusing a single position."
+    ],
+    "transfer": "Return the pair of indices. Define which pair wins when several are possible before writing the code.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing and numeric comparisons",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "shared-readings",
+    "title": "Match repeated readings",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "shared_readings",
+    "signature": "left: list[int], right: list[int]",
+    "returns": "list[int]",
+    "statement": "Both lists are sorted. Return their shared values in sorted order, retaining the smaller occurrence count for each value. For example, two 3s on one side and one 3 on the other produce one 3.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            5
+          ],
+          [
+            2,
+            2,
+            2,
+            4
+          ]
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            1
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            5
+          ],
+          [
+            2,
+            2,
+            2,
+            4
+          ]
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            1
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            1
+          ],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            1,
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "expected": [
+          1
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            0,
+            4
+          ],
+          [
+            -2,
+            4
+          ]
+        ],
+        "expected": [
+          -2,
+          4
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "hints": [
+      "Compare the earliest unmatched value in each list.",
+      "A smaller value cannot match anything later in the other sorted list.",
+      "On equality, append once and move both pointers. Otherwise move only the smaller side."
+    ],
+    "approach": [
+      "Treat each occurrence as available for one match. Equal current values form a match, so consuming one from each list enforces the smaller-count rule automatically.",
+      "When current values differ, discard only the smaller one. The other list has already reached a larger value and will never return to that smaller value."
+    ],
+    "solution": "def shared_readings(left: list[int], right: list[int]) -> list[int]:\n    i = 0\n    j = 0\n    result = []\n    while i < len(left) and j < len(right):\n        if left[i] == right[j]:\n            result.append(left[i])\n            i += 1\n            j += 1\n        elif left[i] < right[j]:\n            i += 1\n        else:\n            j += 1\n    return result\n",
+    "complexity": "O(n + m) time and O(min(n, m)) output space in the worst case; O(1) auxiliary space.",
+    "pitfalls": [
+      "Using sets loses repeated matches.",
+      "Advancing both pointers on unequal values can miss a match."
+    ],
+    "transfer": "Compute values present on the left but unmatched on the right, preserving remaining multiplicities.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing and mutable sequence append",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "busiest-block",
+    "title": "Find the busiest fixed block",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "busiest_block",
+    "signature": "counts: list[int], width: int",
+    "returns": "int",
+    "statement": "Return the starting index of the width consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when width exceeds the list length.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "width is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            8,
+            4,
+            1
+          ],
+          2
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          1
+        ],
+        "expected": -1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            8,
+            4,
+            1
+          ],
+          2
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          1
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            3
+          ],
+          1
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            1,
+            1
+          ],
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            0,
+            2,
+            8
+          ],
+          1
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            2,
+            0,
+            3
+          ],
+          3
+        ],
+        "expected": 0
+      }
+    ],
+    "hints": [
+      "Adjacent blocks share all but one entry.",
+      "Compute the first total, then subtract the outgoing value and add the incoming one.",
+      "Update the best index only when the new total is strictly larger."
+    ],
+    "approach": [
+      "The first complete block establishes a valid answer. Each next block removes its old first entry and gains a new last entry, so there is no need to sum width entries again.",
+      "Record a new start only for a larger total. Equality leaves the earlier start unchanged. Check whether a complete block exists before constructing the first sum."
+    ],
+    "solution": "def busiest_block(counts: list[int], width: int) -> int:\n    if width > len(counts):\n        return -1\n    current = 0\n    for index in range(width):\n        current += counts[index]\n    best = current\n    best_start = 0\n    for end in range(width, len(counts)):\n        current += counts[end] - counts[end - width]\n        if current > best:\n            best = current\n            best_start = end - width + 1\n    return best_start\n",
+    "complexity": "O(n) time and O(1) extra space. The initial sum and subsequent updates together visit O(n) entries.",
+    "pitfalls": [
+      "Using >= changes the tie rule.",
+      "Returning the ending index rather than the starting index."
+    ],
+    "transfer": "Return the busiest block for every width from 1 through n. Estimate the cost of reusing this function.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing and integer arithmetic",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "affordable-stretch",
+    "title": "Fit consecutive costs into a budget",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "affordable_stretch",
+    "signature": "costs: list[int], budget: int",
+    "returns": "int",
+    "statement": "Return the longest length of a consecutive stretch whose sum is at most budget. An empty stretch is allowed, so return zero if no entry can fit.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Costs and budget are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            1,
+            3,
+            1,
+            1
+          ],
+          5
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            1,
+            3,
+            1,
+            1
+          ],
+          5
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            6
+          ],
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          6
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            2,
+            2,
+            2
+          ],
+          3
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            5,
+            0,
+            0
+          ],
+          0
+        ],
+        "expected": 2
+      }
+    ],
+    "hints": [
+      "Expand a stretch one entry at a time and track its sum.",
+      "If the sum exceeds budget, remove entries from the left until it fits.",
+      "Nonnegative costs make shrinking safe; record right - left + 1 after restoring the budget."
+    ],
+    "approach": [
+      "After adding a new right endpoint, discard leftmost entries until the sum is affordable. Because costs are nonnegative, adding later entries cannot rescue an over-budget earlier start.",
+      "Once the sum fits, this is the longest affordable stretch ending at that right endpoint. Both endpoints move only forward, so repeated shrinking still makes linear progress."
+    ],
+    "solution": "def affordable_stretch(costs: list[int], budget: int) -> int:\n    left = 0\n    current = 0\n    best = 0\n    for right, cost in enumerate(costs):\n        current += cost\n        while current > budget:\n            current -= costs[left]\n            left += 1\n        best = max(best, right - left + 1)\n    return best\n",
+    "complexity": "O(n) time and O(1) extra space. Each entry enters and leaves the window at most once.",
+    "pitfalls": [
+      "Using this method with negative costs invalidates the elimination argument.",
+      "Forgetting that zero-cost entries can extend a zero-budget stretch."
+    ],
+    "transfer": "Now allow negative credits. Construct an example where this shrinking rule misses the best stretch before choosing another approach.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing and integer arithmetic",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "range-totals",
+    "title": "Answer several range totals",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "range_totals",
+    "signature": "values: list[int], queries: list[list[int]]",
+    "returns": "list[int]",
+    "statement": "For each [start, stop] query, return the sum of values from start inclusive to stop exclusive. Preserve query order. Empty ranges have total zero.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Values are integers from -10,000 to 10,000. Every query has 0 <= start <= stop <= len(values). At most 1,000 queries."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            -1,
+            5
+          ],
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          6,
+          4,
+          0
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          0
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            -1,
+            5
+          ],
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          6,
+          4,
+          0
+        ]
+      },
+      {
+        "args": [
+          [],
+          [
+            [
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            9
+          ],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            9
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          9,
+          0
+        ]
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          3,
+          3
+        ]
+      },
+      {
+        "args": [
+          [
+            -2,
+            -3
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          -2,
+          -3
+        ]
+      }
+    ],
+    "hints": [
+      "Many queries repeat work if you sum each slice.",
+      "Store the total before every position, beginning with zero.",
+      "A range total equals prefix[stop] - prefix[start]."
+    ],
+    "approach": [
+      "A prefix table stores the sum of the first k entries at position k. This includes an initial zero, which lets ranges beginning at index zero use the same formula as other ranges.",
+      "Subtracting the earlier prefix cancels exactly the entries before start. The remaining total covers start through stop-1, and equal endpoints cancel to zero."
+    ],
+    "solution": "def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:\n    prefix = [0]\n    for value in values:\n        prefix.append(prefix[-1] + value)\n    return [prefix[stop] - prefix[start] for start, stop in queries]\n",
+    "complexity": "O(n + q) time, O(n) auxiliary prefix space and O(q) output space for n values and q queries.",
+    "pitfalls": [
+      "Treating stop as inclusive.",
+      "Omitting the initial zero shifts every query by one."
+    ],
+    "transfer": "Answer range averages as exact [sum, count] pairs, defining what to return for an empty range.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "List indexing including negative indices; mutable sequence append",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "balance-marker",
+    "title": "Place a balanced marker",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "balance_marker",
+    "signature": "values: list[int]",
+    "returns": "int",
+    "statement": "Return the earliest index whose entries strictly before it sum to the same amount as entries strictly after it. The value at the index is excluded from both sums. Return -1 if none exists.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Integer values from -10,000 to 10,000; negative values are allowed."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            3,
+            7,
+            5
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": -1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            3,
+            7,
+            5
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            9
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0,
+            0
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "expected": 1
+      }
+    ],
+    "hints": [
+      "At an index, the right total can be derived from the whole total.",
+      "right_total = total - left_total - current_value.",
+      "Compare before adding the current value to the left total."
+    ],
+    "approach": [
+      "Keep the sum strictly to the left as you scan. The whole sum minus that left sum and the current entry gives the sum strictly to the right.",
+      "Checking before updating left preserves the exclusion rule. The first successful index is the requested earliest marker; a single-entry list succeeds because both sides are empty."
+    ],
+    "solution": "def balance_marker(values: list[int]) -> int:\n    total = sum(values)\n    left = 0\n    for index, value in enumerate(values):\n        if left == total - left - value:\n            return index\n        left += value\n    return -1\n",
+    "complexity": "O(n) time for two passes and O(1) extra space.",
+    "pitfalls": [
+      "Including the marker value on one side.",
+      "Assuming sums only increase, even though negatives are allowed."
+    ],
+    "transfer": "Return every balanced marker and explain why the same running-total method still works.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Numeric types: integer addition, subtraction and equality",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "first-suitable",
+    "title": "Find the first suitable capacity",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "first_suitable",
+    "signature": "capacities: list[int], required: int",
+    "returns": "int",
+    "statement": "capacities is sorted in nondecreasing order. Return the first index holding a value at least required, or len(capacities) if no value qualifies.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Capacities and required are integers from 0 to 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            2,
+            4,
+            4,
+            9
+          ],
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          3
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            2,
+            4,
+            4,
+            9
+          ],
+          4
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [],
+          3
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            2,
+            4
+          ],
+          5
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            2,
+            4
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            3,
+            3,
+            3
+          ],
+          3
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5,
+            8
+          ],
+          6
+        ],
+        "expected": 2
+      }
+    ],
+    "hints": [
+      "The qualifying positions, if any, form a suffix.",
+      "Maintain a half-open search interval [low, high).",
+      "If the middle value is too small use low = middle + 1; otherwise use high = middle."
+    ],
+    "approach": [
+      "The answer is a boundary between values that are too small and values that qualify. Using len(capacities) as a possible answer naturally represents the boundary after the last entry.",
+      "Each comparison keeps the half containing the earliest qualifying position. A qualifying middle remains a possible answer, so move high to middle rather than middle-1."
+    ],
+    "solution": "def first_suitable(capacities: list[int], required: int) -> int:\n    low = 0\n    high = len(capacities)\n    while low < high:\n        middle = (low + high) // 2\n        if capacities[middle] < required:\n            low = middle + 1\n        else:\n            high = middle\n    return low\n",
+    "complexity": "O(log(n + 1)) time and O(1) extra space for n capacities. Random access to the list is constant time.",
+    "pitfalls": [
+      "Returning an arbitrary equal value when duplicates exist.",
+      "Combining inclusive and exclusive interval update rules."
+    ],
+    "transfer": "Return the first index strictly above required. Which comparison changes?",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing; numeric comparisons and floor division",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      },
+      {
+        "title": "Python documentation: bisect",
+        "url": "https://docs.python.org/3/library/bisect.html",
+        "section": "bisect_left insertion-point partition and performance notes",
+        "reviewed": "2026-10-02",
+        "scope": "Corroborates the lower-bound partition; the challenge implements the search explicitly."
+      }
+    ]
+  },
+  {
+    "id": "balanced-groups",
+    "title": "Check nested groups",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "balanced_groups",
+    "signature": "text: str",
+    "returns": "bool",
+    "statement": "Return whether every round, square and curly bracket closes in the correct nested order. Ignore ASCII letters and literal spaces. Empty text is valid.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Only ASCII letters, spaces and the characters ()[]{} appear."
+    ],
+    "examples": [
+      {
+        "args": [
+          "a{b[c](d)}"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": true
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          "a{b[c](d)}"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "([)]"
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          ")("
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          "(()"
+        ],
+        "expected": false
+      },
+      {
+        "args": [
+          "hello world"
+        ],
+        "expected": true
+      },
+      {
+        "args": [
+          "[]{}()"
+        ],
+        "expected": true
+      }
+    ],
+    "hints": [
+      "The next closing bracket must match the most recent unmatched opening bracket.",
+      "Store unmatched opening brackets in a list used as a stack.",
+      "On a closer, fail if the stack is empty or its popped opener has the wrong type."
+    ],
+    "approach": [
+      "Nested groups close in the reverse order they opened. A stack preserves exactly that order while allowing unrelated text to pass through.",
+      "A mismatched or unexpected closing bracket fails immediately. At the end, the stack must also be empty; otherwise some opening groups never closed."
+    ],
+    "solution": "def balanced_groups(text: str) -> bool:\n    stack = []\n    openers = \"([{\"\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    for char in text:\n        if char in openers:\n            stack.append(char)\n        elif char in pairs:\n            if not stack or stack.pop() != pairs[char]:\n                return False\n    return not stack\n",
+    "complexity": "O(n) time and O(d) extra space for maximum unmatched nesting depth d, at most n.",
+    "pitfalls": [
+      "Comparing only counts permits incorrect nesting such as ([)].",
+      "Accepting leftover opening brackets at the end."
+    ],
+    "transfer": "Return the index of the first bracket error. Define how an unmatched opener at end-of-input should be reported.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "List append and pop; string and dictionary membership",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "undo-notes",
+    "title": "Apply note edits with undo",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "undo_notes",
+    "signature": "commands: list[str]",
+    "returns": "list[str]",
+    "statement": "Each command is either \"add:\" followed by a note, or exactly \"undo\". Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word undo."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "add:a",
+            "add:b",
+            "undo",
+            "add:c"
+          ]
+        ],
+        "expected": [
+          "a",
+          "c"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "add:a",
+            "add:b",
+            "undo",
+            "add:c"
+          ]
+        ],
+        "expected": [
+          "a",
+          "c"
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "undo"
+          ]
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "add:"
+          ]
+        ],
+        "expected": [
+          ""
+        ]
+      },
+      {
+        "args": [
+          [
+            "add:undo",
+            "add:x:y"
+          ]
+        ],
+        "expected": [
+          "undo",
+          "x:y"
+        ]
+      },
+      {
+        "args": [
+          [
+            "add:a",
+            "undo",
+            "undo"
+          ]
+        ],
+        "expected": []
+      }
+    ],
+    "hints": [
+      "The retained notes already have the order needed for undo.",
+      "A list supports append and removing its final item.",
+      "Slice after the first four characters for add commands; pop only when notes is nonempty."
+    ],
+    "approach": [
+      "An undo cancels the latest retained addition, so a stack models the command history needed by this contract. Undone notes do not need to be kept because redo is not supported.",
+      "Check the exact command before extracting a note. A note containing undo is ordinary content, and removing the fixed add: prefix preserves additional colons."
+    ],
+    "solution": "def undo_notes(commands: list[str]) -> list[str]:\n    notes = []\n    for command in commands:\n        if command == \"undo\":\n            if notes:\n                notes.pop()\n        else:\n            notes.append(command[4:])\n    return notes\n",
+    "complexity": "O(c + n) time for n commands with c total characters. O(c + n) worst-case retained output storage, including copied note strings.",
+    "pitfalls": [
+      "Calling pop on an empty list.",
+      "Splitting at every colon and losing note content."
+    ],
+    "transfer": "Add redo. Decide what happens to redo history after a new add command.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String slicing; list append and pop",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "read-settings",
+    "title": "Read small settings lines",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "read_settings",
+    "signature": "lines: list[str]",
+    "returns": "dict[str, str]",
+    "statement": "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with #, and split other lines at the first =. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain = and #.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            " theme = dark ",
+            "bad line",
+            "theme=light",
+            "note=a=b"
+          ]
+        ],
+        "expected": {
+          "theme": "light",
+          "note": "a=b"
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            " theme = dark ",
+            "bad line",
+            "theme=light",
+            "note=a=b"
+          ]
+        ],
+        "expected": {
+          "theme": "light",
+          "note": "a=b"
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            " # comment",
+            "   "
+          ]
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            "=x",
+            "A=x",
+            "a-b=x",
+            "_ok=yes"
+          ]
+        ],
+        "expected": {
+          "_ok": "yes"
+        }
+      },
+      {
+        "args": [
+          [
+            "empty=",
+            "x=#text"
+          ]
+        ],
+        "expected": {
+          "empty": "",
+          "x": "#text"
+        }
+      },
+      {
+        "args": [
+          [
+            "x=1",
+            "x ?=2",
+            "x=3"
+          ]
+        ],
+        "expected": {
+          "x": "3"
+        }
+      }
+    ],
+    "hints": [
+      "Treat line classification and key validation as separate decisions.",
+      "partition(\"=\") splits once and tells you whether a separator existed.",
+      "Validate every key character against a literal allowed alphabet before assigning into the dictionary."
+    ],
+    "approach": [
+      "Normalize only the spaces the contract mentions. After skipping comments, the first separator divides the key from all remaining value content. Splitting every separator would damage values such as a=b.",
+      "Validate the whole key before updating the result. This prevents an invalid later line from replacing a valid earlier assignment, while ordinary dictionary assignment implements the last-valid-value policy."
+    ],
+    "solution": "def read_settings(lines: list[str]) -> dict[str, str]:\n    result = {}\n    allowed = \"abcdefghijklmnopqrstuvwxyz_\"\n    for line in lines:\n        line = line.strip(\" \")\n        if not line or line.startswith(\"#\"):\n            continue\n        key, separator, value = line.partition(\"=\")\n        key = key.strip(\" \")\n        if not separator or not key or any(char not in allowed for char in key):\n            continue\n        result[key] = value.strip(\" \")\n    return result\n",
+    "complexity": "Expected O(c + n) time and O(c + n) worst-case space for n lines with c total characters. Dictionary operations have expected constant lookup cost after hashing.",
+    "pitfalls": [
+      "Treating an inline # as a comment despite the stated value grammar.",
+      "Using isalpha, which accepts more than lowercase ASCII letters."
+    ],
+    "transfer": "Return rejected line numbers along with settings, while preserving the last-valid-assignment policy.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String methods: strip with explicit characters, startswith and partition; mapping assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "latest-samples",
+    "title": "Keep the latest device sample",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "latest_samples",
+    "signature": "samples: list[list]",
+    "returns": "dict[str, list[int]]",
+    "statement": "Each sample is [device, timestamp, reading]. Return a dictionary mapping each device to [timestamp, reading] for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              "a",
+              3,
+              8
+            ],
+            [
+              "a",
+              1,
+              9
+            ],
+            [
+              "b",
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            3,
+            8
+          ],
+          "b": [
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              "a",
+              3,
+              8
+            ],
+            [
+              "a",
+              1,
+              9
+            ],
+            [
+              "b",
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            3,
+            8
+          ],
+          "b": [
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": {}
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              2,
+              1
+            ],
+            [
+              "a",
+              2,
+              7
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            2,
+            7
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "a",
+              5,
+              8
+            ],
+            [
+              "a",
+              4,
+              9
+            ]
+          ]
+        ],
+        "expected": {
+          "a": [
+            5,
+            8
+          ]
+        }
+      },
+      {
+        "args": [
+          [
+            [
+              "A",
+              1,
+              -1
+            ],
+            [
+              "a",
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": {
+          "A": [
+            1,
+            -1
+          ],
+          "a": [
+            1,
+            2
+          ]
+        }
+      }
+    ],
+    "hints": [
+      "Each device needs its own best sample so far.",
+      "Compare timestamps, not reading values or row positions.",
+      "Replace when the device is new or timestamp >= its stored timestamp."
+    ],
+    "approach": [
+      "After each input row, the dictionary holds the winning sample among rows seen for each device. An older timestamp cannot replace that winner.",
+      "Equality must replace the stored sample because the contract favors the later row. Build a fresh two-element list for each stored result rather than returning a mutable input row."
+    ],
+    "solution": "def latest_samples(samples: list[list]) -> dict[str, list[int]]:\n    latest = {}\n    for device, timestamp, reading in samples:\n        if device not in latest or timestamp >= latest[device][0]:\n            latest[device] = [timestamp, reading]\n    return latest\n",
+    "complexity": "Expected O(n + c) time for n rows and c device-name characters; O(u) output entries for u devices.",
+    "pitfalls": [
+      "Taking the last row without checking its timestamp.",
+      "Using > and retaining the wrong row on a timestamp tie."
+    ],
+    "transfer": "Keep the two most recent distinct timestamps per device. Specify which reading wins when one timestamp repeats.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Dictionary membership and assignment; list indexing",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "maintenance-coverage",
+    "title": "Combine maintenance coverage",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "maintenance_coverage",
+    "signature": "intervals: list[list[int]]",
+    "returns": "list[list[int]]",
+    "statement": "Each [start, end] is a half-open time interval with start < end. Return sorted coverage intervals, combining overlaps and touching intervals. For example [1,3] and [3,5] become [1,5]. Do not change the supplied rows.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Every row has two integer endpoints with 0 <= start < end <= 1,000,000. Input may be unsorted or repeated."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              5,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            8
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              5,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              6
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            8
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              2
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            7
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    ],
+    "hints": [
+      "Arrange intervals by their starting time before comparing coverage.",
+      "Only the last output interval can overlap the next sorted input.",
+      "Start a new interval only when start > previous_end; otherwise extend the previous end to the maximum."
+    ],
+    "approach": [
+      "Sorting makes starts nondecreasing. Once an interval begins after the end of the current coverage, no later interval can fill that gap, so the current result is complete.",
+      "For overlapping or touching intervals, keep the original coverage start and extend only its end. Nested intervals may add no new coverage. Copy endpoints into new rows so extending the result cannot mutate an input row."
+    ],
+    "solution": "def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:\n    result = []\n    for start, end in sorted(intervals):\n        if not result or start > result[-1][1]:\n            result.append([start, end])\n        else:\n            result[-1][1] = max(result[-1][1], end)\n    return result\n",
+    "complexity": "O(n log(n + 1)) time and O(n) extra space including sorted references and output rows.",
+    "pitfalls": [
+      "Assigning an input row directly to the result before modifying it.",
+      "Replacing the end with a smaller nested interval endpoint."
+    ],
+    "transfer": "Keep touching intervals separate. Change the comparison and explain how that changes the meaning of coverage groups.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence comparisons and mutable sequence assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "first-open-slot",
+    "title": "Find time for a short appointment",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "first_open_slot",
+    "signature": "busy: list[list[int]], day_end: int, duration: int",
+    "returns": "int",
+    "statement": "The working day is [0, day_end). Return the earliest integer start where an appointment of duration fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "0 <= day_end <= 1,000,000 and 1 <= duration <= 1,000,000. Every busy row satisfies 0 <= start < end <= day_end."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              2,
+              5
+            ],
+            [
+              7,
+              9
+            ]
+          ],
+          10,
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          5,
+          5
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              2,
+              5
+            ],
+            [
+              7,
+              9
+            ]
+          ],
+          10,
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          5,
+          5
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [],
+          0,
+          1
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              2,
+              6
+            ]
+          ],
+          10,
+          3
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          6,
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          7,
+          3
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ]
+          ],
+          5,
+          2
+        ],
+        "expected": 0
+      }
+    ],
+    "hints": [
+      "Track the earliest start not ruled out by the busy intervals already examined.",
+      "Sort the intervals; a gap before the next start may fit the appointment.",
+      "If candidate + duration <= start, return candidate. Otherwise move candidate to max(candidate, end)."
+    ],
+    "approach": [
+      "Sorted starts let you inspect free gaps chronologically. Before each busy interval, the candidate is the earliest remaining possible appointment start. If its end is no later than the next busy start, that gap is sufficient.",
+      "If the gap is too short, all earlier candidate starts are impossible. Move beyond the busy coverage with max, which also handles nested intervals. After the loop, check the final gap up to day_end."
+    ],
+    "solution": "def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:\n    candidate = 0\n    for start, end in sorted(busy):\n        if candidate + duration <= start:\n            return candidate\n        candidate = max(candidate, end)\n    if candidate + duration <= day_end:\n        return candidate\n    return -1\n",
+    "complexity": "O(n log(n + 1)) time and O(n) sorting space for n busy intervals.",
+    "pitfalls": [
+      "Using < instead of <= rejects an appointment that exactly fills a gap.",
+      "Moving candidate backward for a nested interval."
+    ],
+    "transfer": "Add a required cleanup gap after each busy interval, clipped at the end of the day.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence comparisons and numeric comparisons",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "peak-requests",
+    "title": "Measure a request burst",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "peak_requests",
+    "signature": "timestamps: list[int], width: int",
+    "returns": "int",
+    "statement": "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval [s, s + width) for any integer start s. The right boundary is excluded. Return zero for no requests.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Timestamps are nondecreasing integers from 0 to 1,000,000. width is from 1 to 1,000,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            3,
+            5
+          ],
+          3
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          2
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            1,
+            3,
+            5
+          ],
+          3
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [],
+          2
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            0
+          ],
+          1
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            0,
+            3
+          ],
+          3
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            4,
+            4,
+            4
+          ],
+          1
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            0,
+            2,
+            3,
+            4,
+            10
+          ],
+          3
+        ],
+        "expected": 3
+      }
+    ],
+    "hints": [
+      "A group fits if its last timestamp minus its first is less than width.",
+      "Keep a left endpoint for the oldest request still fitting with the current request.",
+      "While timestamps[right] - timestamps[left] >= width, advance left."
+    ],
+    "approach": [
+      "For any nonempty set of requests that fits, shifting the interval start to its earliest request still contains that set. It is enough to consider consecutive groups in the sorted list.",
+      "When the newest request is width or more seconds after the oldest, those two cannot share a half-open interval. Remove old requests until the group fits, then record its size. Duplicates remain separate positions."
+    ],
+    "solution": "def peak_requests(timestamps: list[int], width: int) -> int:\n    left = 0\n    best = 0\n    for right, timestamp in enumerate(timestamps):\n        while timestamp - timestamps[left] >= width:\n            left += 1\n        best = max(best, right - left + 1)\n    return best\n",
+    "complexity": "O(n) time and O(1) extra space. Each endpoint advances at most n positions.",
+    "pitfalls": [
+      "Using > instead of >= accidentally includes the excluded right boundary.",
+      "Deduplicating timestamps loses distinct requests."
+    ],
+    "transfer": "Return the earliest start of a window achieving the peak as well as its count. Define the empty result.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing and integer arithmetic",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "parse-price",
+    "title": "Convert a price into cents",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "parse_price",
+    "signature": "text: str",
+    "returns": "int | None",
+    "statement": "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or None for an invalid string. Examples: \"12\" gives 1200, \"12.05\" gives 1205.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
+    ],
+    "examples": [
+      {
+        "args": [
+          "12.05"
+        ],
+        "expected": 1205
+      },
+      {
+        "args": [
+          "12"
+        ],
+        "expected": 1200
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          "12.05"
+        ],
+        "expected": 1205
+      },
+      {
+        "args": [
+          "12"
+        ],
+        "expected": 1200
+      },
+      {
+        "args": [
+          "0.00"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "0002.07"
+        ],
+        "expected": 207
+      },
+      {
+        "args": [
+          ""
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1.2"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          " 1.00"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1.00.00"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "+2"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "1000000"
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          "999999.99"
+        ],
+        "expected": 99999999
+      }
+    ],
+    "hints": [
+      "Validate the exact grammar before converting any digits.",
+      "Split on the decimal point and allow either one or two pieces.",
+      "Check lengths and membership in \"0123456789\", then compute whole * 100 + fraction."
+    ],
+    "approach": [
+      "Money enters as text, so preserve its exact decimal meaning. Parsing whole units and cents separately avoids binary floating-point rounding.",
+      "Validation must cover every character and the allowed lengths. A missing fractional part means zero cents, while a present but empty or one-digit fractional part is invalid under this grammar."
+    ],
+    "solution": "def parse_price(text: str) -> int | None:\n    parts = text.split(\".\")\n    if len(parts) not in (1, 2):\n        return None\n    whole = parts[0]\n    if not 1 <= len(whole) <= 6 or any(c not in \"0123456789\" for c in whole):\n        return None\n    fraction = \"00\"\n    if len(parts) == 2:\n        fraction = parts[1]\n        if len(fraction) != 2 or any(c not in \"0123456789\" for c in fraction):\n            return None\n    return int(whole) * 100 + int(fraction)\n",
+    "complexity": "O(n) time and O(n) split storage for input length n. Accepted numeric parts have fixed maximum length, so their conversion cost is bounded.",
+    "pitfalls": [
+      "Using float(text) accepts a wider grammar and introduces rounding concerns.",
+      "Confusing valid zero cents with the None failure result."
+    ],
+    "transfer": "Allow an optional leading minus for refunds. Specify whether negative zero is preserved or becomes integer zero.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String split and membership; integer conversion",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "compare-releases",
+    "title": "Compare numeric release labels",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "compare_releases",
+    "signature": "left: str, right: str",
+    "returns": "int",
+    "statement": "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when left is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
+    ],
+    "examples": [
+      {
+        "args": [
+          "1.10",
+          "1.2"
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          "1",
+          "1.0.0"
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          "1.10",
+          "1.2"
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          "1",
+          "1.0.0"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "0.9",
+          "1"
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          "01.002",
+          "1.2"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "2.0.1",
+          "2"
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          "0",
+          "0.0"
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          "3.4",
+          "3.4.1"
+        ],
+        "expected": -1
+      }
+    ],
+    "hints": [
+      "String comparison would put 10 before 2.",
+      "Convert each component to an integer and compare corresponding positions.",
+      "Loop to the longer component count, supplying zero for a missing position."
+    ],
+    "approach": [
+      "A release is decided by the first unequal numeric component. Later components matter only if all earlier ones matched, so returning at the first difference implements the ordering directly.",
+      "Padding missing trailing positions with zero makes 1 and 1.0 equivalent. Keep this rule separate from real packaging standards, which also define prereleases and other syntax."
+    ],
+    "solution": "def compare_releases(left: str, right: str) -> int:\n    a = [int(part) for part in left.split(\".\")]\n    b = [int(part) for part in right.split(\".\")]\n    for index in range(max(len(a), len(b))):\n        x = a[index] if index < len(a) else 0\n        y = b[index] if index < len(b) else 0\n        if x < y:\n            return -1\n        if x > y:\n            return 1\n    return 0\n",
+    "complexity": "O(c) time and O(c) space for c total input characters, with the stated bounded component size.",
+    "pitfalls": [
+      "Comparing component strings instead of integers.",
+      "Assuming more components always means a later release."
+    ],
+    "transfer": "Support a final -preview marker that sorts before its corresponding stable release. Write the comparison rules before implementing it.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "String split; integer conversion and numeric comparisons",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "ready-order",
+    "title": "Plan a small preparation list",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "ready_order",
+    "signature": "tasks: list[str], requirements: list[list[str]]",
+    "returns": "list[str] | None",
+    "statement": "Each [task, prerequisite] requires prerequisite to finish before task. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return None if no complete order exists, including a self-dependency. An empty task list has the valid order [].",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "tasks contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "pack",
+            "wash",
+            "dry"
+          ],
+          [
+            [
+              "pack",
+              "dry"
+            ],
+            [
+              "dry",
+              "wash"
+            ]
+          ]
+        ],
+        "expected": [
+          "wash",
+          "dry",
+          "pack"
+        ]
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "pack",
+            "wash",
+            "dry"
+          ],
+          [
+            [
+              "pack",
+              "dry"
+            ],
+            [
+              "dry",
+              "wash"
+            ]
+          ]
+        ],
+        "expected": [
+          "wash",
+          "dry",
+          "pack"
+        ]
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            "b",
+            "a"
+          ],
+          []
+        ],
+        "expected": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "args": [
+          [
+            "a",
+            "b"
+          ],
+          [
+            [
+              "a",
+              "b"
+            ],
+            [
+              "b",
+              "a"
+            ]
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            "a"
+          ],
+          [
+            [
+              "a",
+              "a"
+            ]
+          ]
+        ],
+        "expected": null
+      },
+      {
+        "args": [
+          [
+            "b",
+            "a",
+            "c"
+          ],
+          [
+            [
+              "c",
+              "a"
+            ],
+            [
+              "c",
+              "a"
+            ]
+          ]
+        ],
+        "expected": [
+          "a",
+          "b",
+          "c"
+        ]
+      }
+    ],
+    "hints": [
+      "A task is ready when every prerequisite already appears in the completed set.",
+      "Scan sorted task names for the first unfinished ready task, then repeat.",
+      "If no task is ready while unfinished tasks remain, return None."
+    ],
+    "approach": [
+      "This small-input solution repeatedly chooses a ready task from sorted names. A set of prerequisites per task removes duplicate requirements without weakening the dependency rule.",
+      "Each selected task is safe because all its prerequisites are complete. If none is ready, every unfinished task still depends on unfinished work, so a dependency cycle prevents completion. Rechecking readiness each round also honors the smallest-ready-name rule when new tasks become available."
+    ],
+    "solution": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    needed = {task: set() for task in tasks}\n    for task, prerequisite in requirements:\n        needed[task].add(prerequisite)\n    ordered = sorted(tasks)\n    done = set()\n    result = []\n    while len(result) < len(tasks):\n        selected = None\n        for task in ordered:\n            if task not in done and needed[task] <= done:\n                selected = task\n                break\n        if selected is None:\n            return None\n        done.add(selected)\n        result.append(selected)\n    return result\n",
+    "complexity": "With bounded name lengths and expected set operations, O(r + v log(v + 1) + v * (v + e)) worst-case time and O(v + e) extra space for v tasks, r requirement rows and e distinct requirements. Repeated scans favor clarity at v <= 100.",
+    "pitfalls": [
+      "Sorting only the initially ready tasks misses later priority changes.",
+      "Returning a partial order without reporting the cycle."
+    ],
+    "transfer": "Replace repeated scans with prerequisite counts and a priority queue of ready tasks. Explain why the output order should remain identical.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Set types: subset comparison and add; mapping indexing",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "fulfill-orders",
+    "title": "Process complete stock requests",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "fulfill_orders",
+    "signature": "stock: dict[str, int], orders: list[list]",
+    "returns": "list[bool]",
+    "statement": "Each order is [item, quantity]. Process orders in input order using a private working copy of stock. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave stock unchanged.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
+    ],
+    "examples": [
+      {
+        "args": [
+          {
+            "pen": 4
+          },
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pen",
+              2
+            ],
+            [
+              "pen",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "args": [
+          {},
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          {
+            "pen": 4
+          },
+          [
+            [
+              "pen",
+              3
+            ],
+            [
+              "pen",
+              2
+            ],
+            [
+              "pen",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "args": [
+          {},
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          {},
+          [
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 0
+          },
+          [
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 2
+          },
+          [
+            [
+              "x",
+              2
+            ],
+            [
+              "x",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          false
+        ]
+      },
+      {
+        "args": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          [
+            [
+              "y",
+              2
+            ],
+            [
+              "x",
+              1
+            ],
+            [
+              "y",
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "hints": [
+      "You need changing inventory internally without changing the supplied dictionary.",
+      "Copy stock once; values are integers, so a shallow copy is sufficient.",
+      "Deduct only inside the acceptance branch, then append whether that order succeeded."
+    ],
+    "approach": [
+      "Order matters because an accepted request reduces what later requests can use. A private dictionary preserves that state while keeping the function pure from the caller's perspective.",
+      "Check the full quantity before deducting anything. Partial fulfillment would change both the returned answer and the inventory available to later requests, so rejection must leave the working quantity unchanged."
+    ],
+    "solution": "def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:\n    remaining = stock.copy()\n    accepted = []\n    for item, quantity in orders:\n        if remaining.get(item, 0) >= quantity:\n            remaining[item] -= quantity\n            accepted.append(True)\n        else:\n            accepted.append(False)\n    return accepted\n",
+    "complexity": "Expected O(s + n + c) time for s stock entries, n orders and c item-name characters examined; O(s) working entries and O(n) output space.",
+    "pitfalls": [
+      "Deducting before checking whether the whole order fits.",
+      "Copying the dictionary is essential even though integer values themselves are immutable."
+    ],
+    "transfer": "Allow each order to request several items atomically. Reject the whole order if any item is short.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Dictionary copy, get and assignment",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "book-most-sessions",
+    "title": "Fit the most optional sessions",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "book_most_sessions",
+    "signature": "sessions: list[list[int]]",
+    "returns": "int",
+    "statement": "Each [start, end] is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
+    "constraints": [
+      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Each row contains integer times with 0 <= start < end <= 1,000,000. Input may be unsorted."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              0,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              0,
+              8
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              10
+            ],
+            [
+              2,
+              9
+            ],
+            [
+              3,
+              8
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        ],
+        "expected": 3
+      }
+    ],
+    "hints": [
+      "Choosing the earliest starting session can block many shorter sessions.",
+      "Among currently compatible sessions, the one ending earliest leaves the most remaining time.",
+      "Sort by end time; accept a session when its start is at least the last accepted end."
+    ],
+    "approach": [
+      "Consider the first session of any optimal schedule. Replacing it with the session that ends earliest cannot block a later session, because the replacement finishes no later. This preserves the achievable count.",
+      "After accepting that session, the same argument applies to compatible sessions that remain. Sorting by end time lets one forward scan make those choices. This reasoning depends on maximizing count; it does not solve a version with unequal rewards."
+    ],
+    "solution": "def book_most_sessions(sessions: list[list[int]]) -> int:\n    count = 0\n    last_end = 0\n    for start, end in sorted(sessions, key=lambda interval: (interval[1], interval[0])):\n        if start >= last_end:\n            count += 1\n            last_end = end\n    return count\n",
+    "complexity": "O(n log(n + 1)) time and O(n) sorting space. The selection scan itself uses O(1) auxiliary state.",
+    "pitfalls": [
+      "Choosing shortest duration is not justified by the earliest-finish argument.",
+      "Using this greedy rule for unequal session rewards can miss the best total reward."
+    ],
+    "transfer": "Give sessions different integer rewards. Find a counterexample to this greedy rule, then design a method that compares taking and skipping each session.",
+    "references": [
+      {
+        "title": "Python documentation: built-in types",
+        "url": "https://docs.python.org/3/library/stdtypes.html",
+        "section": "Sequence indexing; numeric comparisons",
+        "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  }
+]
