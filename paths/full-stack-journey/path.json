@@ -4,7 +4,7 @@
   "category": "Applied projects",
   "status": "ready",
   "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
-  "level": "Guided foundation project → intermediate integration → advanced extensions",
+  "level": "Intermediate full-stack project → deployment extensions",
   "prerequisites": [
     "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
     "Install .NET 10 SDK, Node 24/npm and Python 3.11+; SQL Server/SSMS is required for the persistence milestone."
@@ -702,6 +702,14 @@
           "paragraphs": [
             "The in-memory adapter locks compare-and-replace; SQL performs the comparison in the update predicate. The UI retains the displayed row and explains Reload and compare. It does not automatically retry with version 2 because that would overwrite another decision without the learner reviewing it."
           ]
+        },
+        {
+          "title": "Preserve the draft after a stale update",
+          "paragraphs": [
+            "Two tabs read version 4. A changes the title and receives version 5. B submits its old version 4 with a minutes edit. The API must return a conflict and retain A’s row. The UI should keep B’s unsaved minutes visible while offering a deliberate reload or reconciliation. Automatically resending with version 5 would convert conflict detection into an invisible overwrite.",
+            "Run two independent clients against the local reference with the same initial version. Confirm only one update succeeds, then fetch the stored row through a third request. For the UI case, keep a draft before injecting a 409. The acceptance condition is not just an error message: the draft survives and the persisted winner remains unchanged.",
+            "Extend planner-ui.test.tsx with controllable responses: first load version 4, return conflict on save, then offer version 5 on explicit refresh. A changed case edits different fields; explain why automatic merging still needs a stated field-level policy."
+          ]
         }
       ],
       "exercise": {
@@ -797,6 +805,14 @@
           "title": "An idempotent creation extension",
           "paragraphs": [
             "For the assessed extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
+          ]
+        },
+        {
+          "title": "Recover an unknown create without guessing",
+          "paragraphs": [
+            "The server commits a new session, but its response is lost. The UI sees a timeout. A second POST with a new identity can create two sessions. A disabled button only prevents a second click while the page remains alive; it does not identify the operation after a reload.",
+            "An extension can persist one client operation key for one intended create, send it on retries, and bind the server’s receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
+            "Reproduce the ambiguity with a proxy or test adapter that allows the first server commit but drops only its response. Query the database independently. Implement receipt replay, then repeat the fault: there should be one session and the same returned identity. Do not mark this complete merely because a mocked fetch was called once."
           ]
         }
       ],
@@ -1085,6 +1101,13 @@
           "title": "A final feature review",
           "paragraphs": [
             "Finish with a review explaining the complete feature and its remaining boundaries. Show a valid add, rejected input, stale conflict, retained draft, SQL restart and tested restore if performed. Distinguish the baseline from your identity/idempotency/release extensions and link each claim to recorded evidence."
+          ]
+        },
+        {
+          "title": "Prove a restore has useful application state",
+          "paragraphs": [
+            "A backup file exists and the restore command succeeds. That still does not prove the planner works. Before the backup, create two known sessions and record their IDs and versions. After backup, make a third change. Restore into a separate owned database and point a separate local app instance at it. The first two rows must match the backup; the later change should be absent under this scenario.",
+            "Exercise a read and a versioned update through the restored API. A schema mismatch may leave rows inspectable in SQL while the application cannot use them. Keep the original database intact throughout the drill. Recovery evidence consists of observed rows and application behaviour, with the backup time explaining which changes were intentionally not recovered."
           ]
         }
       ],

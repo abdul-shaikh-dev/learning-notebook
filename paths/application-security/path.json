@@ -4,7 +4,7 @@
   "category": "Security",
   "status": "ready",
   "description": "Learn trusted identity, object authorization, web input and session defenses, OAuth/OIDC boundaries and security verification through 21 lessons and three synthetic offline projects.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate application controls → integration extensions",
   "prerequisites": [
     "Basic programming and HTTP concepts; complete Python or web foundations if functions, dictionaries and requests are unfamiliar."
   ],
@@ -142,7 +142,9 @@
     "intermediate-kit.md",
     "advanced-kit.md",
     "security_http.py",
-    "test_security_http.py"
+    "test_security_http.py",
+    "login_flow_lab.py",
+    "depth-lab.md"
   ],
   "downloads": [
     {
@@ -334,6 +336,14 @@
             "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
           ],
           "example": "from security_lab import Principal, DOCUMENTS, authorized\nassert authorized(Principal('alice','red'),DOCUMENTS['a'],'update')\nassert not authorized(Principal('alice','red'),DOCUMENTS['c'],'read')\nassert not authorized(Principal('reviewer','red','reader'),DOCUMENTS['b'],'update')"
+        },
+        {
+          "title": "Break a convincing but incomplete ownership check",
+          "paragraphs": [
+            "Alice in tenant Red requests document a. The request has a valid session and a valid CSRF token. Now change only the path to Bob’s document b: the session is still valid, but object authorization must fail. Next use Alice’s identity in tenant Blue against a. Checking only the owner name now fails to separate tenants. The predicate needs the authenticated tenant, owner and permitted action together.",
+            "Run test_security_http.py and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
+            "Changed case: add a read-only collaborator. Decide whether they may read, rename or delete before altering the code. A role called member cannot replace action-specific requirements. Add one allowed read and one denied mutation; avoid solving the negative test by denying every request."
+          ]
         }
       ],
       "exercise": {
@@ -918,6 +928,14 @@
             "The worksheet deliberately has no cryptographic implementation or live endpoint. Real tests use the provider’s supported flow and record sanitized outcomes. A passing authorization policy unit test says nothing about PKCE verification."
           ],
           "example": "Authorization: code_challenge=<S256 challenge>, state=<correlation>\nRedemption: code_verifier=<per-flow verifier>\nOIDC request/ID token: nonce under the chosen library contract\n# Do not log these values or implement fake redemption."
+        },
+        {
+          "title": "Track two browser login attempts independently",
+          "paragraphs": [
+            "Two tabs begin login. Tab A stores state A and verifier A; tab B stores state B and verifier B. If your implementation keeps one global verifier, B overwrites A. The response for A may then be associated with the wrong initiating transaction. Store pending flows by unpredictable state with expiry and one-time consumption, rather than one shared current-login value.",
+            "A local transaction-binding test can create A and B, complete B first, and then complete A. Completing A again must fail; an unknown state must fail before exchanging a code. This test proves your state bookkeeping, not an identity provider’s signature validation. Keep the provider adapter separate so a fake successful token response cannot bypass issuer, audience or nonce checks.",
+            "Use login_flow_lab.py for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library’s documented token-validation path."
+          ]
         }
       ],
       "exercise": {
@@ -1251,6 +1269,13 @@
             "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
           ],
           "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"
+        },
+        {
+          "title": "Make a negative test prove the protected outcome",
+          "paragraphs": [
+            "Suppose a test sends a malicious title and sees an error. What was protected? Inspect the database row, emitted events and returned body. The intended assertion is no unauthorized mutation and no confidential response, not merely an error status. Pair each denial with a permitted case so an implementation that always returns 403 cannot pass.",
+            "Choose one control from the existing HTTP lab, deliberately remove it in a copied exercise, and identify the smallest test that detects the defect. If none fails, add a behaviour test before repairing the copy. This turns a control inventory into evidence about a real execution path. Leave login-provider and browser-cookie claims separate until those environments are exercised."
+          ]
         }
       ],
       "exercise": {
@@ -1405,7 +1430,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced: Security verification and identity integration review",
+      "title": "Applied extension: Security verification and identity integration review",
       "description": "Deliver an evidence matrix and runbook, plus an optional real-provider integration plan with clear opt-in and test boundaries.",
       "exitCriteria": [
         "No raw token, cookie, credential or private body enters evidence.",

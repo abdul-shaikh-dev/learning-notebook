@@ -84,6 +84,24 @@
       "href": "paths/python/practice/test_io_failure_bridge.py",
       "role": "test",
       "description": "Local I/O failure checks"
+    },
+    {
+      "id": "depth-summary_reference-py",
+      "href": "paths/python/practice/summary_reference.py",
+      "role": "reference",
+      "description": "Independent coding challenge reference"
+    },
+    {
+      "id": "depth-summary_checks-py",
+      "href": "paths/python/practice/summary_checks.py",
+      "role": "test",
+      "description": "Contract checks for a learner-selected summary module"
+    },
+    {
+      "id": "depth-summary-challenge-md",
+      "href": "paths/python/practice/summary-challenge.md",
+      "role": "guide",
+      "description": "Build independently from concrete input/output cases"
     }
   ],
   "tasks": [
@@ -96,7 +114,10 @@
         "intermediate_project-py",
         "advanced_project-py",
         "test_projects-py",
-        "README-md"
+        "README-md",
+        "depth-summary_reference-py",
+        "depth-summary_checks-py",
+        "depth-summary-challenge-md"
       ],
       "steps": [
         "Extract the bundle and open python-practice. All listed files are flat at this folder root.",
@@ -104,7 +125,8 @@
         "Run the provided baseline and record its actual results.",
         "Build a validated study log and topic summary. Start from a blank file; compare the reference only after attempting the brief.",
         "Complete the assessment requirements in the reader: Accept nonblank topics and actual nonnegative whole minutes.; Preserve existing records when validation fails.; Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
-        "Compare your evidence with the stage rubric: Correct repeated-topic and empty totals.; Explicit validation and unchanged state on errors.; Explains that simple JSON persistence assumes one process."
+        "Compare your evidence with the stage rubric: Correct repeated-topic and empty totals.; Explicit validation and unchanged state on errors.; Explains that simple JSON persistence assumes one process.",
+        "Build the independent summary from summary-challenge.md, then run the same contract checks against your module."
       ],
       "commands": [
         {
@@ -116,6 +138,11 @@
           "label": "Run baseline tests from python-practice folder root",
           "command": "python -m unittest -v test_projects.py",
           "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python summary_checks.py",
+          "expected": "Five unittest methods pass against the reference; use my_summary to assess your own implementation."
         }
       ],
       "prerequisites": [

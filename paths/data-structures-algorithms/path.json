@@ -4,7 +4,7 @@
   "category": "Computer science",
   "status": "ready",
   "description": "From collections to algorithm design: invariants, graph traversal, greedy proofs, dynamic programming and tested projects.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
     "You only need arithmetic and a willingness to trace a few steps on paper."
@@ -61,7 +61,10 @@
     "practice/trees_graphs.py",
     "practice/test_trees_graphs.py",
     "practice/test_advanced_oracles.py",
-    "practice/advanced-reasoning.md"
+    "practice/advanced-reasoning.md",
+    "practice/method_selection.py",
+    "practice/test_method_selection.py",
+    "practice/method-selection.md"
   ],
   "downloads": [
     {
@@ -541,6 +544,13 @@
           "paragraphs": [
             "A seen set prevents cycles from causing repeated traversal. With adjacency lists and expected constant-time hashing, traversal is O(V+E) over reachable vertices/edges."
           ]
+        },
+        {
+          "title": "Changing the question changes the algorithm",
+          "paragraphs": [
+            "A has a direct edge to B costing nine and an edge to C costing one; C reaches B for one more. BFS reports one hop to B, correctly answering fewest edges. It does not choose the cheapest two-edge route. Before tracing a queue, say whether you minimize hops, weight, elapsed time or some other quantity.",
+            "The method-selection lab runs both BFS and Dijkstra on this same graph. An unreachable Z is absent from both reachable-distance maps. Reporting zero for Z would confuse unreachable with the legitimate zero distance from A to itself. Use the result representation to preserve that distinction."
+          ]
         }
       ],
       "exercise": {
@@ -638,6 +648,13 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Memoization is not a substitute for a valid recurrence. Test base cases separately. A greedy choice needs a proof; it does not follow from having a short implementation."
+          ]
+        },
+        {
+          "title": "Derive a second recurrence rather than memorising stairs",
+          "paragraphs": [
+            "For unlimited coins of values 1, 3 and 4, define best[a] as the minimum coin count for amount a. The last coin c leaves amount a-c, so each reachable best[a-c]+1 is a candidate. Start best[0]=0; represent unreachable amounts with None, not zero. At six, using three after three yields two coins, while a greedy four leaves two ones.",
+            "The reference computes states in increasing amount because every positive coin leads to a smaller amount. For target T and k denominations it uses O(Tk) candidate work and O(T) storage. T is the numeric amount, so a huge value can be expensive even if its decimal input is short. The exercise oracle instead explores reachable amounts with BFS; agreement across small cases is evidence from a different mechanism."
           ]
         }
       ],
@@ -1039,6 +1056,13 @@
           "paragraphs": [
             "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
           ]
+        },
+        {
+          "title": "Use a small counterexample to reject a tempting rule",
+          "paragraphs": [
+            "Taking the largest coin seems reasonable on 1, 5 and 10, but that observation is not a proof for arbitrary denominations. On 1, 3, 4 with target 6, greedy takes 4+1+1 while 3+3 is better. A counterexample is enough to reject the universal rule; thousands of successful random examples would not prove it.",
+            "The supplied method-selection tests keep the failing greedy case as a comparison, not a failing regression. The production answer in that lab is the DP result. Transfer the habit to interval scheduling: a shortest-duration or earliest-start rule needs its own argument, not the proof for earliest finish."
+          ]
         }
       ],
       "exercise": {
@@ -1212,6 +1236,13 @@
           "paragraphs": [
             "Benchmarks measure a particular workload and environment. They cannot establish asymptotic complexity by themselves. Separate setup, sorting and parsing from the operation being measured; report input sizes and distributions. Avoid recursive depth claims based on balanced-tree examples alone."
           ]
+        },
+        {
+          "title": "Select state and method for a changed constraint",
+          "paragraphs": [
+            "Try a route problem with one optional half-price edge. A location alone is no longer enough state: arriving at B with the discount unused has different future choices from arriving there after spending it. Model (location, used_discount), and choose transitions that preserve the resource constraint before selecting a shortest-path method.",
+            "This extension is not implemented in method_selection.py. A useful concrete case has A→B cost 8, A→C cost 3, C→B cost 3: ordinary cheapest cost is 6, but one half-price edge permits the direct cost 4. Test an unreachable destination and a zero-cost edge too. A passing coin lab does not demonstrate this richer state model."
+          ]
         }
       ],
       "exercise": {
@@ -1303,7 +1334,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · Proofs and constrained optimization",
+      "title": "Selected advanced practice",
       "description": "Choose algorithms by assumptions, prove or challenge greedy choices and design dynamic-programming states.",
       "exitCriteria": [
         "Explain why Dijkstra requires nonnegative weights.",

@@ -4,7 +4,7 @@
   "category": "Personal development",
   "status": "ready",
   "description": "Design realistic everyday routines using context, small actions and honest observations.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → everyday experiments → adaptation and review",
   "prerequisites": [
     "No specialist knowledge required.",
     "A text editor or printed worksheets; fictional cases can be used throughout."
@@ -250,7 +250,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced — adapt and review",
+      "title": "Applied transfer — adapt and review",
       "description": "An evidence-based maintenance decision",
       "exitCriteria": [
         "Compare benefit, effort and context fit.",
@@ -468,22 +468,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "One routine, two different opportunities",
           "paragraphs": [
-            "Hana opens a shopping site whenever she sits down for lunch at her desk, hoping for a change from work."
+            "Continuing case: Noor wants to put project notes in one folder before leaving a shared desk. On Monday the desk timer appears with two minutes to spare. On Tuesday the current file is still exporting; on Wednesday a colleague needs the desk immediately. All three days have a cue, but only Monday has an uninterrupted opportunity. Counting only completed days hides that difference.",
+            "An earlier cue may help; a second reminder at departure cannot create missing time. Noor tries saving the current file as export starts, then collects remaining notes when the desk is available. This is a local design hypothesis, not evidence that the action has become automatic."
           ],
-          "example": "Cue: sitting down with lunch. Action: browsing offers. Immediate payoff: novelty and a break from work. Hana tests putting a short puzzle beside her lunch instead. She checks whether it provides a satisfying break without assuming that shopping has only one cause.",
+          "example": "Monday: timer noticed, opportunity available, notes filed. Tuesday: timer noticed, export blocked filing. Wednesday: timer noticed, immediate handover blocked filing. The next test moves the cue earlier and makes the first action saving the current file.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Sam opens a news app whenever the kettle is switched on, while the book stays in another room. Map the cue, action, immediate payoff and competing option.",
-        "solution": "Cue: kettle switched on. Action: news app. Payoff: something engaging during waiting. Option: leave a short story beside the kettle and read one paragraph. This tests an alternative without claiming the phone is the sole cause.",
+        "prompt": "Transfer: Noor now works on a train. There is no timer, the connection drops and the journey ends unpredictably. Choose an observable cue and an offline action. What observation would make you reject the plan?",
+        "solution": "One option is to save a local note when closing the editor and sync later. The cue belongs to an action Noor controls rather than uncertain arrival time. Revise it if closing the editor happens only after work is lost, or if local storage is unavailable. Other answers work when their cue, opportunity and materials are explicit.",
         "solutionFormat": "prose",
         "checks": [
-          "Cue, action and immediate consequence are distinguished.",
-          "The alternative is physically available at the cue.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Cue works without the desk timer.",
+          "First action works offline.",
+          "An observation could disconfirm the plan."
         ]
       },
       "quiz": {
@@ -1152,22 +1153,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "Separate a useful change from a good week",
           "paragraphs": [
-            "Theo moves a drawing pad beside his chair during the same week that his evening work hours fall."
+            "Noor moves the filing cue from departure to export. In the earlier week, five desk sessions contained three usable opportunities and two completions. In the new week, five sessions contained four opportunities and three completions. The setting as well as the completion count changed.",
+            "The observed proportions are 2/3 and 3/4 among usable opportunities, not proof that the new cue caused improvement. Noor keeps folder and action unchanged and checks whether the cue happens early enough. A small practical experiment need not pretend to be a controlled trial; a long diary is optional."
           ],
-          "example": "Theo keeps the same five-minute drawing task and pad while testing the new location. He records available evenings and work hours. More drawings may support keeping the setup, but the lighter workload remains an alternative explanation for the increase.",
+          "example": "Noor keeps the inexpensive earlier cue provisionally. At the next review she checks whether export failures or handovers explain the remaining misses before adding another change.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Ren moves a reading card to the kettle while also changing work hours and buying a new book. Choose a cleaner comparison and state a confound.",
-        "solution": "Keep the same brief reading action and book, try only the cue location, and note work hours each day. A quieter schedule could still explain improvement. Ren can keep the useful setup while remaining uncertain about its cause.",
+        "prompt": "Transfer: six sessions next week contain only two usable opportunities and two completions. A colleague says 100% proves the routine is fixed. Explain the evidence and one next step.",
+        "solution": "Completion is 2/2 among usable opportunities but only 2/6 across sessions. Four sessions lacked an opportunity. Inspect why before claiming reliability or automaticity. An offline first action may fit the missing contexts. Changing cue, location and action together would make attribution harder.",
         "solutionFormat": "prose",
         "checks": [
-          "One proposed change is isolated where practical.",
-          "A plausible confound is recorded.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Distinguishes 2/2 opportunities from 2/6 sessions.",
+          "Avoids causal and automaticity claims.",
+          "Addresses missing opportunity rather than adding a reward by default."
         ]
       },
       "quiz": {
@@ -1209,22 +1211,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "Keep the purpose when the cue disappears",
           "paragraphs": [
-            "Kim’s library-based vocabulary review loses its usual cue when the library closes for renovation."
+            "Noor now alternates home and client-site work. The old timer disappears. The purpose is recoverable project notes, so preserving the desk ritual is unnecessary. At the client site, notes must remain in the approved workspace.",
+            "Recoverability and allowed storage stay fixed; cue, action size and timing can change. Copying notes to a personal phone would satisfy convenience while violating the actual constraint."
           ],
-          "example": "Kim keeps the purpose—reviewing a few unfamiliar words—and chooses the end of the bus journey as a new cue, provided a safe waiting place is available. A printed card replaces the library desk. She checks the new opportunity before treating the old schedule as transferable.",
+          "example": "At home Noor saves in the approved project folder before closing the editor. At the client site she adds one next-action line before handing over the session. If no approved capture opportunity exists, she reports the incomplete handover rather than inventing a workaround.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Sol’s after-class filing routine stops when the course becomes remote. Translate the routine into the new context.",
-        "solution": "After closing the remote session at the home desk, Sol places the digital notes in the named folder and writes one summary line. He first checks that the session really has an end point; on recordings, finishing a chapter is the cue.",
+        "prompt": "Transfer: the client allows reading but no editing in the final ten minutes; personal devices are prohibited. Revise the plan without exporting notes.",
+        "solution": "Move the save/check before the read-only window, such as the scheduled review twelve minutes before handover. Use the approved workspace while editing is allowed. If that opportunity does not exist, arrange an earlier handover or acknowledge incomplete capture. Recoverability within the rule matters more than keeping the old cue.",
         "solutionFormat": "prose",
         "checks": [
-          "The changed context’s missing cue is identified.",
-          "The new cue fits the same useful purpose.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Acts before editing becomes unavailable.",
+          "Preserves the storage constraint.",
+          "Explains why a new cue can preserve the purpose."
         ]
       },
       "quiz": {

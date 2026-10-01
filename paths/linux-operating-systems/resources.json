@@ -24,6 +24,18 @@
       "href": "paths/linux-operating-systems/practice/linux-observation.md",
       "role": "guide",
       "description": "Course-owned linux-observation.md"
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/linux-operating-systems/practice/linux_fd_drill.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/linux-operating-systems/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -77,7 +89,9 @@
         "README-md",
         "diagnostic_lab-py",
         "test_os_labs-py",
-        "linux-observation-md"
+        "linux-observation-md",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Download and extract the bundle; all files are at the named folder root.",
@@ -86,7 +100,8 @@
         "Use the current absolute interpreter with a list of arguments and shell=False.",
         "Reject invalid timeout and teaching-input bounds before launching.",
         "Return stdout, stderr and exact child status; preserve nonzero status.",
-        "Test direct-child timeout and explain descendant/output limitations."
+        "Test direct-child timeout and explain descendant/output limitations.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -98,6 +113,11 @@
           "label": "Run baseline failure checks",
           "command": "python -m unittest -v test_os_labs.py",
           "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python3 linux_fd_drill.py",
+          "expected": "JSON shows EMFILE reached, before=after_cleanup and reopen=ok; PASS confirms child-only limits. Windows direct execution reports SKIP."
         }
       ],
       "prerequisites": [
@@ -108,7 +128,8 @@
       ],
       "notes": [
         "Python 3.11+ standard library only.",
-        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
@@ -119,7 +140,9 @@
         "README-md",
         "diagnostic_lab-py",
         "test_os_labs-py",
-        "linux-observation-md"
+        "linux-observation-md",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Download and extract the bundle; all files are at the named folder root.",
@@ -129,7 +152,8 @@
         "Demonstrate model backlog growth 120 and drain to zero under stated constant rates.",
         "Explain why virtual size, RSS and container limits answer different questions.",
         "Explain how durable work identity survives abrupt shutdown.",
-        "Separate constructed exceptions from actual Linux observations."
+        "Separate constructed exceptions from actual Linux observations.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -141,6 +165,11 @@
           "label": "Run baseline failure checks",
           "command": "python -m unittest -v test_os_labs.py",
           "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python3 linux_fd_drill.py",
+          "expected": "JSON shows EMFILE reached, before=after_cleanup and reopen=ok; PASS confirms child-only limits. Windows direct execution reports SKIP."
         }
       ],
       "prerequisites": [
@@ -151,7 +180,8 @@
       ],
       "notes": [
         "Python 3.11+ standard library only.",
-        "Tests establish local reference behavior, not every learner extension or production/platform outcome."
+        "Tests establish local reference behavior, not every learner extension or production/platform outcome.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }
   ],

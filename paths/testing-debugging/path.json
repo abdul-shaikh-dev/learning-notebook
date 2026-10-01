@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "Learn to specify, test and diagnose behavior through 24 lessons and three runnable projects: strict parsing, failure-safe files and reproducible stale-writer tests.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
     "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
@@ -120,7 +120,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Selected advanced practice",
       "description": "Prove the local version invariant under two competing stale edits and produce a bounded diagnostic report.",
       "exitCriteria": [
         "Ordering is established by synchronization rather than sleeps.",
@@ -460,6 +460,13 @@
             "Reduction must preserve the condition that triggers the bug. Deleting a duplicate row may make a duplicate-ID failure disappear, which teaches that duplication is material. A reproduction that needs today's remote data is unstable; capture a small permitted fixture with a fixed version instead."
           ],
           "example": "1000 input rows fail\nReduce to two rows with ID a\nRemove one row -> failure disappears\nHypothesis: uniqueness boundary, not file size"
+        },
+        {
+          "title": "Reduce an unfamiliar missing-row report",
+          "paragraphs": [
+            "A user reports that a timeline loses entries when loading page two. Start with four rows: a,b,c at time5 and d at time6. Page size2 returns a,b then d; c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
+            "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
+          ]
         }
       ],
       "exercise": {
@@ -514,6 +521,13 @@
           "title": "Watch the value, not the guess",
           "paragraphs": [
             "Open the guided diagnosis task. The contract sums through index 1, so [4, 8, 16] must give 12. In pdb, inspect values[:stop]: it is [4], not [4, 8]. The missing item is evidence for an exclusive slice boundary. A regression with an independent expected value distinguishes the fix; editing the printed message would not."
+          ]
+        },
+        {
+          "title": "Choose an experiment that separates explanations",
+          "paragraphs": [
+            "Two hypotheses explain a missing c: the first page changed the source, or the cursor excluded records sharing its timestamp. Print or assert source IDs after the first call to distinguish them. Then keep all rows fixed and change the page size from2 to3. If c returns at size3, the page boundary becomes a strong clue.",
+            "A separate test mutates a returned row and inspects the original input. That uncovers an ownership bug even after pagination is repaired. Do not assume that fixing the first failing assertion explains every reported symptom. Keep the two minimal reproductions distinct."
           ]
         }
       ],
@@ -760,6 +774,13 @@
             "Our suite uses a fixed seed and finite generated cases, so it is reproducible rather than exhaustive. A property-testing engine such as Hypothesis can generate and shrink counterexamples, but it is an optional dependency. A weak property can still pass a constant-zero implementation; retain concrete nonzero examples."
           ],
           "example": "total([a:7,b:2]) == total([b:2,a:7])\ntotal(rows + [zero:0]) == total(rows)\nAlso require total([a:7]) == 7"
+        },
+        {
+          "title": "Combine a full-walk property with concrete expectations",
+          "paragraphs": [
+            "For an unchanged finite dataset, concatenating pages should equal the complete sorted sequence exactly once. The focused test repeats the walk at sizes1,2,3,5 and100. This crosses boundaries inside equal-time groups and at the end, exposing cursor logic that passes only the demonstration size.",
+            "Use a bounded loop in the test itself so a cursor that never advances fails instead of hanging. Keep the concrete a,b,c,d assertion too: an oracle sharing a mistaken sort rule could otherwise confirm the same error in both sides. Changing records during the walk is outside this local contract and would require a snapshot or an explicit consistency policy."
+          ]
         }
       ],
       "exercise": {
@@ -809,6 +830,13 @@
             "A test is not useful merely because it executes a changed line. Observe the boundary, relevant output and absent unwanted effects. Keep a brief issue explanation in the test name or comment. If the bug was caused by two competing updates, a sequential happy path will not preserve it."
           ],
           "example": "Old: buggy_minutes(True) returns True\nNew boundary: parse_record with true raises ValueError\nDiscriminator: only integer JSON duration is accepted"
+        },
+        {
+          "title": "Repair the mechanism and preserve both contracts",
+          "paragraphs": [
+            "The corrected comparison uses the complete ordering key (time,id), not time alone. Returning new flat dictionaries prevents a caller from changing the source through the result. Copying only the list would not fix that second defect because its rows would still be shared.",
+            "A shallow row copy is enough only for this lab's flat trusted row shape. If you add nested metadata, write a new ownership test and decide whether to deep-copy, freeze or expose immutable domain values. The existing passing checks must not be described as proof of isolation for structures they never exercised."
+          ]
         }
       ],
       "exercise": {
@@ -1360,7 +1388,11 @@
     "practice/test_diagnosis_lab.py",
     "practice/branch_subject.py",
     "practice/test_branch_lab.py",
-    "practice/diagnosis-workbook.md"
+    "practice/diagnosis-workbook.md",
+    "practice/cursor_candidate.py",
+    "practice/cursor_reference.py",
+    "practice/cursor_checks.py",
+    "practice/cursor-investigation.md"
   ],
   "downloads": [
     {

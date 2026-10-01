@@ -51,3 +51,9 @@ For a container rollout, build each reviewed source tree into its own image, rec
 The Python server is unauthenticated and uses http.server, which is not a production web server. Keep it on loopback or the dedicated local cluster. /metrics is JSON counters including health/metrics traffic, not a production exporter or eligible-user SLI. The load helper disables proxies/redirects, rejects credentials/fragments and limits each response read to64KiB; its focused test proves a redirect target is not visited. It is bounded sequential closed-loop timing, not a capacity benchmark. Backup restores are synthetic SQLite checks, not SQL Server recovery or off-host disaster recovery. Real TLS, secrets, identity, collectors, proxies and deploy/rollback tooling remain integration work.
 
 ci-example.yaml is an opt-in learning workflow template for a new repository with these files at root. It checks/upload sources only, has no deployment credentials and was not installed or run by opening this kit. Its current official action tags are readable; production use pins independently verified commit SHAs, applies upgrades and checks runner compatibility. Consult the linked official action repositories when enabling it.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `schema_coexistence.py`: PASS confirms coexistence, late old write, dual-write/backfill and expected old-reader failure after DROP.
+
+Requirements: Python 3.11+ with SQLite 3.35+; standard library only.

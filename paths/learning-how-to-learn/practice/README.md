@@ -18,3 +18,11 @@ Suggested pace: one small lesson or attempt when available. These are learning o
 Open `lab.html` in a browser with `lab.js`, `lab-model.js` and `lab.css` beside it. No installation, account or external service is required. Use the five activity buttons for capacity planning, a keyboard-accessible task board, a habit experiment, a recall card and a conversation scenario.
 
 These are educational models: the capacity sketch does not schedule overlapping appointments; a chosen review date does not create a reminder; a conversation opening cannot guarantee agreement. All entries stay in page memory and reload clears them. Use **Export my practice** to keep a JSON copy privately; no import or automatic sync is provided. The notebook backlink works in the hosted site; from an extracted kit it may not resolve, and you can return to the notebook using your own bookmark.
+
+## Optional connected case
+
+These lessons follow one evolving situation. Read the worked case first; try a changed case aloud or in your own tools when useful. No extra worksheet or written submission is required. These fictional cases provide reasoning practice, not a validated assessment.
+
+- **8. Move from worked examples to independent attempts** (`worked-to-independent`): Fade the help while preserving the decision.
+- **5. Return after a gap** (`spaced-returns`): Use a later occasion to discover what remains.
+- **15. Test transfer with changed cases** (`transfer-cases`): Changed surface, changed rule, or missing information?.

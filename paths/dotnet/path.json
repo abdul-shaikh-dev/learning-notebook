@@ -4,7 +4,7 @@
   "category": "Programming",
   "status": "ready",
   "description": "Progress from C# fundamentals to tested APIs, then practice cancellation, concurrency, secure resource access, schema evolution, observability and deployment decisions.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Comfort using a terminal and editing a text file.",
     "No prior C# experience required; basic HTTP and SQL help with the final lessons."
@@ -307,6 +307,13 @@
             "Parameters are passed by value by default. For a reference type the copied value is a reference, so mutating an object's contents can still affect its caller. Avoid hidden mutation when a return value is enough."
           ],
           "example": "static decimal Total(int quantity, decimal price)\n{\n    if (quantity < 0 || price < 0)\n        throw new ArgumentOutOfRangeException(nameof(quantity), \"Values must be nonnegative\");\n    return quantity * price;\n}\nConsole.WriteLine(Total(2, 4m));\n// Expected: 8"
+        },
+        {
+          "title": "Choose return and failure contracts together",
+          "paragraphs": [
+            "The focused HTTP client returns Session? because a documented404 means no session exists. A503 is not an empty result: it throws, so the caller can show a service problem without falsely claiming the record is absent. A successful response with minutes0 is valid and must not be confused with missing data.",
+            "Its positive-ID precondition is checked before sending. The test counts handler calls and proves an invalid ID dispatches nothing. This combines two observations: the exception and the absence of an external attempt. A test checking only the exception could miss a method that sends first and rejects afterward."
+          ]
         }
       ],
       "exercise": {
@@ -519,6 +526,13 @@
             "Use async void only for event handlers that require it; callers cannot await its completion. Await started tasks so their failures are observed. Artificial delay here teaches the mechanism, not network performance."
           ],
           "example": "using var cts = new CancellationTokenSource();\ncts.Cancel();\ntry { await Task.Delay(1000, cts.Token); }\ncatch (OperationCanceledException) { Console.WriteLine(\"Cancelled\"); }\n// Expected: Cancelled"
+        },
+        {
+          "title": "Cancellation is an observed asynchronous outcome",
+          "paragraphs": [
+            "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. No guessed sleep duration is used to make the race seem reliable.",
+            "Passing this check shows token propagation through this in-process adapter. It does not prove a remote service stopped work or rolled back a write. A caller cancelling after a remote commit can still have an unknown result. Distinguish cancelling the wait from undoing an operation."
+          ]
         }
       ],
       "exercise": {
@@ -873,6 +887,13 @@
             "Define bounded paging and stable ordering before the collection grows. An optimistic version check allows a client to detect another writer's update. For production creation retries, use an idempotency key with durable uniqueness rather than a memory-only cache."
           ],
           "example": "// Practice contract:\nGET /tasks?after=0&limit=20 -> ordered page, limit must be 1..100\nPOST /tasks {\"title\":\" Read \"} -> 201, normalized title\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 200, version 2\nPATCH /tasks/1/complete {\"expectedVersion\":1} -> 409\n// See practice/task-api.cs for complete code."
+        },
+        {
+          "title": "A successful status does not validate the response body",
+          "paragraphs": [
+            "The client expects id7 and integer minutes0..1440. The handler returns200 with a missing minutes field, a wrong ID, negative minutes or numeric text. Each shape is rejected. A deserialized object with default values could otherwise turn missing data into a believable result.",
+            "The lesson reference deliberately allows unknown extra JSON fields for additive compatibility, and uses JSON parser semantics for duplicate properties. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement that explicitly and add corresponding tests."
+          ]
         }
       ],
       "exercise": {
@@ -935,6 +956,13 @@
             "Use the same relational provider as deployment for provider-dependent constraints and transactions. EF Core's in-memory provider does not reproduce relational SQL behavior. Keep deterministic business rules in fast unit tests and reserve integration tests for important boundaries."
           ],
           "example": "// Acceptance sequence:\n// 1. POST blank title -> 400 and errors.title.\n// 2. POST valid title -> 201 and a working Location.\n// 3. Complete with current version -> 200 and Done true.\n// 4. Complete with old version -> 409.\n// 5. Concurrent creates -> distinct IDs.\n// See practice/acceptance.cs for executable assertions."
+        },
+        {
+          "title": "Locate exactly which boundary a test crosses",
+          "paragraphs": [
+            "BoundaryChecks.csproj sends requests through a real HttpClient and SessionClient, but replaces HttpMessageHandler. It verifies route construction, status interpretation, response parsing and token propagation without opening a socket. It therefore gives stronger adapter evidence than returning a mocked Session directly, while remaining short of HTTP server integration.",
+            "Run the existing task-api and acceptance projects to cross a real loopback HTTP boundary. Then run persistence checks to include their actual storage adapter. Neither of those automatically includes deployment routing, TLS, production identity or SQL Server. State the furthest executed boundary rather than using integration as an all-or-nothing label."
+          ]
         }
       ],
       "exercise": {
@@ -1192,6 +1220,13 @@
             "Streaming reduces the need to buffer all results, but it lengthens resource ownership while the consumer reads. A database stream may retain a connection; a partial HTTP response cannot later be replaced by a fresh problem response after headers are sent."
           ],
           "example": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nawait foreach (int value in Generate(CancellationToken.None)) Console.WriteLine(value);\nstatic async IAsyncEnumerable<int> Generate([EnumeratorCancellation] CancellationToken token = default)\n{\n    for (int i = 0; i < 2; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then 1"
+        },
+        {
+          "title": "Keep request failure and retry policy separate",
+          "paragraphs": [
+            "One scripted503 produces one attempt and a propagated error. The adapter does not hide a retry loop. Retrying a read may be reasonable with a bounded deadline and transient-failure policy, but a write additionally needs an operation identity and reconciliation contract. The same helper should not silently retry every HttpRequestException.",
+            "As an extension, implement a bounded read retry that makes at most two attempts:503 then200 succeeds with two;503 twice fails with two;404 stays missing with one. Cancellation must prevent another attempt. The current reference has no retry, delay or total deadline policy, so passing it does not establish those behaviors."
+          ]
         }
       ],
       "exercise": {
@@ -1548,7 +1583,10 @@
     "practice/acceptance.cs",
     "practice/PersistenceChecks.csproj",
     "practice/persistence-api.cs",
-    "practice/persistence-checks.cs"
+    "practice/persistence-checks.cs",
+    "practice/HttpBoundary.cs",
+    "practice/BoundaryChecks.csproj",
+    "practice/http-boundary.md"
   ],
   "stages": [
     {
@@ -1614,7 +1652,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced service practice",
+      "title": "Selected advanced practice",
       "description": "Work through cancellation, overload, identity, operations and recovery using measured evidence. Completion establishes experience with these scenarios, not comprehensive .NET expertise.",
       "exitCriteria": [
         "Prove cancellation reaches downstream I/O and permits are released after failure.",

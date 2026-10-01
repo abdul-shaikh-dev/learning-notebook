@@ -36,6 +36,24 @@
       "href": "paths/data-structures-algorithms/practice/advanced-reasoning.md",
       "role": "guide",
       "description": "Worked advanced algorithm reasoning and feedback"
+    },
+    {
+      "id": "depth-method_selection-py",
+      "href": "paths/data-structures-algorithms/practice/method_selection.py",
+      "role": "reference",
+      "description": "Coin DP and a deliberately limited greedy comparison"
+    },
+    {
+      "id": "depth-test_method_selection-py",
+      "href": "paths/data-structures-algorithms/practice/test_method_selection.py",
+      "role": "test",
+      "description": "Route metric distinction and independent coin BFS oracle"
+    },
+    {
+      "id": "depth-method-selection-md",
+      "href": "paths/data-structures-algorithms/practice/method-selection.md",
+      "role": "guide",
+      "description": "Choose a method by state, objective and counterexample"
     }
   ],
   "tasks": [
@@ -84,7 +102,10 @@
         "algorithms-py",
         "advanced_algorithms-py",
         "trees_graphs-py",
-        "test_trees_graphs-py"
+        "test_trees_graphs-py",
+        "depth-method_selection-py",
+        "depth-test_method_selection-py",
+        "depth-method-selection-md"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -93,7 +114,8 @@
         "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
         "Complete the assessment requirements in the reader: Preserve isolated topics and neighbor-only vertices.; Return an order satisfying every dependency or an explicit cycle error.; Use BFS separately to explain reachability, not prerequisite completion.; Test multiple valid orders without asserting one arbitrary sequence.; Document complexity for your chosen representation.",
         "Compare your evidence with the stage rubric: Every edge is checked against the output order.; Cycles fail reliably.; Disconnected topics are not lost.; Tests cover empty input, one vertex and shared prerequisites.",
-        "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge."
+        "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge.",
+        "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
       ],
       "commands": [
         {
@@ -105,6 +127,11 @@
           "label": "Run tree and DFS oracle tests",
           "command": "python -m unittest -v test_trees_graphs.py",
           "expected": "All four independent tree/graph test methods pass, including exhaustive small cases."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python -m unittest -v test_method_selection.py",
+          "expected": "Four tests pass, including 130 independently checked coin cases and different hop/cost answers."
         }
       ],
       "prerequisites": [
@@ -129,7 +156,10 @@
         "trees_graphs-py",
         "test_trees_graphs-py",
         "practice-test_advanced_oracles-py",
-        "practice-advanced-reasoning-md"
+        "practice-advanced-reasoning-md",
+        "depth-method_selection-py",
+        "depth-test_method_selection-py",
+        "depth-method-selection-md"
       ],
       "steps": [
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
@@ -138,13 +168,19 @@
         "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
         "Complete the assessment requirements in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights.; Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals.; Choose items under an integer budget with each item used at most once.; Compare small cases against independent brute-force oracles.; Write invariants, termination arguments and representation-specific complexity.; Define input size limits and document remaining limitations.",
         "Compare your evidence with the stage rubric: Each task uses the correct objective and preconditions.; Counterexamples explain why plausible alternatives fail.; Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.; Pseudo-polynomial and exponential costs are described honestly.; Results remain correct without performance optimizations.",
-        "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
+        "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation.",
+        "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
       ],
       "commands": [
         {
           "label": "Run reference from data-structures-algorithms-practice folder root",
           "command": "python advanced_algorithms.py",
           "expected": "All advanced algorithm reference checks passed."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python -m unittest -v test_method_selection.py",
+          "expected": "Four tests pass, including 130 independently checked coin cases and different hop/cost answers."
         }
       ],
       "prerequisites": [

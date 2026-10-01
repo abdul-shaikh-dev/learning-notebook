@@ -48,6 +48,24 @@
       "href": "paths/git-team-workflows/review_roleplay.py",
       "role": "reference",
       "description": "Local author/reviewer feedback and revised-candidate exercise."
+    },
+    {
+      "id": "depth-semantic_merge-py",
+      "href": "paths/git-team-workflows/semantic_merge.py",
+      "role": "reference",
+      "description": "Two local clones expose a clean merge that violates a shared invariant"
+    },
+    {
+      "id": "depth-test_semantic_merge-py",
+      "href": "paths/git-team-workflows/test_semantic_merge.py",
+      "role": "test",
+      "description": "Verify divergent history, semantic failure and candidate repair"
+    },
+    {
+      "id": "depth-semantic-merge-md",
+      "href": "paths/git-team-workflows/semantic-merge.md",
+      "role": "guide",
+      "description": "Inspect a semantic conflict without hosted services"
     }
   ],
   "tasks": [
@@ -106,7 +124,10 @@
         "foundation-kit-md",
         "intermediate-kit-md",
         "advanced-kit-md",
-        "review_roleplay-py"
+        "review_roleplay-py",
+        "depth-semantic_merge-py",
+        "depth-test_semantic_merge-py",
+        "depth-semantic-merge-md"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -117,13 +138,19 @@
         "Verify a two-parent merge.",
         "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
         "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
-        "Compare submitted evidence with the rubric: Conflict/abort/resolution states are supported by actual outputs. The resolved contents preserve both stated intents. Fetch and integration are distinguished. Review evidence names the candidate and no hosted approval is invented."
+        "Compare submitted evidence with the rubric: Conflict/abort/resolution states are supported by actual outputs. The resolved contents preserve both stated intents. Fetch and integration are distinguished. Review evidence names the candidate and no hosted approval is invented.",
+        "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
       ],
       "commands": [
         {
           "label": "Run local two-developer fixture",
           "command": "python -B sandbox.py --stage intermediate --workspace-parent .",
           "expected": "JSON reports conflict_resolved and fetch_preserved_local_head true; no network or push."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python -m unittest -v test_semantic_merge.py",
+          "expected": "One multi-step local collaboration test passes; it detects the intentionally invalid clean merge before repair."
         }
       ],
       "prerequisites": [
@@ -150,7 +177,10 @@
         "foundation-kit-md",
         "intermediate-kit-md",
         "advanced-kit-md",
-        "review_roleplay-py"
+        "review_roleplay-py",
+        "depth-semantic_merge-py",
+        "depth-test_semantic_merge-py",
+        "depth-semantic-merge-md"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -162,7 +192,8 @@
         "Verify the annotated tag object.",
         "Produce an offline release record including artifact/hosting checks not executed.",
         "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
-        "Run review_roleplay.py in a fresh owned child and inspect reviewer feedback, revised candidate and second review."
+        "Run review_roleplay.py in a fresh owned child and inspect reviewer feedback, revised candidate and second review.",
+        "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
       ],
       "commands": [
         {
@@ -174,6 +205,11 @@
           "label": "Run sandbox boundary regression tests",
           "command": "python -B -m unittest -v test_sandbox.py",
           "expected": "Seven test methods pass, including local review revision, repository-root escape and push rejection."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python -m unittest -v test_semantic_merge.py",
+          "expected": "One multi-step local collaboration test passes; it detects the intentionally invalid clean merge before repair."
         }
       ],
       "prerequisites": [

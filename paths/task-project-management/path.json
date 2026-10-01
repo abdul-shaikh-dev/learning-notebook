@@ -4,7 +4,7 @@
   "category": "Personal effectiveness",
   "status": "ready",
   "description": "Learn task & project management through realistic constraints, worked examples, printable practice and assessed projects.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → small-project practice → delivery and review",
   "prerequisites": [
     "No specialist knowledge required.",
     "A text editor or Markdown viewer for printable worksheets."
@@ -261,7 +261,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced",
+      "title": "Applied review — deliver and improve a small project",
       "description": "Close a project using acceptance and improvement evidence.",
       "exitCriteria": [
         "Age, cycle time and throughput use consistent boundaries.",
@@ -622,16 +622,25 @@
           "paragraphs": [
             "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "Schedule from the dependency",
+          "paragraphs": [
+            "Continuing case: a club is publishing a workshop invitation. Drafting text takes an hour, room confirmation requires Lee's reply and registration-link testing takes half an hour. Text and link testing initially run independently; final publication needs all three.",
+            "Three busy cards hide the release constraint. Give confirmation a needed-by point and a fallback decision. A missing fact cannot be completed by assigning another writer."
+          ],
+          "example": "Monday: draft text and test the link while Lee checks the room. Tuesday noon: insert the confirmed location and review. Without confirmation, ask the organiser to move the announcement or approve a save-the-date without a room; the full invitation stays blocked.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Order confirm venue, publish invitation, draft exercises and review exercises.",
-        "solution": "Confirm venue before publishing its address. Draft before review. Draft exercises can proceed while the venue is being confirmed, so these branches may run independently.",
+        "prompt": "Transfer: registration now needs room capacity, so configuration cannot finish before Lee replies. Which work can proceed, and how does the dependency map change?",
+        "solution": "General text can proceed. Capacity confirmation now precedes final registration configuration and testing. That chain must finish before release. A placeholder may support development but is not evidence of a checked registration route.",
         "solutionFormat": "prose",
         "checks": [
-          "Identify the venue input needed by publication.",
-          "Keep draft-before-review ordering explicit.",
-          "Allow the independent drafting branch to proceed."
+          "Places confirmation before final registration configuration.",
+          "Preserves genuinely independent text work.",
+          "Does not count a placeholder as verification."
         ]
       },
       "quiz": {
@@ -1038,16 +1047,25 @@
           "paragraphs": [
             "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "A new request changes the acceptance conditions",
+          "paragraphs": [
+            "The invitation is ready for review when the organiser adds a second workshop session. The change needs session selection, separate capacities and matching confirmations, not just a new title. Existing completion criteria cover one session.",
+            "Identify changed acceptance conditions and dependencies, then decide scope and date. Reuse completed work where applicable, but a one-session form test does not verify two-session routing."
+          ],
+          "example": "Option A: publish the checked single session today and announce the second later. Option B: delay, add selection, confirm capacities and test both paths. The organiser chooses B, so the team retains old work and adds the checks made necessary by the decision.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "A recorded video is requested three days before the workshop. Existing capacity is full.",
-        "solution": "Offer to replace an optional deliverable, move the video to a later project or obtain support. Record the chosen option and revised completion criteria. Do not add it silently to the existing deadline.",
+        "prompt": "Transfer: the second session replaces the first instead of adding a choice. Which proposed work disappears, and which evidence needs repeating?",
+        "solution": "Remove the unnecessary session selector and two-branch routing. Update date, room and capacity as needed; retest the single registration and confirmation route. Check previously sent links if applicable. Verify old session details no longer appear rather than rebuilding everything by default.",
         "solutionFormat": "prose",
         "checks": [
-          "Expose the added work and limited capacity.",
-          "Offer a scope, schedule or support trade-off.",
-          "Record the accepted option and revised criteria."
+          "Removes unnecessary multi-session work.",
+          "Repeats evidence invalidated by changed details.",
+          "Makes a scope decision instead of accepting every task."
         ]
       },
       "quiz": {
@@ -1142,16 +1160,25 @@
           "paragraphs": [
             "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "Review the beneficiary's complete task",
+          "paragraphs": [
+            "The organiser approves the invitation wording. An attendee registers on a phone and receives a confirmation for the old session. Text approval and successful task completion are different evidence. Keep the valid text review and reopen the broken confirmation path.",
+            "Follow the outcome: find the event, register and receive matching details. One observed failure justifies repair; one success does not prove all devices and cases work."
+          ],
+          "example": "Invitation: Thursday. Form: Thursday. Confirmation: Tuesday. Repair the template and repeat a fresh registration. Check related cancellation/edit templates if the change touches them; unrelated decoration does not automatically need retesting.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "The exercise sheet has every required section but a beginner cannot identify the first step. Evaluate it.",
-        "solution": "Verification may pass the section checklist, but validation exposes an unclear starting instruction. Revise the first step and repeat the beginner task before calling the material ready.",
+        "prompt": "Transfer: all dates match, but the event is full and the form still reports successful registration. Change the completion criteria and next check.",
+        "solution": "Require the agreed sold-out or wait-list outcome when full, distinct from a confirmed place. Test the final available place and next attempt under the actual service's supported concurrency model. Correct dates do not establish a valid booking. Do not infer capacity guarantees from a visual mockup.",
         "solutionFormat": "prose",
         "checks": [
-          "Distinguish section verification from intended-use validation.",
-          "Identify the first-step obstacle.",
-          "Revise and repeat the relevant task."
+          "Checks final-place and full-event boundary.",
+          "Distinguishes wait-list from confirmed booking.",
+          "Limits claims to supported system behavior."
         ]
       },
       "quiz": {

@@ -4,7 +4,7 @@
   "category": "Programming",
   "status": "ready",
   "description": "Progress through 23 Python lessons from first scripts to typed domain models, reusable CLI tools, resource management, concurrency, profiling and a bounded import pipeline. Three staged projects provide practice and review criteria.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Comfort creating files and opening a terminal; no programming experience required.",
     "A computer with a current supported Python 3 interpreter."
@@ -356,6 +356,14 @@
           "paragraphs": [
             "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
           ]
+        },
+        {
+          "title": "Work through a grouping operation",
+          "paragraphs": [
+            "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
+            "Do not use a set to remove duplicate sessions before defining identity. Two distinct sessions can have equal topic and minutes. In the summary challenge, repeated IDs are rejected while repeated topics are accumulated. That distinction keeps a valid second session from disappearing."
+          ],
+          "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nassert totals == {\"Python\": 30, \"SQL\": 30}"
         }
       ],
       "exercise": {
@@ -470,6 +478,13 @@
           "paragraphs": [
             "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use None and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
           ]
+        },
+        {
+          "title": "Separate computation from interaction",
+          "paragraphs": [
+            "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into summarize(rows), returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
+            "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise ValueError. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
+          ]
         }
       ],
       "exercise": {
@@ -526,6 +541,13 @@
           "title": "Pitfalls",
           "paragraphs": [
             "A bare except can hide programming errors and interrupt signals. Catch a narrow type near the operation you understand. Do not return a fake success value after a failure; the caller should be able to distinguish valid zero minutes from invalid input."
+          ]
+        },
+        {
+          "title": "Trace a validation failure before repairing it",
+          "paragraphs": [
+            "A row with minutes=\"20\" is not equivalent to a row with integer 20 under an explicit numeric input contract. Validate at the boundary, then compute with one consistent representation. If text conversion is part of your product, perform it in a separate input adapter rather than accidentally accepting arbitrary values inside the calculation.",
+            "In Python, bool is a subclass of int. For this exercise, True must not silently mean one minute, so type(minutes) is int expresses the exact policy. The checks also try negative minutes, one above the maximum, missing fields and a whitespace-only topic. Each rejected input should identify a contract decision you can explain."
           ]
         }
       ],
@@ -764,6 +786,13 @@
           "title": "Pitfalls",
           "paragraphs": [
             "Do not silently overwrite malformed data with an empty log. Report JSON or schema errors and keep the file for recovery. Concurrent writers and interrupted writes require more careful storage; this beginner version is for one local process. Before using a permanent file, back it up and add tests for invalid records."
+          ]
+        },
+        {
+          "title": "Build a summary without copying its implementation",
+          "paragraphs": [
+            "Open summary-challenge.md and create my_summary.py with summarize(rows). The supplied summary_checks.py imports your module by name, so you can solve the contract independently and run python summary_checks.py my_summary. It checks grouping, deterministic ties, input preservation and invalid records. The reference is a separate file you can inspect after an attempt.",
+            "One transfer check splits a seven-minute X session into distinct three-minute and four-minute sessions. The summary must stay the same. This property catches implementations tied to the example row count. It complements concrete expected values: a function always returning [] could satisfy reorder invariance but still be wrong."
           ]
         }
       ],
@@ -1474,7 +1503,10 @@
     "practice/helpers.py",
     "practice/main.py",
     "practice/io_failure_bridge.py",
-    "practice/test_io_failure_bridge.py"
+    "practice/test_io_failure_bridge.py",
+    "practice/summary_reference.py",
+    "practice/summary_checks.py",
+    "practice/summary-challenge.md"
   ],
   "stages": [
     {
@@ -1532,7 +1564,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Selected advanced practice",
       "description": "Measured concurrency, bounded inputs and failure-aware batch publishing. This is applied practice rather than professional certification.",
       "exitCriteria": [
         "Explain worker ordering, cancellation limits and when concurrency may hurt.",

@@ -23,3 +23,9 @@ Choose RabbitMQ or a managed broker deliberately; follow its current official in
 ## Cleanup
 
 Demo/test temporary databases are automatically removed. A learner-created persistent database must be closed before deleting its explicitly named training file. No script deletes arbitrary directories or operates a broker/cloud account.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `broker_ack_drill.py`: PASS reports broker redelivery, one inbox row, balance=7 and a drained queue. No process-crash durability claim.
+
+Requirements: Python 3.11+, optional Pika, and the isolated loopback RabbitMQ recipe below.

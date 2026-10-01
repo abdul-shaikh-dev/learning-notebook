@@ -4,7 +4,7 @@
   "category": "Engineering practice",
   "status": "ready",
   "description": "Learn local Git state, reviewable teamwork, history integration, recovery and release evidence through 20 lessons and three executable projects with retained learner workspaces.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
   ],
@@ -111,7 +111,10 @@
     "foundation-kit.md",
     "intermediate-kit.md",
     "advanced-kit.md",
-    "review_roleplay.py"
+    "review_roleplay.py",
+    "semantic_merge.py",
+    "test_semantic_merge.py",
+    "semantic-merge.md"
   ],
   "downloads": [
     {
@@ -556,6 +559,13 @@
             "Choose integration policy deliberately. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
           ],
           "example": "git log --graph --oneline --all\ngit merge feature\ngit rev-list --parents -n 1 HEAD\n# Strict update when divergence is unexpected:\ngit merge --ff-only origin/main"
+        },
+        {
+          "title": "A clean merge can combine incompatible decisions",
+          "paragraphs": [
+            "Both developers start with batch size5 and capacity10. Alice changes batch to8; Bob changes capacity to6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has batch8 and capacity6 and violates the invariant.",
+            "The semantic_merge.py lab creates a source and two local clones, records both independently valid states, performs the merge and asserts the combined failure. This is why a successful merge command is only evidence about integration of file histories. Behavioral checks must run on the combined candidate."
+          ]
         }
       ],
       "exercise": {
@@ -608,6 +618,13 @@
             "Abort recovery is most predictable when the working tree was clean before starting. Preserve unrelated local edits before integration. A resolved file still needs review and tests for the combined requirement."
           ],
           "example": "git diff --name-only --diff-filter=U\ngit show :1:policy.txt\ngit show :2:policy.txt\ngit show :3:policy.txt\n# Choose a real resolution, then:\ngit add policy.txt\ngit commit"
+        },
+        {
+          "title": "Resolve meaning even when there are no conflict markers",
+          "paragraphs": [
+            "A textual conflict asks you to reconcile overlapping edits. A semantic conflict can require the same reasoning without any markers: here Alice wanted larger batches, while Bob imposed a smaller capacity. Preserving both exact numbers is impossible under the shared invariant. The reference chooses batch6, retaining the capacity reduction and the largest permitted batch.",
+            "That choice is a scenario policy, not something Git can infer. If the product required batch8, the owners would need to revisit the capacity decision. Inspect the separate commits before editing the resolution so you can distinguish a deliberate compromise from accidentally losing one person's work."
+          ]
         }
       ],
       "exercise": {
@@ -660,6 +677,13 @@
             "This demonstrates Git behavior without credentials or a hosting account. It does not demonstrate protected branches, remote permissions, review enforcement or service availability. Inspect a remote URL before contacting it."
           ],
           "example": "git remote -v\ngit fetch origin\ngit log --oneline HEAD..origin/main\ngit merge --ff-only origin/main\n# No push command is executed by the lab."
+        },
+        {
+          "title": "Observe fetch without moving your branch",
+          "paragraphs": [
+            "Bob has a commit Alice has never seen. Fetching Alice's local main exposes her candidate through FETCH_HEAD but leaves Bob's HEAD at his own commit. The lab asserts this before merging. Since neither candidate contains the other, integration creates a two-parent merge commit instead of a fast-forward.",
+            "The fixture uses only local paths under its fresh owned directory and the existing Sandbox blocks push. This demonstrates distributed history and integration mechanics without a hosted account. A real remote adds authentication, permission, protected-branch and network failure behavior that this run does not exercise."
+          ]
         }
       ],
       "exercise": {
@@ -1128,6 +1152,13 @@
             "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
           ],
           "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
+        },
+        {
+          "title": "Review the integrated commit and its follow-up repair",
+          "paragraphs": [
+            "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged values8/6 with repaired6/6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
+            "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to batch4 and capacity6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
+          ]
         }
       ],
       "exercise": {
@@ -1221,7 +1252,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced: Local recovery and release portfolio",
+      "title": "Selected advanced practice: Local recovery and release portfolio",
       "description": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
       "exitCriteria": [
         "Bisect result identifies the known synthetic defect.",

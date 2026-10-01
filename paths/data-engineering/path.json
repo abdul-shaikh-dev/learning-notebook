@@ -4,7 +4,7 @@
   "category": "Data and databases",
   "status": "ready",
   "description": "Follow 22 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate batch pipelines → selected extensions",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
     "Python 3.11+ for the portable practice kit; no external packages.",
@@ -605,6 +605,14 @@
           "paragraphs": [
             "A watermark does not solve deletions, mutable timestamps or records arriving with older times. Choose source change tracking, tombstones or periodic reconciliation where needed. The reference lab models replay, not a live incremental connector."
           ]
+        },
+        {
+          "title": "Work through a missed row",
+          "paragraphs": [
+            "An extractor stores the largest occurred_at it has seen: 10:05. A source row arriving at 10:08 describes an event at 09:59. The next query WHERE occurred_at > 10:05 will never retrieve it. Sorting the returned rows cannot repair an exclusion that happened before sorting. Event time describes the business event; a reliable extraction cursor describes source changes.",
+            "One alternative is a source-controlled increasing change sequence. Read changes after sequence 41, apply sequences 42–45 and advance the cursor to 45 in the same target transaction. If applying 44 fails, the target must retain both its earlier data and cursor 41. A lookback window plus idempotent application is another design, but it covers only lateness within that window and needs a stated correction policy.",
+            "Try the revision_lab.py exercise in the practice files. It deliberately processes a newer revision before an older one. The stale record must not replace the new value. Change the event order and compare the final projection; this is a local change-feed model, not a connector to a production CDC system."
+          ]
         }
       ],
       "exercise": {
@@ -784,6 +792,14 @@
           "paragraphs": [
             "Overlapping or gapped intervals can multiply or lose facts. Late corrections require a policy for rebuilding impacted joins. The supplied SQLite lab does not implement a full historical dimension."
           ]
+        },
+        {
+          "title": "Choose the historical join before writing SQL",
+          "paragraphs": [
+            "Customer C belonged to region North before April 1 and South from April 1. Order A happened March 31 and order B happened April 2. Joining both orders to the current customer row assigns both to South. That is correct for a current-region report and incorrect for a region-at-order-time report. The same SQL join can be syntactically valid and answer the wrong question.",
+            "For the historical question, store nonoverlapping validity intervals and match valid_from <= order_time < valid_to. A timestamp exactly on April 1 belongs to the new interval. Before summing amounts, verify each order matches exactly one dimension version. An overlap duplicates money; a gap silently drops orders in an inner join.",
+            "Changed case: the April 1 region change is corrected to March 30. Identify the affected order IDs before recalculating aggregates. Rebuild their historical matches and compare counts and totals, rather than treating the correction as one additional customer row."
+          ]
         }
       ],
       "exercise": {
@@ -900,6 +916,13 @@
           "title": "Stream-watermark limits",
           "paragraphs": [
             "A watermark in stream processing is a progress estimate under a system policy, not proof that no earlier event exists. Our batch lab makes late-data reasoning explicit but does not execute a streaming engine."
+          ]
+        },
+        {
+          "title": "Recompute a result instead of adding twice",
+          "paragraphs": [
+            "The first order revision contributes 100 cents to Monday. Revision 2 changes it to 150 cents. Adding 150 to the previous aggregate produces 250, but the corrected contribution is 150. Either subtract the old contribution and add the new one atomically, or rebuild the affected aggregate from a deduplicated current projection.",
+            "Now revision 3 moves the order to Tuesday. Both Monday and Tuesday are affected. A deletion must remove the contribution while retaining enough revision identity to reject an older event arriving later. The revision lab uses a tombstone for this reason. Compare the broken additive total with the reference projection, then add an independent test for a date move followed by a stale update."
           ]
         }
       ],
@@ -1386,7 +1409,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Applied extension",
       "description": "Defend lineage, recovery, schema evolution and target integration limits.",
       "exitCriteria": [
         "Compare input/stored keys, counts and exact sums, including an offsetting-error case.",
@@ -1419,7 +1442,10 @@
     "practice/pipeline_lab.py",
     "practice/test_pipeline_lab.py",
     "practice/sample_orders.csv",
-    "practice/sql-server-bridge.sql"
+    "practice/sql-server-bridge.sql",
+    "practice/revision_lab.py",
+    "practice/test_revision_lab.py",
+    "practice/depth-lab.md"
   ],
   "downloads": [
     {

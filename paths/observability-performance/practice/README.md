@@ -27,3 +27,9 @@ Foundation: define boundaries, interpret percentile and good-event checks. Inter
 Execution scope: standard-library local HTTP, duration analysis, failure injection and lookup timing. OpenTelemetry SDK/collector deployment, real distributed propagation, backend retention, actual alert delivery, cloud infrastructure and production load are learner extensions and are not verified by these scripts.
 
 References are linked per lesson; OpenTelemetry, Prometheus, Google SRE, Python and MDN primary documentation checked 2026-09-30. Recheck versioned APIs before choosing an SDK or monitoring backend.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `trace_investigation.py`: Two measured JSON timelines, one success and one error, followed by PASS for timeline bounds and error evidence. Timings vary.
+
+Requirements: Python 3.11+ standard library.

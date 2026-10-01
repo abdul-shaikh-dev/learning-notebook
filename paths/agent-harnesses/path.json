@@ -4,7 +4,7 @@
   "category": "AI engineering",
   "status": "ready",
   "description": "Build the runtime around an agent: 24 lessons on controlled tool dispatch, scoped approvals, bounded loops, state recovery and operational evidence, with three projects and a fully offline Python workshop.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Intermediate runtime engineering → selected recovery extensions",
   "prerequisites": [
     "Basic Python functions, dictionaries, classes, exceptions and tests; the Python path provides preparation.",
     "The AI Agents path is a useful introduction to model/tool workflows. This path focuses on runtime implementation and operations.",
@@ -129,7 +129,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · prove and operate the boundary",
+      "title": "Applied extension · prove and operate the boundary",
       "description": "Design isolation, concurrency, telemetry, regression and incident processes beyond the single-worker toy.",
       "exitCriteria": [
         "Separate deterministic policy evidence from LLM quality and production security.",
@@ -1006,6 +1006,14 @@
           "paragraphs": [
             "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
+        },
+        {
+          "title": "Locate the crash between two commits",
+          "paragraphs": [
+            "Walk through a save in four moments: the checkpoint says waiting; the user approves; the effect store commits the note and receipt; the checkpoint records completion. A crash after the third moment leaves durable business state ahead of durable run state. Resuming by blindly repeating the action risks duplication. Restoring only the checkpoint does not reconstruct what the effect store already did.",
+            "Open persisted-run-lab.md and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
+            "For a changed case, crash before the effect commits. Recovery finds no local receipt and keeps the approval boundary. Absence is authoritative here because the local effect and receipt share a transaction; an external service with delayed lookup would require a different unknown-outcome policy."
+          ]
         }
       ],
       "exercise": {
@@ -1323,6 +1331,14 @@
           "paragraphs": [
             "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
+        },
+        {
+          "title": "A version conflict is a useful outcome",
+          "paragraphs": [
+            "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A’s state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
+            "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in durable_state.py and add a second connection that attempts the stale save.",
+            "Use the owner_version_lab.py exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
+          ]
         }
       ],
       "exercise": {
@@ -1498,6 +1514,13 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "A dataset should include normal, boundary, failure and adversarial cases, with versioned expected outcomes. Do not tune on every held-out example and still call it independent validation. Model-based graders can assist but need calibration and disagreement review. A safe tool rejection may be a policy success even if the overall user task did not complete, so report both dimensions."
+          ]
+        },
+        {
+          "title": "Separate three kinds of failure",
+          "paragraphs": [
+            "A retrieval tool returns the wrong document; the model cites an unobserved ID; the application writes a note without approval. These require different checks: retrieval relevance, citation membership, and authorization at the effect boundary. One final-answer similarity score cannot identify which layer failed.",
+            "Start with six fixed cases and run the deterministic runtime against each. Then substitute a live local model while keeping those cases unchanged. Count failures by layer and retain one trace per distinct failure. Add a seventh, previously unseen case only after the fix: this checks whether you improved the rule or merely memorized the original prompt. The local framework bridge in AI Agents supplies the graph and model boundaries for this exercise."
           ]
         }
       ],
@@ -1724,7 +1747,9 @@
     "practice/test_parser_properties.py",
     "practice/persisted_run_lab.py",
     "practice/test_persisted_run_lab.py",
-    "practice/persisted-run-lab.md"
+    "practice/persisted-run-lab.md",
+    "practice/owner_version_lab.py",
+    "practice/depth-lab.md"
   ],
   "downloads": [
     {

@@ -54,6 +54,18 @@
       "href": "paths/observability-performance/practice/verification.md",
       "role": "guide",
       "description": "Actual local execution evidence and unverified boundaries"
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/observability-performance/practice/trace_investigation.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/observability-performance/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -70,7 +82,9 @@
         "integration-test",
         "runbook",
         "README",
-        "verification"
+        "verification",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract the bundle; all files are flat inside the named practice folder.",
@@ -80,13 +94,19 @@
         "Calculate nearest-rank percentiles.",
         "Write safe structured log fields.",
         "Interpret golden signals and nested spans.",
-        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
           "label": "Run local reference checks",
           "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
           "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python trace_investigation.py",
+          "expected": "Two measured JSON timelines, one success and one error, followed by PASS for timeline bounds and error evidence. Timings vary."
         }
       ],
       "prerequisites": [
@@ -97,7 +117,8 @@
       ],
       "notes": [
         "Reference files are a starting point; learner extensions and production deployment require separate verification.",
-        "No credentials, external providers or paid services are required for the baseline."
+        "No credentials, external providers or paid services are required for the baseline.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
@@ -162,7 +183,9 @@
         "integration-test",
         "runbook",
         "README",
-        "verification"
+        "verification",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract the bundle; all files are flat inside the named practice folder.",
@@ -173,13 +196,19 @@
         "Explain load-generator limitations.",
         "Write recovery and retest steps.",
         "Create a telemetry release/security evidence matrix.",
-        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
+        "Record actual outputs and compare them with the rubric; do not claim unexecuted checks.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
           "label": "Run local reference checks",
           "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
           "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python trace_investigation.py",
+          "expected": "Two measured JSON timelines, one success and one error, followed by PASS for timeline bounds and error evidence. Timings vary."
         }
       ],
       "prerequisites": [
@@ -190,7 +219,8 @@
       ],
       "notes": [
         "Reference files are a starting point; learner extensions and production deployment require separate verification.",
-        "No credentials, external providers or paid services are required for the baseline."
+        "No credentials, external providers or paid services are required for the baseline.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }
   ],

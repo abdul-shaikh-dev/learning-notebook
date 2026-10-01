@@ -4,7 +4,7 @@
   "category": "Product design",
   "status": "ready",
   "description": "Create clear, responsive interfaces and verify keyboard, semantic, contrast and recovery behaviour with honest evidence.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → applied interaction practice → scoped release review",
   "prerequisites": [
     "Basic file editing and running a terminal command. No prior specialist knowledge required.",
     "Basic HTML and JavaScript help you edit the UI lab and understand its Node.js checks. Python is optional and used only to run a local HTTP server; no Python programming or measurement lab is required."
@@ -194,7 +194,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced — maintained inclusive journeys",
+      "title": "Applied review — maintained inclusive journeys",
       "description": "Evaluate complex interactions and produce bounded release evidence.",
       "exitCriteria": [
         "The same task works through equivalent input routes.",
@@ -447,16 +447,25 @@
           "paragraphs": [
             "A mouse-only smoke test misses keyboard traps and disappearing focus. Test forward and backward navigation, activation, dismissal and route changes with the mouse untouched."
           ]
+        },
+        {
+          "title": "Debug the existing dashboard by following focus",
+          "paragraphs": [
+            "Open practice/demo.html from this path's files. Tab to the title, submit blank, then enter a title and submit again. Failure should explain recovery; after success the cleared title is ready for another entry. The visible list and status should agree.",
+            "Optional fault injection: copy the practice folder, then remove input.focus() only from the successful submit branch of demo.js. Add a title with the mouse button and continue by keyboard. Compare focus with the blank-input branch, then restore the line. A test that only searches for focus() would miss which branch needs it."
+          ],
+          "example": "Empty submit -> input focused, invalid state and error. Corrected submit -> row appended, invalid state cleared, status updated, input focused. Preview -> modal heading. Close -> trigger. Focus follows the next task; always jumping to the page top would interrupt entry.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Navigate the downloadable demo using only Tab, Shift+Tab, Enter and Escape. Record the focus destination after closing the dialog.",
-        "solution": "The skip link reaches main; the form fields and buttons follow source order. Opening Preview moves focus into the dialog; Escape closes it and restores focus to Preview. Any invisible focus or unreachable control is a defect to reproduce and fix, even if the pointer interaction works.",
+        "prompt": "Changed interaction: a Remove button deletes its own row. Choose focus after removing the first of three rows and after removing the only row. Explain why the deleted button cannot be the return target.",
+        "solution": "For the first of three, focus the next available row action if that preserves editing. For the only row, focus a stable control such as the title input and announce the empty result. The deleted element cannot provide usable focus. Optionally implement in the copied demo, then keyboard-check both cases; a proposed rule alone is not browser evidence.",
         "solutionFormat": "prose",
         "checks": [
-          "Every action is reachable.",
-          "Focus is visible and not obscured.",
-          "Closing a temporary surface restores a sensible position."
+          "Chooses an existing target after deletion.",
+          "Handles the empty-list case separately.",
+          "Separates a focus plan from tested behavior."
         ]
       },
       "quiz": {
@@ -665,16 +674,25 @@
           "paragraphs": [
             "Client validation improves recovery but is not a server security boundary. Repeat validation on the server and map server failures back to useful field or form messages."
           ]
+        },
+        {
+          "title": "Clear errors when the state changes",
+          "paragraphs": [
+            "Inspect the existing demo.js submit handler. It trims the title, rejects emptiness, marks aria-invalid on failure and clears the flag and error on success. Spaces-only input must follow failure. Keeping the old error beside a newly appended valid row creates contradictory states.",
+            "In a copied folder, temporarily remove the line clearing title-error and repeat blank -> valid. Repair the success transition rather than hiding alerts in CSS. Submit angle brackets too: the demo uses textContent, so the title should appear literally rather than become markup."
+          ],
+          "example": "Spaces -> no row, error, invalid input. \"Graphs\" -> one row, cleared error/invalid flag, success status. \"<b>Graphs</b>\" -> literal characters in another row. Reload -> no rows because this demo has no persistence.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Submit the demo with spaces, then a valid title. Inspect the invalid state and recovery without a mouse.",
-        "solution": "Whitespace is rejected with visible Title is required text; the input receives focus, aria-invalid=true and a described error. After valid input, the error clears and a status message confirms the change. The implementation never inserts learner input using innerHTML.",
+        "prompt": "Changed requirement: titles must be unique ignoring outer whitespace and case, but display must preserve spelling. Outline comparison and recovery; optionally implement in the copied handler.",
+        "solution": "Retain the trimmed original for display; compare lower-case normalised keys with existing titles. Reject duplicates before appending and leave input editable. \" Graphs \" and \"graphs\" collide; \"Graph theory\" does not. Clear the duplicate error after a valid replacement. This is a stated lab rule, not a universal language-aware identity algorithm.",
         "solutionFormat": "prose",
         "checks": [
-          "Errors name the field and fix.",
-          "Typed values survive failure.",
-          "Invalid state clears when resolved."
+          "Normalises comparison but preserves display text.",
+          "Rejects duplicates before reporting success or changing count.",
+          "Tests duplicate -> correction for stale errors."
         ]
       },
       "quiz": {
@@ -767,16 +785,25 @@
           "paragraphs": [
             "Opening every preview in a modal is not automatically better. A separate page can be clearer for long content, shareable resources or complex navigation. Choose the pattern according to the task."
           ]
+        },
+        {
+          "title": "Track focus ownership as triggers change",
+          "paragraphs": [
+            "The demo calls showModal() from Preview, focuses the dialog heading and returns focus to the trigger on close. Read those lines, then test Tab, Shift+Tab, Escape and Close in your browser. A dialog tag alone is not a complete interaction test.",
+            "In a copy, remove the close listener and compare both close routes. The browser may already return focus to the invoker in this simple case; report what happens rather than inventing a failure. The harder case changes the trigger's lifetime: an in-dialog action removes the row whose Preview button opened it."
+          ],
+          "example": "Stable trigger: remember opener, open, select initial focus, close, return. Row-specific trigger: remember the actual invoking button; on close check whether it still belongs to the document. If removed, choose the agreed surviving-row or Add fallback.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Open and dismiss the demo preview with keyboard controls. Specify what should happen if its opener is removed.",
-        "solution": "Focus enters the Preview dialog; Escape or Close dismisses it and returns to Preview. If that opener no longer exists, choose the next logical control or page heading and check it is connected before focusing. The dialog title is its accessible name; background interaction is inert while open.",
+        "prompt": "Changed case: the second of two row Preview buttons opens the dialog, then its row is removed by an in-dialog action. Repair the one-global-opener design and identify the close paths to test.",
+        "solution": "Remember the actual invoker each time. On close return to it if connected, otherwise use a relevant surviving control. Test Escape and explicit Close, including the removed-invoker case. If implementing removal, keep list count and status consistent. Focus checks do not replace assistive-technology testing.",
         "solutionFormat": "prose",
         "checks": [
-          "The dialog has an accessible name.",
-          "Escape and a visible close control work.",
-          "Focus returns to a surviving logical target."
+          "Remembers the actual trigger among multiple buttons.",
+          "Provides a connected fallback when it is deleted.",
+          "Tests Escape and explicit close."
         ]
       },
       "quiz": {

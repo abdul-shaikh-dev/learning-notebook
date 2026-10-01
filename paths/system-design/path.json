@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "Build and defend a system from requirements to recovery: 24 lessons on APIs, data, capacity, distributed behavior and operations, with three design projects and a tested offline calculator.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate design reasoning → local experiments",
   "prerequisites": [
     "Comfort with a small application, basic HTTP and database concepts is helpful; the foundation lessons explain the vocabulary.",
     "No cloud account or paid service is required. Optional calculator exercises need Python 3.10+ and basic terminal use."
@@ -150,7 +150,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · operate and evolve",
+      "title": "Applied extension · operate and evolve",
       "description": "Defend the design under overload, partial failure, recovery and incompatible change; make claims testable.",
       "exitCriteria": [
         "Bound retry and queue amplification within deadlines and capacity.",
@@ -699,6 +699,14 @@
           "paragraphs": [
             "On expiry, many callers can miss together and stampede the origin. Coalescing duplicate loads and varying refresh times can help; bounded stale content is acceptable only when the product permits it. Evicting after a write can race with an old reader repopulating stale data, so use versioned keys or a deliberate consistency strategy. A high hit ratio does not excuse incorrect user isolation."
           ]
+        },
+        {
+          "title": "A cache key is part of the correctness contract",
+          "paragraphs": [
+            "A public workshop list and a private learner’s bookings are different cache problems. Keying private results only by URL can return Alice’s bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
+            "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The booking_lab.py reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
+            "Changed case: an administrator cancels the workshop. Describe which cached views may temporarily lag and which operations must consult authoritative state. A short TTL bounds some stale exposure; it does not turn a stale authorization decision into a correct one."
+          ]
         }
       ],
       "exercise": {
@@ -1221,6 +1229,14 @@
           "paragraphs": [
             "Protect fair access per tenant as well as aggregate capacity. A global cap can let one client consume everything. Reject with a documented response and retry guidance where appropriate; blindly retrying rejected work defeats the protection. Separate optional analytics from essential saves, but define what degradation means to users. Queue depth without processing rate or job age is difficult to interpret."
           ]
+        },
+        {
+          "title": "Distinguish a faster worker from a stable queue",
+          "paragraphs": [
+            "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Making each job 10% faster yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
+            "Run capacity_calculator.py to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
+            "For an implementation extension, cap an in-memory queue at a small capacity, make a worker wait on an event, and submit more requests than the cap. Assert explicit rejection and eventual draining after release. Avoid sleeps as evidence of ordering; use events. This proves admission behaviour locally, not internet-scale capacity."
+          ]
         }
       ],
       "exercise": {
@@ -1611,6 +1627,14 @@
           "title": "Repeat the threat-model pass",
           "paragraphs": [
             "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+          ]
+        },
+        {
+          "title": "Use a counterexample to revise the design",
+          "paragraphs": [
+            "Start with the existing booking lab and one seat. The first design reads capacity, then inserts a reservation. Construct the interleaving where two callers both observe one seat before either writes. The revised design must move the condition into the protected write and test the final invariant: remaining capacity is nonnegative and at most one booking exists.",
+            "Next inject a crash after outbox publication but before its sent marker. A second delivery is now expected, so the consumer needs its own deduplication contract. Changing the producer’s transaction cannot erase this acknowledgement gap. Use the supplied relay-crash test to connect the architecture drawing to an observable duplicate.",
+            "For transfer, change the requirement to two seats booked atomically by one learner. Work out the capacity predicate and rollback case before editing the code. This small requirement change is a better test of understanding than reproducing the original one-seat diagram."
           ]
         }
       ],

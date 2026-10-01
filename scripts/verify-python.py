@@ -7,6 +7,18 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = (
+    ("python/practice", "summary_checks.py"),
+    ("data-structures-algorithms/practice", "test_method_selection.py"),
+    ("design-patterns", "test_batch_export.py"),
+    ("testing-debugging/practice", "cursor_checks.py"),
+    ("git-team-workflows", "test_semantic_merge.py"),
+    ("data-engineering/practice", "test_revision_lab.py"),
+    ("agent-harnesses/practice", "owner_version_lab.py"),
+    ("application-security", "login_flow_lab.py"),
+    ("financial-foundations/practice", "test_valuation_transfer.py"),
+    ("networking-web/practice", "tcp_framing.py"),
+    ("delivery-operations/practice", "schema_coexistence.py"),
+    ("observability-performance/practice", "trace_investigation.py"),
     ("linux-operating-systems/practice", "test_os_labs.py"),
     ("data-engineering/practice", "test_pipeline_lab.py"),
     ("messaging-events/practice", "test_event_lab.py"),
@@ -47,12 +59,16 @@ SUITES = (
     ("kubernetes/practice", "check_manifests.py"),
 )
 
+# Optional framework/server/cluster labs are intentionally not part of the
+# standard-library suite. Their prerequisites and commands live in their kits.
+DIRECT_SUITES = {"summary_checks.py", "cursor_checks.py", "tcp_framing.py", "schema_coexistence.py", "trace_investigation.py"}
+
 with tempfile.TemporaryDirectory(prefix="notebook-python-") as scratch:
     for folder, suite in SUITES:
         target = Path(scratch) / folder
         shutil.copytree(ROOT / "paths" / folder, target, dirs_exist_ok=True)
         print(f"Checking {folder}", flush=True)
-        command = [sys.executable, suite] if suite.endswith(".test.py") else [sys.executable, "-m", "unittest", "-v", suite]
+        command = [sys.executable, suite] if suite.endswith(".test.py") or suite in DIRECT_SUITES else [sys.executable, "-m", "unittest", "-v", suite]
         subprocess.run(command, cwd=target, check=True, timeout=90)
     target = Path(scratch) / "algorithms"
     shutil.copytree(ROOT / "paths/data-structures-algorithms/practice", target)

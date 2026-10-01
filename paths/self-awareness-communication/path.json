@@ -4,7 +4,7 @@
   "category": "Personal development",
   "status": "ready",
   "description": "Practise reflection, listening, clear requests and respectful disagreement in everyday situations.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → everyday conversation practice → adaptation and review",
   "prerequisites": [
     "No specialist knowledge required.",
     "A text editor or printed worksheets; fictional cases can be used throughout."
@@ -254,7 +254,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced — adapt and review",
+      "title": "Applied transfer — adapt and review a conversation",
       "description": "A difficult-conversation plan and review",
       "exitCriteria": [
         "Map positions, concerns, constraints and power differences.",
@@ -757,22 +757,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "A short roleplay with a correction",
           "paragraphs": [
-            "Luis says he can collect the equipment if someone confirms the storage room before Thursday."
+            "Optional roleplay: read both parts silently or with someone willing. Dev: \"The task moved to done before I reviewed it. Does done mean ready for me or ready to send?\" Rowan's reply, \"You want permission for everything,\" adds an interpretation Dev did not state.",
+            "Try: \"You need to know whether done includes review; have I understood?\" If yes, agree the board rule. If Dev says, \"No, I worry the client already received it,\" check sending status first. The correction changes the next action; a warmer repetition of the wrong paraphrase does not resolve it."
           ],
-          "example": "“You can collect it once the storage room is confirmed, and you need that confirmation before Thursday. Is that right, or have I missed another condition?” The summary preserves the dependency and deadline rather than turning a conditional offer into an unconditional promise.",
+          "example": "Dev: \"Was it sent?\" Rowan: \"No. Done meant my draft was finished. Shall we use Ready for review, then Ready to send after checking?\" Dev: \"Yes, that separates the decisions.\"",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Zara says she can do the analysis but needs the figures before noon. Write a checked paraphrase and a correction invitation.",
-        "solution": "You can complete the analysis if the figures arrive before noon; the timing is the blocker. Have I understood that, or is there another dependency? This identifies the condition while leaving Zara room to correct it.",
+        "prompt": "Branch: Dev instead says someone already sent it. Give Rowan's next response without defending the label first.",
+        "solution": "One response: \"Then let us compare the sent version with the reviewed copy and decide whether a correction is needed. We can fix labels afterward.\" It accepts the corrected fact, checks the artifact and changes priority without assuming who is at fault.",
         "solutionFormat": "prose",
         "checks": [
-          "The summary preserves the speaker’s condition.",
-          "The speaker is invited to correct it.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Uses the correction to change the next action.",
+          "Checks the sent artifact rather than debating intentions.",
+          "Leaves blame undecided while addressing the consequence."
         ]
       },
       "quiz": {
@@ -1163,22 +1164,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "Compare options after the first proposal fails",
           "paragraphs": [
-            "A community team needs refreshments and registration ready, with only one member able to arrive early."
+            "Rowan wants quick handoffs; Dev needs review before client release. They agree a draft may be prepared independently but the release needs a named reviewer. Rowan proposes 4 p.m.; Dev is unavailable. That is a constraint, not proof of unwillingness.",
+            "Branch A: a noon review meets the deadline, so send drafts before noon. Branch B: the deadline is ten and Dev is the only reviewer, so noon fails. Branch C: an authorised alternate may be free at nine; obtain agreement before counting that slot as available."
           ],
-          "example": "Option A gives everyone equal preparation tasks, leaving registration dependent on late arrivals. Option B gives early setup to the willing early member and advance preparation to others. Compare arrival times and effort, then confirm acceptance and backup arrangements; early availability does not itself create an obligation.",
+          "example": "Rowan: \"We need a checked release by ten. Can we send the draft the previous afternoon, use an authorised alternate at nine, or request a later release?\" Dev accepts the prior-afternoon option provided essential later changes reopen review.",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "A group must finish a poster while members have different skills and available hours. Generate two task plans and compare them using two criteria.",
-        "solution": "Plan A splits pages equally; Plan B assigns layout to the available designer and research checks to others. Compare total hours and whether each person can complete their part by Friday. Plan B may fit better, but confirm consent and backup coverage rather than assuming skill creates obligation.",
+        "prompt": "Changed case: essential client data arrives at 9:30 and the alternate is unavailable. Respond while preserving review and an honest deadline.",
+        "solution": "Identify changes needing review, contact the authorised reviewer and surface the ten o'clock conflict. Offer revised timing or an agreed limited update. Yesterday's approval cannot silently cover changed essential data. Without an available reviewer, a checked release by ten is not a credible promise.",
         "solutionFormat": "prose",
         "checks": [
-          "Two options are compared against explicit criteria.",
-          "Availability and agreement are checked.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Recognises which evidence new data invalidates.",
+          "Does not count an unavailable alternate.",
+          "Offers explicit limited scope or revised timing."
         ]
       },
       "quiz": {
@@ -1227,22 +1229,23 @@
           ]
         },
         {
-          "title": "Work through an everyday case",
+          "title": "Repair the statement and its practical effect",
           "paragraphs": [
-            "Nico tells the group the wrong deadline, and another member reschedules work using that information."
+            "Rowan publicly said, \"Dev never reviews on time,\" then learns that no deadline was agreed and the draft arrived after Dev left. A repair names and corrects the inaccurate statement, preferably for the same audience, and proposes a useful next action. It need not ask Dev for reassurance.",
+            "Branch A: Dev accepts; agree the next review time. Branch B: Dev says reputation was harmed; ask what factual correction helps without claiming harm is erased. Branch C: Dev wants no conversation now; respect that and still correct the record appropriately."
           ],
-          "example": "“I gave Friday as the deadline; the confirmed date is Thursday. I am sorry. I will correct the group note now and help identify the work affected.” Nico asks what practical correction would help and does not require the other person to reassure him or forgive immediately.",
+          "example": "Rowan: \"I said you never review on time. That was unfair: we had no agreed deadline and I sent it late. I will correct that in the team thread. Can you review this draft by noon tomorrow, or should we find another plan?\"",
           "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Jules interrupts a partner twice and then discovers that he misunderstood the missing information. Draft a repair and a changed next action.",
-        "solution": "I interrupted you twice and missed the information you were explaining. I am sorry. Please finish; then I will summarise before suggesting a change. Jules lets the partner choose whether to continue and follows through rather than seeking reassurance.",
+        "prompt": "Transfer: Dev replies, \"Do not message me again about this today, but correct the team thread.\" Choose the next action and define an honest success claim.",
+        "solution": "Correct the factual claim without sharing private details, then stop requesting discussion today. Do not condition correction on forgiveness. Success is an inaccurate statement corrected and the requested boundary respected; it does not establish restored trust.",
         "solutionFormat": "prose",
         "checks": [
-          "The mistake and its effect are named.",
-          "The changed next action matches the mistake.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Corrects without demanding reassurance.",
+          "Respects the requested pause.",
+          "Separates observable repair from restored trust."
         ]
       },
       "quiz": {

@@ -26,3 +26,9 @@ For an optional real-browser CORS failure/success, disposable HTTPS certificate 
 Primary source sections were reviewed on 2026-09-27. Local test results follow; these do not establish unexecuted internet or deployment behavior.
 
 Local verification on 2026-09-27: Python 3.14; 12 regression tests passed. Reference script commands also executed successfully.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `tcp_framing.py`: PASS covers valid split/coalesced UTF-8 frames, empty EOF, truncated EOF and the 64-byte frame limit.
+
+Requirements: Python 3.11+ standard library; permission to bind an ephemeral loopback TCP port.

@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "Follow requests from names to validated bodies through 24 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
     "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
@@ -134,7 +134,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Applied extension",
       "description": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
       "exitCriteria": [
         "Malformed syntax, incompatible types and wrong media type each reject.",
@@ -377,16 +377,25 @@
             "Use the standard HTTP client rather than writing a partial TCP parser for this course. A read can yield fewer bytes than requested, and a peer can close halfway through content. Bounded reads protect the application from accepting unlimited bodies, but correct handling must also recognize truncated messages."
           ],
           "example": "Server sends 20 bytes in two writes\nReceiver reads 8 then 12\nSame content, different chunking\nA one-read parser would silently truncate"
+        },
+        {
+          "title": "Frame bytes before decoding text",
+          "paragraphs": [
+            "The word cafe with an accented final letter needs two UTF-8 bytes for that letter. A recv boundary can separate those bytes; decoding each chunk independently can therefore fail even though the complete message is valid. Accumulate bytes until the application delimiter arrives, enforce a size limit and only then decode the complete frame. A sendall call does not reserve a matching recv call.",
+            "tcp_framing.py uses a real loopback listener and deliberately small three-byte reads. One exchange splits a UTF-8 character across sends; another sends two newline-delimited frames together. Both must yield complete messages. EOF with remaining bytes is an incomplete frame, not a successful short message. This tiny newline protocol teaches TCP framing; it is not an HTTP parser."
+          ],
+          "example": "wire bytes: b'caf\\xc3' + b'\\xa9\\nsecond\\n'\nframes: ['café', 'second']\nwire bytes: b'incomplete' then EOF -> error, no completed frame",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "What assertion belongs in a truncated-body test extension?",
-        "solution": "Claimed Content-Length exceeds bytes actually received, so the client must report incomplete content and never publish a valid lesson from the prefix.",
-        "solutionFormat": "prose",
+        "prompt": "Run python tcp_framing.py. Change the malformed fixture from an incomplete frame to 65 bytes without a newline. Which boundary should reject it and why should more reads not be required?",
         "checks": [
-          "Specify declared and received body sizes for the fixture.",
-          "Assert the client outcome and whether any application result is published."
-        ]
+          "Both valid exchanges produce two messages regardless of send/read chunking.",
+          "The 65-byte frame exceeds the 64-byte limit; incomplete EOF is separately rejected."
+        ],
+        "solution": "The pending-frame size check rejects the 65th byte before allowing unbounded accumulation. EOF with fewer bytes but no delimiter is a different error: the protocol frame never completed. Neither failure should publish a fabricated complete message. A decoder must bound memory as well as recognize message boundaries.",
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why is one socket read insufficient as a general parser?",
@@ -1070,16 +1079,25 @@
             "The /stall endpoint waits on an Event before sending a response. A client with a short socket timeout should stop waiting; cleanup releases the server event afterward. This controlled local read timeout is real, while injected-clock retry tests model a separate policy. Avoid treating either as internet latency benchmarking."
           ],
           "example": "Server signals request started\nClient waits for headers with timeout .15s\nClient gets TimeoutError\nCleanup releases server; request did reach it"
+        },
+        {
+          "title": "A read timeout can reset while the overall budget expires",
+          "paragraphs": [
+            "Suppose a server sends one byte every 80 ms and the socket timeout is 100 ms. Every individual read may succeed indefinitely. A two-second request deadline must instead use a monotonic start time and subtract elapsed time before each wait. Retrying with a fresh two-second budget on every attempt defeats the caller's total budget.",
+            "With a two-second budget, an initial attempt using 1.4 seconds and a planned 0.4-second backoff leave only 0.2 seconds. A second two-second attempt is inconsistent with that contract. Bound its wait by the remaining time or decline the retry. A timeout after a POST still leaves the outcome uncertain; deadline arithmetic does not provide idempotency or remotely undo a committed write."
+          ],
+          "example": "total budget 2.0s - attempt 1.4s - backoff 0.4s = 0.2s remaining\nnext wait <= 0.2s; no fresh full budget\nreceived response prefix != complete application result",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Why does the readiness event matter?",
-        "solution": "It establishes the server received the request before the timeout observation. A refusal or thread-start failure would be a different behavior and should not satisfy the intended case.",
-        "solutionFormat": "prose",
+        "prompt": "A peer sends a byte every 80 ms under a 100 ms read timeout. Explain why the client can exceed a two-second goal, and calculate the remaining attempt budget after 1.4 seconds plus 0.4 seconds backoff.",
         "checks": [
-          "Describe the synchronization point and the event it establishes.",
-          "Explain which timeout or startup failures remain possible afterward."
-        ]
+          "Per-read progress can keep avoiding the socket timeout while total duration grows.",
+          "The next attempt has at most 0.2 seconds, and an uncertain earlier write must not be blindly repeated."
+        ],
+        "solution": "The timeout bounds an individual blocking read, not the full exchange. Use one monotonic deadline across reads, backoff and attempts. Only 0.2 seconds remains; skip a retry that cannot usefully finish or cap its waits accordingly. For a mutating request also resolve idempotency/outcome uncertainty.",
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What does client timeout establish?",
@@ -1355,7 +1373,9 @@
     "practice/README.md",
     "practice/project-workbook.md",
     "practice/browser-boundary-drill.md",
-    "practice/browser_drill.py"
+    "practice/browser_drill.py",
+    "practice/tcp_framing.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

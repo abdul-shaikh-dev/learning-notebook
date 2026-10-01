@@ -1,0 +1,3 @@
+# Optional build-and-break exercise
+
+Predict the totals after revisions 1, 2, 1, deletion 3 and stale 2: 100, 150, 150, empty, empty. Run python revision_lab.py, then python -m unittest -v test_revision_lab.py. Build your own apply function before comparing the reference. Change the day in revision 2 and verify the old day disappears. The snapshot table deliberately retains tombstones. Removing them lets old deliveries resurrect deleted orders. This model assumes one process, authoritative per-order revisions and complete replacement events. It does not implement a source cursor, streaming watermark or concurrent writer protocol.

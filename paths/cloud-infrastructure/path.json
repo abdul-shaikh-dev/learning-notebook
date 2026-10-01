@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "22 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
-  "level": "Foundations → intermediate → selected advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
     "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
@@ -650,6 +650,15 @@
             "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
           ],
           "example": "from infra_lab import plan, simulate_apply\nimport json\nfrom pathlib import Path\n\ncurrent = json.loads(Path('topology.json').read_text())['resources']\nprint(plan(current, []))  # two destroy operations in the MODEL\n# simulate_apply(current, []) raises ValueError\nprint(simulate_apply(current, [], allow_destroy=True))  # []\n# No cloud or filesystem resource is created/deleted."
+        },
+        {
+          "title": "Read the action before reading the totals",
+          "paragraphs": [
+            "Suppose a plan contains one tag update and one database replacement. The summary says two resources change, but only the replacement crosses the data-lifetime boundary. Read the address, before/after fields, action order and replacement reason. An unknown endpoint is normal during creation; an unknown backup destination is a missing recovery assumption. Neither observation is resolved by counting plus signs.",
+            "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. There is no provider, provisioner, cloud resource or cost. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
+          ],
+          "example": "initial: [create], exit 2\nafter local apply: [no-op], exit 0\ninput v1 -> v2: [update], exit 2\nidentity-1 -> identity-2: [delete, create], exit 2",
+          "exampleFormat": "prose"
         }
       ],
       "quiz": {
@@ -676,16 +685,23 @@
           "section": "Purpose of Terraform state",
           "reviewed": "2026-09-30",
           "scope": "Terraform 1.x language guidance; the offline inventory is a teaching model, not a Terraform state implementation."
+        },
+        {
+          "title": "Terraform built-in data and plan semantics",
+          "url": "https://developer.hashicorp.com/terraform/language/resources/terraform-data",
+          "section": "input versus triggers_replace; built-in provider",
+          "reviewed": "2026-10-02",
+          "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
         }
       ],
       "stage": "intermediate",
       "exercise": {
-        "prompt": "Run the planner tests for create, no-op, update, replace and destroy. In workbook.md explain which actions need a data migration or backup. No command in the supplied kit invokes terraform apply.",
+        "prompt": "Compare the optional real CLI plans. If a database property produces delete/create instead of update, what changes in your release decision even when the plan exits successfully?",
         "checks": [
-          "Classify all five model actions, including no-op.",
-          "Name the data consequences of replace/destroy and the unexecuted cloud boundary."
+          "Distinguish plan exit 2 (changes present) from failure, and identify the exact replacement address and field.",
+          "For the database case, require a data-preserving migration/recovery path; the terraform_data drill has no database data to preserve."
         ],
-        "solution": "The model reports create for absent IDs, update for changed tags, replace for changed kind/name and destroy for removed desired IDs. Replacements/deletions require explicit local opt-in. Review data migration and recovery before real destructive operations. No supplied operation invokes Terraform apply, and model output cannot prove cloud creation.",
+        "solution": "Exit 2 means a successful plan contains changes. The action list, not the exit code, reveals replacement. Review data movement, endpoint consumers and recovery before a separate apply. The local drill establishes Terraform action semantics only; it does not establish that a provider-backed database replacement preserves records.",
         "solutionFormat": "prose"
       }
     },
@@ -808,6 +824,15 @@
           "paragraphs": [
             "An operator temporarily enables public storage access during troubleshooting. The next plan should reveal the divergence; the security owner decides a controlled remediation. Importing an existing account needs exactly one intended state owner to avoid competing management."
           ]
+        },
+        {
+          "title": "Separate observed state, desired configuration and ownership",
+          "paragraphs": [
+            "Imagine configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh learns the live value; a normal plan can then propose false because configuration still owns the desired value. A refresh-only operation would update observations without enforcing that intent. Treat an emergency change as an ownership decision: codify it with a reason or restore the intended control.",
+            "Adopting an existing account adds a mapping between a Terraform address and the remote identity. If the configuration omits a required encryption or network property, the first post-import plan may propose an unexpected change. Compare the observed account, configuration and proposed actions before accepting management. Two state owners can each try to undo the other's changes; importing twice does not create high availability."
+          ],
+          "example": "configuration: public_access=false\nremote observation: public_access=true\nnormal plan: restore false\nrefresh-only: record true, do not remediate remote access",
+          "exampleFormat": "prose"
         }
       ],
       "quiz": {
@@ -838,12 +863,12 @@
       ],
       "stage": "intermediate",
       "exercise": {
-        "prompt": "Use the offline model to change a tag and compare drift. Draft an adoption checklist: scope, identity, one owner, backup, matching configuration, non-destructive reviewed plan. Do not import a shared resource for this exercise.",
+        "prompt": "An imported account has data and its first normal plan shows replacement because the configured name differs. What evidence would make adoption safe to continue?",
         "checks": [
-          "Identify a deliberate decision for manual drift.",
-          "List scope, one owner and reviewed plan as adoption gates."
+          "The differing name and replacement are identified before any apply.",
+          "The chosen action preserves existing identity/data or uses an explicit migration; importing alone is not called a backup."
         ],
-        "solution": "A tag drift changes observed inventory and should be deliberately codified or reverted by its owner. For adoption verify scope, resource ID and a single state owner, protect data, write matching configuration and inspect a non-destructive refreshed plan before mutation. Import only establishes an association; it is not automatic safe reconciliation.",
+        "solution": "Stop before apply. Confirm the remote identity and intended owner, reconcile the name/configuration to the existing object when that is the goal, and review a fresh plan. If replacement is intentional, establish a separate tested migration and recovery path. Import associates identity; it neither copies data nor guarantees a harmless next plan.",
         "solutionFormat": "prose"
       }
     },
@@ -1394,7 +1419,9 @@
     "practice/topology.json",
     "practice/main.tf.json",
     "practice/README.md",
-    "practice/workbook.md"
+    "practice/workbook.md",
+    "practice/terraform_plan_drill.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

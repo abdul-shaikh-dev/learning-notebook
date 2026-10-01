@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "24 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
-  "level": "Foundations → intermediate → selected advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
     "Python 3.11+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
@@ -582,15 +582,24 @@
             "Timing also depends on scheduling and probe execution; the arithmetic is an approximate configured budget, not an SLA. An aggressive liveness check on a shared dependency can worsen an outage. The local HTTP test confirms ready 503/live 200 distinction but does not execute kubelet probe scheduling."
           ],
           "example": "startup /live: period5s × failureThreshold12≈60s failure budget\nreadiness /ready: failure removes ready eligibility\nliveness /live: repeated failure triggers container restart"
+        },
+        {
+          "title": "Follow one failing Pod into the Service endpoints",
+          "paragraphs": [
+            "Two replicas are Ready. Creating /tmp/not-ready in one replica makes /ready return 503 while /live still returns 200. The kubelet eventually marks that Pod unready; the EndpointSlice controller updates its ready condition. The Pod can remain Running with the same UID and restart count. Traffic selection changes because readiness changed, not because the process died.",
+            "Run the optional readiness_drill.py only after the existing kind lab is healthy. It guards the named loopback context and namespace ownership, changes one Pod, checks its EndpointSlice and restores its gate in finally. Transitions are asynchronous, so it polls conditions with deadlines rather than assuming an immediate update. A long-lived connection already attached to the Pod is a separate boundary; endpoint readiness is not proof that every existing connection vanished."
+          ],
+          "example": "before: Ready=True, restartCount=N\ngate present: Ready=False, endpoint.ready=False, restartCount=N\ngate removed: Ready=True, restartCount=N",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Make the gate file inside a named lab Pod and predict its probe outcomes.",
-        "solution": "/ready becomes 503 so readiness eventually fails; /live remains200 so this condition should not cause a liveness restart. Remove the file and inspect readiness recovery. Record actual thresholds/timestamps during the optional drill.",
+        "prompt": "Run the optional probe drill, or trace its checks. If the restart count increases while only the readiness gate changed, which evidence contradicts the intended probe design?",
         "checks": [
-          "Distinguish traffic removal from restart.",
-          "Measure the optional cluster transition."
+          "The chosen Pod UID remains stable and its endpoint readiness becomes false.",
+          "Restarts remain unchanged through gate creation and recovery; an increase triggers inspection of liveness/events, not a success claim."
         ],
+        "solution": "Readiness should change traffic eligibility without restarting this service. A restart requires another cause: inspect container termination reason, events and actual startup/liveness paths. Keep Pod UID in the record so a replacement Pod is not mistaken for recovery of the same process. The script removes its own gate even if an assertion fails.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -1219,15 +1228,24 @@
             "ImagePullBackOff, CrashLoopBackOff and Pending indicate different stages, not interchangeable root causes. The kit imagePullPolicy Never intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
           ],
           "example": "kubectl --context=kind-notebook-lab -n notebook-lab describe pod NAME\nkubectl --context=kind-notebook-lab -n notebook-lab logs NAME --previous\nkubectl --context=kind-notebook-lab -n notebook-lab get endpointslices\n# Use actual object names and check their readiness conditions."
+        },
+        {
+          "title": "The order of checks changes the diagnosis",
+          "paragraphs": [
+            "A user sees a connection failure. First inspect the Deployment and Pods: no scheduled Pod makes application HTTP logs irrelevant. If the Pod is Running, inspect Ready and EndpointSlices. If the endpoint is absent or unready, investigate selectors and probes before DNS. If a ready endpoint exists, compare a request to the Pod with a request through the Service; this separates application behavior from routing.",
+            "In the supplied workload imagePullPolicy=Never requires the image on each node that can host the Pod. ErrImageNeverPull can therefore affect one replica after rescheduling even if its sibling works. Increasing probe delays cannot load an image. Likewise, a readiness 503 cannot be corrected by repeatedly deleting Pods when every replacement receives the same broken configuration."
+          ],
+          "example": "Pending -> scheduling conditions/events\nErrImageNeverPull -> local image on selected node\nRunning + Ready=False -> probe/app readiness\nReady=True + no matching endpoints -> Service selector\nReady endpoint + failed request -> traffic/app boundary",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Classify Pending, ErrImageNeverPull and readiness 503.",
-        "solution": "Pending often means scheduling constraints; ErrImageNeverPull means the local image is unavailable under Never; readiness 503 means the running HTTP service reports it cannot serve required work. Inspect events/logs and correct that specific boundary.",
+        "prompt": "A replacement Pod reports ErrImageNeverPull; another replica serves traffic normally. Explain why a successful request to the healthy replica does not close the incident.",
         "checks": [
-          "Tie observations to stage of failure.",
-          "Preserve secrets and incident evidence."
+          "Identify node-local image availability as the failed boundary under imagePullPolicy=Never.",
+          "Require recovery of the replacement replica and desired ready count; do not treat one successful response as deployment health."
         ],
+        "solution": "Inspect the failing Pod's assigned node and events, load the intended lab image through the documented kind procedure, then observe the replacement becoming Ready and rollout convergence. The healthy sibling proves only that one execution path works. Probe tuning or Service changes do not resolve the absent image.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -1361,7 +1379,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · handle storage, controllers and recovery",
+      "title": "Applied extension · handle storage, controllers and recovery",
       "description": "Study finite work, autoscaling, disruption, render-first templating, GitOps and distinct recovery stores.",
       "exitCriteria": [
         "Separate PVC retention from backup.",
@@ -1410,7 +1428,9 @@
     "practice/storage.json",
     "practice/test_lab_guard.ps1",
     "practice/optional-enforcement-track.md",
-    "practice/policy-clients.json"
+    "practice/policy-clients.json",
+    "practice/readiness_drill.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

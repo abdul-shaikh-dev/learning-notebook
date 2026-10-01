@@ -4,7 +4,7 @@
   "category": "Web development",
   "status": "ready",
   "description": "Build typed web features, then practise state architecture, async correctness, testing and resilient delivery.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "No React experience required. Be comfortable creating folders and editing text files.",
     "Work through JavaScript lessons before the React sections. Familiarity with HTML is useful but introduced here."
@@ -104,7 +104,10 @@
     "practice/http-loader.ts",
     "practice/advanced-bridge.test.ts",
     "practice/javascript-steps.js",
-    "practice/performance-runner.js"
+    "practice/performance-runner.js",
+    "practice/foundation-data.ts",
+    "practice/foundation-data.test.ts",
+    "practice/foundation-bridge.md"
   ],
   "downloads": [
     {
@@ -227,6 +230,14 @@
           "paragraphs": [
             "Run practice/javascript-steps.js with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
           ]
+        },
+        {
+          "title": "Follow conversion before choosing a fallback",
+          "paragraphs": [
+            "An HTML number input still exposes text through its value property. Number(\"\") becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, value || 20 replaces a valid zero; value ?? 20 replaces only null and undefined.",
+            "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser deliberately rejects \"20\" instead of coercing it. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
+          ],
+          "example": "const text = \"\";\nconst missing = text.trim() === \"\";\nconsole.log(Number(text), missing); // 0, true\nconsole.log(0 || 20, 0 ?? 20); // 20, 0"
         }
       ],
       "exercise": {
@@ -327,6 +338,13 @@
           "paragraphs": [
             "Returning nothing yields undefined. In an arrow function with braces, write return explicitly."
           ]
+        },
+        {
+          "title": "Trace references through an update",
+          "paragraphs": [
+            "Copying an array with [...rows] copies its container, not every object inside it. If next[0].done = true, both containers still point to the same first object. The old state has now changed too. Instead, create a new object for the changed row and retain unchanged rows. This makes the ownership decision explicit before React enters the picture.",
+            "Complete and toggle are different operations. Repeating complete should leave a row completed; repeating toggle changes it back. Choose the operation from the user intent and retry behavior. The focused lab tests repeated completion and a missing ID, so a convenient toggle implementation cannot silently replace the contract."
+          ]
         }
       ],
       "exercise": {
@@ -377,6 +395,13 @@
           "paragraphs": [
             "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with Promise.all; one rejection rejects that combined promise."
           ]
+        },
+        {
+          "title": "Two requests can finish in reverse order",
+          "paragraphs": [
+            "Imagine searching P, then Python. The P request may return last. Await inside each request orders that request's steps, but does not order independent calls. Assign a request number when starting; apply a result only if it still belongs to the current request. Cancellation can reduce wasted work, while the identity check determines which result may update the view.",
+            "Failure also has an owner. An old request must not replace a newer success with an error message. Apply the identity check to both success and failure paths, and clear the loading state only for the current request. The later race-safe loading lesson and its existing tests implement this fuller UI boundary."
+          ]
         }
       ],
       "exercise": {
@@ -426,6 +451,14 @@
           "paragraphs": [
             "any disables useful checking. Prefer a specific type or unknown with narrowing when the shape is not yet established."
           ]
+        },
+        {
+          "title": "Narrow unknown data step by step",
+          "paragraphs": [
+            "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. That type describes a runtime branch you actually executed.",
+            "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
+          ],
+          "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
         }
       ],
       "exercise": {
@@ -524,6 +557,13 @@
           "title": "Pitfalls",
           "paragraphs": [
             "Directly changing an object in state does not request a render. Also avoid storing both records and a separately maintained completed count when the count can be derived."
+          ]
+        },
+        {
+          "title": "Test the transition before wiring a component",
+          "paragraphs": [
+            "The focused lab exposes transition(rows, action) as an ordinary TypeScript function. With rows a and b, completing a returns a changed copy of a and keeps b. The test freezes the input to expose mutation immediately. You can inspect the output without rendering a component or understanding a testing library for DOM events.",
+            "Build a component that calls setRows(previous => transition(previous, action)) once the transition is understood. Derived totals should be calculated from rows rather than maintained in a second independent state variable. A later component test still matters: passing transition tests does not prove that the button dispatches the right ID."
           ]
         }
       ],
@@ -1417,7 +1457,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · Resilience and delivery",
+      "title": "Selected advanced practice",
       "description": "Reason about asynchronous races, persistence, security and measured performance in a bounded application.",
       "exitCriteria": [
         "Prevent stale requests from overwriting newer intent.",

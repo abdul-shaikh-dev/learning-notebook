@@ -1,0 +1,3 @@
+# Optional build-and-break exercise
+
+Run python login_flow_lab.py. Implement Pending in a scratch copy, then preserve the tests while replacing the reference. The A/B test detects a single global verifier; the second detects expiry and replay; the third detects duplicate-state replacement. Change the expiry boundary by one second and predict the outcome. These are synthetic transaction IDs, not secure random values. The class intentionally has no browser session binding, persistence, cryptography or identity provider. When integrating an identity library, keep the behaviours but let that library implement the protocol and cryptography.

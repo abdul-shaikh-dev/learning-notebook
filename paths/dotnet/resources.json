@@ -42,6 +42,24 @@
       "href": "paths/dotnet/practice/persistence-checks.cs",
       "role": "test",
       "description": "persistence-checks.cs — guided executable scaffold"
+    },
+    {
+      "id": "depth-HttpBoundary-cs",
+      "href": "paths/dotnet/practice/HttpBoundary.cs",
+      "role": "reference",
+      "description": "Executable HttpClient adapter boundary and failure checks"
+    },
+    {
+      "id": "depth-BoundaryChecks-csproj",
+      "href": "paths/dotnet/practice/BoundaryChecks.csproj",
+      "role": "test",
+      "description": "Package-free .NET HTTP adapter check project"
+    },
+    {
+      "id": "depth-http-boundary-md",
+      "href": "paths/dotnet/practice/http-boundary.md",
+      "role": "guide",
+      "description": "Distinguish client adapter checks from service integration"
     }
   ],
   "tasks": [
@@ -53,7 +71,10 @@
         "README-md",
         "foundation-cs",
         "task-api-cs",
-        "acceptance-cs"
+        "acceptance-cs",
+        "depth-HttpBoundary-cs",
+        "depth-BoundaryChecks-csproj",
+        "depth-http-boundary-md"
       ],
       "steps": [
         "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -61,13 +82,19 @@
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
         "Complete the assessment requirements in the reader: Task IDs are positive and titles are trimmed and nonblank.; Completion changes only the intended task.; An empty list and unknown ID have explicit behavior.; Four or more assertions cover a normal case and boundary failures.; Explain one nullable value and one disposable resource from your implementation.",
-        "Compare your evidence with the stage rubric: Correctness: expected output and assertions pass.; Boundaries: blank title, invalid ID and missing lookup are handled deliberately.; Design: presentation is separate from reusable task behavior.; Explanation: learner can trace state changes and describe why validation lives at the boundary."
+        "Compare your evidence with the stage rubric: Correctness: expected output and assertions pass.; Boundaries: blank title, invalid ID and missing lookup are handled deliberately.; Design: presentation is separate from reusable task behavior.; Explanation: learner can trace state changes and describe why validation lives at the boundary.",
+        "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
         {
           "label": "PowerShell · kit root · SDK 10",
           "command": "dotnet new console -n Foundation -f net10.0\nCopy-Item ./foundation.cs ./Foundation/Program.cs\ndotnet run --project ./Foundation",
           "expected": "2: Practice; 3: Review; PASS: 4 foundation assertions."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "dotnet run --project BoundaryChecks.csproj",
+          "expected": "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts. Requires the course .NET10 SDK."
         }
       ],
       "prerequisites": [
@@ -93,7 +120,10 @@
         "acceptance-cs",
         "PersistenceChecks-csproj",
         "persistence-api-cs",
-        "persistence-checks-cs"
+        "persistence-checks-cs",
+        "depth-HttpBoundary-cs",
+        "depth-BoundaryChecks-csproj",
+        "depth-http-boundary-md"
       ],
       "steps": [
         "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -101,7 +131,8 @@
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
         "Complete the assessment requirements in the reader: Create, page, fetch and complete tasks with validated DTOs.; Return 400, 404 and 409 consistently; the POST Location is retrievable.; Use scoped DbContext and parameterized queries.; Review migration code/SQL and test upgrade from a previous schema.; Persist task state across restart and protect competing updates.; Make task plus audit creation atomic and test rollback from a new context.",
-        "Compare your evidence with the stage rubric: HTTP behavior: executable acceptance checks verify successful and rejected requests.; Persistence: restart and fresh-context tests establish stored state.; Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.; Maintainability: typed storage boundary, scope ownership and package versions are explained.; Migration evidence: generated operations are reviewed, tested and retained with a recovery note."
+        "Compare your evidence with the stage rubric: HTTP behavior: executable acceptance checks verify successful and rejected requests.; Persistence: restart and fresh-context tests establish stored state.; Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.; Maintainability: typed storage boundary, scope ownership and package versions are explained.; Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
+        "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
         {
@@ -118,6 +149,11 @@
           "label": "PowerShell · guided SQLite/test-principal extension",
           "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
           "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "dotnet run --project BoundaryChecks.csproj",
+          "expected": "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts. Requires the course .NET10 SDK."
         }
       ],
       "prerequisites": [
@@ -143,7 +179,10 @@
         "acceptance-cs",
         "PersistenceChecks-csproj",
         "persistence-api-cs",
-        "persistence-checks-cs"
+        "persistence-checks-cs",
+        "depth-HttpBoundary-cs",
+        "depth-BoundaryChecks-csproj",
+        "depth-http-boundary-md"
       ],
       "steps": [
         "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
@@ -151,7 +190,8 @@
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
         "Complete the assessment requirements in the reader: Use a real authentication handler with issuer/audience/lifetime validation.; Set ownership from trusted identity and authorize every task read/write.; Propagate request cancellation, bound dependency work and avoid unobserved tasks.; Add structured problem responses, logs, traces/metrics collection and readiness checks.; Test migrations, transaction failures, stale versions and authorization denials.; Publish a release build, measure bounded queries and document backup/rollback and limitations.",
-        "Compare your evidence with the stage rubric: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.; Resilience: controlled cancellation/failure scenarios terminate work and release resources.; Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.; Performance: before/after measurements use the same workload and preserve correctness.; Delivery: published build checks succeed and the rollback plan handles persistent data.; Judgment: learner states what remains unverified and which changes would be needed for multiple replicas."
+        "Compare your evidence with the stage rubric: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.; Resilience: controlled cancellation/failure scenarios terminate work and release resources.; Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.; Performance: before/after measurements use the same workload and preserve correctness.; Delivery: published build checks succeed and the rollback plan handles persistent data.; Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
+        "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
         {
@@ -168,6 +208,11 @@
           "label": "PowerShell · guided SQLite/test-principal extension",
           "command": "dotnet run --project ./PersistenceChecks.csproj -c Release",
           "expected": "PASS: 13 SQLite and test-host authorization assertions. Not evidence of real token validation."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "dotnet run --project BoundaryChecks.csproj",
+          "expected": "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts. Requires the course .NET10 SDK."
         }
       ],
       "prerequisites": [

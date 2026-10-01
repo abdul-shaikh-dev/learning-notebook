@@ -42,3 +42,9 @@ No persistent files are created by the portable demo/tests.
 
 Record which platform commands you actually executed. Production security,
 kernel resource limits and crash durability remain independent integration work.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `linux_fd_drill.py`: JSON shows EMFILE reached, before=after_cleanup and reopen=ok; PASS confirms child-only limits. Windows direct execution reports SKIP.
+
+Requirements: Python 3.11+ inside an existing Linux/WSL distribution with /proc mounted; no sudo.

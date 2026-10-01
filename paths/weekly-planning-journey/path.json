@@ -445,21 +445,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Reconcile what remains before moving blocks",
           "paragraphs": [
-            "Before Wednesday’s request, event work still fits if estimates hold, but no reserve remains. Adding two more hours creates a two-hour shortfall. Sam asks to simplify the pack by two hours or move the new request; this is a visible trade-off.",
-            "The weekly total does not show timing by itself. Monday’s spare hour has already elapsed when Tuesday’s issue arrives. The printable revision therefore adds an agreed one-hour routine deferral; unused past time is not reassigned into the future."
-          ]
+            "Sam began with 11 project hours, eight for the event pack and three reserved. By Wednesday, four event hours are complete. An essential extra meeting removes two remaining hours. Start the revision from seven remaining hours, not the original eleven.",
+            "Five hours now remain: four for event work and one uncommitted. If Lee's venue confirmation also slips past the print cutoff, spare effort cannot fix release. Separate reduced capacity from a missing prerequisite."
+          ],
+          "example": "11 - 4 completed - 2 lost = 5 available. Remaining event effort: 8 - 4 = 4. Reserve: 1. With venue confirmation pending, Sam asks whether a confirmed-content save-the-date is an acceptable interim output.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Calculate the revised budget and name two legitimate responses to the new request.",
-        "solution": "Original 11 project/reserve hours minus three service hours leaves eight. Eight event hours plus two urgent hours requires ten, so the shortfall is two. One response is an agreed simpler six-hour pack plus two urgent hours. Another is retaining the eight-hour pack and moving or reassigning the urgent request. Do not count used reserve twice.",
+        "prompt": "Changed case: the meeting is cancelled, but Lee will answer after the print cutoff. Is the original plan feasible? Name the next decision.",
+        "solution": "Seven hours return, enough for four remaining work hours and three reserve. The print prerequisite still misses its cutoff. Agree another print date, a confirmed interim scope or a reliable earlier source. Free hours do not resolve unavailable information.",
         "solutionFormat": "prose",
         "checks": [
-          "Three service hours leave eight aggregate hours against ten requested.",
-          "Scope/deadline/ownership choices and elapsed-time constraints are named.",
-          "State the scenario-specific condition that would change the decision."
+          "Restores seven remaining hours without recounting completed work.",
+          "Separates cutoff from effort capacity.",
+          "Names a scope/date or information decision."
         ]
       },
       "quiz": {
@@ -496,20 +498,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Change the message when the constraint changes",
           "paragraphs": [
-            "Sam drafts: I can deliver the full pack Friday or the urgent request today plus a shorter pack Friday. Please confirm the shorter pack by 14:00 so I can proceed. The decision owner agrees to the shorter layout."
-          ]
+            "Sam reports: \"The pack needs four more hours and I have five, but venue confirmation arrives after the print cutoff. I can finish confirmed content today; we need a decision on venue details.\" This identifies the constraint rather than saying only that the week is busy.",
+            "The organiser explains that printed directions are essential for attendees unable to use the digital version. A digital-only substitute is not equivalent. Sam offers a confirmed alternative venue or a later distribution decision instead of assuming the first workaround is acceptable."
+          ],
+          "example": "Sam: \"Digital-only would not meet the printed-directions need. We can move distribution or use an agreed confirmed venue. Which constraint can change? I will hold the final print file until that decision.\"",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Rewrite I am overwhelmed, everything will be late into a factual update with one proposed choice.",
-        "solution": "The service issue used the three-hour reserve, and the new request adds two hours. The full Friday pack and new request exceed remaining capacity by two hours. I propose a shorter pack with the same required information; please confirm by 14:00. If not accepted, we need to move or reassign the new request. This gives the owner an actionable decision.",
+        "prompt": "Transfer: an alternative venue is authorised but needs a one-hour map revision and half-hour proofread. Sam still has five hours and four hours of original work left. State the new conflict and one real choice.",
+        "solution": "4 + 1 + 0.5 = 5.5 hours against five, a half-hour gap before reserve. First check whether the venue change removes any original work to avoid double-counting. If not, move an agreed item or deadline, or secure confirmed help. The venue decision did not resolve capacity automatically.",
         "solutionFormat": "prose",
         "checks": [
-          "Message includes fact, two-hour impact, proposed choice and decision time.",
-          "Request is directed to the owner who can change scope or deadline.",
-          "State the scenario-specific condition that would change the decision."
+          "Calculates the half-hour gap under the no-overlap assumption.",
+          "Checks for replaced work.",
+          "Makes an explicit trade-off rather than using nonexistent time."
         ]
       },
       "quiz": {
@@ -747,20 +752,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Choose an experiment that could disappoint you",
           "paragraphs": [
-            "Prediction: removing deferred blocks will reduce accidental overbooking. Check: compare active blocks with accepted commitments Wednesday and Friday. Sam keeps the small waiting-list habit rather than replacing it and still reviews learning on Monday."
-          ]
+            "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. An earlier dependency request is a candidate improvement. The evidence does not justify rebuilding every part of the planning system.",
+            "Next week Sam requests the key confirmation two working days earlier while keeping estimation unchanged. The observation is whether a usable answer arrives before the decision point. If the source cannot confirm earlier, the experiment may fail and a fallback release decision becomes more relevant."
+          ],
+          "example": "Prediction: earlier request produces an answer before cutoff. In-time answer -> keep provisionally. Same late answer because venue availability is undecided -> address the dependency or fallback, not simply add more reminders.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Design one experiment for inaccurate task estimates. Include a condition under which you would change your conclusion.",
-        "solution": "For the next three similar packs, record expected and observed assembly time separately from waiting time. Prediction: using those observations will narrow the estimate gap. Review after the third pack. If scope or interruptions differ greatly, compare like cases before concluding the estimation method helped; do not generalise from one unusually quiet week.",
+        "prompt": "Changed case: confirmation arrives early because the venue was already booked. The following project uses a new, unconfirmed venue. What carries forward and what remains untested?",
+        "solution": "Keep the inexpensive early request if useful, but do not attribute the improvement entirely to it. A pre-booked venue changes the task. Plan separately for the new venue's earliest possible confirmation and fallback decision point. One easier week cannot establish reliability in the harder context.",
         "solutionFormat": "prose",
         "checks": [
-          "Experiment states one change, prediction and observation point.",
-          "Different scope or disruptions limit the estimate comparison.",
-          "State the scenario-specific condition that would change the decision."
+          "Identifies the pre-booked venue as a changed condition.",
+          "Avoids claiming the timing change caused all improvement.",
+          "Plans for the unresolved new-venue dependency."
         ]
       },
       "quiz": {
@@ -896,7 +904,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced: Evidence, review and next-week experiment",
+      "title": "Applied review: Evidence and next-week experiment",
       "description": "Compare actual outcomes with estimates and prepare a realistic next week linked to all five companion paths.",
       "exitCriteria": [
         "Observed 12 hours versus planned 11 is explained, not hidden.",

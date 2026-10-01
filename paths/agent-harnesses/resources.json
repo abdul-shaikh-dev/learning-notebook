@@ -66,6 +66,18 @@
       "href": "paths/agent-harnesses/practice/persisted-run-lab.md",
       "role": "guide",
       "description": "Run and effect reconciliation guide"
+    },
+    {
+      "id": "depth-owner-version-lab-py",
+      "href": "paths/agent-harnesses/practice/owner_version_lab.py",
+      "role": "test",
+      "description": "Reproduce a stale writer through two independent connections"
+    },
+    {
+      "id": "depth-depth-lab-md",
+      "href": "paths/agent-harnesses/practice/depth-lab.md",
+      "role": "guide",
+      "description": "Run, change and explain one concrete failure"
     }
   ],
   "tasks": [
@@ -170,7 +182,9 @@
         "test_parser_properties-py",
         "practice-persisted_run_lab-py",
         "practice-test_persisted_run_lab-py",
-        "practice-persisted-run-lab-md"
+        "practice-persisted-run-lab-md",
+        "depth-owner-version-lab-py",
+        "depth-depth-lab-md"
       ],
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
@@ -191,6 +205,11 @@
           "label": "Run baseline tests from agent-harnesses-practice folder root",
           "command": "python -m unittest -v test_harness_workshop.py",
           "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        },
+        {
+          "label": "Optional depth exercise · extracted kit root",
+          "command": "python owner_version_lab.py",
+          "expected": "Two tests pass: stale replacement and competing creation."
         }
       ],
       "prerequisites": [

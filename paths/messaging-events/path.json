@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "22 lessons, three stage projects and a locally runnable practice kit covering reliable asynchronous workflows from messages to recovery.",
-  "level": "Foundations → intermediate → selected advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic Python and SQL transactions for the local exercises.",
     "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
@@ -272,7 +272,7 @@
           "url": "https://www.rabbitmq.com/docs/confirms",
           "section": "Consumer acknowledgements; publisher confirms; prefetch",
           "reviewed": "2026-09-30",
-          "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          "scope": "Core SQLite exercises are protocol-neutral. The optional broker_ack_drill.py uses a real local RabbitMQ/Pika connection for channel-loss redelivery; it does not test broker restart or replication."
         },
         {
           "title": "RabbitMQ reliability guide",
@@ -371,6 +371,15 @@
           "paragraphs": [
             "Crash before commit: database changes roll back and replay must do the work. Crash after commit before acknowledgement: replay must detect the committed inbox entry and skip the effect. The lab injects a failure during a transaction to prove both inbox and projection remain unchanged."
           ]
+        },
+        {
+          "title": "Reproduce the commit-to-ack gap against a broker",
+          "paragraphs": [
+            "An event adds 7 to a balance. The consumer inserts event-1 into its inbox and updates the balance in one transaction, then its channel closes before acknowledgement. RabbitMQ redelivers the unacknowledged delivery. On replay the inbox key already exists, so the transaction skips the balance increment and the consumer acknowledges on the new channel. The two deliveries share an application ID; their channel delivery tags need not match.",
+            "broker_ack_drill.py exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies redelivered plus balance=7 on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately."
+          ],
+          "example": "first delivery: inbox inserts event-1; balance 0 -> 7; commit\nconnection closes before ack\nredelivery: inbox conflict; balance stays 7; ack on new channel",
+          "exampleFormat": "prose"
         }
       ],
       "quiz": {
@@ -389,7 +398,7 @@
           "url": "https://www.rabbitmq.com/docs/confirms",
           "section": "Consumer acknowledgements; publisher confirms; prefetch",
           "reviewed": "2026-09-30",
-          "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          "scope": "Core SQLite exercises are protocol-neutral. The optional broker_ack_drill.py uses a real local RabbitMQ/Pika connection for channel-loss redelivery; it does not test broker restart or replication."
         },
         {
           "title": "Azure transactional outbox",
@@ -397,16 +406,23 @@
           "section": "Transactional outbox architecture and message processing",
           "reviewed": "2026-09-30",
           "scope": "The reference uses Cosmos DB; this course demonstrates the same local-transaction boundary with SQLite, not Cosmos change feed."
+        },
+        {
+          "title": "Pika blocking channel operations",
+          "url": "https://pika.readthedocs.io/en/stable/modules/adapters/blocking.html",
+          "section": "basic_get, basic_ack and publisher confirmation",
+          "reviewed": "2026-10-02",
+          "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
         }
       ],
       "stage": "foundation",
       "exercise": {
-        "prompt": "Read consume() in event_lab.py. Move the inbox insert out of the transaction in a copy, inject a crash, and predict lost work. Restore the reference and run the rollback test.",
+        "prompt": "In the optional broker drill, replace the inbox check in a disposable copy with an unconditional increment. Which result exposes the bug, and why would acknowledging earlier be an unsafe fix?",
         "checks": [
-          "Explain the before-commit and after-commit crash outcomes.",
-          "Identify why a separately committed inbox marker can lose work."
+          "Without deduplication the balance becomes 14 after redelivery; the reference remains 7 with one inbox row.",
+          "Acknowledging before commit can lose the effect if the transaction subsequently fails."
         ],
-        "solution": "The transaction encloses inbox insertion and projection update. A pre-commit crash rolls both back, permitting replay. A post-commit pre-acknowledgement crash replays into the existing inbox key and skips the effect. Committing the inbox separately first risks suppressing work that never completed.",
+        "solution": "The duplicate business effect is balance=14, even though both deliveries carried one event ID. Restore the inbox/effect transaction and acknowledge after it commits. Early acknowledgement hides redelivery by accepting a loss window; it does not provide exactly-once effects.",
         "solutionFormat": "prose"
       }
     },
@@ -586,6 +602,15 @@
             "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
           ],
           "example": "from contextlib import closing\nfrom event_lab import connect, create_job, pending\n\nwith closing(connect(':memory:')) as db:\n    create_job(db, 'j-4', 'e-17', 7)\n    print(len(pending(db)))  # 1 committed pending event"
+        },
+        {
+          "title": "Which crash leaves which durable evidence?",
+          "paragraphs": [
+            "There are three different boundaries. Before the producer transaction commits, neither business row nor outbox row should survive. After it commits but before publish, the pending outbox row allows recovery. After confirmed publication but before the sent marker commits, the relay cannot prove the marker survived and retries the same event ID. This last case permits duplicate delivery by design.",
+            "Deleting or marking the row before publication eliminates the retry evidence and can lose the event. Holding a database transaction open across a network publish does not create one atomic broker/database commit: the broker can accept just before the database rolls back. Keep the relay transaction short, reuse a stable event ID and let the consumer transaction enforce one local effect."
+          ],
+          "example": "producer rollback -> no job, no event\nproducer commit + relay unavailable -> job + pending event\npublish accepted + sent mark lost -> retry same event ID\nconsumer replay -> inbox prevents a second effect",
+          "exampleFormat": "prose"
         }
       ],
       "quiz": {
@@ -611,17 +636,17 @@
           "url": "https://www.rabbitmq.com/docs/confirms",
           "section": "Consumer acknowledgements; publisher confirms; prefetch",
           "reviewed": "2026-09-30",
-          "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          "scope": "Core SQLite exercises are protocol-neutral. The optional broker_ack_drill.py uses a real local RabbitMQ/Pika connection for channel-loss redelivery; it does not test broker restart or replication."
         }
       ],
       "stage": "intermediate",
       "exercise": {
-        "prompt": "Run the creation rollback test and relay redelivery test. Explain why marking sent before publication risks loss.",
+        "prompt": "A relay receives publisher confirmation and crashes before marking the outbox row sent. On restart it publishes again. Is that evidence that the outbox failed? Give the final inbox and balance results for event-1 adding 7.",
         "checks": [
-          "Locate the atomic job/outbox transaction.",
-          "Explain why publish-before-mark can duplicate and mark-before-publish can lose."
+          "The pending outbox row causes a retry with the same event ID; publication can occur twice.",
+          "A correct consumer ends with one inbox row and balance=7, not 14."
         ],
-        "solution": "Commit the job and outbox event together. The relay publishes with a stable ID and the chosen broker confirmation behavior, then marks the row sent. A crash after publish before marking can duplicate delivery; the durable consumer inbox handles it. Marking sent first can lose publication permanently.",
+        "solution": "This is the expected uncertainty window. The outbox preserves publication intent, not unique delivery. Retrying the same ID and atomically deduplicating the consumer effect yields one inbox row and balance 7. Generating a new event ID for each relay attempt defeats that protection.",
         "solutionFormat": "prose"
       }
     },
@@ -875,7 +900,7 @@
           "url": "https://www.rabbitmq.com/docs/confirms",
           "section": "Consumer acknowledgements; publisher confirms; prefetch",
           "reviewed": "2026-09-30",
-          "scope": "RabbitMQ 4.3 documentation reviewed; examples here are original protocol-neutral simulations, not a RabbitMQ client."
+          "scope": "Core SQLite exercises are protocol-neutral. The optional broker_ack_drill.py uses a real local RabbitMQ/Pika connection for channel-loss redelivery; it does not test broker restart or replication."
         },
         {
           "title": "Azure competing consumers",
@@ -1370,7 +1395,9 @@
     "practice/event_lab.py",
     "practice/test_event_lab.py",
     "practice/README.md",
-    "practice/workbook.md"
+    "practice/workbook.md",
+    "practice/broker_ack_drill.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

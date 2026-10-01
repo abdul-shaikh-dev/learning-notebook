@@ -36,6 +36,18 @@
       "href": "paths/cloud-infrastructure/practice/workbook.md",
       "role": "guide",
       "description": "Three projects, exercises, evidence ledger and reference reasoning."
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/cloud-infrastructure/practice/terraform_plan_drill.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/cloud-infrastructure/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -87,7 +99,9 @@
         "topology-json",
         "main-tf-json",
         "README-md",
-        "workbook-md"
+        "workbook-md",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract the flat files and read README.md.",
@@ -95,7 +109,8 @@
         "Classify create/update/replace/destroy.",
         "Review typed inputs, state handling and dependencies.",
         "Optionally init/validate in a separate empty folder; record results.",
-        "Compare your findings with workbook.md and the stage rubric."
+        "Compare your findings with workbook.md and the stage rubric.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -107,12 +122,18 @@
           "label": "Run local tests",
           "command": "python -m unittest -v test_infra_lab.py",
           "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python terraform_plan_drill.py",
+          "expected": "Four PASS plan lines: create/2, no-op/0, update/2, delete-create/2. Only initial built-in local state is applied; no cloud provider runs."
         }
       ],
       "prerequisites": [],
       "notes": [
         "Python 3.11+ and standard library only.",
-        "Optional external tools are separately documented and not included in the local verification claim."
+        "Optional external tools are separately documented and not included in the local verification claim.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {

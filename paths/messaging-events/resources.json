@@ -24,6 +24,18 @@
       "href": "paths/messaging-events/practice/workbook.md",
       "role": "guide",
       "description": "Three projects, exercises, evidence ledger and reference reasoning."
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/messaging-events/practice/broker_ack_drill.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/messaging-events/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -35,7 +47,9 @@
         "event_lab-py",
         "test_event_lab-py",
         "README-md",
-        "workbook-md"
+        "workbook-md",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract the flat files and read README.md.",
@@ -43,7 +57,8 @@
         "Sketch queue and independent subscriber responsibilities.",
         "Draw three acknowledgement crash windows.",
         "Define event, job and correlation identifiers.",
-        "Compare your findings with workbook.md and the stage rubric."
+        "Compare your findings with workbook.md and the stage rubric.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -55,12 +70,18 @@
           "label": "Run local tests",
           "command": "python -m unittest -v test_event_lab.py",
           "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python broker_ack_drill.py",
+          "expected": "PASS reports broker redelivery, one inbox row, balance=7 and a drained queue. No process-crash durability claim."
         }
       ],
       "prerequisites": [],
       "notes": [
         "Python 3.11+ and standard library only.",
-        "Optional external tools are separately documented and not included in the local verification claim."
+        "Optional external tools are separately documented and not included in the local verification claim.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
@@ -71,7 +92,9 @@
         "event_lab-py",
         "test_event_lab-py",
         "README-md",
-        "workbook-md"
+        "workbook-md",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract the flat files and read README.md.",
@@ -79,7 +102,8 @@
         "Explain atomic outbox and inbox transactions.",
         "Inject a failure before consumer commit.",
         "Write finite retry and quarantine policies.",
-        "Compare your findings with workbook.md and the stage rubric."
+        "Compare your findings with workbook.md and the stage rubric.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -91,12 +115,18 @@
           "label": "Run local tests",
           "command": "python -m unittest -v test_event_lab.py",
           "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python broker_ack_drill.py",
+          "expected": "PASS reports broker redelivery, one inbox row, balance=7 and a drained queue. No process-crash durability claim."
         }
       ],
       "prerequisites": [],
       "notes": [
         "Python 3.11+ and standard library only.",
-        "Optional external tools are separately documented and not included in the local verification claim."
+        "Optional external tools are separately documented and not included in the local verification claim.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {

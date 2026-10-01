@@ -48,6 +48,18 @@
       "href": "paths/networking-web/practice/browser_drill.py",
       "role": "reference",
       "description": "Two loopback origins for browser-enforced CORS positive and negative cases."
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/networking-web/practice/tcp_framing.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/networking-web/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -63,7 +75,9 @@
         "README-md",
         "project-workbook-md",
         "browser-boundary-drill-md",
-        "browser_drill-py"
+        "browser_drill-py",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Read README.md and run the supplied references.",
@@ -72,7 +86,8 @@
         "Store an offline address with TTL and test just before and at expiry using injected time.",
         "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
         "Permit retries only for the explicit safe-read policy with attempts and time left.",
-        "Compare your evidence with the stage rubric and document extensions separately."
+        "Compare your evidence with the stage rubric and document extensions separately.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -94,6 +109,11 @@
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_network_labs.py",
           "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python tcp_framing.py",
+          "expected": "PASS covers valid split/coalesced UTF-8 frames, empty EOF, truncated EOF and the 64-byte frame limit."
         }
       ],
       "prerequisites": [
@@ -104,7 +124,8 @@
       ],
       "notes": [
         "All files are flat at the root of the downloadable practice folder.",
-        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
@@ -176,7 +197,9 @@
         "README-md",
         "project-workbook-md",
         "browser-boundary-drill-md",
-        "browser_drill-py"
+        "browser_drill-py",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Read README.md and run the supplied references.",
@@ -187,7 +210,8 @@
         "Record only status/attempt metadata and classify final failure.",
         "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed.",
         "Compare your evidence with the stage rubric and document extensions separately.",
-        "Optionally follow browser-boundary-drill.md in an authorized local environment; mark unexecuted checks explicitly."
+        "Optionally follow browser-boundary-drill.md in an authorized local environment; mark unexecuted checks explicitly.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -209,6 +233,11 @@
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_network_labs.py",
           "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python tcp_framing.py",
+          "expected": "PASS covers valid split/coalesced UTF-8 frames, empty EOF, truncated EOF and the 64-byte frame limit."
         }
       ],
       "prerequisites": [
@@ -219,7 +248,8 @@
       ],
       "notes": [
         "All files are flat at the root of the downloadable practice folder.",
-        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions."
+        "Passing supplied tests proves the reference behaviors, not your unimplemented extensions.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }
   ],

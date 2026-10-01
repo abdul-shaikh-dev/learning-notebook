@@ -26,10 +26,16 @@ The template is a minimal Azure resource group plus storage account. It disables
 
 ## Optional real deployment: separate decision, not an automated exercise
 
-Use only a disposable subscription/resource group you own; never use shared work infrastructure. Before ANY plan/apply confirm tenant and subscription, regional service availability, current storage/transaction costs, least-privilege identity, data retention and cleanup ownership. Consult current Azure/HashiCorp docs; no supplied script calls Azure or runs apply/destroy. Budget alerts are not spending caps. Terraform plan may query cloud APIs. Applying this template would create real billable storage and must not be called an offline check.
+Use only a disposable subscription/resource group you own; never use shared work infrastructure. Before ANY plan/apply confirm tenant and subscription, regional service availability, current storage/transaction costs, least-privilege identity, data retention and cleanup ownership. Consult current Azure/HashiCorp docs; no supplied script calls Azure or applies cloud resources. The optional terraform_plan_drill.py applies only built-in terraform_data in its own disposable local state directory. Budget alerts are not spending caps. Terraform plan may query cloud APIs. Applying this template would create real billable storage and must not be called an offline check.
 
 If you independently choose real provisioning, review every planned operation, record actual state and cloud results, and protect state/plan artifacts. Before cleanup review terraform plan -destroy against the exact isolated scope, preserve only needed synthetic data, then deliberately run terraform destroy. Verify resources and any externally created related objects are gone; account for soft deletion and delayed cost reporting. Do not delete a group that contains anything you did not create for this lab.
 
 ## Cleanup and confidentiality
 
 Offline scripts mutate only copied in-memory inventories and leave no resource/state files. Remove the explicitly created optional validation folder when finished after checking it contains no needed data. Do not commit .terraform/, *.tfstate*, saved plans, credentials or provider login caches. No secrets are supplied by the kit.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `terraform_plan_drill.py`: Four PASS plan lines: create/2, no-op/0, update/2, delete-create/2. Only initial built-in local state is applied; no cloud provider runs.
+
+Requirements: Python 3.11+ and an existing Terraform 1.4+ CLI.

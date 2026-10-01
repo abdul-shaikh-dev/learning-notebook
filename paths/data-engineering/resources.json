@@ -30,6 +30,24 @@
       "href": "paths/data-engineering/practice/sql-server-bridge.sql",
       "role": "reference",
       "description": "Course-owned sql-server-bridge.sql"
+    },
+    {
+      "id": "depth-revision-lab-py",
+      "href": "paths/data-engineering/practice/revision_lab.py",
+      "role": "reference",
+      "description": "Revision-aware updates, replay and tombstones"
+    },
+    {
+      "id": "depth-test-revision-lab-py",
+      "href": "paths/data-engineering/practice/test_revision_lab.py",
+      "role": "test",
+      "description": "Independent outcomes for replay, corrections and late deletion"
+    },
+    {
+      "id": "depth-depth-lab-md",
+      "href": "paths/data-engineering/practice/depth-lab.md",
+      "role": "guide",
+      "description": "Run, change and explain one concrete failure"
     }
   ],
   "tasks": [
@@ -130,7 +148,10 @@
         "pipeline_lab-py",
         "test_pipeline_lab-py",
         "sample_orders-csv",
-        "sql-server-bridge-sql"
+        "sql-server-bridge-sql",
+        "depth-revision-lab-py",
+        "depth-test-revision-lab-py",
+        "depth-depth-lab-md"
       ],
       "steps": [
         "Download and extract the bundle; all files are at the named folder root.",
@@ -152,6 +173,11 @@
           "label": "Run baseline failure checks",
           "command": "python -m unittest -v test_pipeline_lab.py",
           "expected": "The supplied unittest suite passes; optional Linux/SQL Server extensions remain separate."
+        },
+        {
+          "label": "Optional depth exercise · extracted kit root",
+          "command": "python -m unittest -v test_revision_lab.py",
+          "expected": "Four revision tests pass, including stale delivery after deletion."
         }
       ],
       "prerequisites": [

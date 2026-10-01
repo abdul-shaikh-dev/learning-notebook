@@ -4,7 +4,7 @@
   "category": "Software design",
   "status": "ready",
   "description": "Learn to choose and apply patterns through 24 lessons: contracts, composition, creation, wrappers, lifecycle behavior and failure-aware persistence boundaries. Build three staged projects and explain when a simpler design is better.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
     "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
@@ -129,7 +129,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice: failure-aware design and refactoring",
+      "title": "Selected advanced practice: failure-aware design and refactoring",
       "description": "Combine a few justified patterns, test negative paths and state the limits of in-memory implementations.",
       "exitCriteria": [
         "Model legal and illegal state transitions.",
@@ -429,6 +429,13 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Strategy is helpful when alternatives represent the same job. Policies that return unrelated result types weaken the boundary. Do not wrap a single arithmetic expression in multiple classes unless state, lifecycle or a language constraint makes that useful."
+          ]
+        },
+        {
+          "title": "Preserve one workflow while adding formats",
+          "paragraphs": [
+            "In the batch-export lab, format selection varies between lines and JSON. Ownership checks, duplicate-ID policy and commit ordering do not vary. Extract only a titles-to-text formatter. If each strategy also writes storage or decides permission, adding a third format can accidentally change the security and failure behavior.",
+            "Start with a dictionary of two functions. A class hierarchy is justified only when a format needs a meaningful additional contract or state. Tests compare Unicode output and empty input across implementations, because quoting and an empty JSON list are observable behavior rather than internal style."
           ]
         }
       ],
@@ -1448,6 +1455,13 @@
           "paragraphs": [
             "The example avoids publishing working changes when the body raises, but replacement itself is not an atomic multi-thread or crash-safe operation. Real persistence needs a transaction and conflict policy. An email sent before commit cannot be rolled back with database rows; coordinate such effects explicitly, for example with a transactional outbox when that complexity is justified."
           ]
+        },
+        {
+          "title": "A larger example has more than one observable effect",
+          "paragraphs": [
+            "A successful export updates payload, version and a count history. If the payload changes but the history does not, a later observer sees a partial outcome. The MemoryStore fixture replaces one immutable snapshot after checks; its injected failure happens before replacement and therefore leaves all three observations unchanged.",
+            "This is a teaching boundary in one process, not proof that a file writer and remote audit service commit together. With separate external systems, identify the authoritative commit and recovery policy. Moving calls into a method named commit does not make an external multi-step workflow atomic."
+          ]
         }
       ],
       "exercise": {
@@ -1534,6 +1548,13 @@
             "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive.",
             "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract."
           ]
+        },
+        {
+          "title": "Characterise late failures before moving code",
+          "paragraphs": [
+            "The larger batch_export_legacy.py first checks version and format, then validates every row, formats the complete batch and calls storage once. A second row owned by B must reject an A export even when the first row is valid. If a refactor writes each accepted row immediately, it has changed behavior despite producing the same success output.",
+            "Run test_batch_export.py against both supplied versions, then copy the legacy into your own candidate and substitute it in the test import. Refactor in small steps: extract preparation, extract format selection, then keep the orchestration explicit. Preserve rejection before effects, input immutability, stale-version behavior and error types."
+          ]
         }
       ],
       "exercise": {
@@ -1590,6 +1611,13 @@
           "paragraphs": [
             "Watch for speculative generality, a god object coordinating unrelated domains, deep fragile inheritance, hidden service locators and singleton mutable state. Singleton controls instance access, but does not make that instance thread-safe and can couple tests through global state. A module-level constant is different from a global mutable transaction manager. Remove abstractions whose benefits no longer justify their cost."
           ]
+        },
+        {
+          "title": "Use the next requirement to evaluate the abstraction",
+          "paragraphs": [
+            "Add CSV as a new format without changing the row validation or commit order. A title containing a comma or quote distinguishes real CSV serialization from joining with commas. Keep empty input and Unicode examples. If this change only needs a new formatter, the extracted variation point earns its place.",
+            "A future remote store is a different axis of change. Its timeout can mean an unknown outcome rather than definitely no write. The local failure injection cannot establish remote retry safety; add an adapter contract and reconciliation design only when that requirement becomes real. Avoid adding those protocols to the local exercise preemptively."
+          ]
         }
       ],
       "exercise": {
@@ -1631,7 +1659,11 @@
     "legacy_export.py",
     "refactored_export.py",
     "test_refactoring.py",
-    "refactoring-lab.md"
+    "refactoring-lab.md",
+    "batch_export_legacy.py",
+    "batch_export_refactor.py",
+    "test_batch_export.py",
+    "batch-refactor.md"
   ],
   "downloads": [
     {

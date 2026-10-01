@@ -309,20 +309,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Use a later occasion to discover what remains",
           "paragraphs": [
-            "Maya studies Tuesday for 12 minutes, answers three cases Thursday for 6 minutes, and checks again Monday. She cannot guarantee any particular percentage remembered; she can record which decisions remain accurate."
-          ]
+            "Maya answers all three branches correctly immediately after reading. That cannot establish retention after a gap. She chooses a later day she can realistically attend; no particular delay is universally best.",
+            "At the later check she tries a new case before reopening the rule. Corrections are useful, but the first unaided result stays distinct from a corrected answer. Missing the planned day changes the date; it does not require restarting the course."
+          ],
+          "example": "Later case: urgent today for a quarter-day. Maya initially chooses coordinator, checks the rule and corrects it to manager. The evidence is one missed exception followed by correction, not two independent successes. A spoken attempt is enough; written logging is optional.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "You can study Monday and Friday but not Wednesday. Plan three separated attempts over two weeks and explain the limitation.",
-        "solution": "Use Monday of week one for study plus first attempt, Friday for closed-source cases and Monday of week two for new cases. The unequal gaps are acceptable when they fit real availability. Results may suggest a shorter gap for the urgent exception. This schedule is a starting experiment, not a universal optimum.",
+        "prompt": "On a later occasion, try without the example: a planned request is exactly one day; a second request is urgent today for one hour. Give both routes. If attempted immediately, what can you conclude?",
+        "solution": "Planned one day -> coordinator; urgent one hour -> manager. An immediate attempt checks current application, not delayed retention. A later attempt with the rule hidden supplies limited retention evidence; report any help rather than counting it as unaided success. One correct pair cannot establish lasting mastery.",
         "solutionFormat": "prose",
         "checks": [
-          "Three attempts occur on genuinely available dates across two weeks.",
-          "Unequal gaps are explained without claiming an optimal formula.",
-          "State the scenario-specific condition that would change the decision."
+          "Handles the one-day boundary and urgent exception.",
+          "Distinguishes immediate application from a later check.",
+          "Reports help and corrections honestly."
         ]
       },
       "quiz": {
@@ -459,20 +462,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Fade the help while preserving the decision",
           "paragraphs": [
-            "Maya first sees a solved urgent case, then completes the reason for a planned two-day case, then routes a fresh one-day request. She distinguishes copied reasoning from her independent answer."
-          ]
+            "Continuing case: Maya learns a fictional approval policy. Planned one-day requests go to the coordinator; planned requests of two or more days go to the manager; urgent same-day requests of any duration go to the manager. A worked example should show which condition is checked first.",
+            "First explain an urgent half-day request fully: urgency overrides duration. Next hide the route while leaving the policy visible. Finally hide the policy. A correct answer with the rule visible shows supported application, not yet independent recall."
+          ],
+          "example": "Urgent today, half a day -> manager because the exception applies first. Planned tomorrow, one day -> coordinator. Planned next month, two days -> manager because duration is two or more days. These test distinct branches.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Design a three-step help reduction for learning a recipe adjustment, without assuming the learner already knows the process.",
-        "solution": "First study a worked example of reducing a four-serving recipe to two and explain each halving. Next fill missing amounts in another two-serving example with the rule visible. Finally adjust a new simple recipe independently, then compare amounts. If a step fails, revisit that calculation rather than calling all cooking ability weak.",
+        "prompt": "Transfer: a planned one-day request is rescheduled to today because of an unexpected event. Choose the route and identify the fact that changes the decision.",
+        "solution": "If it is now urgent same-day, use the manager: the exception takes precedence over duration. If the rescheduling was routine rather than urgent, clarify that detail instead of inferring urgency from the date alone. The changed condition, not the unchanged duration, determines the exception.",
         "solutionFormat": "prose",
         "checks": [
-          "Support reduces from worked example to missing step to new independent recipe adjustment.",
-          "Amounts and reasoning are compared with a checked reference.",
-          "State the scenario-specific condition that would change the decision."
+          "Checks urgency before duration.",
+          "Names the changed condition.",
+          "Distinguishes same-day timing from evidence of urgency."
         ]
       },
       "quiz": {
@@ -809,20 +815,23 @@
           ]
         },
         {
-          "title": "Worked scenario",
+          "title": "Changed surface, changed rule, or missing information?",
           "paragraphs": [
-            "Maya now routes room bookings: short planned bookings go to reception, long bookings to facilities, and urgent bookings to facilities. She explains the similar exception structure while checking the new names and thresholds."
-          ]
+            "Maya meets a new equipment-booking policy: standard bookings up to two hours go to the desk coordinator; longer bookings go to the facilities lead; restricted equipment always goes to the facilities lead. Its structure resembles the earlier policy but its conditions differ.",
+            "Transfer requires reading the new rules, not importing old words. Urgent is not synonymous with restricted. A two-hour standard booking is at the permitted boundary. If equipment status is unknown, a necessary input is missing; guessing conceals the gap."
+          ],
+          "example": "Standard two hours -> coordinator. Standard three hours -> facilities lead. Restricted thirty minutes -> facilities lead. Thirty minutes with equipment status omitted -> ask whether the equipment is restricted.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Use the exception-first idea with a fictional booking rule and state what must be checked before using it in a real workplace.",
-        "solution": "For a supplied rule where urgent bookings always go to facilities, test urgency first, then duration. In a real workplace confirm the current booking policy, what urgent means and who has authority. A similar logical structure does not make the leave-request names or thresholds valid for bookings.",
+        "prompt": "Changed case: a standard ninety-minute booking is urgent, and the supplied policy says nothing about urgency. Route it, then explain what changes if restricted equipment is added. Return later if you want a retention check.",
+        "solution": "Standard ninety minutes goes to the desk coordinator; urgency adds no exception under this policy. Restricted equipment changes the route to the facilities lead regardless of duration. This demonstrates one application of relevant conditions, not that every rule transfers between domains.",
         "solutionFormat": "prose",
         "checks": [
-          "Booking rule is checked before applying exception-first reasoning.",
-          "Real workplace names and thresholds are explicitly untested.",
-          "State the scenario-specific condition that would change the decision."
+          "Does not import the old urgency exception.",
+          "Changes route for restricted equipment.",
+          "Limits the conclusion from one changed case."
         ]
       },
       "quiz": {
@@ -1157,7 +1166,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced: Delayed application and transfer portfolio",
+      "title": "Transfer: Delayed application and evidence",
       "description": "Demonstrate a delayed application, changed-context case and an evidence-based next step.",
       "exitCriteria": [
         "Comparable delayed evidence is retained, including errors.",

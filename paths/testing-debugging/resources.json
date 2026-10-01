@@ -66,6 +66,30 @@
       "href": "paths/testing-debugging/practice/diagnosis-workbook.md",
       "role": "guide",
       "description": "Pdb commands, async event trace, optional branch report and timing experiment"
+    },
+    {
+      "id": "depth-cursor_candidate-py",
+      "href": "paths/testing-debugging/practice/cursor_candidate.py",
+      "role": "starter",
+      "description": "Unfamiliar pagination and ownership investigation candidate"
+    },
+    {
+      "id": "depth-cursor_reference-py",
+      "href": "paths/testing-debugging/practice/cursor_reference.py",
+      "role": "reference",
+      "description": "Corrected composite-cursor flat-row reference"
+    },
+    {
+      "id": "depth-cursor_checks-py",
+      "href": "paths/testing-debugging/practice/cursor_checks.py",
+      "role": "test",
+      "description": "Missing rows, aliasing, boundaries and full-walk checks"
+    },
+    {
+      "id": "depth-cursor-investigation-md",
+      "href": "paths/testing-debugging/practice/cursor-investigation.md",
+      "role": "guide",
+      "description": "Debug a report by discriminating hypotheses"
     }
   ],
   "tasks": [
@@ -79,7 +103,11 @@
         "testing_concurrency-py",
         "test_testing_labs-py",
         "README-md",
-        "project-workbook-md"
+        "project-workbook-md",
+        "depth-cursor_candidate-py",
+        "depth-cursor_reference-py",
+        "depth-cursor_checks-py",
+        "depth-cursor-investigation-md"
       ],
       "steps": [
         "Read README.md and run the supplied references.",
@@ -88,7 +116,8 @@
         "Reject duplicate JSON keys, booleans, invalid JSON and oversized text.",
         "Compute known totals and demonstrate a test distinguishing the supplied boolean mutant.",
         "Produce a minimal reproduction note with expected and observed results.",
-        "Compare your evidence with the stage rubric and document extensions separately."
+        "Compare your evidence with the stage rubric and document extensions separately.",
+        "Debug the unfamiliar pagination report using cursor-investigation.md and run the same checks against your repaired module."
       ],
       "commands": [
         {
@@ -110,6 +139,11 @@
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_testing_labs.py",
           "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python cursor_checks.py",
+          "expected": "Four contract tests pass on the reference. The candidate command in the guide intentionally fails."
         }
       ],
       "prerequisites": [
@@ -133,7 +167,11 @@
         "testing_concurrency-py",
         "test_testing_labs-py",
         "README-md",
-        "project-workbook-md"
+        "project-workbook-md",
+        "depth-cursor_candidate-py",
+        "depth-cursor_reference-py",
+        "depth-cursor_checks-py",
+        "depth-cursor-investigation-md"
       ],
       "steps": [
         "Read README.md and run the supplied references.",
@@ -142,7 +180,8 @@
         "Serialize schema_version, records and total; read stored JSON back.",
         "Use an injected replacement failure and assert old bytes remain.",
         "Assert rejected input does not invoke replacement and temporary files are removed.",
-        "Compare your evidence with the stage rubric and document extensions separately."
+        "Compare your evidence with the stage rubric and document extensions separately.",
+        "Debug the unfamiliar pagination report using cursor-investigation.md and run the same checks against your repaired module."
       ],
       "commands": [
         {
@@ -164,6 +203,11 @@
           "label": "Run meaningful regression suite",
           "command": "python -m unittest -v test_testing_labs.py",
           "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python cursor_checks.py",
+          "expected": "Four contract tests pass on the reference. The candidate command in the guide intentionally fails."
         }
       ],
       "prerequisites": [
@@ -241,14 +285,19 @@
         "test_diagnosis_lab-py",
         "branch_subject-py",
         "test_branch_lab-py",
-        "diagnosis-workbook-md"
+        "diagnosis-workbook-md",
+        "depth-cursor_candidate-py",
+        "depth-cursor_reference-py",
+        "depth-cursor_checks-py",
+        "depth-cursor-investigation-md"
       ],
       "steps": [
         "Read diagnosis-workbook.md and predict each result before inspecting its solution.",
         "Step through the deliberately wrong slice in pdb; record the missing element and caller.",
         "Run successful and cancelled cleanup cases; explain the readiness event and absence of a commit.",
         "Optionally measure the untested branch using coverage in a disposable environment.",
-        "Compare scan and index timing with setup included; record inputs, runtime and sample distributions."
+        "Compare scan and index timing with setup included; record inputs, runtime and sample distributions.",
+        "Debug the unfamiliar pagination report using cursor-investigation.md and run the same checks against your repaired module."
       ],
       "commands": [
         {
@@ -265,6 +314,11 @@
           "label": "Bounded benchmark",
           "command": "python diagnosis_lab.py --benchmark",
           "expected": "Two sample distributions and medians; no fixed performance threshold."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "python cursor_checks.py",
+          "expected": "Four contract tests pass on the reference. The candidate command in the guide intentionally fails."
         }
       ],
       "prerequisites": [

@@ -60,6 +60,24 @@
       "href": "paths/ai-agents/provider-evaluation-lab.md",
       "role": "guide",
       "description": "Optional provider evaluation guide"
+    },
+    {
+      "id": "depth-local-framework-lab-py",
+      "href": "paths/ai-agents/local_framework_lab.py",
+      "role": "reference",
+      "description": "One local research task through LangChain, LangGraph and Deep Agents"
+    },
+    {
+      "id": "depth-test-local-framework-lab-py",
+      "href": "paths/ai-agents/test_local_framework_lab.py",
+      "role": "test",
+      "description": "Real graph routing with deterministic draft fixtures"
+    },
+    {
+      "id": "depth-local-framework-guide-md",
+      "href": "paths/ai-agents/local-framework-guide.md",
+      "role": "guide",
+      "description": "Build and compare the local framework variants; optional Fleet migration"
     }
   ],
   "tasks": [
@@ -149,8 +167,8 @@
     },
     {
       "id": "advanced",
-      "title": "Evaluation and release dossier",
-      "goal": "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+      "title": "One research assistant, compared three ways",
+      "goal": "Build and test one small research task, then compare direct generation, explicit graph control and an optional Deep Agents tool loop.",
       "fileIds": [
         "workshop-py",
         "test_workshop-py",
@@ -161,16 +179,20 @@
         "provider-integration-exercise-md",
         "provider_eval-py",
         "test_provider_eval-py",
-        "provider-evaluation-lab-md"
+        "provider-evaluation-lab-md",
+        "depth-local-framework-lab-py",
+        "depth-test-local-framework-lab-py",
+        "depth-local-framework-guide-md"
       ],
       "steps": [
-        "Extract the bundle and open ai-agents-practice. All listed files are flat at this folder root.",
-        "Read README.md before running the references.",
-        "Run the provided baseline and record its actual results.",
-        "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
-        "Complete the assessment requirements in the reader: Create at least six task cases including no-answer, ambiguity, injection and tool failure.; Define deterministic and semantic scoring separately.; Record expected terminal statuses and forbidden actions.; Write a held-out comparison, judge-calibration and rollback plan.; State all guarantees the offline suite cannot establish.",
-        "Compare your evidence with the stage rubric: Task criteria are defined before observing results.; Security failures cannot be hidden by average quality.; No claims of model accuracy are derived from scripted tests.; The release plan versions tools, policy, retrieval and model configuration.; Live integration uses current official protocol docs and no embedded credentials.",
-        "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
+        "Extract all task files together and open local-framework-guide.md.",
+        "Run the existing offline workshop baseline.",
+        "Install the framework guide dependencies in a separate environment, then run the model-free graph tests.",
+        "Implement the model-free retrieve/draft/check workflow against the supplied behaviour tests.",
+        "Try an answerable question, an absent topic and a draft with an unsupported citation.",
+        "When a compatible local server is available, run the same questions through chain and graph modes; inspect the answers and attempts.",
+        "Try Deep Agents tool calling separately and retain the explicit graph if the model cannot use tools reliably.",
+        "Change one document or question without changing the code and test whether the behaviour transfers."
       ],
       "commands": [
         {
@@ -182,6 +204,11 @@
           "label": "Run baseline tests from ai-agents-practice folder root",
           "command": "python -m unittest -v test_workshop.py",
           "expected": "The supplied regression suite passes. This verifies the baseline, not your unimplemented assessment extensions."
+        },
+        {
+          "label": "Optional depth exercise · extracted kit root",
+          "command": "python -m unittest -v test_local_framework_lab.py",
+          "expected": "After installing the guide’s pinned dependencies, six real graph tests pass without a model."
         }
       ],
       "prerequisites": [
@@ -191,9 +218,9 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; no model credentials or external services.",
-        "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
-        "The supplied files are references or templates. Build the requested stage project and document extensions separately from the baseline results."
+        "The standard-library workshop and optional framework project are separate baselines. Framework mode requires the pinned dependencies in its guide.",
+        "Only explicitly chosen live modes contact your loopback model. Fleet needs separate workspace access.",
+        "Try the build and changed cases directly; no written dossier is required."
       ]
     }
   ],

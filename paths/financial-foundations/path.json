@@ -39,6 +39,8 @@
     "practice/test_swap_repricing.py",
     "practice/swap-repricing.md",
     "content/diagrams.js",
-    "runtime/diagrams.js"
+    "runtime/diagrams.js",
+    "practice/valuation-transfer.md",
+    "practice/test_valuation_transfer.py"
   ]
 }

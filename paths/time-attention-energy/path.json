@@ -4,7 +4,7 @@
   "category": "Personal effectiveness",
   "status": "ready",
   "description": "Learn time, attention & energy through realistic constraints, worked examples, printable practice and assessed projects.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → everyday planning → adaptation and review",
   "prerequisites": [
     "No specialist knowledge required.",
     "A text editor or Markdown viewer for printable worksheets."
@@ -261,7 +261,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced",
+      "title": "Applied review — adapt a personal schedule",
       "description": "Produce a two-week routine and an honest evidence review.",
       "exitCriteria": [
         "The routine has a minimum version for disrupted days.",
@@ -726,16 +726,25 @@
           "paragraphs": [
             "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "Forecast with comparable evidence",
+          "paragraphs": [
+            "Continuing case: Isha must prepare an event briefing. Comparable briefings took 45, 60 and 90 active minutes, excluding waiting for approval. The median is 60, but the range warns against treating an hour as a guarantee.",
+            "This briefing also needs a new route map. Isha separates familiar editing from the new work and labels the map estimate provisional. Approval waiting belongs on the dependency timeline, not inside an unexplained editing estimate."
+          ],
+          "example": "Isha reserves 60 minutes for editing plus a provisional 30 for the map. An early map check reveals an unconfirmed entrance. She requests that fact and works on confirmed text; faster typing cannot resolve the missing input.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Three comparable drafts took 70, 90 and 110 minutes. A new draft is predicted at 40. Give a grounded planning range.",
-        "solution": "Use 70–110 minutes as a starting range and ask why the new draft would differ. Reserve about 90 minutes plus a review window if the work is comparable; mark this as a judgement, not a confidence interval.",
+        "prompt": "Transfer: a sponsor supplies a ready-to-use map. All three earlier durations included ten minutes of printing, which this digital release omits. Revise the baseline and state its limits.",
+        "solution": "Adjusted durations are 35, 50 and 80 minutes, with a median of 50. Remove map-building time only after checking that the supplied map meets the requirement. Approval wait remains separate. Three adjusted observations provide a forecast, not a guaranteed finish.",
         "solutionFormat": "prose",
         "checks": [
-          "Compare the new task with completed work.",
-          "Keep the 70–110 minute variation visible.",
-          "Avoid presenting three observations as a reliable percentile."
+          "Adjusts observations to 35, 50 and 80.",
+          "Uses 50 as a baseline rather than a promise.",
+          "Checks that the map really removes new work."
         ]
       },
       "quiz": {
@@ -778,16 +787,25 @@
           "paragraphs": [
             "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "Reserve can absorb effort, not every dependency",
+          "paragraphs": [
+            "Isha has a 150-minute window and an initial 90-minute briefing estimate, leaving 60 uncommitted. The venue now says map confirmation will arrive tomorrow, after today's release deadline.",
+            "Unused time cannot make another person answer today. Separate effort overruns from blocked prerequisites. Publishing an unconfirmed entrance just to meet the calendar would fail the deliverable's purpose."
+          ],
+          "example": "Isha asks the organiser to choose a confirmed-text interim release, a later complete release or a reliable earlier confirmation. She does not silently call an incomplete briefing final.",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "A 180-minute window contains 160 minutes of work, including an optional 30-minute task, and 30 minutes of essential transitions. Repair it.",
-        "solution": "The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.",
+        "prompt": "Transfer: the map is confirmed, but two text corrections add 25 minutes. With 60 originally uncommitted and no other new work, what changes and what should be checked?",
+        "solution": "90 + 25 = 115 minutes fits within 150, leaving 35. Check that the corrections include review time and no dependent approval has moved. Unlike missing confirmation, this effort change fits the reserve under the stated assumptions.",
         "solutionFormat": "prose",
         "checks": [
-          "Recognize that the initial plan exceeds capacity.",
-          "Identify the optional 30 minutes to move.",
-          "Keep transitions and buffer distinct."
+          "Calculates 115 minutes and 35 remaining.",
+          "Separates effort from unavailable prerequisites.",
+          "Checks that review time is included."
         ]
       },
       "quiz": {
@@ -1090,16 +1108,25 @@
           "paragraphs": [
             "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
           ]
+        },
+        {
+          "title": "Negotiate scope while the window stays fixed",
+          "paragraphs": [
+            "Isha's colleague requests a second-language version. After corrections, 35 minutes remain; preparing and checking the translation is estimated at 50. A yes would leave a fifteen-minute gap even if nothing else changes.",
+            "A useful boundary names the commitment, conflict and choices. Offer a later checked version, confirmed help that removes work, or an agreed scope change. First ask whether the translation is essential to today's audience; an essential requirement cannot be dismissed as decoration."
+          ],
+          "example": "I can finish the checked briefing today. Translation needs about 50 minutes and I have 35 left. I can deliver it tomorrow, or we can agree what moves. Does today's audience require it?",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Today includes a promised draft and only 30 spare minutes. Draft a reply to a new 90-minute request; completing it today would displace that draft.",
-        "solution": "I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.",
+        "prompt": "Transfer: translation is essential and a reviewer offers to check it tomorrow only. Choose a response without extending available time.",
+        "solution": "Tomorrow's review cannot produce a checked translation today. Agree a later complete release or an explicitly scoped interim communication the audience can use. If neither works, state the conflict. Do not call an unchecked translation final merely because later review is offered.",
         "solutionFormat": "prose",
         "checks": [
-          "Compare the 90-minute request with 30 spare minutes.",
-          "Offer concrete feasible alternatives.",
-          "Name the existing commitment affected by immediate acceptance."
+          "Treats audience needs as a scope condition.",
+          "Recognises the unavailable review today.",
+          "Makes an explicit scope/date decision."
         ]
       },
       "quiz": {

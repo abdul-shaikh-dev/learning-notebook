@@ -4,7 +4,7 @@
   "category": "AI engineering",
   "status": "ready",
   "description": "Build a clear mental model of agents through 24 lessons on tools, state, grounding, permissions, failures and evaluation. Three staged projects use a fully offline scripted workshop, then define what a real model integration still needs.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate agents → local framework practice",
   "prerequisites": [
     "No prior AI knowledge required; begin with the vocabulary lessons.",
     "Basic Python functions, dictionaries, exceptions and tests help with the optional executable workshop.",
@@ -121,7 +121,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice: evaluate and release deliberately",
+      "title": "Applied extension: evaluate and release deliberately",
       "description": "Design evidence-based evaluation and a safe path from deterministic mechanics to a live model.",
       "exitCriteria": [
         "Separate outcome checks, traces and judge calibration.",
@@ -130,23 +130,22 @@
         "Version the full behavior-changing bundle."
       ],
       "project": {
-        "title": "Evaluation and release dossier",
-        "brief": "Build an evaluation specification around the workshop and write the evidence needed for a future live release.",
+        "title": "One research assistant, compared three ways",
+        "brief": "Build and test one small research task, then compare direct generation, explicit graph control and an optional Deep Agents tool loop.",
         "requirements": [
-          "Create at least six task cases including no-answer, ambiguity, injection and tool failure.",
-          "Define deterministic and semantic scoring separately.",
-          "Record expected terminal statuses and forbidden actions.",
-          "Write a held-out comparison, judge-calibration and rollback plan.",
-          "State all guarantees the offline suite cannot establish."
+          "Implement the model-free retrieve/draft/check workflow against the supplied behaviour tests.",
+          "Try an answerable question, an absent topic and a draft with an unsupported citation.",
+          "When a compatible local server is available, run the same questions through chain and graph modes; inspect the answers and attempts.",
+          "Try Deep Agents tool calling separately and retain the explicit graph if the model cannot use tools reliably.",
+          "Change one document or question without changing the code and test whether the behaviour transfers."
         ],
         "rubric": [
-          "Task criteria are defined before observing results.",
-          "Security failures cannot be hidden by average quality.",
-          "No claims of model accuracy are derived from scripted tests.",
-          "The release plan versions tools, policy, retrieval and model configuration.",
-          "Live integration uses current official protocol docs and no embedded credentials."
+          "The graph stops after at most two draft attempts and skips generation when no evidence is found.",
+          "Accepted citation IDs come from retrieved evidence; answer support is checked separately.",
+          "Failures remain visible rather than becoming fabricated successful answers.",
+          "Live model, tool-calling and Fleet results are claimed only for runs actually performed."
         ],
-        "solution": "Use evaluation_cases.json as a starter and expand it with independent cases. Run local tests for mechanics; review the rubric manually for semantic cases. A future live run must record actual model outputs and usage, calibrate judgments and compare a compatible version bundle. The current artifact is an offline educational baseline, not a deployed AI service."
+        "solution": "Follow local-framework-guide.md and implement the routing before comparing local_framework_lab.py. test_local_framework_lab.py exercises real LangGraph with deterministic drafts. Use the same questions and records for optional live modes so that differences can be attributed to control flow and model behaviour. Fleet remains a separate optional migration exercise requiring workspace access."
       }
     }
   ],
@@ -563,6 +562,13 @@
           "paragraphs": [
             "Appending every message forever is not a state model. It makes recovery and authorization difficult to inspect. Conversely, reducing all history to one summary may lose important pending-action details. Define which state fields are authoritative, who may update them and what is persisted."
           ]
+        },
+        {
+          "title": "Follow one state field across a graph",
+          "paragraphs": [
+            "The research graph stores question, evidence, draft and attempts separately. Retrieval replaces evidence; drafting replaces the current draft and increases attempts; checking chooses either an exit or one bounded revision. A node returns an update for the fields it changes. If a draft field accumulates strings instead of replacing its value, the next check may inspect old text alongside the new answer.",
+            "Use the graph mode in local_framework_lab.py with its scripted draft source first. Read the update stream as node outputs, then compare the final state. Inject an unsupported citation into the first draft and a valid citation into the second. Expect two attempts. Make both drafts invalid and expect a rejected result, not a third attempt. These outcomes do not require an LLM to test."
+          ]
         }
       ],
       "exercise": {
@@ -791,6 +797,14 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Access controls should filter the retrievable collection for the caller, not rely on the model to ignore forbidden results. Ranking quality can deteriorate when content changes. The workshop uses simple lexical matching on a synthetic public collection; it does not implement embeddings or prove retrieval quality on real documents."
+          ]
+        },
+        {
+          "title": "Diagnose retrieval before changing the prompt",
+          "paragraphs": [
+            "A research question asks how to recover a failed import. Document A describes setup; document B describes rollback; document C contains an old rollback policy. A fluent answer from A alone is a retrieval failure before it is a writing failure. Keep the selected IDs visible and distinguish missing evidence from contradictory evidence.",
+            "Try three questions against the same small corpus: one answerable verbatim, one paraphrase, and one absent topic. A lexical baseline may miss the paraphrase; returning any nonempty list must not automatically permit an answer. First inspect selection, then generation, then whether each claim is supported. An embedding model can change ranking without solving document freshness or access control.",
+            "In local_framework_lab.py, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable simply because the retriever always returns something."
           ]
         }
       ],
@@ -1643,15 +1657,23 @@
             "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
             "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
           ]
+        },
+        {
+          "title": "Build the same research task at three abstraction levels",
+          "paragraphs": [
+            "The optional local-framework-guide.md develops one task through direct LangChain model invocation, an explicit LangGraph workflow, and a Deep Agents tool loop. Keep the corpus and questions fixed so that changes in control flow can be compared. Start with model-free graph checks, then call your existing llama.cpp server explicitly. Tool-calling support depends on the server, chat template and model; successful ordinary chat does not establish tool compatibility.",
+            "The graph keeps retrieval and the attempt limit in application code. The Deep Agents variant lets the model choose a bounded search tool and adds harness behaviour. Inspect tool calls and final evidence separately. More planning does not necessarily improve a tiny-model answer; compare unsupported claims, completion and latency on the same cases.",
+            "LangSmith Fleet is a separate managed agent product, not a required local Python package. The guide includes a concrete migration exercise using synthetic documents and a capability comparison. Without a Fleet workspace, finish the local project and leave workspace deployment unexecuted. No private project corpus or local server is automatically exposed."
+          ]
         }
       ],
       "exercise": {
-        "prompt": "List what the passing offline tests prove and what remains unverified before using a real model.",
-        "solution": "They prove the tested local validation, allowlist, state transitions, evidence-ID checks and bounded-loop behavior with scripted proposals. They do not prove model understanding, useful search planning, semantic grounding, prompt-injection resistance, live API compatibility, latency, cost or production security. Those need a real adapter, operational controls and evaluated task data.",
+        "prompt": "Run the local framework graph without a model. Make the first draft cite D99 and the second cite D1; then make both cite D99. Predict and verify the two terminal outcomes. If your local server is available, repeat the same question using chain and graph modes.",
+        "solution": "The first run should finish citation_valid after two attempts; the second should finish rejected after two attempts. A question with no matching evidence should make zero draft calls. The tests enforce these graph behaviours. Read the actual answer to judge support: a real citation ID can accompany a false claim. The optional live runs test a separate model/server boundary.",
         "checks": [
-          "Clearly separates harness tests from intelligence.",
-          "Uses current runtime-specific documentation.",
-          "Makes no claim of live verification."
+          "One invalid draft followed by a valid citation takes exactly two attempts.",
+          "Two invalid drafts stop without a third model call.",
+          "Missing evidence skips generation; citation membership is not scored as factual truth."
         ],
         "solutionFormat": "prose"
       },
@@ -1693,7 +1715,10 @@
     "provider-integration-exercise.md",
     "provider_eval.py",
     "test_provider_eval.py",
-    "provider-evaluation-lab.md"
+    "provider-evaluation-lab.md",
+    "local_framework_lab.py",
+    "test_local_framework_lab.py",
+    "local-framework-guide.md"
   ],
   "downloads": [
     {

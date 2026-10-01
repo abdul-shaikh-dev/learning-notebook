@@ -114,6 +114,24 @@
       "href": "paths/react/practice/performance-runner.js",
       "role": "reference",
       "description": "Benchmark command entry point"
+    },
+    {
+      "id": "depth-foundation-data-ts",
+      "href": "paths/react/practice/foundation-data.ts",
+      "role": "reference",
+      "description": "Runtime parsing and immutable actions before React"
+    },
+    {
+      "id": "depth-foundation-data-test-ts",
+      "href": "paths/react/practice/foundation-data.test.ts",
+      "role": "test",
+      "description": "Malformed input, zero, mutation and repeated-action tests"
+    },
+    {
+      "id": "depth-foundation-bridge-md",
+      "href": "paths/react/practice/foundation-bridge.md",
+      "role": "guide",
+      "description": "Build from JavaScript semantics into TypeScript state"
     }
   ],
   "tasks": [
@@ -126,7 +144,10 @@
         "AdvancedApp-tsx",
         "tracker-core-ts",
         "tracker-core-test-ts",
-        "README-md"
+        "README-md",
+        "depth-foundation-data-ts",
+        "depth-foundation-data-test-ts",
+        "depth-foundation-bridge-md"
       ],
       "steps": [
         "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -134,13 +155,24 @@
         "Run the provided baseline and record its actual results. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
         "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
         "Complete the assessment requirements in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans.; Reject malformed JSON, duplicate IDs, blank titles and unsupported versions.; Return a completion summary without modifying caller-owned records.; Write repeatable valid and invalid-input tests.",
-        "Compare your evidence with the stage rubric: Every malformed case produces an explicit failure.; Zero and false are not treated as missing.; Original data is unchanged.; Explain where runtime validation ends and static typing begins."
+        "Compare your evidence with the stage rubric: Every malformed case produces an explicit failure.; Zero and false are not treated as missing.; Original data is unchanged.; Explain where runtime validation ends and static typing begins.",
+        "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
       ],
       "commands": [
         {
           "label": "Run reference from react-practice folder root",
           "command": "node --experimental-strip-types tracker-core.test.ts",
           "expected": "The domain regression checks finish successfully."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "npm test -- foundation-data.test.ts",
+          "expected": "Four focused runtime tests pass."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "npm run build",
+          "expected": "The pinned TypeScript and Vite project builds; this is separate from runtime validation."
         }
       ],
       "prerequisites": [
@@ -172,7 +204,10 @@
         "index-html",
         "package-json",
         "package-lock-json",
-        "tsconfig-json"
+        "tsconfig-json",
+        "depth-foundation-data-ts",
+        "depth-foundation-data-test-ts",
+        "depth-foundation-bridge-md"
       ],
       "steps": [
         "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
@@ -180,7 +215,8 @@
         "Run the provided baseline and record its actual results. Create the Vite directory once, then reuse it for later runs.",
         "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
         "Complete the assessment requirements in the reader: Use stable IDs and immutable reducer transitions.; Show blank-title errors and an empty search result.; Keep completion counts derived from all records.; Decide whether changing selection preserves unsaved drafts.; Run domain tests and manually verify Enter, Tab and checkbox behavior.",
-        "Compare your evidence with the stage rubric: No duplicated records or mutation of old state.; Filtering does not lose completion changes.; Controls have accessible names.; A failed input cannot appear as a successful update.; Explain the ownership of each state value."
+        "Compare your evidence with the stage rubric: No duplicated records or mutation of old state.; Filtering does not lose completion changes.; Controls have accessible names.; A failed input cannot appear as a successful update.; Explain the ownership of each state value.",
+        "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
       ],
       "commands": [
         {
@@ -192,6 +228,16 @@
           "label": "PowerShell · extracted kit root · pinned UI harness",
           "command": "npm ci\nnpm test\nnpm run build\nnpm run dev",
           "expected": "Domain checks, five component regressions and production build pass; Vite serves the tracker."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "npm test -- foundation-data.test.ts",
+          "expected": "Four focused runtime tests pass."
+        },
+        {
+          "label": "Run the focused depth lab from the extracted bundle root",
+          "command": "npm run build",
+          "expected": "The pinned TypeScript and Vite project builds; this is separate from runtime validation."
         }
       ],
       "prerequisites": [

@@ -60,6 +60,18 @@
       "href": "paths/financial-foundations/practice/swap-repricing.md",
       "role": "guide",
       "description": "Paper-first swap trace, worked bridge, wrong answers and fixing variant"
+    },
+    {
+      "id": "depth-valuation-transfer-md",
+      "href": "paths/financial-foundations/practice/valuation-transfer.md",
+      "role": "guide",
+      "description": "Independent valuation predictions and changed input cases"
+    },
+    {
+      "id": "depth-test-valuation-transfer-py",
+      "href": "paths/financial-foundations/practice/test_valuation_transfer.py",
+      "role": "test",
+      "description": "Verify valuation direction, bp conversion and fixing precedence"
     }
   ],
   "tasks": [
@@ -131,7 +143,9 @@
       "fileIds": [
         "swap_repricing-py",
         "test_swap_repricing-py",
-        "swap-repricing-md"
+        "swap-repricing-md",
+        "depth-valuation-transfer-md",
+        "depth-test-valuation-transfer-py"
       ],
       "steps": [
         "Read the contract in swap-repricing.md; principal is not exchanged.",
@@ -145,6 +159,11 @@
           "label": "Optional Python reference and checks",
           "command": "python swap_repricing.py\npython -m unittest -v test_swap_repricing.py",
           "expected": "FO EUR -100; independent EUR -573.50; difference EUR -473.50; five tests pass."
+        },
+        {
+          "label": "Optional depth exercise · extracted kit root",
+          "command": "python -m unittest -v test_valuation_transfer.py",
+          "expected": "Four supplied-input valuation transfer tests pass."
         }
       ],
       "prerequisites": [

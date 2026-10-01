@@ -66,6 +66,18 @@
       "href": "paths/application-security/test_security_http.py",
       "role": "test",
       "description": "HTTP denials with fresh-connection persisted-state checks and authorized success."
+    },
+    {
+      "id": "depth-login-flow-lab-py",
+      "href": "paths/application-security/login_flow_lab.py",
+      "role": "reference",
+      "description": "Two-tab transaction binding with replay and expiry tests"
+    },
+    {
+      "id": "depth-depth-lab-md",
+      "href": "paths/application-security/depth-lab.md",
+      "role": "guide",
+      "description": "Run, change and explain one concrete failure"
     }
   ],
   "tasks": [
@@ -177,7 +189,9 @@
         "intermediate-kit-md",
         "advanced-kit-md",
         "security_http-py",
-        "test_security_http-py"
+        "test_security_http-py",
+        "depth-login-flow-lab-py",
+        "depth-depth-lab-md"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -197,6 +211,11 @@
           "label": "Run all local security evidence",
           "command": "python -B -m unittest -v test_security_lab.py test_security_http.py",
           "expected": "Ten methods pass, including loopback HTTP mutation denial. Browser/provider and cryptographic validation remain unexecuted."
+        },
+        {
+          "label": "Optional depth exercise · extracted kit root",
+          "command": "python login_flow_lab.py",
+          "expected": "Three synthetic flow-binding tests pass; no identity provider is contacted."
         }
       ],
       "prerequisites": [

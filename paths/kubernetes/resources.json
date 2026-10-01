@@ -120,6 +120,18 @@
       "href": "paths/kubernetes/practice/policy-clients.json",
       "role": "reference",
       "description": "Restricted Pod clients for NetworkPolicy allowed and denied traffic."
+    },
+    {
+      "id": "mechanism-lab-script",
+      "href": "paths/kubernetes/practice/readiness_drill.py",
+      "role": "reference",
+      "description": "Optional real mechanism drill with observable assertions and bounded cleanup."
+    },
+    {
+      "id": "mechanism-lab-guide",
+      "href": "paths/kubernetes/practice/mechanism-lab.md",
+      "role": "guide",
+      "description": "Exact setup, expected results, cleanup, scope and primary references for the optional mechanism drill."
     }
   ],
   "tasks": [
@@ -208,7 +220,9 @@
         "storage-json",
         "test_lab_guard-ps1",
         "optional-enforcement-track-md",
-        "policy-clients-json"
+        "policy-clients-json",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract all listed flat files together into a new practice folder.",
@@ -220,7 +234,8 @@
         "Review viewer RBAC and paired allowed/denied identity checks.",
         "Only claim network isolation after verifying an enforcing CNI and both clients.",
         "Review restricted non-root/read-only settings and necessary writable paths.",
-        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
+        "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -232,6 +247,11 @@
           "label": "Optional local lab · after context review and namespace Bootstrap",
           "command": "./lab.ps1 -Action Validate",
           "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python readiness_drill.py",
+          "expected": "PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script."
         }
       ],
       "prerequisites": [
@@ -243,7 +263,8 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results."
+        "Build the stage requirements and document evidence separately from reference results.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     },
     {
@@ -270,7 +291,9 @@
         "storage-json",
         "test_lab_guard-ps1",
         "optional-enforcement-track-md",
-        "policy-clients-json"
+        "policy-clients-json",
+        "mechanism-lab-script",
+        "mechanism-lab-guide"
       ],
       "steps": [
         "Extract all listed flat files together into a new practice folder.",
@@ -284,7 +307,8 @@
         "Draw GitOps drift/revert timeline without installing a controller.",
         "Inventory Git/Secrets/etcd/PVC/external SQL backup/restore separately.",
         "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
-        "Optionally follow optional-enforcement-track.md in an authorized local environment; mark unexecuted checks explicitly."
+        "Optionally follow optional-enforcement-track.md in an authorized local environment; mark unexecuted checks explicitly.",
+        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
       ],
       "commands": [
         {
@@ -296,6 +320,11 @@
           "label": "Optional local lab · after context review and namespace Bootstrap",
           "command": "./lab.ps1 -Action Validate",
           "expected": "Dedicated loopback kind API admits the workload in server dry-run; no workload is persisted by Validate."
+        },
+        {
+          "label": "Optional mechanism drill (read its guide first)",
+          "command": "python readiness_drill.py",
+          "expected": "PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script."
         }
       ],
       "prerequisites": [
@@ -307,7 +336,8 @@
       "notes": [
         "Only the supplied local Python checks are immediately runnable without extra infrastructure.",
         "Docker/cluster/full-stack exercises are explicit opt-in learner work; no cloud provisioning or production deployment is performed by opening this kit.",
-        "Build the stage requirements and document evidence separately from reference results."
+        "Build the stage requirements and document evidence separately from reference results.",
+        "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
     }
   ],

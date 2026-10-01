@@ -4,7 +4,7 @@
   "category": "Software engineering",
   "status": "ready",
   "description": "24 lessons bridge checked code to reviewable release, health, compatible rollout, telemetry and recovery, with a tested local service and concrete React/.NET/SQL integration runbook.",
-  "level": "Foundations → intermediate → selected advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Use the existing React (react), C#/.NET (dotnet), SQL Server (sql-server) and Networking & the Web (networking-web) paths for their application/data/network boundaries.",
     "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
@@ -615,15 +615,24 @@
             "Both the release-label test and distinct_artifact_drill.py use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
           ],
           "example": "v1 reads title\nMigration adds nullable label\nv2 reads title + optional label\nBackfill in bounded batches\nRemove old representation only after old consumers disappear."
+        },
+        {
+          "title": "Backfill is a moving boundary while old writers still run",
+          "paragraphs": [
+            "Adding nullable label lets old code keep selecting and inserting title. New readers can use COALESCE(label,title) while new writers populate both fields. A first backfill does not finish migration if an old instance can insert another row with label=NULL one second later. Stop or upgrade old writers, reconcile the remaining rows, and only then enforce the final representation.",
+            "schema_coexistence.py executes this sequence in a disposable SQLite file, including a late old write after backfill. It verifies both readers during coexistence and deliberately proves the old query fails after DROP COLUMN title. Keeping the old binary therefore does not make rollback safe after contraction. The script tests data compatibility, not SQL Server DDL locking, deployment concurrency or an EF migration."
+          ],
+          "example": "expand: add nullable label -> old reader still works\nbackfill -> old writer inserts late row with label=NULL\nv2 fallback + dual writes -> coexistence\nretire old writers, reconcile -> contract\nold SELECT title -> fails after DROP",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Would you drop title before rolling out v2? Explain a safer plan.",
-        "solution": "No: old readers would fail during coexistence and binary rollback. Add a compatible representation, migrate readers/writers, measure old use, then contract in a later reviewed release with a tested recovery plan.",
+        "prompt": "Run python schema_coexistence.py. Why is zero missing labels immediately after the first backfill insufficient to authorize dropping title?",
         "checks": [
-          "Describe the mixed-version interval.",
-          "Separate schema and binary rollback."
+          "A late old writer produces another NULL label, which the new reader handles via fallback.",
+          "After contraction the old query fails despite an intact database; binary rollback is not sufficient."
         ],
+        "solution": "The invariant is unstable while old writers remain. Confirm they are retired, run a final reconciliation, verify new reads/writes and make the rollback boundary explicit before dropping the old column. The observed old-reader failure after DROP is a compatibility failure, not database corruption.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -643,6 +652,13 @@
           "section": "SQL scripts; production deployment",
           "reviewed": "2026-09-27",
           "scope": "EF Core 10/SQL Server integration exercise; bundled runtime uses SQLite, not SQL Server. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+        },
+        {
+          "title": "SQLite ALTER TABLE",
+          "url": "https://www.sqlite.org/lang_altertable.html",
+          "section": "ADD COLUMN and DROP COLUMN",
+          "reviewed": "2026-10-02",
+          "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
         }
       ],
       "stage": "intermediate"
@@ -1155,15 +1171,24 @@
             "A process that starts successfully can still serve the wrong dataset. Record snapshot identity/time, restore commands, missing-write reconciliation and who can approve the final traffic switch. SQL Server tests must restore actual full/differential/log sets as applicable, not rename a .bak file as if it were a usable database."
           ],
           "example": "Snapshot: note A\nLater source: note A + note B\nRestored independent file: A only\nVerify integrity, row values and release compatibility before switching traffic."
+        },
+        {
+          "title": "A healthy restore can contain the wrong business point in time",
+          "paragraphs": [
+            "A snapshot contains note A; note B commits afterward. An isolated restore can pass integrity_check and correctly return A only. That is a successful restoration of the chosen snapshot with known data loss, not proof of zero RPO. If the selected snapshot was supposed to contain B, the same row count is instead evidence of the wrong backup or an incomplete recovery chain.",
+            "Measure recovery from the agreed incident start to the point the restored application can safely serve the required data. Copy duration alone omits identity, configuration, verification and traffic cutover. The local drill has no external clients, but a real cutover must also fence the old writer; otherwise recovered and old databases can both accept divergent changes."
+          ],
+          "example": "snapshot S: A\nsource after S: A + B\nrestore S: A, integrity ok\nknown gap: B; reconcile or accept under RPO\nthen fence old writers before cutover",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Create a restore acceptance checklist for a lost notes database.",
-        "solution": "Verify backup identity, restore in isolation, run integrity/schema checks, compare known notes/counts and check the compatible app. Measure time and lost-data interval; only then plan a controlled writer stop and traffic cutover.",
+        "prompt": "A restore reports integrity ok and returns A but not B. B was committed after the snapshot. What has passed, what data-loss interval remains, and what would change if B predated the snapshot?",
         "checks": [
-          "Read expected business values.",
-          "Measure recovery and identify lost writes."
+          "Snapshot restoration and application reads can pass while post-snapshot B remains lost.",
+          "If B predates the required snapshot, investigate backup identity or recovery completeness rather than accepting the result."
         ],
+        "solution": "Integrity and the expected A value support a usable restoration of S. The loss window runs from S to the failure point and includes B. If B should already belong to S, reject the recovery evidence and inspect backup identity/chain. In either case verify the compatible application and writer cutover before declaring service recovered.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -1346,7 +1371,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice · operate and recover",
+      "title": "Applied extension · operate and recover",
       "description": "Interpret eligible signals, compare bounded workloads, restore independently and coordinate an incident.",
       "exitCriteria": [
         "Define an eligible-request SLI/window and budget.",
@@ -1386,7 +1411,9 @@
     "practice/integration-runbook.md",
     "practice/release-workbook.md",
     "practice/distinct_artifact_drill.py",
-    "practice/test_distinct_artifact_drill.py"
+    "practice/test_distinct_artifact_drill.py",
+    "practice/schema_coexistence.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

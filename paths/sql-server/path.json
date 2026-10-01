@@ -4,7 +4,7 @@
   "category": "Data",
   "status": "ready",
   "description": "Progress from first SQL queries to robust data models, replayable imports, transaction contracts, query-plan diagnosis and an assessed reconciliation pipeline.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate T-SQL → selected engine labs",
   "prerequisites": [
     "No SQL knowledge required. Comfort with files, rows and columns is helpful.",
     "Access to a local or training SQL Server instance and a query client is needed to execute exercises; reading and quizzes work without one."
@@ -1086,6 +1086,14 @@
             "Every extra index costs space and write work. A covering index that adds many wide columns may be a poor trade. Update statistics or change an index only under a controlled experiment; repeatedly clearing a shared plan cache is not an acceptable benchmark method."
           ],
           "example": ""
+        },
+        {
+          "title": "Explain why the same query can choose different work",
+          "paragraphs": [
+            "Imagine 100,000 rows: 99,900 have status Closed and 100 have status Open. A noncovering index on status can be useful for Open but require many lookups for Closed. The predicate text is unchanged; the value distribution changes how much work each access path implies. An index is not automatically useful because a WHERE clause mentions its first column.",
+            "In an isolated copy of the training data, compare the two parameter values with actual plans and logical reads. Record returned rows separately from rows read. Repeat after changing the distribution and updating statistics through the supported lab procedure. A tiny teaching table may legitimately scan; do not force an index to make the illustration look successful.",
+            "Now add a covering column and compare write cost and storage as well as read work. The question is whether this workload benefits, not whether a plan contains the word Seek. Use query-store-lab.sql to distinguish one execution’s observations from a historical change."
+          ]
         }
       ],
       "exercise": {
@@ -1368,6 +1376,14 @@
             "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
             "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
           ]
+        },
+        {
+          "title": "Predict a two-session schedule before running it",
+          "paragraphs": [
+            "At version 8, balance is 100. Session A reads it and plans +10; B reads it and plans +20. If both send unconditional replacement values, A can write 110 and B then write 120, losing 10. With a version predicate, the second replacement affects zero rows. That result is a conflict requiring a fresh decision, not success with an unchanged row.",
+            "Use session-a.sql and session-b.sql from the concurrency lab. Pause at the supplied boundaries and note the order of reads, writes and commits. An atomic UPDATE balance = balance + delta addresses this particular arithmetic race; it does not automatically protect a rule involving several rows or an external payment.",
+            "Change the task to reserving the last available seat. Decide which predicate must remain true at the write and which constraint remains a final guard. A test with two sequential successful reads is not concurrent evidence; keep both sessions open at the documented interleaving."
+          ]
         }
       ],
       "exercise": {
@@ -1631,6 +1647,14 @@
           "paragraphs": [
             "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
           ]
+        },
+        {
+          "title": "Diagnose a plausible reconciliation result",
+          "paragraphs": [
+            "A join duplicates one 100-unit order and drops a different 100-unit order. The total remains correct, but the report is wrong. Reconcile business keys and multiplicity as well as aggregate amounts. Count source-only, target-only and duplicated IDs before declaring that a zero total difference means success.",
+            "Construct this fixture using temporary tables in a separate query window: source IDs A=100, B=100, C=50; faulty output A=100, A=100, C=50. Both sums are 250 and both row counts are three. Group by ID to reveal A twice and B absent. Repair the join rather than applying DISTINCT blindly: legitimate equal-valued orders must remain separate.",
+            "Transfer the test to a replayed batch: a second run must preserve the same IDs and values, while changed content under an existing batch identity must follow the explicit conflict policy. Submit actual engine output for these cases; source inspection does not establish isolation or rollback behaviour."
+          ]
         }
       ],
       "exercise": {
@@ -1774,7 +1798,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Applied extension",
       "description": "Investigate performance and concurrency failures, design safe releases, and deliver an auditable import capstone.",
       "exitCriteria": [
         "Account for every raw row, demonstrate replay invariance and explain post-load conflict handling.",

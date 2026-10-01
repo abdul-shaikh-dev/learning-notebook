@@ -4,7 +4,7 @@
   "category": "Engineering practice",
   "status": "ready",
   "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic file editing and running a terminal command. No prior specialist knowledge required.",
     "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
@@ -106,7 +106,9 @@
     "practice/integration.test.py",
     "practice/runbook.md",
     "practice/README.md",
-    "practice/verification.md"
+    "practice/verification.md",
+    "practice/trace_investigation.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {
@@ -208,7 +210,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced — diagnosis and operating evidence",
+      "title": "Applied extension — diagnosis and operating evidence",
       "description": "Investigate bottlenecks, memory, load models and telemetry failure boundaries.",
       "exitCriteria": [
         "One change is justified by measured evidence.",
@@ -563,17 +565,25 @@
           "paragraphs": [
             "A trace alone may omit queued work, retries or sampled spans. Read instrumentation boundaries and combine it with logs and aggregate metrics."
           ]
+        },
+        {
+          "title": "Compute overlap before assigning the missing time",
+          "paragraphs": [
+            "A parent spans 0 to 150 ms. Child A spans 10 to 100; B spans 10 to 130. Their durations sum to 210 ms, but their union covers only 120 ms because 90 ms overlap. The remaining 30 ms belongs outside the measured child intervals. It may include setup, scheduling, serialization or uninstrumented waits; elapsed subtraction alone cannot call it CPU work.",
+            "trace_investigation.py measures two real concurrent sleeping operations with a monotonic clock, prints their intervals, overlap, process CPU and uncovered parent time, then repeats with B reporting failure. It retains the failed span and request outcome rather than dropping failed requests from the latency story. These are manual spans without context propagation or an OpenTelemetry collector."
+          ],
+          "example": "A duration=90ms; B duration=120ms; overlap=90ms\ncovered child time=90+120-90=120ms\nuncovered parent=150-120=30ms\nlatest required child B determines completion before final assembly",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Draw a 150 ms request with parsing, two parallel calls and rendering. Identify the critical path and uninstrumented gaps.",
-        "solution": "Place parse 0–10, call A 10–100, call B 10–130 and final assembly 130–150. The path through B dominates completion. The parent is 150 ms; child durations are not added to it. Any uncovered interval should be named unknown until further evidence identifies it.",
-        "solutionFormat": "prose",
+        "prompt": "Run python trace_investigation.py. Compare child_sum with parent_wall and explain why adding them is wrong. What changes when the B span reports error?",
         "checks": [
-          "Parent/child timing is not double-counted.",
-          "Overlap is represented.",
-          "Unknown intervals remain unknown."
-        ]
+          "Compute coverage from the union of child intervals, preserving overlap.",
+          "The failed run retains both timing and error status; uncovered time is not automatically CPU time."
+        ],
+        "solution": "Child intervals lie inside the parent and can overlap each other, so adding parent and children double-counts. Use their union to identify uncovered elapsed time. B failure changes request outcome but does not erase the time spent waiting for it. Exact durations and even completion order depend on scheduling; the script checks timeline invariants, not a machine-speed threshold.",
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why should parent and child durations not simply be added?",
@@ -592,6 +602,13 @@
           "section": "Traces and spans",
           "reviewed": "2026-09-30",
           "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+        },
+        {
+          "title": "Python monotonic and process clocks",
+          "url": "https://docs.python.org/3/library/time.html",
+          "section": "perf_counter and process_time",
+          "reviewed": "2026-10-02",
+          "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
         }
       ]
     },
@@ -971,17 +988,25 @@
           "paragraphs": [
             "Instrumentation can perturb timing. Use the profiler to locate candidates, then benchmark the change without profiling overhead for the performance claim."
           ]
+        },
+        {
+          "title": "Separate a waiting request from CPU saturation",
+          "paragraphs": [
+            "In the concurrent span drill, process CPU time excludes the time threads spend sleeping, while parent wall time includes it. A large wall/CPU gap is consistent with waiting in this controlled workload. In a real service it does not identify which dependency is slow; inspect spans and queue/connection-pool evidence. Under concurrency process_time includes CPU used by all threads in the process, so it cannot be assigned to one request without further instrumentation.",
+            "Now profile a compute-bound lookup batch from benchmark.py. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
+          ],
+          "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Profile the supplied benchmark. Identify which function dominates the linear path and propose one measurement to validate a change.",
-        "solution": "Run the documented cProfile command and inspect lookup loop cost and call counts. Compare the same search batch after indexing, keeping expected results identical. Measure without the profiler for the timing comparison and document index construction separately.",
-        "solutionFormat": "prose",
+        "prompt": "An index takes 20 ms to build and saves 0.5 ms per lookup. Compare workloads of 10 and 100 lookups, then explain why a high wall time with low process CPU needs a different investigation.",
         "checks": [
-          "CPU and elapsed waiting are distinguished.",
-          "Parent/child attribution is not summed.",
-          "A candidate change is remeasured."
-        ]
+          "Ten lookups save only 5 ms and lose 15 ms including build; 100 save 50 ms and gain 30 ms before memory costs.",
+          "Waiting evidence motivates dependency/queue inspection; it is not automatically a CPU optimization target."
+        ],
+        "solution": "Include construction in the workload: 10 queries do not amortize the 20 ms build, while 100 do. Validate outputs and measure memory separately. A waiting workload may benefit from concurrency, reduced queueing or faster dependencies, but a CPU profile alone cannot attribute an uninstrumented wait.",
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why benchmark after profiling?",

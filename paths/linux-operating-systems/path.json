@@ -4,7 +4,7 @@
   "category": "Systems and operations",
   "status": "ready",
   "description": "Follow 22 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
-  "level": "Foundations → intermediate → advanced practice",
+  "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
     "Python 3.11+ for the portable practice kit; no external packages.",
@@ -806,15 +806,24 @@
           "paragraphs": [
             "Removing a log pathname does not necessarily reclaim disk usage while a process holds it open. Never delete active logs to diagnose a production server. A context manager closes handles but does not guarantee committed business data."
           ]
+        },
+        {
+          "title": "Observe EMFILE without changing the shell limit",
+          "paragraphs": [
+            "A process can run out of descriptors even when disk space and memory remain available. EMFILE names the per-process descriptor boundary; ENFILE is a different system-wide open-file-table boundary. Repeatedly reopening a harmless file such as /dev/null can demonstrate exhaustion without corrupting its content. Raising a limit merely moves the failure if handles still accumulate.",
+            "The optional linux_fd_drill.py starts a child with a small RLIMIT_NOFILE, opens descriptors until Linux returns EMFILE, closes every opened descriptor in finally, and proves a new open succeeds. The parent and shell limits are untouched. /proc/self/fd counts can include the directory handle used to inspect them, so compare observations made in the same way instead of expecting an absolute number across machines."
+          ],
+          "example": "child only: soft RLIMIT_NOFILE=32\nrepeated open -> OSError(errno.EMFILE)\nclose owned descriptors -> count returns to baseline\nnew open -> succeeds",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Explain why 1,000 successful opens followed by a failure can indicate a leak rather than a corrupt file.",
-        "solution": "Unclosed handles accumulate until the per-process/system resource limit is reached; inspect lifetime and count as well as the failing filename.",
+        "prompt": "Run python3 linux_fd_drill.py in an existing Linux/WSL distribution. Explain why freeing disk space would not fix this injected failure and why successful reopening after cleanup matters.",
         "checks": [
-          "Connect accumulated unclosed handles to eventual resource-limit failure.",
-          "Inspect handle counts and closure paths before blaming the failing file contents."
+          "The child catches EMFILE and restores its descriptor count to the baseline.",
+          "A fresh open succeeds after closing handles; no shell or parent limit was changed."
         ],
+        "solution": "The failure concerns process handles, not allocated disk blocks. Recovery after close demonstrates that releasing the exhausted resource restores service. The exact count depends on inherited handles, so the checks compare before/after and the errno rather than hardcoding how many opens must succeed.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -834,6 +843,13 @@
           "section": "Open file descriptions",
           "reviewed": "2026-09-30",
           "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+        },
+        {
+          "title": "Python Unix resource limits",
+          "url": "https://docs.python.org/3/library/resource.html",
+          "section": "RLIMIT_NOFILE and setrlimit",
+          "reviewed": "2026-10-02",
+          "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
         }
       ]
     },
@@ -1288,15 +1304,24 @@
           "paragraphs": [
             "A simulation trains reasoning but is not a real Linux incident investigation. Production diagnosis needs authorization, change records and safe evidence handling. The reference never reads arbitrary system files or changes permissions."
           ]
+        },
+        {
+          "title": "Use errno to choose the next observation",
+          "paragraphs": [
+            "Consider an importer that opens its first 29 files and then cannot open another. The pathname exists and permissions are unchanged. If the captured errno is EMFILE, changing ownership is unrelated; compare descriptor growth and look for missing closure on an exception path. If the same failure is ENOENT, inspect the absolute path and working directory instead. The user-visible phrase cannot open file is not enough to select a repair.",
+            "A minimal incident record keeps operation, errno, process identity and resource count with the timestamp. Avoid logging file contents to diagnose a resource boundary. Repeat one bounded operation after releasing the suspected handles, and verify the same process recovers. Restart can clear symptoms while hiding the leak; a regression test must also check cleanup on failed work."
+          ],
+          "example": "same symptom: cannot open input\nENOENT -> resolve path/cwd\nEACCES -> identity and parent traversal\nEMFILE -> owned descriptor counts/lifetimes\nvalid open + ValueError -> schema/content category",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Create a decision table separating FileNotFoundError, PermissionError, TimeoutExpired and ValueError. Give each a next observation.",
-        "solution": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix.",
+        "prompt": "The child descriptor drill fails with EMFILE, then succeeds after cleanup. An importer instead opens the file and rejects an amount. Give one discriminating observation and targeted fix for each.",
         "checks": [
-          "Map missing-file and permission errors to path/cwd and identity/parent-access observations respectively.",
-          "Map timeout and validation errors to process/deadline and schema/rejected-row observations respectively."
+          "Use errno plus before/after descriptor counts for the open failure.",
+          "Use the validation field/category after a successful open for the rejected amount; permission changes are not the fix."
         ],
+        "solution": "For EMFILE, inspect resource lifetimes and close handles on all paths; prove recovery with a bounded reopen and count comparison. For the amount error, inspect schema and validation rules using a synthetic rejected value. The successful open already crossed the filesystem-access boundary; changing permissions would not validate the amount.",
         "solutionFormat": "prose"
       },
       "quiz": {
@@ -1433,7 +1458,7 @@
     },
     {
       "id": "advanced",
-      "title": "Advanced practice",
+      "title": "Applied extension",
       "description": "Diagnose a failure and distinguish modeled results from Linux observations.",
       "exitCriteria": [
         "Record symptom, timeline, hypothesis, exact observation and minimal fix.",
@@ -1465,7 +1490,9 @@
     "practice/README.md",
     "practice/diagnostic_lab.py",
     "practice/test_os_labs.py",
-    "practice/linux-observation.md"
+    "practice/linux-observation.md",
+    "practice/linux_fd_drill.py",
+    "practice/mechanism-lab.md"
   ],
   "downloads": [
     {

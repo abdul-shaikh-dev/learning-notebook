@@ -13,3 +13,11 @@ Manual verification: check that each worksheet is readable, fill in one fictiona
 Open `lab.html` in a browser with `lab.js`, `lab-model.js` and `lab.css` beside it. No installation, account or external service is required. Use the five activity buttons for capacity planning, a keyboard-accessible task board, a habit experiment, a recall card and a conversation scenario.
 
 These are educational models: the capacity sketch does not schedule overlapping appointments; a chosen review date does not create a reminder; a conversation opening cannot guarantee agreement. All entries stay in page memory and reload clears them. Use **Export my practice** to keep a JSON copy privately; no import or automatic sync is provided. The notebook backlink works in the hosted site; from an extracted kit it may not resolve, and you can return to the notebook using your own bookmark.
+
+## Optional connected case
+
+These lessons follow one evolving situation. Read the worked case first; try a changed case aloud or in your own tools when useful. No extra worksheet or written submission is required. These fictional cases provide reasoning practice, not a validated assessment.
+
+- **9. Paraphrase and invite correction** (`paraphrase`): A short roleplay with a correction.
+- **16. Compare options with agreed criteria** (`negotiate-options`): Compare options after the first proposal fails.
+- **17. Repair a specific communication mistake** (`repair`): Repair the statement and its practical effect.

@@ -57,3 +57,9 @@ For optional live positive/negative checks of NetworkPolicy, HPA and PVC, follow
 Stop port-forward with Ctrl+C. After preserving needed evidence/data, `./lab.ps1 -Action Cleanup` deletes only the marked notebook-lab namespace in the verified local context. Namespace deletion also removes claims and can destroy their local data; decide before invoking. The cluster itself is retained. To remove the dedicated cluster later, explicitly review `kind delete cluster --name notebook-lab`; it destroys local cluster state.
 
 Record API/client/node-image versions, applied/rendered object identities, rollout/probe events, client results and storage contents. Distinguish offline checks, API dry-run and live workload/CNI/storage evidence. Helm/GitOps lessons are render/reconciliation exercises; no chart/controller/CRD is installed by this kit. Production requires real identity, data/backups, network enforcement, telemetry, multiple failure domains, capacity, secure updates and a rehearsed recovery plan.
+
+## Optional mechanism extension
+
+See [mechanism-lab.md](mechanism-lab.md) for `readiness_drill.py`: PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script.
+
+Requirements: Python 3.11+, kubectl, and the existing disposable kind-notebook-lab from README.md with two Ready release-demo Pods.
