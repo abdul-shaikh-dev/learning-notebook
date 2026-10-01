@@ -3,48 +3,128 @@ body>header .theme-toggle,.theme-toggle{min-height:44px;padding:8px 12px;border:
 body>header .theme-toggle{margin-left:auto}
 .theme-toggle[aria-pressed=true]{background:#284537;color:#e4f2e8!important}
 @media(max-width:700px){body>header .theme-toggle{padding:8px;font-size:12px}body>header .brand{font-size:20px}}
+/* Restrained charcoal surfaces keep green for actions and learning states. */
+html[data-theme=dark]{
+ --night-bg:#111517;
+ --night-surface:#191e21;
+ --night-raised:#252c30;
+ --night-hover:#303a3f;
+ --night-line:#3b464c;
+ --night-text:#dce3e6;
+ --night-muted:#aab6bd;
+ --night-accent:#a8ceb5;
+}
 @media screen{
- html[data-theme=dark]{color-scheme:dark;background:#121e1a}
- html[data-theme=dark] body{--ink:#e4eee7;--navy:#254a3a;--muted:#b1c4b9;--teal:#8ed7b5;--mint:#284537;--blue:#9acbf7;--line:#425a4e;--paper:#121e1a;--white:#1b2c24;--amber:#f0c67e;--library-muted:#b1c4b9;--library-line:#425a4e;background:#121e1a;color:#e4eee7}
- html[data-theme=dark] body>header,html[data-theme=dark] .finance-course main{background:#17271f;color:#e4eee7;border-color:#425a4e}
- html[data-theme=dark] :is(h1,h2,h3,h4,.brand,.catalog .library-hero h1 em,.catalog .atlas-open-page h2 em){color:#e4eee7}
- html[data-theme=dark] :is(.intro,.muted,.header-note,footer,.library-summary,.atlas-next,.node-meta,.node-open,.branch-heading p,.map-guidance,.course-label,.finance-sidebar-heading div>span){color:#b1c4b9!important}
- html[data-theme=dark] a{color:#9acbf7}
- html[data-theme=dark] :is(.card,.course-module,.path-card,.task-kit,.concept-diagram,.visual-explorer,.quiz,details,.atlas-itinerary,.roadmap-legend,.atlas-open-page,.atlas-page-tab,.takeaway,.lesson-references,.worked-example,.result,.backup-panel,.pwa-card,.pwa-course-card){background:#1b2c24;color:#e4eee7;border-color:#425a4e}
- html[data-theme=dark] :is(.catalog .branch-stop .map-node,.catalog .resume-card,.finance-course aside,.finance-course .course-tools,.catalog .course-tools,.library-view-switch){background:#1b2c24;color:#e4eee7;border-color:#425a4e;box-shadow:none}
- html[data-theme=dark] :is(.catalog .resume-card p,.catalog .resume-card small,.finance-sidebar-heading strong,.catalog .atlas-open-page>a,.finance-course #nav a,.finance-course .study-tools>summary,.finance-course .study-tools .file-link){color:#d8e9df}
+ html[data-theme=dark]{color-scheme:dark;background:var(--night-bg)}
+ html[data-theme=dark] body{--ink:var(--night-text);--navy:var(--night-raised);--muted:var(--night-muted);--teal:var(--night-accent);--mint:var(--night-raised);--blue:#a9c9e0;--line:var(--night-line);--paper:var(--night-bg);--white:var(--night-surface);--amber:#f0c67e;--library-muted:var(--night-muted);--library-line:var(--night-line);background:var(--night-bg);color:var(--night-text)}
+ html[data-theme=dark] body>header,html[data-theme=dark] .finance-course main{background:var(--night-bg);color:var(--night-text);border-color:var(--night-line)}
+ html[data-theme=dark] :is(h1,h2,h3,h4,.brand,.catalog .library-hero h1 em,.catalog .atlas-open-page h2 em){color:var(--night-text)}
+ html[data-theme=dark] :is(.intro,.muted,.header-note,footer,.library-summary,.atlas-next,.node-meta,.node-open,.branch-heading p,.map-guidance,.course-label,.finance-sidebar-heading div>span){color:var(--night-muted)!important}
+ html[data-theme=dark] a{color:#a9c9e0}
+ html[data-theme=dark] :is(.card,.course-module,.path-card,.task-kit,.concept-diagram,.visual-explorer,.quiz,details,.atlas-itinerary,.roadmap-legend,.atlas-open-page,.atlas-page-tab,.takeaway,.lesson-references,.worked-example,.result,.backup-panel,.pwa-card,.pwa-course-card){background:var(--night-surface);color:var(--night-text);border-color:var(--night-line)}
+ html[data-theme=dark] :is(.catalog .branch-stop .map-node,.catalog .resume-card,.finance-course aside,.finance-course .course-tools,.catalog .course-tools,.library-view-switch){background:var(--night-surface);color:var(--night-text);border-color:var(--night-line);box-shadow:none}
+ html[data-theme=dark] :is(.catalog .resume-card p,.catalog .resume-card small,.finance-sidebar-heading strong,.catalog .atlas-open-page>a,.finance-course #nav a,.finance-course .study-tools>summary,.finance-course .study-tools .file-link){color:var(--night-text)}
  html[data-theme=dark] :is(.catalog .course-tools,.catalog .walkthrough-reading,.reading-status){background:transparent}
- html[data-theme=dark] :is(input,select,textarea){background:#15231c;color:#e4eee7;border-color:#6f8b7b}
- html[data-theme=dark] input::placeholder{color:#acbfb3!important}
- html[data-theme=dark] :is(button,.download-action,.course-tools>a,.notebook-nav>a,.task-tabs>a,.resume-card>a,.file-role,.badge,.subject-symbol){background:#284537!important;color:#e4eee7!important;border-color:#597464!important}
- html[data-theme=dark] :is(button:hover,.download-action:hover,.course-tools>a:hover,.task-tabs>a:hover,.catalog .branch-stop .map-node:hover){background:#345943!important}
- html[data-theme=dark] :is(.primary,.library-search-link,.finance-course .continue a){background:#addbbd!important;color:#12251a!important}
- html[data-theme=dark] :is([aria-current=page],button[aria-pressed=true]){outline:1px solid #a5d9b7}
+ html[data-theme=dark] :is(input,select,textarea){background:var(--night-bg);color:var(--night-text);border-color:#69767e}
+ html[data-theme=dark] input::placeholder{color:var(--night-muted)!important}
+ html[data-theme=dark] :is(button,.download-action,.course-tools>a,.notebook-nav>a,.task-tabs>a,.resume-card>a,.file-role,.badge,.subject-symbol){background:var(--night-raised)!important;color:var(--night-text)!important;border-color:var(--night-line)!important}
+ html[data-theme=dark] :is(button:hover,.download-action:hover,.course-tools>a:hover,.task-tabs>a:hover,.catalog .branch-stop .map-node:hover){background:var(--night-hover)!important}
+ html[data-theme=dark] :is(.primary,.library-search-link,.finance-course .continue a){background:var(--night-accent)!important;color:#15251c!important}
+ html[data-theme=dark] :is([aria-current=page],button[aria-pressed=true]){outline:1px solid var(--night-accent)}
  html[data-theme=dark] :focus-visible{outline:3px solid #f0c67e!important;outline-offset:3px}
- html[data-theme=dark] :is(th,td,li,.branch-section,.finance-sidebar-heading){border-color:#425a4e}
- html[data-theme=dark] :is(th,tr:nth-child(even)){background:#20372b}
- html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog,.mermaid-dialog-header){background:#17271f;color:#e4eee7}
- html[data-theme=dark] .mermaid-view svg .node :is(rect,polygon,path),html[data-theme=dark] .mermaid-dialog svg .node :is(rect,polygon,path){fill:#284537!important;stroke:#91b9a1!important}
- html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(text,.nodeLabel,.edgeLabel){fill:#e4eee7!important;color:#e4eee7!important}
- html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel rect{fill:#17271f!important}
- html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(.flowchart-link,.messageLine0,.messageLine1){stroke:#91b9a1!important}
- html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg marker path{fill:#91b9a1!important;stroke:#91b9a1!important}
- /* Illustrated exercises retain their authored semantic colours on a light canvas. */
- html[data-theme=dark] :is(.visual-frame,.visual-diagram,.scene-stage){background:#f3f6f3;color:#183731}
- html[data-theme=dark] :is(.visual-frame,.visual-diagram,.scene-stage) :is(h2,h3,h4,p){color:#183731}
+ html[data-theme=dark] :is(th,td,li,.branch-section,.finance-sidebar-heading){border-color:var(--night-line)}
+ html[data-theme=dark] :is(th,tr:nth-child(even)){background:var(--night-raised)}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog,.mermaid-dialog-header){background:var(--night-bg);color:var(--night-text)}
+ html[data-theme=dark] .mermaid-view svg .node :is(rect,polygon,path),html[data-theme=dark] .mermaid-dialog svg .node :is(rect,polygon,path){fill:var(--night-raised)!important;stroke:#8dada1!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(text,.nodeLabel,.edgeLabel){fill:var(--night-text)!important;color:var(--night-text)!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel rect{fill:var(--night-bg)!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg :is(.flowchart-link,.messageLine0,.messageLine1){stroke:#8dada1!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg marker path{fill:#8dada1!important;stroke:#8dada1!important}
  html[data-theme=dark] .code-panel button{background:transparent!important;color:#edf5ef!important}
  html[data-theme=dark] .code-panel button:hover{background:#365c4d!important}
 }
 @media print{.theme-toggle{display:none!important}html{color-scheme:light}}
 
 @media screen{
- html[data-theme=dark] :is(#learning-map,.branch-section,.independent-paths,.pwa-install,.preview-record,.preview-cycle span,.preview-vocabulary li){background:#1b2c24!important;color:#e4eee7!important;border-color:#425a4e!important}
- html[data-theme=dark] :is(input,select,textarea){background:#15231c!important;color:#e4eee7!important;border-color:#6f8b7b!important}
- html[data-theme=dark] :is(.takeaway,.atlas-lesson-rail summary,.atlas-category,.atlas-itinerary-title,.atlas-itinerary small,.atlas-itinerary strong,.library-filter p,.library-filter label,.map-node strong,.pwa-install p,.pwa-course-actions a,.pwa-offline-notes a){color:#d8e9df!important}
+ html[data-theme=dark] :is(#learning-map,.branch-section,.independent-paths,.pwa-install,.preview-record,.preview-cycle span,.preview-vocabulary li){background:var(--night-surface)!important;color:var(--night-text)!important;border-color:var(--night-line)!important}
+ html[data-theme=dark] :is(input,select,textarea){background:var(--night-bg)!important;color:var(--night-text)!important;border-color:#69767e!important}
+ html[data-theme=dark] :is(.takeaway,.atlas-lesson-rail summary,.atlas-category,.atlas-itinerary-title,.atlas-itinerary small,.atlas-itinerary strong,.library-filter p,.library-filter label,.map-node strong,.pwa-install p,.pwa-course-actions a,.pwa-offline-notes a){color:var(--night-text)!important}
  html[data-theme=dark] .atlas-lesson-rail details{background:transparent}
  html[data-theme=dark] .atlas-lesson-rail button{background:transparent!important}
- html[data-theme=dark] .atlas-lesson-rail button:hover{background:#284537!important}
- html[data-theme=dark] .branch-connectors path{stroke:#8ab39a}
+ html[data-theme=dark] .atlas-lesson-rail button:hover{background:var(--night-raised)!important}
+ html[data-theme=dark] .branch-connectors path{stroke:#788e84}
  html[data-theme=dark] .catalog .takeaway{background:transparent}
 }
-@media screen{html[data-theme=dark] :is(.continue,.finance-sidebar-icon,.mark){background:#284537!important;color:#e4eee7!important}html[data-theme=dark] :is(.mermaid-hint,.mermaid-status,.catalog-return,.course-current,.finance-course .continue p,.finance-course .continue .eyebrow){color:#b1c4b9!important}html[data-theme=dark] .finance-course main>p a{background:transparent;color:#9acbf7}html[data-theme=dark] input[type=file]::file-selector-button{background:#284537;color:#e4eee7}}
+@media screen{html[data-theme=dark] :is(.continue,.finance-sidebar-icon,.mark){background:var(--night-raised)!important;color:var(--night-text)!important}html[data-theme=dark] :is(.mermaid-hint,.mermaid-status,.catalog-return,.course-current,.finance-course .continue p,.finance-course .continue .eyebrow){color:var(--night-muted)!important}html[data-theme=dark] .finance-course main>p a{background:transparent;color:#a9c9e0}html[data-theme=dark] input[type=file]::file-selector-button{background:var(--night-raised);color:var(--night-text)}}
+
+body>header .theme-toggle,.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;padding:10px;flex-shrink:0}
+.theme-toggle svg{display:block;pointer-events:none}
+.theme-toggle .theme-sun{display:none}
+html[data-theme=dark] .theme-toggle .theme-moon{display:none}
+html[data-theme=dark] .theme-toggle .theme-sun{display:block}
+
+@media screen{
+ html[data-theme=dark] body>header{background:#14191c;border-bottom-color:#2c353a}
+ html[data-theme=dark] :is(h1,h2,h3,h4,.brand){color:#f1f4f2}
+ html[data-theme=dark] :is(.catalog .resume-card,.catalog .branch-stop .map-node){background:var(--night-raised);border-color:var(--night-line)}
+ html[data-theme=dark] :is(.catalog .resume-card,.catalog .branch-stop .map-node):hover{border-color:#6b8176}
+ html[data-theme=dark] :is(.catalog .library-explorer,.catalog .course-tools,.catalog .takeaway,.finance-sidebar-heading){border-color:var(--night-line)}
+ html[data-theme=dark] :is(.catalog .roadmap-legend,.catalog .branch-section,.independent-paths){background:var(--night-surface)!important}
+ html[data-theme=dark] .catalog .roadmap-legend{color:var(--night-muted)!important;border-bottom:1px solid #30393e}
+ html[data-theme=dark] .catalog .resume-card a{background:#283e33!important;color:#c1dfcc!important;border-color:#496656!important}
+ html[data-theme=dark] :is(.notebook-nav>a,.course-tools>a,.theme-toggle){background:transparent!important;border-color:transparent!important;color:var(--night-muted)!important}
+ html[data-theme=dark] :is(.notebook-nav>a,.course-tools>a,.theme-toggle):hover{background:var(--night-raised)!important;color:#f1f4f2!important}
+ html[data-theme=dark] .theme-toggle[aria-pressed=true]{outline:0;color:#dac28b!important}
+ html[data-theme=dark] .library-view-switch{padding:3px;background:var(--night-bg)}
+ html[data-theme=dark] .library-view-switch button{background:transparent!important;border-color:transparent!important;color:var(--night-muted)!important}
+ html[data-theme=dark] .library-view-switch button[aria-pressed=true]{background:var(--night-raised)!important;color:#f1f4f2!important;outline:1px solid #56666e}
+ html[data-theme=dark] .finance-course #nav a[aria-current=page]{background:#263d31;color:#c1dfcc;outline:1px solid #496656}
+ html[data-theme=dark] .subject-symbol{background:#283a32!important;color:#b7d6c3!important}
+ html[data-theme=dark] .map-node[data-subject=dotnet] .subject-symbol,html[data-theme=dark] .map-node[data-subject=ai-agents] .subject-symbol{background:#373044!important;color:#d1bee5!important}
+ html[data-theme=dark] .map-node[data-subject=react] .subject-symbol,html[data-theme=dark] .map-node[data-subject=sql-server] .subject-symbol{background:#273946!important;color:#b0cfe5!important}
+ html[data-theme=dark] .map-node[data-subject=financial-foundations] .subject-symbol{background:#3b3528!important;color:#e2ca99!important}
+ html[data-theme=dark] .node-progress{background:#414d54}
+ html[data-theme=dark] .node-progress>span{background:#8bb69d}
+ html[data-theme=dark] .code-panel{background:#101417;border:1px solid #39464d}
+ html[data-theme=dark] .code-panel-header{background:#21292e;border-color:#39464d}
+ html[data-theme=dark] body .code-panel pre{background:#101417!important;color:#dce3e6!important}
+ html[data-theme=dark] .code-language{color:#abd3bb}
+ html[data-theme=dark] .code-copy-status{color:var(--night-muted)}
+ html[data-theme=dark] .hljs-comment{color:#a1b0b8}
+ html[data-theme=dark] .mermaid-view{border:1px solid #303b42}
+ html[data-theme=dark] .mermaid-view .mermaid-current :is(rect,polygon,path){fill:#294536!important;stroke:#b4dbc2!important}
+ html[data-theme=dark] .mermaid-view .mermaid-edge-current{stroke:#b4dbc2!important}
+ html[data-theme=dark] .mermaid-dialog::backdrop{background:#080b0dcc}
+ html[data-theme=dark] ::selection{background:#395547;color:#fff}
+ html[data-theme=dark] input:focus-visible{border-color:#a8ceb5!important}
+ html[data-theme=dark] :is(button,.download-action):disabled{opacity:.5;cursor:not-allowed}
+}
+@media screen{html[data-theme=dark] button.option.correct{background:#244535!important;color:#d0ebda!important;border-color:#82b695!important}html[data-theme=dark] button.option.wrong{background:#482c2d!important;color:#f3cdca!important;border-color:#c98f88!important}}
+
+/* Shared reading templates, including content below the first viewport. */
+@media screen{
+ html[data-theme=dark] :is(.curriculum-stage,.coding-exercise,.learning-trace,.trace-items>span,.course-current,.atlas-station,.atlas-course-icon,.preview-array span,.stage-project,.worked-prose,.folder-tree){background:var(--night-surface)!important;color:var(--night-text)!important;border-color:var(--night-line)!important}
+ html[data-theme=dark] .catalog .lesson-list a{background:var(--night-raised)!important;color:#c7dce9!important;border-color:var(--night-line)!important}
+ html[data-theme=dark] .catalog .lesson-list a:hover{background:var(--night-hover)!important}
+ html[data-theme=dark] main :is(p,li,dd,td)>a:not(.primary):not(.download-action){background:transparent!important;color:#a9c9e0!important}
+ html[data-theme=dark] :is(.primary,.library-search-link,.finance-course .continue a){background:#2c503c!important;color:#e6f3eb!important;border:1px solid #59866b!important}
+ html[data-theme=dark] :is(.primary,.library-search-link,.finance-course .continue a):hover{background:#37634b!important}
+ html[data-theme=dark] :is(.pwa-connection,.pwa-saved){color:#abd3bb!important}
+ html[data-theme=dark] :is(.pwa-outdated,.pwa-connection.is-offline){color:#e3c38d!important}
+ html[data-theme=dark] :is(.pwa-error,.watch){background:#3b3024!important;color:#ead3ae!important;border-color:#9e8157!important}
+ html[data-theme=dark] :is(.watch h3,.watch strong){color:#f0d9b4!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel,html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel *{background:var(--night-bg)!important;color:var(--night-text)!important}
+ html[data-theme=dark] :is(.mermaid-view,.mermaid-dialog) svg .edgeLabel rect{fill:var(--night-bg)!important}
+ html[data-theme=dark] .mermaid-view svg .actor{fill:var(--night-raised)!important;stroke:#8dada1!important}
+ html[data-theme=dark] progress{background:#3b464c;color:#83b294;border-radius:4px}
+ html[data-theme=dark] progress::-webkit-progress-bar{background:#3b464c;border-radius:4px}
+ html[data-theme=dark] progress::-webkit-progress-value{background:#83b294;border-radius:4px}
+ html[data-theme=dark] progress::-moz-progress-bar{background:#83b294;border-radius:4px}
+}
+
+@media screen{
+ html[data-theme=dark] .eyebrow{color:var(--night-accent)!important}
+ html[data-theme=dark] :is(.library-footer-tools p,main small){color:var(--night-muted)!important}
+ html[data-theme=dark] :is(.course-tools a,.task-tabs a){background:var(--night-raised)!important;color:#a9c9e0!important;border-color:var(--night-line)!important}
+ html[data-theme=dark] :not(pre)>code{background:var(--night-raised)!important;color:#e2d4b3!important}
+}

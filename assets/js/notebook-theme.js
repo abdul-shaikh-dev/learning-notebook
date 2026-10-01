@@ -9,7 +9,7 @@
  function apply(){
   const dark=(preference|| (media.matches?'dark':'light'))==='dark';
   root.dataset.theme=dark?'dark':'light';
-  document.querySelectorAll('[data-theme-toggle]').forEach(button=>button.setAttribute('aria-pressed',String(dark)));
+  document.querySelectorAll('[data-theme-toggle]').forEach(button=>{button.setAttribute('aria-pressed',String(dark));button.setAttribute('title',dark?'Switch to light mode':'Switch to dark mode');});
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#121e1a':'#17392f');
  }
  apply();

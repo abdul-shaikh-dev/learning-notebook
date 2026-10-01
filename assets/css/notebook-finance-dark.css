@@ -1,0 +1,203 @@
+/* Finance teaching components share the notebook's dark palette. Keep print unchanged. */
+@media screen {
+  html[data-theme=dark] :is(.finance-course,.handbook) {
+    --finance-good-bg:#233c30;
+    --finance-good:#b9dfc5;
+    --finance-good-line:#648b73;
+    --finance-warn-bg:#3c3324;
+    --finance-warn:#efd09a;
+    --finance-warn-line:#a68b57;
+    --finance-bad-bg:#422b2d;
+    --finance-bad:#f1bcb8;
+    --finance-bad-line:#b47b78;
+    --finance-info-bg:#243541;
+    --finance-info:#b8d4e8;
+  }
+
+  html[data-theme=dark] .finance-course :is(.finance-nav-group p,.finance-start p,.finance-sidebar-heading div>span,.intro,.coverage-row span,.diagram-caption,.diagram-foot,.diagram-arrow,.diagram-node span) {
+    color:var(--night-muted);
+  }
+  html[data-theme=dark] .finance-course :is(.finance-start,.finance-start::before) {
+    background:var(--night-raised);
+    color:var(--night-text);
+  }
+  html[data-theme=dark] .finance-course .finance-start a {
+    color:var(--night-accent);
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] .finance-course :is(.study-tools,.course-menu,.finance-sidebar-heading) {
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] .finance-course :is(#nav a:hover,.study-tools .file-link:hover,aside .catalog-return:hover,aside .catalog-return:focus-visible,aside .file-link:focus-visible) {
+    background:var(--night-hover);
+    color:var(--night-text);
+  }
+  html[data-theme=dark] .finance-course :is(.welcome-diagram,.story-tabs,.price-control,.node-explanation,.journey-lineage,.journey-check) {
+    background:var(--night-surface);
+    color:var(--night-text);
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] .finance-course .diagram-node {
+    background:var(--night-raised);
+    color:var(--night-text);
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] .finance-course .diagram-node.emphasis {
+    background:var(--finance-good-bg);
+    color:var(--finance-good);
+    border-color:var(--finance-good-line);
+  }
+  html[data-theme=dark] .finance-course .diagram-node.emphasis span {
+    color:var(--finance-good);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(.example,.result,.diagram-explanation) {
+    background:var(--night-surface);
+    color:var(--night-text);
+    border:1px solid var(--night-line);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(.example h2,.example h3,.result h3,.diagram-explanation .eyebrow) {
+    color:var(--night-accent);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(code,.example code) {
+    background:var(--night-raised);
+    color:var(--finance-info);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) .example pre {
+    color:var(--night-text);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(.beginner-words,.worked-example,.finance-task-resources,.flow a,.empty,.story-stage,table) {
+    background:var(--night-surface);
+    color:var(--night-text);
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(th,tr:nth-child(even)) {
+    background:var(--night-raised);
+    color:var(--night-text);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(th,td,.metric-row) {
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(.result small,.result .muted) {
+    color:var(--night-muted);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(.watch,.watch strong) {
+    background:var(--finance-warn-bg);
+    color:var(--finance-warn);
+    border-color:var(--finance-warn-line);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) .error {
+    background:var(--finance-bad-bg);
+    color:var(--finance-bad);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) .secondary {
+    background:var(--finance-good-bg);
+    color:var(--finance-good);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(p a,li a,.sources-inline a) {
+    background:var(--night-raised);
+    color:var(--finance-info);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) :is(p a:hover,li a:hover,.sources-inline a:hover) {
+    background:var(--night-hover);
+  }
+  html[data-theme=dark] .finance-course .lesson-list a {
+    background:transparent;
+    color:var(--night-text);
+  }
+  html[data-theme=dark] .finance-course :is(.coverage-row a,.welcome-actions>a:not(.primary),.story-next a,.back-link,.journey-entry) {
+    color:var(--finance-info);
+  }
+  html[data-theme=dark] .finance-course :is(.coverage-row a:hover,.welcome-actions>a:not(.primary):hover,.story-next a:hover,.back-link:hover) {
+    background:var(--night-hover);
+    color:var(--finance-info);
+  }
+
+  /* Selected controls remain distinguishable from unselected buttons. */
+  html[data-theme=dark] .finance-course :is(.story-tabs a,.journey-steps a) {
+    background:var(--night-raised);
+    color:var(--night-text);
+  }
+  html[data-theme=dark] .finance-course :is(.story-tabs a[aria-current=page],.journey-steps a[aria-current=step],.tabs button[aria-pressed=true],.trade-timeline button[aria-pressed=true],.book-map button[aria-pressed=true],.stage-nav button.active) {
+    background:var(--finance-good-bg)!important;
+    color:var(--finance-good)!important;
+    border-color:var(--finance-good-line)!important;
+  }
+  html[data-theme=dark] .finance-course :is(.story-tabs a:hover,.journey-steps a:hover) {
+    box-shadow:inset 0 0 0 1px var(--night-accent);
+  }
+  html[data-theme=dark] .finance-course :is(.story-context,.position-workbench p,.price-slider,.story-ledger dt,.story-ledger small,.pnl-bar-row>div:first-child span,.bridge-flow span,.book-map>span,.book-map button small,.journey-context span,.journey-bridge small,.journey-report dt,.sold-securities p) {
+    color:var(--night-muted);
+  }
+  html[data-theme=dark] .finance-course .book-map button[aria-pressed=true] small {
+    color:var(--finance-good);
+  }
+  html[data-theme=dark] .finance-course :is(.price-control output,.journey-io h3,.journey-io>span,.journey-lineage>span) {
+    color:var(--finance-info);
+  }
+  html[data-theme=dark] .finance-course :is(.story-stage input[type=range],.same-source-toggle input,.study-tools progress) {
+    accent-color:var(--night-accent);
+  }
+  html[data-theme=dark] .finance-course :is(.visual-lesson-link,.prudential .bridge-result) {
+    background:var(--finance-info-bg);
+    color:var(--finance-info);
+    border-color:#5f829a;
+  }
+  html[data-theme=dark] .finance-course .visual-lesson-link small {
+    color:var(--finance-info);
+  }
+  html[data-theme=dark] .finance-course .visual-lesson-link:hover {
+    background:var(--night-hover);
+  }
+  html[data-theme=dark] .finance-course :is(.bridge-result,.journey-status.resolved,.share-certificate) {
+    background:var(--finance-good-bg);
+    color:var(--finance-good);
+    border-color:var(--finance-good-line);
+    outline-color:var(--finance-good-line);
+  }
+  html[data-theme=dark] .finance-course .bridge-result span {
+    color:inherit;
+  }
+  html[data-theme=dark] .finance-course :is(.share-certificate.is-sold,.journey-status.unresolved) {
+    background:var(--finance-warn-bg);
+    color:var(--finance-warn);
+    border-color:var(--finance-warn-line);
+    outline-color:var(--finance-warn-line);
+  }
+  html[data-theme=dark] .finance-course .share-certificate small {
+    color:inherit;
+  }
+  html[data-theme=dark] .finance-course .share-token {
+    background:var(--finance-good-bg);
+    color:var(--finance-good);
+  }
+  html[data-theme=dark] .finance-course .share-token.sold {
+    background:var(--night-raised);
+    color:var(--night-muted);
+    border-color:var(--night-muted);
+  }
+  html[data-theme=dark] .finance-course .pnl-bar-track {
+    background:var(--night-raised);
+  }
+  html[data-theme=dark] .finance-course .zero-line {
+    background:var(--night-muted);
+  }
+  html[data-theme=dark] .finance-course :is(.pnl-bar,.bar,.context-dot) {
+    background:#8bb69d;
+  }
+  html[data-theme=dark] .finance-course .pnl-bar.negative {
+    background:#d89089;
+  }
+  html[data-theme=dark] .finance-course .positive-text {
+    color:var(--finance-good);
+  }
+  html[data-theme=dark] .finance-course .negative-text {
+    color:var(--finance-bad);
+  }
+  html[data-theme=dark] .finance-course :is(.journey-context,.journey-io,.journey-scenario,.journey-report,.journey-entry,.journey-steps a span,.sold-securities) {
+    border-color:var(--night-line);
+  }
+  html[data-theme=dark] :is(.finance-course,.handbook) .diagram-edges li.is-current {
+    background:var(--finance-info-bg);
+    color:var(--finance-info);
+  }
+}
