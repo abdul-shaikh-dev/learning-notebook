@@ -405,7 +405,7 @@
       {
         "id": "n3",
         "label": "Cancellation cleanup",
-        "description": "The cancelled child’s finally appends released exactly once before cancellation propagates."
+        "description": "The cancelled child's finally appends released exactly once before cancellation propagates."
       },
       {
         "id": "n4",
@@ -420,7 +420,7 @@
       {
         "id": "n6",
         "label": "Success cleanup",
-        "description": "The successful child’s finally also appends released exactly once."
+        "description": "The successful child's finally also appends released exactly once."
       },
       {
         "id": "n7",

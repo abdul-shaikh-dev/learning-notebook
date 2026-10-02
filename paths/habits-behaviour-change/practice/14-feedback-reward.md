@@ -36,7 +36,7 @@ Immediate consequence: she sees the keys in the bowl and can retrieve them. Long
 
 - Immediate consequence and longer-term outcome differ.
 - No unsupported brain mechanism is asserted.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

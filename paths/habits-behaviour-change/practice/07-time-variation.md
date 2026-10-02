@@ -36,7 +36,7 @@ Needing deliberate effort at day 21 does not demonstrate failure. Dev checks whe
 
 - Study estimates are described as variable rather than a deadline.
 - The next review checks cue and practical fit.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

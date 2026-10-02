@@ -110,7 +110,7 @@
   },
   "topological": {
     "title": "Dependencies and ready vertices",
-    "summary": "A dependency edge means its source must precede its target. Kahn’s algorithm removes dependencies and rejects a cycle when not all vertices are emitted.",
+    "summary": "A dependency edge means its source must precede its target. Kahn's algorithm removes dependencies and rejects a cycle when not all vertices are emitted.",
     "nodes": [
       {
         "id": "n0",

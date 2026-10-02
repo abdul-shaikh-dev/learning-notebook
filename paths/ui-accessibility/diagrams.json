@@ -1,7 +1,7 @@
 {
   "forms-validation": {
     "title": "Recover from invalid input",
-    "summary": "A one-field form keeps the person\u2019s work and provides a useful correction path.",
+    "summary": "A one-field form keeps the person's work and provides a useful correction path.",
     "nodes": [
       {
         "id": "0",

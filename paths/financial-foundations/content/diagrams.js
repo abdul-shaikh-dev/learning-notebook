@@ -560,7 +560,7 @@ const FINANCE_DIAGRAMS = {
       {
         "id": "sum",
         "label": "Add both present values",
-        "description": "At the example’s 5% rate the sum is $1,000."
+        "description": "At the example's 5% rate the sum is $1,000."
       }
     ],
     "edges": [

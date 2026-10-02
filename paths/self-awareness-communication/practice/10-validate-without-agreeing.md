@@ -36,7 +36,7 @@ I hear that losing the room disrupted your plan. I cannot cancel their booking, 
 
 - The disruption is acknowledged without guessing motives.
 - The limit and available help are explicit.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

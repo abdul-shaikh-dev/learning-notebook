@@ -6,7 +6,7 @@ Run `python -m unittest -v test_advanced_oracles.py` from this directory. The or
 
 Immediately before taking a current minimum distance from the heap, that entry is the cheapest known route through already explored edges. With nonnegative weights, a route through any unprocessed vertex cannot improve a settled minimum: reaching that vertex already costs at least the popped distance, and the remaining edge adds at least zero. A stale heap entry is skipped because a better entry was later inserted.
 
-Trace A→B at 8, A→C at 2, C→B at 1. After A: B=8, C=2. Pop C, improve B to 3. The old B=8 entry remains in the heap but is stale. A plausible wrong algorithm marks B final when first discovered and returns 8. Negative edges break the proof: a later negative edge could improve a settled vertex, so this function rejects them.
+Trace the edges from A to B with cost 8, A to C with cost 2, and C to B with cost 1. After processing A, the best known costs are 8 for B and 2 for C. Pop C and improve the cost for B to 3. The old B=8 entry remains in the heap but is stale. A plausible wrong algorithm marks B final when first discovered and returns 8. Negative edges break the proof: a later negative edge could improve a settled vertex, so this function rejects them.
 
 The independent small-graph oracle repeatedly relaxes every edge up to V−1 times. Its different selection rule helps find bugs that a second copy of the heap algorithm would share. Zero edges, unreachable vertices, competing routes and a negative-edge rejection are included. The bounded cases do not prove correctness for every graph.
 

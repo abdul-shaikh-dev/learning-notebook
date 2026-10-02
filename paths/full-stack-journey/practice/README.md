@@ -49,7 +49,7 @@ clause; two competing version-1 updates cannot both succeed.
 ## Assessment versus supplied code
 
 The working reference covers create, list, completion, validation, stale conflicts,
-request metadata logging and SQL persistence. The workbook asks YOU to add filtering,
+request metadata logging and SQL persistence. The workbook asks you to add filtering,
 verified login/ownership, idempotent create, trace propagation, CI and recovery.
 Those are deliberately separate extensions with acceptance criteria, not features
 claimed by this reference. No cloud account, real identity provider or paid deployment

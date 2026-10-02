@@ -37,7 +37,7 @@ Outcome: less searching before leaving. Controllable action: put keys in the rea
 - State a useful outcome and a controllable action.
 - Record three opportunities with context, completion and constraints.
 - Choose a recognised cue and a useful minimum.
-- Record known facts and uncertainty separately, using the relevant stage measures.
+- Use the measures from this stage to separate known facts from what remains uncertain.
 
 ## Related worksheets
 

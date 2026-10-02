@@ -67,7 +67,7 @@
     {
       "id": "messages-events",
       "title": "1. Messages, commands and events",
-      "takeaway": "Name whether you request work or report a fact.",
+      "takeaway": "Say whether the message requests work or reports a fact.",
       "sections": [
         {
           "title": "Commands, events and completion",
@@ -83,7 +83,7 @@
         }
       ],
       "quiz": {
-        "question": "Name whether you request work or report a fact. Which decision follows?",
+        "question": "Say whether the message requests work or reports a fact. Which decision follows?",
         "options": [
           "Keep accepted, running, completed and failed as separate observable states.",
           "Treat the send operation as proof that the export exists.",
@@ -122,7 +122,7 @@
     {
       "id": "topologies",
       "title": "2. Queue, pub/sub and retained log",
-      "takeaway": "Choose a topology from who must receive the message.",
+      "takeaway": "Choose a topology based on who must receive each message.",
       "sections": [
         {
           "title": "Queues, subscriptions and logs",
@@ -138,7 +138,7 @@
         }
       ],
       "quiz": {
-        "question": "Choose a topology from who must receive the message. Which decision follows?",
+        "question": "Choose a topology based on who must receive each message. Which decision follows?",
         "options": [
           "Use independent subscriptions for independent side effects.",
           "Add an audit consumer to the same work queue and expect every event.",
@@ -247,7 +247,7 @@
     {
       "id": "acceptance",
       "title": "4. Publish confirmation versus completion",
-      "takeaway": "Publisher confirmation and consumer acknowledgement protect different hops.",
+      "takeaway": "Publisher confirmation reports broker acceptance; consumer acknowledgement reports that the consumer finished handling a delivery.",
       "sections": [
         {
           "title": "Publisher confirms and acknowledgements",
@@ -263,7 +263,7 @@
         }
       ],
       "quiz": {
-        "question": "Publisher confirmation and consumer acknowledgement protect different hops. Which decision follows?",
+        "question": "Publisher confirmation reports broker acceptance; consumer acknowledgement reports that the consumer finished handling a delivery. Which decision follows?",
         "options": [
           "Retry uncertain publication with stable identity and durable consumer handling.",
           "Assume a missing confirmation proves the broker did not receive it.",
@@ -477,7 +477,7 @@
           "Name different protections for process restart, host loss and deletion.",
           "Mark replicated broker and backup claims as requiring real experiments."
         ],
-        "solution": "Process restart requires durable local state and broker definitions/messages appropriate to the product. Host loss may additionally require replicated durable storage and a tested failover path. Operator deletion needs separately protected backup/recovery and ownership controls. The local SQLite suite proves none of the broker replication or deletion recovery rows.",
+        "solution": "Process restart requires durable local state and broker definitions/messages appropriate to the product. Host loss may also require replicated durable storage and a tested failover path. Operator deletion needs separately protected backup/recovery and ownership controls. The local SQLite suite does not test broker replication or recovery after deletion.",
         "solutionFormat": "prose"
       }
     },
@@ -709,7 +709,7 @@
           "Separate permanent input failure from transient dependency failure.",
           "Record the exact reference decisions and distinguish classification from scheduling."
         ],
-        "solution": "An invalid required field is permanent for that unchanged payload and should quarantine immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
+        "solution": "An invalid required field will not become valid if the payload stays unchanged. Quarantine the message immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
         "solutionFormat": "prose"
       }
     },
@@ -868,7 +868,7 @@
           "Include all four supported-version combinations.",
           "Show that the supplied strict parser needs an explicit change for optional fields."
         ],
-        "solution": "Test all producer-v1/v2 and consumer-v1/v2 combinations actually supported. Retain job/event identity types. A malformed payload quarantines rather than coercing. The supplied strict v1 parser rejects unknown fields, so adding display_name requires a parser/contract change and tests before its producer is released.",
+        "solution": "Test all producer-v1/v2 and consumer-v1/v2 combinations actually supported. Retain job/event identity types. Quarantine a malformed payload rather than changing its values to make it pass validation. The supplied strict v1 parser rejects unknown fields, so adding display_name requires a parser/contract change and tests before its producer is released.",
         "solutionFormat": "prose"
       }
     },
@@ -979,7 +979,7 @@
     {
       "id": "sagas",
       "title": "17. Distributed workflow and compensation",
-      "takeaway": "A saga coordinates local steps without pretending they are one transaction.",
+      "takeaway": "A saga coordinates local transactions and recovery actions across a workflow.",
       "sections": [
         {
           "title": "Steps and compensation",
@@ -995,7 +995,7 @@
         }
       ],
       "quiz": {
-        "question": "A saga coordinates local steps without pretending they are one transaction. Which decision follows?",
+        "question": "A saga coordinates local transactions and recovery actions across a workflow. Which decision follows?",
         "options": [
           "Track uncertain steps and compensations as durable workflow states.",
           "Treat compensation as an atomic rollback across all services.",
@@ -1137,7 +1137,7 @@
     {
       "id": "failure-tests",
       "title": "20. Failure injection and concurrency evidence",
-      "takeaway": "Make crash windows reproducible and test invariant preservation.",
+      "takeaway": "Reproduce crashes at specific points and check that the required rules still hold.",
       "sections": [
         {
           "title": "Failure injection and durable state",
@@ -1160,7 +1160,7 @@
         }
       ],
       "quiz": {
-        "question": "Make crash windows reproducible and test invariant preservation. Which decision follows?",
+        "question": "Reproduce crashes at specific points and check that the required rules still hold. Which decision follows?",
         "options": [
           "Match each invariant to the actual failure boundary exercised.",
           "Claim replicated broker reliability after a Python unit suite passes.",

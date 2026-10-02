@@ -1,5 +1,5 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const ctx={URL,document:{currentScript:{src:'https://example.test/assets/js/notebook-mermaid.js'}},escapeText:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;')};
+const ctx={URL,document:{currentScript:{src:'https://example.test/assets/js/notebook-mermaid.js'}},escapeText:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll("'",'&#39;').replaceAll('"','&quot;')};
 vm.createContext(ctx);
 for(const f of ['assets/js/notebook-mermaid.js','assets/js/learning-tools.js','paths/financial-foundations/content/diagrams.js','paths/financial-foundations/runtime/diagrams.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
 let alternatives=0;

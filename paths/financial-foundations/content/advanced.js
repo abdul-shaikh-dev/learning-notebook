@@ -74,9 +74,9 @@ const ADVANCED = [
     "title": "Keep the aggregation sequence visible",
     "paragraphs": [
       "First define the valuation exposure and calculate its prudent value under the relevant category method. Map only accounting adjustments that address that same uncertainty at the required calculation level. An unrelated reserve cannot reduce this result. Respect the CET1-impact proportion and non-negative AVA requirements.",
-      "Next calculate the eligible exposure amounts, apply that category’s prescribed aggregation, and combine category results. Credit-spread and investing/funding uncertainty feed the MPU, close-out and model-risk categories as required; do not add them twice. Categories outside the Annex do not receive an automatic 50% discount. A supplied prudent value or expected value is an assumption in these teaching examples, not something the formula itself estimates."
+      "Next calculate the eligible exposure amounts, apply that category's prescribed aggregation, and combine category results. Credit-spread and investing/funding uncertainty feed the MPU, close-out and model-risk categories as required; do not add them twice. Categories outside the Annex do not receive an automatic 50% discount. A supplied prudent value or expected value is an assumption in these teaching examples, not something the formula itself estimates."
     ],
-    "example": "Teaching flow: evidence → exposure/prudent value → eligible same-source booked adjustment → exposure AVA → prescribed category aggregation → category totals → total AVA → CET1 deduction.\nIf two Method-1 exposures produce APVAs of €4k and €3k, their category AVA is €7k. That is still not the bank’s all-category total.",
+    "example": "Teaching flow: evidence → exposure/prudent value → eligible same-source booked adjustment → exposure AVA → prescribed category aggregation → category totals → total AVA → CET1 deduction.\nIf two Method-1 exposures produce APVAs of €4k and €3k, their category AVA is €7k. That is still not the bank's all-category total.",
     "sourceIds": [
       "eu"
     ],

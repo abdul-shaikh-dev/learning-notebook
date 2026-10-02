@@ -2,8 +2,7 @@
 
 Run `python -m unittest -v test_batch_export.py`. Four test methods apply the same success, ownership, validation, stale-version and storage-failure observations to both implementations.
 
-The workflow accepts exact rows `{id, owner, title}`, a trusted actor string, output kind and expected store version. Input A/1/" One " plus A/2/"Café" yields `One
-Café` for lines or `["One", "Café"]` for JSON. One successful batch increments version once and appends count2. A later row belonging to B rejects the entire A batch with no changed snapshot.
+The workflow accepts rows with exactly `id`, `owner` and `title`, a trusted actor string, an output kind and the expected store version. For owner A, use row 1 with title " One " and row 2 with title "Café". The lines format puts `One` and `Café` on separate lines. The JSON format returns `["One", "Café"]`. One successful batch increments the version once and appends a count of 2. A later row belonging to B rejects the entire A batch with no changed snapshot.
 
 Copy the legacy into a new candidate module, change the test import to exercise it and extract one responsibility at a time. The separate reference is a comparison, not the required starting point. No written design template is needed.
 

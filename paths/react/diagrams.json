@@ -1,7 +1,7 @@
 {
   "state": {
     "title": "A click requests the next state snapshot",
-    "summary": "Follow the lesson’s Sessions button from 0 to 1. The connections show event and render dependencies, not an immediate mutation of count.",
+    "summary": "Follow the lesson's Sessions button from 0 to 1. The connections show event and render dependencies, not an immediate mutation of count.",
     "nodes": [
       {
         "id": "snapshot",
@@ -16,7 +16,7 @@
       {
         "id": "queue",
         "label": "Pending functional update",
-        "description": "React queues the updater. The current render’s count binding remains 0."
+        "description": "React queues the updater. The current render's count binding remains 0."
       },
       {
         "id": "next",
@@ -58,7 +58,7 @@
           "snapshot"
         ],
         "activeEdges": [],
-        "explanation": "The displayed count and this render’s count are 0. The handler was created as part of this render."
+        "explanation": "The displayed count and this render's count are 0. The handler was created as part of this render."
       },
       {
         "title": "Handle one click",

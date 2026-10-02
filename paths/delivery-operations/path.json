@@ -465,7 +465,7 @@
         {
           "title": "Configuration and shutdown",
           "paragraphs": [
-            "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label. Validate values before serving. Exec-form CMD makes Python the container process so it receives termination signals. The app responds to SIGTERM by stopping accept/serve work and closing its server; this simple lab does not implement a fully bounded production request-drain protocol."
+            "Build configuration affects produced bytes; runtime configuration supplies deployment values such as bind address and release label. Validate values before serving. Exec-form CMD makes Python the container process so it receives termination signals. On SIGTERM, the app stops accepting and serving work and closes its server. This lab does not implement a production shutdown protocol that bounds the time allowed for in-flight requests."
           ]
         },
         {
@@ -690,7 +690,7 @@
       ],
       "exercise": {
         "prompt": "Identify which job should receive production credentials.",
-        "solution": "Only the reviewed promotion/deployment job, after source and artifact approval, with least privilege. The pull-request test job should have none. Check trigger semantics and environment protection before enabling the template.",
+        "solution": "Only the reviewed promotion or deployment job should receive deployment credentials, after source and artifact approval. Give it only the permissions it needs. The pull-request test job should receive no deployment credentials. Check trigger semantics and environment protection before enabling the template.",
         "checks": [
           "Separate contributor checks from promotion.",
           "Minimize token permissions."
@@ -1076,7 +1076,7 @@
         {
           "title": "The bounded timing helper",
           "paragraphs": [
-            "This helper is a smoke-sized timing exercise with concurrency 1, not a benchmark proving capacity. Record Python/runtime, hardware, warmup, payload and sample count. A p95 from 50 samples describes few tail observations and is unstable; no speed target is guaranteed by the supplied code."
+            "This helper measures a small batch of requests with concurrency 1. It does not establish service capacity. Record Python/runtime, hardware, warmup, payload and sample count. A p95 from 50 samples describes few tail observations and is unstable; no speed target is guaranteed by the supplied code."
           ],
           "example": "python release_tools.py load http://127.0.0.1:8080/version --count 50\nOutput: model, request count, errors, p50_ms, p95_ms\nCompare v1 and v2 under the same synthetic workload."
         }
@@ -1288,7 +1288,7 @@
       ],
       "exercise": {
         "prompt": "Choose one release claim and specify a test result that would disprove it.",
-        "solution": "Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim.",
+        "solution": "The test shows that a simulated release-label rollback preserves existing notes while the schema stays unchanged. It starts the same code with the v1 label, restarts it with v2, then returns to v1 against the same temporary database and reads the record. It does not test a destructive migration or SQL Server failover. For each major release claim, state the behavior, the test that supports it and what remains untested.",
         "checks": [
           "Tie each claim to a named executed or planned check.",
           "Expose unsupported production assumptions."
@@ -1303,7 +1303,7 @@
           "A review date certifies current runtime safety"
         ],
         "correct": 1,
-        "explanation": "The named local behaviors passed; staging and production boundaries have separate evidence. Claim: a simulated release-label rollback preserves existing notes under unchanged schema. Evidence: the named test restarts v1→v2→v1 labels using the same code against the same temporary database and reads the record. Limits: no destructive migration or SQL Server failover was tested. Repeat that structure for each major release claim."
+        "explanation": "The named local behaviors passed; staging and production boundaries have separate evidence. The test shows that a simulated release-label rollback preserves existing notes while the schema stays unchanged. It starts the same code with the v1 label, restarts it with v2, then returns to v1 against the same temporary database and reads the record. It does not test a destructive migration or SQL Server failover. For each major release claim, state the behavior, the test that supports it and what remains untested."
       },
       "references": [
         {

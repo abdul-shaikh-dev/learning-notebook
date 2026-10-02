@@ -36,7 +36,7 @@ We seem to be discussing two questions at once: timing and workload. Could we us
 
 - Channel choice considers access and clarification.
 - The final decision will have an agreed record.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

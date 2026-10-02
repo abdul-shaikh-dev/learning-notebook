@@ -36,7 +36,7 @@ Jo records evening context, whether a realistic reading opportunity existed, and
 
 - The baseline includes both action and no-opportunity rows.
 - Context is recorded without unnecessary private details.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

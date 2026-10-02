@@ -8,7 +8,7 @@ Demonstrate text encoding, SQL parameter binding, session lifecycle and a CSRF d
 python -B -m unittest -v test_security_lab.ValidationTests test_security_lab.SessionTests
 ```
 
-Expected: Five methods pass: content boundaries, HTML encoding, SQLite binding, session lifecycle and CSRF denials.
+Expect five test methods to pass, covering content boundaries, HTML encoding, SQLite binding, the session lifecycle and CSRF denials.
 
 ## Optional practice
 
@@ -16,7 +16,7 @@ Expected: Five methods pass: content boundaries, HTML encoding, SQLite binding, 
 2. Test malformed shapes, exact title boundaries and control characters.
 3. Compare encoded HTML text and a literal injection-shaped SQL search.
 4. Verify rotation, exact expiry and logout.
-5. Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.
+5. Reject missing or incorrect CSRF tokens, tokens from another session, and malformed Unicode tokens.
 6. Run `python -B -m unittest -v test_security_http.py`, then identify browser and provider checks still needed.
 
 ## Reference approach

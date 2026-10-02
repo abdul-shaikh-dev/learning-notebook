@@ -541,7 +541,7 @@
         {
           "title": "Choose an experiment that separates explanations",
           "paragraphs": [
-            "Two hypotheses explain a missing c: the first page changed the source, or the cursor excluded records sharing its timestamp. Print or assert source IDs after the first call to distinguish them. Then keep all rows fixed and change the page size from2 to3. If c returns at size3, the page boundary becomes a strong clue.",
+            "Two hypotheses explain a missing c: the first page changed the source, or the cursor excluded records sharing its timestamp. Print or assert source IDs after the first call to distinguish them. Then keep all rows fixed and change the page size from 2 to 3. If c returns at size 3, the page boundary becomes a strong clue.",
             "A separate test mutates a returned row and inspects the original input. That uncovers an ownership bug even after pagination is repaired. Do not assume that fixing the first failing assertion explains every reported symptom. Keep the two minimal reproductions distinct."
           ]
         }
@@ -628,12 +628,12 @@
       "id": "mocks",
       "title": "10. Use doubles at owned boundaries",
       "stage": "intermediate",
-      "takeaway": "A test double substitutes a collaborator so a failure or observation can be controlled.",
+      "takeaway": "A test double replaces a dependency so the test can control its response or observe how it is called.",
       "sections": [
         {
           "title": "Controlled collaborators",
           "paragraphs": [
-            "A test double substitutes a collaborator so a failure or observation can be controlled. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This is a deliberate seam around a file operation rather than a mock of every internal helper."
+            "A test double replaces a dependency so the test can control its response or observe how it is called. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This lets the test control one file operation without mocking every internal helper."
           ]
         },
         {
@@ -726,12 +726,12 @@
       "id": "integration-files",
       "title": "12. Verify serialization and replacement together",
       "stage": "intermediate",
-      "takeaway": "Integration evidence should cross a real boundary.",
+      "takeaway": "An integration test should exercise real collaborating components.",
       "sections": [
         {
           "title": "Real-file integration",
           "paragraphs": [
-            "Integration evidence should cross a real boundary. The report reference validates the complete batch, serializes a schema-versioned object into the destination directory, flushes it and replaces the target once. A readback assertion checks both the returned report and actual stored JSON."
+            "An integration test should exercise real collaborating components. The report reference validates the complete batch, serializes a schema-versioned object into the destination directory, flushes it and replaces the target once. A readback assertion checks both the returned report and actual stored JSON."
           ]
         },
         {
@@ -793,8 +793,8 @@
         {
           "title": "Combine a full-walk property with concrete expectations",
           "paragraphs": [
-            "For an unchanged finite dataset, concatenating pages should equal the complete sorted sequence exactly once. The focused test repeats the walk at sizes1,2,3,5 and100. This crosses boundaries inside equal-time groups and at the end, exposing cursor logic that passes only the demonstration size.",
-            "Use a bounded loop in the test itself so a cursor that never advances fails instead of hanging. Keep the concrete a,b,c,d assertion too: an oracle sharing a mistaken sort rule could otherwise confirm the same error in both sides. Changing records during the walk is outside this local contract and would require a snapshot or an explicit consistency policy."
+            "For an unchanged finite dataset, concatenating pages should equal the complete sorted sequence exactly once. The focused test repeats the walk at page sizes 1, 2, 3, 5 and 100. This crosses boundaries inside equal-time groups and at the end, exposing cursor logic that passes only the demonstration size.",
+            "Limit the number of iterations in the test so a cursor that never advances fails instead of hanging. Keep the concrete a,b,c,d assertion too: an oracle sharing a mistaken sort rule could otherwise confirm the same error in both sides. Changing records during the walk is outside this local contract and would require a snapshot or an explicit consistency policy."
           ]
         }
       ],
@@ -1322,7 +1322,7 @@
       ],
       "exercise": {
         "prompt": "Draft a diagnosis for the deliberate boolean mutant.",
-        "solution": "True was accepted because isinstance treats bool as int. The strict parser uses exact int typing. Boolean regression rejects it while 0 and 1440 still pass. The fixture is synthetic and no production data was used.",
+        "solution": "The faulty parser accepted True because isinstance(True, int) is true. The strict parser requires the exact int type. The regression test rejects booleans while 0 and 1440 still pass. The fixture uses synthetic data.",
         "solutionFormat": "prose",
         "checks": [
           "Separate recorded behavior, suspected cause and confirmed cause.",

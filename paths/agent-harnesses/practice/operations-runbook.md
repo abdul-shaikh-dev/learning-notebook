@@ -25,16 +25,16 @@ An uncertain effect does not become a known failure because a deadline expires o
 1. Prevent new effects for the run. Do not submit a fresh save with a new operation ID.
 2. Collect run ID, subject, call ID, tool/schema/policy versions and intent fingerprint. Avoid displaying note text unless needed and authorized.
 3. Query the authoritative receipt source through a separately authorized and bounded recovery path.
-4. If a matching receipt exists, attach it and report the actual effect. A consumed deadline or cancellation still prevents further ordinary dispatch.
+4. If a matching receipt exists, attach it and report the actual effect. An expired deadline or cancellation still prevents further ordinary dispatch.
 5. If the receipt is absent, conflicting or inaccessible, keep the uncertainty visible. Absence may reflect replication lag or incomplete evidence in a real system.
 6. Assign an owner and escalation deadline. Only the documented recovery policy can authorize retry, compensation or manual reconciliation.
 7. Record the decision and evidence reference, then add a regression case if behavior differed from expectations.
 
 ## Approval review
 
-Display subject, run, tool, resource, destination and meaningful arguments. Match the reviewed intent at execution time. Recheck current entitlement. Define reviewer authentication, expiry, revocation and replay protection in the real approval service; the toy digest supplies none of these by itself.
+Display subject, run, tool, resource, destination and meaningful arguments. Match the reviewed intent at execution time. Recheck current entitlement. Define reviewer authentication, expiry, revocation and replay protection in the real approval service; the workshop digest supplies none of these by itself.
 
-If arguments change, ask for a decision on the new intent through the product's authorized flow. If the action is denied by resource policy, approval does not override it. If a checkpoint is restored, the toy intentionally requires fresh approval.
+If arguments change, ask for a decision on the new intent through the product's authorized flow. If the action is denied by resource policy, approval does not override it. If a checkpoint is restored, the workshop intentionally requires fresh approval.
 
 ## Operational signals
 
@@ -67,4 +67,4 @@ Use a limited controlled rollout with thresholds agreed by the product/operation
 
 ## Evidence ledger
 
-For each claim record: mechanism, test input, expected result, observed result, version and limitation. A mock adapter test is not evidence of real network behavior; a single-worker unit test is not evidence of fencing; a metadata allowlist is not a completed privacy review.
+For each claim, record the mechanism, test input, expected and observed results, version and limitation. A mock adapter test is not evidence of real network behavior; a single-worker unit test is not evidence of fencing; a metadata allowlist is not a completed privacy review.

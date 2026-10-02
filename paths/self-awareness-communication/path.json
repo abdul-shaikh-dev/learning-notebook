@@ -316,7 +316,7 @@
         "checks": [
           "Observation and motive interpretation are separated.",
           "The question seeks missing information neutrally.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -373,7 +373,7 @@
         "checks": [
           "The feeling differs from the proposed action.",
           "The concern names an actual practical effect.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -430,7 +430,7 @@
         "checks": [
           "The competing priorities are both named.",
           "The help offer has a clear time limit.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -456,13 +456,13 @@
     {
       "id": "reflection-record",
       "title": "4. Use a short reflection record",
-      "takeaway": "A reflection record makes a situation, your first explanation and possible alternatives visible.",
+      "takeaway": "Write what happened, your first explanation and other possibilities.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand the distinction",
           "paragraphs": [
-            "A reflection record makes a situation, your first explanation and possible alternatives visible. Keep the record brief and use low-stakes examples. The purpose is curiosity and a next action, not grading your feelings or diagnosing yourself. You may use a fictional scenario or stop if the exercise is not helpful. Personal notes do not need to be shared."
+            "Write what happened, your first explanation and other possibilities. Keep the record brief and use low-stakes examples. The purpose is curiosity and a next action, not grading your feelings or diagnosing yourself. You may use a fictional scenario or stop if the exercise is not helpful. Personal notes do not need to be shared."
           ]
         },
         {
@@ -487,7 +487,7 @@
         "checks": [
           "Evidence for and against the first account is recorded.",
           "A practical next step ends the reflection.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -544,7 +544,7 @@
         "checks": [
           "At least two explanations remain possibilities.",
           "The question can reveal relevant information.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -601,7 +601,7 @@
         "checks": [
           "Urgent purpose and later concern are distinguished.",
           "The reply requests the needed information.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -658,7 +658,7 @@
         "checks": [
           "Time and setting are agreed before listening.",
           "Understanding is checked rather than inferred from posture.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -715,7 +715,7 @@
         "checks": [
           "An open question invites context without blame.",
           "The follow-up checks a concrete dependency.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -830,7 +830,7 @@
         "checks": [
           "The disruption is acknowledged without guessing motives.",
           "The limit and available help are explicit.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -887,7 +887,7 @@
         "checks": [
           "Action, completion time and confirmation time are clear.",
           "An alternative response is possible.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -944,7 +944,7 @@
         "checks": [
           "The boundary describes the learner's own action.",
           "An available alternative is stated without coercion.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1001,7 +1001,7 @@
         "checks": [
           "A specific artefact or event is identified.",
           "Impact, proposed change and response invitation are present.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1058,7 +1058,7 @@
         "checks": [
           "The reply asks for an example before deciding.",
           "The proposed experiment has a checkable result.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1115,7 +1115,7 @@
         "checks": [
           "Positions and underlying concerns are distinguished.",
           "Shared aim and real constraints are included.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1302,7 +1302,7 @@
         "checks": [
           "Channel choice considers access and clarification.",
           "The final decision will have an agreed record.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1359,7 +1359,7 @@
         "checks": [
           "The factual record includes role and requested work.",
           "An appropriate support route is identified without diagnosis.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {
@@ -1416,7 +1416,7 @@
         "checks": [
           "Agreement and unresolved issue remain separate.",
           "The follow-up names an action and a review point.",
-          "The worked response is used for comparison, with any justified alternative explained."
+          "Compare your answer with the example. Explain any different choice."
         ]
       },
       "quiz": {

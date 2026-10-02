@@ -1,7 +1,7 @@
 {
   "api-di": {
     "title": "A POST request through the small Task API",
-    "summary": "A successful first POST /tasks with {\"title\":\"Read\"}, starting from the empty in-memory store. This is the lesson’s minimal endpoint path, not every ASP.NET Core middleware stage.",
+    "summary": "A successful first POST /tasks with {\"title\":\"Read\"}, starting from the empty in-memory store. This is the lesson's minimal endpoint path, not every ASP.NET Core middleware stage.",
     "nodes": [
       {
         "id": "client",
@@ -217,7 +217,7 @@
           "n4"
         ],
         "activeEdges": [],
-        "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query’s result; ToList stores the values produced by this enumeration."
+        "explanation": "The result list now holds Pass 75 and Pass 90 for display. Mutating the source before enumeration could change a deferred query's result; ToList stores the values produced by this enumeration."
       }
     ],
     "direction": "LR"

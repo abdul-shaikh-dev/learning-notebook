@@ -36,7 +36,7 @@ I feel frustrated. I am concerned about preparing from the correct version. I wi
 
 - The feeling differs from the proposed action.
 - The concern names an actual practical effect.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

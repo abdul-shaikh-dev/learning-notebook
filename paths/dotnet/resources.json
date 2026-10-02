@@ -77,12 +77,12 @@
         "depth-http-boundary-md"
       ],
       "steps": [
-        "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open dotnet-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
-        "Build the project described in the reader: Task IDs are positive and titles are trimmed and nonblank. Completion changes only the intended task. An empty list and unknown ID have explicit behavior. Four or more assertions cover a normal case and boundary failures. Explain one nullable value and one disposable resource from your implementation.",
-        "Check your result: Correctness: expected output and assertions pass. Boundaries: blank title, invalid ID and missing lookup are handled deliberately. Design: presentation is separate from reusable task behavior. Explanation: learner can trace state changes and describe why validation lives at the boundary."
+        "Build the project described in the lesson. Task IDs are positive and titles are trimmed and nonblank. Completion changes only the intended task. An empty list and unknown ID have explicit behavior. Four or more assertions cover a normal case and boundary failures. Explain one nullable value and one disposable resource from your implementation.",
+        "Check the following results. Check that the output matches the expected values and the assertions pass. Check the defined behavior for a blank title, invalid ID and missing task. Keep presentation separate from reusable task behavior. Trace the state changes and explain where input validation runs."
       ],
       "commands": [
         {
@@ -121,12 +121,12 @@
         "depth-http-boundary-md"
       ],
       "steps": [
-        "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open dotnet-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Begin with the downloadable API baseline, preserve its request/response contract, and implement SQLite persistence with explicit versions and migration evidence.",
-        "Build the project described in the reader: Create, page, fetch and complete tasks with validated DTOs. Return 400, 404 and 409 consistently; the POST Location is retrievable. Use scoped DbContext and parameterized queries. Review migration code/SQL and test upgrade from a previous schema. Persist task state across restart and protect competing updates. Make task plus audit creation atomic and test rollback from a new context.",
-        "Check your result: HTTP behavior: executable acceptance checks verify successful and rejected requests. Persistence: restart and fresh-context tests establish stored state. Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts. Maintainability: typed storage boundary, scope ownership and package versions are explained. Migration evidence: generated operations are reviewed, tested and retained with a recovery note.",
+        "Build the project described in the lesson. Create, page, fetch and complete tasks with validated DTOs. Return 400, 404 and 409 consistently; the POST Location is retrievable. Use scoped DbContext and parameterized queries. Review migration code/SQL and test upgrade from a previous schema. Persist task state across restart and protect competing updates. Make task plus audit creation atomic and test rollback from a new context.",
+        "Check the following results. Run acceptance checks for successful and rejected requests. Check stored data after a restart and through a fresh context. Confirm that a deliberate write failure rolls back all related writes and that a stale token produces a conflict. Explain the storage interface, context lifetime and package versions. Review and test the generated migration operations. Save them with recovery instructions.",
         "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [
@@ -180,12 +180,12 @@
         "depth-http-boundary-md"
       ],
       "steps": [
-        "Extract the bundle and open dotnet-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open dotnet-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
-        "Extend the intermediate persistent API into a staging-ready exercise, then produce a test and operations dossier for a review.",
-        "Build the project described in the reader: Use a real authentication handler with issuer/audience/lifetime validation. Set ownership from trusted identity and authorize every task read/write. Propagate request cancellation, bound dependency work and avoid unobserved tasks. Add structured problem responses, logs, traces/metrics collection and readiness checks. Test migrations, transaction failures, stale versions and authorization denials. Publish a release build, measure bounded queries and document backup/rollback and limitations.",
-        "Check your result: Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement. Resilience: controlled cancellation/failure scenarios terminate work and release resources. Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable. Performance: before/after measurements use the same workload and preserve correctness. Delivery: published build checks succeed and the rollback plan handles persistent data. Judgment: learner states what remains unverified and which changes would be needed for multiple replicas.",
+        "Extend the intermediate persistent API into a staging-ready exercise, then produce a test results and operating instructions for a review.",
+        "Build the project described in the lesson. Use a real authentication handler with issuer/audience/lifetime validation. Set ownership from trusted identity and authorize every task read/write. Propagate request cancellation, bound dependency work and avoid unobserved tasks. Add structured problem responses, logs, traces/metrics collection and readiness checks. Test migrations, transaction failures, stale versions and authorization denials. Publish a release build, measure bounded queries and document backup/rollback and limitations.",
+        "Check the following results. Run denial tests and a staging check with a real token to verify policy and ownership enforcement. Check that controlled cancellation and failure terminate work and release resources. Trace a failed request to a log that excludes sensitive data. Inspect readiness results and latency measurements. Use the same workload for before-and-after measurements, and rerun correctness checks. Check the published build and explain how rollback handles persistent data. State what remains unverified and what would need to change for multiple replicas.",
         "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
       ],
       "commands": [

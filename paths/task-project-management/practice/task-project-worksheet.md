@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.
+A task is a specific action. A project needs several actions to reach an outcome. A routine repeats when a particular event occurs. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.
 
 ## Try before reading the answer
 

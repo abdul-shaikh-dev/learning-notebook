@@ -36,7 +36,7 @@ Ben leaves a notebook and pencil on a clear corner of the desk. He predicts less
 
 - One reversible setup step is changed.
 - The predicted benefit can be observed.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

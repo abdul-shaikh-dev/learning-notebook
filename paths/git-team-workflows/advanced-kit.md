@@ -20,7 +20,7 @@ Expected: Seven test methods pass, including local review revision, repository-r
 
 1. Run the advanced fixture and verify the first bad commit with its predicate.
 2. Compare targeted revert with the private reset/reflog recovery.
-3. Explain the cherry-picked change and rebased topic’s changed identity.
+3. Explain the cherry-picked change and rebased topic's changed identity.
 4. Verify the annotated tag object.
 5. Produce an offline release record including artifact/hosting checks not executed.
 6. Run `python -B review_roleplay.py --workspace-parent .`; inspect reviewer feedback, revised candidate and second review before completing release-review.md.

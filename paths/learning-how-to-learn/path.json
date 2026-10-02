@@ -3,7 +3,7 @@
   "title": "Learning How to Learn",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Build a practical learning loop with retrieval, spacing, mixed cases, feedback and cautious transfer.",
+  "description": "Practise recalling ideas, review them after a gap and apply them to unfamiliar cases. Use feedback to correct mistakes.",
   "level": "Beginner → applied practice → independent review",
   "prerequisites": [
     "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
@@ -122,7 +122,7 @@
         "checks": [
           "Target names an observable action and its use.",
           "Baseline and later check measure that action.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -172,7 +172,7 @@
         "checks": [
           "Urgent same-day exception is produced with the rule closed.",
           "Answer distinguishes urgency from ordinary duration.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -222,7 +222,7 @@
         "checks": [
           "Two prompts require producing a route and a reason.",
           "Correction identifies the missing override and a later retry.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -279,7 +279,7 @@
         "checks": [
           "Repaired prompt omits the visible coordinator answer.",
           "Variant changes planned request to urgent same-day request.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -382,7 +382,7 @@
         "checks": [
           "Count is two correct cases out of three.",
           "Follow-up uses new cases and the same route-plus-reason rule.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -432,7 +432,7 @@
         "checks": [
           "Urgent one-day case demonstrates the duration-only error.",
           "Explanation anchors the override in the supplied policy.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -512,7 +512,7 @@
       "id": "mix-related-cases",
       "title": "9. Mix related cases to choose the method",
       "stage": "intermediate",
-      "takeaway": "Interleave distinguishable cases after an initial introduction.",
+      "takeaway": "Once you know each rule, mix cases so you have to choose which rule applies.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -535,7 +535,7 @@
         "checks": [
           "Six cases include planned short, planned long and urgent requests.",
           "Category labels are removed so selection must be made.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -569,7 +569,7 @@
       "id": "feedback-action",
       "title": "10. Turn feedback into the next attempt",
       "stage": "intermediate",
-      "takeaway": "Feedback is useful when it identifies a gap and a repair.",
+      "takeaway": "Useful feedback identifies a mistake or missing step and explains how to correct it.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -592,7 +592,7 @@
         "checks": [
           "Revised response states approver, case feature and applicable rule.",
           "Feedback produces a specific repair and a new attempt.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -642,7 +642,7 @@
         "checks": [
           "Three different errors receive plausible distinct classifications.",
           "Each repair targets the failed decision rather than a trait label.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -692,7 +692,7 @@
         "checks": [
           "Prediction four of five is compared with actual two of five.",
           "Confidently wrong items are selected for correction.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -726,7 +726,7 @@
       "id": "study-environment",
       "title": "13. Make a small session easy to begin",
       "stage": "intermediate",
-      "takeaway": "Reduce avoidable setup and protect a manageable opportunity.",
+      "takeaway": "Have your materials ready for a study session you can fit into your day.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -749,7 +749,7 @@
         "checks": [
           "Normal cue fits one of the two available ten-minute windows.",
           "Fallback reduces scope rather than inventing another window.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -799,7 +799,7 @@
         "checks": [
           "Outline contains prompts, checked key, exception and source.",
           "Accessible format is chosen without assigning a fixed learning-style identity.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -856,7 +856,7 @@
         "checks": [
           "Only Tuesday and next Monday are scheduled.",
           "Omitted Thursday review is recorded and later check retained.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -959,7 +959,7 @@
         "checks": [
           "Vocabulary recall is distinguished from procedural machine operation.",
           "Missing task-specific performance evidence is named.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -1009,7 +1009,7 @@
         "checks": [
           "Repair checks one category with reduced support before mixing.",
           "A fresh attempt determines whether to adjust the repair.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -1036,7 +1036,7 @@
       "id": "delayed-demonstration",
       "title": "19. Demonstrate and explain a changed case",
       "stage": "advanced",
-      "takeaway": "Submit evidence of recall, application and limitations.",
+      "takeaway": "Show what you can recall and apply after a gap, and what you still get wrong.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -1059,7 +1059,7 @@
         "checks": [
           "Conclusion retains counts one of four and three of four.",
           "Failed changed-context case is stated as unestablished transfer.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -1109,7 +1109,7 @@
         "checks": [
           "Easy current, obsolete and rarely used current rules receive different treatments.",
           "Policy change triggers verified update or retirement.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {

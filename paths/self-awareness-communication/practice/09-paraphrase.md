@@ -36,7 +36,7 @@ You can complete the analysis if the figures arrive before noon; the timing is t
 
 - The summary preserves the speaker’s condition.
 - The speaker is invited to correct it.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

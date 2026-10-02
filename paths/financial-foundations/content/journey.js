@@ -4,7 +4,7 @@ const TRADE_JOURNEY = [
     "label": "Book the trade",
     "owner": "Trading + operations",
     "title": "Capture the agreement",
-    "body": "The bank buys 1,000 Company A shares at $100 each in its Customer book. Booking records an agreement; it does not establish settlement or today’s value.",
+    "body": "The bank buys 1,000 Company A shares at $100 each in its Customer book. Booking records an agreement; it does not establish settlement or today's value.",
     "input": "Confirmed buy: 1,000 shares at $100",
     "output": "Trade T-1042 · Company A · USD · Customer book",
     "control": "Match instrument, direction, quantity, price, currency and settlement details to the confirmation.",
@@ -32,7 +32,7 @@ const TRADE_JOURNEY = [
     "label": "Select prices",
     "owner": "Market data team + valuation users",
     "title": "Attach meaning to each price",
-    "body": "At today’s close the desk uses $104 per share. An independent quote is $103.50. Check instrument, currency, timestamp and quotation basis before comparison.",
+    "body": "At today's close the desk uses $104 per share. An independent quote is $103.50. Check instrument, currency, timestamp and quotation basis before comparison.",
     "input": "Desk mark $104.00 · independent quote $103.50",
     "output": "Two price records with source, time and quality evidence",
     "control": "Use the evidence switch below. Assume comparable close-time evidence in the usable case. A stale quote is not suitable merely because its provider is independent.",
@@ -52,7 +52,7 @@ const TRADE_JOURNEY = [
     "control": "Check units and sign. Price per share differs from bond price as a percentage of face value. Correct arithmetic cannot repair unsuitable inputs.",
     "data": "Position snapshot + price snapshot + method version → valuation run",
     "question": "Is $104,000 the profit?",
-    "answer": "No. It is the holding value. Compared with yesterday’s $100,000 close, the provisional movement is +$4,000.",
+    "answer": "No. It is the holding value. Compared with yesterday's $100,000 close, the provisional movement is +$4,000.",
     "lesson": 2
   },
   {
@@ -91,9 +91,9 @@ const TRADE_JOURNEY = [
     "body": "Assume valuation changes are recognised through P&L. No trades or cash flows occur today. The approved result is $103,500 closing value − $100,000 opening value = +$3,500. All is unrealised because no shares were sold.",
     "input": "Opening $100,000 · desk movement +$4,000 · correction −$500",
     "output": "Approved P&L +$3,500 · unresolved desk estimate +$4,000 is provisional",
-    "control": "The purchase was yesterday. Do not subtract yesterday’s cash payment again from today’s value movement. Since-inception economic P&L equals holding value plus cumulative net cash here.",
+    "control": "The purchase was yesterday. Do not subtract yesterday's cash payment again from today's value movement. Since-inception economic P&L equals holding value plus cumulative net cash here.",
     "data": "Prior approved close + current close + period flows → P&L explanation",
-    "question": "Is the −$500 correction the whole day’s P&L?",
+    "question": "Is the −$500 correction the whole day's P&L?",
     "answer": "No. It reduces the +$4,000 desk movement to +$3,500. It is one component of the bridge.",
     "lesson": 16
   },

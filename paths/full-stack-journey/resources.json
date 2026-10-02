@@ -145,7 +145,7 @@
         {
           "label": "Install frontend dependencies",
           "command": "npm ci --ignore-scripts",
-          "expected": "Pinned dependencies installed; network is required for first install."
+          "expected": "The pinned dependencies are installed. The first installation needs network access."
         },
         {
           "label": "Validate and build frontend",
@@ -160,7 +160,7 @@
         {
           "label": "Run real HTTP checks in terminal C",
           "command": "python acceptance.py http://127.0.0.1:5087",
-          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+          "expected": "The command prints a PASS line after creating synthetic tasks and checking that exactly one concurrent update succeeds."
         }
       ],
       "prerequisites": [
@@ -179,7 +179,7 @@
       ],
       "notes": [
         "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
-        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are practice extensions."
       ]
     },
     {
@@ -221,7 +221,7 @@
         {
           "label": "Install frontend dependencies",
           "command": "npm ci --ignore-scripts",
-          "expected": "Pinned dependencies installed; network is required for first install."
+          "expected": "The pinned dependencies are installed. The first installation needs network access."
         },
         {
           "label": "Validate and build frontend",
@@ -236,7 +236,7 @@
         {
           "label": "Run real HTTP checks in terminal C",
           "command": "python acceptance.py http://127.0.0.1:5087",
-          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+          "expected": "The command prints a PASS line after creating synthetic tasks and checking that exactly one concurrent update succeeds."
         }
       ],
       "prerequisites": [
@@ -255,7 +255,7 @@
       ],
       "notes": [
         "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
-        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are practice extensions."
       ]
     },
     {
@@ -285,8 +285,8 @@
         "Extract the complete kit into a new practice folder.",
         "Read README.md and milestones.md.",
         "Separate browser, HTTP and SQL evidence.",
-        "Explain authentication and deployment extensions honestly.",
-        "Defend a recovery plan with measured results where executed."
+        "Identify which authentication and deployment extensions you tested and which remain untested.",
+        "Explain the recovery plan. Include measured results from any recovery drills you ran."
       ],
       "commands": [
         {
@@ -297,7 +297,7 @@
         {
           "label": "Install frontend dependencies",
           "command": "npm ci --ignore-scripts",
-          "expected": "Pinned dependencies installed; network is required for first install."
+          "expected": "The pinned dependencies are installed. The first installation needs network access."
         },
         {
           "label": "Validate and build frontend",
@@ -312,7 +312,7 @@
         {
           "label": "Run real HTTP checks in terminal C",
           "command": "python acceptance.py http://127.0.0.1:5087",
-          "expected": "PASS line; creates synthetic tasks and verifies exactly one concurrent update winner."
+          "expected": "The command prints a PASS line after creating synthetic tasks and checking that exactly one concurrent update succeeds."
         }
       ],
       "prerequisites": [
@@ -331,7 +331,7 @@
       ],
       "notes": [
         "Files are flat in the extracted folder. SQL setup and cleanup are explicit in README.md.",
-        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are assessed extensions."
+        "Reference code implements the local vertical slice; login, idempotent POST, public deployment and recovery are practice extensions."
       ]
     }
   ],

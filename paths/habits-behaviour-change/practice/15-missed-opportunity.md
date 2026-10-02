@@ -36,7 +36,7 @@ No desk-session opportunity occurred. Resume filing at the next normal session; 
 
 - The reason for the miss is categorised from facts.
 - The next action avoids punitive catch-up.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

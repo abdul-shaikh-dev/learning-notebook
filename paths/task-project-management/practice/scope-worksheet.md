@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A scope note records beneficiary, outcome, constraints and explicit exclusions. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.
+State who the project helps, what it will produce, its limits and what it will leave out. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.
 
 ## Try before reading the answer
 

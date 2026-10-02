@@ -10,7 +10,7 @@ A return cue is a short note that lets you restart: name the file or page, the l
 
 ## Try before reading the answer
 
-A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.
+A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. How much time do the interruptions take?
 
 Decision: ____________________________________________
 

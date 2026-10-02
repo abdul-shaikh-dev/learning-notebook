@@ -36,7 +36,7 @@ Observation: my message has no reply after two hours. Interpretation: she does n
 
 - Observation and motive interpretation are separated.
 - The question seeks missing information neutrally.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

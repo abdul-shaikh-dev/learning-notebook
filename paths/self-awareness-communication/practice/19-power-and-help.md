@@ -36,7 +36,7 @@ Keep dates, requested tasks and the agreed role description. Ask the coordinator
 
 - The factual record includes role and requested work.
 - An appropriate support route is identified without diagnosis.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

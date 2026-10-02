@@ -168,15 +168,15 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name is a vocabulary for reasoning, not a requirement to create classes.",
-            "Imagine a study notebook that exports progress. At first a small function is enough. A second export format creates a variation point: formatting changes while selecting records stays stable. Name that pressure before choosing an abstraction. Creational patterns concern construction; structural patterns concern assembling interfaces and objects; behavioral patterns concern responsibility and collaboration. These categories organize discussion, not strict technical boundaries."
+            "A design pattern describes a recurring problem, the collaboration used to address it, and the consequences. Its name helps you discuss that design without requiring a class implementation.",
+            "Imagine a study notebook that exports progress. At first a small function is enough. A second export format creates a variation point: formatting changes while selecting records stays stable. Identify what needs to change before choosing an abstraction. Creational patterns concern construction; structural patterns concern assembling interfaces and objects; behavioral patterns concern responsibility and collaboration. These categories organize discussion, not strict technical boundaries."
           ]
         },
         {
           "title": "A small vocabulary for reading designs",
           "paragraphs": [
             "A collaborator is an object or function called to perform part of a job. A dependency is something a component needs to do its work. A contract describes accepted inputs, outputs, failures and side effects. An invariant is a rule that must remain true at a specified boundary.",
-            "A variation point is a part expected to change independently. Coupling describes how changes in one part affect another; cohesion asks whether the responsibilities within one part belong together. These are reasoning tools, not scores that can be maximized without tradeoffs."
+            "A variation point is a part expected to change independently. Coupling describes how changes in one part affect another; cohesion asks whether the responsibilities within one part belong together. Use these terms to compare the effects of a change. Reducing coupling can add indirection, for example, so consider both costs."
           ]
         },
         {
@@ -196,7 +196,7 @@
           "title": "Selected catalog and provenance",
           "paragraphs": [
             "This is a selected Python-oriented pattern catalog, not a complete treatment of the 23 GoF patterns. Gamma, Helm, Johnson and Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (1994; ISBN 9780201633610), supplies the canonical creational, structural and behavioral catalog. Dependency Injection, Repository and Unit of Work are additional architectural material, not entries in that GoF catalog.",
-            "The course includes Chain of Responsibility and Mediator contrasts in collaboration.py. Patterns omitted here remain optional later breadth; the goal is to justify a collaboration under specific pressure, not memorize all catalog entries."
+            "The course compares Chain of Responsibility and Mediator in collaboration.py. Study other patterns when a problem calls for them. Here, explain why your chosen objects and functions fit the requirement."
           ]
         }
       ],
@@ -245,7 +245,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "A contract includes accepted inputs, returned values, failures and side effects. Matching method names is only one part of being substitutable.",
             "An invariant is a rule that remains true at a boundary: study minutes are nonnegative whole numbers, for example. A caller expecting a formatter that leaves records unchanged cannot safely substitute one that deletes them. Python annotations describe expectations for tools and readers; they do not automatically validate untrusted runtime inputs."
           ]
         },
@@ -302,14 +301,14 @@
           "title": "Intent",
           "paragraphs": [
             "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
-            "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. This creates a seam for a fake delivery recorder in tests."
+            "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. Tests can supply a function that records deliveries without sending them."
           ]
         },
         {
           "title": "Collaboration",
           "paragraphs": [
             "remind constructs the message and delegates delivery to the supplied callable. Passing sent.append makes the effect observable without an external service.",
-            "Collaboration: caller → remind → formatter, then remind → delivery. The caller assembles the collaborators; remind owns the order of work."
+            "In this example, the caller supplies the delivery function and remind formats the message inline. The exercise below also passes formatting as a separate function."
           ],
           "example": "def remind(title, deliver):\n    deliver(f\"Review {title}\")\nsent = []\nremind(\"Patterns\", sent.append)\nassert sent == [\"Review Patterns\"]"
         },
@@ -322,7 +321,7 @@
         {
           "title": "Read the collaboration diagram",
           "paragraphs": [
-            "Follow the arrows as calls. The application supplies collaborators, the reminder coordinates them, and the delivery recorder gives the test observable evidence. This is one process, not a distributed system."
+            "The diagram shows the exercise version, with both formatting and delivery supplied as functions. The arrows show call order. The test checks the messages recorded by the delivery function, and all calls run in one process."
           ],
           "example": "# Application entry point\n#       | supplies collaborators\n#       v\n#    remind ----> message formatter\n#       |             |\n#       | <---- formatted message\n#       v\n#    delivery ----> recorded message\n#\n# The arrows describe dependencies and call order, not inheritance."
         }
@@ -421,7 +420,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "Strategy lets a workflow use an interchangeable policy with a shared contract. A callable is often enough in Python.",
             "A notebook can order lessons alphabetically or by duration. Selecting lessons stays unchanged; the ranking policy varies. Keep input and output conventions explicit so changing a strategy does not change the meaning of the workflow. Selection can remain a simple branch at the application boundary."
           ]
         },
@@ -632,7 +630,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "Adapter translates an existing component into the interface a consumer expects. It should make semantic differences visible, not merely rename fields.",
             "A legacy progress system reports seconds while the notebook expects whole minutes. This adapter rounds down when converting seconds to minutes. Unit conversion, missing values and error translation belong at this boundary. A thin wrapper that labels seconds as minutes would be structurally compatible and behaviorally wrong."
           ]
         },
@@ -695,7 +692,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "Facade presents a simpler entry point to a subsystem with several operations. It coordinates a use case while preserving meaningful failures.",
             "A study pack needs validation, formatting and delivery. A facade gives the caller one publish operation while collaborators retain their roles. It should not imply atomicity: formatting may succeed and delivery may fail. Return success only after the required operations succeed."
           ]
         },
@@ -814,7 +810,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "Composite lets a leaf and a group support the same operation so clients can work with a hierarchy uniformly.",
             "A lesson has minutes; a module contains lessons or submodules and sums their minutes. The operation can recurse without the caller knowing whether the root is a leaf or a group. This example assumes a finite acyclic tree and nonnegative integer minute values supplied by the caller. The dataclass constructors do not validate those values."
           ]
         },
@@ -1201,7 +1196,7 @@
         {
           "title": "Keep the coordinator boundary honest",
           "paragraphs": [
-            "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller's input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. A mediator that accumulates every unrelated policy becomes a coupling hotspot; retain only the rules needed for this collaboration."
+            "The tests verify rejected prerequisites, missing IDs and repeated completion without leaked effects; the caller's input dictionary also remains unchanged. This coordinator copies local state and appends notification records in one sequential process. An external notifier can fail after a database commit: add a separate transaction and durable delivery contract before treating that scenario as reliable. Adding unrelated policies to the mediator makes more components depend on it. Keep only the rules needed for this workflow."
           ]
         }
       ],
@@ -1644,7 +1639,6 @@
         {
           "title": "Intent",
           "paragraphs": [
-            "Good pattern selection explains why the simplest acceptable design is insufficient and which cost the chosen collaboration introduces.",
             "Use a decision record with context, options, decision and consequences. A strategy varies a policy; an adapter translates a boundary; a facade offers a workflow; a decorator layers compatible behavior; a proxy controls access; a state machine governs lifecycle. Similar diagrams do not make their intentions interchangeable."
           ]
         },
@@ -1664,7 +1658,7 @@
         {
           "title": "Use the next requirement to evaluate the abstraction",
           "paragraphs": [
-            "Add CSV as a new format without changing the row validation or commit order. A title containing a comma or quote distinguishes real CSV serialization from joining with commas. Keep empty input and Unicode examples. If this change only needs a new formatter, the extracted variation point earns its place.",
+            "Add CSV as a new format without changing the row validation or commit order. A title containing a comma or quote distinguishes real CSV serialization from joining with commas. Keep empty input and Unicode examples. If adding CSV requires only a new formatter, the refactor has let you add a format without altering validation or storage.",
             "A future remote store is a different axis of change. Its timeout can mean an unknown outcome rather than definitely no write. The local failure injection cannot establish remote retry safety; add an adapter contract and reconciliation design only when that requirement becomes real. Avoid adding those protocols to the local exercise preemptively."
           ]
         }

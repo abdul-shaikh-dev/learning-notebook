@@ -1,6 +1,6 @@
 # Journey checkpoints and evidence
 
-## Foundation: one complete vertical slice
+## Foundation: one feature across the stack
 Create and list sessions; validate 0, 1440, -1, 1441, blank title and boolean minutes.
 Keep a draft when the API is stopped; show a useful error instead of an empty list.
 Add the Open minutes summary from first-slice without duplicating task state.
@@ -13,8 +13,7 @@ Open the UI in two tabs: complete the same version in both; the second must show
 conflict until Reload. Add editable titles with a retained draft and explicit compare.
 Design the idempotency tests here. Implement multi-user keys after the identity milestone
 below; a fixed synthetic owner is sufficient only for the local receipt fixture.
-Add an idempotency key for POST: same key+same payload replays one result; key+different
-payload returns conflict. Persist the key and created task atomically, and test retries
+Add an idempotency key for POST. Repeating the same key and payload returns the original result. Reusing the key with a different payload returns a conflict. Persist the key and created task atomically, and test retries
 after a committed response is lost. The baseline does not implement idempotent create.
 
 ## Advanced: identity, release and recovery

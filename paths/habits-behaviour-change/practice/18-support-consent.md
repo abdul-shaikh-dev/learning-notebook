@@ -36,7 +36,7 @@ Could you ask once on Sunday whether my bag setup is working? Please do not chec
 
 - The helper’s role and frequency are agreed.
 - Either person can stop the arrangement.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

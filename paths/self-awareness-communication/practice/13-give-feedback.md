@@ -36,7 +36,7 @@ In the summary slide, ABC and QRT are not defined. I could not interpret the com
 
 - A specific artefact or event is identified.
 - Impact, proposed change and response invitation are present.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

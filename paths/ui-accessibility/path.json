@@ -150,7 +150,7 @@
         "brief": "Design a course overview whose hierarchy and controls support a realistic learner task.",
         "requirements": [
           "Write two realistic task scenarios.",
-          "Create semantic headings/navigation/actions.",
+          "Use semantic headings, navigation links and action buttons.",
           "Measure proposed contrast pairs.",
           "Test the overview with a keyboard."
         ],
@@ -211,7 +211,7 @@
           "Review authentication and destructive-action flows.",
           "Run a task test with another person.",
           "Record assistive-technology checks or mark them unexecuted.",
-          "Create component regression and manual retest triggers."
+          "Add component regression tests and identify changes that require another manual check."
         ],
         "rubric": [
           "The same task works through equivalent input routes.",
@@ -555,7 +555,7 @@
         {
           "title": "Readable text and action labels",
           "paragraphs": [
-            "Choose a readable base size, a comfortable line height and a bounded measure so lines do not stretch across a large monitor. Use relative units for typography and leave room for text expansion. Distinguish a heading from a caption without making the caption too faint. Avoid embedding essential text in images.",
+            "Choose a readable base size, a comfortable line height and a maximum line width so text does not stretch across a large monitor. Use relative units for typography and leave room for text expansion. Distinguish a heading from a caption without making the caption too faint. Avoid embedding essential text in images.",
             "Write labels that describe the action or destination. Download practice kit is clearer than Click here. Explain abbreviations at first use, and put the most useful instruction before secondary details. Preserve user text spacing adjustments without clipping controls or hiding content. A fixed-height card often fails when a title wraps or text spacing increases."
           ],
           "example": "Less useful: \"Invalid input\"\nMore useful: \"Enter a title with at least one non-space character.\"\nLess useful link: \"Here\"\nMore useful link: \"Download Python practice kit\""
@@ -718,7 +718,7 @@
     {
       "id": "states-feedback",
       "title": "10. Loading, empty, error and success states",
-      "takeaway": "Every operation needs a coherent story before, during and after completion.",
+      "takeaway": "Show what an operation is doing and whether it succeeded or failed.",
       "stage": "intermediate",
       "sections": [
         {
@@ -776,7 +776,7 @@
           "title": "Modal behavior and focus",
           "paragraphs": [
             "A modal blocks interaction with the rest of the page. Use a native dialog with showModal for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with tabindex=-1.",
-            "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a surface that still permits background interaction."
+            "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a dialog that still permits background interaction."
           ],
           "example": "const opener = document.activeElement;\ndialog.showModal();\ndialog.addEventListener(\"close\", () => opener.focus(), {once:true});"
         },
@@ -1054,7 +1054,7 @@
       ],
       "exercise": {
         "prompt": "Design keyboard and touch alternatives for a reorderable lesson list. Decide where focus stays after a move.",
-        "solution": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson’s control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate.",
+        "solution": "Use explicit Move up and Move down buttons with names identifying the lesson. Disable boundary actions, update the order once and keep focus on the moved lesson's control. Announce the new position through a polite status region. Keep an undo action for accidental changes if persistence is immediate.",
         "solutionFormat": "prose",
         "checks": [
           "All drag results have non-drag equivalents.",
@@ -1222,7 +1222,7 @@
         {
           "title": "Static-check limitations",
           "paragraphs": [
-            "The bundled static checks are guardrails, not a WCAG conformance report. A page can pass those checks and still have a keyboard trap, confusing labels or inaccessible dynamic content."
+            "The bundled checks inspect selected HTML rules. They do not establish WCAG conformance. A page can pass those checks and still have a keyboard trap, confusing labels or inaccessible dynamic content."
           ]
         }
       ],

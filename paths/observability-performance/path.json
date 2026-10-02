@@ -249,7 +249,7 @@
         {
           "title": "Questions, logs, metrics and traces",
           "paragraphs": [
-            "Observability is the ability to investigate a system using the outputs it exposes. Monitoring checks known conditions, while exploratory investigation asks new questions. Neither is created by collecting everything. Start with a user symptom such as Imports are slow, then identify which measurements distinguish network waiting, parsing, database work and queue delay.",
+            "Observability is the ability to investigate a system using the outputs it exposes. Monitoring checks known conditions, while exploratory investigation asks new questions. Collecting more data does not by itself make investigation or monitoring useful. Start with a user symptom such as Imports are slow, then identify which measurements distinguish network waiting, parsing, database work and queue delay.",
             "Logs describe events, metrics aggregate measurements and traces connect work across boundaries. A request count can show traffic growth without identifying one request. A trace can identify the slow segment but may be sampled. Combine evidence instead of expecting one signal to answer every question."
           ],
           "example": "Question: why did import request R take 900 ms?\nMetric: latency distribution changed\nTrace: database span consumed 700 ms\nLog: database retry occurred for R"
@@ -313,7 +313,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Define three latency boundaries for a React → API → database request. Choose which one supports a user-facing objective.",
+        "prompt": "Define three latency measurements for a request that starts in React, calls an API and queries a database. Choose which measurement supports a user-facing objective.",
         "solution": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added.",
         "solutionFormat": "prose",
         "checks": [
@@ -467,7 +467,7 @@
       ],
       "exercise": {
         "prompt": "Calculate mean, median and nearest-rank p95 for 1, 2, 3, 4, 100. Explain why the p95 is uncertain.",
-        "solution": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator.",
+        "solution": "The mean is 22, the median is 3 and the nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator.",
         "solutionFormat": "prose",
         "checks": [
           "The estimator is stated.",
@@ -483,7 +483,7 @@
           "By taking the smallest host median."
         ],
         "correct": 0,
-        "explanation": "Mean is 22, median is 3 and nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
+        "explanation": "The mean is 22, the median is 3 and the nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
       },
       "references": [
         {
@@ -634,7 +634,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Explain where a trace header belongs in a React → API → worker journey. Identify which security checks it cannot replace.",
+        "prompt": "Explain how trace context passes from React to an API and then to a background worker. Identify which security checks it cannot replace.",
         "solution": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks.",
         "solutionFormat": "prose",
         "checks": [
@@ -847,7 +847,7 @@
       ],
       "exercise": {
         "prompt": "Design one page and one ticket for an import service. Include a response owner and zero-traffic behaviour.",
-        "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
+        "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
         "solutionFormat": "prose",
         "checks": [
           "Each alert has an action and owner.",
@@ -863,7 +863,7 @@
           "400 requests per second."
         ],
         "correct": 0,
-        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Ticket for slower budget erosion. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
+        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
       },
       "references": [
         {
@@ -1072,7 +1072,7 @@
       ],
       "exercise": {
         "prompt": "Design a repeated import memory experiment with and without retaining processed rows. Specify the limitations of tracemalloc.",
-        "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage.",
+        "solution": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. If each import retains rows in a list, the list will keep growing. Inspect which code owns those references and when it should release them. State that native and full process memory are outside this tool's complete coverage.",
         "solutionFormat": "prose",
         "checks": [
           "Retained and temporary memory are distinguished.",
@@ -1088,7 +1088,7 @@
           "Yes; traced allocation totals also include all kernel file-cache pages."
         ],
         "correct": 0,
-        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. A steadily retained list is expected growth; investigate ownership. State that native and full process memory are outside this tool's complete coverage."
+        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. If each import retains rows in a list, the list will keep growing. Inspect which code owns those references and when it should release them. State that native and full process memory are outside this tool's complete coverage."
       },
       "references": [
         {

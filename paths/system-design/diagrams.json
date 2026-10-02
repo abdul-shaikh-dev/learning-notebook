@@ -81,7 +81,7 @@
         "activeEdges": [
           0
         ],
-        "explanation": "The key identifies this caller’s reserve operation for workshop 42, not every future booking by the learner."
+        "explanation": "The key identifies this caller's reserve operation for workshop 42, not every future booking by the learner."
       },
       {
         "title": "Commit effect and result together",
@@ -568,13 +568,13 @@
     "nodes": [
       {
         "id": "n0",
-        "label": "A requests B’s progress",
+        "label": "A requests B's progress",
         "description": "Treat the requested owner and record identifier as untrusted inputs."
       },
       {
         "id": "n1",
         "label": "Verified identity A",
-        "description": "Load identity from the verified session/token, not the request’s asserted owner."
+        "description": "Load identity from the verified session/token, not the request's asserted owner."
       },
       {
         "id": "n2",
@@ -615,7 +615,7 @@
       },
       {
         "title": "Follow the mechanism",
-        "explanation": "Load identity from the verified session/token, not the request’s asserted owner. Evaluate permission for resource owner B, including background/status/download paths.",
+        "explanation": "Load identity from the verified session/token, not the request's asserted owner. Evaluate permission for resource owner B, including background/status/download paths.",
         "activeNodes": [
           "n0",
           "n1",

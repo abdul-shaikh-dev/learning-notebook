@@ -36,7 +36,7 @@ Plan A splits pages equally; Plan B assigns layout to the available designer and
 
 - Two options are compared against explicit criteria.
 - Availability and agreement are checked.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

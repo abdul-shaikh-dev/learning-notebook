@@ -8,7 +8,7 @@ A calendar contains fixed commitments and negotiable work. Count the remaining s
 
 ## Try before reading the answer
 
-A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. Find study capacity.
+A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?
 
 Decision: ____________________________________________
 

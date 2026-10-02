@@ -23,7 +23,7 @@ python pipeline_lab.py sample_orders.csv practice.db sept-01
 ```
 
 First run commits; second replays without additional rows. Inspect identifiers,
-count and totals using reconcile, not just CLI status. Remove **only your
+count and totals using `reconcile`. A successful CLI status alone does not establish that the stored data is correct. Remove **only your
 practice.db** after closing the program and reviewing your evidence.
 
 ## Contract and projects

@@ -97,12 +97,12 @@
         "depth-batch-refactor-md"
       ],
       "steps": [
-        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open design-patterns-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output.",
         "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
-        "Build the project described in the reader: Validate all titles before producing output. Use two compatible formatting strategies selected at one entry point. Reject unknown formats and preserve input order. Include an empty-input test and a malformed-title test.",
-        "Check your result: Both output formats are correct for the same input. No mutation of caller records occurs. The design note explains why a simple factory/function is enough. Tests assert observable behavior, including failures."
+        "Build the project described in the lesson. Validate all titles before producing output. Use two compatible formatting strategies selected at one entry point. Reject unknown formats and preserve input order. Include an empty-input test and a malformed-title test.",
+        "Check the following results. Both output formats are correct for the same input. No mutation of caller records occurs. The design note explains why a simple factory/function is enough. Tests assert observable behavior, including failures."
       ],
       "commands": [
         {
@@ -141,12 +141,12 @@
         "test_collaboration-py"
       ],
       "steps": [
-        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open design-patterns-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output.",
         "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
-        "Build the project described in the reader: Adapt a legacy seconds field with an explicit conversion policy. Use a measurement decorator that delegates once and records only success. Test wrapper failure and input immutability. Write a note comparing facade, adapter, decorator and proxy intentions.",
-        "Check your result: Boundary conversion is correct at 59/60/61 seconds. Failures are propagated and not counted as successful output. Facade remains focused on the preview workflow. The design note explains one case where each wrapper would be unnecessary.",
+        "Build the project described in the lesson. Adapt a legacy seconds field with an explicit conversion policy. Use a measurement decorator that delegates once and records only success. Test wrapper failure and input immutability. Write a note comparing facade, adapter, decorator and proxy intentions.",
+        "Check the following results. Boundary conversion is correct at 59/60/61 seconds. Failures are propagated and not counted as successful output. Facade remains focused on the preview workflow. The design note explains one case where each wrapper would be unnecessary.",
         "Compare first-handler selection with event broadcast. Defer Command and Mediator portions of the shared collaboration tests until their advanced lessons."
       ],
       "commands": [
@@ -198,12 +198,12 @@
         "depth-batch-refactor-md"
       ],
       "steps": [
-        "Extract the bundle and open design-patterns-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open design-patterns-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output.",
         "Use the workshop repository and copy-on-write unit of work to complete a lesson, then review how the design must change for a real database and notifications.",
-        "Build the project described in the reader: Reject missing IDs and repeated completion according to a stated policy. Commit a valid transition and keep the original store unchanged when validation fails. Run the provided rollback tests and add a failing repository substitute. Propose provider integration tests and a notification failure policy. Write a decision record rejecting at least one unnecessary pattern.",
-        "Check your result: Success changes exactly the intended record. The failure path does not leak a working-copy update. Limitations explicitly include concurrency, durability and external effects. A fake repository is not presented as proof of database behavior. The refactoring plan preserves public contracts and can be reviewed in small changes.",
+        "Build the project described in the lesson. Reject missing IDs and repeated completion according to a stated policy. Commit a valid transition and keep the original store unchanged when validation fails. Run the provided rollback tests and add a failing repository substitute. Propose provider integration tests and a notification failure policy. Write a decision record rejecting at least one unnecessary pattern.",
+        "Check the following results. Success changes exactly the intended record. The failure path does not leak a working-copy update. Limitations explicitly include concurrency, durability and external effects. A fake repository is not presented as proof of database behavior. The refactoring plan preserves public contracts and can be reviewed in small changes.",
         "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation.",
         "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract.",
         "Use batch-refactor.md to preserve complete-batch behavior through extraction, then add a CSV strategy."

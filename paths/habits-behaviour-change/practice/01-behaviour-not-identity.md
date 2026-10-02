@@ -36,7 +36,7 @@ Mira writes: after entering home, place keys in the bowl by the door. She checks
 
 - An identity label is rewritten as a specific observable action.
 - The target includes a recognisable arrival situation.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

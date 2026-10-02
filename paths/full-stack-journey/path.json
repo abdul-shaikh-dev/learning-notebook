@@ -136,7 +136,7 @@
       "exitCriteria": [
         "Separate browser, HTTP and SQL evidence.",
         "Explain which authentication and deployment features still need implementation and testing.",
-        "Defend a recovery plan with measured results where executed."
+        "Explain the recovery plan. Include measured results from any recovery drills you ran."
       ],
       "project": {
         "title": "Test, release and recover the study planner",
@@ -144,13 +144,13 @@
         "requirements": [
           "Separate browser, HTTP and SQL evidence.",
           "Explain which authentication and deployment features still need implementation and testing.",
-          "Defend a recovery plan with measured results where executed.",
+          "Explain the recovery plan. Include measured results from any recovery drills you ran.",
           "Use the milestone workbook as an optional guide; verify the behavior in your own application before comparing the reference."
         ],
         "rubric": [
           "Separate browser, HTTP and SQL evidence.",
           "Explain which authentication and deployment features still need implementation and testing.",
-          "Defend a recovery plan with measured results where executed.",
+          "Explain the recovery plan. Include measured results from any recovery drills you ran.",
           "Explain each remaining boundary and identify the exact task files."
         ],
         "solution": "Run decoder and real HTTP checks, record manual keyboard/browser results and optional SQL restore evidence. Add verified identity/owner predicates before public exposure; package a reproducible release and state unexecuted provider/deployment checks."
@@ -402,7 +402,7 @@
       "id": "ui-state",
       "title": "6. Build an accessible form with clear request states",
       "stage": "foundation",
-      "takeaway": "A retained draft lets a learner recover from failure.",
+      "takeaway": "Keeping the draft lets a user correct or retry a failed submission.",
       "sections": [
         {
           "title": "Form state and accessible feedback",
@@ -461,7 +461,7 @@
         {
           "title": "Refresh versus API restart",
           "paragraphs": [
-            "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. This is a useful foundation boundary: the UI is integrated, while durability is intentionally not yet established. Record both behaviors instead of calling refresh a persistence test."
+            "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. At this stage the UI calls the API, but the API does not retain data across restarts. Record both behaviors instead of calling refresh a persistence test."
           ]
         },
         {
@@ -806,13 +806,13 @@
         {
           "title": "Uncertain POST outcomes",
           "paragraphs": [
-            "The reference POST generates a new ID each time and does not implement idempotency. If SQL commits and the connection breaks before 201 reaches the browser, an automatic retry can create a second session. Keeping a draft is good recovery UX, but it does not solve effect uncertainty."
+            "The reference POST generates a new ID each time and does not implement idempotency. If SQL commits and the connection breaks before 201 reaches the browser, an automatic retry can create a second session. Keeping a draft is good recovery UX, but it does not tell you whether the server committed the write."
           ]
         },
         {
           "title": "An idempotent creation extension",
           "paragraphs": [
-            "For the assessed extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
+            "For the practice extension, accept a stable operation key scoped to a verified user, store a canonical payload fingerprint and final result atomically with creation, and replay the same result for the same key/payload. A reused key with different data must conflict. Define retention and maximum key/payload sizes."
           ]
         },
         {

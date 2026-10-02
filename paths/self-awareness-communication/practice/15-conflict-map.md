@@ -36,7 +36,7 @@ Positions: evening versus morning. Concerns: finishing work first versus availab
 
 - Positions and underlying concerns are distinguished.
 - Shared aim and real constraints are included.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

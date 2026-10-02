@@ -73,10 +73,10 @@
         "verification-md"
       ],
       "steps": [
-        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Extract the bundle. All files are directly inside the named practice folder.",
         "Read README.md and run the baseline commands.",
         "Write two realistic task scenarios.",
-        "Create semantic headings/navigation/actions.",
+        "Use semantic headings, navigation links and action buttons.",
         "Measure proposed contrast pairs.",
         "Test the overview with a keyboard.",
         "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
@@ -85,7 +85,7 @@
         {
           "label": "Run local reference checks",
           "command": "node contrast.test.cjs\nnode semantics.test.cjs",
-          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+          "expected": "Contrast arithmetic and static HTML checks pass; manual browser/assistive-technology checks remain separate."
         }
       ],
       "prerequisites": [
@@ -115,7 +115,7 @@
         "verification-md"
       ],
       "steps": [
-        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Extract the bundle. All files are directly inside the named practice folder.",
         "Read README.md and run the baseline commands.",
         "Preserve labels and help/error associations.",
         "Test blank and valid submission.",
@@ -128,7 +128,7 @@
         {
           "label": "Run local reference checks",
           "command": "node contrast.test.cjs\nnode semantics.test.cjs",
-          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+          "expected": "Contrast arithmetic and static HTML checks pass; manual browser/assistive-technology checks remain separate."
         },
         {
           "label": "Open the browser lab",
@@ -163,21 +163,21 @@
         "verification-md"
       ],
       "steps": [
-        "Extract the bundle; all files are flat inside the named practice folder.",
+        "Extract the bundle. All files are directly inside the named practice folder.",
         "Read README.md and run the baseline commands.",
         "Add non-drag reordering.",
         "Design localisation and long-text cases.",
         "Review authentication and destructive-action flows.",
         "Run a task test with another person.",
         "Record assistive-technology checks or mark them unexecuted.",
-        "Create component regression and manual retest triggers.",
+        "Add component regression tests and identify changes that require another manual check.",
         "Record actual outputs and compare them with the rubric; do not claim unexecuted checks."
       ],
       "commands": [
         {
           "label": "Run local reference checks",
           "command": "node contrast.test.cjs\nnode semantics.test.cjs",
-          "expected": "Contrast arithmetic and static semantic guardrails pass; manual browser/assistive-technology checks remain separate."
+          "expected": "Contrast arithmetic and static HTML checks pass; manual browser/assistive-technology checks remain separate."
         }
       ],
       "prerequisites": [

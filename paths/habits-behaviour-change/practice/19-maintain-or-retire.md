@@ -36,7 +36,7 @@ Vic compares whether the paper planner adds useful information or merely duplica
 
 - Benefit and duplicated effort are compared.
 - The keep/change/retire decision has a reason.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

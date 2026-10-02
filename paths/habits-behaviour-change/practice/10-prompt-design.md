@@ -2,7 +2,7 @@
 
 ## Aim
 
-A reminder is useful when it arrives at an actionable moment and says what to do.
+A reminder is useful when it arrives at a time when you can act and says what to do.
 
 An alarm that fires during commuting may be noticed but impossible to use. Prefer one well-placed prompt over many competing notifications. Record whether the signal was seen and whether acting was feasible. This distinguishes a prompt failure from a lack of opportunity.
 
@@ -36,7 +36,7 @@ Move the prompt to the end of her desk session and label it “file today’s ha
 
 - The prompt occurs at an available opportunity.
 - Seen, feasible and completed are recorded separately.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

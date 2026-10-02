@@ -36,7 +36,7 @@ Keep the after-dinner cue and bag by the door. Add a note for late shifts and re
 
 - Observations and alternate explanations are separate.
 - A recovery branch and review date are specified.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

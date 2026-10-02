@@ -36,7 +36,7 @@ I interrupted you twice and missed the information you were explaining. I am sor
 
 - The mistake and its effect are named.
 - The changed next action matches the mistake.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A resumption note preserves state: last completed step, next action, open question and file location. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.
+Before stopping, note where you got to, what comes next, any open question and which file to reopen. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.
 
 ## Try before reading the answer
 

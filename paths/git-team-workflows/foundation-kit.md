@@ -12,7 +12,7 @@ Expected: JSON reports staged_snapshot two and ignored_untracked true; fresh own
 
 ## Implement and submit
 
-1. Run the complete foundation fixture in its fresh retained owned child.
+1. Run the complete foundation fixture in its new directory created and kept by the fixture.
 2. Predict ordinary and cached diffs for one -> staged two -> unstaged three.
 3. Verify committed contents independently with git show.
 4. Show that an untracked synthetic config file is ignored without claiming history erasure.

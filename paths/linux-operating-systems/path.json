@@ -349,7 +349,7 @@
       ],
       "exercise": {
         "prompt": "Design separate destinations for a report and diagnostic log. Explain why merging stderr into CSV can corrupt it.",
-        "solution": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream.",
+        "solution": "Write report rows to stdout or a report file. Send diagnostics to stderr or a separate log. Diagnostic text does not satisfy the report schema and must not enter its data stream.",
         "checks": [
           "Send report data to stdout or its file and diagnostics to stderr or a log.",
           "Explain how a diagnostic line would violate the CSV schema if streams were merged."
@@ -364,7 +364,7 @@
           "Both to stderr so every line is treated as diagnostic evidence"
         ],
         "correct": 0,
-        "explanation": "Write report rows to stdout/file and diagnostics to stderr/log. Diagnostic text does not satisfy the report schema and must not enter its data stream."
+        "explanation": "Write report rows to stdout or a report file. Send diagnostics to stderr or a separate log. Diagnostic text does not satisfy the report schema and must not enter its data stream."
       },
       "references": [
         {
@@ -536,7 +536,7 @@
       ],
       "exercise": {
         "prompt": "List three facts to capture when a scheduled command works interactively but fails as a service.",
-        "solution": "Capture effective user, absolute executable/version, and working directory/configuration source. Redact secret values.",
+        "solution": "Record the effective user, the absolute executable path and its version, the working directory, and the configuration source. Redact secret values.",
         "checks": [
           "Capture effective user, absolute executable and version, and working directory or configuration source.",
           "Redact secret configuration values from the comparison."
@@ -659,7 +659,7 @@
       ],
       "exercise": {
         "prompt": "Sketch shutdown when one task finishes and a second exceeds the deadline. Which state must survive abrupt termination?",
-        "solution": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup.",
+        "solution": "Stop accepting new work and finish the task that fits within the shutdown deadline. Save unfinished work durably for retry. Durable work identity must survive a process that cannot run cleanup.",
         "checks": [
           "Stop intake and complete only work that fits the shutdown deadline.",
           "Keep unfinished work identity durable so retry remains possible without cleanup."
@@ -674,7 +674,7 @@
           "A termination handler can extend the deadline after SIGKILL"
         ],
         "correct": 0,
-        "explanation": "Stop intake, finish the bounded task, mark or retain the unfinished task durably for retry. Durable work identity must survive a process that cannot run cleanup."
+        "explanation": "Stop accepting new work and finish the task that fits within the shutdown deadline. Save unfinished work durably for retry. Durable work identity must survive a process that cannot run cleanup."
       },
       "references": [
         {
@@ -714,7 +714,7 @@
       ],
       "exercise": {
         "prompt": "Explain why VSZ=2 GiB and RSS=120 MiB is not evidence of a 2 GiB physical leak.",
-        "solution": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak.",
+        "solution": "VSZ includes reserved and mapped virtual address space. Track resident memory and heap growth under an equivalent workload, then inspect allocations before calling the growth a leak.",
         "checks": [
           "Distinguish the 2 GiB virtual mapping from the 120 MiB resident measurement.",
           "Request resident or heap trends under equivalent workload before diagnosing a leak."
@@ -729,7 +729,7 @@
           "The 120 MiB RSS proves that no allocation leak can exist"
         ],
         "correct": 0,
-        "explanation": "VSZ includes reserved/mapped virtual space. Track resident/heap growth under equivalent workload and inspect allocation evidence before calling it a leak."
+        "explanation": "VSZ includes reserved and mapped virtual address space. Track resident memory and heap growth under an equivalent workload, then inspect allocations before calling the growth a leak."
       },
       "references": [
         {
@@ -776,7 +776,7 @@
       ],
       "exercise": {
         "prompt": "State the smallest critical section needed to preserve count += 1 and why locking just the final write fails.",
-        "solution": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads.",
+        "solution": "Protect the read, calculation and write with the same lock. Locking only the write lets both workers calculate the same next value from stale reads.",
         "checks": [
           "Protect the read, calculation and write as one critical section.",
           "Show how both workers can compute 6 from 5 when only final writes are locked."
@@ -791,7 +791,7 @@
           "A lock covering only the printed result"
         ],
         "correct": 0,
-        "explanation": "Protect read, calculation and write together. Locking only write permits both workers to calculate the same next value from stale reads."
+        "explanation": "Protect the read, calculation and write with the same lock. Locking only the write lets both workers calculate the same next value from stale reads."
       },
       "references": [
         {
@@ -1026,7 +1026,7 @@
       ],
       "exercise": {
         "prompt": "Specify executable, identity, working directory and restart conditions for a practice importer. Which failures should not retry rapidly?",
-        "solution": "Use an absolute executable, unprivileged account and explicit working directory. Invalid permanent configuration should stop/alert rather than rapidly repeat.",
+        "solution": "Use an absolute executable, unprivileged account and explicit working directory. If the configuration is permanently invalid, stop the service and alert its owner instead of restarting it repeatedly.",
         "checks": [
           "Specify an absolute executable, unprivileged identity and explicit working directory.",
           "Stop or alert on permanent invalid configuration instead of rapidly restarting it."
@@ -1088,7 +1088,7 @@
       ],
       "exercise": {
         "prompt": "Write an evidence note for an importer failure without including the database password or entire customer file.",
-        "solution": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage.",
+        "solution": "Record the time with its timezone, the operation ID, a sanitized error category, the input schema and version, and the relevant path or identity. Keep sensitive source data only in approved storage.",
         "checks": [
           "Include time and timezone, operation ID, sanitized error category, schema version and relevant path or identity.",
           "Exclude the database password and complete customer file from the evidence note."
@@ -1103,7 +1103,7 @@
           "Only the error sentence, omitting time, identity and operation details"
         ],
         "correct": 0,
-        "explanation": "Record UTC/timezone, operation ID, sanitized error category, input schema/version and relevant path/identity; retain sensitive source only in approved storage."
+        "explanation": "Record the time with its timezone, the operation ID, a sanitized error category, the input schema and version, and the relevant path or identity. Keep sensitive source data only in approved storage."
       },
       "references": [
         {
@@ -1150,7 +1150,7 @@
       ],
       "exercise": {
         "prompt": "Predict backlog after arrival returns to 8/second for 60 seconds. State the model assumptions.",
-        "solution": "Spare capacity is 2/second, clearing 120 in 60 seconds. Rates are constant, service remains 10 and there are no retries or size differences.",
+        "solution": "The worker has spare capacity of 2 jobs per second, so it clears 120 queued jobs in 60 seconds. This assumes constant rates, a service capacity of 10 jobs per second, no retries and equal job sizes.",
         "checks": [
           "Calculate 2 jobs/second spare capacity and removal of the 120-job backlog in 60 seconds.",
           "State constant rates, service capacity of 10, and no retries or job-size differences."
@@ -1212,7 +1212,7 @@
       ],
       "exercise": {
         "prompt": "Match PID visibility and memory budget to their mechanisms. Explain why seeing PID 1 is not proof of host administrator access.",
-        "solution": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities.",
+        "solution": "A PID namespace controls which process IDs are visible. A memory cgroup controls the memory budget. A process ID alone establishes neither user identity nor capabilities.",
         "checks": [
           "Match PID visibility to a PID namespace and memory budget to a cgroup.",
           "Explain why PID 1 alone establishes neither host identity nor administrator capabilities."
@@ -1227,7 +1227,7 @@
           "The cgroup assigns PID 1 and grants host administrator identity"
         ],
         "correct": 0,
-        "explanation": "PID namespace controls PID views; memory cgroup controls a budget. PID numbering says nothing by itself about user identity/capabilities."
+        "explanation": "A PID namespace controls which process IDs are visible. A memory cgroup controls the memory budget. A process ID alone establishes neither user identity nor capabilities."
       },
       "references": [
         {
@@ -1353,7 +1353,7 @@
           "Administrator privileges because all file-processing errors concern access"
         ],
         "correct": 0,
-        "explanation": "Missing: inspect configured path/cwd. Permission: identity/parents/policy. Timeout: deadline/process state. Validation: schema and rejected row category. Avoid a blanket sudo fix."
+        "explanation": "For a missing file, inspect the configured path and working directory. For an access failure, inspect the process identity, parent directories and access policy. For a timeout, inspect the deadline and process state. For a validation error, inspect the schema and rejected row category. A blanket sudo fix does not distinguish these causes."
       },
       "references": [
         {
@@ -1393,7 +1393,7 @@
       ],
       "exercise": {
         "prompt": "Produce a one-page report with reproducible commands, failure timeline, safe fix and recovery verification.",
-        "solution": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries.",
+        "solution": "Include the tool and runtime versions, the exact bounded test, observations before and after recovery, and the state that was preserved. State which Linux and production behaviors remain untested.",
         "checks": [
           "Include versions, reproducible bounded commands, failure timeline and before/after recovery evidence.",
           "Show preserved prior state and label modeled, executed and untested Linux behavior separately."
@@ -1408,7 +1408,7 @@
           "Production capacity is verified because each small test completed"
         ],
         "correct": 0,
-        "explanation": "Include tool/runtime versions, exact bounded test, before/after evidence, preserved state and explicit untested Linux/production boundaries."
+        "explanation": "Include the tool and runtime versions, the exact bounded test, observations before and after recovery, and the state that was preserved. State which Linux and production behaviors remain untested."
       },
       "references": [
         {

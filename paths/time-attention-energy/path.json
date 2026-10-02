@@ -3,7 +3,7 @@
   "title": "Time, Attention & Energy",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Learn time, attention & energy through realistic constraints, worked examples, printable practice and assessed projects.",
+  "description": "Plan study sessions around fixed commitments, interruptions and recovery. Use worked examples to check what fits.",
   "level": "Foundations → everyday planning → adaptation and review",
   "prerequisites": [
     "No specialist knowledge required.",
@@ -22,8 +22,8 @@
     "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
-    "Apply one bounded change to an ordinary real commitment.",
-    "Retain the smallest useful routine and review actual outcomes."
+    "Try one small change in how you handle an existing commitment.",
+    "Keep the parts of the routine that help, and check what you finish."
   ],
   "sources": [
     {
@@ -204,7 +204,7 @@
     {
       "id": "foundation",
       "title": "Plan a study day",
-      "description": "Plan a synthetic day with limited capacity and a clear output.",
+      "description": "Plan a fictional day with limited time and a specific result to finish.",
       "exitCriteria": [
         "Capacity calculation includes essential commitments and transitions.",
         "Two session outcomes have observable finish conditions.",
@@ -213,7 +213,7 @@
       ],
       "project": {
         "title": "A feasible study day",
-        "brief": "Plan a synthetic day with limited capacity and a clear output.",
+        "brief": "Plan a fictional day with limited time and a specific result to finish.",
         "requirements": [
           "List fixed commitments and calculate remaining capacity.",
           "Select two outcomes and finish conditions.",
@@ -255,7 +255,7 @@
           "The trial compares checked output, errors and context.",
           "The comparison supports one feasible next scheduling change and states what remains uncertain."
         ],
-        "solution": "Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload confounds any improvement; keep conclusions local.",
+        "solution": "Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload could explain the improvement. These sessions alone cannot show that batching caused it.",
         "solutionFormat": "prose"
       }
     },
@@ -267,14 +267,14 @@
         "The routine has a minimum version for disrupted days.",
         "A conflicting request is resolved through explicit feasible alternatives.",
         "Tracking fields are justified by decisions and maintenance cost.",
-        "The evidence review states confounds and a bounded next experiment."
+        "Explain what else could account for the results, then choose a small follow-up trial."
       ],
       "project": {
         "title": "A sustainable personal system",
         "brief": "Try a routine for two weeks and report what happened, including missed sessions and changed conditions.",
         "requirements": [
           "Capture obligations and review capacity twice.",
-          "Renegotiate one synthetic conflicting request.",
+          "Use a fictional conflicting request to practise agreeing on a feasible alternative.",
           "Remove one unnecessary tracking field.",
           "Report observed outcomes, maintenance cost and a next revision."
         ],
@@ -282,7 +282,7 @@
           "The routine has a minimum version for disrupted days.",
           "A conflicting request is resolved through explicit feasible alternatives.",
           "Tracking fields are justified by decisions and maintenance cost.",
-          "The evidence review states confounds and a bounded next experiment."
+          "Explain what else could account for the results, then choose a small follow-up trial."
         ],
         "solution": "Keep one commitment list, a daily capacity check and a weekly review. For a 90-minute request with 30 minutes available, offer a partial result today or a full result Thursday. Record fewer misses alongside workload differences; retain useful decisions and revise unsupported claims.",
         "solutionFormat": "prose"
@@ -300,7 +300,7 @@
           "title": "Understand and apply",
           "paragraphs": [
             "A calendar contains fixed commitments and negotiable work. Count the remaining space before adding ambitions. Include travel, meals, care and transition time; empty squares are not all usable focus time. A capacity budget is a planning aid, not a judgement of personal worth.",
-            "Check the shape of the available time as well as its total. Three separate 20-minute gaps might support three reading questions, but they are a poor fit for a 60-minute task needing setup and uninterrupted checking. Place fixed commitments first, subtract essential transitions and then match an outcome to an actual window. If a long task will not fit, split its deliverable at a useful boundary or move it. Do not assume that time saved in one part of the day is automatically available in another."
+            "Check when time is available as well as how much you have. Three separate 20-minute gaps might support three reading questions, but they are a poor fit for a 60-minute task needing setup and uninterrupted checking. Place fixed commitments first, subtract essential transitions and then match an outcome to an actual window. If a long task will not fit, split its deliverable at a useful boundary or move it. Do not assume that time saved in one part of the day is automatically available in another."
           ],
           "example": "A three-hour afternoon includes a 20-minute walk, 25-minute meal and 15-minute setup: 180 − 60 = 120 study minutes. Allocate 60 to practice, 40 to checking and leave 20 uncommitted.",
           "exampleFormat": "prose"
@@ -313,7 +313,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. Find study capacity.",
+        "prompt": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?",
         "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
         "solutionFormat": "prose",
         "checks": [
@@ -574,7 +574,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.",
+        "prompt": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. How much time do the interruptions take?",
         "solution": "Six minutes of messages plus eight minutes of resumption equals 14 minutes. There are 36 minutes left for drafting. This is the supplied scenario, not a universal interruption cost.",
         "solutionFormat": "prose",
         "checks": [
@@ -606,13 +606,13 @@
     {
       "id": "small-start",
       "title": "7. Make starting concrete",
-      "takeaway": "Starting friction often comes from an ambiguous first move or missing material.",
+      "takeaway": "Starting is harder when the first action is unclear or a needed file is missing.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "Starting friction often comes from an ambiguous first move or missing material. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.",
+            "Starting is harder when the first action is unclear or a needed file is missing. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.",
             "Preparing a first action can reveal a missing input. If the chapter is unavailable, obtaining the file becomes the next action; pretending to revise it would create a false promise. Choose a first move that produces useful state, such as one improved heading or a question for the author. Avoid replacing a vague large task with twenty tiny tracking cards whose maintenance costs exceed their value. After the first move, reassess the remaining work and available time. A small start is a way to clarify execution, not evidence that every barrier is motivational."
           ],
           "example": "For an unclear data-cleaning task, open the supplied CSV and list the column names plus the first missing value. That bounded action reveals the input before choosing a cleaning rule.",
@@ -898,13 +898,13 @@
     {
       "id": "resume",
       "title": "12. Leave a return cue",
-      "takeaway": "A resumption note preserves state: last completed step, next action, open question and file location.",
+      "takeaway": "Before stopping, note where you got to, what comes next, any open question and which file to reopen.",
       "stage": "intermediate",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A resumption note preserves state: last completed step, next action, open question and file location. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.",
+            "Before stopping, note where you got to, what comes next, any open question and which file to reopen. It is especially useful when an unavoidable interruption occurs before a natural boundary. The note reduces reconstruction work in the example; its benefit in your setting remains testable.",
             "Write the cue before closing the file when possible, while the current state is still available. Include a stable filename, the last verified step and one unresolved issue. A note saying continue editing does not distinguish completed work from work still requiring checking. On return, read the cue and inspect the actual file because another person may have changed it. Resume at the next valid step rather than blindly following stale instructions. In a shared task, record version or location information so the cue does not send someone to an outdated copy."
           ],
           "example": "Return cue: checked references A–D; next verify reference E against the source; open question: B has two publication dates; file literature-notes.md. The cue preserves both the next action and unresolved evidence.",
@@ -1022,7 +1022,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A learner reports better drafting at 10:00 than 16:00 on three days. Propose a bounded test.",
+        "prompt": "A learner reports better drafting at 10:00 than 16:00 on three days. Plan a small comparison using similar tasks.",
         "solution": "Move one comparable drafting task to 10:00 for a week and keep task size and quality criteria similar. Record sleep opportunity and disruptions as context. The result supports a local decision, not proof of a body clock mechanism.",
         "solutionFormat": "prose",
         "checks": [
@@ -1054,13 +1054,13 @@
     {
       "id": "weekly-review",
       "title": "15. Review commitments before adding more",
-      "takeaway": "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints.",
+      "takeaway": "Compare what you planned with what happened, then decide what still fits.",
       "stage": "advanced",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week's limited outcomes. A review should create decisions, not become another elaborate tracking task.",
+            "Compare what you planned with what happened, then decide what still fits. Start by recovering loose notes and obligations; then choose the coming week's limited outcomes. A review should create decisions, not become another elaborate tracking task.",
             "Carry-over requires a decision: keep, clarify, reduce, defer or remove. Copying every unfinished item into the next week preserves the overload and turns the review into clerical work. Recheck deadline consequences and promises before choosing outcomes, because last week's priorities may have changed. For each selected item, verify that needed inputs and a work window exist. A postponed promise may require a message to the affected person rather than a private calendar edit. End the review when these decisions are recorded, even if the backlog remains long."
           ],
           "example": "A weekly list contains three completed tasks, two carried tasks and three new requests. With three available windows, archive the completed work and select three bounded outcomes from the five remaining candidates; defer or renegotiate the other two explicitly.",
@@ -1187,7 +1187,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Four of six daily outcomes carry over on three days. Design one intervention.",
+        "prompt": "Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.",
         "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
         "solutionFormat": "prose",
         "checks": [
@@ -1395,7 +1395,7 @@
         }
       ],
       "exercise": {
-        "prompt": "In a two-week trial, missed deadlines decreased but workload was lighter in week two. Capacity budgeting exposed schedule conflicts; message batching was also tested. Write a conclusion that separates observed usefulness from an independent causal effect.",
+        "prompt": "In a two-week trial, missed deadlines decreased but workload was lighter in week two. Capacity budgeting exposed schedule conflicts; message batching was also tested. Explain what helped and why these results do not show which change caused the improvement.",
         "solution": "The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.",
         "solutionFormat": "prose",
         "checks": [

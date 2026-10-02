@@ -9,7 +9,7 @@
     "returns": "int",
     "statement": "Return the sum of entries that are at least minimum. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Durations and minimum are integers from 0 to 10,000."
     ],
     "examples": [
@@ -128,7 +128,7 @@
     "returns": "list[int]",
     "statement": "Return a new list. Replace readings below low with low and readings above high with high. Keep readings on either boundary unchanged. Preserve order and duplicates.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "-10,000 <= low <= high <= 10,000. Readings are integers in that same numeric range."
     ],
     "examples": [
@@ -275,7 +275,7 @@
     "returns": "int",
     "statement": "Return the index of the first label whose length is at least minimum. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Labels contain ASCII characters only. minimum is from 0 to 1,001."
     ],
     "examples": [
@@ -395,7 +395,7 @@
     "returns": "int",
     "statement": "Return the greatest number of consecutive 1 entries. A 0 ends the current streak. Return zero for an empty list or a list containing only zeros.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Each flag is exactly the integer 0 or 1."
     ],
     "examples": [
@@ -513,7 +513,7 @@
     "returns": "str",
     "statement": "Remove leading and trailing ASCII spaces, reduce each internal run of ASCII spaces to one, and convert A-Z to lowercase. The empty result is allowed. Only the literal space character is whitespace in this contract.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "text contains only ASCII letters A-Z, a-z and literal spaces."
     ],
     "examples": [
@@ -604,7 +604,7 @@
     "returns": "list[int]",
     "statement": "Return each reading minus its immediate predecessor, beginning with the second reading. Do not include a made-up change for the first reading. Fewer than two readings gives an empty list.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Readings are integers from -10,000 to 10,000."
     ],
     "examples": [
@@ -732,7 +732,7 @@
     "returns": "list[str]",
     "statement": "Return each distinct label once, in the order it first appears. Matching is exact and case-sensitive. An empty string is a valid label.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Labels contain ASCII characters only."
     ],
     "examples": [
@@ -862,7 +862,7 @@
     "returns": "dict[str, int]",
     "statement": "Each delivery is [item, quantity]. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
     ],
     "examples": [
@@ -1027,7 +1027,7 @@
     "returns": "list[int]",
     "statement": "Return column sums across rows of different lengths. A missing position contributes zero. Include every column that occurs in any row. No rows, or only empty rows, gives an empty list.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
     ],
     "examples": [
@@ -1184,7 +1184,7 @@
     "returns": "dict[str, list[str]]",
     "statement": "Group names by their first character in a dictionary. Preserve original order and duplicates within each group. Skip empty names. Matching is case-sensitive.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Names contain ASCII letters only, or are empty."
     ],
     "examples": [
@@ -1333,7 +1333,7 @@
     "returns": "str | None",
     "statement": "Return the most frequent label. Break a frequency tie by the label that first appeared. Return None for no labels. An empty string counts as a label.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "ASCII labels; exact case-sensitive matching."
     ],
     "examples": [
@@ -1450,7 +1450,7 @@
     "returns": "bool",
     "statement": "The sizes list is sorted in nondecreasing order. Return whether two different positions sum to target. Equal sizes may be used if they occur at least twice.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Sizes and target are integers from -10,000 to 10,000. Input is already sorted."
     ],
     "examples": [
@@ -1584,7 +1584,7 @@
     "returns": "list[int]",
     "statement": "Both lists are sorted. Return their shared values in sorted order, retaining the smaller occurrence count for each value. For example, two 3s on one side and one 3 on the other produce one 3.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
     ],
     "examples": [
@@ -1738,7 +1738,7 @@
     "returns": "int",
     "statement": "Return the starting index of the width consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when width exceeds the list length.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "width is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
     ],
     "examples": [
@@ -1871,7 +1871,7 @@
     "returns": "int",
     "statement": "Return the longest length of a consecutive stretch whose sum is at most budget. An empty stretch is allowed, so return zero if no entry can fit.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Costs and budget are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
     ],
     "examples": [
@@ -2007,7 +2007,7 @@
     "returns": "list[int]",
     "statement": "For each [start, stop] query, return the sum of values from start inclusive to stop exclusive. Preserve query order. Empty ranges have total zero.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Values are integers from -10,000 to 10,000. Every query has 0 <= start <= stop <= len(values). At most 1,000 queries."
     ],
     "examples": [
@@ -2209,7 +2209,7 @@
     "returns": "int",
     "statement": "Return the earliest index whose entries strictly before it sum to the same amount as entries strictly after it. The value at the index is excluded from both sums. Return -1 if none exists.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Integer values from -10,000 to 10,000; negative values are allowed."
     ],
     "examples": [
@@ -2323,7 +2323,7 @@
     "returns": "int",
     "statement": "capacities is sorted in nondecreasing order. Return the first index holding a value at least required, or len(capacities) if no value qualifies.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Capacities and required are integers from 0 to 10,000."
     ],
     "examples": [
@@ -2453,7 +2453,7 @@
     "returns": "bool",
     "statement": "Return whether every round, square and curly bracket closes in the correct nested order. Ignore ASCII letters and literal spaces. Empty text is valid.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Only ASCII letters, spaces and the characters ()[]{} appear."
     ],
     "examples": [
@@ -2550,7 +2550,7 @@
     "returns": "list[str]",
     "statement": "Each command is either \"add:\" followed by a note, or exactly \"undo\". Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word undo."
     ],
     "examples": [
@@ -2673,7 +2673,7 @@
     "returns": "dict[str, str]",
     "statement": "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with #, and split other lines at the first =. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain = and #.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
     ],
     "examples": [
@@ -2802,7 +2802,7 @@
     "returns": "dict[str, list[int]]",
     "statement": "Each sample is [device, timestamp, reading]. Return a dictionary mapping each device to [timestamp, reading] for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
     ],
     "examples": [
@@ -3006,7 +3006,7 @@
     "returns": "list[list[int]]",
     "statement": "Each [start, end] is a half-open time interval with start < end. Return sorted coverage intervals, combining overlaps and touching intervals. For example [1,3] and [3,5] become [1,5]. Do not change the supplied rows.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Every row has two integer endpoints with 0 <= start < end <= 1,000,000. Input may be unsorted or repeated."
     ],
     "examples": [
@@ -3189,7 +3189,7 @@
     "returns": "int",
     "statement": "The working day is [0, day_end). Return the earliest integer start where an appointment of duration fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "0 <= day_end <= 1,000,000 and 1 <= duration <= 1,000,000. Every busy row satisfies 0 <= start < end <= day_end."
     ],
     "examples": [
@@ -3354,7 +3354,7 @@
     "returns": "int",
     "statement": "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval [s, s + width) for any integer start s. The right boundary is excluded. Return zero for no requests.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Timestamps are nondecreasing integers from 0 to 1,000,000. width is from 1 to 1,000,000."
     ],
     "examples": [
@@ -3478,7 +3478,7 @@
     "returns": "int | None",
     "statement": "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or None for an invalid string. Examples: \"12\" gives 1200, \"12.05\" gives 1205.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
     ],
     "examples": [
@@ -3599,7 +3599,7 @@
     "returns": "int",
     "statement": "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when left is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
     ],
     "examples": [
@@ -3705,7 +3705,7 @@
     "returns": "list[str] | None",
     "statement": "Each [task, prerequisite] requires prerequisite to finish before task. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return None if no complete order exists, including a self-dependency. An empty task list has the valid order [].",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "tasks contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
     ],
     "examples": [
@@ -3880,7 +3880,7 @@
     "returns": "list[bool]",
     "statement": "Each order is [item, quantity]. Process orders in input order using a private working copy of stock. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave stock unchanged.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
     ],
     "examples": [
@@ -4067,7 +4067,7 @@
     "returns": "int",
     "statement": "Each [start, end] is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
     "constraints": [
-      "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+      "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
       "Each row contains integer times with 0 <= start < end <= 1,000,000. Input may be unsorted."
     ],
     "examples": [

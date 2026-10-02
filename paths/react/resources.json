@@ -150,12 +150,12 @@
         "depth-foundation-bridge-md"
       ],
       "steps": [
-        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open react-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output. The foundation reference is the domain decoder and tests; implement a pure importer function first. The UI belongs to the later components/forms stage.",
         "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
-        "Build the project described in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans. Reject malformed JSON, duplicate IDs, blank titles and unsupported versions. Return a completion summary without modifying caller-owned records. Write repeatable valid and invalid-input tests.",
-        "Check your result: Every malformed case produces an explicit failure. Zero and false are not treated as missing. Original data is unchanged. Explain where runtime validation ends and static typing begins.",
+        "Build the project described in the lesson. Accept a versioned object containing unique lesson IDs, titles and completion booleans. Reject malformed JSON, duplicate IDs, blank titles and unsupported versions. Return a completion summary without modifying caller-owned records. Write repeatable valid and invalid-input tests.",
+        "Check the following results. Every malformed case produces an explicit failure. Zero and false are not treated as missing. Original data is unchanged. Explain where runtime validation ends and static typing begins.",
         "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
       ],
       "commands": [
@@ -195,7 +195,7 @@
     {
       "id": "intermediate",
       "title": "Editable learning tracker",
-      "goal": "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+      "goal": "Build a tracker that lets users add, toggle, remove and search records. Keep its data transformations pure and its controls usable with a keyboard.",
       "fileIds": [
         "App-tsx",
         "AdvancedApp-tsx",
@@ -215,12 +215,12 @@
         "depth-foundation-bridge-md"
       ],
       "steps": [
-        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open react-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output. Create the Vite directory once, then reuse it for later runs.",
-        "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
-        "Build the project described in the reader: Use stable IDs and immutable reducer transitions. Show blank-title errors and an empty search result. Keep completion counts derived from all records. Decide whether changing selection preserves unsaved drafts. Run domain tests and manually verify Enter, Tab and checkbox behavior.",
-        "Check your result: No duplicated records or mutation of old state. Filtering does not lose completion changes. Controls have accessible names. A failed input cannot appear as a successful update. Explain the ownership of each state value.",
+        "Build a tracker that lets users add, toggle, remove and search records. Keep its data transformations pure and its controls usable with a keyboard.",
+        "Build the project described in the lesson. Use stable IDs and immutable reducer transitions. Show blank-title errors and an empty search result. Keep completion counts derived from all records. Decide whether changing selection preserves unsaved drafts. Run domain tests and manually verify Enter, Tab and checkbox behavior.",
+        "Check that records are not duplicated and previous state is unchanged. Completion changes must survive filtering, controls must have accessible names, and invalid input must produce an error. Explain which component owns each state value.",
         "Use foundation-bridge.md to connect JS value/reference behavior to a validated TypeScript state transition."
       ],
       "commands": [
@@ -277,12 +277,12 @@
         "tsconfig-json"
       ],
       "steps": [
-        "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open react-practice. All listed files are directly inside that folder.",
         "Read README.md before running the references.",
         "Run the reference and check its output. Create the Vite directory once, then reuse it for later runs.",
-        "Extend the workshop into a versioned, recoverable application and produce evidence for its release readiness.",
-        "Build the project described in the reader: Add persistence with explicit save/read failure handling and schema version checks. Implement a controllable API adapter with loading, error and stale-response tests. Add URL-selected records and verify Back/Forward and direct-link refresh. Prevent unsaved edits being silently overwritten. Document server authorization assumptions and keep secrets out of the client. Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
-        "Check your result: Delayed response A cannot overwrite newer record B. Malformed storage remains visible as an error rather than silently trusted data. Keyboard and empty/error journeys pass. Release notes distinguish executed tests from reviewed-only code. Rollback/migration behavior is specified."
+        "Extend the workshop into a versioned, recoverable application and check whether it is ready to release.",
+        "Build the project described in the lesson. Add persistence with explicit save/read failure handling and schema version checks. Implement a controllable API adapter with loading, error and stale-response tests. Add URL-selected records and verify Back/Forward and direct-link refresh. Prevent unsaved edits being silently overwritten. Document server authorization assumptions and keep secrets out of the client. Provide before/after measurements for one genuine bottleneck or explain why no optimization was justified.",
+        "Check the following results. Delayed response A cannot overwrite newer record B. Malformed storage remains visible as an error rather than silently trusted data. Keyboard and empty/error journeys pass. Release notes distinguish executed tests from reviewed-only code. Rollback/migration behavior is specified."
       ],
       "commands": [
         {

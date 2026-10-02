@@ -8,7 +8,7 @@ Energy notes are subjective observations, not biological diagnoses. Track percei
 
 ## Try before reading the answer
 
-A learner reports better drafting at 10:00 than 16:00 on three days. Propose a bounded test.
+A learner reports better drafting at 10:00 than 16:00 on three days. Plan a small comparison using similar tasks.
 
 Decision: ____________________________________________
 

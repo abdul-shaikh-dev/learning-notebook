@@ -66,7 +66,7 @@ dotnet ef migrations script --idempotent --project ./PracticeApi --output ./arti
 
 Create the artifacts directory first. Inspect SQL, locks, expected starting/ending schema and rollback implications. Apply only to the named staging database using an approved database tool/identity. This idempotent-script example is SQL Server-specific; SQLite does not provide the same facility. Test old/new API versions against the expanded schema, backfill synthetic data and leave destructive contraction for a later release after compatibility evidence.
 
-Map your implemented API configuration key (for example ConnectionStrings__Tasks) to a private runtime secret reference. Setting an environment variable on the stock memory-only API does not magically implement persistence. Configure actual issuer/audience/trusted keys through the chosen identity provider and prove accepted, expired and wrong-audience behavior in staging. Never ship these credentials in Vite environment values: those values appear in client assets.
+Map your implemented API configuration key (for example ConnectionStrings__Tasks) to a private runtime secret reference. The stock API stores data in memory. Adding a connection-string environment variable does not change that implementation. Configure actual issuer/audience/trusted keys through the chosen identity provider and prove accepted, expired and wrong-audience behavior in staging. Never ship these credentials in Vite environment values: those values appear in client assets.
 
 ## 4. Deploy a candidate and prove the user journey
 
@@ -88,6 +88,6 @@ Retain the prior React build/API image and compatible schema. Switch routing bac
 
 Separately capture a supported SQL Server backup chain appropriate to the recovery model. Restore it into a new isolated database, run integrity/schema checks and verify synthetic record values through a compatible API. Measure restore time and missing-write interval; plan controlled cutover/reconciliation. Reverting a binary does not restore dropped columns or recover transactions after the snapshot.
 
-For an incident drill, simulate a reviewed staging dependency/configuration failure, stop further rollout, assign lead, record observations, choose a compatible rollback or dependency fix, and verify user recovery. Close with one falsifiable improvement and its owner.
+For an incident drill, simulate a reviewed staging dependency/configuration failure, stop further rollout, assign lead, record observations, choose a compatible rollback or dependency fix, and verify user recovery. Choose one improvement, name its owner and specify a test that would show whether it worked.
 
 Primary references: Microsoft .NET container tutorial https://learn.microsoft.com/en-us/dotnet/core/docker/build-container ; EF migrations https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying ; trusted proxies https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-10.0 ; SQL recovery https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/restore-and-recovery-overview-sql-server?view=sql-server-ver17 . Applicability reviewed 2026-09-27; this runbook was inspected, not executed as a full stack.

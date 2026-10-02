@@ -36,7 +36,7 @@ Could you point to a recent update that was difficult to follow? I hear that the
 
 - The reply asks for an example before deciding.
 - The proposed experiment has a checkable result.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

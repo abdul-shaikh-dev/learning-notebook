@@ -3,7 +3,7 @@
   "title": "Plan and Review Your Week",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Connect five personal-effectiveness topics through Sam's fictional busy week: plan within capacity, adapt to disruption, communicate trade-offs and review evidence in 15 lessons and three printable projects.",
+  "description": "Help Sam plan a fictional busy week, adjust when plans change and explain what needs to be postponed. The path has 15 lessons and three printable projects.",
   "level": "Beginner → applied practice → independent review",
   "prerequisites": [
     "No technical background, prior course or special app required. A notebook or printable worksheet is sufficient."
@@ -85,7 +85,7 @@
       "id": "week-context",
       "title": "1. Meet a realistic week",
       "stage": "foundation",
-      "takeaway": "Start with commitments, constraints and a small purpose.",
+      "takeaway": "List fixed commitments and choose what you want to finish this week.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -108,7 +108,7 @@
         "checks": [
           "Capacity is 35 minus 12 minus 12 equals 11.",
           "One uncertainty prevents treating 11 as guaranteed focused hours.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -135,7 +135,7 @@
       "id": "capture-week",
       "title": "2. Capture open commitments",
       "stage": "foundation",
-      "takeaway": "A capture list is an inventory before it is a schedule.",
+      "takeaway": "List commitments and ideas before deciding when to work on them.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -158,7 +158,7 @@
         "checks": [
           "Accepted event/reply commitments are separated from optional poster idea.",
           "Result, recipient and timing are clarified.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -208,7 +208,7 @@
         "checks": [
           "Four actions include names request and final reconciliation.",
           "Independent venue/cover work is separated from waiting work.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -235,7 +235,7 @@
       "id": "priorities-capacity",
       "title": "4. Choose a feasible set of outcomes",
       "stage": "foundation",
-      "takeaway": "Priority becomes real when you name what is deferred.",
+      "takeaway": "Choosing a priority also means deciding what to postpone.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -258,7 +258,7 @@
         "checks": [
           "Eight plus two plus three is compared with 11.",
           "Two-hour shortfall leads to an explicit agreed change.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -308,7 +308,7 @@
         "checks": [
           "Wednesday care time is treated as unavailable.",
           "Thursday meeting and appointment windows are checked before placement.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -358,7 +358,7 @@
         "checks": [
           "Late-name fallback preserves required details without guessing names.",
           "Event owner decides a scope or timing change.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -385,7 +385,7 @@
       "id": "supporting-habit",
       "title": "7. Add one small supporting habit",
       "stage": "intermediate",
-      "takeaway": "A habit supports the week; it should not consume the week.",
+      "takeaway": "Choose a short routine that helps you keep track of the week's work.",
       "sections": [
         {
           "title": "Understand and try it",
@@ -408,7 +408,7 @@
         "checks": [
           "Three-minute normal routine and one-minute fallback use an actual cue.",
           "Observable next-morning result is defined without a perfect-streak claim.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -566,7 +566,7 @@
         "checks": [
           "Cancelled Thursday review stays cancelled in the record.",
           "Monday delayed check remains realistic and Friday is optional.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -617,7 +617,7 @@
         "checks": [
           "Three service plus six pack plus two urgent hours equals 11 aggregate demand.",
           "Day-level timing and agreed routine deferral remain visible.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -667,7 +667,7 @@
         "checks": [
           "Seven plus two plus three gives 12 observed against 11 budgeted.",
           "The actual source of the extra hour is recorded before judging success.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {
@@ -717,7 +717,7 @@
         "checks": [
           "Review states win, cost, condition and a testable repair.",
           "Missed learning and three-of-five habit count stay visible.",
-          "State the scenario-specific condition that would change the decision."
+          "Name one change in the case that would change your answer."
         ]
       },
       "quiz": {

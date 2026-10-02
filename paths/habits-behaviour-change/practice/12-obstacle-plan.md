@@ -36,7 +36,7 @@ Normal: after lunch at the usual desk, review three notes. Different desk: after
 
 - Normal cue and obstacle branch are both specified.
 - The branch permits a skip when opportunity is absent.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

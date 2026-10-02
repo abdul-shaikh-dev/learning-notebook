@@ -575,7 +575,7 @@
       "id": "indexes-storage",
       "title": "8. Indexes, storage and retention",
       "stage": "foundation",
-      "takeaway": "An index buys read efficiency with write, space and maintenance costs.",
+      "takeaway": "An index can speed up reads but adds writes, storage and maintenance work.",
       "sections": [
         {
           "title": "Concept",
@@ -690,7 +690,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A cache keeps a reusable result nearer a caller. Cache-aside first checks the cache, loads the origin on a miss, then populates it. A TTL bounds how long an entry may remain without refresh, but it does not automatically solve all races. Public lesson content is a better starting point than private authorization decisions or the final available workshop seat."
+            "A cache stores a result so callers can reuse it without repeating the original computation or fetch. Cache-aside first checks the cache, loads the origin on a miss, then populates it. A TTL bounds how long an entry may remain without refresh, but it does not automatically solve all races. Public lesson content is a better starting point than private authorization decisions or the final available workshop seat."
           ]
         },
         {
@@ -1177,7 +1177,7 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Multiplication across layers is a common hidden cost."
+            "When several layers retry, one request can trigger many more downstream attempts."
           ],
           "example": "Three layers each allow 3 attempts including the first\nWorst-case deepest attempts: 3 × 3 × 3 = 27\nChoose one intentional retry owner where practical\nOverall deadline: 1,000 ms\nReserve time for response/cleanup; stop retries when budget is spent\nIsolate export-worker concurrency from interactive-save capacity."
         },
@@ -1351,7 +1351,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "A saga coordinates a longer workflow through local transactions and compensating actions. Compensation is a business action, not time travel: cancelling a reservation does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
+            "A saga coordinates a longer workflow through local transactions and compensating actions. A compensating action addresses the effects of an earlier step. Cancelling a reservation, for example, does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
             "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
           ]
         },
@@ -1462,7 +1462,7 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Model an attacker who changes a URL and request body, not just a cooperative UI."
+            "Test requests with changed URLs and bodies, including inputs the UI would never send."
           ],
           "example": "Authenticated learner A requests /users/B/progress\nServer loads identity A from verified session/token\nServer evaluates policy for resource owner B\nReject unauthorized access before returning private data\nAlso test export/status/download endpoints\nAudit relevant decisions without storing access tokens"
         },
@@ -1530,7 +1530,7 @@
         {
           "title": "Design",
           "paragraphs": [
-            "A toy failure timeline reveals whether objectives are being met."
+            "Use the example failure timeline to calculate data loss and recovery time, then compare them with the objectives."
           ],
           "example": "Last recoverable point: 10:00\nFailure: 10:12\nRequired service restored and validated: 10:47\nObserved potential data-loss interval: 12 minutes\nObserved recovery duration from failure: 35 minutes\nTargets: RPO 15 min, RTO 30 min\nResult: RPO interval fits; recovery misses RTO by 5 min"
         },
@@ -1579,7 +1579,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A modular monolith is one deployable application with internal ownership boundaries. Microservices add independently deployed services and network contracts. Separate services can support different scaling or team needs, but introduce partial failure, observability, version compatibility and operational overhead. A notebook does not need a service per noun merely because it has users, lessons and progress."
+            "A modular monolith is one deployable application with internal ownership boundaries. Microservices add independently deployed services and network contracts. Separate services can support different scaling or team needs, but introduce partial failure, observability, version compatibility and operational overhead. Users, lessons and progress do not each need a separate service unless their operational requirements justify that split."
           ]
         },
         {
@@ -1634,13 +1634,13 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Finish a design with evidence, not a gallery of components. An architecture decision record states context, options, choice, consequences and a revisit trigger. A load test measures a specified workload and environment; results do not automatically transfer to a different dataset or failure mode. A failure drill tests a recovery hypothesis. Keep synthetic data and controlled environments for learning."
+            "For each design decision, state which requirement it addresses and which evidence supports it. An architecture decision record states context, options, choice, consequences and a revisit trigger. A load test measures a specified workload and environment; results do not automatically transfer to a different dataset or failure mode. A failure drill tests a recovery hypothesis. Keep synthetic data and controlled environments for learning."
           ]
         },
         {
           "title": "Design",
           "paragraphs": [
-            "Review the notebook booking extension as an argument."
+            "Review whether the notebook booking design meets its stated requirements."
           ],
           "example": "Claim: one seat cannot be double-booked\nMechanism: conditional inventory change + unique booking + transaction\nEvidence: concurrent final-seat and rollback tests\nClaim: repeated uncertain requests do not duplicate bookings\nMechanism: durable scoped idempotency key\nEvidence: response-loss and simultaneous retry tests\nUnknown: regional failover write behavior → needs separate drill"
         },

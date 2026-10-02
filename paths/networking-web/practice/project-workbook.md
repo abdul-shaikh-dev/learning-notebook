@@ -43,7 +43,7 @@ Reference: Use the supplied local_server and fetch helpers to compare GET, HEAD,
 
 ## Bounded observation and cache review
 
-Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.
+Validate observations, cache public responses in the model and track retries against a deadline. Explain what the resulting tests establish.
 
 Practice:
 

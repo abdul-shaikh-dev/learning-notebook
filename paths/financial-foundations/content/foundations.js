@@ -27,10 +27,10 @@ const FOUNDATIONS = [
       "A fixed-for-floating interest-rate swap exchanges interest amounts. Assume a bank pays 4% fixed and receives a floating rate on $1m for a half-year period with accrual fraction 0.5. If the floating rate for that payment is 5%, it receives $25,000 and pays $20,000. If payment netting applies, the net receipt is $5,000. The $1m notional is only the reference amount in this example.",
       "That one payment is not the entire swap value. Before settlement, value depends on all remaining expected net payments, their dates and discounting. A future floating payment may be unknown today, so a forecast curve is needed. A discount curve supplies discount factors. Different maturities can have different rates.",
       "A call option gives its holder the right to buy an underlying asset at a strike price. With strike $100, its expiry payoff per share is max(share price − 100, 0). At expiry prices $90, $100 and $120, payoffs are $0, $0 and $20. If the premium paid was $7, simple profit at expiry before financing/fees is −$7, −$7 and +$13.",
-      "Before expiry, an option price is not simply its payoff at today’s share price. Remaining time and possible outcomes matter. Volatility describes dispersion; implied volatility is the model input consistent with an observed option price. A surface supplies inputs at different strikes and maturities. These examples introduce meaning, not a full option-pricing model."
+      "Before expiry, an option price is not simply its payoff at today's share price. Remaining time and possible outcomes matter. Volatility describes dispersion; implied volatility is the model input consistent with an observed option price. A surface supplies inputs at different strikes and maturities. These examples introduce meaning, not a full option-pricing model."
     ],
     "example": "Swap period: $1m × (5% − 4%) × 0.5 = +$5,000 to the bank\nCall expiry payoff at share price $120: max(120 − 100, 0) = $20\nCall simple profit after $7 premium: $20 − $7 = $13",
-    "check": "Can the swap’s $1m notional or its next $5,000 payment be used as its total fair value?",
+    "check": "Can the swap's $1m notional or its next $5,000 payment be used as its total fair value?",
     "answer": "No. The notional sizes payments; the next payment is only one cash flow. Value considers the remaining contract and current inputs."
   },
   {
@@ -41,7 +41,7 @@ const FOUNDATIONS = [
       9
     ],
     "paragraphs": [
-      "A sensitivity answers a local “what if” question. Here +$12,000 per basis point means that increasing the specified rate input by 1bp increases value by approximately $12,000. A move of −2bp therefore suggests −$24,000. Other systems use different signs or bump definitions.",
+      "A sensitivity answers a local \"what if\" question. Here +$12,000 per basis point means that increasing the specified rate input by 1bp increases value by approximately $12,000. A move of −2bp therefore suggests −$24,000. Other systems use different signs or bump definitions.",
       "Vega measures response to a volatility change. If vega is $5,000 per volatility percentage point, a move from 20% to 21% suggests +$5,000 for positive vega. The change is one volatility point, not a 100% or 1.00-decimal change.",
       "Correlation concerns how variables move together. It can matter for a payoff linked to two shares. It is neither the volatility of one share nor a guarantee of future co-movement. Changing an uncertain correlation and repricing helps investigate significance.",
       "These are local approximations. Large moves, option curvature and interactions can break a simple sensitivity-times-move estimate. Hold other inputs fixed when isolating an effect, then compare with full repricing."
@@ -75,9 +75,9 @@ const FOUNDATIONS = [
     ],
     "paragraphs": [
       "A balance sheet separates assets, liabilities and equity. If a simplified bank has assets of $1,000 and liabilities of $900, accounting equity is $100. Equity is the residual, not a special cash account.",
-      "Regulatory capital starts from eligible components and applies prescribed adjustments. Accounting equity is not automatically CET1. Assume, purely for illustration, the bank’s capital reconciliation produces CET1 of $80 after all other eligibility rules and adjustments.",
+      "Regulatory capital starts from eligible components and applies prescribed adjustments. Accounting equity is not automatically CET1. Assume, purely for illustration, the bank's capital reconciliation produces CET1 of $80 after all other eligibility rules and adjustments.",
       "Risk-weighted assets (RWA) are a regulatory risk measure used as a denominator. They are not simply the assets shown on the balance sheet. With RWA of $800 and CET1 of $80, the ratio is 10%. A final AVA deduction of $2 gives CET1 of $78 and a ratio of 9.75%, holding everything else fixed.",
-      "The deduction reduces the regulatory measure. It is not a $2 cash payment and does not by itself change the accounting fair-value journal. Nor does this single ratio establish the bank’s total regulatory compliance."
+      "The deduction reduces the regulatory measure. It is not a $2 cash payment and does not by itself change the accounting fair-value journal. Nor does this single ratio establish the bank's total regulatory compliance."
     ],
     "example": "Accounting equity: $1,000 − $900 = $100\nAssumed eligible CET1 after other adjustments: $80\nBefore AVA: $80 / $800 = 10.00%\nAfter final $2 AVA: $78 / $800 = 9.75%\nChange: −0.25 percentage points = −25bp",
     "check": "Does the $2 AVA deduction mean the bank pays $2 cash to someone?",

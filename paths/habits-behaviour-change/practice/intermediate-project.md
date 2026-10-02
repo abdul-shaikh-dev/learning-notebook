@@ -37,7 +37,7 @@ If I arrive and can put my bags down, then I put my keys in the bowl. If immedia
 - Write a cue/action plan and an obstacle branch.
 - Try one reversible setup change, keeping the target stable.
 - Record available opportunities, completion and ease separately.
-- Record known facts and uncertainty separately, using the relevant stage measures.
+- Use the measures from this stage to separate known facts from what remains uncertain.
 
 ## Related worksheets
 

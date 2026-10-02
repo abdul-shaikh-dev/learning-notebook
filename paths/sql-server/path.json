@@ -3,7 +3,7 @@
   "title": "SQL Server & T-SQL",
   "category": "Data",
   "status": "ready",
-  "description": "Progress from first SQL queries to robust data models, replayable imports, transaction contracts, query-plan diagnosis and an assessed reconciliation pipeline.",
+  "description": "Learn to query SQL Server, model data, replay imports safely and diagnose query plans. Finish by building and testing a reconciliation pipeline.",
   "level": "Foundations → intermediate T-SQL → selected engine labs",
   "prerequisites": [
     "No SQL knowledge required. Comfort with files, rows and columns is helpful.",
@@ -456,7 +456,7 @@
     {
       "id": "cte-and-subquery",
       "title": "6. Use CTEs and subqueries to name intermediate ideas",
-      "takeaway": "A named query step improves reasoning; it is not automatically a stored result.",
+      "takeaway": "A named query step makes a long query easier to follow; it does not automatically store the result.",
       "sections": [
         {
           "title": "Concept",
@@ -772,7 +772,7 @@
     {
       "id": "indexes-and-plans",
       "title": "11. Read a plan before tuning a query",
-      "takeaway": "Indexes trade read access paths against storage and write costs.",
+      "takeaway": "Indexes can reduce the work needed to read rows, but require storage and maintenance when data changes.",
       "sections": [
         {
           "title": "Concept",
@@ -1247,7 +1247,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers are more robust than relying on perfect timing. A schema migration must preserve those identifiers too."
+            "Do not update the watermark before committing the target changes. A crash between those operations can lose work; replay-safe commits and durable source identifiers protect recovery when the timing goes wrong. A schema migration must preserve those identifiers too."
           ],
           "example": ""
         },

@@ -1,7 +1,7 @@
 {
   "values-and-names": {
     "title": "From names to a computed value",
-    "summary": "A data-dependency map for the lesson’s study-time calculation. Arrows mean “supplies a value to”; they do not mean that a name stores another name.",
+    "summary": "A data-dependency map for the lesson's study-time calculation. Arrows mean \"supplies a value to\"; they do not mean that a name stores another name.",
     "nodes": [
       {
         "id": "minutes",
@@ -160,7 +160,7 @@
         "activeEdges": [
           0
         ],
-        "explanation": "The definition already exists. Calling it creates this call’s parameter bindings; it does not run both example calls at once."
+        "explanation": "The definition already exists. Calling it creates this call's parameter bindings; it does not run both example calls at once."
       },
       {
         "title": "Compute locally",

@@ -131,7 +131,7 @@
   function updateNotice() {
     if (!registration.waiting || !registration.active || registration.active === registration.waiting || registration.active.state !== 'activated' || $('pwa-update-notice')) return;
     const notice = element('section', '', 'pwa-notice'); notice.id = 'pwa-update-notice'; notice.setAttribute('aria-label', 'Notebook update'); notice.setAttribute('role', 'status');
-    notice.append(element('strong', 'A fresh notebook is ready'));
+    notice.append(element('strong', 'A notebook update is ready'));
     notice.append(element('p', 'Apply the update and reload notebook tabs. Saved progress stays. Refresh offline course downloads afterward.'));
     const actions = element('div', '', 'pwa-notice-actions'), apply = element('button', 'Update notebook', 'primary'), later = element('button', 'Later', 'quiet'); apply.type = later.type = 'button';
     apply.addEventListener('click', () => { if (!registration.waiting) return; if (busy) { message('Let the current download finish before updating.', true); return; } requestedUpdate = true; apply.disabled = true; apply.textContent = 'Updating…'; registration.waiting.postMessage({type:'ACTIVATE_UPDATE'}); });

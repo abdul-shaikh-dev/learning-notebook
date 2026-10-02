@@ -133,7 +133,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Durations and minimum are integers from 0 to 10,000."
           ]
         }
@@ -198,7 +198,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "-10,000 <= low <= high <= 10,000. Readings are integers in that same numeric range."
           ]
         }
@@ -263,7 +263,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Labels contain ASCII characters only. minimum is from 0 to 1,001."
           ]
         }
@@ -328,7 +328,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each flag is exactly the integer 0 or 1."
           ]
         }
@@ -393,7 +393,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "text contains only ASCII letters A-Z, a-z and literal spaces."
           ]
         }
@@ -458,7 +458,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Readings are integers from -10,000 to 10,000."
           ]
         }
@@ -523,7 +523,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Labels contain ASCII characters only."
           ]
         }
@@ -588,7 +588,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
           ]
         }
@@ -653,7 +653,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
           ]
         }
@@ -718,7 +718,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Names contain ASCII letters only, or are empty."
           ]
         }
@@ -783,7 +783,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII labels; exact case-sensitive matching."
           ]
         }
@@ -848,7 +848,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Sizes and target are integers from -10,000 to 10,000. Input is already sorted."
           ]
         }
@@ -913,7 +913,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
           ]
         }
@@ -978,7 +978,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "width is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
           ]
         }
@@ -1043,7 +1043,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Costs and budget are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
           ]
         }
@@ -1108,7 +1108,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Values are integers from -10,000 to 10,000. Every query has 0 <= start <= stop <= len(values). At most 1,000 queries."
           ]
         }
@@ -1173,7 +1173,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Integer values from -10,000 to 10,000; negative values are allowed."
           ]
         }
@@ -1238,7 +1238,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Capacities and required are integers from 0 to 10,000."
           ]
         }
@@ -1310,7 +1310,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Only ASCII letters, spaces and the characters ()[]{} appear."
           ]
         }
@@ -1375,7 +1375,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word undo."
           ]
         }
@@ -1440,7 +1440,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
           ]
         }
@@ -1505,7 +1505,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
           ]
         }
@@ -1570,7 +1570,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Every row has two integer endpoints with 0 <= start < end <= 1,000,000. Input may be unsorted or repeated."
           ]
         }
@@ -1635,7 +1635,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "0 <= day_end <= 1,000,000 and 1 <= duration <= 1,000,000. Every busy row satisfies 0 <= start < end <= day_end."
           ]
         }
@@ -1700,7 +1700,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Timestamps are nondecreasing integers from 0 to 1,000,000. width is from 1 to 1,000,000."
           ]
         }
@@ -1765,7 +1765,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
           ]
         }
@@ -1830,7 +1830,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
           ]
         }
@@ -1895,7 +1895,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "tasks contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
           ]
         }
@@ -1960,7 +1960,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
           ]
         }
@@ -2025,7 +2025,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Python 3.11+. Do not mutate any input. All integer inputs exclude bool. Lists and strings have at most 1,000 elements or characters unless stated otherwise.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each row contains integer times with 0 <= start < end <= 1,000,000. Input may be unsorted."
           ]
         }

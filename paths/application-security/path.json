@@ -162,7 +162,7 @@
         {
           "title": "Assets and authority",
           "paragraphs": [
-            "An asset is something the application must protect: private documents, account access, money, availability or evidence of an action. A threat is a way that asset could be harmed. Start with the workflow rather than a list of fashionable security tools.",
+            "An asset is something the application must protect: private documents, account access, money, availability or evidence of an action. A threat is a way that asset could be harmed. Start with the workflow and the assets it exposes before choosing security tools.",
             "A trust boundary separates components with different authority. Browser inputs, HTTP headers and uploaded files are untrusted even when the interface looks friendly. A server-side identity adapter and an application database have different responsibilities; a browser assertion is not proof of identity."
           ]
         },
@@ -170,14 +170,14 @@
           "title": "A cross-owner threat model",
           "paragraphs": [
             "The synthetic notebook stores Alice's and Bob's private documents across two tenants. If Alice guesses Bob's document ID, the unwanted action is reading another owner's private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
-            "Write asset -> entry point -> trust boundary -> abuse case -> control -> verification. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
+            "Name the asset, identify its entry point and trust boundary, then describe an abuse case, the control that blocks it and the test that verifies the control. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
           ],
           "example": "Asset: Bob private document\nEntry: GET /documents/b\nBoundary: request identity -> server policy -> stored object\nAbuse: Alice changes requested ID to b\nControl: tenant + ownership check\nEvidence: denied response and no document data"
         }
       ],
       "exercise": {
         "prompt": "Alice changes PATCH /documents/a to PATCH /documents/b. Document b belongs to Bob. Name the asset, unwanted change and one result that would show the server protected it.",
-        "solution": "The asset is Bob’s document and its title. Alice must not rename it. The server must deny the foreign update and leave Bob’s stored title unchanged; an error response alone would not prove the write was prevented. Login and request validation are separate boundaries introduced in the next lessons.",
+        "solution": "The asset is Bob's document and its title. Alice must not rename it. The server must deny the foreign update and leave Bob's stored title unchanged; an error response alone would not prove the write was prevented. Login and request validation are separate boundaries introduced in the next lessons.",
         "checks": [
           "Name the owner and requested action.",
           "Check both denial and unchanged stored data."
@@ -625,7 +625,7 @@
         {
           "title": "Session-bound CSRF checks",
           "paragraphs": [
-            "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation ensures malformed input fails as PermissionError rather than leaking an internal comparison exception.",
+            "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation makes malformed input fail as PermissionError instead of exposing an internal comparison exception.",
             "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
           ],
           "example": "from security_lab import Sessions, Principal\ns=Sessions(); sid=s.login(Principal('alice','red'),0)\ntoken=s.records[sid][2]  # trusted fixture inspection\ns.csrf(sid,token,1)\n# A missing or another session's token is denied."
@@ -684,7 +684,7 @@
         {
           "title": "HTML text encoding tests",
           "paragraphs": [
-            "The test compares exact encoded output for a synthetic script string and ensures an img-shaped input is not emitted as a raw tag. These strings are test data in memory; no attack is sent to a site or browser.",
+            "The test compares the exact encoded output for a synthetic script string and checks that an img-shaped input is not emitted as a raw tag. These strings are test data in memory; no attack is sent to a site or browser.",
             "Prefer template autoescaping and safe DOM text APIs. If rich HTML is truly required, use a maintained sanitizer with an explicit allowed-content policy. A content security policy can reduce impact but does not make unsafe sinks correct."
           ],
           "example": "from security_lab import title_html\nassert title_html('<script>alert(1)</script>') == '<h1>&lt;script&gt;alert(1)&lt;/script&gt;</h1>'\n# Valid only for the documented HTML text context."
@@ -692,7 +692,7 @@
       ],
       "exercise": {
         "prompt": "Explain why reusing title_html's escaping inside a JavaScript string or an href is unsafe. Propose a safe sink for plain text.",
-        "solution": "Use textContent or the template engine’s escaped text context for plain text. JavaScript and URL contexts require their own APIs/validation and should not receive copied HTML escaping. Test the actual rendering sink in a browser integration rather than claiming the local text fixture covers every context.",
+        "solution": "Use textContent or the template engine's escaped text context for plain text. JavaScript and URL contexts require their own APIs/validation and should not receive copied HTML escaping. Test the actual rendering sink in a browser integration rather than claiming the local text fixture covers every context.",
         "solutionFormat": "prose",
         "checks": [
           "Exact HTML text encoding is checked.",
@@ -810,7 +810,7 @@
       ],
       "exercise": {
         "prompt": "Label every participant and distinguish client login evidence from API access evidence.",
-        "solution": "Use OpenID Connect for the client’s identity needs and an appropriately validated access token for the API. Record issuer, audience, client type and scope. Map trusted identity into application policy; a provider login does not establish document ownership. Execute a real flow only in the opted-in training tenant.",
+        "solution": "Use OpenID Connect for the client's identity needs and an appropriately validated access token for the API. Record issuer, audience, client type and scope. Map trusted identity into application policy; a provider login does not establish document ownership. Execute a real flow only in the opted-in training tenant.",
         "solutionFormat": "prose",
         "checks": [
           "OAuth participants are correctly named.",
@@ -862,14 +862,14 @@
           "title": "Provider validation and local limits",
           "paragraphs": [
             "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library's integration tests.",
-            "The local Principal is a downstream test seam only. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
+            "The local Principal lets tests supply an already authenticated identity to the policy code. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
           ],
           "example": "OIDC login adapter -> verified (issuer, subject)\nApplication account mapping -> internal principal\nDocument policy -> permitted action\n# An unverified payload cannot enter this pipeline as a principal."
         }
       ],
       "exercise": {
         "prompt": "Explain why using email as the sole account identifier can create an identity-mapping problem.",
-        "solution": "Email can change and its verification/uniqueness properties depend on the issuer. Map the issuer’s stable subject under the provider contract to an internal account. Validate the ID token for its intended client and enforce application authorization separately.",
+        "solution": "Email can change and its verification/uniqueness properties depend on the issuer. Map the issuer's stable subject under the provider contract to an internal account. Validate the ID token for its intended client and enforce application authorization separately.",
         "solutionFormat": "prose",
         "checks": [
           "Issuer and subject mapping are explicit.",
@@ -1054,7 +1054,7 @@
       ],
       "exercise": {
         "prompt": "Design a signing-key or API-key rotation plan with a rollback constraint and explicit old-key revocation evidence.",
-        "solution": "Use the provider/secret manager’s supported key lifecycle, deploy consumers with an overlap policy where appropriate, verify the new value, revoke the old value and test failure after revocation. A rollback must not silently re-enable a compromised key. Keep raw secret values out of the report.",
+        "solution": "Use the provider/secret manager's supported key lifecycle, deploy consumers with an overlap policy where appropriate, verify the new value, revoke the old value and test failure after revocation. A rollback must not silently re-enable a compromised key. Keep raw secret values out of the report.",
         "solutionFormat": "prose",
         "checks": [
           "Only synthetic/nonsecret fixture values are stored.",
@@ -1412,7 +1412,7 @@
           "Test malformed shapes, exact title boundaries and control characters.",
           "Compare encoded HTML text and a literal injection-shaped SQL search.",
           "Verify rotation, exact expiry and logout.",
-          "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
+          "Reject missing or incorrect CSRF tokens, tokens from another session, and malformed Unicode tokens.",
           "Run the supplied loopback route tests, then identify browser and identity-provider checks still needed."
         ],
         "rubric": [

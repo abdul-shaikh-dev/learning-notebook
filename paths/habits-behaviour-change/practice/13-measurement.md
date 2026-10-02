@@ -36,7 +36,7 @@ Four of five available opportunities were used, or 80%. Four of seven calendar d
 
 - The numerator and denominator are explicit.
 - Completion, ease and outcome are not conflated.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

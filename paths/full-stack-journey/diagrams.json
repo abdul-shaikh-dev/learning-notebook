@@ -1,12 +1,12 @@
 {
   "architecture": {
     "title": "Follow a study-session request",
-    "summary": "A vertical slice crosses browser, HTTP and storage boundaries.",
+    "summary": "Follow a request from the browser through HTTP to storage.",
     "nodes": [
       {
         "id": "ui",
         "label": "React form",
-        "description": "Owns the draft and renders only validated observations."
+        "description": "Keeps the draft and displays validated API results."
       },
       {
         "id": "proxy",
@@ -21,13 +21,13 @@
       {
         "id": "db",
         "label": "Task store",
-        "description": "Memory first, then dedicated SQL Server persistence.",
+        "description": "The first stage uses memory. Later stages use a dedicated SQL Server database.",
         "shape": "database"
       },
       {
         "id": "result",
         "label": "Validated UI result",
-        "description": "HTTP status and task shape are checked before publishing."
+        "description": "The client checks the HTTP status and task fields before updating the screen."
       }
     ],
     "edges": [
@@ -89,7 +89,7 @@
         "activeEdges": [
           2
         ],
-        "explanation": "Memory first, then dedicated SQL Server persistence."
+        "explanation": "The first stage uses memory. Later stages use a dedicated SQL Server database."
       },
       {
         "title": "return saved record",
@@ -111,7 +111,7 @@
         "activeEdges": [
           4
         ],
-        "explanation": "HTTP status and task shape are checked before publishing."
+        "explanation": "The client checks the HTTP status and task fields before updating the screen."
       }
     ]
   },

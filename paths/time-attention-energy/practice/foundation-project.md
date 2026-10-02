@@ -1,6 +1,6 @@
 # A feasible study day
 
-Plan a synthetic day with limited capacity and a clear output.
+Plan a fictional day with limited time and a specific result to finish.
 
 ## Deliverables
 

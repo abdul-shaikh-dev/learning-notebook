@@ -718,7 +718,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Changing a link changes reachability; finding the link is often the expensive part.",
             "insert_after preserves the old successor while inserting a new node. Traversal follows next until None, producing 1, 2, 3."
           ],
           "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
@@ -773,7 +772,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Merge two sorted runs while preserving the invariant that the output prefix is sorted.",
             "Each recursive call sorts a smaller half. During merging, i and j mark the unconsumed suffixes; choosing the left value on equality preserves stability."
           ],
           "example": "def merge_sort(items):\n    if len(items) < 2:\n        return list(items)\n    mid = len(items) // 2\n    left, right = merge_sort(items[:mid]), merge_sort(items[mid:])\n    out, i, j = [], 0, 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            out.append(left[i]); i += 1\n        else:\n            out.append(right[j]); j += 1\n    return out + left[i:] + right[j:]\n\nassert merge_sort([3, 1, 2, 1]) == [1, 1, 2, 3]"
@@ -828,7 +826,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Monotonic structure lets you discard candidates without checking every pair.",
             "For sorted values, a sum below the target advances left; a sum above it retreats right. The example finds indices 1 and 2, whose values sum to 6."
           ],
           "example": "def pair_sum(values, target):\n    left, right = 0, len(values) - 1\n    while left < right:\n        total = values[left] + values[right]\n        if total == target:\n            return left, right\n        if total < target:\n            left += 1\n        else:\n            right -= 1\n    return None\n\nassert pair_sum([1, 2, 4, 7], 6) == (1, 2)"
@@ -883,7 +880,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Maintain the property of a contiguous interval instead of rebuilding every interval.",
             "last records the most recent index of each character. max prevents left from moving backward when a repeated character lies outside the current window; abba has a longest unique span of length 2."
           ],
           "example": "def longest_unique(text):\n    last, left, best = {}, 0, 0\n    for right, char in enumerate(text):\n        left = max(left, last.get(char, -1) + 1)\n        last[char] = right\n        best = max(best, right - left + 1)\n    return best\n\nassert longest_unique(\"abba\") == 2"
@@ -945,7 +941,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "A dependency order exists only when the directed graph has no cycle.",
             "indegree counts remaining prerequisites. Each dequeued vertex removes its outgoing constraints; fewer emitted vertices than known vertices indicates a cycle."
           ],
           "example": "from collections import deque\n\ndef topological(graph):\n    indegree = {v: 0 for v in graph}\n    for neighbors in graph.values():\n        for v in neighbors:\n            indegree[v] = indegree.get(v, 0) + 1\n    queue = deque(v for v, degree in indegree.items() if degree == 0)\n    order = []\n    while queue:\n        node = queue.popleft(); order.append(node)\n        for neighbor in graph.get(node, []):\n            indegree[neighbor] -= 1\n            if indegree[neighbor] == 0:\n                queue.append(neighbor)\n    if len(order) != len(indegree):\n        raise ValueError(\"dependency cycle\")\n    return order\n\nassert topological({\"A\":[\"B\"],\"B\":[\"C\"]}) == [\"A\",\"B\",\"C\"]"
@@ -1008,7 +1003,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "A shortest-hop path may not be the minimum-cost path.",
             "The route A → C → B costs 3 instead of the direct cost 8. Improved distances enter the heap, and stale entries are skipped; a ticket breaks ties without comparing vertex objects."
           ],
           "example": "import heapq\nfrom itertools import count\n\ndef dijkstra(graph, start):\n    if any(weight < 0 for edges in graph.values() for _, weight in edges):\n        raise ValueError(\"negative weight\")\n    ticket = count()\n    distance = {start: 0}\n    heap = [(0, next(ticket), start)]\n    while heap:\n        cost, _, node = heapq.heappop(heap)\n        if cost != distance[node]:\n            continue\n        for neighbor, weight in graph.get(node, []):\n            proposed = cost + weight\n            if proposed < distance.get(neighbor, float(\"inf\")):\n                distance[neighbor] = proposed\n                heapq.heappush(heap, (proposed, next(ticket), neighbor))\n    return distance\n\nassert dijkstra({\"A\":[(\"B\",8),(\"C\",2)],\"C\":[(\"B\",1)]},\"A\")[\"B\"] == 3"
@@ -1069,7 +1063,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "A locally attractive choice needs a proof, not intuition.",
             "Sorting by finish time leaves room for later compatible intervals. The sample chooses three positive-duration intervals; start >= end permits adjacent intervals."
           ],
           "example": "def schedule(intervals):\n    chosen, end = [], None\n    for start, finish in sorted(intervals, key=lambda x: x[1]):\n        if finish <= start:\n            raise ValueError(\"positive-duration intervals required\")\n        if end is None or start >= end:\n            chosen.append((start, finish)); end = finish\n    return chosen\n\nassert len(schedule([(0,4),(0,2),(2,3),(3,5)])) == 3"
@@ -1132,7 +1125,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Explore a search tree while restoring state after each choice.",
             "Each level explores exclusion and inclusion. The inclusion branch appends an item and then pops it, while a copied selection protects each completed subset."
           ],
           "example": "def subsets(items):\n    output, selected = [], []\n    def visit(index):\n        if index == len(items):\n            output.append(selected.copy())\n            return\n        visit(index + 1)\n        selected.append(items[index])\n        visit(index + 1)\n        selected.pop()\n    visit(0)\n    return output\n\nassert len(subsets([1,2,3])) == 8"
@@ -1187,7 +1179,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "Iteration order can determine whether an item is used once or repeatedly.",
             "Descending capacities ensure each item contributes at most once. Weight 2/value 3 and weight 3/value 4 combine to give value 7 at capacity 5."
           ],
           "example": "def knapsack(items, capacity):\n    if capacity < 0:\n        raise ValueError(\"negative capacity\")\n    dp = [0] * (capacity + 1)\n    for weight, value in items:\n        if weight <= 0:\n            raise ValueError(\"positive integer weights required\")\n        for c in range(capacity, weight - 1, -1):\n            dp[c] = max(dp[c], dp[c-weight] + value)\n    return dp[capacity]\n\nassert knapsack([(2,3),(3,4),(4,5)],5) == 7"
@@ -1249,7 +1240,6 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "A result, a correctness argument and a complexity claim need separate evidence.",
             "The review separates correctness from cost and evidence: establish the contract, invariant and termination, then justify the bound and test against an oracle and adversarial cases."
           ],
           "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits"
@@ -1353,7 +1343,7 @@
           "Disconnected topics are not lost.",
           "Tests cover empty input, one vertex and shared prerequisites."
         ],
-        "solution": "Use Kahn’s topological order implementation. Build indegrees for every vertex, enqueue zero-indegree vertices, decrement neighbors and compare output count to vertex count. Validate every returned order by mapping vertices to positions. Keep completion eligibility as a separate check of all prerequisites."
+        "solution": "Use Kahn's topological order implementation. Build indegrees for every vertex, enqueue zero-indegree vertices, decrement neighbors and compare output count to vertex count. Validate every returned order by mapping vertices to positions. Keep completion eligibility as a separate check of all prerequisites."
       }
     },
     {
@@ -1381,7 +1371,7 @@
           "Each task uses the correct objective and preconditions.",
           "Counterexamples explain why plausible alternatives fail.",
           "Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs.",
-          "Pseudo-polynomial and exponential costs are described honestly.",
+          "Explain which costs are pseudo-polynomial or exponential and what that means for input size.",
           "Results remain correct without performance optimizations."
         ],
         "solution": "Use lazy-heap Dijkstra for nonnegative costs, earliest-finish greedy for unweighted interval count, and descending-capacity 0/1 knapsack for the budget problem. The advanced_algorithms.py download contains reference functions and checks. Extend it with independent small-input oracles and document why each algorithm applies."

@@ -154,7 +154,7 @@
     {
       "id": "advanced",
       "title": "Bounded observation and cache review",
-      "goal": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+      "goal": "Validate observations, cache public responses in the model and track retries against a deadline. Explain what the resulting tests establish.",
       "fileIds": [
         "network_foundation-py",
         "network_http-py",

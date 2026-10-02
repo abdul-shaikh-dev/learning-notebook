@@ -5,7 +5,7 @@ Try a two-week routine and compare what happened with your plan.
 ## Deliverables
 
 - Capture obligations and review capacity twice.
-- Renegotiate one synthetic conflicting request.
+- Use a fictional conflicting request to practise agreeing on a feasible alternative.
 - Remove one unnecessary tracking field.
 - Report observed outcomes, maintenance cost and a next revision.
 
@@ -16,7 +16,7 @@ Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missi
 - The routine has a minimum version for disrupted days.
 - A conflicting request is resolved through explicit feasible alternatives.
 - Tracking fields are justified by decisions and maintenance cost.
-- The evidence review states confounds and a bounded next experiment.
+- Explain what else could account for the results, then choose a small follow-up trial.
 
 ## Worked synthetic approach
 

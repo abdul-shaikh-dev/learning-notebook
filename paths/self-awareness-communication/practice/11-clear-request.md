@@ -36,7 +36,7 @@ Could you send the chart by 4 pm so I can build the slides tonight? If that is n
 
 - Action, completion time and confirmation time are clear.
 - An alternative response is possible.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

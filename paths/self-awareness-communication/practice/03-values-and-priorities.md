@@ -36,7 +36,7 @@ I can spend five minutes identifying the question, then return to my work. I can
 
 - The competing priorities are both named.
 - The help offer has a clear time limit.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

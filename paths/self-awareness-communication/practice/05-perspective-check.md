@@ -36,7 +36,7 @@ Possibilities: the organiser used an old list, or the group planned a smaller se
 
 - At least two explanations remain possibilities.
 - The question can reveal relevant information.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

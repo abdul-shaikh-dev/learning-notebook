@@ -1114,7 +1114,7 @@
         {
           "title": "Runnable failed second write",
           "paragraphs": [
-            "Run practice/PersistenceChecks.csproj. It inserts a task inside an explicit transaction, then tries to insert an audit event with a duplicate unique key. That second SaveChanges fails; the catch rolls back. Fresh-context queries must find no new task and only the original audit event. This is stronger evidence than calling RollbackAsync without a failed write."
+            "Run practice/PersistenceChecks.csproj. It inserts a task inside an explicit transaction, then tries to insert an audit event with a duplicate unique key. That second SaveChanges fails; the catch rolls back. Fresh-context queries must find no new task and only the original audit event. This checks rollback after an actual failed write, rather than only checking that RollbackAsync was called."
           ]
         }
       ],
@@ -1168,7 +1168,7 @@
           "title": "Keep the simple endpoint separate from the versioned project",
           "paragraphs": [
             "The 204 completion fragment below is a smaller milestone for learning persistence. The stage project preserves the downloadable API's versioned contract: it accepts expectedVersion, returns the updated representation and rejects stale versions with 409. Do not replace that project endpoint with this unconditional update.",
-            "Build in three steps: first prove create and fetch across restart; then complete and fetch Done; then carry the client's original version through the conditional update taught in ef-evolution. Run the HTTP acceptance checks only against the matching versioned API contract. A passing 204 toy endpoint does not satisfy those checks."
+            "Build in three steps: first prove create and fetch across restart; then complete and fetch Done; then carry the client's original version through the conditional update taught in ef-evolution. Run the HTTP acceptance checks only against the matching versioned API contract. An endpoint that returns 204 without checking the version will not satisfy those checks."
           ]
         },
         {
@@ -1633,10 +1633,10 @@
           "Explain one nullable value and one disposable resource from your implementation."
         ],
         "rubric": [
-          "Correctness: expected output and assertions pass.",
-          "Boundaries: blank title, invalid ID and missing lookup are handled deliberately.",
-          "Design: presentation is separate from reusable task behavior.",
-          "Explanation: learner can trace state changes and describe why validation lives at the boundary."
+          "Check that the output matches the expected values and the assertions pass.",
+          "Check the defined behavior for a blank title, invalid ID and missing task.",
+          "Keep presentation separate from reusable task behavior.",
+          "Trace the state changes and explain where input validation runs."
         ],
         "solution": "Reference: practice/foundation.cs; run it using practice/README.md. It prints two open tasks and passes four assertions. Extend it with Find(id) returning a nullable LearningTask, assert a missing lookup, and keep immutable identity/title with controlled Complete behavior. An independent async exercise must demonstrate token cancellation; the notebook reference does not contain a background worker."
       }
@@ -1664,13 +1664,13 @@
           "Make task plus audit creation atomic and test rollback from a new context."
         ],
         "rubric": [
-          "HTTP behavior: executable acceptance checks verify successful and rejected requests.",
-          "Persistence: restart and fresh-context tests establish stored state.",
-          "Integrity: a deliberate write failure rolls back all related writes and a stale token conflicts.",
-          "Maintainability: typed storage boundary, scope ownership and package versions are explained.",
-          "Migration evidence: generated operations are reviewed, tested and retained with a recovery note."
+          "Run acceptance checks for successful and rejected requests.",
+          "Check stored data after a restart and through a fresh context.",
+          "Confirm that a deliberate write failure rolls back all related writes and that a stale token produces a conflict.",
+          "Explain the storage interface, context lifetime and package versions.",
+          "Review and test the generated migration operations. Save them with recovery instructions."
         ],
-        "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an assessed extension, not a claim made by the memory baseline."
+        "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an practice extension, not a claim made by the memory baseline."
       }
     },
     {
@@ -1697,12 +1697,12 @@
           "Publish a release build, measure bounded queries and document backup/rollback and limitations."
         ],
         "rubric": [
-          "Security: denial tests and a real-token staging check demonstrate both policy and ownership enforcement.",
-          "Resilience: controlled cancellation/failure scenarios terminate work and release resources.",
-          "Operations: a failed request can be traced to a sanitized log; readiness and latency evidence are inspectable.",
-          "Performance: before/after measurements use the same workload and preserve correctness.",
-          "Delivery: published build checks succeed and the rollback plan handles persistent data.",
-          "Judgment: learner states what remains unverified and which changes would be needed for multiple replicas."
+          "Run denial tests and a staging check with a real token to verify policy and ownership enforcement.",
+          "Check that controlled cancellation and failure terminate work and release resources.",
+          "Trace a failed request to a log that excludes sensitive data. Inspect readiness results and latency measurements.",
+          "Use the same workload for before-and-after measurements, and rerun correctness checks.",
+          "Check the published build and explain how rollback handles persistent data.",
+          "State what remains unverified and what would need to change for multiple replicas."
         ],
         "solution": "Reference architecture: authenticated /tasks route group -> DTO validation -> scoped task service -> EF Core context with owner filtering and concurrency token. Mutations commit task/audit/outbox state atomically; caller token reaches database work; distributed invariants remain in the database. Tests use an isolated relational fixture and test-only fake identities, followed by real-token staging checks. Shared Meter/ActivitySource and structured logs feed a configured collector. Deployment runs reviewed migrations, gates traffic on readiness, retains the prior compatible build and proves backup recovery. Use lessons auth-boundaries through performance as implementation/verification guides. This is a reviewable solution blueprint; the download is intentionally only the runnable local baseline, not a finished secure production service."
       }

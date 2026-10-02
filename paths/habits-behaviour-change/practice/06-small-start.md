@@ -36,7 +36,7 @@ Minimum: review three saved words and use one in a sentence. Optional extension:
 
 - The minimum makes a real contribution to the purpose.
 - The extension is clearly optional.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

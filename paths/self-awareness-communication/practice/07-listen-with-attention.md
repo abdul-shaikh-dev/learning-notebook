@@ -36,7 +36,7 @@ I have ten minutes and want to understand. I will silence notifications; is now 
 
 - Time and setting are agreed before listening.
 - Understanding is checked rather than inferred from posture.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

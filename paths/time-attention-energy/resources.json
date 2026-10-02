@@ -180,7 +180,7 @@
     {
       "id": "practice-capacity",
       "title": "Practise: Begin with available capacity",
-      "goal": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. Find study capacity.",
+      "goal": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?",
       "fileIds": [
         "capacity-worksheet",
         "README-md",
@@ -315,7 +315,7 @@
     {
       "id": "practice-attention-context",
       "title": "Practise: Notice what pulls attention",
-      "goal": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.",
+      "goal": "A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. How much time do the interruptions take?",
       "fileIds": [
         "attention-context-worksheet",
         "README-md",
@@ -531,7 +531,7 @@
     {
       "id": "practice-energy-patterns",
       "title": "Practise: Schedule from observations",
-      "goal": "A learner reports better drafting at 10:00 than 16:00 on three days. Propose a bounded test.",
+      "goal": "A learner reports better drafting at 10:00 than 16:00 on three days. Plan a small comparison using similar tasks.",
       "fileIds": [
         "energy-patterns-worksheet",
         "README-md",
@@ -612,7 +612,7 @@
     {
       "id": "practice-overload",
       "title": "Practise: Reduce load when the plan repeatedly fails",
-      "goal": "Four of six daily outcomes carry over on three days. Design one intervention.",
+      "goal": "Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.",
       "fileIds": [
         "overload-worksheet",
         "README-md",
@@ -747,7 +747,7 @@
     {
       "id": "foundation",
       "title": "A feasible study day",
-      "goal": "Plan a synthetic day with limited capacity and a clear output.",
+      "goal": "Plan a fictional day with limited time and a specific result to finish.",
       "fileIds": [
         "foundation-project",
         "README-md",
@@ -844,7 +844,7 @@
       "steps": [
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
         "Capture obligations and review capacity twice.",
-        "Renegotiate one synthetic conflicting request.",
+        "Use a fictional conflicting request to practise agreeing on a feasible alternative.",
         "Remove one unnecessary tracking field.",
         "Report observed outcomes, maintenance cost and a next revision.",
         "Score the rubric; revise missing criteria and preserve the evidence."

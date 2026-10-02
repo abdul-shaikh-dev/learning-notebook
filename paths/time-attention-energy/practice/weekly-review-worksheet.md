@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A review reconciles planned work, completed outcomes, postponed commitments and changed constraints. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.
+Compare what you planned with what happened, then decide what still fits. Start by recovering loose notes and obligations; then choose the coming week’s limited outcomes. A review should create decisions, not become another elaborate tracking task.
 
 ## Try before reading the answer
 

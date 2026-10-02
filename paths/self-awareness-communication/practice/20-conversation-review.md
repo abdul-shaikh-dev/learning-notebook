@@ -36,7 +36,7 @@ We clarified that the draft arrives Thursday and assigned the chart check. The i
 
 - Agreement and unresolved issue remain separate.
 - The follow-up names an action and a review point.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

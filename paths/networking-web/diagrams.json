@@ -741,7 +741,7 @@
   },
   "browser-boundaries": {
     "title": "CORS controls browser response exposure",
-    "summary": "Python’s HTTP client does not enforce browser CORS; authorization is a separate server decision.",
+    "summary": "Python's HTTP client does not enforce browser CORS; authorization is a separate server decision.",
     "nodes": [
       {
         "id": "n0",
@@ -826,7 +826,7 @@
       {
         "id": "n0",
         "label": "Browser HTTPS request",
-        "description": "Begin with the browser’s observed request and deadline."
+        "description": "Begin with the browser's observed request and deadline."
       },
       {
         "id": "n1",
@@ -864,7 +864,7 @@
     "steps": [
       {
         "title": "Establish the boundary",
-        "explanation": "Begin with the browser’s observed request and deadline.",
+        "explanation": "Begin with the browser's observed request and deadline.",
         "activeNodes": [
           "n0"
         ],

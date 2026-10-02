@@ -16,7 +16,7 @@ Identify authenticated subject, current task scope, model proposals, retrieved c
 
 Compare at least two plausible approaches, including retaining a simple constrained workflow. Describe tool semantics, latency, operational ownership, storage, failure recovery and data exposure. A managed runtime does not eliminate application authorization or responsibility for business effects.
 
-Current official OpenAI documentation distinguishes a managed Agents API harness, an application-owned Agents SDK runner and lower-level Responses integration. Recheck the official runtime guide before implementation; this template pins no model name, price or product availability promise.
+Current official OpenAI documentation distinguishes a managed Agents API harness, an application-owned Agents SDK runner and lower-level Responses integration. Recheck the official runtime guide before implementation; this template does not specify a model name, price or product availability.
 
 ## State and effect contract
 

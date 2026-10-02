@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A board represents states with entry and exit policies. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.
+A task board shows where work stands and what must happen before it moves. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.
 
 ## Try before reading the answer
 

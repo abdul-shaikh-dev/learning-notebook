@@ -111,7 +111,7 @@
   ],
   "downloads": [
     {
-      "title": "Runnable React tracker — App.tsx",
+      "title": "Runnable React tracker, App.tsx",
       "href": "paths/react/practice/App.tsx"
     },
     {
@@ -358,7 +358,7 @@
         {
           "title": "Trace references through an update",
           "paragraphs": [
-            "Copying an array with [...rows] copies its container, not every object inside it. If next[0].done = true, both containers still point to the same first object. The old state has now changed too. Instead, create a new object for the changed row and retain unchanged rows. This makes the ownership decision explicit before React enters the picture.",
+            "Copying an array with [...rows] copies its container, not every object inside it. If next[0].done = true, both containers still point to the same first object. The old state has now changed too. Instead, create a new object for the changed row and retain unchanged rows. This makes the ownership decision explicit before you use the code in React.",
             "Complete and toggle are different operations. Repeating complete should leave a row completed; repeating toggle changes it back. Choose the operation from the user intent and retry behavior. The focused lab tests repeated completion and a missing ID, so a convenient toggle implementation cannot silently replace the contract."
           ]
         }
@@ -416,7 +416,7 @@
           "title": "Two requests can finish in reverse order",
           "paragraphs": [
             "Imagine searching P, then Python. The P request may return last. Await inside each request orders that request's steps, but does not order independent calls. Assign a request number when starting; apply a result only if it still belongs to the current request. Cancellation can reduce wasted work, while the identity check determines which result may update the view.",
-            "Failure also has an owner. An old request must not replace a newer success with an error message. Apply the identity check to both success and failure paths, and clear the loading state only for the current request. The later race-safe loading lesson and its existing tests implement this fuller UI boundary."
+            "Check which request produced an error, too. An old request must not replace a newer success with an error message. Apply the identity check to both success and failure paths, and clear the loading state only for the current request. The later race-safe loading lesson and its existing tests implement this fuller UI boundary."
           ]
         }
       ],
@@ -675,7 +675,7 @@
           "Whitespace-only input fails.",
           "A valid title is trimmed.",
           "Show a visible error; do not rely on an alert or red border alone.",
-          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
+          "Run npm test in the downloaded project. Find the relevant assertion in ui.test.tsx, temporarily remove the behavior it checks, and confirm that the test fails. Restore the behavior afterward."
         ]
       },
       "quiz": {
@@ -811,7 +811,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "A closure retains access to its lexical environment; scheduling decides when a callback observes it.",
             "The two counters retain independent value variables, producing 1, 2, 1. The promise callback runs after synchronous code, so the log order is A, C, B."
           ],
           "example": "function makeCounter() {\n  let value = 0;\n  return () => ++value;\n}\nconst first = makeCounter();\nconst second = makeCounter();\nconsole.log(first(), first(), second()); // 1 2 1\nconsole.log(\"A\");\nPromise.resolve().then(() => console.log(\"B\"));\nconsole.log(\"C\"); // A, C, then B\n// A module could export makeCounter with: export { makeCounter };"
@@ -866,7 +865,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Represent valid states so that impossible combinations are difficult to express.",
             "The TypeScript function narrows Remote by status. Only the success branch reads data; an empty successful array is described as 0 lessons."
           ],
           "example": "type Remote<T> =\n  | { status: \"loading\" }\n  | { status: \"success\"; data: T }\n  | { status: \"error\"; message: string };\nfunction describe(value: Remote<string[]>): string {\n  switch (value.status) {\n    case \"loading\": return \"Loading\";\n    case \"success\": return value.data.length + \" lessons\";\n    case \"error\": return value.message;\n  }\n}\n// TypeScript snippet: describe({status:\"success\",data:[]}) gives \"0 lessons\"."
@@ -921,7 +919,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Centralize state transitions when related updates must remain consistent.",
             "The reducer returns new arrays for toggle and remove; toggle also copies the matching row. The final comment shows how a component connects this function to useReducer."
           ],
           "example": "type Row = {id:string; title:string; done:boolean};\ntype Action = {type:\"toggle\"; id:string} | {type:\"remove\"; id:string};\nfunction reducer(state: Row[], action: Action): Row[] {\n  switch (action.type) {\n    case \"toggle\": return state.map(row => row.id === action.id ? {...row, done:!row.done} : row);\n    case \"remove\": return state.filter(row => row.id !== action.id);\n  }\n}\n// Component fragment: const [rows, dispatch] = useReducer(reducer, []);"
@@ -976,7 +973,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "When a custom Hook calls useState, each invocation gets its own state. Lift state to a shared owner when components need the same value.",
             "This Hook fragment gives each invocation its own state. The functional update flips the current value; sharing the Hook implementation does not couple its callers."
           ],
           "example": "// Component/Hook fragment; import useState from React.\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  return {on, toggle: () => setOn(value => !value)};\n}\n// const first = useToggle(); const second = useToggle();\n// Toggling first does not toggle second."
@@ -1031,7 +1027,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "State belongs to a component's position and identity in the rendered tree.",
             "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
           ],
           "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
@@ -1086,7 +1081,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Cancellation and stale-result protection keep old requests from overwriting newer intent.",
             "This Effect fragment needs itemId, setView and decode from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
           ],
           "example": "// Effect fragment with itemId, setView and decode supplied by the component.\nuseEffect(() => {\n  const controller = new AbortController();\n  let active = true;\n  setView({status:\"loading\"});\n  fetch('/api/items/' + encodeURIComponent(itemId), {signal:controller.signal})\n    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })\n    .then(raw => { const data = decode(raw); if (active) setView({status:\"success\",data}); })\n    .catch(error => { if (active && error.name !== 'AbortError') setView({status:\"error\",message:'Unable to load'}); });\n  return () => { active = false; controller.abort(); };\n}, [itemId]);"
@@ -1105,7 +1099,7 @@
           "A stale success cannot overwrite B.",
           "Cleanup does not show an error for intentional cancellation.",
           "Loading, error, empty and success are distinct.",
-          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
+          "Run npm test in the downloaded project. Find the relevant assertion in ui.test.tsx, temporarily remove the behavior it checks, and confirm that the test fails. Restore the behavior afterward."
         ]
       },
       "quiz": {
@@ -1143,7 +1137,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Navigation state belongs in a URL when users need to bookmark or share it.",
             "The URL parser reads q and validates page as a positive integer, falling back to 1. pushState changes browser history without emitting popstate itself."
           ],
           "example": "const params = new URLSearchParams('?q=react&page=2');\nconst query = params.get('q') ?? '';\nconst rawPage = Number(params.get('page') ?? '1');\nconst page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;\nconsole.log(query, page); // react 2\n// pushState changes history but does not itself emit popstate."
@@ -1162,7 +1155,7 @@
           "Bad page values fall back safely.",
           "The URL and screen cannot disagree.",
           "Test actual browser history rather than only a component mock.",
-          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
+          "Run npm test in the downloaded project. Find the relevant assertion in ui.test.tsx, temporarily remove the behavior it checks, and confirm that the test fails. Restore the behavior afterward."
         ]
       },
       "quiz": {
@@ -1201,7 +1194,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Test domain logic, component interactions and browser journeys at appropriate boundaries.",
             "The kit supplies the imports and test environment for this fragment. The test finds controls by accessible role and name, completes the Types lesson, and checks visible progress."
           ],
           "example": "// Testing Library example fragment; the downloadable kit configures Vitest, jsdom,\n// @testing-library/react and @testing-library/user-event.\nconst user = userEvent.setup();\nrender(<App />);\nawait user.type(screen.getByRole('textbox', {name:'Find a lesson'}), 'Types');\nawait user.click(screen.getByRole('checkbox', {name:'Types'}));\nexpect(screen.getByText('1 of 3 complete')).toBeTruthy();"
@@ -1220,7 +1212,7 @@
           "Each test has an observable expected result.",
           "At least one negative case per boundary.",
           "Do not mark a test passed merely because it did not throw during setup.",
-          "Run the downloadable npm test harness. Record the relevant ui.test.tsx assertion, then remove its protective behavior temporarily and confirm the regression fails."
+          "Run npm test in the downloaded project. Find the relevant assertion in ui.test.tsx, temporarily remove the behavior it checks, and confirm that the test fails. Restore the behavior afterward."
         ]
       },
       "quiz": {
@@ -1257,7 +1249,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Recoverable UI failures and access-control decisions are different responsibilities.",
             "JSX renders externalTitle as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
           ],
           "example": "// Safe text rendering:\n<p>{externalTitle}</p>\n// Do not convert untrusted strings to HTML with dangerouslySetInnerHTML.\n// Authorization still belongs on the server, even if a button is hidden."
@@ -1312,7 +1303,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "An optimization should preserve behavior and improve a measured bottleneck.",
             "This component fragment caches expensiveFilter by rows and query. Its usefulness depends on measured cost and stable dependencies; a new rows reference invalidates the cache."
           ],
           "example": "// Component fragment:\nconst visible = useMemo(\n  () => expensiveFilter(rows, query),\n  [rows, query]\n);\n// Use only when measurement shows this calculation is worth caching.\n// Changing rows identity every render can defeat the cache."
@@ -1373,7 +1363,6 @@
         {
           "title": "Example",
           "paragraphs": [
-            "A working local screen still needs a reliable data and delivery contract.",
             "The versioned envelope supports validation and migration of persisted lessons. The release sequence covers build correctness, navigation, keyboard use, failure behavior and operational recovery."
           ],
           "example": "Persistence envelope:\n{ \"version\": 1, \"lessons\": [{\"id\":\"types\",\"title\":\"Types\",\"done\":false}] }\n\nRelease checks:\nType-check → domain tests → UI tests → production build → preview\nDeep-link refresh → keyboard flow → error states → monitoring → rollback plan"
@@ -1460,7 +1449,7 @@
       ],
       "project": {
         "title": "Editable learning tracker",
-        "brief": "Build an add/toggle/remove/search tracker with a pure domain core and a keyboard-usable interface.",
+        "brief": "Build a tracker that lets users add, toggle, remove and search records. Keep its data transformations pure and its controls usable with a keyboard.",
         "requirements": [
           "Use stable IDs and immutable reducer transitions.",
           "Show blank-title errors and an empty search result.",

@@ -36,7 +36,7 @@ Keep the same brief reading action and book, try only the cue location, and note
 
 - One proposed change is isolated where practical.
 - A plausible confound is recorded.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

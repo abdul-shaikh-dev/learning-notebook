@@ -8,7 +8,7 @@ Repeated carry-over can mean the plan exceeds capacity, tasks are unclear or the
 
 ## Try before reading the answer
 
-Four of six daily outcomes carry over on three days. Design one intervention.
+Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.
 
 Decision: ____________________________________________
 

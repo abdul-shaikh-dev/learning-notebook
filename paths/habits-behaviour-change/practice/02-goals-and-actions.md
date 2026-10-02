@@ -36,7 +36,7 @@ Outcome: spend less time searching before leaving. Action: put tomorrow’s note
 
 - Outcome and controllable action are written separately.
 - An external constraint is identified.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

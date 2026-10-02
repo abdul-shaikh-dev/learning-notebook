@@ -20,7 +20,7 @@ Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missi
 
 ## Worked synthetic approach
 
-Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload confounds any improvement; keep conclusions local.
+Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload could explain the improvement. These sessions alone cannot show that batching caused it.
 
 ## Your evidence
 

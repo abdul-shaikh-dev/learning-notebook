@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-A next action uses a verb, object and completion test. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.
+A next action says what to do and how to tell it is finished. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.
 
 ## Try before reading the answer
 

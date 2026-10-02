@@ -36,7 +36,7 @@ I am not available for homework messages after 9 pm. I can look at one question 
 
 - The boundary describes the learner’s own action.
 - An available alternative is stated without coercion.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

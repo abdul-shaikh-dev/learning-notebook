@@ -100,7 +100,7 @@
       ],
       "exercise": {
         "prompt": "Define order count, customer count and revenue for these rows and write their grains.",
-        "solution": "Order count=2, distinct customers=1, revenue=2000 cents. Input grain is order; output grain is calendar day under the stated UTC rule.",
+        "solution": "There are 2 orders, 1 distinct customer and 2000 cents of revenue. Each input row represents an order. Each output row represents a calendar day under the stated UTC rule.",
         "checks": [
           "Calculate two orders, one distinct customer and 2000 cents of revenue.",
           "Identify order-grain input and calendar-day output under the UTC rule."
@@ -487,7 +487,7 @@
         {
           "title": "Transactional batch effects",
           "paragraphs": [
-            "A transaction groups changes that should succeed or fail together. Parse and validate the bounded batch, begin a transaction, write rows and commit only when required work succeeds. On failure rollback prevents partial application of that transaction."
+            "A transaction groups changes that should succeed or fail together. Parse and validate the bounded batch, begin a transaction, write rows and commit only when required work succeeds. If the work fails, rollback undoes the changes in that transaction."
           ]
         },
         {
@@ -576,7 +576,7 @@
       ],
       "exercise": {
         "prompt": "Describe the failure when an ID is checked outside the write transaction and two workers race.",
-        "solution": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient.",
+        "solution": "Both workers can find that the ID is absent and attempt the write. A database uniqueness constraint must protect the ID, and the effect and marker must commit together. A pre-check alone is insufficient.",
         "checks": [
           "Show how two workers can both observe a missing run ID before either writes.",
           "Use database uniqueness and one atomic effect/marker boundary rather than a pre-check alone."
@@ -591,7 +591,7 @@
           "Different run IDs for the two workers so neither waits"
         ],
         "correct": 0,
-        "explanation": "Both can see missing and both attempt effects. Database uniqueness and an atomic effect/marker boundary are needed; a pre-check alone is insufficient."
+        "explanation": "Both workers can find that the ID is absent and attempt the write. A database uniqueness constraint must protect the ID, and the effect and marker must commit together. A pre-check alone is insufficient."
       },
       "references": [
         {
@@ -639,7 +639,7 @@
       ],
       "exercise": {
         "prompt": "When should an extraction watermark advance if target writes fail after half the batch?",
-        "solution": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication.",
+        "solution": "It must not advance. Roll back or reconcile the target changes, then retry from the previous committed boundary using deduplication.",
         "checks": [
           "Keep the previous committed watermark when target writes fail halfway.",
           "Roll back or reconcile partial effects and retry with deduplication."
@@ -654,7 +654,7 @@
           "Advance halfway based on the number of attempted writes"
         ],
         "correct": 0,
-        "explanation": "It must not advance. Roll back/reconcile target effects and retry from the previous committed boundary using deduplication."
+        "explanation": "It must not advance. Roll back or reconcile the target changes, then retry from the previous committed boundary using deduplication."
       },
       "references": [
         {
@@ -1232,7 +1232,7 @@
       ],
       "exercise": {
         "prompt": "List the integration evidence needed before claiming the SQL Server adapter works.",
-        "solution": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals.",
+        "solution": "Run the clean-load, replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server and driver versions. Then verify the stored keys and totals.",
         "checks": [
           "Name clean-load, replay, payload-conflict, duplicate rollback and invalid-input target tests.",
           "Verify stored keys and totals using the selected SQL Server and driver versions."
@@ -1247,7 +1247,7 @@
           "A DATETIME2 column, which alone proves UTC input handling"
         ],
         "correct": 0,
-        "explanation": "Run clean-load, same-batch replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server/driver version, then verify stored keys/totals."
+        "explanation": "Run the clean-load, replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server and driver versions. Then verify the stored keys and totals."
       },
       "references": [
         {

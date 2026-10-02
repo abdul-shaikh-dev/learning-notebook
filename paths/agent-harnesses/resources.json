@@ -162,7 +162,7 @@
     },
     {
       "id": "advanced",
-      "title": "Harness assurance and operations packet",
+      "title": "Runtime tests and operations plan",
       "goal": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
       "fileIds": [
         "harness_workshop-py",

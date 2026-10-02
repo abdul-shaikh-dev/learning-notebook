@@ -44,13 +44,13 @@ The API has validated title lengths, bounded ID-ordered pages, immutable task sn
 
 This is a local, unauthenticated, memory-only learning baseline. Keep it bound to loopback. It does not claim durability, user isolation, distributed coordination or production readiness. The completion endpoint returns 200 with updated state; the earlier foundation API lesson used 204, so do not combine their acceptance contracts.
 
-## Intermediate assessment extension
+## Intermediate practice extension
 
 Replace the store with an EF Core SQLite implementation and a scoped context. Use compatible provider/tool versions for your target framework, add reviewed migrations, and retain the HTTP behavior. Add a real persistent concurrency token. Test restart persistence and a rollback from a new context. EF Core needs package restore; the guided executable below supplies a separate package-based scaffold. Migration generation and review remain learner work.
 
-## Advanced assessment extension
+## Advanced practice extension
 
-Configure real authentication and task ownership, enforce read/write policies, propagate request cancellation through database work, separate readiness from liveness, collect logs and metrics, and publish a release build. Add denial tests with a fake principal only inside a test host, then verify real token validation in staging. Measure a bounded list query under repeatable load and write a migration/rollback runbook. These extensions are assessed in the path; the baseline is a reference starting point, not their finished solution.
+Configure real authentication and task ownership, enforce read/write policies, propagate request cancellation through database work, separate readiness from liveness, collect logs and metrics, and publish a release build. Add denial tests with a fake principal only inside a test host, then verify real token validation in staging. Measure a bounded list query under repeatable load and write a migration/rollback runbook. The path gives criteria for these extensions. Use the baseline as a starting point and implement the extensions yourself.
 
 No installation, deployment, identity-provider setup or migration is performed by opening these files.
 
@@ -74,6 +74,6 @@ This is a focused guided extension, not a drop-in replacement preserving every e
 2. Run the memory API and its HTTP acceptance client. Record the contract: title validation, paging, version conflicts and restart loss. Run `PersistenceChecks.csproj` separately. Its task/audit test now saves the task, fails the second audit write on a unique key, rolls back, and queries both tables from a new context.
 3. Replace the memory store in a copy of the API, add migrations, and retain the same HTTP assertions. Test a fresh database upgrade and an existing database upgrade. `EnsureCreated` in the disposable scaffold is not a migration.
 4. Add owner checks and policies at every read and write. Keep the fake header principal in the test host only. Capture anonymous, denied, cross-owner and stale-write responses, plus restart and rollback evidence.
-5. For the advanced hand-in, show the exact code and output for cancellation, readiness, bounded lists, logs/metrics, a release build, migration review and rollback procedure. Mark real token validation and production load as unverified until exercised in staging.
+5. For the advanced project, show the exact code and output for cancellation, readiness, bounded lists, logs/metrics, a release build, migration review and rollback procedure. Mark real token validation and production load as unverified until exercised in staging.
 
 Sources: [EF Core transactions](https://learn.microsoft.com/en-us/ef/core/saving/transactions), [EF Core migrations](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/).

@@ -124,7 +124,7 @@
           "Restoring does not reset step usage.",
           "Uncertain state is visible until a receipt resolves it."
         ],
-        "solution": "Use a canonical operation fingerprint and a host-only approval method. The fake store coordinates its note and receipt in one local operation. After simulated response loss, enter uncertain and reconcile by the original identity. Restore trusted JSON only with matching script/version and require review again for waiting actions. The toy does not establish crash durability or real user authentication."
+        "solution": "Use a canonical operation fingerprint and a host-only approval method. The fake store coordinates its note and receipt in one local operation. After simulated response loss, enter uncertain and reconcile by the original identity. Restore trusted JSON only with matching script/version and require review again for waiting actions. The workshop does not establish crash durability or real user authentication."
       }
     },
     {
@@ -137,7 +137,7 @@
         "Produce a rollout plan, incident runbook and ADR with unresolved risks."
       ],
       "project": {
-        "title": "Harness assurance and operations packet",
+        "title": "Runtime tests and operations plan",
         "brief": "Test the offline harness, then choose the next external adapter to implement. Specify its failure behavior before deploying infrastructure.",
         "requirements": [
           "Run the provided suite and add two adversarial proposal fixtures.",
@@ -331,7 +331,7 @@
       "id": "state-context",
       "title": "4. Separate durable state from model context",
       "stage": "foundation",
-      "takeaway": "The transcript is an input view, not the authoritative ledger.",
+      "takeaway": "The transcript supplies context; runtime and business records establish the current state.",
       "sections": [
         {
           "title": "Concept",
@@ -443,7 +443,7 @@
       "id": "schema",
       "title": "6. Validate shape and meaning before invocation",
       "stage": "foundation",
-      "takeaway": "Structured output helps parsing; runtime validation still owns acceptance.",
+      "takeaway": "Structured output is easier to parse, but the runtime must still validate it before accepting a call.",
       "sections": [
         {
           "title": "Concept",
@@ -454,14 +454,14 @@
         {
           "title": "Example",
           "paragraphs": [
-            "The toy validator accepts a strict small contract, not the full JSON Schema standard. It rejects unexpected keys and booleans where an integer is expected."
+            "The workshop validator accepts a strict small contract, not the full JSON Schema standard. It rejects unexpected keys and booleans where an integer is expected."
           ],
           "example": "Accepted read args: {\"lesson_id\":\"L1\"}\nRejected: {\"lesson_id\":\"L1\",\"owner\":\"another-user\"}\nRejected: {\"lesson_id\":[\"L1\"]}\nRejected note: text longer than configured character cap\nValidation runs before any fake handler is invoked."
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Bounds have units: a character cap is not a token budget or memory sandbox. A payload may be too large before it reaches the validator, so a production transport must enforce input-size limits before parsing. Do not repair a dangerous proposal by silently changing its meaning. Surface a clear validation category and let a bounded correction path choose a new valid proposal if the product supports that."
+            "Bounds have units: a character cap is not a token budget or memory sandbox. A payload may be too large before it reaches the validator, so a production transport must enforce input-size limits before parsing. Do not repair a dangerous proposal by silently changing its meaning. Report the validation error clearly. If the product allows a correction attempt, limit how many new proposals it accepts."
           ]
         },
         {
@@ -691,7 +691,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Our toy runtime pauses before save_note, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
+            "Our workshop runtime pauses before save_note, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
           ],
           "example": "Pending: save_note(L1, \"Review indexes\")\nFingerprint includes run + subject + call ID + tool + args\nHost approves that pending fingerprint\nRecheck current policy and exact arguments\nChanged text or destination → reject stale approval\nOne successful dispatch consumes the approval."
         },
@@ -851,7 +851,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "In real clients, retries should fit an overall deadline and may need backoff and jitter. Nested retries multiply load. An SDK may retry underneath your loop, so inspect all layers rather than counting only visible proposals. The toy workshop uses no real waiting or network; it does not model jitter, congestion or provider rate limits."
+            "In real clients, retries should fit an overall deadline and may need backoff and jitter. Nested retries multiply load. An SDK may retry underneath your loop, so inspect all layers rather than counting only visible proposals. The workshop uses no real waiting or network; it does not model jitter, congestion or provider rate limits."
           ]
         }
       ],
@@ -1286,7 +1286,7 @@
       ],
       "exercise": {
         "prompt": "Someone adds eval(model_output) to the workshop and calls the registry a sandbox. Explain the problem.",
-        "solution": "eval executes untrusted code with the Python process authority; registry validation does not contain it. Remove arbitrary evaluation. If execution is genuinely required, design a separate constrained execution service and validate its controls. The current workshop intentionally uses only reviewed in-memory functions.",
+        "solution": "eval executes untrusted code with the Python process authority; registry validation does not contain it. Remove arbitrary evaluation. If the application needs code execution, design a separate service with explicit limits and test its controls. The current workshop intentionally uses only reviewed in-memory functions.",
         "checks": [
           "No dynamic code evaluation is introduced.",
           "Trust boundary and resource controls are drawn separately.",
@@ -1476,7 +1476,7 @@
       ],
       "exercise": {
         "prompt": "An exception includes a complete note body. What should a tool boundary record?",
-        "solution": "Map it to an explicit safe error category and retain only approved metadata in general telemetry. If detailed evidence is genuinely needed, store it through a restricted, redacted and retention-controlled channel. Do not emit str(exception) blindly into shared logs.",
+        "solution": "Map it to an explicit safe error category and retain only approved metadata in general telemetry. If diagnosis requires the detailed error, redact sensitive fields and store it with restricted access and a retention limit. Do not emit str(exception) blindly into shared logs.",
         "checks": [
           "Note text is absent from the normal event stream.",
           "Error handling does not dump raw arguments.",
@@ -1595,7 +1595,7 @@
       ],
       "exercise": {
         "prompt": "A new tool version passes schema tests but doubles uncertain writes in a pilot. What should the release decision consider?",
-        "solution": "Stop or restrict the rollout according to the agreed failure policy, investigate adapter outcome semantics and reconcile affected operations. Do not celebrate schema compatibility as end-to-end success. Preserve versioned traces, confirm no duplicate effects and verify recovery before broadening deployment.",
+        "solution": "Stop or restrict the rollout according to the agreed failure policy, investigate adapter outcome semantics and reconcile affected operations. Passing schema tests does not establish that the complete workflow works. Preserve versioned traces, confirm no duplicate effects and verify recovery before broadening deployment.",
         "checks": [
           "In-flight checkpoint compatibility is tested.",
           "Rollback limits include already committed effects.",
@@ -1627,7 +1627,7 @@
       "id": "operations",
       "title": "23. Operate pauses, incidents and reconciliation",
       "stage": "advanced",
-      "takeaway": "A runbook turns uncertainty into an owned, bounded response.",
+      "takeaway": "A runbook names the incident owner, recovery steps and conditions for escalation.",
       "sections": [
         {
           "title": "Concept",
@@ -1713,7 +1713,7 @@
       ],
       "exercise": {
         "prompt": "Create a capstone review that someone else can run offline. What must it include?",
-        "solution": "Include commands, expected deterministic outcomes, the test matrix and an architecture diagram. Demonstrate approval mismatch, denied scope, loop exhaustion, cancellation, checkpoint mismatch and uncertain-effect reconciliation. Provide an ADR for durable multi-worker storage without pretending it exists in the toy. State that passing these tests validates runtime fixtures, not model intelligence or production security.",
+        "solution": "Include commands, expected deterministic outcomes, the test matrix and an architecture diagram. Demonstrate approval mismatch, denied scope, loop exhaustion, cancellation, checkpoint mismatch and uncertain-effect reconciliation. Provide an ADR for durable multi-worker storage and state that the workshop does not implement it. State that passing these tests validates runtime fixtures, not model intelligence or production security.",
         "checks": [
           "A fresh reviewer can run the suite without credentials.",
           "Every major policy has a failure test.",

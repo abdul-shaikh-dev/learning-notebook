@@ -2,7 +2,7 @@
 
 ## Aim
 
-A reflection record makes a situation, your first explanation and possible alternatives visible.
+Write what happened, your first explanation and other possibilities.
 
 Keep the record brief and use low-stakes examples. The purpose is curiosity and a next action, not grading your feelings or diagnosing yourself. You may use a fictional scenario or stop if the exercise is not helpful. Personal notes do not need to be shared.
 
@@ -36,7 +36,7 @@ Event: a two-line reply. First interpretation: annoyance. Evidence: short length
 
 - Evidence for and against the first account is recorded.
 - A practical next step ends the reflection.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

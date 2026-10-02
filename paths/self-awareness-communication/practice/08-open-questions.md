@@ -36,7 +36,7 @@ What is making tonight difficult? After the answer: is the missing data the only
 
 - An open question invites context without blame.
 - The follow-up checks a concrete dependency.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

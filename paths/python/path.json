@@ -1090,7 +1090,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Keep domain logic importable and argument parsing at a deliberate entry point.",
             "A package groups modules under an import name; a distribution is an installable artifact. __init__.py makes a regular package; __main__.py supports python -m package. For distribution, pyproject.toml declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
           ]
         },
@@ -1160,7 +1159,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Test contracts and failure behavior, then log useful operational facts.",
             "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. unittest supports assertRaises, assertLogs and subTest for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
           ]
         },
@@ -1225,7 +1223,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Choose concurrency by workload and keep shared state controlled.",
             "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. asyncio cooperatively schedules coroutines at await points, and TaskGroup provides bounded task lifetimes and failure propagation."
           ]
         },
@@ -1296,7 +1293,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Check correctness, then measure representative workloads before optimizing.",
             "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. cProfile helps locate cumulative time; timeit repeats focused measurements. Report workload size, environment and methodology. tracemalloc tracks Python allocations rather than every native allocation."
           ]
         },
@@ -1353,7 +1349,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Parsing, schema validation and authorization are separate steps.",
             "JSON decoding establishes syntax, not expected shape. Check exact fields, types, sizes and ranges before constructing domain objects. Bound bytes before parsing, plus record count and field lengths. Never eval user input or deserialize untrusted pickle."
           ]
         },
@@ -1410,7 +1405,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Prepare a complete new file before replacing previous output.",
             "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, flush and fsync its contents, close it, then replace the target with os.replace. Atomic visibility differs from power-loss durability and concurrency control."
           ]
         },
@@ -1467,7 +1461,6 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Validate a complete batch before one deliberate commit.",
             "Build an importer for newline-delimited records with id, topic and minutes. IDs must be unique. Bound input, validate all rows and save a versioned report only when all pass. This policy keeps partial success from looking like a complete import."
           ]
         },

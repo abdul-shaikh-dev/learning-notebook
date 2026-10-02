@@ -8,7 +8,7 @@ Verify tenant/owner/action decisions and narrow update shapes on synthetic recor
 python -B -m unittest -v test_security_lab.AuthorizationTests
 ```
 
-Expected: Two methods pass: permission matrix/default denial and allowed-field/copy boundaries.
+Expect two test methods to pass. They check the permission matrix, default denial, allowed fields and copied records.
 
 ## Optional practice
 
@@ -20,7 +20,7 @@ Expected: Two methods pass: permission matrix/default denial and allowed-field/c
 
 ## Reference approach
 
-Use Principal only as trusted fixture context. The policy requires a matching tenant and either ownership or read-only reader permission; unknown actions deny. read_document returns a copy and the same outward unavailable error for denied/missing. parse_update accepts only title. Run AuthorizationTests, record the matrix and extend a copy with a new explicitly tested action.
+Use Principal only to supply trusted fixture context. The policy requires a matching tenant and either ownership or read-only reader permission. It denies unknown actions. read_document returns a copy of an allowed record and uses the same public unavailable error for denied and missing records. parse_update accepts only title. Run AuthorizationTests, record the matrix and extend a copy with a new explicitly tested action.
 
 ## Evidence rubric
 

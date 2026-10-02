@@ -25,10 +25,10 @@ citations end `rejected`. Follow the tests before studying every framework API.
 Build the routing yourself from the behaviour tests in a scratch copy. Keep
 retrieval and the draft callable independent. Then introduce two defects in
 turn: always route to drafting, and remove the attempt limit. Identify which
-test catches each one. The recursion limit is a last bound, not the application’s
+test catches each one. The recursion limit is a last bound, not the application's
 normal missing-evidence result.
 
-**Why the state is shaped this way:** evidence is a mapping of stable IDs to
+The evidence field maps stable IDs to
 text; the draft is one current string; attempts is an integer. A failed draft
 must not remain accepted merely because an earlier draft contained a valid ID.
 The check deliberately permits a false claim with a real citation. One test
@@ -67,7 +67,7 @@ should be diagnosed before increasing retries.
 .venv\Scripts\python local_framework_lab.py --mode deep --base-url http://127.0.0.1:8080/v1 --model YOUR_MODEL_ID
 ```
 
-This version supplies `search_records` as a tool. It also receives Deep Agents’
+This version supplies `search_records` as a tool. It also receives Deep Agents'
 built-in harness tools. The default state-backed file tools are not a grant to
 read your disk; no filesystem or execution backend is configured here. Inspect
 the printed messages for actual search calls and their returned evidence. A
@@ -77,7 +77,7 @@ failure as useful capability evidence.
 
 Compare one concrete change: ask for two policies in one answer. Does planning
 or delegation improve support, or only add calls? Try an unknown policy and
-inspect whether the agent invents an answer. Keep the graph’s deterministic
+inspect whether the agent invents an answer. Keep the graph's deterministic
 tests even if the Deep Agents variant seems more fluent.
 
 ## 4. Grow one corpus, not three unrelated demos
@@ -95,12 +95,12 @@ corpus workflow, but this downloadable kit remains self-contained.
 LangSmith Fleet adds a managed workspace and agent-building experience. It is
 not a fourth local runtime mode in this script. Without workspace access, use
 the completed local app and this small migration exercise: identify the search
-tool’s inputs/outputs, the three synthetic records, and who may use the tool.
+tool's inputs/outputs, the three synthetic records, and who may use the tool.
 Decide whether a remote workspace can reach the tool at all. `127.0.0.1` on a
 hosted service refers to that service, not your PC.
 
 When workspace access becomes available, configure one synthetic read-only
-tool through the workspace’s supported connection mechanism, run the same
+tool through the workspace's supported connection mechanism, run the same
 three questions, and inspect its trace and permissions. This guide does not
 expose a local port or upload private documents. A local script passing tests
 does not establish a working Fleet connection.
@@ -110,7 +110,7 @@ does not establish a working Fleet connection.
 The graph tests execute real LangGraph with scripted drafts. The direct model
 and Deep Agents modes require your compatible running server; model quality
 and Fleet deployment are separate checks. Package import/agent construction
-can succeed even when a model’s tool calling fails.
+can succeed even when a model's tool calling fails.
 
 Official references checked 2 October 2026:
 

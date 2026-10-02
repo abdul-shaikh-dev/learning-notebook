@@ -1592,7 +1592,7 @@
       "id": "deployment",
       "title": "23. Versioning and incremental release",
       "stage": "advanced",
-      "takeaway": "An agent release includes more than a prompt: model configuration, tool schemas, policy, retrieval collection and application code can all change behavior..",
+      "takeaway": "Model configuration, tool schemas, policy, retrieved data and application code can all change an agent's behavior. Version them with the prompt when you release it.",
       "sections": [
         {
           "title": "Concept",

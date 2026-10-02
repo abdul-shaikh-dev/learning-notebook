@@ -12,7 +12,7 @@
   "outcomes": [
     "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
     "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
-    "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+    "Validate observations, cache public responses in the model and track retries against a deadline. Explain what the resulting tests establish.",
     "Explain the difference between supplied test evidence and unexecuted deployment extensions."
   ],
   "setup": [
@@ -132,7 +132,7 @@
     {
       "id": "advanced",
       "title": "Applied extension",
-      "description": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+      "description": "Validate observations, cache public responses in the model and track retries against a deadline. Explain what the resulting tests establish.",
       "exitCriteria": [
         "Malformed syntax, incompatible types and wrong media type each reject.",
         "User-specific output is not placed in the shared model cache.",
@@ -140,7 +140,7 @@
       ],
       "project": {
         "title": "Bounded observation and cache review",
-        "brief": "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
+        "brief": "Validate observations, cache public responses in the model and track retries against a deadline. Explain what the resulting tests establish.",
         "requirements": [
           "Bound body size and require media type plus exact lesson/version schema.",
           "Reject private cache insertion and test exact freshness expiry with an injected clock.",
@@ -183,7 +183,7 @@
       ],
       "exercise": {
         "prompt": "Classify connection refusal versus invalid JSON.",
-        "solution": "Refusal prevents an HTTP exchange; invalid JSON occurs after a response exists. Check server/listener configuration for the former and response contract for the latter.",
+        "solution": "A refused connection prevents an HTTP exchange. Invalid JSON occurs after a response arrives. For a refused connection, check the server and listener configuration. For invalid JSON, compare the body with the expected response contract.",
         "solutionFormat": "prose",
         "checks": [
           "Identify the last successful layer for each failure.",
@@ -330,7 +330,7 @@
       ],
       "exercise": {
         "prompt": "Write a case for TTL zero.",
-        "solution": "Remembering with zero TTL expires immediately in this model. At the same time lookup returns None; assert that without sleeping.",
+        "solution": "An entry stored with a zero TTL expires immediately in this model. A lookup at the insertion time returns None. Test both operations with the same injected time, without sleeping.",
         "solutionFormat": "prose",
         "checks": [
           "Specify a clock, insertion time and lookup time.",
@@ -695,7 +695,7 @@
       ],
       "exercise": {
         "prompt": "What would a real local TLS extension require? Optional live drill: practice/browser-boundary-drill.md; record browser/TLS observations separately.",
-        "solution": "Provision a test CA and server certificate, configure trust, assert correct-host success and wrong-host/untrusted-chain failures, then inspect negotiated transport. Keep it separate from the current HTTP evidence.",
+        "solution": "Create a test CA and server certificate, then configure client trust. Check that the matching host succeeds and that a wrong hostname or untrusted chain fails. Inspect the negotiated transport. Keep it separate from the current HTTP evidence.",
         "solutionFormat": "prose",
         "checks": [
           "List setup and runtime observations required for a TLS experiment.",
@@ -989,7 +989,7 @@
       ],
       "exercise": {
         "prompt": "What must a bounded redirect helper track?",
-        "solution": "Hop count, resolved destination origin, method rules and whether credentials may be forwarded. Stop loops and reject destinations outside its policy.",
+        "solution": "Check the hop count, the resolved destination origin, the method rules and whether credentials may be forwarded. Stop loops and reject destinations outside the client policy.",
         "solutionFormat": "prose",
         "checks": [
           "Provide a redirect chain and explicit stopping conditions.",
@@ -1243,7 +1243,7 @@
       ],
       "exercise": {
         "prompt": "What evidence separates a proxy 504 from an origin 500?",
-        "solution": "Correlated proxy and origin logs with clocks and request identity, plus the response metadata. A single browser status cannot establish where processing failed.",
+        "solution": "Compare proxy and origin logs using their timestamps and request identifiers, then inspect the response metadata. A single browser status cannot establish where processing failed.",
         "solutionFormat": "prose",
         "checks": [
           "Collect timestamped client, proxy and origin observations.",
@@ -1341,7 +1341,7 @@
       ],
       "exercise": {
         "prompt": "Choose the smallest next experiment before using real HTTPS.",
-        "solution": "Create a local test CA/server, verify trusted matching-name success and untrusted/wrong-name failure without disabling checks; retain the existing body and timeout contracts.",
+        "solution": "Create a local test CA and server. Check that a trusted certificate with a matching name succeeds, and that an untrusted certificate or wrong name fails without disabling verification. Retain the existing body and timeout contracts.",
         "solutionFormat": "prose",
         "checks": [
           "Name the unresolved claim and the smallest discriminating experiment.",

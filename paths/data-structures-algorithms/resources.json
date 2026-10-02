@@ -68,12 +68,12 @@
         "test_trees_graphs-py"
       ],
       "steps": [
-        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are directly inside that folder.",
         "Read the reference source and its input contracts before running its checks.",
         "Run the reference and check its output.",
         "Process add and undo commands for study events. Build it independently using the concrete contract below.",
         "Build the reader's event-command contract. Test the supplied a/b duplicate-and-undo fixture, then two undos followed by reuse of a. The algorithm download does not implement this project.",
-        "Check your result: Counts match a hand-calculated fixture. Undo respects last-in-first-out order. No duplicate is silently counted as a new unique event. Complexity claims name their assumptions."
+        "Check the following results. Counts match a hand-calculated fixture. Undo respects last-in-first-out order. No duplicate is silently counted as a new unique event. Complexity claims name their assumptions."
       ],
       "commands": [
         {
@@ -108,12 +108,12 @@
         "depth-method-selection-md"
       ],
       "steps": [
-        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are directly inside that folder.",
         "Read the reference source and its input contracts before running its checks.",
         "Run the reference and check its output.",
         "Given topics and directed prerequisite edges, produce a valid study order and diagnose cycles.",
-        "Build the project described in the reader: Preserve isolated topics and neighbor-only vertices. Return an order satisfying every dependency or an explicit cycle error. Use BFS separately to explain reachability, not prerequisite completion. Test multiple valid orders without asserting one arbitrary sequence. Document complexity for your chosen representation.",
-        "Check your result: Every edge is checked against the output order. Cycles fail reliably. Disconnected topics are not lost. Tests cover empty input, one vertex and shared prerequisites.",
+        "Build the project described in the lesson. Preserve isolated topics and neighbor-only vertices. Return an order satisfying every dependency or an explicit cycle error. Use BFS separately to explain reachability, not prerequisite completion. Test multiple valid orders without asserting one arbitrary sequence. Document complexity for your chosen representation.",
+        "Check the following results. Every edge is checked against the output order. Cycles fail reliably. Disconnected topics are not lost. Tests cover empty input, one vertex and shared prerequisites.",
         "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge.",
         "Use method-selection.md for the BFS and coin examples. Defer its weighted route extension until the advanced Dijkstra and algorithm-review lessons."
       ],
@@ -162,12 +162,12 @@
         "depth-method-selection-md"
       ],
       "steps": [
-        "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
+        "Extract the bundle and open data-structures-algorithms-practice. All listed files are directly inside that folder.",
         "Read the reference source and its input contracts before running its checks.",
         "Run the reference and check its output.",
         "Implement and review three different optimization tasks rather than applying one favorite algorithm everywhere.",
-        "Build the project described in the reader: Find routes on a nonnegative weighted graph and reject unsupported weights. Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals. Choose items under an integer budget with each item used at most once. Compare small cases against independent brute-force oracles. Write invariants, termination arguments and representation-specific complexity. Define input size limits and document remaining limitations.",
-        "Check your result: Each task uses the correct objective and preconditions. Counterexamples explain why plausible alternatives fail. Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs. Pseudo-polynomial and exponential costs are described honestly. Results remain correct without performance optimizations.",
+        "Build the project described in the lesson. Find routes on a nonnegative weighted graph and reject unsupported weights. Schedule the maximum number of compatible positive-duration unweighted intervals; reject zero-duration and reversed intervals. Choose items under an integer budget with each item used at most once. Compare small cases against independent brute-force oracles. Write invariants, termination arguments and representation-specific complexity. Define input size limits and document remaining limitations.",
+        "Check the following results. Each task uses the correct objective and preconditions. Counterexamples explain why plausible alternatives fail. Tests include ties, duplicates, empty input, rejected nonpositive interval durations, zero-cost edges and disconnected inputs. Explain which costs are pseudo-polynomial or exponential and what that means for input size. Results remain correct without performance optimizations.",
         "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation.",
         "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
       ],

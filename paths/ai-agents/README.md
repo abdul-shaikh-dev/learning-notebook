@@ -1,4 +1,4 @@
-# AI Agents: offline practice
+# AI agents: offline practice
 
 Visual companions in the notebook: [Agent loop and execution boundary](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/ai-agents/loop). The original text traces below remain available for offline use.
 
@@ -79,7 +79,7 @@ application. The local collection is synthetic and public.
    execution evidence and final claims. Explain why a script is not a model.
 2. Add invalid and unauthorized requests. Prove they cannot reach the tool.
    Design a hypothetical approval flow without adding external actions.
-3. Expand `evaluation_cases.json` into a release dossier: task criteria,
+3. Expand `evaluation_cases.json` into a release review: task criteria,
    deterministic checks, semantic rubric, held-out data, judge calibration,
    version bundle, gradual release and rollback limits.
 
@@ -108,7 +108,7 @@ Official OpenAI documentation checked **26 September 2026** distinguishes:
 - **Responses API:** direct model integration with application control of the
   surrounding loop and tool handling.
 
-Choose according to ownership needs, not the shortest marketing name. Read the
+Choose the runtime based on which responsibilities your application needs to control. Read the
 current runtime-specific protocol for state, tool calls/results, incomplete
 responses, refusals, errors and cleanup before writing an adapter. No untested
 live API code or model-name recommendation is provided here.

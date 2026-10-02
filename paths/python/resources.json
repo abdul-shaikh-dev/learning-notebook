@@ -121,8 +121,8 @@
       ],
       "steps": [
         "Read README.md before running the references.",
-        "Build the project described in the reader: Accept nonblank topics and actual nonnegative whole minutes. Preserve existing records when validation fails. Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
-        "Check your result: Correct repeated-topic and empty totals. Explicit validation and unchanged state on errors. Explains that simple JSON persistence assumes one process.",
+        "Build the project described in the lesson. Accept nonblank topics and actual nonnegative whole minutes. Preserve existing records when validation fails. Round-trip sample data through UTF-8 JSON and summarize repeated topics.",
+        "Check totals for repeated topics and empty input. Verify that validation errors leave existing records unchanged. Explain why this JSON storage example assumes one process.",
         "Build the independent summary from summary-challenge.md, then run the same contract checks against your module.",
         "After attempting the project, run the reference and compare its output with your result."
       ],
@@ -168,8 +168,8 @@
       ],
       "steps": [
         "Read README.md before running the references.",
-        "Build the project described in the reader: Use a frozen Session dataclass with explicit range/shape rules. Bound file reads and close handles on errors. Separate main argument parsing from importable calculation functions. Return 0 on success and 1 on expected read/validation failure. Document how to split into a package and add pyproject.toml; no package publication is required.",
-        "Check your result: Valid zero and trimmed topics work. Invalid shapes and minutes fail without rewriting input. Tests use temporary files and verify output/status. Explains why a type hint is not schema validation.",
+        "Build the project described in the lesson. Use a frozen Session dataclass with explicit range/shape rules. Bound file reads and close handles on errors. Separate main argument parsing from importable calculation functions. Return 0 on success and 1 on expected read/validation failure. Document how to split into a package and add pyproject.toml; no package publication is required.",
+        "Check that zero minutes and trimmed topics work. Invalid record shapes and minutes must fail without rewriting the input. Use temporary files to test output and exit status. Explain why type hints do not validate a JSON document.",
         "After attempting the project, run the reference and compare its output with your result."
       ],
       "commands": [
@@ -214,8 +214,8 @@
       ],
       "steps": [
         "Read README.md before running the references.",
-        "Build the project described in the reader: Bound bytes, records, fields and worker count. Reject duplicate keys, duplicate IDs and invalid minutes. Keep worker output order deterministic and commit only after batch validation. Write a same-directory temporary file, fsync contents, replace once and clean on failure. Validate loaded report version and recomputed totals. Profile sequential versus threaded validation; do not promise a speedup.",
-        "Check your result: Round-trip, empty, boundary and corruption tests pass. Injected replacement failure preserves exact prior bytes and leaves no temporary files. CLI error status and safe logging are explained. Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim.",
+        "Build the project described in the lesson. Bound bytes, records, fields and worker count. Reject duplicate keys, duplicate IDs and invalid minutes. Keep worker output order deterministic and commit only after batch validation. Write a same-directory temporary file, fsync contents, replace once and clean on failure. Validate loaded report version and recomputed totals. Profile sequential versus threaded validation; do not promise a speedup.",
+        "Run round-trip, empty-input, boundary and corruption tests. Simulate a replacement failure and check that the prior report is byte-for-byte unchanged and no temporary files remain. Explain the CLI error status and logging policy. Document the trusted-directory and single-writer assumptions, and what remains untested about power loss.",
         "After attempting the project, run the reference and compare its output with your result."
       ],
       "commands": [

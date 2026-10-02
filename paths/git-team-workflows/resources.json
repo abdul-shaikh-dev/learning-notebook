@@ -84,8 +84,8 @@
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
         "Read README.md and foundation-kit.md before running the references.",
         "Run the commands below and record actual results separately from expected results.",
-        "Run the complete foundation fixture in its fresh retained owned child.",
-        "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
+        "Run the complete foundation fixture in the new directory it creates and keeps for inspection.",
+        "Predict the ordinary and cached diffs after writing one, staging two and then editing the file to three.",
         "Verify committed contents independently with git show.",
         "Show that an untracked synthetic config file is ignored without claiming history erasure.",
         "In the reported foundation repository, independently try staged four and unstaged five from the three-states lesson. Verify both diffs before comparing the explanation.",
@@ -136,7 +136,7 @@
         "Verify a two-parent merge.",
         "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
         "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
-        "Compare submitted evidence with the rubric: Conflict/abort/resolution states are supported by actual outputs. The resolved contents preserve both stated intents. Fetch and integration are distinguished. Review evidence names the candidate and no hosted approval is invented.",
+        "Compare submitted evidence with the rubric: The recorded output shows the conflict, the abort and the later resolution. The resolved contents preserve both stated intents. Fetch and integration are distinguished. The review names the candidate commit and states that no hosted approval was obtained.",
         "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
       ],
       "commands": [

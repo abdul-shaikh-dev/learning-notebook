@@ -36,7 +36,7 @@ Omar sends one message before the break and sets a visible end time, or talks br
 
 - The original action’s immediate function is named.
 - The replacement fits the break duration.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

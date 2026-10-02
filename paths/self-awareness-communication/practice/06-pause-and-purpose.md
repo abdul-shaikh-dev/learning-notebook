@@ -36,7 +36,7 @@ I saw the room changed. Please confirm the new location and whether the start ti
 
 - Urgent purpose and later concern are distinguished.
 - The reply requests the needed information.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

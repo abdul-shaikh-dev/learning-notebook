@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.
+Break each deliverable into actions someone can complete and check. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.
 
 An owner is the person responsible for moving an item forward and following up; they need not do every action themselves. Agree the owner rather than silently assigning someone. For the workshop, Sam coordinates the venue request and Lee coordinates the checked invitation.
 

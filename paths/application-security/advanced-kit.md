@@ -8,7 +8,7 @@ Deliver an evidence matrix and runbook, plus an optional real-provider integrati
 python -B -m unittest -v test_security_lab.py test_security_http.py
 ```
 
-Expected: Ten methods pass, including loopback HTTP mutation denial and persisted-state checks. This does not execute a browser/provider or cryptographic validation.
+Expect ten test methods to pass, including checks that denied loopback HTTP mutations leave stored data unchanged. They do not exercise a browser, identity provider or cryptographic validator.
 
 ## Optional practice
 

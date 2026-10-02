@@ -544,7 +544,7 @@
         {
           "title": "The resource-group relationship",
           "paragraphs": [
-            "The template storage account uses the created resource-group name and location through references. The graph has group before account, not group before every resource in every environment. A private endpoint would add further dependencies if intentionally designed."
+            "The template storage account uses the created resource-group name and location through references. The storage account depends on this resource group. Other resources may have different dependencies. A private endpoint would add further dependencies if intentionally designed."
           ]
         }
       ],
@@ -648,7 +648,7 @@
         {
           "title": "Plan actions and unknown values",
           "paragraphs": [
-            "Read additions, in-place changes, replacements and deletions resource by resource. Unknown-after-apply values may be legitimate but deserve attention where they affect safety. A saved plan contains sensitive information and can become inappropriate if surrounding conditions change. Review identity, scope, provider selection and destructive actions before applying."
+            "Read additions, in-place changes, replacements and deletions resource by resource. Some values remain unknown until apply. Check whether those unknown values affect access, data preservation or recovery. A saved plan contains sensitive information and can become inappropriate if surrounding conditions change. Review identity, scope, provider selection and destructive actions before applying."
           ]
         },
         {
@@ -774,7 +774,7 @@
         {
           "title": "A storage-module extension",
           "paragraphs": [
-            "A storage module could accept name, region and approved tags, and expose its ID. It should state networking prerequisites. The supplied single-file template is intentionally a readable foundation; turning it into a module is a learner extension, not a hidden generated abstraction."
+            "A storage module could accept name, region and approved tags, and expose its ID. It should state networking prerequisites. The supplied template keeps the resource definitions in one file. Refactoring them into a module is an optional exercise."
           ]
         }
       ],
@@ -1122,7 +1122,7 @@
         {
           "title": "Offline versus live evidence",
           "paragraphs": [
-            "The supplied suite executes only local Python/SQLite-free inventory modeling, while optional init/validate checks the AzureRM schema without apply. Mock Terraform tests are discussed as an extension requiring Terraform 1.7+; they do not establish real service reachability."
+            "The supplied Python suite tests a local inventory model without a database. The optional init and validate commands check the AzureRM schema without applying the configuration. Mock Terraform tests are discussed as an extension requiring Terraform 1.7+; they do not establish real service reachability."
           ],
           "example": "python infra_lab.py\npython -m unittest -v test_infra_lab.py"
         }
@@ -1172,7 +1172,7 @@
         {
           "title": "Failure domains and data recovery",
           "paragraphs": [
-            "A region, zone, account or identity failure can affect different parts of a workload. Rebuilding infrastructure from code does not restore database rows or blob contents. Define recovery point and time objectives, protect backups separately, and rehearse isolated restoration with real synthetic verification when choosing a live environment."
+            "A region, zone, account or identity failure can affect different parts of a workload. Rebuilding infrastructure from code does not restore database rows or blob contents. Define recovery point and time objectives, protect backups separately, and rehearse restoration in an isolated environment and verify the restored synthetic data."
           ]
         },
         {

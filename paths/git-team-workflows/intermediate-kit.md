@@ -12,7 +12,7 @@ Expected: JSON reports conflict_resolved and fetch_preserved_local_head true; no
 
 ## Implement and submit
 
-1. Run the intermediate fixture’s deliberate conflict, abort and resolution.
+1. Run the intermediate fixture's deliberate conflict, abort and resolution.
 2. Explain base/ours/theirs and preserve both fixture intents.
 3. Verify a two-parent merge.
 4. Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.

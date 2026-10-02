@@ -36,7 +36,7 @@ Cue: kettle switched on. Action: news app. Payoff: something engaging during wai
 
 - Cue, action and immediate consequence are distinguished.
 - The alternative is physically available at the cue.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

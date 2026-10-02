@@ -16,6 +16,6 @@ Recovery: snapshot identity/time, isolation target, integrity/business assertion
 Incident: time→observation→decision→effect; separate observed cause from hypothesis.
 Release record: source, artifact digest, config revision, schema range, gate, prior artifact, recovery owner.
 
-Reference arithmetic: 10,000 requests at 99.9% allows10 bad;12bad leaves -2 and burns1.2× budget. Counter interval from 100/2 to 220/5 is 120 requests and 3 bad, giving 2 requests/s and 2.5% bad over 60 seconds. A snapshot containing A before B was written restores A, not B. The same-code v1/v2 label restart test proves only unchanged-schema persistence; actual differing-artifact rollback is a separate exercise.
+At a 99.9% success target, 10,000 eligible requests allow 10 bad outcomes. Twelve bad outcomes exceed that budget by 2 and consume 1.2 times the allowance. Counter interval from 100/2 to 220/5 is 120 requests and 3 bad, giving 2 requests/s and 2.5% bad over 60 seconds. A snapshot containing A before B was written restores A, not B. The same-code v1/v2 label restart test proves only unchanged-schema persistence; actual differing-artifact rollback is a separate exercise.
 
 For each claim write: mechanism; named executed check; observed result; environment/runtime; untested boundary; next experiment. These results describe the lab. They do not certify a production system.

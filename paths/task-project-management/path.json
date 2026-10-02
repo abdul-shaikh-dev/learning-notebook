@@ -3,7 +3,7 @@
   "title": "Task & Project Management",
   "category": "Personal effectiveness",
   "status": "ready",
-  "description": "Learn task & project management through realistic constraints, worked examples, printable practice and assessed projects.",
+  "description": "Break projects into tasks, track work in progress and agree on deadlines you can meet.",
   "level": "Foundations → small-project practice → delivery and review",
   "prerequisites": [
     "No specialist knowledge required.",
@@ -22,8 +22,8 @@
     "Optional: open Practice studio, or lab.html in the downloaded bundle."
   ],
   "nextSteps": [
-    "Apply one bounded change to an ordinary real commitment.",
-    "Retain the smallest useful routine and review actual outcomes."
+    "Try one small change in how you handle an existing commitment.",
+    "Keep the parts of the routine that help, and check what you finish."
   ],
   "sources": [
     {
@@ -345,13 +345,13 @@
     {
       "id": "task-project",
       "title": "2. Separate tasks, projects and routines",
-      "takeaway": "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger.",
+      "takeaway": "A task is a specific action. A project needs several actions to reach an outcome. A routine repeats when a particular event occurs.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A task is a bounded action; a project combines actions to reach an outcome; a routine recurs under a trigger. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
+            "A task is a specific action. A project needs several actions to reach an outcome. A routine repeats when a particular event occurs. These are practical labels, not universal definitions. Separating them prevents a large goal from masquerading as a single executable step.",
             "A recurring task needs a trigger and a policy for missed occurrences. Closing Friday's attendance check does not end the routine. A project, by contrast, needs an end state and transfer of any ongoing obligations. The workshop might be complete when the session and materials are accepted, while attendance reporting continues under a different owner. Choose labels to support these decisions rather than debating terminology. If a task repeatedly expands into several deliverables, promote it into a small project and clarify the actions needed to reach its completion state."
           ],
           "example": "Sending a library reservation request is a task; preparing a reading-group launch is a project; checking registrations every Monday is a routine. Link the reservation to the project and give the routine a recurring trigger.",
@@ -397,13 +397,13 @@
     {
       "id": "next-action",
       "title": "3. Write the next observable action",
-      "takeaway": "A next action uses a verb, object and completion test.",
+      "takeaway": "A next action says what to do and how to tell it is finished.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A next action uses a verb, object and completion test. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.",
+            "A next action says what to do and how to tell it is finished. Missing information is itself a possible action: ask, inspect or confirm. Avoid splitting work into tiny administrative items that cost more to maintain than to do.",
             "Distinguish sending a question from receiving its answer. The first action is executable now; the second is waiting and needs a follow-up policy. Ask for a specific input such as seated capacity, not a vague confirmation that everything is fine. State where the request goes and when the answer is needed if another task depends on it. After sending, record the waiting condition on the same card or a linked item. The next action should expose uncertainty and reduce it rather than pretending the workshop plan can proceed without the missing information."
           ],
           "example": "When the reading-group room’s opening hours are unknown, send the librarian a request to confirm access for 12 readers on Saturday. Sending completes this action; record the reply as a separate waiting item.",
@@ -501,13 +501,13 @@
     {
       "id": "scope",
       "title": "5. State outcome and exclusions",
-      "takeaway": "A scope note records beneficiary, outcome, constraints and explicit exclusions.",
+      "takeaway": "State who the project helps, what it will produce, its limits and what it will leave out.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A scope note records beneficiary, outcome, constraints and explicit exclusions. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.",
+            "State who the project helps, what it will produce, its limits and what it will leave out. Exclusions help assess incoming requests. They can change through a conscious decision; they are not an excuse to ignore a newly discovered essential need.",
             "Ask what benefit each requested deliverable provides. A video and a live session may serve different audiences and require different preparation, review and support. Comparing benefit and cost makes exclusion a reasoned choice rather than a refusal based on habit. Record essential participation needs early because they can affect venue and material decisions. When new information changes the intended beneficiary or outcome, revise the scope consciously. A scope note is a baseline for decisions; it is not permission to ignore a requirement that makes the agreed workshop unusable."
           ],
           "example": "Within ten days, deliver a 45-minute orientation and a one-page reference sheet for 12 new volunteers. Exclude a training video and a custom registration app. Confirm access needs before selecting the room and materials.",
@@ -553,13 +553,13 @@
     {
       "id": "decompose",
       "title": "6. Break deliverables into manageable work",
-      "takeaway": "Decompose from the deliverable down to actions that can be owned and checked.",
+      "takeaway": "Break each deliverable into actions someone can complete and check.",
       "stage": "foundation",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
+            "Break each deliverable into actions someone can complete and check. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
             "For each deliverable, identify the work needed to create, check and hand it over. Remove actions that contribute to none of the deliverables. Split work where someone can check a result, such as a confirmed venue or a reviewed invitation. Different pieces can have different owners and take different amounts of time. Add detail when someone lacks enough information to start or check the work; avoid maintaining a task tree larger than the project needs.",
             "An owner is the person responsible for moving an item forward and following up; they need not do every action themselves. Agree the owner rather than silently assigning someone. For the workshop, Sam coordinates the venue request and Lee coordinates the checked invitation."
           ],
@@ -667,14 +667,14 @@
     {
       "id": "board",
       "title": "8. Visualize the real workflow",
-      "takeaway": "A board represents states with entry and exit policies.",
+      "takeaway": "A task board shows where work stands and what must happen before it moves.",
       "stage": "intermediate",
       "sections": [
         {
           "title": "Understand and apply",
           "paragraphs": [
-            "A board represents states with entry and exit policies. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.",
-            "Keep review visible when it is a real workflow state. Moving a draft directly to Done because writing ended conceals waiting and makes measurements inconsistent with items that include review. Define what happens when a check fails: return with a named correction and owner rather than bounce the card without explanation. A board can use a table or list instead of columns if that is more accessible. Its value comes from truthful states and policies, not its appearance. Inspect stale cards against real artifacts so the representation remains accurate."
+            "A task board shows where work stands and what must happen before it moves. Ready, Doing, Review and Done are useful only when their meaning is shared. A Waiting label should retain owner and next follow-up; moving a card is not evidence that the work advanced.",
+            "Keep review visible when it is a real workflow state. Moving a draft directly to Done because writing ended conceals waiting and makes measurements inconsistent with items that include review. Define what happens when a check fails: return with a named correction and owner rather than bounce the card without explanation. A board can use a table or list instead of columns if that is more accessible. Its value comes from accurate status and clear rules for moving tasks, not its appearance. Inspect stale cards against real artifacts so the representation remains accurate."
           ],
           "example": "For a reading-guide board, Ready requires an owner, a named passage and a finish criterion. Review exits when factual and usability checks pass, or returns with a specific correction. Done includes the approved guide’s link.",
           "exampleFormat": "prose"

@@ -285,7 +285,7 @@
         {
           "title": "Selector relationships",
           "paragraphs": [
-            "A selector is not a descriptive caption: changing a label can remove a Pod from service routing or controller ownership. Keep controller selectors stable and examine matching Pods/EndpointSlices when diagnosing a Service with no endpoints. The offline checker verifies these specific relationships, not cluster admission."
+            "Selectors determine which Pods a Service or controller selects. Changing a label can remove a Pod from service routing or controller ownership. Keep controller selectors stable and examine matching Pods/EndpointSlices when diagnosing a Service with no endpoints. The offline checker verifies these specific relationships, not cluster admission."
           ],
           "example": "Deployment selector: app=release-demo\nPod-template label: app=release-demo\nService selector: app=release-demo\nAll namespaced objects: notebook-lab"
         },
@@ -593,7 +593,7 @@
         {
           "title": "Probe timing and local evidence",
           "paragraphs": [
-            "Timing also depends on scheduling and probe execution; the arithmetic is an approximate configured budget, not an SLA. An aggressive liveness check on a shared dependency can worsen an outage. The local HTTP test confirms ready 503/live 200 distinction but does not execute kubelet probe scheduling."
+            "Timing also depends on scheduling and probe execution; the arithmetic is an approximate configured budget, not an SLA. An aggressive liveness check on a shared dependency can worsen an outage. The local HTTP test confirms that /ready can return 503 while /live returns 200. It does not exercise kubelet probe scheduling."
           ],
           "example": "startup /live: period5s × failureThreshold12≈60s failure budget\nreadiness /ready: failure removes ready eligibility\nliveness /live: repeated failure triggers container restart"
         },
@@ -645,7 +645,7 @@
         {
           "title": "Scheduling requests and runtime limits",
           "paragraphs": [
-            "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory. CPU over a limit can be throttled, while excessive memory can lead to termination. The lab requests 100m CPU / 64 Mi and limits 500m CPU / 128 Mi as teaching values, not measured capacity recommendations. Observe actual usage before tuning or adding autoscaling."
+            "Resource requests inform scheduling and some utilization calculations; limits constrain runtime usage differently for CPU and memory. CPU over a limit can be throttled, while excessive memory can lead to termination. The lab requests 100m CPU and 64 Mi of memory, with limits of 500m CPU and 128 Mi of memory. These are teaching values, not measured capacity recommendations. Observe actual usage before tuning or adding autoscaling."
           ]
         },
         {
@@ -694,7 +694,7 @@
         {
           "title": "Rollout capacity and deadlines",
           "paragraphs": [
-            "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. The kit uses surge 1 / unavailable 0 for two replicas, requiring spare capacity for a third during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
+            "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. For two replicas, the kit sets maxSurge to 1 and maxUnavailable to 0. This requires spare capacity for a third replica during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
           ]
         },
         {

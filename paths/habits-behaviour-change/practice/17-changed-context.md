@@ -36,7 +36,7 @@ After closing the remote session at the home desk, Sol places the digital notes 
 
 - The changed context’s missing cue is identified.
 - The new cue fits the same useful purpose.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

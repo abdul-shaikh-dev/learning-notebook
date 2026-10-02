@@ -120,7 +120,7 @@
   },
   "transactions-isolation": {
     "title": "A deliberate failure rolls back the work copy",
-    "summary": "Follow the lesson’s single-session #LNAtomicWork example with @@TRANCOUNT = 0 at entry. It demonstrates rollback, not how other sessions observe concurrent changes.",
+    "summary": "Follow the lesson's single-session #LNAtomicWork example with @@TRANCOUNT = 0 at entry. It demonstrates rollback, not how other sessions observe concurrent changes.",
     "nodes": [
       {
         "id": "before",

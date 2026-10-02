@@ -37,7 +37,7 @@ Keep the reachable bowl provisionally: fewer searches were observed and setup co
 - Compare benefit, effort and context fit.
 - State what was observed and what cannot be inferred.
 - Choose keep, change or retire with a recovery branch and review date.
-- Record known facts and uncertainty separately, using the relevant stage measures.
+- Use the measures from this stage to separate known facts from what remains uncertain.
 
 ## Related worksheets
 

@@ -205,7 +205,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Predict both diffs after one -> stage two -> edit three. Verify using the foundation fixture.",
+        "prompt": "Predict both diffs after writing one, staging two and then editing the file to three. Verify using the foundation fixture.",
         "solution": "The cached diff replaces one with two. The ordinary diff replaces two with three. After the commit HEAD contains two. Stage three again only if the intended next snapshot should include it.",
         "solutionFormat": "prose",
         "checks": [
@@ -394,7 +394,7 @@
       "id": "history-refs",
       "title": "6. Read commits, parents and references",
       "stage": "foundation",
-      "takeaway": "Names move; commit identities describe specific snapshots and ancestry.",
+      "takeaway": "Branch names can point to new commits; a commit ID identifies a specific snapshot and its ancestry.",
       "sections": [
         {
           "title": "Commit graph and references",
@@ -851,7 +851,7 @@
       ],
       "exercise": {
         "prompt": "Explain which lost work the fixture can recover and which work the reflog does not guarantee.",
-        "solution": "The fixture can recover a previously committed snapshot while the object and reflog entry remain available. It cannot promise recovery of never-committed content, another repository’s history, or objects already expired/pruned. Create a branch after inspecting the candidate.",
+        "solution": "The fixture can recover a previously committed snapshot while the object and reflog entry remain available. It cannot promise recovery of never-committed content, another repository's history, or objects already expired/pruned. Create a branch after inspecting the candidate.",
         "solutionFormat": "prose",
         "checks": [
           "Recovered object is inspected.",
@@ -955,7 +955,7 @@
       ],
       "exercise": {
         "prompt": "Explain what to verify before backporting a small fix that calls a helper introduced in another commit.",
-        "solution": "Check that the helper exists and has the required contract on the target branch. Backport its dependency or adapt the fix coherently, then run relevant target-branch tests. The selected patch’s original success does not prove the new context works.",
+        "solution": "Check that the helper exists and has the required contract on the target branch. Backport its dependency or adapt the fix coherently, then run relevant target-branch tests. The selected patch's original success does not prove the new context works.",
         "solutionFormat": "prose",
         "checks": [
           "Source patch and dependencies are reviewed.",
@@ -1007,7 +1007,7 @@
       ],
       "exercise": {
         "prompt": "Explain the difference between rebasing an unpublished topic and rebasing a branch used by other developers.",
-        "solution": "The private branch can be replayed within its owner’s workflow after preserving a recovery point. A shared branch requires coordination because others refer to the old identities. Recheck final behavior and review evidence in either case.",
+        "solution": "The private branch can be replayed within its owner's workflow after preserving a recovery point. A shared branch requires coordination because others refer to the old identities. Recheck final behavior and review evidence in either case.",
         "solutionFormat": "prose",
         "checks": [
           "Changed identity is demonstrated.",
@@ -1220,8 +1220,8 @@
         "title": "Three-state snapshot investigation",
         "brief": "Run the foundation fixture and explain precisely which note version is in the working tree, index and commit.",
         "requirements": [
-          "Run the complete foundation fixture in its fresh retained owned child.",
-          "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
+          "Run the complete foundation fixture in the new directory it creates and keeps for inspection.",
+          "Predict the ordinary and cached diffs after writing one, staging two and then editing the file to three.",
           "Verify committed contents independently with git show.",
           "Show that an untracked synthetic config file is ignored without claiming history erasure."
         ],
@@ -1239,10 +1239,10 @@
       "title": "Intermediate: two-developer integration review",
       "description": "Resolve a fixture conflict and update a local reviewer clone without contacting a server.",
       "exitCriteria": [
-        "Conflict/abort/resolution states are supported by actual outputs.",
+        "The recorded output shows the conflict, the abort and the later resolution.",
         "The resolved contents preserve both stated intents.",
         "Fetch and integration are distinguished.",
-        "Review evidence names the candidate and no hosted approval is invented."
+        "The review names the candidate commit and states that no hosted approval was obtained."
       ],
       "project": {
         "title": "Two-developer integration review",
@@ -1255,10 +1255,10 @@
           "Write an offline pull-request review with candidate identifiers and remaining hosting limits."
         ],
         "rubric": [
-          "Conflict/abort/resolution states are supported by actual outputs.",
+          "The recorded output shows the conflict, the abort and the later resolution.",
           "The resolved contents preserve both stated intents.",
           "Fetch and integration are distinguished.",
-          "Review evidence names the candidate and no hosted approval is invented."
+          "The review names the candidate commit and states that no hosted approval was obtained."
         ],
         "solution": "Use `python -B sandbox.py --stage intermediate --workspace-parent .`. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
       }

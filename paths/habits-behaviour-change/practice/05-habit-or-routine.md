@@ -2,7 +2,7 @@
 
 ## Aim
 
-Repeating an action and beginning it with little deliberate decision are related but different.
+Repeating a routine does not show that starting it has become automatic.
 
 A routine can require planning every time and still be useful. Record ease of starting separately from completion. Your simple ease rating is a personal observation, not a validated diagnostic instrument. Do not call a behaviour automatic merely because a checklist has many ticks.
 
@@ -36,7 +36,7 @@ Weekly completion shows repetition. Her continued deliberate scheduling means au
 
 - Completion is separated from ease of initiation.
 - The routine remains useful without an automaticity claim.
-- The worked response is used for comparison, with any justified alternative explained.
+- Compare your answer with the example. Explain any different choice.
 
 ## Source
 

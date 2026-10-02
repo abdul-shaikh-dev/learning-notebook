@@ -154,7 +154,7 @@
         "Test malformed shapes, exact title boundaries and control characters.",
         "Compare encoded HTML text and a literal injection-shaped SQL search.",
         "Verify rotation, exact expiry and logout.",
-        "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
+        "Reject missing or incorrect CSRF tokens, tokens from another session, and malformed Unicode tokens.",
         "Run the supplied loopback route tests, then identify browser and identity-provider checks still needed.",
         "Compare submitted evidence with the rubric: Synthetic attack strings remain data in the documented contexts. SQL binding executes against a real in-memory SQLite fixture. Expired/revoked sessions and wrong CSRF tokens fail. Local methods are not presented as browser or cryptographic integration."
       ],

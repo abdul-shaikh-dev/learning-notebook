@@ -4,7 +4,7 @@ Synthetic practice case. No account, app or private data required.
 
 ## Read
 
-Starting friction often comes from an ambiguous first move or missing material. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.
+Starting is harder when the first action is unclear or a needed file is missing. Prepare the file, question and small action before the planned start. A two-minute start is an optional heuristic; it does not solve lack of resources, conflicting demands or health constraints.
 
 ## Try before reading the answer
 
