@@ -108,9 +108,22 @@ jobs:
       - name: Build the full-stack journey and run real HTTP checks
         run: python scripts/verify-fullstack.py
 
+  data-science:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install scientific Python practice dependencies
+        run: python -m pip install -r paths/data-analysis-python/practice/requirements.txt -r paths/machine-learning-foundations/practice/requirements.txt
+      - name: Run data analysis and machine learning practice suites
+        run: python scripts/verify-data-science.py
+
   deploy:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
-    needs: [build, python, react, dotnet, fullstack]
+    needs: [build, python, react, dotnet, fullstack, data-science]
     runs-on: ubuntu-latest
     permissions:
       pages: write

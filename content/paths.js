@@ -14506,6 +14506,1481 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "data-analysis-python",
+    "title": "Data analysis with Python",
+    "category": "Data & AI",
+    "status": "ready",
+    "description": "Investigate fictional support tickets with NumPy, pandas and charts. Validate the data, explain comparisons and produce a reproducible report.",
+    "level": "Foundations to reproducible analysis",
+    "prerequisites": [
+      "Python functions, lists, dictionaries and basic tests.",
+      "Basic averages and percentages; study practical maths and statistics alongside this path."
+    ],
+    "outcomes": [
+      "Validate a tabular data contract.",
+      "Calculate summaries with explicit denominators.",
+      "Join data and create labeled charts.",
+      "Deliver a tested report with clear limits."
+    ],
+    "setup": [
+      "Download the practice kit and read README.md.",
+      "Run the standard-library dataset checks with Python 3.11 or newer.",
+      "For executable analysis, use Python 3.12+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
+    ],
+    "nextSteps": [
+      "Study machine learning foundations after validating the reporting pipeline."
+    ],
+    "sources": [
+      {
+        "title": "pandas user guide",
+        "url": "https://pandas.pydata.org/docs/user_guide/10min.html"
+      },
+      {
+        "title": "NumPy beginner guide",
+        "url": "https://numpy.org/doc/stable/user/absolute_beginners.html"
+      },
+      {
+        "title": "Matplotlib quick start",
+        "url": "https://matplotlib.org/stable/users/explain/quick_start.html"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "question-and-grain",
+        "title": "1. Ask a question and define one row",
+        "takeaway": "Define the population and what one row represents before calculating a metric.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Our fictional support desk asks what share of completed tickets took more than 24 hours to resolve. The supplied file contains one row per completed ticket, not one row per message. A message table would give busy tickets more weight if you averaged its rows directly. Write the unit of observation beside the question.",
+              "The file covers 24 fictional tickets created on 24 consecutive dates. It is a teaching sample without open tickets. Its result describes those rows only. A service-wide claim would also need a collection process, a reporting period and a policy for unresolved tickets. Define the denominator before choosing pandas operations."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Two tickets take 10 and 30 hours. One has five messages and the other has one. The ticket mean is 20 hours. Expanding to message rows gives 80/6 hours, which answers a different question."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Two completed tickets take 8 and 40 hours. What fraction breached the greater-than-24-hour rule?",
+          "solution": "One of two tickets breached, so the fraction is 0.5 or 50%.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Count completed tickets, not messages.",
+            "Apply the strict 24-hour rule to each ticket before dividing."
+          ]
+        },
+        "quiz": {
+          "question": "Which result uses tickets as the denominator?",
+          "options": [
+            "One of two tickets breached, so the fraction is 0.5 or 50%.",
+            "40 divided by 48 is the breach fraction.",
+            "Count every message as a ticket."
+          ],
+          "correct": 0,
+          "explanation": "The 40-hour ticket is the single breach. Dividing its duration by total duration measures a share of hours, not a share of tickets. Counting messages changes the unit of observation."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "load-and-inspect",
+        "title": "2. Load a CSV and check its shape",
+        "takeaway": "Inspect columns, row counts and types before transforming a table.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A CSV stores text. pandas infers types when reading it, and inference can hide a wrong assumption. Load with read_csv, inspect shape, columns, head and dtypes, then compare them with the data dictionary. Reading successfully does not establish that a file contains the expected records.",
+              "Keep the raw input unchanged. Make the source path relative to the script file so the same program works from another directory. A quick preview helps detect a delimiter or header mistake, but examine counts and validation results across the whole table. A clean first five rows cannot certify the rest."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "df = pd.read_csv(\"support_tickets.csv\"); df.shape should be (24, 8). df[\"ticket_id\"].nunique() should be 24. A shape of (24, 1) suggests a delimiter problem."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A file has 24 rows but only 23 unique ticket IDs. Can you treat it as one row per ticket?",
+          "solution": "No. Investigate the repeated ID before reporting ticket-level results.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare row count with distinct ticket IDs.",
+            "Identify the repeated ID and check whether its values conflict."
+          ]
+        },
+        "quiz": {
+          "question": "What does a repeated ID require?",
+          "options": [
+            "No. Investigate the repeated ID before reporting ticket-level results.",
+            "Use head() and ignore later rows.",
+            "Assume the extra row is harmless because the CSV loaded."
+          ],
+          "correct": 0,
+          "explanation": "The duplicate violates the intended grain even though read_csv succeeds. head() only previews a few records and cannot establish whole-file uniqueness."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "numpy-arrays",
+        "title": "3. Calculate with NumPy arrays",
+        "takeaway": "Array operations apply to elements, and shape determines which operations make sense.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A NumPy array stores elements with a shared dtype. np.array([2, 4, 6], dtype=float) creates a one-dimensional numeric array of shape (3,). Multiplication by 60 converts every hour value to minutes. A Python list multiplied by 60 repeats its contents instead. Check the container before assuming arithmetic semantics.",
+              "For a two-dimensional table, an axis tells a reduction which dimension to collapse. A two-row, three-column array has shape (2, 3). Summing axis=0 produces one value per column; axis=1 produces one per row. Broadcasting can combine compatible shapes, but a successful operation may still use the wrong units."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0) returns [5, 7, 9]. Summing axis=1 returns [6, 15]. The result length is a useful sanity check."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Convert np.array([1.5, 2.0]) hours to minutes.",
+          "solution": "Multiply by 60 to obtain [90.0, 120.0] minutes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Keep the output shape at two elements.",
+            "Multiply each duration by 60 and label the result in minutes."
+          ]
+        },
+        "quiz": {
+          "question": "Which operation converts both durations?",
+          "options": [
+            "Multiply by 60 to obtain [90.0, 120.0] minutes.",
+            "Repeat the array values 60 times.",
+            "Add 60 to each value."
+          ],
+          "correct": 0,
+          "explanation": "Multiplication applies to both numeric elements. Repeating values changes the number of observations, and adding 60 does not convert the unit."
+        },
+        "references": [
+          {
+            "title": "NumPy beginner guide",
+            "url": "https://numpy.org/doc/stable/user/absolute_beginners.html",
+            "section": "Array creation, shape, indexing and basic operations",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "types-and-dates",
+        "title": "4. Parse values with explicit failures",
+        "takeaway": "Convert types deliberately and keep invalid values visible.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Identifiers are labels even if they contain digits. Keep them as strings so leading zeros survive. Convert numeric columns with to_numeric and dates with to_datetime. errors=\"raise\" stops on malformed values; errors=\"coerce\" creates missing values. Coercion needs a separate count and review because it can silently change the population used by later summaries.",
+              "The supplied created_date is a calendar date without a timezone or time of day. It supports grouping by date, but it cannot establish elapsed resolution time. resolution_hours is a separate measured outcome in this fictional file. In a real event table, normalize timestamp zones and define which start and end events count before subtracting timestamps."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\") gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A duration cell contains \"unknown\". Should you replace it with zero?",
+          "solution": "No. Keep it missing or reject it, and report the missing count.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish a measured zero from an unavailable value.",
+            "Report a missing-value count if numeric conversion coerces the cell."
+          ]
+        },
+        "quiz": {
+          "question": "What preserves the difference between unknown and zero?",
+          "options": [
+            "No. Keep it missing or reject it, and report the missing count.",
+            "Replace unknown durations with zero before averaging.",
+            "Delete the entire source file."
+          ],
+          "correct": 0,
+          "explanation": "Zero claims an immediate resolution. The source supplies no such measurement. Rejecting the cell or marking it missing keeps that uncertainty visible without destroying the source."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "select-and-filter",
+        "title": "5. Select rows without losing the question",
+        "takeaway": "Use explicit masks and column names to make the selection reviewable.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Use df.loc[mask, columns] to select both rows and columns. A mask is a Boolean Series aligned to the table index. Combine comparisons with & or | and put each comparison in parentheses. Python and/or expects single truth values and cannot combine whole pandas Series this way.",
+              "State whether your filter changes the population or only the displayed columns. Keeping high-priority tickets changes the population; hiding the team column does not. Record the number of rows before and after a filter. Use df.loc[mask, \"column\"] for assignment rather than chained indexing, which has version-dependent copy behavior and is unsupported for reliable updates."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24). df.loc[mask, [\"ticket_id\", \"resolution_hours\"]] lists high-priority breaches only."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A high-priority subset has 3 breaches among 4 tickets. What is its breach rate?",
+          "solution": "The subset rate is 3/4 or 75%; it does not describe all tickets.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use the four high-priority tickets as the denominator.",
+            "Keep the conclusion limited to the selected population."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement keeps the population clear?",
+          "options": [
+            "The subset rate is 3/4 or 75%; it does not describe all tickets.",
+            "75% of every ticket in the source breached.",
+            "The rate is 3 divided by all message counts."
+          ],
+          "correct": 0,
+          "explanation": "The mask selects four tickets, three of which breached. Neither all-ticket claims nor message counts use that same population."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/indexing.html",
+            "section": "Boolean indexing and selection by label",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "missing-and-duplicates",
+        "title": "6. Treat missing values and repeated records separately",
+        "takeaway": "Missing values and duplicate rows need different explanations and fixes.",
+        "stage": "foundation",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() counts unavailable cells; duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
+              "Do not choose the first record just because it makes a test pass. If two versions have explicit update times, the newest validated version may be appropriate. If the source lacks that information, stop and report the conflict. For missing durations, report both total tickets and known durations so readers can see the denominator used by the mean."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Durations [4, missing, 8] have a known-value mean of 6 and a known count of 2. Filling the gap with zero gives 4 and changes the meaning of the measurement."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Two T009 records contain durations 10 and 30 with no update timestamp. What should the pipeline do?",
+          "solution": "Reject or quarantine the conflict for review rather than silently choosing one.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognize a conflicting duplicate rather than two independent tickets.",
+            "Do not invent an update order that the source does not supply."
+          ]
+        },
+        "quiz": {
+          "question": "Which response preserves the unresolved conflict?",
+          "options": [
+            "Reject or quarantine the conflict for review rather than silently choosing one.",
+            "Always keep the first row.",
+            "Average the two rows and call them one measured ticket."
+          ],
+          "correct": 0,
+          "explanation": "Averaging the conflicting durations creates a new value that neither record measured. Keeping the first row relies on an undocumented ordering rule. Review is needed before choosing a record."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html",
+            "section": "Detecting missing values and calculations",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "indexes-and-alignment",
+        "title": "7. Understand labels and row positions",
+        "stage": "foundation",
+        "takeaway": "Pandas aligns labeled values by index, which can differ from row position.",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A Series has values and an index. Adding two Series matches index labels rather than blindly adding the first item to the first item. This is useful when rows have been reordered, but it can create missing results when labels do not match. Use iloc for positional selection and loc for label selection.",
+              "Inspect the index after filtering or sorting. A filtered table may retain labels 2 and 5 rather than becoming labels 0 and 1. Resetting the index changes those labels; it does not change the underlying ticket identities. Keep ticket_id as the business identifier and choose positional array arithmetic only when you have verified both row orders."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Series([10, 20], index=[\"A\", \"B\"]) plus Series([1, 2], index=[\"B\", \"A\"]) gives A=12 and B=21. The first stored values are not paired."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A filtered table has index labels 2 and 5. How do you select its first stored row?",
+          "solution": "Use iloc[0]. loc[0] looks for label 0 and may fail.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Choose positional selection for the first stored row.",
+            "Explain why label 0 may not exist after filtering."
+          ]
+        },
+        "quiz": {
+          "question": "A filtered table has index labels 2 and 5. How do you select its first stored row?",
+          "options": [
+            "Use iloc[0]. loc[0] looks for label 0 and may fail.",
+            "Use loc[0] because every filtered table starts at label zero.",
+            "Rename the ticket IDs to match the index."
+          ],
+          "correct": 0,
+          "explanation": "iloc selects by position. loc selects by label, so loc[0] asks for a different thing. Changing business identifiers to match row positions would corrupt their meaning."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/indexing.html",
+            "section": "Selection by label and position",
+            "reviewed": "2026-10-02",
+            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+          }
+        ]
+      },
+      {
+        "id": "derive-and-validate",
+        "title": "8. Derive columns with units and boundary checks",
+        "takeaway": "A derived column must implement a stated rule, including equality at its boundary.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "The teaching rule defines a breach as resolution_hours > 24. Exactly 24 hours does not breach. Derive the flag from validated durations and compare it with the supplied breached column. A disagreement can reveal a changed policy, corrupted export or wrong operator. Avoid overwriting the original flag before checking it.",
+              "Vectorized operations make the same rule apply across rows, but they do not validate inputs automatically. Reject negative or nonfinite durations before calculating a flag. A numeric conversion can still accept infinity. Keep the rule in a named function and test values below, at and above the threshold."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "np.array([23.9, 24.0, 24.1]) > 24 produces [False, False, True]. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Does a duration of exactly 24 hours breach this rule?",
+          "solution": "No. The rule uses greater than 24, not greater than or equal to 24.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Write the exact comparison used by the rule.",
+            "Check the boundary value without rounding it into another case."
+          ]
+        },
+        "quiz": {
+          "question": "How should equality behave?",
+          "options": [
+            "No. The rule uses greater than 24, not greater than or equal to 24.",
+            "It breaches because all thresholds are inclusive.",
+            "Its classification depends on the CSV row order."
+          ],
+          "correct": 0,
+          "explanation": "A strict greater-than comparison is false at equality. Row order never changes the classification; the numeric threshold and operator determine it."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "group-and-denominators",
+        "title": "9. Summarize groups with counts",
+        "takeaway": "Show the group denominator beside its rate.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "groupby splits rows by a key and computes an aggregate for each group. size counts rows; count on a column counts its nonmissing values. For validated zero-or-one breach flags, mean is the fraction of ones. Include ticket count, breach count and mean duration so the reader can check the rate and see how much data supports it.",
+              "A mean of group rates gives every group equal weight. An overall ticket rate must weight groups by ticket count. This difference matters when teams handle different volumes. Missing group labels also need a policy because groupby normally excludes missing keys; use dropna=False when auditing unclassified rows."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Team A has 1 breach in 2 tickets and B has 1 in 8. Their unweighted mean rate is 31.25%. The overall ticket rate is 2/10 or 20%."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Which overall rate should describe all ten tickets in the example?",
+          "solution": "Use 2/10 or 20%, because each ticket gets equal weight.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Add breach counts across both groups.",
+            "Add ticket counts before calculating the overall fraction."
+          ]
+        },
+        "quiz": {
+          "question": "Which denominator answers the ticket-level question?",
+          "options": [
+            "Use 2/10 or 20%, because each ticket gets equal weight.",
+            "Average the two percentages to get the overall ticket rate.",
+            "Use only the larger team and ignore the other one."
+          ],
+          "correct": 0,
+          "explanation": "The numerator is two breaches and the denominator is ten tickets. An unweighted average of group percentages gives the two-ticket team the same influence as the eight-ticket team."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
+            "section": "Aggregation and missing group keys",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "joins-and-cardinality",
+        "title": "10. Join lookup tables without multiplying tickets",
+        "takeaway": "Validate the expected relationship before accepting a join.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A left merge can attach a team owner to every ticket. The ticket table contains many rows for each team; the lookup must contain one row for each team. merge(..., validate=\"many_to_one\") rejects duplicate lookup keys. A duplicate right-side key otherwise repeats matching ticket rows and changes later counts and sums.",
+              "Cardinality validation does not prove every key matched. Use indicator=True and inspect left_only rows. Decide whether an unknown team should stop the report or appear as unassigned. pandas matches null join keys to each other, unlike the usual SQL null comparison, so reject missing required keys rather than assuming SQL behavior."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Two billing tickets merged with two billing owner rows produce four rows. The intended many-to-one merge should reject that lookup before aggregation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A lookup has two billing rows with different owners. Is a left join alone enough?",
+          "solution": "No. Enforce many-to-one cardinality and investigate the duplicate lookup key.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify team as the right-side key that must be unique.",
+            "Check cardinality before accepting the merged table."
+          ]
+        },
+        "quiz": {
+          "question": "What prevents ticket multiplication?",
+          "options": [
+            "No. Enforce many-to-one cardinality and investigate the duplicate lookup key.",
+            "A left join always preserves the original row count.",
+            "Drop any repeated output rows after calculating totals."
+          ],
+          "correct": 0,
+          "explanation": "A left join can repeat left rows when several right rows match. Removing output rows after calculating totals cannot repair those already-inflated totals or establish the correct owner."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
+            "section": "Merge key uniqueness and indicator",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ],
+        "diagram": {
+          "title": "Why a duplicate lookup multiplies tickets",
+          "summary": "Each left row pairs with every matching right row. A two-row billing lookup doubles the two billing tickets.",
+          "type": "flow",
+          "nodes": [
+            {
+              "id": "tickets",
+              "label": "Two billing tickets",
+              "description": "T001 and T003 each represent one completed ticket."
+            },
+            {
+              "id": "lookup",
+              "label": "Two billing owners",
+              "description": "The lookup incorrectly contains both Asha and Sam for the same team key."
+            },
+            {
+              "id": "merge",
+              "label": "Four matched rows",
+              "description": "Each of the two tickets pairs with each owner, producing four rows."
+            },
+            {
+              "id": "validate",
+              "label": "Reject many-to-one violation",
+              "description": "validate=\"many_to_one\" detects that billing is duplicated on the right. Fix the lookup before reporting."
+            }
+          ],
+          "edges": [
+            {
+              "from": "tickets",
+              "to": "merge",
+              "label": "two left matches"
+            },
+            {
+              "from": "lookup",
+              "to": "merge",
+              "label": "two right matches per ticket"
+            },
+            {
+              "from": "lookup",
+              "to": "validate",
+              "label": "check key uniqueness first"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Inspect the input grain",
+              "activeNodes": [
+                "tickets",
+                "lookup"
+              ],
+              "activeEdges": [],
+              "explanation": "The left side is one row per ticket. The intended lookup should have one row per team."
+            },
+            {
+              "title": "Follow every match",
+              "activeNodes": [
+                "tickets",
+                "lookup",
+                "merge"
+              ],
+              "activeEdges": [
+                0,
+                1
+              ],
+              "explanation": "Two tickets multiplied by two lookup records produces four output rows."
+            },
+            {
+              "title": "Stop before aggregation",
+              "activeNodes": [
+                "lookup",
+                "validate"
+              ],
+              "activeEdges": [
+                2
+              ],
+              "explanation": "Cardinality validation rejects the duplicate team key. Row counts alone cannot tell which owner is correct."
+            }
+          ]
+        }
+      },
+      {
+        "id": "distributions-and-outliers",
+        "title": "11. Read a distribution before choosing one average",
+        "takeaway": "An unusual value needs investigation, and one average can hide its effect.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Use count, minimum, maximum, median and mean together before interpreting a duration column. A long right tail can pull the mean above most observations. The median identifies the middle of sorted observations, while the mean retains the contribution of every duration. Neither describes all features of the distribution.",
+              "A long duration may be a real difficult ticket, a unit error or a missing closure event. Check the source before removing it. Show results with and without a questioned value only when you explain the exclusion rule. Deleting every inconvenient observation makes the report look stable by changing the question."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For [2, 3, 4, 5, 86], the mean is 20 hours and the median is 4. Both calculations are correct. The 86-hour case accounts for much of the total waiting time."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Which summary reveals the long tail in those five durations?",
+          "solution": "Report mean 20, median 4 and maximum 86 with the count of 5.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Calculate the sum as 100 and divide by five for the mean.",
+            "Identify the third sorted value as the median.",
+            "Keep the maximum visible while its validity is investigated."
+          ]
+        },
+        "quiz": {
+          "question": "Which summary avoids hiding the tail?",
+          "options": [
+            "Report mean 20, median 4 and maximum 86 with the count of 5.",
+            "Report only median 4 and claim every ticket takes about four hours.",
+            "Delete 86 because it is above the mean."
+          ],
+          "correct": 0,
+          "explanation": "The mean and median answer different questions. The maximum exposes the tail. Removing 86 only because it exceeds the mean discards a possibly real observation without a source-based rule."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "dates-and-aggregation",
+        "title": "12. Group dates without inventing observations",
+        "takeaway": "A date with no rows is different from a measured zero.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Parse dates, sort them and choose a reporting interval before resampling. A daily ticket count measures tickets created each day; a daily mean duration groups their eventual outcomes by creation day. It is not the same as tickets resolved that day. Explain which event establishes the date group.",
+              "An absent date may mean no activity or an incomplete export. Reindexing a date range can reveal gaps, but filling them with zero requires evidence that collection was complete. For an average duration on a day with no completed tickets, zero is usually misleading; there is no observed duration to average."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by created_date places all three on Monday. A closure workload chart would need resolved timestamps instead."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "The export has no Tuesday rows and its completeness is unknown. What should a daily chart show?",
+          "solution": "Mark Tuesday as missing or explain the gap until collection completeness is established.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate an absent observation from verified zero activity.",
+            "State which event date defines the chart."
+          ]
+        },
+        "quiz": {
+          "question": "What avoids inventing measured zero activity?",
+          "options": [
+            "Mark Tuesday as missing or explain the gap until collection completeness is established.",
+            "Fill Tuesday with zero and claim nobody contacted support.",
+            "Copy Monday into Tuesday to make the chart continuous."
+          ],
+          "correct": 0,
+          "explanation": "No Tuesday rows may reflect missing collection. Zero invents a measured absence; copying Monday invents activity. A gap preserves what the export does and does not establish."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "charts-for-questions",
+        "title": "13. Choose a chart for the comparison",
+        "takeaway": "Label the measure and units, and keep the plot consistent with the table.",
+        "stage": "intermediate",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "Use a bar chart for counts by team, a histogram for a duration distribution and a line chart for an ordered time series. These forms answer different questions. Matplotlib separates a Figure, the output container, from an Axes, where data and labels appear. The explicit fig, ax = plt.subplots() style helps when adding labels or several plots.",
+              "A bar chart compares lengths, so a zero baseline usually matters. Label hours as hours and rates as fractions or percentages consistently. A chart needs a text summary and accessible labels; color alone should not encode the conclusion. Keep categories in a stable order so two generated reports can be compared."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "The kit writes counts.png with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Which chart best shows the shape of individual resolution durations?",
+          "solution": "Use a histogram of resolution_hours with labeled hour bins and ticket counts.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Put duration in hours on the histogram axis.",
+            "Use ticket frequency for the bin counts."
+          ]
+        },
+        "quiz": {
+          "question": "Which chart answers a distribution question?",
+          "options": [
+            "Use a histogram of resolution_hours with labeled hour bins and ticket counts.",
+            "Use a line joining arbitrary ticket IDs and call it a time trend.",
+            "Use a pie chart with one slice per duration."
+          ],
+          "correct": 0,
+          "explanation": "A histogram groups durations into intervals to show their distribution. Connecting ticket IDs implies an order that is not elapsed time, and one pie slice per duration does not show frequency across intervals clearly."
+        },
+        "references": [
+          {
+            "title": "Matplotlib quick start",
+            "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
+            "section": "Figure, Axes and explicit plotting interface",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "reshape-for-comparison",
+        "title": "14. Reshape after checking unique combinations",
+        "stage": "intermediate",
+        "takeaway": "A pivot needs a defined value for every row-and-column combination.",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A long table stores a category in a column; a wide table gives selected categories their own columns. A team-by-priority count table can make comparisons easier. Group and count first, then unstack or pivot the summary. The reshaping step changes presentation, not what counts as one ticket.",
+              "pivot requires unique index-and-column combinations. Repeated team-priority rows in a raw ticket table are expected, so a direct pivot of duration can fail. pivot_table can aggregate them, but specify the aggregation rather than accepting a mean that may answer the wrong question. Filling missing count combinations with zero needs confidence that the input population is complete."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by unstack produces a billing row with low=2 and high=1. A sum of resolution_hours would measure something else."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Several tickets share the same team and priority. How do you build a count table?",
+          "solution": "Group by team and priority, count tickets, then reshape the resulting counts.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Count at the team-priority combination before reshaping.",
+            "Keep duration measures separate from frequency counts."
+          ]
+        },
+        "quiz": {
+          "question": "Several tickets share the same team and priority. How do you build a count table?",
+          "options": [
+            "Group by team and priority, count tickets, then reshape the resulting counts.",
+            "Pivot raw durations and assume a missing combination proves zero activity.",
+            "Use the mean duration as the ticket count."
+          ],
+          "correct": 0,
+          "explanation": "Repeated team-priority combinations are normal in ticket-level data. Counting them first defines one aggregate per output cell. A duration mean cannot stand in for the number of tickets."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/reshaping.html",
+            "section": "Pivot and pivot tables",
+            "reviewed": "2026-10-02",
+            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+          }
+        ]
+      },
+      {
+        "id": "association-and-comparison",
+        "title": "15. Compare groups without claiming a cause",
+        "takeaway": "A difference between groups does not establish why it occurred.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "An email-versus-chat comparison can describe the rows, but customers choose channels and teams may route difficult work differently. A channel difference may reflect case mix, priority or staffing. Split a descriptive table by priority to see whether a broad pattern persists, but remember that unrecorded differences can remain.",
+              "The dataset is fictional and small. Its patterns exist to test code, not to measure a service or estimate a treatment effect. Avoid p-values or causal claims that imply a sampling design the file does not have. A useful conclusion states the observed difference, its denominator and the additional evidence needed for a decision."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "If email has longer durations and also contains most high-priority tickets, switching everyone to chat is not a justified recommendation. The data does not show what would happen to the same cases under a different channel."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Email tickets are slower in this file. Does that prove email causes delays?",
+          "solution": "No. Describe the difference and investigate case mix or a suitable study before claiming causation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Describe the observed association without changing it into a causal claim.",
+            "Name at least one possible difference in case mix."
+          ]
+        },
+        "quiz": {
+          "question": "Which conclusion fits observational groups?",
+          "options": [
+            "No. Describe the difference and investigate case mix or a suitable study before claiming causation.",
+            "Moving all tickets to chat must reduce resolution time.",
+            "A groupby operation removes all confounding."
+          ],
+          "correct": 0,
+          "explanation": "Grouping organizes observations but does not randomly assign customers or remove hidden differences. An intervention claim needs evidence about what would happen under a different channel, which this file does not supply."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "validation-functions",
+        "title": "16. Make invalid input fail before reporting",
+        "takeaway": "Check the data contract before creating summaries or charts.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A validation function should check required columns, unique nonblank IDs, allowed categories, parseable dates, nonnegative finite durations and consistent breach flags. A clean happy-path fixture is not enough. Construct broken cases to prove each relevant check actually rejects bad input.",
+              "Decide whether extra columns are acceptable and document the decision. The kit requires its eight columns but permits extras, allowing a future source to add metadata without changing the calculations. It rejects missing values in required fields. A more permissive real pipeline would need explicit missing-value and quarantine policies."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "The test suite changes one duration to -1 and expects ValueError. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A CSV has correct columns but includes infinite resolution_hours. Should it pass?",
+          "solution": "No. Check finiteness as well as numeric conversion and nonnegativity.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Reject infinity explicitly with a finiteness check.",
+            "Keep validation before summary generation."
+          ]
+        },
+        "quiz": {
+          "question": "Which check rejects an invalid numeric measurement?",
+          "options": [
+            "No. Check finiteness as well as numeric conversion and nonnegativity.",
+            "Any value accepted by float() is a valid duration.",
+            "Sort the file and accept it if the totals look plausible."
+          ],
+          "correct": 0,
+          "explanation": "float conversion accepts infinity, but it is not a finite measured duration. Sorting cannot change this invalid value into valid evidence, and plausible-looking totals are not a data contract."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "functions-and-tests",
+        "title": "17. Separate transformation from file output",
+        "takeaway": "Test calculations as functions before testing the exported report.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A pure summary function takes a validated DataFrame and returns a table without writing files. This lets a test supply four rows and compare exact expected counts. Loading, validation, calculation and output can then fail separately with useful messages. Keep filenames and chart settings outside the arithmetic.",
+              "Test small cases whose results you can calculate by hand. Include the 24-hour boundary, unequal group sizes and a conflicting lookup. Avoid a test that calls the same aggregation expression to construct its expected value, because the implementation and test could repeat the same mistake. Floating point means may need a tolerance."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For billing durations [4, 28] and technical [24, 48], both groups have two tickets and one breach. Their means are 16 and 36 hours. These literal expectations catch several common aggregation errors."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "How should a test check that four-row example?",
+          "solution": "Assert the literal counts, breach counts and means for both teams.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Assert billing mean 16 and technical mean 36 independently.",
+            "Assert both groups contain two tickets and one breach."
+          ]
+        },
+        "quiz": {
+          "question": "Which test has independent expectations?",
+          "options": [
+            "Assert the literal counts, breach counts and means for both teams.",
+            "Build the expected output by calling the function under test again.",
+            "Check only that a PNG file exists."
+          ],
+          "correct": 0,
+          "explanation": "Literal values calculated from the four input rows can expose a faulty implementation. Calling the same function twice repeats its mistakes. Checking a PNG exists verifies output creation, not arithmetic."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "chunking-and-weighting",
+        "title": "18. Combine chunks using sufficient totals",
+        "stage": "advanced",
+        "takeaway": "Combine sums and counts rather than averaging unequal chunk means.",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "read_csv with chunksize can process a large file in smaller pieces. This limits the size of each loaded chunk, but a correct combined answer still needs state across chunks. A mean requires a total sum and a count of known values. Global duplicate detection also needs a shared set of IDs or an external store.",
+              "Do not assume chunking makes every operation easy. An exact median cannot generally be combined from chunk medians. Sorting across the whole dataset may need external sorting, and a lookup must still obey the same cardinality rule. Profile a real workload before adding chunking to this small 24-row example."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A first chunk has two durations with mean 10 and a second has eight with mean 30. The combined mean is (2*10 + 8*30)/10 = 26, not the unweighted mean 20."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "How do you combine the two example chunks?",
+          "solution": "Carry sum 260 and count 10, then divide to get 26 hours.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recover sums 20 and 240 from the two chunk means and counts.",
+            "Divide their combined sum by the combined count of ten."
+          ]
+        },
+        "quiz": {
+          "question": "How do you combine the two example chunks?",
+          "options": [
+            "Carry sum 260 and count 10, then divide to get 26 hours.",
+            "Average the chunk means and report 20 hours.",
+            "Use only the final chunk because it is larger."
+          ],
+          "correct": 0,
+          "explanation": "The larger chunk contains four times as many observations and must contribute four times the weight. Averaging chunk means assigns equal weight to chunks; using only the final chunk discards two observations."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/scale.html",
+            "section": "Use chunking",
+            "reviewed": "2026-10-02",
+            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+          }
+        ]
+      },
+      {
+        "id": "reproducible-report",
+        "title": "19. Generate a report from one command",
+        "takeaway": "Record inputs and versions so another run can explain its result.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A reproducible report starts from named input files and runs without manual edits to intermediate tables. Save a source hash, row count and library versions beside the results. A hash identifies the exact bytes used; it does not certify data accuracy. Stable sort order and consistent numeric formatting make differences between runs easier to inspect.",
+              "The kit writes report.json and counts.png into a chosen output folder. The JSON includes the fictional-data limitation and the table behind the chart. Run it from a fresh folder and inspect the output before sharing. If dependency versions change, rerun the tests and compare the table, rather than assuming an image that looks similar proves equivalence."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. The recorded SHA-256 changes if even one source byte changes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Two reports disagree. What should you compare first?",
+          "solution": "Compare the input hashes, filtering rules and dependency versions before interpreting the difference.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare the exact input hashes before assuming the data is unchanged.",
+            "Check analysis choices and actual package versions."
+          ]
+        },
+        "quiz": {
+          "question": "What helps explain a changed result?",
+          "options": [
+            "Compare the input hashes, filtering rules and dependency versions before interpreting the difference.",
+            "Assume the newer chart is correct because it looks cleaner.",
+            "Erase the older result so there is only one report."
+          ],
+          "correct": 0,
+          "explanation": "A prettier chart does not establish a correct calculation. Keeping both reports and their provenance lets you identify whether changed inputs, code or libraries explain the difference."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "sensitivity-and-limits",
+        "title": "20. Check how choices change the conclusion",
+        "takeaway": "Show when a result depends on a threshold or exclusion rule.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A breach rate depends on the policy threshold. Recalculate at 12, 24 and 48 hours to see the effect without redefining the official 24-hour result. Sensitivity analysis asks how a conclusion changes under stated alternatives. It does not let you pick whichever threshold produces the preferred story.",
+              "Keep the same population when comparing thresholds so only one choice changes. If you also remove long tickets, you cannot attribute the difference to the threshold alone. Report missing-data assumptions separately. For this fictional file, the exercise tests calculation stability and honest description rather than an operational policy recommendation."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Durations [8, 24, 40, 60] breach thresholds 12, 24 and 48 at rates 75%, 50% and 25%. Equality remains nonbreaching in each case."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "At a threshold of 24 hours, how many of [8, 24, 40, 60] breach?",
+          "solution": "Two of four breach, giving 50%; exactly 24 does not breach.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Count 40 and 60 as the only values above 24.",
+            "Keep the same four records while changing an alternate threshold."
+          ]
+        },
+        "quiz": {
+          "question": "Which answer applies the same strict comparison?",
+          "options": [
+            "Two of four breach, giving 50%; exactly 24 does not breach.",
+            "Three breach because equality counts.",
+            "Change the threshold until the rate is below 10%."
+          ],
+          "correct": 0,
+          "explanation": "Exactly 24 is excluded by the strict comparison. Choosing a threshold to obtain a desired rate changes the question after seeing the result rather than testing a stated sensitivity."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      },
+      {
+        "id": "handoff-to-modeling",
+        "title": "21. Hand analysis to a model without leaking the answer",
+        "takeaway": "Separate intake information from outcomes before attempting prediction.",
+        "stage": "advanced",
+        "sections": [
+          {
+            "title": "Understand the decision",
+            "paragraphs": [
+              "A descriptive analysis can use resolution_hours and breached because it summarizes completed tickets. A model intended to act at intake cannot use either as a predictor. The duration is only known later and the flag is the target. Mark when every field becomes available, not only whether its type is numeric.",
+              "Keep ticket IDs for tracing errors, but arbitrary identifiers rarely explain the underlying process. A model also needs a split that respects time or repeated customers, an untouched evaluation set and a baseline. The next learning path uses a larger fictional dataset to practise those decisions. Good results on that synthetic exercise do not establish production usefulness."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "customer_messages in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Which of resolution_hours and channel is available for intake prediction?",
+          "solution": "Channel is available at intake; resolution_hours is an outcome and must be excluded.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify when each candidate feature becomes available.",
+            "Exclude duration and the target itself from intake predictors."
+          ]
+        },
+        "quiz": {
+          "question": "Which predictor avoids using the future outcome?",
+          "options": [
+            "Channel is available at intake; resolution_hours is an outcome and must be excluded.",
+            "Use resolution_hours because it is strongly correlated with the target.",
+            "Use breached to predict breached and report perfect accuracy."
+          ],
+          "correct": 0,
+          "explanation": "Channel is recorded at intake. Duration is known only after completion. Using it or the target gives the model information it would not have at the intended decision time."
+        },
+        "references": [
+          {
+            "title": "pandas user guide",
+            "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+            "section": "Selection, missing data, operations and merge",
+            "reviewed": "2026-10-02",
+            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Inspect the support export",
+        "description": "Load the supplied file, document one-row-per-ticket grain, check types and produce a short quality summary.",
+        "exitCriteria": [
+          "Check 24 rows and 24 unique IDs.",
+          "Calculate known duration count without replacing missing values with zero.",
+          "Demonstrate how one conflicting duplicate changes validation."
+        ],
+        "project": {
+          "title": "Inspect the support export",
+          "brief": "Load the supplied file, document one-row-per-ticket grain, check types and produce a short quality summary.",
+          "requirements": [
+            "Check 24 rows and 24 unique IDs.",
+            "Calculate known duration count without replacing missing values with zero.",
+            "Demonstrate how one conflicting duplicate changes validation."
+          ],
+          "rubric": [
+            "Check 24 rows and 24 unique IDs.",
+            "Calculate known duration count without replacing missing values with zero.",
+            "Demonstrate how one conflicting duplicate changes validation."
+          ],
+          "solution": "The supplied clean file has 24 unique tickets and no missing required values. Keep its raw bytes unchanged. Reject the conflicting duplicate; do not choose a duration silently.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Compare teams without multiplying rows",
+        "description": "Attach team owners and calculate ticket counts, breach counts, rates and mean durations. Produce a labeled count chart.",
+        "exitCriteria": [
+          "Enforce a many-to-one lookup and reject unmatched teams.",
+          "Calculate the overall rate from ticket counts.",
+          "Show a histogram separately from the category comparison."
+        ],
+        "project": {
+          "title": "Compare teams without multiplying rows",
+          "brief": "Attach team owners and calculate ticket counts, breach counts, rates and mean durations. Produce a labeled count chart.",
+          "requirements": [
+            "Enforce a many-to-one lookup and reject unmatched teams.",
+            "Calculate the overall rate from ticket counts.",
+            "Show a histogram separately from the category comparison."
+          ],
+          "rubric": [
+            "Enforce a many-to-one lookup and reject unmatched teams.",
+            "Calculate the overall rate from ticket counts.",
+            "Show a histogram separately from the category comparison."
+          ],
+          "solution": "Use validate=\"many_to_one\" plus merge indicator checks. Each team has 12 tickets. Keep the all-ticket denominator at 24. Report the actual calculated breach counts; the chart labels ticket counts, not hours.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Deliver a reproducible analysis",
+        "description": "Create one command that validates the input and writes a report, chart and input provenance. Explain the limits of the fictional sample.",
+        "exitCriteria": [
+          "Test negative, infinite and conflicting values.",
+          "Record source hash and library versions.",
+          "Compare strict thresholds of 12, 24 and 48 hours without changing rows.",
+          "Identify fields unavailable at prediction time."
+        ],
+        "project": {
+          "title": "Deliver a reproducible analysis",
+          "brief": "Create one command that validates the input and writes a report, chart and input provenance. Explain the limits of the fictional sample.",
+          "requirements": [
+            "Test negative, infinite and conflicting values.",
+            "Record source hash and library versions.",
+            "Compare strict thresholds of 12, 24 and 48 hours without changing rows.",
+            "Identify fields unavailable at prediction time."
+          ],
+          "rubric": [
+            "Test negative, infinite and conflicting values.",
+            "Record source hash and library versions.",
+            "Compare strict thresholds of 12, 24 and 48 hours without changing rows.",
+            "Identify fields unavailable at prediction time."
+          ],
+          "solution": "Run the independent tests before generating output. Include the 24-row count, table, source hash and limitation in report.json. Treat alternate thresholds as sensitivity checks; exclude outcome fields from intake prediction.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "README.md",
+        "href": "paths/data-analysis-python/practice/README.md"
+      },
+      {
+        "title": "support_tickets.csv",
+        "href": "paths/data-analysis-python/practice/support_tickets.csv"
+      },
+      {
+        "title": "teams.csv",
+        "href": "paths/data-analysis-python/practice/teams.csv"
+      },
+      {
+        "title": "analysis.py",
+        "href": "paths/data-analysis-python/practice/analysis.py"
+      },
+      {
+        "title": "test_analysis.py",
+        "href": "paths/data-analysis-python/practice/test_analysis.py"
+      },
+      {
+        "title": "test_dataset.py",
+        "href": "paths/data-analysis-python/practice/test_dataset.py"
+      },
+      {
+        "title": "requirements.txt",
+        "href": "paths/data-analysis-python/practice/requirements.txt"
+      },
+      {
+        "title": "projects.md",
+        "href": "paths/data-analysis-python/practice/projects.md"
+      }
+    ],
+    "resources": {
+      "folder": "data-analysis-python-practice",
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/data-analysis-python/practice/README.md",
+          "role": "guide",
+          "description": "README.md"
+        },
+        {
+          "id": "support_tickets-csv",
+          "href": "paths/data-analysis-python/practice/support_tickets.csv",
+          "role": "data",
+          "description": "support tickets.csv"
+        },
+        {
+          "id": "teams-csv",
+          "href": "paths/data-analysis-python/practice/teams.csv",
+          "role": "data",
+          "description": "teams.csv"
+        },
+        {
+          "id": "analysis-py",
+          "href": "paths/data-analysis-python/practice/analysis.py",
+          "role": "reference",
+          "description": "analysis.py"
+        },
+        {
+          "id": "test_analysis-py",
+          "href": "paths/data-analysis-python/practice/test_analysis.py",
+          "role": "test",
+          "description": "test analysis.py"
+        },
+        {
+          "id": "test_dataset-py",
+          "href": "paths/data-analysis-python/practice/test_dataset.py",
+          "role": "test",
+          "description": "test dataset.py"
+        },
+        {
+          "id": "requirements-txt",
+          "href": "paths/data-analysis-python/practice/requirements.txt",
+          "role": "guide",
+          "description": "requirements.txt"
+        },
+        {
+          "id": "projects-md",
+          "href": "paths/data-analysis-python/practice/projects.md",
+          "role": "guide",
+          "description": "projects.md"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Inspect the support export",
+          "goal": "Load the supplied file, document one-row-per-ticket grain, check types and produce a short quality summary.",
+          "fileIds": [
+            "README-md",
+            "support_tickets-csv",
+            "teams-csv",
+            "analysis-py",
+            "test_analysis-py",
+            "test_dataset-py",
+            "requirements-txt",
+            "projects-md"
+          ],
+          "steps": [
+            "Attempt the stage brief in projects.md before opening the reference.",
+            "Run the dataset checks; install optional analysis dependencies for the full lab.",
+            "Compare your result with the reference and explain the stated limits."
+          ],
+          "commands": [
+            {
+              "label": "Dataset checks, standard library only",
+              "command": "python -m unittest -v test_dataset.py",
+              "expected": "All dataset tests pass."
+            },
+            {
+              "label": "Analysis checks after installing requirements",
+              "command": "python -m unittest -v test_analysis.py",
+              "expected": "All analysis tests pass."
+            },
+            {
+              "label": "Generate the report",
+              "command": "python analysis.py --out report-output",
+              "expected": "report-output contains report.json and counts.png."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "The input is fictional and cannot support real service or causal claims."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Compare teams without multiplying rows",
+          "goal": "Attach team owners and calculate ticket counts, breach counts, rates and mean durations. Produce a labeled count chart.",
+          "fileIds": [
+            "README-md",
+            "support_tickets-csv",
+            "teams-csv",
+            "analysis-py",
+            "test_analysis-py",
+            "test_dataset-py",
+            "requirements-txt",
+            "projects-md"
+          ],
+          "steps": [
+            "Attempt the stage brief in projects.md before opening the reference.",
+            "Run the dataset checks; install optional analysis dependencies for the full lab.",
+            "Compare your result with the reference and explain the stated limits."
+          ],
+          "commands": [
+            {
+              "label": "Dataset checks, standard library only",
+              "command": "python -m unittest -v test_dataset.py",
+              "expected": "All dataset tests pass."
+            },
+            {
+              "label": "Analysis checks after installing requirements",
+              "command": "python -m unittest -v test_analysis.py",
+              "expected": "All analysis tests pass."
+            },
+            {
+              "label": "Generate the report",
+              "command": "python analysis.py --out report-output",
+              "expected": "report-output contains report.json and counts.png."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "The input is fictional and cannot support real service or causal claims."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Deliver a reproducible analysis",
+          "goal": "Create one command that validates the input and writes a report, chart and input provenance. Explain the limits of the fictional sample.",
+          "fileIds": [
+            "README-md",
+            "support_tickets-csv",
+            "teams-csv",
+            "analysis-py",
+            "test_analysis-py",
+            "test_dataset-py",
+            "requirements-txt",
+            "projects-md"
+          ],
+          "steps": [
+            "Attempt the stage brief in projects.md before opening the reference.",
+            "Run the dataset checks; install optional analysis dependencies for the full lab.",
+            "Compare your result with the reference and explain the stated limits."
+          ],
+          "commands": [
+            {
+              "label": "Dataset checks, standard library only",
+              "command": "python -m unittest -v test_dataset.py",
+              "expected": "All dataset tests pass."
+            },
+            {
+              "label": "Analysis checks after installing requirements",
+              "command": "python -m unittest -v test_analysis.py",
+              "expected": "All analysis tests pass."
+            },
+            {
+              "label": "Generate the report",
+              "command": "python analysis.py --out report-output",
+              "expected": "report-output contains report.json and counts.png."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "The input is fictional and cannot support real service or causal claims."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "question-and-grain": "foundation",
+        "load-and-inspect": "foundation",
+        "numpy-arrays": "foundation",
+        "types-and-dates": "foundation",
+        "select-and-filter": "foundation",
+        "missing-and-duplicates": "foundation",
+        "indexes-and-alignment": "foundation",
+        "derive-and-validate": "intermediate",
+        "group-and-denominators": "intermediate",
+        "joins-and-cardinality": "intermediate",
+        "distributions-and-outliers": "intermediate",
+        "dates-and-aggregation": "intermediate",
+        "charts-for-questions": "intermediate",
+        "reshape-for-comparison": "intermediate",
+        "association-and-comparison": "advanced",
+        "validation-functions": "advanced",
+        "functions-and-tests": "advanced",
+        "reproducible-report": "advanced",
+        "sensitivity-and-limits": "advanced",
+        "handoff-to-modeling": "advanced",
+        "chunking-and-weighting": "advanced"
+      },
+      "bundle": {
+        "href": "paths/data-analysis-python/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "data-engineering",
     "title": "Data Engineering",
     "category": "Data and databases",
@@ -45826,6 +47301,1637 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "machine-learning-foundations",
+    "title": "Machine learning foundations",
+    "category": "Data and databases",
+    "status": "ready",
+    "description": "21 lessons on prediction questions, baselines, regression and classification, preprocessing, evaluation, leakage and reproducible experiments. Includes a CPU-only support-ticket lab.",
+    "level": "Foundations through a supervised-learning capstone",
+    "prerequisites": [
+      "Python functions, lists, dictionaries and basic tests.",
+      "Read the practical maths and statistics path for averages, probability and vectors.",
+      "Basic data analysis helps with tables and missing values."
+    ],
+    "outcomes": [
+      "Frame a prediction with valid inputs and a useful baseline.",
+      "Fit and evaluate a preprocessing pipeline without using held-out answers.",
+      "Explain split assumptions, error costs and the limits of a model report."
+    ],
+    "setup": [
+      "Download and extract the complete practice bundle.",
+      "The metric and partition lab needs Python 3.11+ and no packages.",
+      "For the model lab use Python 3.14, a virtual environment and requirements.txt. No GPU, cloud service or API key is needed."
+    ],
+    "nextSteps": [
+      "Apply the experiment structure to a small, permissioned real dataset.",
+      "Use the AI agents path to evaluate applications that use model predictions."
+    ],
+    "sources": [
+      {
+        "title": "Supervised learning",
+        "url": "https://scikit-learn.org/stable/getting_started.html"
+      },
+      {
+        "title": "Cross-validation",
+        "url": "https://scikit-learn.org/stable/modules/cross_validation.html"
+      },
+      {
+        "title": "Metrics and scoring",
+        "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      },
+      {
+        "title": "Common pitfalls",
+        "url": "https://scikit-learn.org/stable/common_pitfalls.html"
+      },
+      {
+        "title": "Linear models",
+        "url": "https://scikit-learn.org/stable/modules/linear_model.html"
+      },
+      {
+        "title": "Pipelines and composite estimators",
+        "url": "https://scikit-learn.org/stable/modules/compose.html"
+      },
+      {
+        "title": "DummyClassifier",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "prediction-question",
+        "title": "1. Choose a prediction question",
+        "stage": "foundation",
+        "takeaway": "Name the decision, prediction time and outcome before choosing a model.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Supervised learning uses examples with known outcomes to fit a prediction rule. Each row needs a clear unit. Here, one row is one fictional support ticket. At intake, a team wants to flag tickets likely to remain unresolved after 24 hours. The eventual breach label is available only after the outcome is known.",
+              "Classification predicts a category such as breach or no breach. Regression predicts a number such as resolution hours. A useful prediction must change a decision. If nobody can review flagged tickets, improving a score alone does not create a workable process."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For a ticket closed after 30 hours, the breach label is 1. A ticket closed at exactly 24 hours has label 0 under our strict greater-than rule. Neither outcome is an intake input."
+            ],
+            "example": "prediction time: ticket intake\ntarget: int(resolution_hours > 24)\npossible action: human review of a flagged ticket"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A real service must define clock hours versus business hours, reopened tickets and tickets whose outcomes are not yet known. This course uses completed fictional tickets and clock hours."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A manager asks for a model to improve support. Rewrite the request as a testable classification question and name one missing operational detail.",
+          "solution": "Predict at intake whether a completed ticket will take more than 24 clock hours to resolve. Use the flag to offer human review. Ask how many tickets staff can review per day before selecting a threshold.",
+          "solutionFormat": "prose",
+          "checks": [
+            "State intake as the prediction time.",
+            "Define the strict 24-hour target and an action."
+          ]
+        },
+        "quiz": {
+          "question": "Which target matches the stated question?",
+          "options": [
+            "Whether the ticket eventually takes more than 24 hours",
+            "How many messages arrive after closure",
+            "Whether the model receives a high score"
+          ],
+          "correct": 0,
+          "explanation": "The first option labels the intended future outcome. Later messages may be unavailable at intake, and a score describes evaluation rather than the ticket."
+        },
+        "references": [
+          {
+            "title": "Supervised learning",
+            "url": "https://scikit-learn.org/stable/getting_started.html",
+            "section": "Fitting and predicting: estimator basics",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "features-and-targets",
+        "title": "2. Separate inputs from outcomes",
+        "stage": "foundation",
+        "takeaway": "Use only information that exists when the prediction will be made.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A feature is an input supplied to a model. The target is the outcome it learns to predict. A column name does not establish availability. A priority column edited after escalation may contain future information even though a priority column recorded at intake is valid.",
+              "Our dataset records channel, intake priority, initial team and customer_messages at intake. The last value counts messages in the submitted intake packet, not the lifetime conversation. ticket_id and customer_id identify records and groups; the reference model does not use them as predictors."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "The target breached is computed from resolution_hours. Giving resolution_hours to the classifier would let it reconstruct the answer. The lab selects four allowed features explicitly instead of passing every CSV column."
+            ],
+            "example": "FEATURES = ('channel', 'priority', 'team', 'customer_messages')\n# resolution_hours and breached are excluded from X."
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "An input allowlist prevents accidental columns from entering this lab. Real feature availability still requires timestamp and data-pipeline checks; an allowlist cannot detect a mislabeled historical snapshot."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An export adds final_agent_rating and intake_queue_length. Which may enter the model, and what must you verify?",
+          "solution": "Exclude final_agent_rating because it follows the outcome. intake_queue_length may enter only if it records the queue at intake and the same value can be produced in live prediction. Recheck the split and fit preprocessing only on training rows.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Exclude post-outcome ratings.",
+            "Verify the queue timestamp and live availability."
+          ]
+        },
+        "quiz": {
+          "question": "Why exclude resolution_hours from breach prediction?",
+          "options": [
+            "It is numeric",
+            "It directly determines an outcome unavailable at intake",
+            "It needs scaling"
+          ],
+          "correct": 1,
+          "explanation": "The problem is timing and target leakage. Scaling a leaked outcome does not make it a valid predictor."
+        },
+        "references": [
+          {
+            "title": "Common pitfalls",
+            "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+            "section": "Inconsistent preprocessing; data leakage; controlling randomness",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "simple-baselines",
+        "title": "3. Measure a simple baseline",
+        "stage": "foundation",
+        "takeaway": "Compare against a rule that uses no predictive features.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A baseline shows whether a model adds value over an inexpensive rule. For classification, predicting the most common training class is a useful first comparison. Fit the baseline on training labels, then measure it on the same evaluation rows as the proposed model.",
+              "For regression, a constant median prediction is a natural reference for mean absolute error. A constant mean prediction is a reference for squared error. These are comparisons, not guarantees that one constant performs best on every unseen sample."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Suppose training labels contain 80 zeros and 20 ones. A most-frequent classifier always predicts zero. On evaluation labels with 18 zeros and 2 ones, it gets 90% accuracy while finding none of the two breaches."
+            ],
+            "example": "accuracy = 18 / 20 = 0.90\nbreach recall = 0 / 2 = 0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Do not compare a model on easy rows with a baseline on different rows. Record the baseline strategy and evaluation population alongside its score."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Training resolution times are 2, 4 and 12 hours. Predict their median for evaluation times 3 and 9 hours. Calculate mean absolute error.",
+          "solution": "The training median is 4. Absolute errors are 1 and 5, so MAE is 3 hours. Computing a new median from the evaluation labels would change the baseline using held-out answers.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use training median 4.",
+            "Calculate MAE as 3 hours."
+          ]
+        },
+        "quiz": {
+          "question": "A 90% accuracy baseline misses every breach. What follows?",
+          "options": [
+            "The model is ready for triage",
+            "Accuracy alone hides failure on the target class",
+            "The labels must be discarded"
+          ],
+          "correct": 1,
+          "explanation": "The majority rule can score well when breaches are rare. Breach recall and the costs of misses still matter."
+        },
+        "references": [
+          {
+            "title": "DummyClassifier",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html",
+            "section": "Parameters: strategy; fit; predict",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "holdout-splits",
+        "title": "4. Give each partition a job",
+        "stage": "foundation",
+        "takeaway": "Train on one partition, make choices on another and reserve a final test.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Training rows fit model parameters. Validation rows help choose features, model settings or decision thresholds. Test rows estimate the frozen procedure after those choices. If you repeatedly choose changes because they improve the test score, those rows have become another validation set.",
+              "A split should match the intended use. Random splitting is a reasonable teaching starting point for independent, exchangeable examples. Predicting later tickets usually calls for chronological evaluation. Predicting tickets from unseen customers requires customer separation. Those answer different questions."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For 240 chronological rows, the lab assigns the first 144 to training, the next 48 to validation and the final 48 to testing. Only training data fit the model; validation selects a threshold. The test labels do not enter either step."
+            ],
+            "example": "train = rows[:144]\nvalidation = rows[144:192]\ntest = rows[192:]"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A chronological row cut is safe here because generated dates strictly increase and fictional labels arrive before the next intake two days later. Real ticket outcomes may overlap the cutoff and require a gap or removal of immature labels."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "You compare five models using test accuracy and publish the highest. What is wrong, and how would you repair the process?",
+          "solution": "The test set influenced model selection, so its winning score is optimistic as a final assessment. Treat it as validation, freeze the selected procedure and obtain a new untouched test set representative of intended use.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explain test-set selection bias.",
+            "Require fresh evaluation after freezing choices."
+          ]
+        },
+        "quiz": {
+          "question": "Where should you choose a decision threshold?",
+          "options": [
+            "On final test labels",
+            "On training predictions only",
+            "On validation data or suitable training cross-validation"
+          ],
+          "correct": 2,
+          "explanation": "Threshold choice is model selection. The final test must remain outside that choice."
+        },
+        "references": [
+          {
+            "title": "Cross-validation",
+            "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+            "section": "Computing cross-validated metrics; grouped data; time series split",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ],
+        "diagram": {
+          "title": "Fit, choose and test without crossing the boundary",
+          "summary": "Arrows show which data may influence fitting, threshold selection and final reporting. Test labels influence only the final report. The dates of all training outcomes precede the next partition in this fictional fixture.",
+          "direction": "LR",
+          "nodes": [
+            {
+              "id": "train",
+              "label": "144 training tickets",
+              "description": "Earlier tickets supply intake features and mature labels. Training cross-validation also stays inside these rows."
+            },
+            {
+              "id": "model",
+              "label": "Fitted pipeline",
+              "description": "Training rows fit imputation, category encoding, scaling and classifier coefficients."
+            },
+            {
+              "id": "validation",
+              "label": "48 validation tickets",
+              "description": "The fitted pipeline predicts these rows. Their labels choose a threshold by the declared cost."
+            },
+            {
+              "id": "policy",
+              "label": "Frozen model and threshold",
+              "description": "The selected threshold and fitted model stop changing before final evaluation."
+            },
+            {
+              "id": "test",
+              "label": "48 final test tickets",
+              "description": "The final rows supply new intake inputs and mature answers for the report. They never fit a preprocessing step or choose the threshold."
+            },
+            {
+              "id": "report",
+              "label": "Model and baseline report",
+              "description": "Compare both procedures on the same final rows. Include confusion counts, costs and the fictional-data limit."
+            }
+          ],
+          "edges": [
+            {
+              "from": "train",
+              "to": "model",
+              "label": "fit all preprocessing and coefficients"
+            },
+            {
+              "from": "model",
+              "to": "validation",
+              "label": "predict with fitted transformations"
+            },
+            {
+              "from": "validation",
+              "to": "policy",
+              "label": "choose threshold from validation cost"
+            },
+            {
+              "from": "policy",
+              "to": "report",
+              "label": "apply frozen procedure"
+            },
+            {
+              "from": "test",
+              "to": "report",
+              "label": "evaluate against final answers"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Fit using earlier rows",
+              "activeNodes": [
+                "train",
+                "model"
+              ],
+              "activeEdges": [
+                0
+              ],
+              "explanation": "A fit learns every transformation and the classifier using training data only. Within cross-validation, each earlier training fold gets its own fitted pipeline."
+            },
+            {
+              "title": "Select the action threshold",
+              "activeNodes": [
+                "model",
+                "validation",
+                "policy"
+              ],
+              "activeEdges": [
+                1,
+                2
+              ],
+              "explanation": "The validation probabilities stay fixed while thresholds change. The declared cost chooses one threshold; validation rows do not refit the model."
+            },
+            {
+              "title": "Report one frozen comparison",
+              "activeNodes": [
+                "policy",
+                "test",
+                "report"
+              ],
+              "activeEdges": [
+                3,
+                4
+              ],
+              "explanation": "Final labels contribute only to metrics. If those metrics prompt another model change, use new held-out data for the next final assessment."
+            }
+          ]
+        }
+      },
+      {
+        "id": "classification-metrics",
+        "title": "5. Count the classification mistakes",
+        "stage": "foundation",
+        "takeaway": "Precision asks how many flags are correct; recall asks how many actual positives are found.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Choose the positive class explicitly. Here it is breach. A true positive is a correctly flagged breach. A false positive flags a ticket that resolves within the limit. A false negative misses a breach. A true negative correctly leaves a non-breach unflagged.",
+              "Precision divides true positives by all predicted positives. Recall divides true positives by all actual positives. Report counts with ratios, especially on small samples. When a denominator is zero, the ratio is undefined; the standard-library lab returns None instead of silently claiming success."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "With 6 true positives, 2 false positives, 3 false negatives and 9 true negatives, precision is 6/8 = 0.75. Recall is 6/9, about 0.667. Accuracy is 15/20 = 0.75."
+            ],
+            "example": "precision = TP / (TP + FP)\nrecall = TP / (TP + FN)\naccuracy = (TP + TN) / total"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Two models can have the same accuracy but different operational costs. False positives consume review time; false negatives leave breaches unflagged. Neither metric specifies what staff should do without that context."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "For truth [1, 0, 1, 0] and predictions [1, 1, 0, 0], calculate all four counts, precision and recall.",
+          "solution": "TP=1, FP=1, FN=1 and TN=1. Precision and recall are both 1/2. Run test_metrics.py to check this case and the no-positive-predictions case.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Find one of each confusion count.",
+            "Calculate precision and recall as 0.5."
+          ]
+        },
+        "quiz": {
+          "question": "There are no predicted positives. What is precision?",
+          "options": [
+            "Exactly 1",
+            "Undefined unless a reporting convention supplies a value",
+            "Equal to accuracy"
+          ],
+          "correct": 1,
+          "explanation": "Precision divides by the number of positive predictions. That denominator is zero; document any numeric replacement."
+        },
+        "references": [
+          {
+            "title": "Metrics and scoring",
+            "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "section": "Classification metrics; regression metrics; dummy estimators",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "regression-metrics",
+        "title": "6. Measure errors in meaningful units",
+        "stage": "foundation",
+        "takeaway": "Absolute error keeps the target unit; squared error gives larger misses more weight.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A regression residual is the observed value minus the prediction. Mean absolute error averages residual magnitudes. Mean squared error averages their squares. Root mean squared error takes the square root so its unit matches the target again.",
+              "The choice expresses what kinds of error matter. Squaring makes a few large errors count more. Keep units in the report and inspect the residuals rather than describing any smaller number as better across different metrics."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For actual hours [4, 10] and predictions [6, 6], residuals are [-2, 4]. MAE is 3 hours, MSE is 10 hours squared and RMSE is approximately 3.162 hours."
+            ],
+            "example": "MAE = (2 + 4) / 2 = 3\nMSE = (4 + 16) / 2 = 10\nRMSE = sqrt(10)"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "R-squared compares squared error against a constant based on the evaluation mean. It can be negative. It does not measure causal explanation or the percentage of individual predictions that are correct."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compare A=[5, 9] and B=[4, 14] for actual values [4, 10]. Which has lower MAE and MSE?",
+          "solution": "A has absolute errors 1 and 1, giving MAE 1 and MSE 1. B has errors 0 and 4, giving MAE 2 and MSE 8. A is better on both metrics for these two rows, without proving future superiority.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Calculate both metrics for both models.",
+            "Limit the conclusion to this evaluation."
+          ]
+        },
+        "quiz": {
+          "question": "MAE is 3 when the target is measured in hours. Its unit is:",
+          "options": [
+            "Hours",
+            "Hours squared",
+            "A percentage"
+          ],
+          "correct": 0,
+          "explanation": "Absolute differences retain the hours unit. Squared error changes it to hours squared."
+        },
+        "references": [
+          {
+            "title": "Metrics and scoring",
+            "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "section": "Classification metrics; regression metrics; dummy estimators",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "class-imbalance",
+        "title": "7. Check the class counts",
+        "stage": "foundation",
+        "takeaway": "Report how many positive cases support a score.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Class balance describes how many examples belong to each label. A rare positive class can make accuracy look good even when a classifier misses the cases you care about. Count labels separately in every partition before interpreting a metric.",
+              "Stratified random splitting approximately preserves class proportions, but it does not preserve chronology or separate customers. A time split may reveal changing prevalence. Keep that change visible instead of rearranging future labels solely to make partitions look alike."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A set of 100 tickets with 5 breaches gives an always-negative rule 95% accuracy and zero recall. Missing one of five positives changes recall by 20 percentage points. Small positive counts make comparisons fragile."
+            ],
+            "example": "positives = 5\nnegatives = 95\nmajority accuracy = 95 / 100"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Class weighting changes the training objective; it does not create new independent examples. Oversampling before splitting can duplicate cases across partitions. Any resampling must happen only inside the training side of each fit."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Validation has 40 tickets and 2 breaches. A model finds one breach and flags three other tickets. Calculate recall and precision and name the denominator that makes recall unstable.",
+          "solution": "Recall is 1/2 = 0.5. Precision is 1/4 = 0.25. Only two actual positives support recall, so one changed prediction moves it by 0.5. Report those counts rather than describing the model as consistently finding half of breaches.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Calculate recall 0.5 and precision 0.25.",
+            "Report two actual positives."
+          ]
+        },
+        "quiz": {
+          "question": "Does stratification alone make a split appropriate for future prediction?",
+          "options": [
+            "Yes, because labels are balanced",
+            "No, chronology remains a separate condition",
+            "Yes, if the test set is small"
+          ],
+          "correct": 1,
+          "explanation": "Preserving class proportions does not prevent future rows from entering training."
+        },
+        "references": [
+          {
+            "title": "Cross-validation",
+            "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+            "section": "Computing cross-validated metrics; grouped data; time series split",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "fit-a-regression",
+        "title": "8. Fit a linear prediction rule",
+        "stage": "intermediate",
+        "takeaway": "A linear model combines inputs with learned coefficients and an intercept.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "For one input x, a linear prediction is intercept + coefficient*x. Fitting ordinary least squares chooses coefficients that minimize the training sum of squared residuals. Prediction then applies the fitted rule to a new input without looking at its outcome.",
+              "A coefficient describes the model while its other inputs stay fixed. It does not establish that changing a feature causes the outcome to change. Correlated inputs, omitted variables and the way records were collected can make a causal interpretation wrong."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "The invented rule hours = 5 + 2*messages predicts 11 hours for 3 messages. If the actual result is 15 hours, its residual is 4 hours. This arithmetic demonstrates prediction; it is not a fitted claim about support work."
+            ],
+            "example": "predicted = 5 + 2 * 3  # 11\nresidual = 15 - predicted  # 4"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Linear predictions can be negative even when hours cannot. Check prediction ranges and error patterns before deciding whether a transformation or different model is justified. Never hide bad outputs by clipping without reporting that policy."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A fitted model predicts hours = 6 + 1.5*messages. Predict for 4 messages and explain why reducing messages is not proven to reduce resolution time.",
+          "solution": "The prediction is 12 hours. The coefficient is an association in the fitted model; difficult cases may cause both more messages and longer resolution. An intervention needs separate evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Calculate 12 hours.",
+            "Separate prediction from intervention."
+          ]
+        },
+        "quiz": {
+          "question": "What does fit do for ordinary least squares?",
+          "options": [
+            "Choose coefficients using training residuals",
+            "Read future test labels for every prediction",
+            "Prove that each input causes the target"
+          ],
+          "correct": 0,
+          "explanation": "Fitting minimizes training squared residuals. Evaluation and causal inference are separate questions."
+        },
+        "references": [
+          {
+            "title": "Linear models",
+            "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+            "section": "Ordinary least squares; ridge regression; logistic regression",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "fit-a-classifier",
+        "title": "9. Turn a score into a class",
+        "stage": "intermediate",
+        "takeaway": "A probability estimate and a decision threshold do different jobs.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Logistic regression combines encoded inputs into a score and maps that score to a number between zero and one. In binary classification this estimates the probability of the positive class under the fitted model. It is classification despite the name regression.",
+              "A threshold turns probabilities into decisions. The lab flags probability >= threshold and locates class 1 in classes_ rather than assuming a probability column. A probability of 0.8 is a model estimate, not a promise that this particular ticket will breach."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Probabilities [0.2, 0.5, 0.8] become [0, 1, 1] under our >=0.5 policy. At 0.7 they become [0, 0, 1]. The fitted probabilities stay the same while the action changes."
+            ],
+            "example": "predictions = [int(p >= threshold) for p in probabilities]"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Calibration asks whether events assigned similar probabilities occur at roughly those frequencies. Good ranking does not guarantee good calibration. The tiny fictional lab demonstrates the API and does not establish reliable real-world probabilities."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "At threshold 0.6, classify probabilities [0.59, 0.60, 0.91]. What other information is needed to count false positives?",
+          "solution": "Predictions are [0, 1, 1]. You need the observed labels for those same rows and the definition of the positive class. Probabilities alone cannot identify mistakes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Apply the inclusive threshold correctly.",
+            "Require matched truth labels."
+          ]
+        },
+        "quiz": {
+          "question": "Raising a threshold while holding probabilities fixed generally does what?",
+          "options": [
+            "Creates more positive predictions",
+            "Leaves the fitted probabilities unchanged",
+            "Retrains the coefficients"
+          ],
+          "correct": 1,
+          "explanation": "A threshold changes the classification policy. Raising it cannot increase the set of positive predictions under this rule."
+        },
+        "references": [
+          {
+            "title": "Linear models",
+            "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+            "section": "Ordinary least squares; ridge regression; logistic regression",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "prepare-features",
+        "title": "10. Learn preprocessing on training rows",
+        "stage": "intermediate",
+        "takeaway": "Imputation, encoding and scaling are fitted parts of the model.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Numerical models need a representation of category strings. One-hot encoding gives each known category its own indicator instead of inventing an ordering between email and chat. Unknown categories need an explicit policy; the lab encodes them with zeros for the relevant category group.",
+              "Scaling centers a numeric feature using a training mean and divides by its training standard deviation. Imputation fills missing values using a training statistic or rule. Fit these quantities on training rows and reuse them unchanged for validation and prediction."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Training message counts [2, 4] have mean 3 and population standard deviation 1. StandardScaler maps them to [-1, 1]. A validation value 8 becomes 5 using those same training statistics."
+            ],
+            "example": "training mean = 3\ntraining standard deviation = 1\ntransform(8) = (8 - 3) / 1 = 5"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Scaling is useful for regularized linear models but is not a universal requirement for all estimators. Filling a missing count with zero would assert no messages, which differs from an unknown count."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Training counts are [2, 6] and validation count is 10. Using population standard deviation, calculate the transformed validation value.",
+          "solution": "The training mean is 4 and standard deviation is 2. The validation value becomes (10-4)/2 = 3. Recomputing mean or deviation with 10 would let validation data influence preprocessing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use training mean 4 and deviation 2.",
+            "Return transformed value 3."
+          ]
+        },
+        "quiz": {
+          "question": "Why avoid encoding chat=1 and email=2 without justification?",
+          "options": [
+            "It invents an ordered numeric distance",
+            "Strings cannot ever be represented",
+            "It prevents any missing values"
+          ],
+          "correct": 0,
+          "explanation": "The numeric ordering introduces an assumption about category relationships. One-hot indicators avoid that particular assumption."
+        },
+        "references": [
+          {
+            "title": "Pipelines and composite estimators",
+            "url": "https://scikit-learn.org/stable/modules/compose.html",
+            "section": "Pipeline; ColumnTransformer",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "pipeline-training",
+        "title": "11. Keep transformations inside the pipeline",
+        "stage": "intermediate",
+        "takeaway": "Fit each preprocessing step within the same training boundary as the estimator.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A Pipeline runs transformation steps in order and finishes with an estimator. Calling fit learns each transformation from the rows supplied to that fit. Calling predict reuses the fitted transformations. ColumnTransformer applies different transformations to numeric and categorical columns.",
+              "In the lab, median imputation and scaling handle the numeric message count. OneHotEncoder handles channel, priority and team. Passing the entire pipeline into cross-validation ensures each fold learns its own preprocessing statistics."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "If you scale all rows first and cross-validate only the classifier, validation rows already influenced the mean. Cross-validating the complete pipeline instead refits that mean inside each training fold."
+            ],
+            "example": "pipeline.fit(X_train, y_train)\nprobabilities = pipeline.predict_proba(X_validation)\n# Do not fit the preprocessing on validation rows."
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A pipeline cannot repair an outcome-derived input, duplicates across partitions or a time split that exposes future labels. It helps enforce fitting boundaries after you choose valid inputs and partitions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A teammate fits StandardScaler on all 240 rows, then passes LogisticRegression to cross-validation. Describe a repair.",
+          "solution": "Put the scaler and classifier into one pipeline and cross-validate that pipeline on the training partition only. Keep the final test outside model selection. Also review feature timing, because a pipeline does not detect target leakage.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Move scaling inside the estimator passed to CV.",
+            "Preserve the untouched test partition."
+          ]
+        },
+        "quiz": {
+          "question": "Which problem can a pipeline alone prevent when used correctly?",
+          "options": [
+            "Customer overlap across partitions",
+            "Fitting scaling statistics before the CV split",
+            "Post-outcome features mislabeled as intake data"
+          ],
+          "correct": 1,
+          "explanation": "Cross-validation fits the whole pipeline on each fold. Group and feature-timing rules still require separate design."
+        },
+        "references": [
+          {
+            "title": "Pipelines and composite estimators",
+            "url": "https://scikit-learn.org/stable/modules/compose.html",
+            "section": "Pipeline; ColumnTransformer",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "cross-validation",
+        "title": "12. Compare choices within training data",
+        "stage": "intermediate",
+        "takeaway": "Cross-validation repeats held-out evaluation without using the final test.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Cross-validation divides the development data into several train/validation arrangements. Each arrangement fits a fresh model and scores held-out rows. Average scores help compare choices, but individual folds show whether results vary substantially.",
+              "Choose the splitter to match the prediction question. The lab uses three expanding time splits within its training period. Later training observations are never used to predict an earlier validation fold. The separate validation partition remains available for threshold choice."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Recall scores 0.5, 0.75 and 1.0 average to 0.75. That does not mean every period achieved 0.75. Report fold sizes and class counts too; a fold with very few breaches gives an unstable recall estimate."
+            ],
+            "example": "mean recall = (0.5 + 0.75 + 1.0) / 3 = 0.75\n# Fold results still matter."
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "An ordinary standard deviation across folds is descriptive, not automatically a confidence interval. Folds share training observations and temporal data can remain dependent."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A model scores 0.91 on random folds but 0.63 on later periods. Which score better supports predicting next month, and what should you investigate?",
+          "solution": "The later-period evaluation better matches the question. Check changing ticket mix, feature timing, outcome maturity and sample sizes. Do not keep the random split solely because its score is higher.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Match the split to future prediction.",
+            "Investigate the difference rather than choosing the flattering score."
+          ]
+        },
+        "quiz": {
+          "question": "Where should cross-validation for model selection run?",
+          "options": [
+            "Within the training/development data",
+            "On the final test after every edit",
+            "On all data before choosing the holdout"
+          ],
+          "correct": 0,
+          "explanation": "Repeated selection belongs inside development data. A final holdout assesses the frozen procedure."
+        },
+        "references": [
+          {
+            "title": "Cross-validation",
+            "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+            "section": "Computing cross-validated metrics; grouped data; time series split",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "overfitting-regularization",
+        "title": "13. Recognize overfitting",
+        "stage": "intermediate",
+        "takeaway": "A good training score can reflect memorization rather than useful prediction.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Overfitting happens when the fitted model captures peculiarities of training examples that do not transfer well. Compare training and suitable validation results. Very low training error paired with much worse validation error is a warning, although distribution change or leakage can also distort the comparison.",
+              "Regularization penalizes large coefficients or otherwise constrains model flexibility. For LogisticRegression, a smaller C means stronger regularization. Select the setting within development data. More regularization can also underfit, so a smaller number is not automatically better."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Model A has training recall 1.0 and validation recall 0.55. B has 0.82 and 0.76. B is a better candidate on that validation recall measure, provided the comparison uses the same rows and threshold policy."
+            ],
+            "example": "candidate C values: 0.1, 1.0, 10.0\nselection data: training cross-validation only"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Recall alone can rise by flagging everything. Compare precision, confusion counts and operational capacity before preferring either model. Adding more model complexity cannot fix invalid labels."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Training and validation error are both high. Is overfitting the only explanation? Name two checks.",
+          "solution": "No. The model may underfit or the inputs may contain little predictive information. Check target quality and feature timing, then compare an appropriate baseline and a modest alternative within development data.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognize high error on both partitions as a different pattern.",
+            "Check data and baseline before adding complexity."
+          ]
+        },
+        "quiz": {
+          "question": "In LogisticRegression, reducing C usually means:",
+          "options": [
+            "Weaker regularization",
+            "Stronger regularization",
+            "More held-out data"
+          ],
+          "correct": 1,
+          "explanation": "C is inverse regularization strength. It does not change the number of evaluation rows."
+        },
+        "references": [
+          {
+            "title": "Linear models",
+            "url": "https://scikit-learn.org/stable/modules/linear_model.html",
+            "section": "Ordinary least squares; ridge regression; logistic regression",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "learning-curves",
+        "title": "14. Compare more training data fairly",
+        "stage": "intermediate",
+        "takeaway": "Vary training size while keeping the evaluation question fixed.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A learning curve compares scores after fitting on different amounts of training data. It can help distinguish a model that improves with more examples from one that performs poorly even on its training rows. Use the same metric and compatible evaluation periods for each comparison.",
+              "For a time-based task, increase the earlier training window without moving future evaluation rows into it. Fit preprocessing again for each window. Keep model settings fixed for this diagnostic or clearly separate any tuning from the comparison."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Suppose validation recall is 0.50, 0.67 and 0.75 with 40, 80 and 120 earlier training rows. More rows helped on this fixed validation period. The curve does not promise the next 40 rows will add another 0.08."
+            ],
+            "example": "training sizes: 40, 80, 120\nfixed validation positives: 12\ncorrect positive predictions: 6, 8, 9"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Changing a training window can change both sample size and population. If older records follow different rules, performance may fall as you add them. Investigate the data rather than assuming that more rows always help."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A learner compares 40 rows on January validation and 120 rows on June validation. Why is that not a clean sample-size comparison?",
+          "solution": "Both the training size and evaluation population changed. Use a common later validation period for the size comparison, while reporting that different training windows may still contain different populations.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify the changed evaluation period.",
+            "Keep validation rows fixed for the diagnostic."
+          ]
+        },
+        "quiz": {
+          "question": "What must be refitted for each training-size experiment?",
+          "options": [
+            "Only the final prediction array",
+            "Preprocessing and the estimator on that training subset",
+            "The final test labels"
+          ],
+          "correct": 1,
+          "explanation": "Each fitted procedure must learn its statistics from its own training subset."
+        },
+        "references": [
+          {
+            "title": "Cross-validation",
+            "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+            "section": "Computing cross-validated metrics; grouped data; time series split",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "leakage-audit",
+        "title": "15. Audit shortcuts that reveal the answer",
+        "stage": "advanced",
+        "takeaway": "Look for future information in features and in the way examples are split.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Leakage can enter through an obvious outcome column or an indirect proxy. A final status, refund decision or note written after resolution may reveal the target. Compare when each value became available with when the prediction is meant to happen.",
+              "Duplicate or related records can also make evaluation too easy. An edited copy of the same ticket in both training and testing does not represent a new case. IDs help detect overlap even when they are excluded from predictors."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "If breached is defined by resolution_hours >24, a single threshold on resolution_hours gets every fictional label correct. That perfect result measures reconstruction of the label, not intake prediction."
+            ],
+            "example": "assert set(train_ticket_ids).isdisjoint(test_ticket_ids)\nassert \"resolution_hours\" not in selected_features"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A disjoint-ID check catches exact overlap, not near duplicates or the same customer under two IDs. Audit record lineage and group definitions when adapting this exercise to real data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A model suddenly reaches 100% after adding last_updated_status. What do you inspect before celebrating?",
+          "solution": "Check when the status was written, whether it encodes closure or breach, whether its historical value is reconstructed correctly and whether duplicated tickets cross partitions. Rerun with only verified intake features and a valid split.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Check timestamp and target proxy.",
+            "Check duplicate leakage independently."
+          ]
+        },
+        "quiz": {
+          "question": "A perfect score after adding an outcome-related field is:",
+          "options": [
+            "Proof that the model understands support",
+            "A reason to audit availability and label reconstruction",
+            "A reason to remove the test set"
+          ],
+          "correct": 1,
+          "explanation": "An unusually strong score may be legitimate, but a field related to the future outcome requires a timing audit first."
+        },
+        "references": [
+          {
+            "title": "Common pitfalls",
+            "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+            "section": "Inconsistent preprocessing; data leakage; controlling randomness",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "time-and-group-splits",
+        "title": "16. Separate future time from unseen customers",
+        "stage": "advanced",
+        "takeaway": "Choose a split that answers the deployment question you actually have.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A chronological split asks how a model fitted on earlier records predicts later records. A group split holds entire customers out and asks about customers unseen during fitting. A random row split may place the same customer on both sides and cannot answer that second question reliably.",
+              "Our generated data has 60 fictional customers with repeated tickets. The main lab tests later dates, so customer overlap is allowed and reported. A separate standard-library group split holds out customer IDs. Combining time and customer constraints requires a custom design rather than assuming either splitter guarantees both."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Customer A has tickets in January and March; B has February and April. A date cutoff after February separates time but keeps both customers on both sides. Holding out B separates customers but can mix earlier and later dates."
+            ],
+            "example": "time question: train Jan/Feb, evaluate Mar/Apr\nnew-customer question: train customer A, evaluate customer B"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A future evaluation also needs mature training labels. If a ticket created the day before a cutoff resolves ten days later, its final label would not exist at the cutoff. Use label-availability times and an appropriate gap in a real dataset."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "You will predict first tickets from companies absent from your training set. Is chronological row splitting enough?",
+          "solution": "No. Keep all records from a company in one partition. If deployment also happens later, enforce both company separation and chronological availability, and report the resulting sample sizes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use company-level grouping.",
+            "Keep timing as a separate requirement."
+          ]
+        },
+        "quiz": {
+          "question": "Which does a group-disjoint split guarantee by itself?",
+          "options": [
+            "No future observations in training",
+            "No shared group IDs across its two partitions",
+            "No target-derived features"
+          ],
+          "correct": 1,
+          "explanation": "Group separation controls identity overlap. It does not enforce chronology or valid feature timing."
+        },
+        "references": [
+          {
+            "title": "Cross-validation",
+            "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+            "section": "Computing cross-validated metrics; grouped data; time series split",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "error-analysis",
+        "title": "17. Read the mistakes by case and subgroup",
+        "stage": "advanced",
+        "takeaway": "Use development errors to investigate a failure, not to invent a flattering average.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "After a validation prediction, join each result back to its ticket ID and inspect false positives and false negatives. Look for recurring conditions, labeling mistakes or unavailable inputs. Keep that inspection in development data so it can guide changes without consuming the final test.",
+              "Slice metrics by a justified property such as channel or team, and show the denominator. Small slices can fluctuate sharply. A weak subgroup result is a prompt for investigation, not proof that the category causes the error."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Suppose validation recall is 8/10 for email and 1/2 for chat. Overall recall is 9/12 = 0.75. The chat estimate is 0.5 based on only two positives; one additional correct prediction would change it to 1.0."
+            ],
+            "example": "email: TP=8, FN=2\nchat: TP=1, FN=1\noverall recall = 9 / 12"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "If you explore many slices, some will look unusual by chance. Record which patterns motivated a change and evaluate that change on fresh development folds before making broader claims."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A channel has 3 rows and no actual breaches. What should its breach recall report say?",
+          "solution": "Recall is undefined because the number of actual positives is zero. Report the three-row count, zero positives and confusion counts. Do not report perfect recall or use this slice to rank models.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Report the zero denominator.",
+            "Keep counts visible."
+          ]
+        },
+        "quiz": {
+          "question": "Why keep ticket IDs beside validation predictions?",
+          "options": [
+            "So the classifier can memorize them",
+            "To trace errors to the original cases",
+            "To replace the target label"
+          ],
+          "correct": 1,
+          "explanation": "IDs support inspection and reconciliation. They need not become predictive features."
+        },
+        "references": [
+          {
+            "title": "Metrics and scoring",
+            "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "section": "Classification metrics; regression metrics; dummy estimators",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "threshold-policy",
+        "title": "18. Choose a threshold with explicit costs",
+        "stage": "advanced",
+        "takeaway": "Pick the decision rule on validation data before evaluating the final test.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "For a fixed model, lowering the threshold includes more tickets in the flagged set. This cannot reduce recall on the same labeled rows, but precision may rise or fall. Select the policy using a cost or capacity rule agreed before examining the final test.",
+              "The lab uses the invented cost 4*FN + FP on validation rows and chooses among thresholds 0.3, 0.5 and 0.7. Ties choose the higher threshold. These numbers are a teaching policy, not a recommendation for real support teams."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For truth [1,0,1,0] and probabilities [0.8,0.6,0.4,0.2], threshold 0.5 produces TP=1, FP=1, FN=1 and cost 5. Threshold 0.3 yields TP=2, FP=1, FN=0 and cost 1."
+            ],
+            "example": "cost = 4 * false_negatives + false_positives\n# Freeze the chosen threshold before test evaluation."
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A cost formula may omit review capacity, harms from actions or changing prevalence. Expected-cost threshold formulas based on probabilities require calibration and their stated assumptions; validation search still needs representative data."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "For the worked example, calculate cost at threshold 0.7. Compare it with 0.3 and 0.5.",
+          "solution": "At 0.7 only the first ticket is flagged. TP=1, FP=0 and FN=1, so cost=4. Among these three choices, 0.3 has the lowest validation cost of 1. That does not guarantee its future cost.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Calculate cost 4 at 0.7.",
+            "Select 0.3 using validation only."
+          ]
+        },
+        "quiz": {
+          "question": "May you lower the threshold after seeing disappointing final-test recall and keep calling it an untouched test?",
+          "options": [
+            "Yes, because coefficients stay fixed",
+            "No, the test then influences the decision rule",
+            "Yes, if accuracy improves"
+          ],
+          "correct": 1,
+          "explanation": "The threshold is part of the evaluated procedure. Changing it in response to test outcomes uses that test for selection."
+        },
+        "references": [
+          {
+            "title": "Metrics and scoring",
+            "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "section": "Classification metrics; regression metrics; dummy estimators",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "reproduce-an-experiment",
+        "title": "19. Record enough to rerun the result",
+        "stage": "advanced",
+        "takeaway": "Save the data identity, partitions, versions and decision rules.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A random seed controls particular random operations; it does not freeze changing files, library versions or row ordering. Record a data checksum and stable partition IDs along with the feature allowlist, estimator settings, threshold policy and package versions.",
+              "The lab prints a SHA-256 of its generated records, partition sizes, chosen threshold and scikit-learn version. Its generator uses a local seeded random instance, so unrelated calls to random do not change its fixture. Tests check repeatability within the tested environment."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Two reports both say seed=23 but one changes the target from >24 to >=24. They describe different tasks. Likewise, changing the CSV order can change a positional time split unless you validate or sort by dates."
+            ],
+            "example": "record: target rule, feature list, data hash\nrecord: split rule, seed, versions, threshold policy\nrecord: metrics with counts and limitations"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Pinned packages help recreate the lab on its stated Python versions. They are not a promise of permanent compatibility or a security update policy. Recheck APIs and tests before changing the environment."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A colleague cannot reproduce your score with the same seed. Name four things to compare before blaming numerical randomness.",
+          "solution": "Compare the data hash, row ordering and split IDs, label definition, feature/preprocessing rules, package versions and selected threshold. Any four with the same meanings are a useful start.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare data and partition identity.",
+            "Compare model and reporting rules."
+          ]
+        },
+        "quiz": {
+          "question": "A seed alone guarantees:",
+          "options": [
+            "The same result for any version and data",
+            "Control of the random operations that use it",
+            "Protection against data leakage"
+          ],
+          "correct": 1,
+          "explanation": "A seed controls a specified source of randomness. It cannot validate the dataset or prevent leakage."
+        },
+        "references": [
+          {
+            "title": "Common pitfalls",
+            "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+            "section": "Inconsistent preprocessing; data leakage; controlling randomness",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "distribution-change",
+        "title": "20. Plan for data and outcome changes",
+        "stage": "advanced",
+        "takeaway": "Monitor inputs immediately and outcome errors when labels become available.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A deployed model receives data collected after training. Category frequencies, queue sizes, processes and target definitions can change. An unfamiliar category or a rising missing-value rate can signal that the input contract no longer matches the experiment.",
+              "A change in input distribution does not prove performance got worse. You need mature outcomes to measure errors. Track data-quality checks promptly, then compare errors, subgroup counts and review workload once labels arrive. Keep the model and label versions attached to each prediction."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "If the chat share rises from 20% to 60%, an overall metric may change even when channel-specific error rates stay the same. Report both the changed mix and the per-channel counts before concluding the model deteriorated."
+            ],
+            "example": "track now: missing values, unknown categories, flag volume\ntrack after outcomes mature: confusion counts, cost, slice sizes"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Retraining automatically on every shift can learn from bad or delayed labels. Define who investigates, what evidence justifies a new model and how the earlier procedure can be restored. The supplied lab stops at an offline report."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A new portal category appears and the fraction of flagged tickets doubles. What can you conclude now, and what must wait?",
+          "solution": "You can conclude the input mix and workload changed. Check the encoding and intake contract immediately. Wait for mature labels to assess precision, recall and cost; a higher flag count alone does not establish better or worse prediction.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate input/workload evidence from error evidence.",
+            "Require mature outcomes for performance claims."
+          ]
+        },
+        "quiz": {
+          "question": "An input distribution shift proves:",
+          "options": [
+            "The model is now inaccurate",
+            "The data mix changed; performance needs separate evidence",
+            "Retraining will improve the score"
+          ],
+          "correct": 1,
+          "explanation": "Input changes are a reason to inspect the system. They do not alone measure outcome error."
+        },
+        "references": [
+          {
+            "title": "Common pitfalls",
+            "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+            "section": "Inconsistent preprocessing; data leakage; controlling randomness",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      },
+      {
+        "id": "model-review-capstone",
+        "title": "21. Decide what the evidence supports",
+        "stage": "advanced",
+        "takeaway": "A reproducible toy score demonstrates the experiment, not readiness for real users.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "The final report should let another reader reconstruct what was predicted, which data were available, how choices were made and where the procedure failed. Compare the final model with the baseline on the same frozen test rows. Include confusion counts, the threshold, sample sizes and per-channel results.",
+              "A synthetic generator encodes relationships its author chose. Success on those relationships shows that the code can learn that fixture. It cannot establish performance on a real help desk, the effects of staff interventions or fairness across actual users. Moving beyond the lab needs representative, permissioned data and a separate evaluation plan."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "If the model beats the majority baseline on 48 fictional later tickets, write exactly that. State that customers repeat across dates, the group split answers a different question and the labels in this fixture mature before the next row two days later."
+            ],
+            "example": "Conclusion: lower cost on this fixed fictional test partition.\nNext evidence: later, representative cases with mature labels.\nDo not claim: proven real-world breach prevention."
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "If review of test errors leads to more model changes, keep that report as historical evidence and reserve new data for the next final assessment. A deployment decision also needs a monitoring and rollback plan."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete the advanced project. Explain one result, one failure case and the smallest next evaluation you would run before considering real use.",
+          "solution": "Run the reference, record the data hash and frozen threshold, compare its test cost with the dummy cost, and inspect channel counts. Name a mistaken ticket if present. Propose a later real-data pilot with permission, mature outcomes and human review; do not treat generated accuracy as deployment evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Report the baseline and model on identical test rows.",
+            "State synthetic-data and customer-overlap limits.",
+            "Propose a new evaluation instead of a deployment claim."
+          ]
+        },
+        "quiz": {
+          "question": "What is the strongest justified conclusion from passing the lab?",
+          "options": [
+            "The model should automatically prioritize real customers",
+            "The implementation and evaluation rules work on the supplied fictional fixture",
+            "The features cause ticket delays"
+          ],
+          "correct": 1,
+          "explanation": "The lab verifies mechanics and reproducibility for its fixture. Real effectiveness and causal claims need different evidence."
+        },
+        "references": [
+          {
+            "title": "Supervised learning",
+            "url": "https://scikit-learn.org/stable/getting_started.html",
+            "section": "Fitting and predicting: estimator basics",
+            "reviewed": "2026-10-02",
+            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Define and measure the task",
+        "description": "Calculate baseline errors before fitting a predictive model.",
+        "exitCriteria": [
+          "Define the intake prediction and strict >24 target.",
+          "Implement confusion counts and MAE independently.",
+          "Reject unequal-length or empty metric inputs.",
+          "Calculate the hand-worked baseline and explain undefined ratios."
+        ],
+        "project": {
+          "title": "Define and measure the task",
+          "brief": "Use the worked label arrays in lessons 3, 5 and 6. Write your metric functions before opening metrics_lab.py. Then run the standard-library tests and explain a denominator-zero case.",
+          "requirements": [
+            "Define the intake prediction and strict >24 target.",
+            "Implement confusion counts and MAE independently.",
+            "Reject unequal-length or empty metric inputs.",
+            "Calculate the hand-worked baseline and explain undefined ratios."
+          ],
+          "rubric": [
+            "Define the intake prediction and strict >24 target.",
+            "Implement confusion counts and MAE independently.",
+            "Reject unequal-length or empty metric inputs.",
+            "Calculate the hand-worked baseline and explain undefined ratios."
+          ],
+          "solution": "A majority prediction can have high accuracy and zero breach recall. For [1,0,1,0] versus [1,1,0,0], all four counts are 1. MAE for [4,10] versus [6,6] is 3. Reject mismatched row counts rather than silently truncating with zip.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Fit and compare a pipeline",
+        "description": "Fit a CPU classifier while keeping preprocessing inside training boundaries.",
+        "exitCriteria": [
+          "Use only the four documented intake features.",
+          "Run the three expanding training folds.",
+          "Fit preprocessing and classifier together.",
+          "Compare the fitted model with a training-fitted majority baseline.",
+          "Explain why the fictional score is not a real-support estimate."
+        ],
+        "project": {
+          "title": "Fit and compare a pipeline",
+          "brief": "Run python ml_lab.py in a fresh Python environment. This development command keeps final-test results hidden. Predict what changes when C moves from 1.0 to 0.1, then compare the candidates using training cross-validation. Retain validation for threshold selection and run --final only after freezing your choices.",
+          "requirements": [
+            "Use only the four documented intake features.",
+            "Run the three expanding training folds.",
+            "Fit preprocessing and classifier together.",
+            "Compare the fitted model with a training-fitted majority baseline.",
+            "Explain why the fictional score is not a real-support estimate."
+          ],
+          "rubric": [
+            "Use only the four documented intake features.",
+            "Run the three expanding training folds.",
+            "Fit preprocessing and classifier together.",
+            "Compare the fitted model with a training-fitted majority baseline.",
+            "Explain why the fictional score is not a real-support estimate."
+          ],
+          "solution": "Use ColumnTransformer for numeric imputation/scaling and one-hot category encoding, followed by LogisticRegression. Pass the whole Pipeline to cross_val_score with TimeSeriesSplit. Compare candidates using development results, then freeze one procedure; do not select C by repeatedly checking the final test.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Review a breach prediction experiment",
+        "description": "Defend the split, threshold and conclusion with a reproducible report.",
+        "exitCriteria": [
+          "Record data hash, package versions and partition sizes.",
+          "Choose a threshold using validation cost 4*FN+FP.",
+          "Compare frozen model and dummy test counts and costs.",
+          "Report group overlap separately from chronological separation.",
+          "Trace validation mistakes to IDs and report slice denominators.",
+          "State the next real-data evidence needed and a limit of the fictional generator."
+        ],
+        "project": {
+          "title": "Review a breach prediction experiment",
+          "brief": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 18. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
+          "requirements": [
+            "Record data hash, package versions and partition sizes.",
+            "Choose a threshold using validation cost 4*FN+FP.",
+            "Compare frozen model and dummy test counts and costs.",
+            "Report group overlap separately from chronological separation.",
+            "Trace validation mistakes to IDs and report slice denominators.",
+            "State the next real-data evidence needed and a limit of the fictional generator."
+          ],
+          "rubric": [
+            "Record data hash, package versions and partition sizes.",
+            "Choose a threshold using validation cost 4*FN+FP.",
+            "Compare frozen model and dummy test counts and costs.",
+            "Report group overlap separately from chronological separation.",
+            "Trace validation mistakes to IDs and report slice denominators.",
+            "State the next real-data evidence needed and a limit of the fictional generator."
+          ],
+          "solution": "The reference uses 144 training, 48 validation and 48 test rows. It selects among thresholds 0.3, 0.5 and 0.7 on validation cost only, with a higher-threshold tie break. The group example holds whole customer IDs out but does not claim chronological separation. Report actual run values and any failure cases; never replace them with an expected flattering score.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete practice bundle",
+        "href": "paths/machine-learning-foundations/practice-bundle.zip"
+      }
+    ],
+    "resources": {
+      "folder": "machine-learning-foundations-practice",
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/machine-learning-foundations/practice/README.md",
+          "role": "guide",
+          "description": "Setup, data contract and project instructions"
+        },
+        {
+          "id": "metrics_lab-py",
+          "href": "paths/machine-learning-foundations/practice/metrics_lab.py",
+          "role": "reference",
+          "description": "Standard-library metrics, partitions and fictional dataset"
+        },
+        {
+          "id": "test_metrics-py",
+          "href": "paths/machine-learning-foundations/practice/test_metrics.py",
+          "role": "test",
+          "description": "Independent metric and split checks"
+        },
+        {
+          "id": "ml_lab-py",
+          "href": "paths/machine-learning-foundations/practice/ml_lab.py",
+          "role": "reference",
+          "description": "CPU scikit-learn pipeline and evaluation"
+        },
+        {
+          "id": "test_ml_lab-py",
+          "href": "paths/machine-learning-foundations/practice/test_ml_lab.py",
+          "role": "test",
+          "description": "Pipeline, preprocessing and evaluation checks"
+        },
+        {
+          "id": "requirements-txt",
+          "href": "paths/machine-learning-foundations/practice/requirements.txt",
+          "role": "reference",
+          "description": "Pinned Python 3.11/3.12 dependencies"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Define and measure the task",
+          "goal": "Use the worked label arrays in lessons 3, 5 and 6. Write your metric functions before opening metrics_lab.py. Then run the standard-library tests and explain a denominator-zero case.",
+          "fileIds": [
+            "README-md",
+            "metrics_lab-py",
+            "test_metrics-py",
+            "ml_lab-py",
+            "test_ml_lab-py",
+            "requirements-txt"
+          ],
+          "steps": [
+            "Extract the bundle and read README.md.",
+            "Define the intake prediction and strict >24 target.",
+            "Implement confusion counts and MAE independently.",
+            "Reject unequal-length or empty metric inputs.",
+            "Calculate the hand-worked baseline and explain undefined ratios."
+          ],
+          "commands": [
+            {
+              "label": "Check metrics and splits",
+              "command": "python -m unittest -v test_metrics.py",
+              "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+            "The dataset is fictional and does not establish real support performance."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Fit and compare a pipeline",
+          "goal": "Run python ml_lab.py in a fresh Python environment. This development command keeps final-test results hidden. Predict what changes when C moves from 1.0 to 0.1, then compare the candidates using training cross-validation. Retain validation for threshold selection and run --final only after freezing your choices.",
+          "fileIds": [
+            "README-md",
+            "metrics_lab-py",
+            "test_metrics-py",
+            "ml_lab-py",
+            "test_ml_lab-py",
+            "requirements-txt"
+          ],
+          "steps": [
+            "Extract the bundle and read README.md.",
+            "Use only the four documented intake features.",
+            "Run the three expanding training folds.",
+            "Fit preprocessing and classifier together.",
+            "Compare the fitted model with a training-fitted majority baseline.",
+            "Explain why the fictional score is not a real-support estimate."
+          ],
+          "commands": [
+            {
+              "label": "Check metrics and splits",
+              "command": "python -m unittest -v test_metrics.py",
+              "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+            },
+            {
+              "label": "Run the CPU model lab",
+              "command": "python ml_lab.py",
+              "expected": "A development JSON report includes 144/48/48 partition sizes, fold scores and a validation-selected threshold. Final-test metrics remain hidden."
+            },
+            {
+              "label": "Check the fitted pipeline",
+              "command": "python -m unittest -v test_ml_lab.py",
+              "expected": "All scikit-learn tests pass in the pinned environment."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+            "The dataset is fictional and does not establish real support performance."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Review a breach prediction experiment",
+          "goal": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 18. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
+          "fileIds": [
+            "README-md",
+            "metrics_lab-py",
+            "test_metrics-py",
+            "ml_lab-py",
+            "test_ml_lab-py",
+            "requirements-txt"
+          ],
+          "steps": [
+            "Extract the bundle and read README.md.",
+            "Record data hash, package versions and partition sizes.",
+            "Choose a threshold using validation cost 4*FN+FP.",
+            "Compare frozen model and dummy test counts and costs.",
+            "Report group overlap separately from chronological separation.",
+            "Trace validation mistakes to IDs and report slice denominators.",
+            "State the next real-data evidence needed and a limit of the fictional generator."
+          ],
+          "commands": [
+            {
+              "label": "Check metrics and splits",
+              "command": "python -m unittest -v test_metrics.py",
+              "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+            },
+            {
+              "label": "Reveal final evaluation after freezing choices",
+              "command": "python ml_lab.py --final",
+              "expected": "A JSON report includes 144/48/48 partition sizes, data hash, fold scores, validation-selected threshold and held-out model/baseline counts."
+            },
+            {
+              "label": "Check the fitted pipeline",
+              "command": "python -m unittest -v test_ml_lab.py",
+              "expected": "All scikit-learn tests pass in the pinned environment."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+            "The dataset is fictional and does not establish real support performance."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "prediction-question": "foundation",
+        "features-and-targets": "foundation",
+        "simple-baselines": "foundation",
+        "holdout-splits": "foundation",
+        "classification-metrics": "foundation",
+        "regression-metrics": "foundation",
+        "class-imbalance": "foundation",
+        "fit-a-regression": "intermediate",
+        "fit-a-classifier": "intermediate",
+        "prepare-features": "intermediate",
+        "pipeline-training": "intermediate",
+        "cross-validation": "intermediate",
+        "overfitting-regularization": "intermediate",
+        "learning-curves": "intermediate",
+        "leakage-audit": "advanced",
+        "time-and-group-splits": "advanced",
+        "error-analysis": "advanced",
+        "threshold-policy": "advanced",
+        "reproduce-an-experiment": "advanced",
+        "model-review-capstone": "advanced",
+        "distribution-change": "advanced"
+      },
+      "bundle": {
+        "href": "paths/machine-learning-foundations/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "messaging-events",
     "title": "Messaging & Event-Driven Systems",
     "category": "Software engineering",
@@ -54237,6 +57343,1537 @@ const LEARNING_PATHS = [
     }
   },
   {
+    "id": "practical-maths-statistics",
+    "title": "Practical maths & statistics",
+    "category": "Data & AI",
+    "status": "ready",
+    "description": "Use logic, probability, statistics and small matrix calculations to check software and data claims.",
+    "level": "Foundations to applied comparisons",
+    "prerequisites": [
+      "Python functions, lists, loops and basic arithmetic. No calculus required."
+    ],
+    "setup": [
+      "Install Python 3.11 or newer.",
+      "Extract the practice bundle and keep its Python files together.",
+      "Run each stage reference only after attempting its project."
+    ],
+    "outcomes": [
+      "Translate conditions and track sets, units and percentage denominators.",
+      "Summarize data and distinguish probability, sampling variation and bias.",
+      "Calculate vector and matrix operations with dimension checks.",
+      "Report uncertainty and design a fair comparison without overstating a causal claim."
+    ],
+    "nextSteps": [
+      "Use these calculations in Data analysis with Python.",
+      "Continue to Machine learning foundations for model evaluation.",
+      "Study formal inference and linear algebra separately when a project requires deeper theory."
+    ],
+    "sources": [
+      {
+        "title": "Python 3.11 documentation",
+        "url": "https://docs.python.org/3.11/library/stdtypes.html"
+      },
+      {
+        "title": "Python 3.11 statistics documentation",
+        "url": "https://docs.python.org/3.11/library/statistics.html"
+      },
+      {
+        "title": "OpenStax Introductory Statistics 2e",
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-3-two-basic-rules-of-probability"
+      },
+      {
+        "title": "OpenStax Introductory Statistics 2e",
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-1-terminology"
+      },
+      {
+        "title": "OpenStax Introductory Statistics 2e",
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/8-1-a-single-population-mean-using-the-normal-distribution"
+      },
+      {
+        "title": "OpenStax Introductory Statistics 2e",
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics"
+      },
+      {
+        "title": "Georgia Tech Interactive Linear Algebra",
+        "url": "https://textbooks.math.gatech.edu/ila/dot-product.html"
+      },
+      {
+        "title": "Georgia Tech Interactive Linear Algebra",
+        "url": "https://textbooks.math.gatech.edu/ila/matrix-multiplication.html"
+      },
+      {
+        "title": "OpenStax Introductory Statistics 2e",
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/4-2-mean-or-expected-value-and-standard-deviation"
+      },
+      {
+        "title": "scikit-learn StandardScaler documentation",
+        "url": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"
+      },
+      {
+        "title": "OpenStax College Algebra 2e",
+        "url": "https://openstax.org/books/college-algebra-2e/pages/2-2-linear-equations-in-one-variable"
+      },
+      {
+        "title": "OpenStax College Algebra 2e",
+        "url": "https://openstax.org/books/college-algebra-2e/pages/6-3-logarithmic-functions"
+      }
+    ],
+    "lessons": [
+      {
+        "id": "logic-and-conditions",
+        "title": "1. Translate a rule into logic",
+        "stage": "foundation",
+        "takeaway": "Check each condition separately before combining conditions.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A proposition has a truth value. For a download rule, let A mean that the account is active and B mean that the file is public. A and B permits a download only when both statements are true. A or B permits either statement or both. Write the four possible input pairs to check the rule before using it in code.",
+              "Negation changes true to false and false to true. The rule not (A and B) is equivalent to (not A) or (not B). It is not equivalent to (not A) and (not B). With Boolean inputs these expressions form a truth table; with other Python objects, and and or can return an operand rather than a bool."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "An active account requesting a private file has A=True and B=False. The conjunction rejects it. Negating that conjunction accepts this pair because at least one required condition failed."
+            ],
+            "example": "for active in (False, True):\n    for public in (False, True):\n        print(active, public, active and public)"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A logical implication does not say its converse is true. If passing the check requires an active account, an active account can still fail another check."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A request is accepted when the user is active and either owns the file or the file is public. Write the condition and test an inactive owner and an active non-owner of a public file.",
+          "solution": "accepted = active and (owns_file or public)\n# inactive owner: False\n# active non-owner, public file: True",
+          "checks": [
+            "Parentheses group the two access reasons.",
+            "An inactive user is rejected even when they own the file."
+          ],
+          "solutionFormat": "code"
+        },
+        "quiz": {
+          "question": "Which expression equals not (A or B) for Boolean values?",
+          "options": [
+            "not A or not B",
+            "not A and not B",
+            "A and B"
+          ],
+          "correct": 1,
+          "explanation": "Both statements must be false for their OR to be false. Negating each separately and joining with AND expresses that case."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 documentation",
+            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "section": "Boolean operations, numeric types and set types",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          }
+        ]
+      },
+      {
+        "id": "sets-and-overlap",
+        "title": "2. Count unique items and overlap",
+        "stage": "foundation",
+        "takeaway": "Subtract overlap once when combining two sets.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A set records membership without duplicates or order. Intersection contains members shared by both sets. Union contains members present in either set. Difference A - B contains members in A that are absent from B, so reversing the operands changes the question.",
+              "Adding the two set sizes counts every shared member twice. The union size is len(A) + len(B) - len(A & B). This reasoning also explains why a join can inflate a count when you intended to count unique people."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Three people read Python and two read SQL. Bea appears in both groups, so there are four people in the union, not five."
+            ],
+            "example": "python = {\"Ada\", \"Bea\", \"Cy\"}\nsql = {\"Bea\", \"Dev\"}\nprint(sorted(python & sql))  # [\"Bea\"]\nprint(len(python | sql))     # 4"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Turning purchases into a set of customer IDs deliberately discards repeat purchases. Keep a list when multiplicity is part of the question."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A={1,2,3,4} and B={3,4,5}. Find the intersection, union and members only in B.",
+          "solution": "A & B == {3, 4}\nA | B == {1, 2, 3, 4, 5}\nB - A == {5}",
+          "checks": [
+            "Union has five unique members.",
+            "Only-in-B uses B - A."
+          ],
+          "solutionFormat": "code"
+        },
+        "quiz": {
+          "question": "A has 10 members, B has 8 and their intersection has 3. How many are in their union?",
+          "options": [
+            "18",
+            "21",
+            "15"
+          ],
+          "correct": 2,
+          "explanation": "The three shared members were included twice in 10 + 8. Subtract them once to obtain 15."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 documentation",
+            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "section": "Boolean operations, numeric types and set types",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          }
+        ]
+      },
+      {
+        "id": "functions-and-domains",
+        "title": "3. Read a function and its domain",
+        "stage": "foundation",
+        "takeaway": "A formula needs a stated set of valid inputs.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A mathematical function assigns one output to each input in its domain. The rule cost(q)=50+12q maps an order quantity to its cost in cents. Its domain might be nonnegative integers because an order cannot contain a fractional item. The formula alone does not enforce that business rule.",
+              "Composition feeds one function into another. If bytes(size_mb)=size_mb*1_000_000 and seconds(bytes)=bytes/250_000, then seconds(bytes(2)) is 8. Track what each intermediate value means; reversing the functions would mix incompatible inputs."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For q=3 the fixed fee contributes 50 cents and the items contribute 36 cents. The result is 86 cents. For zero items the formula still gives 50, so decide whether an empty order is actually allowed."
+            ],
+            "example": "def cost_cents(q):\n    if type(q) is not int or q < 0:\n        raise ValueError(\"nonnegative whole quantity required\")\n    return 50 + 12 * q\nprint(cost_cents(3))  # 86"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A Python function can read time or mutate a list. The mathematical model here assumes a fixed rule, so identical inputs give identical outputs."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Define f(x)=2x+1 and g(x)=x*x. Calculate g(f(3)) and f(g(3)). Explain why they differ.",
+          "solution": "g(f(3)) = g(7) = 49.\nf(g(3)) = f(9) = 19.\nThe order of applying the rules changes the result.",
+          "checks": [
+            "Compute the inner function first.",
+            "Do not assume composition commutes."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "The rule time=distance/speed accepts speed=0. What is missing?",
+          "options": [
+            "A domain restriction that excludes zero speed",
+            "A larger distance",
+            "A rounding rule"
+          ],
+          "correct": 0,
+          "explanation": "Division by zero is undefined. A travel-time model normally requires a positive speed and compatible distance units."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 documentation",
+            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "section": "Boolean operations, numeric types and set types",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          }
+        ]
+      },
+      {
+        "id": "units-and-rates",
+        "title": "4. Keep units in a calculation",
+        "stage": "foundation",
+        "takeaway": "Rates combine quantities with different units.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Write the unit beside each number before calculating. Dividing 1,200 requests by 60 seconds gives 20 requests per second. Multiplying that rate by 15 seconds gives 300 requests. Seconds cancel; the remaining unit describes the answer.",
+              "An average rate over several periods uses total work divided by total time. An unweighted average of period rates works only when the periods have equal durations. Decimal MB means 1,000,000 bytes here; binary MiB means 1,048,576 bytes. State which unit a size uses."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A service completes 100 requests in 10 seconds and 100 more in 30 seconds. Across the whole observation it completes 200 in 40 seconds, or 5 per second. Averaging 10 and 3.333 would give the wrong total rate."
+            ],
+            "example": "counts = [100, 100]\nseconds = [10, 30]\nprint(sum(counts) / sum(seconds))  # 5.0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A measured throughput is not a guarantee for a larger workload. Queueing, caching and resource limits can change the rate."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A 6 MB file transfers at 500,000 bytes per second. Ignoring overhead, calculate seconds. Then calculate the average rate for 6 MB in 12 seconds and 4 MB in 20 seconds.",
+          "solution": "6_000_000 / 500_000 = 12 seconds.\n10_000_000 / 32 = 312_500 bytes per second.",
+          "checks": [
+            "Convert MB to bytes before dividing.",
+            "Aggregate bytes and seconds before computing the second rate."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Two equal-sized files take 2 and 6 seconds. Which denominator gives their combined throughput?",
+          "options": [
+            "2 seconds",
+            "The average of the two speeds",
+            "8 seconds"
+          ],
+          "correct": 2,
+          "explanation": "Total throughput divides the combined file size by all eight elapsed seconds."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 statistics documentation",
+            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "section": "mean, median, pvariance, variance and correlation",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ]
+      },
+      {
+        "id": "percentages-and-change",
+        "title": "5. Choose the percentage denominator",
+        "stage": "foundation",
+        "takeaway": "A percentage change uses the original value as its denominator.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "The fraction part/whole becomes a percentage after multiplication by 100. A change from old to new uses (new-old)/old. The denominator answers the question \"relative to what?\" A zero old value makes this relative change undefined, even when the absolute change is clear.",
+              "A rate moving from 20% to 25% rises by five percentage points. Its relative increase is 5/20=25%. Consecutive percentage changes multiply. A 20% increase followed by a 20% decrease does not return to the starting value because the second change uses a different base."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Starting with 100 units, an increase of 20% produces 120. Reducing the new amount by 20% removes 24 units and leaves 96."
+            ],
+            "example": "start = 100\nend = start * 1.20 * 0.80\nprint(end)  # 96.0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Do not average subgroup percentages without their denominators. One success out of two and nine out of ten combine to 10/12, not the average of 50% and 90%."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Errors fall from 50 to 40. Report the absolute change and relative change. A success rate rises from 0.80 to 0.90; report percentage-point and relative changes.",
+          "solution": "Errors change by -10, or -10/50 = -20%.\nSuccess rises by 10 percentage points, or 0.10/0.80 = 12.5%.",
+          "checks": [
+            "The original count is the denominator.",
+            "Distinguish percentage points from percent change."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A value doubles and then halves. Where does it end?",
+          "options": [
+            "At its starting value",
+            "50% above its starting value",
+            "At zero"
+          ],
+          "correct": 0,
+          "explanation": "Multiplying by 2 and then by 0.5 gives an overall multiplier of 1."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 documentation",
+            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "section": "Boolean operations, numeric types and set types",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          }
+        ]
+      },
+      {
+        "id": "powers-and-growth",
+        "title": "6. Compare additive and multiplicative growth",
+        "stage": "foundation",
+        "takeaway": "Repeated proportional changes multiply rather than add.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Adding the same amount each step gives linear growth. Multiplying by the same factor gives exponential growth. After k doublings, a starting quantity x becomes x*2**k. The exponent counts multiplications, not an amount added to the original value.",
+              "A logarithm reverses exponentiation. If 2**k=32, then k=5. In computing, repeatedly halving a problem of size 32 takes five halvings to reach one. State the base when interpreting a numerical logarithm, and distinguish exact powers from cases requiring a rounded number of whole steps."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Starting with eight records, three doublings produce 64 records. Adding eight three times instead produces 32. These models agree at the first step but diverge afterward."
+            ],
+            "example": "print(8 * 2**3)  # 64\nprint(8 + 8*3)   # 32"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A measured trend over a short period does not justify indefinite exponential growth. A real system can hit storage, demand or capacity limits."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A collection starts with 5 records and triples each round. How many records exist after four rounds? How many halvings take 64 items down to one?",
+          "solution": "5 * 3**4 = 405 records.\n64,32,16,8,4,2,1 takes six halvings.",
+          "checks": [
+            "The initial state is round zero.",
+            "Count transitions, not the seven listed states."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A loop halves an exact power-of-two size until it reaches one. Doubling the starting size adds how many iterations?",
+          "options": [
+            "One",
+            "Two",
+            "Twice as many as before"
+          ],
+          "correct": 0,
+          "explanation": "One extra halving removes the additional factor of two."
+        },
+        "references": [
+          {
+            "title": "OpenStax College Algebra 2e",
+            "url": "https://openstax.org/books/college-algebra-2e/pages/6-3-logarithmic-functions",
+            "section": "6.3, conversion between logarithmic and exponential form",
+            "reviewed": "2026-10-02",
+            "scope": "Positive real arguments and valid logarithm bases; lesson uses exact powers of two and three."
+          }
+        ]
+      },
+      {
+        "id": "algebra-and-scaling",
+        "title": "7. Solve for an unknown and check it",
+        "stage": "foundation",
+        "takeaway": "Reverse the operations, then substitute the answer into the original equation.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Algebra preserves equality by applying the same operation to both sides. For 5+3x=20, subtract 5 from both sides and divide both sides by 3. The result x=5 is only a candidate until you substitute it back and check that both sides equal 20.",
+              "A model can be mathematically solvable but inappropriate for the input. If x counts machines it must be a nonnegative integer. A capacity requirement such as 3x>=16 needs x>=16/3, so six whole machines are required. Rounding to five would violate the inequality."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A fictional batch has a fixed two-second setup and costs three seconds per item. To fit a 20-second limit, 2+3n<=20 gives n<=6. Six items fit exactly; seven take 23 seconds."
+            ],
+            "example": "limit, setup, per_item = 20, 2, 3\nn = (limit - setup) // per_item\nprint(n, setup + per_item * n)  # 6 20"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Floating-point arithmetic can make equality checks fragile. For measured decimal values use an appropriate tolerance; do not use rounding to hide a model that fails its unit or domain checks."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A fee is 8+4q cents. Find q when the total is 36. Under a 35-cent limit, what is the largest whole q?",
+          "solution": "4q = 28, so q = 7; substituting gives 36.\nUnder 35 cents, q <= 27/4 = 6.75. The largest whole q is 6, which costs 32 cents.",
+          "checks": [
+            "Substitute q=7 into the equality.",
+            "Check both 6 and 7 against the limit."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A capacity rule needs n>=4.2 whole workers. Which count satisfies it?",
+          "options": [
+            "4",
+            "5",
+            "Either 4 or 5"
+          ],
+          "correct": 1,
+          "explanation": "Four is below the lower bound. Rounding upward to five respects the inequality."
+        },
+        "references": [
+          {
+            "title": "OpenStax College Algebra 2e",
+            "url": "https://openstax.org/books/college-algebra-2e/pages/2-2-linear-equations-in-one-variable",
+            "section": "2.2, solving linear equations and checking solutions",
+            "reviewed": "2026-10-02",
+            "scope": "Elementary real-number algebra; application-specific nonnegative integer domains are stated in each example."
+          }
+        ]
+      },
+      {
+        "id": "mean-median-and-outliers",
+        "title": "8. Compare centre and distribution",
+        "stage": "intermediate",
+        "takeaway": "A single average can hide an uneven distribution.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "The arithmetic mean shares the total equally among observations. The median is the middle ordered observation, or the mean of the two middle observations for an even-sized list. Sorting changes positions without changing the total, so the mean does not require sorting.",
+              "Inspect the observations before choosing a summary. A high value can move the mean strongly while leaving the median unchanged. That is not a reason to delete it: a genuine long delay may matter more than the typical delay. Report units and the number of observations."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Latencies of 10, 10, 10, 10 and 100 milliseconds have mean 28 and median 10. The mean reflects the slow request; the median describes the middle request. Both calculations are correct."
+            ],
+            "example": "from statistics import mean, median\nx = [10, 10, 10, 10, 100]\nprint(mean(x), median(x))  # 28 10"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Missing observations are not zeros. A missing duration and an actual zero duration have different meanings and can change both summaries."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "For [2,3,3,4,18], calculate mean and median. Replace 18 with 180 and recalculate both. Explain which summary changed most.",
+          "solution": "Original mean=30/5=6, median=3.\nNew mean=192/5=38.4, median=3.\nOnly the mean changes because the middle ordered observation stays 3.",
+          "checks": [
+            "Retain all five observations.",
+            "Explain the unchanged median using ordered positions."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A dashboard shows only median latency. What can it conceal?",
+          "options": [
+            "The units",
+            "A small group of extremely slow requests",
+            "The middle observation"
+          ],
+          "correct": 1,
+          "explanation": "A small slow group may barely move the middle observation. Inspect spread and upper-tail values as well."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 statistics documentation",
+            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "section": "mean, median, pvariance, variance and correlation",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ]
+      },
+      {
+        "id": "variance-and-spread",
+        "title": "9. Measure spread around the mean",
+        "stage": "intermediate",
+        "takeaway": "Variance averages squared deviations; standard deviation restores the original unit.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Subtract the mean from each value to get deviations. Their signed sum is zero, so averaging those deviations cannot measure spread. Squaring removes the signs. Population variance divides the sum of squared deviations by N when describing the full set of interest.",
+              "For an independent sample used to estimate population variance, the usual sample variance divides by n-1. Estimating the mean from the same sample uses one degree of freedom. Standard deviation is the square root of variance. It has the data unit; variance has that unit squared."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For [2,4,6], the mean is 4 and squared deviations are 4,0,4. Population variance is 8/3; sample variance is 8/2=4. The sample standard deviation is 2."
+            ],
+            "example": "from statistics import pvariance, variance, stdev\nx = [2, 4, 6]\nprint(pvariance(x), variance(x), stdev(x))\n# 2.6666666666666665 4 2.0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A larger standard deviation does not identify the cause of variation. Time order, distinct subgroups or a bad measurement can produce the same numerical spread."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Find population variance and sample variance for [1,1,5,5]. State the standard deviation unit if these values are seconds.",
+          "solution": "Mean=3. Squared deviations total 16.\nPopulation variance=16/4=4; sample variance=16/3.\nStandard deviation is in seconds; variance is in seconds squared.",
+          "checks": [
+            "Use four in the population denominator.",
+            "Use three in the sample denominator."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Why does the reference reject sample variance for one observation?",
+          "options": [
+            "One value has no unit",
+            "The n-1 denominator is zero",
+            "A mean needs two values"
+          ],
+          "correct": 1,
+          "explanation": "A sample of one leaves no degrees of freedom for this variance estimate. Its mean is still defined."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 statistics documentation",
+            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "section": "mean, median, pvariance, variance and correlation",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ]
+      },
+      {
+        "id": "probability-and-complements",
+        "title": "10. Build a finite probability model",
+        "stage": "intermediate",
+        "takeaway": "Count outcomes only after stating which outcomes are equally likely.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A sample space lists possible outcomes. An event is a subset of those outcomes. For a uniformly chosen item in a finite list, its event probability is the number of matching outcomes divided by the number of possible outcomes. If outcomes have unequal chances, counting alone is insufficient.",
+              "An event and its complement divide the sample space without overlap. Their probabilities add to one. The probability of at least one failure is often easier to obtain by subtracting the probability of no failures from one. Multiplying probabilities requires an independence assumption or conditional probabilities."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Two independent fair coin tosses have four equally likely ordered outcomes. Only TT contains no heads, so at least one head has probability 1-1/4=3/4."
+            ],
+            "example": "from itertools import product\noutcomes = list(product(\"HT\", repeat=2))\nprint(sum(\"H\" in x for x in outcomes) / len(outcomes))  # 0.75"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Two requests reaching the same failing server may have dependent outcomes. Treating their failure events as independent can badly underestimate joint failure."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Three independent attempts each fail with probability 0.2. Find the chance that all fail and the chance at least one succeeds.",
+          "solution": "All fail: 0.2**3 = 0.008.\nAt least one succeeds: 1 - 0.008 = 0.992.",
+          "checks": [
+            "State independence.",
+            "Use the complement of all failing, not of one failing."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A die is loaded. Is counting three even faces out of six enough to prove P(even)=0.5?",
+          "options": [
+            "Yes, faces have different labels",
+            "No, outcome probabilities are needed",
+            "Yes, even and odd are complements"
+          ],
+          "correct": 1,
+          "explanation": "Complementary events sum to one but need not have equal probabilities. Equal face counts work only with a uniform die."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-1-terminology",
+            "section": "3.1, sample space, events and equally likely outcomes",
+            "reviewed": "2026-10-02",
+            "scope": "Finite probability models; equal likelihood must be justified before dividing event counts by total outcomes."
+          }
+        ]
+      },
+      {
+        "id": "conditional-probability",
+        "title": "11. Change the denominator when conditioning",
+        "stage": "intermediate",
+        "takeaway": "A conditional probability counts within the group named after \"given\".",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "P(A given B) asks how often A occurs among cases where B occurs. With counts it is count(A and B)/count(B), provided count(B)>0. The denominator shrinks to B. Reversing A and B usually changes that denominator and the answer.",
+              "Independence means learning B does not change the probability of A. Disjoint events cannot both occur; independent events can. For two disjoint events with positive probabilities, observing one makes the other impossible, so they are dependent."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Among 100 files, 10 are corrupted. A checker flags eight corrupted files and nine clean files. Among the 17 flagged files, eight are corrupted: 8/17, about 47.1%. The checker finding 8/10 corrupted files answers a different question."
+            ],
+            "example": "flagged_corrupt, flagged_clean = 8, 9\nprint(flagged_corrupt / (flagged_corrupt + flagged_clean))\n# 0.47058823529411764"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "The proportion of corrupted files in the population affects the meaning of a positive result. A measured detection rate alone cannot give the probability that a flagged file is corrupted."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Of 200 events, 20 are failures. An alert catches 15 failures and also flags 30 successes. Compute P(alert given failure) and P(failure given alert).",
+          "solution": "P(alert | failure)=15/20=0.75.\nP(failure | alert)=15/45=1/3.\nThe denominators are failures and alerts respectively.",
+          "checks": [
+            "Count all 45 alerts in the second denominator.",
+            "Do not interpret 75% detection as 75% alert precision."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A condition B has probability zero in your model. Can you use P(A and B)/P(B)?",
+          "options": [
+            "Yes, return zero",
+            "Yes, return P(A)",
+            "No, this formula divides by zero"
+          ],
+          "correct": 2,
+          "explanation": "The elementary conditional-probability formula requires P(B)>0. The reference rejects an empty conditioned group."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-3-two-basic-rules-of-probability",
+            "section": "3.3, multiplication rule and addition rule",
+            "reviewed": "2026-10-02",
+            "scope": "Introductory probability. Counts in lessons are fictional and probabilities depend on the stated sampling model."
+          }
+        ]
+      },
+      {
+        "id": "sampling-and-selection",
+        "title": "12. Separate sampling noise from selection bias",
+        "stage": "intermediate",
+        "takeaway": "A large sample can still miss the population you mean to describe.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Define the population before choosing observations. If the question is about all users, a survey of only users who completed a course excludes people who left. Increasing the number of completers surveyed reduces some sampling noise but does not repair that exclusion.",
+              "A random sample uses a known selection process. Different random samples usually give different summaries. This sampling variation is distinct from a systematic measurement error or a missing group. Record the sampling unit too: 100 requests from one user are not 100 independently sampled users."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A fictional population has durations [2,4,6,8]. The six equally likely samples of two without replacement have means 3,4,5,5,6,7. Their average is the population mean 5, although an individual sample need not equal 5."
+            ],
+            "example": "from itertools import combinations\nfrom statistics import mean\nmeans = [mean(s) for s in combinations([2,4,6,8], 2)]\nprint(means, mean(means))  # [3, 4, 5, 5, 6, 7] 5"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A random seed makes a simulation repeatable; it does not make a biased sampling method representative. A fixed seed is useful for debugging, not evidence that one sample is typical."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A site asks only paying users about ease of signup. The team wants a claim about everyone who started signup. Name the missing group and one better collection method.",
+          "solution": "People who abandoned signup or never paid are missing. Sample people who started signup, including non-completers, and track nonresponse. A larger paying-user sample alone cannot resolve the omission.",
+          "checks": [
+            "Identify non-completers.",
+            "Keep nonresponse as a remaining limitation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Which change addresses a selection problem?",
+          "options": [
+            "Survey ten times as many members of the same excluded-group design",
+            "Include the previously excluded target group in the sampling frame",
+            "Round the mean to fewer decimals"
+          ],
+          "correct": 1,
+          "explanation": "Coverage changes who can enter the sample. More observations or fewer decimals do not restore a missing group."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics",
+            "section": "1.4, random assignment, control and confounding",
+            "reviewed": "2026-10-02",
+            "scope": "Introductory experimental design; the local demonstration does not establish a real treatment effect."
+          }
+        ]
+      },
+      {
+        "id": "expected-value",
+        "title": "13. Weight outcomes by their probabilities",
+        "stage": "intermediate",
+        "takeaway": "Expected value is a probability-weighted average, not a guaranteed outcome.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "For a finite distribution, multiply each numerical outcome by its probability and add the products. Probabilities must be nonnegative and sum to one. The expected value describes a long-run average under repeated comparable trials; it need not equal any possible individual outcome.",
+              "Linearity of expectation lets you add expected contributions even when the contributions are dependent. Independence is a separate issue when calculating a joint probability or the variability of a sum. Expected value alone also omits the size of rare adverse outcomes."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A job takes one second with probability 0.9 and eleven seconds with probability 0.1. Its expected duration is 0.9*1+0.1*11=2 seconds. No individual run takes exactly two seconds in this model."
+            ],
+            "example": "durations = [1,11]\nprobabilities = [.9,.1]\nprint(sum(x*p for x,p in zip(durations,probabilities)))  # 2.0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A timeout set to the mean would fail on every eleven-second run. A service decision often needs the distribution tail as well as the mean."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An operation costs 2 units with probability 0.75 and 10 units with probability 0.25. Calculate its expected cost and the expected total cost for 20 such operations with the same marginal distribution.",
+          "solution": "Expected cost is .75*2+.25*10=4 units.\nExpected total is 20*4=80 units. Independence is unnecessary for this expectation, although it affects variability.",
+          "checks": [
+            "Do not average 2 and 10 without weights.",
+            "Do not claim every batch costs exactly 80."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Expected cost is 4, but outcomes are 2 or 10. Is the calculation necessarily wrong?",
+          "options": [
+            "Yes, an average must be an outcome",
+            "No, a weighted average can lie between outcomes",
+            "Yes, probabilities must be equal"
+          ],
+          "correct": 1,
+          "explanation": "An expected value summarizes the distribution and need not be an attainable single result."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/4-2-mean-or-expected-value-and-standard-deviation",
+            "section": "4.2, mean of a discrete probability distribution",
+            "reviewed": "2026-10-02",
+            "scope": "Finite distributions with stated probabilities; fictional job-cost examples are original."
+          }
+        ]
+      },
+      {
+        "id": "uncertainty-and-intervals",
+        "title": "14. Interpret a confidence interval",
+        "stage": "intermediate",
+        "takeaway": "An interval procedure has coverage across repeated samples.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A sample mean estimates a population mean and changes across samples. Under independent sampling with known population standard deviation sigma, the standard error of the mean is sigma/sqrt(n). For a normal population, a 95% interval is mean plus or minus about 1.96 standard errors.",
+              "The 95% statement describes the procedure: over repeated samples, about 95% of intervals cover the fixed population mean under the assumptions. It does not mean 95% of individual observations lie inside an interval for the mean. An interval also does not correct selection bias or an incorrect measurement process."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Suppose independent measurements come from a normal population with known sigma=10 ms. A sample of 100 has mean 50 ms. Standard error is 1 ms and the interval is approximately [48.04,51.96] ms. If sigma were merely estimated from a small sample, this known-sigma calculation would not be justified."
+            ],
+            "example": "from math import sqrt\nmean, sigma, n = 50, 10, 100\nmargin = 1.96 * sigma / sqrt(n)\nprint(mean - margin, mean + margin)  # 48.04 51.96"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Standard deviation describes the spread of observations. Standard error describes how much an estimator varies across samples. They answer different questions."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Under the same known-sigma normal model, increase n from 100 to 400 while holding sigma=10. What happens to the standard error and margin?",
+          "solution": "Standard error becomes 10/sqrt(400)=0.5.\nMargin becomes 1.96*0.5=0.98.\nQuadrupling n halves these quantities.",
+          "checks": [
+            "Keep the assumptions explicit.",
+            "Do not say the observations became less variable."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A 95% interval for mean latency is [48,52] ms. Which claim follows?",
+          "options": [
+            "95% of requests took 48 to 52 ms",
+            "The method targets the population mean under its assumptions",
+            "Every future sample mean will be inside it"
+          ],
+          "correct": 1,
+          "explanation": "This interval estimates a mean. It is neither a range for individual requests nor a guarantee about future samples."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/8-1-a-single-population-mean-using-the-normal-distribution",
+            "section": "8.1, confidence level and margin of error for known population standard deviation",
+            "reviewed": "2026-10-02",
+            "scope": "Known-sigma normal interval only. The course does not apply this formula to an unknown-sigma small sample."
+          }
+        ]
+      },
+      {
+        "id": "vectors-and-coordinates",
+        "title": "15. Represent a record as a vector",
+        "stage": "advanced",
+        "takeaway": "Each coordinate needs a fixed meaning and unit.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A real vector is an ordered list of numbers. For a document, [word_count, link_count] is a different representation from [link_count, word_count]. Equal lengths are necessary for addition, but matching coordinate meanings are necessary for a useful result.",
+              "Vector addition combines corresponding coordinates. Multiplying by a scalar multiplies every coordinate by the same number. The Euclidean length is sqrt(sum(x*x)). Using that length to compare heterogeneous features can make a large-unit feature dominate, so choose a representation before interpreting distance."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Weekly study totals [2,3] and [1,4] hours for Python and SQL add to [3,7]. The first vector has Euclidean length sqrt(13), but that length is not total study hours; its coordinate sum is 5."
+            ],
+            "example": "from math import sqrt\na, b = [2,3], [1,4]\nprint([x+y for x,y in zip(a,b)])  # [3,7]\nprint(sqrt(sum(x*x for x in a)))  # about 3.606"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Plain zip silently truncates mismatched lengths. Validate dimensions before using it for a vector operation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "For a=[3,4], calculate 2a and its Euclidean length. Explain why [3000,4] has a different length if only the first coordinate changes from metres to millimetres.",
+          "solution": "2a=[6,8], with length 10.\nChanging one coordinate unit changes the numerical distance calculation. Convert to compatible units before interpreting a geometric length.",
+          "checks": [
+            "Scale every coordinate.",
+            "Name the unit inconsistency."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Can two length-two vectors always be added meaningfully?",
+          "options": [
+            "Yes, dimensions are sufficient",
+            "No, coordinate meanings must also match",
+            "Only when their entries are positive"
+          ],
+          "correct": 1,
+          "explanation": "The operation exists numerically, but adding users to seconds has no useful interpretation without a model for those coordinates."
+        },
+        "references": [
+          {
+            "title": "Georgia Tech Interactive Linear Algebra",
+            "url": "https://textbooks.math.gatech.edu/ila/dot-product.html",
+            "section": "Dot products, length and orthogonality",
+            "reviewed": "2026-10-02",
+            "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
+          }
+        ]
+      },
+      {
+        "id": "dot-products-and-scores",
+        "title": "16. Calculate a weighted score",
+        "stage": "advanced",
+        "takeaway": "A dot product multiplies matching coordinates and adds the products.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "For vectors x and w of equal length, their dot product is sum(x_i*w_i). This can represent total cost, a weighted score or part of a geometric comparison. The meaning comes from the coordinate definitions and weights, not from the operation alone.",
+              "For nonzero vectors, dividing the dot product by both lengths gives cosine similarity. It measures direction rather than magnitude. A zero vector has no direction, so this normalization is undefined. A high similarity in your chosen representation does not prove that two documents mean the same thing."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A basket contains three pens and two notebooks. Prices are 10 and 40 cents, so its dot product with the quantity vector is 3*10+2*40=110 cents."
+            ],
+            "example": "quantities, prices = [3,2], [10,40]\nprint(sum(q*p for q,p in zip(quantities, prices)))  # 110"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Weights can be negative and need not sum to one. A weighted average divides by the weight sum and normally states additional assumptions about those weights."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Compute [1,2,3] dot [4,0,-1]. Then find the cosine similarity of [1,0] and [0,1].",
+          "solution": "Dot product = 4+0-3 = 1.\nThe perpendicular unit vectors have dot product 0 and lengths 1, so cosine similarity is 0.",
+          "checks": [
+            "Include the negative contribution.",
+            "Do not call zero similarity a proof of statistical independence."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What happens to cosine similarity when one nonzero vector is multiplied by positive 5?",
+          "options": [
+            "It becomes five times larger",
+            "It stays the same",
+            "It becomes zero"
+          ],
+          "correct": 1,
+          "explanation": "Both the dot product and that vector length scale by five, so their ratio stays unchanged."
+        },
+        "references": [
+          {
+            "title": "Georgia Tech Interactive Linear Algebra",
+            "url": "https://textbooks.math.gatech.edu/ila/dot-product.html",
+            "section": "Dot products, length and orthogonality",
+            "reviewed": "2026-10-02",
+            "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
+          }
+        ]
+      },
+      {
+        "id": "matrices-and-shapes",
+        "title": "17. Multiply a matrix by a vector",
+        "stage": "advanced",
+        "takeaway": "Each output is one row dotted with the input vector.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A matrix is a rectangular arrangement of numbers. An m by n matrix maps an n-coordinate input vector to an m-coordinate output by taking one dot product per row. Write the dimensions before calculating; the number of columns must match the input length.",
+              "For matrix multiplication AB, each entry uses a row of A and a column of B. If A has shape m by n and B has shape n by p, the result has shape m by p. The inner dimensions must match. Multiplication order matters because the operations compose in that order."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Two baskets have quantities [3,2] and [1,4]. Multiplying their two-row quantity matrix by prices [10,40] gives basket costs [110,170]. Rows represent baskets and columns represent products."
+            ],
+            "example": "baskets = [[3,2], [1,4]]\nprices = [10,40]\nprint([sum(q*p for q,p in zip(row, prices)) for row in baskets])\n# [110, 170]"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A ragged nested list is not a rectangular matrix. Reject rows with inconsistent lengths instead of accepting partial dot products."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Multiply [[1,2,0],[0,1,3]] by [4,5,6]. State the matrix shape and result shape.",
+          "solution": "The matrix is 2 by 3.\nRow results are 1*4+2*5+0*6=14 and 0*4+1*5+3*6=23.\nThe result [14,23] has two coordinates.",
+          "checks": [
+            "Compute each row separately.",
+            "An input with two coordinates must be rejected."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A is 2 by 3 and B is 3 by 4. What is the shape of AB?",
+          "options": [
+            "2 by 4",
+            "3 by 3",
+            "4 by 2"
+          ],
+          "correct": 0,
+          "explanation": "The shared inner dimension is three. Two rows of A and four columns of B produce a 2 by 4 result."
+        },
+        "references": [
+          {
+            "title": "Georgia Tech Interactive Linear Algebra",
+            "url": "https://textbooks.math.gatech.edu/ila/matrix-multiplication.html",
+            "section": "Matrix multiplication, dimensions and composition",
+            "reviewed": "2026-10-02",
+            "scope": "Finite real matrices; hand calculations illustrate the operation rather than efficient implementation."
+          }
+        ]
+      },
+      {
+        "id": "correlation-and-causation",
+        "title": "18. Read association without claiming a cause",
+        "stage": "advanced",
+        "takeaway": "Correlation summarizes a pattern; it does not identify why the pattern occurs.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "Pearson correlation compares paired deviations from each variable mean after scaling by their spread. It lies between -1 and 1 when defined. A value near 1 describes a strong positive linear pattern, while a value near 0 means little linear association, not necessarily no relationship.",
+              "Pairs must refer to the same units of observation. Shuffling only one column destroys the pairings. A third variable can influence both observed variables. Reverse causation and selection can also explain an association. A causal claim needs a design and assumptions that address these alternatives."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For x=[1,2,3] and y=[2,4,6], y is exactly 2x, so Pearson correlation is 1. Changing y to [-2,-4,-6] makes it -1. Neither calculation tells us whether changing x would change y in a real system."
+            ],
+            "example": "from statistics import correlation\nprint(correlation([1,2,3], [2,4,6]))  # 1.0"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Correlation with a constant variable is undefined because that variable has zero spread. Zero correlation can also hide a curved relationship, such as y=x*x on symmetric x values."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Teams with more incidents also write more incident reports. Give a plausible direction of causation and explain why deleting reports is not a supported remedy.",
+          "solution": "Incidents can cause teams to write reports. Reports may therefore track incidents without causing them. Removing reports could hide incidents rather than prevent them.",
+          "checks": [
+            "Identify reverse causation.",
+            "Do not infer intervention effects from an observed correlation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Pearson correlation is zero. Which conclusion is justified?",
+          "options": [
+            "There is no possible relationship",
+            "There is no linear association captured by this statistic",
+            "Changing either variable cannot affect the other"
+          ],
+          "correct": 1,
+          "explanation": "A zero value rules out this measured linear pattern, not nonlinear relationships or causal effects."
+        },
+        "references": [
+          {
+            "title": "Python 3.11 statistics documentation",
+            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "section": "mean, median, pvariance, variance and correlation",
+            "reviewed": "2026-10-02",
+            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ]
+      },
+      {
+        "id": "experiments-and-confounding",
+        "title": "19. Plan a comparison that can answer a causal question",
+        "stage": "advanced",
+        "takeaway": "Random assignment helps separate a treatment from pre-existing group differences.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "An observational comparison records what already happened. An experiment assigns a treatment. If faster machines all receive a new algorithm, observed speed can reflect hardware rather than the algorithm. Random assignment reduces systematic treatment-group differences in expectation; it does not guarantee perfectly balanced small groups.",
+              "Choose the assignment unit, outcome and analysis before seeing the result. Repeated requests on the same machine can share conditions, so treating them as independent machines overstates the available information. Keep hardware and measurement rules comparable and report missing results."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "A fictional benchmark compares old and new versions on matched inputs. Alternate their run order after a random start, include warm-up rules and measure the same output checks. If the new version produces wrong answers, its speed alone does not satisfy the task."
+            ],
+            "example": "from random import Random\nunits = list(range(8))\nRandom(7).shuffle(units)\na, b = units[:4], units[4:]\nprint(len(a), len(b), set(a).isdisjoint(b))  # 4 4 True"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A seed gives a reproducible assignment. It does not eliminate interference between units, changes during the experiment or selective reporting."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A team deploys a faster cache only to its newest servers. Propose a comparison that reduces the hardware confound and name one remaining limitation.",
+          "solution": "Randomly assign cache versions within groups of similar hardware, with the same workload and correctness checks. Shared traffic or cache warm-up can still affect results and must be measured or controlled.",
+          "checks": [
+            "Change assignment, not just the chart.",
+            "Retain a concrete remaining threat to interpretation."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "What is the purpose of random assignment?",
+          "options": [
+            "Guarantee identical groups in every experiment",
+            "Remove the need for a control group",
+            "Reduce systematic pre-existing differences between treatment groups"
+          ],
+          "correct": 2,
+          "explanation": "Random assignment balances differences in expectation. Chance imbalance and design failures remain possible."
+        },
+        "references": [
+          {
+            "title": "OpenStax Introductory Statistics 2e",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics",
+            "section": "1.4, random assignment, control and confounding",
+            "reviewed": "2026-10-02",
+            "scope": "Introductory experimental design; the local demonstration does not establish a real treatment effect."
+          }
+        ]
+      },
+      {
+        "id": "feature-scaling",
+        "title": "20. Choose a scale before measuring distance",
+        "stage": "advanced",
+        "takeaway": "A coordinate unit can change a distance-based comparison.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "If one coordinate records bytes and another records seconds, their numerical magnitudes can differ greatly. Euclidean distance adds squared coordinate differences, so the large-scale feature may dominate. Dividing each feature by a stated reference scale changes what counts as a large difference.",
+              "One common transformation subtracts a training mean and divides by a training standard deviation. It centres that feature at zero and expresses differences in standard-deviation units. Fit these values only on the training data before applying them to held-out data. A constant feature has zero standard deviation and needs an explicit policy rather than division by zero."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "For training values [2,4,6], use mean 4 and population standard deviation sqrt(8/3) for this illustrative transformation. The centre value becomes zero. A future value 8 becomes about 2.449 using the same fixed training parameters."
+            ],
+            "example": "from statistics import mean, pstdev\ntrain = [2,4,6]\ncentre, scale = mean(train), pstdev(train)\nprint((8-centre)/scale)  # about 2.449"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "Scaling does not establish that every feature deserves equal influence. A chosen scale and a chosen weight each encode a modeling decision; inspect whether the decision changes under reasonable alternatives."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Training mean is 10 and standard deviation is 2. Transform 14. Should you recompute the mean using the held-out value before transforming it? Explain.",
+          "solution": "The transformed value is (14-10)/2=2.\nKeep the fitted training parameters. Recomputing them from held-out data changes the evaluation procedure and leaks information from the held-out set.",
+          "checks": [
+            "Subtract before dividing.",
+            "Preserve the fitted parameters for later data."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "A feature has the same value in every training row. What happens to standard-deviation scaling?",
+          "options": [
+            "It needs a policy because the denominator is zero",
+            "It automatically becomes one",
+            "It produces a better distance"
+          ],
+          "correct": 0,
+          "explanation": "A constant feature has no observed variation. Dropping it or mapping it by an explicit convention avoids undefined division."
+        },
+        "references": [
+          {
+            "title": "scikit-learn StandardScaler documentation",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html",
+            "section": "Definition z=(x-u)/s, fitted mean and scale, zero-variance handling",
+            "reviewed": "2026-10-02",
+            "scope": "Conceptual reference checked in the current documentation. This exercise implements the arithmetic with the Python standard library, not a scikit-learn dependency."
+          }
+        ]
+      },
+      {
+        "id": "decision-and-capstone",
+        "title": "21. Combine calculation with an honest conclusion",
+        "stage": "advanced",
+        "takeaway": "State the decision, the numerical result and what the comparison cannot establish.",
+        "sections": [
+          {
+            "title": "How it works",
+            "paragraphs": [
+              "A useful report separates observed results from assumptions and proposed actions. First check units, valid inputs and denominators. Then calculate the relevant summaries. Finally connect the result to the actual decision, such as whether a proposed scoring rule meets a stated budget.",
+              "A weighted score is a model choice. Test whether a reasonable change in weights changes the ranking. If it does, the decision depends on the preference encoded by those weights. Confidence in arithmetic does not remove that preference or uncertainty in the data."
+            ]
+          },
+          {
+            "title": "Worked example",
+            "paragraphs": [
+              "Candidate A has normalized benefit scores [0.9,0.4] and B has [0.6,0.8]. Weights [0.8,0.2] give A=0.80 and B=0.64. Equal weights give A=0.65 and B=0.70. The preferred candidate changes, so report that dependence instead of declaring an unconditional winner."
+            ],
+            "example": "candidates = [[0.9,0.4], [0.6,0.8]]\nfor weights in ([0.8,0.2], [0.5,0.5]):\n    print([round(sum(x*w for x,w in zip(row,weights)),2) for row in candidates])\n# [0.8, 0.64]\n# [0.65, 0.7]"
+          },
+          {
+            "title": "Check the assumption",
+            "paragraphs": [
+              "A synthetic exercise can verify calculations and reasoning. It cannot establish how a real deployment will perform or replace a properly designed evaluation."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Complete the advanced project. Report both score rankings, check one invalid shape and explain why a before/after latency reduction alone does not prove the scoring change caused it.",
+          "solution": "The reference prints [0.8,0.64] then [0.65,0.7]. A vector of the wrong length raises ValueError. Traffic, hardware or timing changes could explain before/after latency, so a controlled comparison is needed for a causal claim.",
+          "checks": [
+            "Report the rank reversal.",
+            "Show the dimension failure.",
+            "Name a plausible confound rather than claiming proof."
+          ],
+          "solutionFormat": "prose"
+        },
+        "quiz": {
+          "question": "Two reasonable weight sets choose different winners. What should the report say?",
+          "options": [
+            "Hide the less convenient weighting",
+            "Report the dependence and ask which trade-off matches the decision",
+            "Average the winners into a causal claim"
+          ],
+          "correct": 1,
+          "explanation": "The weights express a preference. Reporting sensitivity lets the decision-maker judge that preference."
+        },
+        "references": [
+          {
+            "title": "Georgia Tech Interactive Linear Algebra",
+            "url": "https://textbooks.math.gatech.edu/ila/dot-product.html",
+            "section": "Dot products, length and orthogonality",
+            "reviewed": "2026-10-02",
+            "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
+          }
+        ]
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Complete practice bundle",
+        "href": "paths/practical-maths-statistics/practice-bundle.zip"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Logic and quantities",
+        "description": "Build a small calculator that keeps count and elapsed-time units explicit.",
+        "exitCriteria": [
+          "Hand calculations match executable results.",
+          "Invalid cases raise ValueError.",
+          "The explanation names the denominator and units."
+        ],
+        "project": {
+          "title": "Rates and rules",
+          "brief": "Build a small calculator that keeps count and elapsed-time units explicit.",
+          "requirements": [
+            "Implement rate, relative_change and combined_rate with the contracts in README.md.",
+            "Reject zero durations, negative counts, nonfinite inputs and mismatched observations.",
+            "Show why 100 requests in 10 seconds plus 100 in 30 seconds gives 5 per second."
+          ],
+          "rubric": [
+            "Hand calculations match executable results.",
+            "Invalid cases raise ValueError.",
+            "The explanation names the denominator and units."
+          ],
+          "solution": "\"\"\"Unit-aware calculations. Python 3.11+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Probability and uncertainty",
+        "description": "Summarize fictional latencies and interpret two different conditional probabilities.",
+        "exitCriteria": [
+          "Report mean 28, median 10 and sample variance 1620.",
+          "Explain why the alert denominators differ.",
+          "Reject empty conditioned groups and explain why the interval is not a range for individual requests."
+        ],
+        "project": {
+          "title": "A latency and alert report",
+          "brief": "Summarize fictional latencies and interpret two different conditional probabilities.",
+          "requirements": [
+            "Calculate sample summaries for [10,10,10,10,100].",
+            "Calculate 8/17 for corrupted given flagged and distinguish it from 8/10 for flagged given corrupted.",
+            "Implement the known-sigma interval for mean=50, sigma=10 and n=100, and state its normal-population, independent-sampling assumptions."
+          ],
+          "rubric": [
+            "Report mean 28, median 10 and sample variance 1620.",
+            "Explain why the alert denominators differ.",
+            "Reject empty conditioned groups and explain why the interval is not a range for individual requests."
+          ],
+          "solution": "\"\"\"Descriptive summaries and a deliberately restricted interval model.\"\"\"\nimport math\nfrom statistics import mean, median, variance\nfrom foundation_project import finite\n\ndef summarize(values):\n    values = [finite(v) for v in values]\n    if len(values) < 2:\n        raise ValueError(\"at least two observations required\")\n    return {\"n\": len(values), \"mean\": mean(values), \"median\": median(values),\n            \"sample_variance\": variance(values)}\n\ndef conditional_count(joint, conditioned):\n    if (type(joint) is not int or type(conditioned) is not int\n            or conditioned <= 0 or not 0 <= joint <= conditioned):\n        raise ValueError(\"valid counts and nonempty condition required\")\n    return joint / conditioned\n\ndef known_sigma_interval(average, sigma, n):\n    average, sigma = finite(average), finite(sigma)\n    if sigma < 0 or type(n) is not int or n <= 0:\n        raise ValueError(\"nonnegative sigma and positive integer n required\")\n    margin = 1.96 * sigma / math.sqrt(n)\n    return average - margin, average + margin\n\nif __name__ == \"__main__\":\n    print(summarize([10,10,10,10,100]))\n    print(round(conditional_count(8,17),4))\n    print(known_sigma_interval(50,10,100))\n"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Vectors and comparisons",
+        "description": "Compare two candidates using two preference weight sets and explain what the result supports.",
+        "exitCriteria": [
+          "Both score lists match hand calculation.",
+          "Ragged matrices and mismatched vectors fail instead of truncating.",
+          "The conclusion separates a chosen scoring preference from a demonstrated causal effect."
+        ],
+        "project": {
+          "title": "A score with a sensitivity check",
+          "brief": "Compare two candidates using two preference weight sets and explain what the result supports.",
+          "requirements": [
+            "Implement dot, matvec and cosine with dimension and zero-vector checks.",
+            "Score [[0.9,0.4],[0.6,0.8]] using [0.8,0.2] and [0.5,0.5].",
+            "Report the rank reversal and propose a controlled comparison for a later deployment."
+          ],
+          "rubric": [
+            "Both score lists match hand calculation.",
+            "Ragged matrices and mismatched vectors fail instead of truncating.",
+            "The conclusion separates a chosen scoring preference from a demonstrated causal effect."
+          ],
+          "solution": "\"\"\"Small real-vector operations, with explicit shape validation.\"\"\"\nimport math\nfrom foundation_project import finite\n\ndef vector(values):\n    result = [finite(v) for v in values]\n    if not result:\n        raise ValueError(\"nonempty vector required\")\n    return result\n\ndef dot(left, right):\n    left, right = vector(left), vector(right)\n    if len(left) != len(right):\n        raise ValueError(\"matching dimensions required\")\n    return sum(a*b for a,b in zip(left,right))\n\ndef matvec(matrix, values):\n    values = vector(values)\n    rows = [vector(row) for row in matrix]\n    if not rows or any(len(row) != len(values) for row in rows):\n        raise ValueError(\"nonempty rectangular matrix must match vector\")\n    return [dot(row,values) for row in rows]\n\ndef cosine(left, right):\n    left, right = vector(left), vector(right)\n    numerator = dot(left,right)\n    denominator = math.sqrt(dot(left,left)) * math.sqrt(dot(right,right))\n    if denominator == 0:\n        raise ValueError(\"zero vector has no cosine direction\")\n    return numerator / denominator\n\nif __name__ == \"__main__\":\n    candidates = [[0.9,0.4],[0.6,0.8]]\n    for weights in ([0.8,0.2],[0.5,0.5]):\n        print([round(v,2) for v in matvec(candidates,weights)])\n"
+        }
+      }
+    ],
+    "resources": {
+      "folder": "practical-maths-statistics-practice",
+      "files": [
+        {
+          "id": "foundation_project-py",
+          "href": "paths/practical-maths-statistics/practice/foundation_project.py",
+          "role": "reference",
+          "description": "foundation project"
+        },
+        {
+          "id": "intermediate_project-py",
+          "href": "paths/practical-maths-statistics/practice/intermediate_project.py",
+          "role": "reference",
+          "description": "intermediate project"
+        },
+        {
+          "id": "advanced_project-py",
+          "href": "paths/practical-maths-statistics/practice/advanced_project.py",
+          "role": "reference",
+          "description": "advanced project"
+        },
+        {
+          "id": "test_projects-py",
+          "href": "paths/practical-maths-statistics/practice/test_projects.py",
+          "role": "test",
+          "description": "Independent hand-calculated cases and invalid-input checks"
+        },
+        {
+          "id": "README-md",
+          "href": "paths/practical-maths-statistics/practice/README.md",
+          "role": "guide",
+          "description": "Setup, contracts and expected results"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Rates and rules",
+          "goal": "Build a small calculator that keeps count and elapsed-time units explicit.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Read the contracts in README.md.",
+            "Attempt the stage requirements in a separate folder.",
+            "Implement rate, relative_change and combined_rate with the contracts in README.md.",
+            "Reject zero durations, negative counts, nonfinite inputs and mismatched observations.",
+            "Show why 100 requests in 10 seconds plus 100 in 30 seconds gives 5 per second.",
+            "Run the reference and compare calculations after completing your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run stage reference",
+              "command": "python foundation_project.py",
+              "expected": "5.0 then -0.2."
+            },
+            {
+              "label": "Run independent checks",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "20 tests pass."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "7. Solve for an unknown and check it",
+              "href": "#topic/practical-maths-statistics/algebra-and-scaling"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "Run from the extracted folder with all Python files together.",
+            "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "A latency and alert report",
+          "goal": "Summarize fictional latencies and interpret two different conditional probabilities.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Read the contracts in README.md.",
+            "Attempt the stage requirements in a separate folder.",
+            "Calculate sample summaries for [10,10,10,10,100].",
+            "Calculate 8/17 for corrupted given flagged and distinguish it from 8/10 for flagged given corrupted.",
+            "Implement the known-sigma interval for mean=50, sigma=10 and n=100, and state its normal-population, independent-sampling assumptions.",
+            "Run the reference and compare calculations after completing your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run stage reference",
+              "command": "python intermediate_project.py",
+              "expected": "n=5, mean=28, median=10, sample_variance=1620; then 0.4706 and (48.04, 51.96)."
+            },
+            {
+              "label": "Run independent checks",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "20 tests pass."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "14. Interpret a confidence interval",
+              "href": "#topic/practical-maths-statistics/uncertainty-and-intervals"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "Run from the extracted folder with all Python files together.",
+            "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "A score with a sensitivity check",
+          "goal": "Compare two candidates using two preference weight sets and explain what the result supports.",
+          "fileIds": [
+            "foundation_project-py",
+            "intermediate_project-py",
+            "advanced_project-py",
+            "test_projects-py",
+            "README-md"
+          ],
+          "steps": [
+            "Read the contracts in README.md.",
+            "Attempt the stage requirements in a separate folder.",
+            "Implement dot, matvec and cosine with dimension and zero-vector checks.",
+            "Score [[0.9,0.4],[0.6,0.8]] using [0.8,0.2] and [0.5,0.5].",
+            "Report the rank reversal and propose a controlled comparison for a later deployment.",
+            "Run the reference and compare calculations after completing your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run stage reference",
+              "command": "python advanced_project.py",
+              "expected": "[0.8, 0.64] then [0.65, 0.7]."
+            },
+            {
+              "label": "Run independent checks",
+              "command": "python -m unittest -v test_projects.py",
+              "expected": "20 tests pass."
+            }
+          ],
+          "prerequisites": [
+            {
+              "label": "21. Combine calculation with an honest conclusion",
+              "href": "#topic/practical-maths-statistics/decision-and-capstone"
+            }
+          ],
+          "notes": [
+            "Python 3.11 or newer; standard library only.",
+            "Run from the extracted folder with all Python files together.",
+            "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "logic-and-conditions": "foundation",
+        "sets-and-overlap": "foundation",
+        "functions-and-domains": "foundation",
+        "units-and-rates": "foundation",
+        "percentages-and-change": "foundation",
+        "powers-and-growth": "foundation",
+        "algebra-and-scaling": "foundation",
+        "mean-median-and-outliers": "intermediate",
+        "variance-and-spread": "intermediate",
+        "probability-and-complements": "intermediate",
+        "conditional-probability": "intermediate",
+        "sampling-and-selection": "intermediate",
+        "expected-value": "intermediate",
+        "uncertainty-and-intervals": "intermediate",
+        "vectors-and-coordinates": "advanced",
+        "dot-products-and-scores": "advanced",
+        "matrices-and-shapes": "advanced",
+        "correlation-and-causation": "advanced",
+        "experiments-and-confounding": "advanced",
+        "feature-scaling": "advanced",
+        "decision-and-capstone": "advanced"
+      },
+      "bundle": {
+        "href": "paths/practical-maths-statistics/practice-bundle.zip"
+      }
+    }
+  },
+  {
     "id": "python",
     "title": "Python",
     "category": "Programming",
@@ -59332,6 +63969,1477 @@ const LEARNING_PATHS = [
       },
       "bundle": {
         "href": "paths/python-problem-solving/practice-bundle.zip"
+      }
+    }
+  },
+  {
+    "id": "requirements-maintenance",
+    "title": "Requirements & software maintenance",
+    "category": "Engineering foundations",
+    "status": "ready",
+    "description": "Turn unclear requests into testable changes. Read an existing Python command, repair a defect and preserve its callers.",
+    "level": "Foundations through a local maintenance capstone",
+    "prerequisites": [
+      "Python functions, exceptions, files and dictionaries.",
+      "Basic terminal use. Git & Team Workflows and Testing & Debugging provide useful background."
+    ],
+    "outcomes": [
+      "Write acceptance examples and a scoped change brief.",
+      "Trace unfamiliar code and reproduce a regression.",
+      "Make a compatible CLI change with evidence and a recovery plan."
+    ],
+    "setup": [
+      "Use Python 3.11 or later; no external packages, account or GPU are required.",
+      "Download and extract the practice ZIP. Run commands from its folder.",
+      "Read CONTRACT.md and attempt projects.md before reading report.py."
+    ],
+    "nextSteps": [
+      "Apply the method to a small issue in an existing project with permission.",
+      "Continue with Testing & Debugging, Git & Team Workflows and the Full-Stack Project Journey."
+    ],
+    "sources": [
+      {
+        "title": "NASA Systems Engineering Handbook",
+        "url": "https://www.nasa.gov/reference/6-2-requirements-management/"
+      },
+      {
+        "title": "Given When Then",
+        "url": "https://martinfowler.com/bliki/GivenWhenThen.html"
+      },
+      {
+        "title": "Google Engineering Practices",
+        "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
+      },
+      {
+        "title": "Python unittest",
+        "url": "https://docs.python.org/3/library/unittest.html"
+      },
+      {
+        "title": "Python csv",
+        "url": "https://docs.python.org/3/library/csv.html"
+      },
+      {
+        "title": "Python argparse",
+        "url": "https://docs.python.org/3/library/argparse.html"
+      },
+      {
+        "title": "Python os",
+        "url": "https://docs.python.org/3/library/os.html#os.replace"
+      },
+      {
+        "title": "Git git-bisect",
+        "url": "https://git-scm.com/docs/git-bisect"
+      },
+      {
+        "title": "Semantic Versioning 2.0.0",
+        "url": "https://semver.org/"
+      }
+    ],
+    "stages": [
+      {
+        "id": "foundation",
+        "title": "Understand the requested change",
+        "description": "Investigate the supplied legacy command and write a short, testable change brief.",
+        "exitCriteria": [
+          "Reproduce the zero-minute count error with a minimal input.",
+          "Trace the record from CSV parsing to summary.",
+          "Specify default, filtered, empty and rejected-input outcomes.",
+          "Separate required behavior from deferred ideas."
+        ],
+        "project": {
+          "title": "Understand the requested change",
+          "brief": "Investigate the supplied legacy command and write a short, testable change brief.",
+          "requirements": [
+            "Reproduce the zero-minute count error with a minimal input.",
+            "Trace the record from CSV parsing to summary.",
+            "Specify default, filtered, empty and rejected-input outcomes.",
+            "Separate required behavior from deferred ideas."
+          ],
+          "rubric": [
+            "Reproduce the zero-minute count error with a minimal input.",
+            "Trace the record from CSV parsing to summary.",
+            "Specify default, filtered, empty and rejected-input outcomes.",
+            "Separate required behavior from deferred ideas."
+          ],
+          "solution": "Trace the truthiness branch, preserve the default keys and all-status selection, and request a count of 1 for a zero-minute ticket. Use the examples in CONTRACT.md; state strict validation as a new explicit policy.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "intermediate",
+        "title": "Make a compatible repair",
+        "description": "Implement the count repair, input validation and optional status filter in your own copy.",
+        "exitCriteria": [
+          "Count zero-minute records.",
+          "Validate all rows before selecting a status.",
+          "Preserve default JSON output and test stderr/exit behavior.",
+          "Show a regression test that distinguishes the broken starter."
+        ],
+        "project": {
+          "title": "Make a compatible repair",
+          "brief": "Implement the count repair, input validation and optional status filter in your own copy.",
+          "requirements": [
+            "Count zero-minute records.",
+            "Validate all rows before selecting a status.",
+            "Preserve default JSON output and test stderr/exit behavior.",
+            "Show a regression test that distinguishes the broken starter."
+          ],
+          "rubric": [
+            "Count zero-minute records.",
+            "Validate all rows before selecting a status.",
+            "Preserve default JSON output and test stderr/exit behavior.",
+            "Show a regression test that distinguishes the broken starter."
+          ],
+          "solution": "Parse complete validated Ticket records, filter only after parsing and count selected records directly. Compare the default fixture (4,20) and open selection (2,12). Use subprocess tests for the public command, not just summary unit tests.",
+          "solutionFormat": "prose"
+        }
+      },
+      {
+        "id": "advanced",
+        "title": "Deliver and maintain the change",
+        "description": "Add local file export, demonstrate failure preservation and write a short recovery and compatibility note.",
+        "exitCriteria": [
+          "Write the complete result before replacing a destination.",
+          "Test invalid input and injected replacement failure against existing bytes.",
+          "Demonstrate default CLI compatibility and temporary-file cleanup.",
+          "Explain single-writer and crash-recovery limits, then handle one changed requirement."
+        ],
+        "project": {
+          "title": "Deliver and maintain the change",
+          "brief": "Add local file export, demonstrate failure preservation and write a short recovery and compatibility note.",
+          "requirements": [
+            "Write the complete result before replacing a destination.",
+            "Test invalid input and injected replacement failure against existing bytes.",
+            "Demonstrate default CLI compatibility and temporary-file cleanup.",
+            "Explain single-writer and crash-recovery limits, then handle one changed requirement."
+          ],
+          "rubric": [
+            "Write the complete result before replacing a destination.",
+            "Test invalid input and injected replacement failure against existing bytes.",
+            "Demonstrate default CLI compatibility and temporary-file cleanup.",
+            "Explain single-writer and crash-recovery limits, then handle one changed requirement."
+          ],
+          "solution": "Create the temporary file beside the destination, close it and call os.replace only after validation and serialization. Clean up on failure. Keep an explicit backup if successful replacement must be reversible. Plan archived status as a separate changed-case exercise.",
+          "solutionFormat": "prose"
+        }
+      }
+    ],
+    "lessons": [
+      {
+        "id": "request-outcome",
+        "title": "1. Start with the user's decision",
+        "stage": "foundation",
+        "takeaway": "A request needs an observable result before it needs an implementation.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "A team asks you to make a ticket report useful for weekly planning. That wording does not tell you whether they need counts, time totals or a list of overdue tickets. First identify the decision the report should support. In this course the team wants to know how much recorded work belongs to open tickets. The report cannot estimate future work from recorded minutes alone.",
+              "Use a small example to expose the uncertainty. Ask whether closed tickets should remain in the default report and whether zero minutes means missing data. Write the answers beside the example. You can inspect existing callers while those questions are open, but do not silently turn an assumption into a requirement."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "A: open, 0 recorded minutes\nB: closed, 5 recorded minutes\nAll tickets: count 2, total 5\nOpen tickets: count 1, total 0\nNeither total predicts the remaining work.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "The team says \"show workload\". Name two meanings that would require different data.",
+          "solution": "Recorded effort needs historical minutes. Remaining effort needs an estimate of future work or another agreed proxy. The supplied CSV only supports recorded effort, so rename the report accordingly or collect more data.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish historical effort from remaining work.",
+            "Identify data missing for each proposed meaning."
+          ]
+        },
+        "quiz": {
+          "question": "Which claim can this CSV support?",
+          "options": [
+            "The team has five minutes of work left",
+            "The tickets contain five recorded minutes",
+            "Every open ticket takes five minutes"
+          ],
+          "correct": 1,
+          "explanation": "Recorded minutes describe logged work. They do not identify remaining work or the duration of every ticket."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+            "section": "6.2 Requirements Management; managing changes and traceability",
+            "reviewed": "2026-10-02",
+            "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
+          }
+        ]
+      },
+      {
+        "id": "acceptance-examples",
+        "title": "2. Turn a request into examples",
+        "stage": "foundation",
+        "takeaway": "An acceptance example states input, action and an observable outcome.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Describe one successful case and one rejected case before editing code. The input includes relevant existing state, such as an older report file. The action is a specific command. The outcome includes output, exit status and any file that must remain unchanged. This makes disagreements visible before they become failing tests.",
+              "Keep the example small enough to calculate by hand. The stakeholder can agree that an open zero-minute ticket counts as one without reading Python. Later, a test translates that decision into assertions. A passing test only supports its stated example and related contract; it does not establish that every stakeholder need was captured."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Given two tickets A(open,0) and B(closed,5)\nWhen the default report runs\nThen stdout JSON has count=2 and total_minutes=5, exit=0.\nGiven an existing report and a row with minutes=-1\nWhen export runs\nThen exit=2 and the old report bytes remain unchanged.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write an acceptance example for a header-only CSV.",
+          "solution": "Given the exact required header and no records, a default report succeeds with count 0 and total_minutes 0. A missing header is a different input and is rejected.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Specify the input header as well as the absence of records.",
+            "Include the count, total and exit status."
+          ]
+        },
+        "quiz": {
+          "question": "Which expected result is precise enough to test?",
+          "options": [
+            "The report feels faster",
+            "The parser uses a loop",
+            "A header-only CSV returns count 0"
+          ],
+          "correct": 2,
+          "explanation": "The count is observable. A preferred implementation or a vague feeling does not specify the result."
+        },
+        "references": [
+          {
+            "title": "Given When Then",
+            "url": "https://martinfowler.com/bliki/GivenWhenThen.html",
+            "section": "Given, When and Then example structure",
+            "reviewed": "2026-10-02",
+            "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ]
+      },
+      {
+        "id": "scope-decisions",
+        "title": "3. Separate required work from ideas",
+        "stage": "foundation",
+        "takeaway": "A short scope decision prevents a small request becoming a rewrite.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "The agreed change adds a status filter and corrects zero-minute counting. It does not introduce accounts, a database or a web dashboard. Those ideas may be valuable later, but each changes the delivery and testing work. Record why the smaller change answers the current request and which unanswered questions would force a different design.",
+              "Distinguish a requirement from a suggested implementation. Keeping the default JSON keys stable is an observable compatibility requirement. Using a particular class hierarchy is usually a design choice. If the input already exceeds memory, that evidence might justify streaming; a hypothetical future size alone does not require it in this exercise."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Required: --status open; preserve default keys; reject invalid rows.\nDeferred: live ticket service; predictions; concurrent writers.\nAssumption: one local caller, UTF-8 CSV, at most a small local file.\nRevisit the memory design when a measured supported input needs it.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "A reviewer suggests a database while no persistence problem has been reported. How do you respond?",
+          "solution": "Explain that the current input and output files meet this request. Record the database idea separately with a concrete trigger, such as concurrent edits that need transactions. Do not bundle the migration into the filter fix.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Connect the proposed change to the current request.",
+            "Name evidence that would justify revisiting the deferred idea."
+          ]
+        },
+        "quiz": {
+          "question": "Which belongs in the current change?",
+          "options": [
+            "A new login system",
+            "The agreed open-status option",
+            "Replacing all file storage"
+          ],
+          "correct": 1,
+          "explanation": "The filter directly answers the agreed request. Other ideas need their own problem and acceptance criteria."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-2-requirements-management/",
+            "section": "6.2 Requirements Management; managing changes and traceability",
+            "reviewed": "2026-10-02",
+            "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
+          }
+        ]
+      },
+      {
+        "id": "reproduce-environment",
+        "title": "4. Establish a repeatable baseline",
+        "stage": "foundation",
+        "takeaway": "Record the command and fixture that reproduce the old behavior.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Before editing an unfamiliar tool, read its entry point and run the smallest documented example. Record the Python version, command and working directory. Keep the supplied CSV unchanged and work on a copy of the starter. A different delimiter or another file with the same name can make two apparently identical runs exercise different inputs.",
+              "The starter intentionally skips records whose minutes value is zero. It prints a plausible total, so looking only at the sum misses the defect. Capture both count and total. The reference tests are a separate comparison: they pass for the corrected implementation and do not prove that your edited starter is fixed."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "python legacy_report.py tickets.csv\nObserved: {\"count\": 3, \"total_minutes\": 20}\nExpected for all four supplied records: count=4, total_minutes=20\nThe zero-minute ticket changes count, not the sum.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Which extra observation distinguishes this defect from a minutes-summing defect?",
+          "solution": "Compare the count and total separately using a zero-minute row. An unchanged sum with a reduced count shows that a record was discarded. A one-row zero-minute fixture reduces the reproduction further.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Check count separately from total minutes.",
+            "Reduce the input while preserving the same failure."
+          ]
+        },
+        "quiz": {
+          "question": "What should you save first?",
+          "options": [
+            "The smallest failing input and exact command",
+            "A screenshot of unrelated logs",
+            "A proposed rewrite"
+          ],
+          "correct": 0,
+          "explanation": "A reproducible failure lets you check whether the change repairs the observed behavior."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "trace-code",
+        "title": "5. Read one execution path",
+        "stage": "foundation",
+        "takeaway": "Follow input to output before trying to understand every file.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Start at the __main__ block, find argument parsing, then follow the input filename into the reader and summary calculation. Note which functions perform I/O and which merely transform values. This gives you a concrete place to insert a test or a new option. Reading every helper alphabetically hides the actual execution order.",
+              "Trace one record through each branch. In legacy_report.py, int converts the minutes text before the if condition checks truthiness. The number zero is false, so the append is skipped. The CSV parser did not lose the row. Locating that branch explains the failure and limits the required change."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "CSV row {id:A, status:open, minutes:0}\nint(\"0\") gives 0\nif minutes is false\nThe record never reaches the summary\nChanging the sum cannot recover the missing record.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Where would you add a temporary observation to confirm the row is read but discarded?",
+          "solution": "Inspect the parsed row immediately before the truthiness branch and the accepted records immediately after it. Use the fictional fixture and remove temporary debugging output before asserting the command's stdout contract.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Locate observations before and after the branch.",
+            "Keep temporary diagnostics out of the public stdout result."
+          ]
+        },
+        "quiz": {
+          "question": "Where is the count lost?",
+          "options": [
+            "Inside JSON encoding",
+            "At the truthiness branch",
+            "In operating-system file permissions"
+          ],
+          "correct": 1,
+          "explanation": "The zero value prevents the append, so the record never reaches the list being counted."
+        },
+        "references": [
+          {
+            "title": "Google Engineering Practices",
+            "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+            "section": "Functionality, complexity, tests and documentation",
+            "reviewed": "2026-10-02",
+            "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ]
+      },
+      {
+        "id": "characterization",
+        "title": "6. Describe existing behavior without approving every bug",
+        "stage": "foundation",
+        "takeaway": "A characterization test records behavior that a change might accidentally break.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Before changing the tool, capture stable behavior such as the default JSON field names and the total for positive-minute records. These checks protect callers even when the internal code is reorganized. Label the known zero-count defect separately instead of turning its observed output into the desired permanent contract.",
+              "A test can be useful even when the original requirement is missing, but its authority is limited. If an existing behavior conflicts with an agreed acceptance example, resolve that conflict explicitly. Here the new requirement deliberately corrects count while preserving total_minutes and the default all-status selection."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Preserve: default includes all statuses; keys are count and total_minutes.\nRepair: a zero-minute row must contribute one to count.\nUnresolved policies, such as unknown statuses, need a decision before strict validation.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "An old caller reads only total_minutes. What must your regression tests protect?",
+          "solution": "Keep total_minutes numeric and unchanged for the same valid default input, preserve JSON stdout and a successful exit code, and test the caller or a minimal equivalent. The count repair should not rename the key.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify the keys and types the existing caller uses.",
+            "Separate intentional repair from preserved behavior."
+          ]
+        },
+        "quiz": {
+          "question": "Should the observed zero-count bug become a permanent expected result?",
+          "options": [
+            "Yes, all old behavior is correct",
+            "Only if tests run quickly",
+            "No, record it as a defect with an agreed new expectation"
+          ],
+          "correct": 2,
+          "explanation": "Characterization reveals existing behavior; it does not override the agreed correction."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "first-project",
+        "title": "7. Write a small change brief",
+        "stage": "foundation",
+        "takeaway": "A useful brief links the request, an example and the code that must change.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Finish the foundation stage by preparing a brief another developer could implement without guessing the main behavior. Include the caller's decision, the zero-minute reproduction, the default compatibility promise and the proposed status option. Link each requirement to a concrete expected result rather than adding a long template.",
+              "Leave design choices open when several implementations satisfy the same contract. Your brief can identify the truthiness branch without prescribing a class layout. State that unknown statuses and negative minutes are rejected in the revised tool, and that invalid export must preserve the previous report. Those are original lab policies, not universal CSV rules."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "R1: zero-minute records count. Check: one open zero-minute row gives count 1.\nR2: default still includes all statuses. Check: supplied fixture totals 20.\nR3: --status open filters. Check: supplied fixture gives count 2, total 12.\nR4: invalid export preserves the previous file.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a fifth example that prevents an implementation from treating no matches as an error.",
+          "solution": "Use a valid CSV containing only open tickets and request --status closed. Expect count 0, total_minutes 0 and exit 0. The data is valid even though the filter finds nothing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Use valid records that the chosen status excludes.",
+            "Distinguish no matches from malformed input."
+          ]
+        },
+        "quiz": {
+          "question": "Which brief is easiest to implement and review?",
+          "options": [
+            "One with examples and explicit preserved behavior",
+            "One listing every possible future feature",
+            "One requiring a particular number of functions"
+          ],
+          "correct": 0,
+          "explanation": "Examples and compatibility promises let the developer choose an implementation while preserving the intended result."
+        },
+        "references": [
+          {
+            "title": "Given When Then",
+            "url": "https://martinfowler.com/bliki/GivenWhenThen.html",
+            "section": "Given, When and Then example structure",
+            "reviewed": "2026-10-02",
+            "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ]
+      },
+      {
+        "id": "regression-first",
+        "title": "8. Make the failure observable in a test",
+        "stage": "intermediate",
+        "takeaway": "A regression test should fail for the defect and pass for the repair.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Choose the one-row zero-minute case and assert both fields. Run it against the starter before changing the truthiness branch. A test that checks only the total would pass on the broken implementation. This is why the expected result should come from the agreed example, not from copying the current program output.",
+              "The kit includes a test that demonstrates the difference between the legacy and corrected implementations. For your own attempt, change that comparison into an assertion on your edited tool. Use a temporary directory for file tests so rerunning them never depends on the last run's output."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Input: one row, id=A, status=open, minutes=0\nExpected: {\"count\": 1, \"total_minutes\": 0}\nLegacy: {\"count\": 0, \"total_minutes\": 0}\nThe count assertion distinguishes the implementations.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Propose an assertion that passes even with the defect, and explain why it is weak.",
+          "solution": "Asserting total_minutes == 0 passes whether the zero-minute record is retained or discarded. Add count == 1 to check the behavior under repair.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Show why the weaker assertion passes on broken code.",
+            "Add an expectation that separates the two implementations."
+          ]
+        },
+        "quiz": {
+          "question": "Which assertion exposes this defect?",
+          "options": [
+            "The program imports",
+            "total_minutes equals zero",
+            "count equals one"
+          ],
+          "correct": 2,
+          "explanation": "Both implementations produce a zero total, but only the corrected one counts the record."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "validation-boundary",
+        "title": "9. Validate a complete input before producing a report",
+        "stage": "intermediate",
+        "takeaway": "A filter must not hide invalid records from validation.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "The new tool accepts the exact header id,status,minutes. IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
+              "Validate every row before applying --status. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "A,open,12\nB,closed,-1\nWith --status open: reject row 3.\nDo not return 12 by silently ignoring the invalid closed row.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Should the text \"1.0\" be accepted as an integer minute value in this lab?",
+          "solution": "No. The contract requires ASCII digits representing whole minutes, not a decimal spelling. Reject it with the row number. If decimal input becomes necessary, revise the contract and all affected fixtures explicitly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Apply the exact accepted numeric spelling rule.",
+            "Explain how a future policy change would affect fixtures."
+          ]
+        },
+        "quiz": {
+          "question": "When should the status filter run?",
+          "options": [
+            "Before parsing the header",
+            "After every row has been validated",
+            "Only after a file has been overwritten"
+          ],
+          "correct": 1,
+          "explanation": "Validation applies to the whole input. Filtering then chooses which valid records contribute to the report."
+        },
+        "references": [
+          {
+            "title": "Python csv",
+            "url": "https://docs.python.org/3/library/csv.html",
+            "section": "DictReader; reading CSV with newline=\"\"",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library CSV parsing. Field validation is a separate policy implemented by the lab."
+          }
+        ]
+      },
+      {
+        "id": "change-location",
+        "title": "10. Change the function that owns the decision",
+        "stage": "intermediate",
+        "takeaway": "Keep parsing, selection and formatting responsibilities separate.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Parsing converts CSV text into validated records. Selection decides which records match the requested status. Summarizing counts selected records and adds their minutes. Formatting turns the result into JSON. Keeping these functions small makes it possible to test the zero-minute rule without starting a subprocess for every case.",
+              "A local separation is enough. You do not need a framework or interface for every function. The reference uses a dataclass for a parsed ticket and a pure summarize function. File replacement remains at the command boundary because it has side effects and failure conditions that arithmetic tests cannot cover."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "read_tickets(path) returns validated Ticket objects.\nsummarize(tickets, \"open\") returns count=2 and total_minutes=12.\nmain() formats or exports the result.\nNo summary function deletes or rewrites the input CSV.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "A proposed summarize function opens the destination file before validating records. What would you move?",
+          "solution": "Move destination I/O to the command layer after parsing and summarizing succeed. Keep summarize responsible for selection and arithmetic so a parsing failure cannot truncate the destination.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Move side effects after complete input validation.",
+            "Keep selection and arithmetic testable without files."
+          ]
+        },
+        "quiz": {
+          "question": "Where does JSON export belong?",
+          "options": [
+            "In the command boundary after validation",
+            "Inside each row's integer conversion",
+            "Inside the count operation"
+          ],
+          "correct": 0,
+          "explanation": "Export has side effects and should only begin after a valid complete result exists."
+        },
+        "references": [
+          {
+            "title": "Google Engineering Practices",
+            "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+            "section": "Functionality, complexity, tests and documentation",
+            "reviewed": "2026-10-02",
+            "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ]
+      },
+      {
+        "id": "boundary-cases",
+        "title": "11. Choose tests that divide the input space",
+        "stage": "intermediate",
+        "takeaway": "Test meaningful boundaries rather than many copies of a happy path.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "The minutes policy has distinct boundaries at 0 and 1440. Test both accepted endpoints and their rejected neighbors. Missing, negative, decimal and nonnumeric values fail for different reasons. Duplicate IDs and malformed row widths need separate cases because they do not depend on minute arithmetic.",
+              "An empty result also has two causes worth distinguishing. A valid header with no records is accepted. A nonempty valid input with no matching status also returns zero. An empty file has no valid header and is rejected. These examples define behavior more clearly than dozens of random positive integers."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Accept minutes: 0, 1, 1439, 1440\nReject minutes: -1, 1441, blank, 1.5, NaN\nAccept header-only input. Reject no header.\nReject repeated IDs even when their statuses differ.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why should duplicate IDs be tested separately from duplicate entire rows?",
+          "solution": "Two records can share an ID while disagreeing on status or minutes. Comparing whole rows would miss that conflict. The contract treats id as the unique identity regardless of the other fields.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish record identity from whole-row equality.",
+            "Include conflicting values under the same ID."
+          ]
+        },
+        "quiz": {
+          "question": "Which input checks an upper rejection boundary?",
+          "options": [
+            "12",
+            "1440",
+            "1441"
+          ],
+          "correct": 2,
+          "explanation": "1440 is the maximum accepted value. Its immediate neighbor 1441 tests rejection just outside the range."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "cli-compatibility",
+        "title": "12. Preserve the command contract",
+        "stage": "intermediate",
+        "takeaway": "A command's arguments, streams and exit codes are part of its behavior.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "A script may be called by another script that parses stdout as JSON. Adding a friendly progress message to stdout can break that caller even though a human still understands the screen. Send diagnostics to stderr and keep successful default stdout to one JSON object. Test through a subprocess when checking those stream boundaries.",
+              "The optional --status argument narrows the selection; omitting it still includes every status. An invalid choice fails before reading the file. The lab uses exit 2 for input and file errors. Define the --output behavior separately: it writes the JSON file and leaves stdout empty on success, so the default caller remains unchanged."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "python report.py tickets.csv\nstdout: {\"count\": 4, \"total_minutes\": 20}\npython report.py tickets.csv --status open\nstdout: {\"count\": 2, \"total_minutes\": 12}\npython report.py tickets.csv --status missing\nstderr: argument error; exit 2",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "A developer adds print(\"Starting...\") before JSON output. Which test should catch this?",
+          "solution": "Run the default command in a subprocess, parse the entire stdout as one JSON document and assert its fields. A unit test of summarize would not see the extra output.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Test the real command rather than only the summary function.",
+            "Validate the entire stdout as one JSON document."
+          ]
+        },
+        "quiz": {
+          "question": "Where should a failed-input diagnostic appear?",
+          "options": [
+            "stderr with a nonzero exit",
+            "stdout before a success object",
+            "Only in a source comment"
+          ],
+          "correct": 0,
+          "explanation": "Separating errors from successful machine-readable output lets callers distinguish and handle them."
+        },
+        "references": [
+          {
+            "title": "Python argparse",
+            "url": "https://docs.python.org/3/library/argparse.html",
+            "section": "ArgumentParser; add_argument; choices; error",
+            "reviewed": "2026-10-02",
+            "scope": "The lab uses stable Python 3.11+ APIs. Invalid arguments use argparse error handling."
+          }
+        ]
+      },
+      {
+        "id": "focused-review",
+        "title": "13. Review the contract as well as the diff",
+        "stage": "intermediate",
+        "takeaway": "A small diff can still change behavior outside the requested case.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Review the change with the acceptance examples beside the code. Check that zero-minute records count, the default retains closed and cancelled tickets, and validation happens before filtering. Then inspect tests for the same omissions. A short patch is easier to examine, but line count does not establish correctness.",
+              "Read changed error paths and cleanup code, not only the main calculation. Ask whether an exception can leave a temporary file or replace an old report too early. In your review note, point to a specific consequence and input. General comments such as improve robustness leave the author guessing which behavior needs work."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Useful review: filtering before validation hides row 3 with minutes=-1. Add a closed invalid row to the open-filter test.\nLess useful review: make the parser robust.\nThe first comment gives a failure, consequence and a check.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a review comment for counting truthy minute values instead of selected records.",
+          "solution": "A selected zero-minute ticket is omitted from the count. Count the selected records directly and add a one-row zero-minute assertion, while keeping total_minutes zero.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Name a concrete input and its incorrect result.",
+            "Propose a check that would prevent the regression."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a review comment actionable?",
+          "options": [
+            "A concrete input and observable consequence",
+            "A demand to rewrite everything",
+            "An adjective without an example"
+          ],
+          "correct": 0,
+          "explanation": "The author can reproduce and verify a concrete behavior. Vague criticism gives no completion condition."
+        },
+        "references": [
+          {
+            "title": "Google Engineering Practices",
+            "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+            "section": "Functionality, complexity, tests and documentation",
+            "reviewed": "2026-10-02",
+            "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ]
+      },
+      {
+        "id": "repair-project",
+        "title": "14. Deliver the filter and count repair",
+        "stage": "intermediate",
+        "takeaway": "Show both the repaired case and the behavior that stayed compatible.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Implement the intermediate project in a copy of legacy_report.py or in your own report.py. Keep the sample input unchanged. Add strict validation, correct counting and an optional status filter. Use the acceptance examples to decide expected values before looking at the reference implementation.",
+              "Run unit checks for selection and subprocess checks for the command. Report what you actually ran, including the zero-minute and invalid-filter cases. The supplied reference suite checks the reference module by default; point your own tests at your attempted implementation to demonstrate your work."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Default fixture: count=4, total_minutes=20\nOpen only: count=2, total_minutes=12\nClosed only: count=1, total_minutes=5\nCancelled only: count=1, total_minutes=3\nInvalid row anywhere: no success JSON; exit=2",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "What evidence is still missing if all summarize unit tests pass?",
+          "solution": "You still need to test file parsing, argument handling, stream contents and process exit codes. The arithmetic can be correct while the command reads the wrong file or prints invalid JSON.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Name command behaviors that arithmetic tests cannot observe.",
+            "Include failure streams and process status in the missing evidence."
+          ]
+        },
+        "quiz": {
+          "question": "Which result supports delivery of the command?",
+          "options": [
+            "Only a passing arithmetic test",
+            "Only a screenshot of the source",
+            "Passing contract tests at both function and command boundaries"
+          ],
+          "correct": 2,
+          "explanation": "The command has behaviors beyond arithmetic, so its public interface needs direct checks."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "safe-file-update",
+        "title": "15. Preserve the previous report on failure",
+        "stage": "advanced",
+        "takeaway": "Build the result before replacing the destination file.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Opening the destination with mode w truncates it immediately. If parsing then fails, the previous report is gone. The reference parses first, serializes a complete result, writes a temporary file beside the destination and replaces the destination only after the write succeeds. The temporary file is removed if replacement raises an error.",
+              "This narrows the failure window but has limits. The exercise assumes one local writer and an ordinary same-filesystem destination. Atomic replacement does not by itself promise survival through power loss, preserve every permission attribute or arbitrate concurrent updates. Those requirements would need additional design and platform-specific verification."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Old report bytes: KEEP\nInvalid input: KEEP remains.\nInjected replacement failure: KEEP remains; temporary file removed.\nSuccessful replacement: complete JSON replaces KEEP.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why create the temporary file in the destination directory?",
+          "solution": "It keeps the temporary file on the destination filesystem, which avoids a cross-filesystem rename failure. It also lets the test inspect cleanup beside the destination. Directory permissions can still prevent writing or replacing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explain the same-filesystem requirement.",
+            "Identify a remaining permission or durability limit."
+          ]
+        },
+        "quiz": {
+          "question": "Does a successful os.replace alone prove power-loss durability?",
+          "options": [
+            "Yes, on every platform",
+            "No, replacement and durability are different guarantees",
+            "Only when the filename ends in JSON"
+          ],
+          "correct": 1,
+          "explanation": "The lab checks normal local replacement and failure preservation, not crash recovery or storage hardware behavior."
+        },
+        "references": [
+          {
+            "title": "Python os",
+            "url": "https://docs.python.org/3/library/os.html#os.replace",
+            "section": "os.replace",
+            "reviewed": "2026-10-02",
+            "scope": "Same-filesystem replacement in the local lab. Atomic name replacement alone is not power-loss durability or concurrency control."
+          }
+        ],
+        "diagram": {
+          "title": "Preserve the old report until the new result is ready",
+          "summary": "Validation and temporary-file writes happen before replacement. Failure before a successful replacement leaves the destination unchanged in this single-writer local example.",
+          "nodes": [
+            {
+              "id": "input",
+              "label": "Validate all input",
+              "description": "Read and validate every CSV row before selecting a status or opening any output file."
+            },
+            {
+              "id": "result",
+              "label": "Calculate and serialize",
+              "description": "Create the selected count and total as a complete JSON string."
+            },
+            {
+              "id": "temp",
+              "label": "Write a temporary file",
+              "description": "Create it beside the destination, write the result and close it."
+            },
+            {
+              "id": "replace",
+              "label": "Replace the destination",
+              "description": "os.replace changes the destination after the temporary write succeeds."
+            },
+            {
+              "id": "old",
+              "label": "Keep the old destination",
+              "description": "A validation failure leaves the destination untouched. A replacement exception also triggers temporary-file cleanup."
+            }
+          ],
+          "edges": [
+            {
+              "from": "input",
+              "to": "result",
+              "label": "valid input"
+            },
+            {
+              "from": "result",
+              "to": "temp",
+              "label": "complete result"
+            },
+            {
+              "from": "temp",
+              "to": "replace",
+              "label": "write succeeds"
+            },
+            {
+              "from": "input",
+              "to": "old",
+              "label": "validation fails"
+            },
+            {
+              "from": "temp",
+              "to": "old",
+              "label": "write or replacement fails"
+            }
+          ],
+          "steps": [
+            {
+              "title": "Validate before output",
+              "explanation": "No destination is opened while the CSV is still being checked.",
+              "activeNodes": [
+                "input",
+                "old"
+              ],
+              "activeEdges": [
+                3
+              ]
+            },
+            {
+              "title": "Prepare a complete file",
+              "explanation": "Calculation and temporary-file writing complete before the destination changes.",
+              "activeNodes": [
+                "result",
+                "temp"
+              ],
+              "activeEdges": [
+                1
+              ]
+            },
+            {
+              "title": "Replace or preserve",
+              "explanation": "A successful replacement installs the new report. A failure preserves the old destination and cleans the temporary file; power-loss durability remains outside this lab.",
+              "activeNodes": [
+                "temp",
+                "replace",
+                "old"
+              ],
+              "activeEdges": [
+                2,
+                4
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "change-history",
+        "title": "16. Use history to narrow a regression",
+        "stage": "advanced",
+        "takeaway": "History identifies a candidate change; a reproduction explains the defect.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "When a failure appeared recently, find one known good revision and one known bad revision. In a disposable clone, git bisect repeatedly chooses a revision for you to classify with the same reproduction. Keep the test command and environment fixed. A build failure unrelated to the target behavior cannot be treated as evidence that the regression is present.",
+              "After finding the first bad revision, inspect its diff and rerun the minimal example. The result narrows where behavior changed; it does not prove which line or assumption caused it. End the bisect session before doing normal development. This optional drill should never reset or rewrite your main working copy."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "In a disposable repo with a known-good and known-bad commit:\ngit bisect start\ngit bisect bad\ngit bisect good <known-good-commit>\nClassify each chosen revision using the same zero-minute check.\ngit bisect reset",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "A selected revision cannot build because of an unrelated missing dependency. What should you avoid?",
+          "solution": "Avoid marking it bad merely because the build failed. Establish whether the target behavior can be tested, repair the environment without changing the subject if appropriate, or skip that revision and record the resulting uncertainty.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish an untestable revision from a demonstrated failure.",
+            "Record uncertainty if a revision must be skipped."
+          ]
+        },
+        "quiz": {
+          "question": "What does the first bad revision establish?",
+          "options": [
+            "Every changed line is wrong",
+            "The failure is impossible to reproduce",
+            "A candidate boundary where the tested behavior changed"
+          ],
+          "correct": 2,
+          "explanation": "The revision narrows investigation. You still need to connect a code change to the observed failure."
+        },
+        "references": [
+          {
+            "title": "Git git-bisect",
+            "url": "https://git-scm.com/docs/git-bisect",
+            "section": "Basic bisect commands; bisect run",
+            "reviewed": "2026-10-02",
+            "scope": "Use a disposable local repository for the optional history exercise. A failing commit still needs diagnosis."
+          }
+        ]
+      },
+      {
+        "id": "compatibility-change",
+        "title": "17. Decide what a future change breaks",
+        "stage": "advanced",
+        "takeaway": "Compatibility is assessed against callers and documented promises.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Suppose a future request renames total_minutes to minutes. A person reading the report may see no difference, but a script indexing the old key will fail. List known consumers and test their assumptions. Consider keeping an old field temporarily, publishing a new interface or coordinating a migration instead of silently changing the output.",
+              "A version number communicates a compatibility decision only when the project has a declared policy. Semantic Versioning relates major, minor and patch changes to a defined public API. It does not discover callers for you or make a breaking change harmless. This exercise leaves the current key unchanged and asks you to plan the hypothetical migration separately."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Existing caller: data[\"total_minutes\"]\nProposed output: {\"count\": 4, \"minutes\": 20}\nConsequence: KeyError for the existing caller.\nCurrent release keeps total_minutes; a rename needs an explicit migration.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Could adding a new JSON field break a caller even while preserving old fields?",
+          "solution": "Yes. A caller might validate an exact set of keys. Inspect or test the declared consumer contract before calling the addition backward compatible. Flexible consumers and exact-schema consumers have different expectations.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identify assumptions made by a strict consumer.",
+            "Check compatibility before describing the extra field as harmless."
+          ]
+        },
+        "quiz": {
+          "question": "What decides whether an output rename is breaking?",
+          "options": [
+            "The number of changed source lines",
+            "The callers' documented expectations",
+            "Whether the new name is shorter"
+          ],
+          "correct": 1,
+          "explanation": "Compatibility concerns observable promises to consumers, not how small or attractive the implementation change is."
+        },
+        "references": [
+          {
+            "title": "Semantic Versioning 2.0.0",
+            "url": "https://semver.org/",
+            "section": "Items 1, 6, 7 and 8",
+            "reviewed": "2026-10-02",
+            "scope": "Applies when a project declares a public API and adopts Semantic Versioning. The lab does not publish a package."
+          }
+        ]
+      },
+      {
+        "id": "dependency-change",
+        "title": "18. Assess a dependency update",
+        "stage": "advanced",
+        "takeaway": "An update needs checks of the behavior your tool depends on.",
+        "sections": [
+          {
+            "title": "Check the used interface",
+            "paragraphs": [
+              "An unfamiliar project may use an older library or interpreter. Identify the APIs it actually calls before upgrading. Read the relevant release notes and run the existing acceptance suite in an isolated environment. A successful package installation establishes that packages installed, not that the application behaves correctly.",
+              "This kit has no third-party runtime dependencies, but a Python upgrade still deserves command and CSV tests. For a project that does use packages, keep the old environment reproducible until the new one passes its checks. Do not mix an unrelated dependency upgrade into the zero-minute repair unless the repair requires it."
+            ]
+          },
+          {
+            "title": "Worked decision",
+            "paragraphs": [
+              "Suppose a dependency update changes the default CSV missing-value handling. The report might still run while interpreting a blank duration as zero. Compare the observed result with the input contract before accepting the update."
+            ],
+            "example": "Known input: a row with blank minutes\nRequired result: exit 2, no success JSON, existing export preserved\nUpdated environment: run the same command and assertions\nA changed accepted value needs an explicit product decision, not only a version bump.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "A security update is needed but one acceptance test fails. What information should the change note contain?",
+          "solution": "Identify the failed input, the expected and observed behavior, the update involved and whether the failure is a regression or an intentionally changed API. Resolve the compatibility problem and rerun the checks. Record any unavailable check rather than claiming installation alone verifies the update.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguish package installation from behavior verification.",
+            "Name the concrete failing contract and evidence needed to resolve it."
+          ]
+        },
+        "quiz": {
+          "question": "What does a successful dependency installation establish?",
+          "options": [
+            "All callers remain compatible",
+            "The requested packages installed successfully",
+            "Every old test is now unnecessary"
+          ],
+          "correct": 1,
+          "explanation": "Installation does not exercise the application contracts. Those need acceptance checks in the updated environment."
+        },
+        "references": [
+          {
+            "title": "Google Engineering Practices",
+            "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+            "section": "Functionality and tests",
+            "reviewed": "2026-10-02",
+            "scope": "Review guidance applied to a fictional dependency-change example. Consult the actual dependency release notes before a real update."
+          }
+        ]
+      },
+      {
+        "id": "operational-check",
+        "title": "19. Define a useful success signal",
+        "stage": "advanced",
+        "takeaway": "Observe whether the change answers the request and preserves valid reports.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "A deployment check should match the feature. For a local command, run the known fixture, inspect the exit code and parse the output. For an application using the command, also check that the caller still consumes it correctly. A process that starts successfully can still return the wrong count.",
+              "Choose diagnostic information that helps reproduce the failure without copying real ticket contents. The lab reports a row number and the failed rule. If a future service logs failures, decide who can read those logs and how long they remain. The fictional practice data does not establish that real records are safe to publish."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Smoke check: supplied fixture with --status open yields count 2 and total 12.\nFailure check: negative minutes yields exit 2 and preserves old export.\nUseful diagnostic: row 3: minutes must be 0..1440.\nAvoid logging the entire ticket description.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Why is exit 0 alone insufficient for a smoke check?",
+          "solution": "The process can successfully execute the wrong logic. Check expected fields and values from a known fixture as well as the exit status, then verify the downstream caller if one exists.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compare output values with an independently known fixture.",
+            "Include the downstream caller when assessing its behavior."
+          ]
+        },
+        "quiz": {
+          "question": "Which signal directly checks the new filter?",
+          "options": [
+            "The file exists",
+            "The Python process starts",
+            "The known open-only fixture returns count 2 and total 12"
+          ],
+          "correct": 2,
+          "explanation": "A known result checks selection and arithmetic. File existence and process startup are weaker evidence."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example; assert methods; command-line interface",
+            "reviewed": "2026-10-02",
+            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ]
+      },
+      {
+        "id": "rollback-plan",
+        "title": "20. Plan recovery before replacing a working version",
+        "stage": "advanced",
+        "takeaway": "Rollback must account for data as well as code.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "For this lab, code rollback means restoring the previous program in a disposable working copy. It does not undo an output file already replaced. Preserve a copy of a report if the user needs its prior contents. Never promise that switching a commit restores data unless the recovery process actually does that.",
+              "Choose a trigger and a verification step. A failed default caller or an invalid export replacing the old report would stop the release. Recover the executable, restore a retained report only if needed and authorized, then rerun the known fixture. A database migration or several concurrent writers would require a different recovery plan beyond this course's local-file scenario."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Trigger: existing consumer rejects the default output.\nAction: return to the prior executable; retain failing fixture for diagnosis.\nData: use a separately retained report if restoration is required.\nVerify: known default caller succeeds; do not claim code rollback restores files.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "The new code wrote a valid but unwanted report. Will reverting code recover the older report?",
+          "solution": "No. The old bytes need a backup or another explicit recovery source. The atomic-write mechanism preserves old bytes on failure, not after a successful replacement.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separate executable history from generated file contents.",
+            "Identify what recovery source would preserve the old report."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement is accurate?",
+          "options": [
+            "Git rollback restores every generated report",
+            "Successful replacement leaves recovery dependent on a retained copy",
+            "Atomic replacement never changes data"
+          ],
+          "correct": 1,
+          "explanation": "After successful replacement the old report is no longer the destination. Code history is separate from generated data."
+        },
+        "references": [
+          {
+            "title": "Python os",
+            "url": "https://docs.python.org/3/library/os.html#os.replace",
+            "section": "os.replace",
+            "reviewed": "2026-10-02",
+            "scope": "Same-filesystem replacement in the local lab. Atomic name replacement alone is not power-loss durability or concurrency control."
+          }
+        ]
+      },
+      {
+        "id": "maintenance-capstone",
+        "title": "21. Review and hand off a complete change",
+        "stage": "advanced",
+        "takeaway": "A handoff explains the behavior, evidence and remaining limits.",
+        "sections": [
+          {
+            "title": "The mechanism",
+            "paragraphs": [
+              "Complete the advanced project by adding --output without breaking the default command. Demonstrate validation failure, successful replacement and a simulated replacement error. Include the no-match and zero-minute cases. Keep your handoff short enough for a maintainer to understand which contract changed and why.",
+              "Explain limits in concrete terms. The reference assumes a small trusted local input and a single writer; it does not provide a multi-user service or power-loss recovery. Link each claim to a command or test you ran. If you only read a reference solution, record that honestly and attempt a changed case before treating the skill as demonstrated."
+            ]
+          },
+          {
+            "title": "Worked case",
+            "paragraphs": [],
+            "example": "Change: optional status filter, zero-minute count repair and safe local export.\nPreserved: default JSON keys and all-status behavior.\nEvidence: unit and subprocess tests, invalid-input preservation, injected replacement failure.\nLimits: one writer, no crash-durability guarantee.\nNext changed case: support archived status without altering old defaults.",
+            "language": "text"
+          }
+        ],
+        "exercise": {
+          "prompt": "Design the first tests for adding archived as a valid status.",
+          "solution": "Test that archived records parse, appear in the default total and can be selected alone. Retain all existing status and invalid-value tests. Confirm whether existing exact-schema consumers and help text need updates before implementing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Check the new status in default and selected results.",
+            "Retain old acceptance cases and review affected callers."
+          ]
+        },
+        "quiz": {
+          "question": "What best demonstrates transfer after this capstone?",
+          "options": [
+            "Copying the same handoff again",
+            "Adding unrelated features",
+            "Handling a new status with independently chosen tests"
+          ],
+          "correct": 2,
+          "explanation": "A changed requirement checks whether you can apply the method beyond the supplied example."
+        },
+        "references": [
+          {
+            "title": "Google Engineering Practices",
+            "url": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+            "section": "Functionality, complexity, tests and documentation",
+            "reviewed": "2026-10-02",
+            "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ]
+      }
+    ],
+    "downloads": [
+      {
+        "title": "Practice guide",
+        "href": "paths/requirements-maintenance/practice/README.md"
+      }
+    ],
+    "resources": {
+      "folder": "requirements-maintenance-practice",
+      "bundle": {
+        "title": "Download practice kit",
+        "href": "paths/requirements-maintenance/practice-bundle.zip"
+      },
+      "files": [
+        {
+          "id": "README-md",
+          "href": "paths/requirements-maintenance/practice/README.md",
+          "role": "guide",
+          "description": "Setup and commands"
+        },
+        {
+          "id": "CONTRACT-md",
+          "href": "paths/requirements-maintenance/practice/CONTRACT.md",
+          "role": "guide",
+          "description": "Agreed input and output rules"
+        },
+        {
+          "id": "projects-md",
+          "href": "paths/requirements-maintenance/practice/projects.md",
+          "role": "guide",
+          "description": "Three projects and changed-case exercises"
+        },
+        {
+          "id": "tickets-csv",
+          "href": "paths/requirements-maintenance/practice/tickets.csv",
+          "role": "data",
+          "description": "Four fictional tickets with a zero-minute record"
+        },
+        {
+          "id": "legacy_report-py",
+          "href": "paths/requirements-maintenance/practice/legacy_report.py",
+          "role": "starter",
+          "description": "Deliberately flawed starting command"
+        },
+        {
+          "id": "report-py",
+          "href": "paths/requirements-maintenance/practice/report.py",
+          "role": "reference",
+          "description": "Corrected reference with optional filter and local export"
+        },
+        {
+          "id": "test_report-py",
+          "href": "paths/requirements-maintenance/practice/test_report.py",
+          "role": "test",
+          "description": "Independent boundary and command acceptance tests"
+        }
+      ],
+      "tasks": [
+        {
+          "id": "foundation",
+          "title": "Understand the requested change",
+          "goal": "Investigate the supplied legacy command and write a short, testable change brief.",
+          "fileIds": [
+            "README-md",
+            "CONTRACT-md",
+            "projects-md",
+            "tickets-csv",
+            "legacy_report-py",
+            "report-py",
+            "test_report-py"
+          ],
+          "steps": [
+            "Read CONTRACT.md and the relevant brief in projects.md.",
+            "Attempt the change in a copy, then compare against the reference.",
+            "Use the supplied tests to study the contract; point your own tests at your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run reference acceptance checks",
+              "command": "python -m unittest -v test_report",
+              "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+            },
+            {
+              "label": "Run the open-ticket report",
+              "command": "python report.py tickets.csv --status open",
+              "expected": "JSON with count 2 and total_minutes 12."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+            "The reference tests do not grade your separately edited starter."
+          ]
+        },
+        {
+          "id": "intermediate",
+          "title": "Make a compatible repair",
+          "goal": "Implement the count repair, input validation and optional status filter in your own copy.",
+          "fileIds": [
+            "README-md",
+            "CONTRACT-md",
+            "projects-md",
+            "tickets-csv",
+            "legacy_report-py",
+            "report-py",
+            "test_report-py"
+          ],
+          "steps": [
+            "Read CONTRACT.md and the relevant brief in projects.md.",
+            "Attempt the change in a copy, then compare against the reference.",
+            "Use the supplied tests to study the contract; point your own tests at your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run reference acceptance checks",
+              "command": "python -m unittest -v test_report",
+              "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+            },
+            {
+              "label": "Run the open-ticket report",
+              "command": "python report.py tickets.csv --status open",
+              "expected": "JSON with count 2 and total_minutes 12."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+            "The reference tests do not grade your separately edited starter."
+          ]
+        },
+        {
+          "id": "advanced",
+          "title": "Deliver and maintain the change",
+          "goal": "Add local file export, demonstrate failure preservation and write a short recovery and compatibility note.",
+          "fileIds": [
+            "README-md",
+            "CONTRACT-md",
+            "projects-md",
+            "tickets-csv",
+            "legacy_report-py",
+            "report-py",
+            "test_report-py"
+          ],
+          "steps": [
+            "Read CONTRACT.md and the relevant brief in projects.md.",
+            "Attempt the change in a copy, then compare against the reference.",
+            "Use the supplied tests to study the contract; point your own tests at your attempt."
+          ],
+          "commands": [
+            {
+              "label": "Run reference acceptance checks",
+              "command": "python -m unittest -v test_report",
+              "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+            },
+            {
+              "label": "Run the open-ticket report",
+              "command": "python report.py tickets.csv --status open",
+              "expected": "JSON with count 2 and total_minutes 12."
+            }
+          ],
+          "prerequisites": [],
+          "notes": [
+            "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+            "The reference tests do not grade your separately edited starter."
+          ]
+        }
+      ],
+      "lessonTasks": {
+        "request-outcome": "foundation",
+        "acceptance-examples": "foundation",
+        "scope-decisions": "foundation",
+        "reproduce-environment": "foundation",
+        "trace-code": "foundation",
+        "characterization": "foundation",
+        "first-project": "foundation",
+        "regression-first": "intermediate",
+        "validation-boundary": "intermediate",
+        "change-location": "intermediate",
+        "boundary-cases": "intermediate",
+        "cli-compatibility": "intermediate",
+        "focused-review": "intermediate",
+        "repair-project": "intermediate",
+        "safe-file-update": "advanced",
+        "change-history": "advanced",
+        "compatibility-change": "advanced",
+        "operational-check": "advanced",
+        "rollback-plan": "advanced",
+        "maintenance-capstone": "advanced",
+        "dependency-change": "advanced"
       }
     }
   },

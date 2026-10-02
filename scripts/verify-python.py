@@ -7,6 +7,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = (
+    ("machine-learning-foundations/practice", "test_metrics.py"),
+    ("practical-maths-statistics/practice", "test_projects.py"),
+    ("requirements-maintenance/practice", "test_report.py"),
+    ("data-analysis-python/practice", "test_dataset.py"),
     ("python-problem-solving/practice", "test_runner.py"),
     ("python-problem-solving/practice", "test_reference.py"),
     ("python/practice", "summary_checks.py"),

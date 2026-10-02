@@ -1,0 +1,188 @@
+{
+  "folder": "machine-learning-foundations-practice",
+  "files": [
+    {
+      "id": "README-md",
+      "href": "paths/machine-learning-foundations/practice/README.md",
+      "role": "guide",
+      "description": "Setup, data contract and project instructions"
+    },
+    {
+      "id": "metrics_lab-py",
+      "href": "paths/machine-learning-foundations/practice/metrics_lab.py",
+      "role": "reference",
+      "description": "Standard-library metrics, partitions and fictional dataset"
+    },
+    {
+      "id": "test_metrics-py",
+      "href": "paths/machine-learning-foundations/practice/test_metrics.py",
+      "role": "test",
+      "description": "Independent metric and split checks"
+    },
+    {
+      "id": "ml_lab-py",
+      "href": "paths/machine-learning-foundations/practice/ml_lab.py",
+      "role": "reference",
+      "description": "CPU scikit-learn pipeline and evaluation"
+    },
+    {
+      "id": "test_ml_lab-py",
+      "href": "paths/machine-learning-foundations/practice/test_ml_lab.py",
+      "role": "test",
+      "description": "Pipeline, preprocessing and evaluation checks"
+    },
+    {
+      "id": "requirements-txt",
+      "href": "paths/machine-learning-foundations/practice/requirements.txt",
+      "role": "reference",
+      "description": "Pinned Python 3.11/3.12 dependencies"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Define and measure the task",
+      "goal": "Use the worked label arrays in lessons 3, 5 and 6. Write your metric functions before opening metrics_lab.py. Then run the standard-library tests and explain a denominator-zero case.",
+      "fileIds": [
+        "README-md",
+        "metrics_lab-py",
+        "test_metrics-py",
+        "ml_lab-py",
+        "test_ml_lab-py",
+        "requirements-txt"
+      ],
+      "steps": [
+        "Extract the bundle and read README.md.",
+        "Define the intake prediction and strict >24 target.",
+        "Implement confusion counts and MAE independently.",
+        "Reject unequal-length or empty metric inputs.",
+        "Calculate the hand-worked baseline and explain undefined ratios."
+      ],
+      "commands": [
+        {
+          "label": "Check metrics and splits",
+          "command": "python -m unittest -v test_metrics.py",
+          "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+        "The dataset is fictional and does not establish real support performance."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Fit and compare a pipeline",
+      "goal": "Run python ml_lab.py in a fresh Python environment. This development command keeps final-test results hidden. Predict what changes when C moves from 1.0 to 0.1, then compare the candidates using training cross-validation. Retain validation for threshold selection and run --final only after freezing your choices.",
+      "fileIds": [
+        "README-md",
+        "metrics_lab-py",
+        "test_metrics-py",
+        "ml_lab-py",
+        "test_ml_lab-py",
+        "requirements-txt"
+      ],
+      "steps": [
+        "Extract the bundle and read README.md.",
+        "Use only the four documented intake features.",
+        "Run the three expanding training folds.",
+        "Fit preprocessing and classifier together.",
+        "Compare the fitted model with a training-fitted majority baseline.",
+        "Explain why the fictional score is not a real-support estimate."
+      ],
+      "commands": [
+        {
+          "label": "Check metrics and splits",
+          "command": "python -m unittest -v test_metrics.py",
+          "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+        },
+        {
+          "label": "Run the CPU model lab",
+          "command": "python ml_lab.py",
+          "expected": "A development JSON report includes 144/48/48 partition sizes, fold scores and a validation-selected threshold. Final-test metrics remain hidden."
+        },
+        {
+          "label": "Check the fitted pipeline",
+          "command": "python -m unittest -v test_ml_lab.py",
+          "expected": "All scikit-learn tests pass in the pinned environment."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+        "The dataset is fictional and does not establish real support performance."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Review a breach prediction experiment",
+      "goal": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 18. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
+      "fileIds": [
+        "README-md",
+        "metrics_lab-py",
+        "test_metrics-py",
+        "ml_lab-py",
+        "test_ml_lab-py",
+        "requirements-txt"
+      ],
+      "steps": [
+        "Extract the bundle and read README.md.",
+        "Record data hash, package versions and partition sizes.",
+        "Choose a threshold using validation cost 4*FN+FP.",
+        "Compare frozen model and dummy test counts and costs.",
+        "Report group overlap separately from chronological separation.",
+        "Trace validation mistakes to IDs and report slice denominators.",
+        "State the next real-data evidence needed and a limit of the fictional generator."
+      ],
+      "commands": [
+        {
+          "label": "Check metrics and splits",
+          "command": "python -m unittest -v test_metrics.py",
+          "expected": "All standard-library tests pass, including invalid input and split leakage checks."
+        },
+        {
+          "label": "Reveal final evaluation after freezing choices",
+          "command": "python ml_lab.py --final",
+          "expected": "A JSON report includes 144/48/48 partition sizes, data hash, fold scores, validation-selected threshold and held-out model/baseline counts."
+        },
+        {
+          "label": "Check the fitted pipeline",
+          "command": "python -m unittest -v test_ml_lab.py",
+          "expected": "All scikit-learn tests pass in the pinned environment."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "The model lab requires the separately installed requirements.txt; standard-library checks do not.",
+        "The dataset is fictional and does not establish real support performance."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "prediction-question": "foundation",
+    "features-and-targets": "foundation",
+    "simple-baselines": "foundation",
+    "holdout-splits": "foundation",
+    "classification-metrics": "foundation",
+    "regression-metrics": "foundation",
+    "class-imbalance": "foundation",
+    "fit-a-regression": "intermediate",
+    "fit-a-classifier": "intermediate",
+    "prepare-features": "intermediate",
+    "pipeline-training": "intermediate",
+    "cross-validation": "intermediate",
+    "overfitting-regularization": "intermediate",
+    "learning-curves": "intermediate",
+    "leakage-audit": "advanced",
+    "time-and-group-splits": "advanced",
+    "error-analysis": "advanced",
+    "threshold-policy": "advanced",
+    "reproduce-an-experiment": "advanced",
+    "model-review-capstone": "advanced",
+    "distribution-change": "advanced"
+  },
+  "bundle": {
+    "href": "paths/machine-learning-foundations/practice-bundle.zip"
+  }
+}

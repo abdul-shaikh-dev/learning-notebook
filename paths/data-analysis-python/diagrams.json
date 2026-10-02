@@ -1,0 +1,81 @@
+{
+  "joins-and-cardinality": {
+    "title": "Why a duplicate lookup multiplies tickets",
+    "summary": "Each left row pairs with every matching right row. A two-row billing lookup doubles the two billing tickets.",
+    "type": "flow",
+    "nodes": [
+      {
+        "id": "tickets",
+        "label": "Two billing tickets",
+        "description": "T001 and T003 each represent one completed ticket."
+      },
+      {
+        "id": "lookup",
+        "label": "Two billing owners",
+        "description": "The lookup incorrectly contains both Asha and Sam for the same team key."
+      },
+      {
+        "id": "merge",
+        "label": "Four matched rows",
+        "description": "Each of the two tickets pairs with each owner, producing four rows."
+      },
+      {
+        "id": "validate",
+        "label": "Reject many-to-one violation",
+        "description": "validate=\"many_to_one\" detects that billing is duplicated on the right. Fix the lookup before reporting."
+      }
+    ],
+    "edges": [
+      {
+        "from": "tickets",
+        "to": "merge",
+        "label": "two left matches"
+      },
+      {
+        "from": "lookup",
+        "to": "merge",
+        "label": "two right matches per ticket"
+      },
+      {
+        "from": "lookup",
+        "to": "validate",
+        "label": "check key uniqueness first"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Inspect the input grain",
+        "activeNodes": [
+          "tickets",
+          "lookup"
+        ],
+        "activeEdges": [],
+        "explanation": "The left side is one row per ticket. The intended lookup should have one row per team."
+      },
+      {
+        "title": "Follow every match",
+        "activeNodes": [
+          "tickets",
+          "lookup",
+          "merge"
+        ],
+        "activeEdges": [
+          0,
+          1
+        ],
+        "explanation": "Two tickets multiplied by two lookup records produces four output rows."
+      },
+      {
+        "title": "Stop before aggregation",
+        "activeNodes": [
+          "lookup",
+          "validate"
+        ],
+        "activeEdges": [
+          2
+        ],
+        "explanation": "Cardinality validation rejects the duplicate team key. Row counts alone cannot tell which owner is correct."
+      }
+    ]
+  }
+}

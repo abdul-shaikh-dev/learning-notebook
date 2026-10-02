@@ -1,0 +1,184 @@
+{
+  "folder": "requirements-maintenance-practice",
+  "bundle": {
+    "title": "Download practice kit",
+    "href": "paths/requirements-maintenance/practice-bundle.zip"
+  },
+  "files": [
+    {
+      "id": "README-md",
+      "href": "paths/requirements-maintenance/practice/README.md",
+      "role": "guide",
+      "description": "Setup and commands"
+    },
+    {
+      "id": "CONTRACT-md",
+      "href": "paths/requirements-maintenance/practice/CONTRACT.md",
+      "role": "guide",
+      "description": "Agreed input and output rules"
+    },
+    {
+      "id": "projects-md",
+      "href": "paths/requirements-maintenance/practice/projects.md",
+      "role": "guide",
+      "description": "Three projects and changed-case exercises"
+    },
+    {
+      "id": "tickets-csv",
+      "href": "paths/requirements-maintenance/practice/tickets.csv",
+      "role": "data",
+      "description": "Four fictional tickets with a zero-minute record"
+    },
+    {
+      "id": "legacy_report-py",
+      "href": "paths/requirements-maintenance/practice/legacy_report.py",
+      "role": "starter",
+      "description": "Deliberately flawed starting command"
+    },
+    {
+      "id": "report-py",
+      "href": "paths/requirements-maintenance/practice/report.py",
+      "role": "reference",
+      "description": "Corrected reference with optional filter and local export"
+    },
+    {
+      "id": "test_report-py",
+      "href": "paths/requirements-maintenance/practice/test_report.py",
+      "role": "test",
+      "description": "Independent boundary and command acceptance tests"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Understand the requested change",
+      "goal": "Investigate the supplied legacy command and write a short, testable change brief.",
+      "fileIds": [
+        "README-md",
+        "CONTRACT-md",
+        "projects-md",
+        "tickets-csv",
+        "legacy_report-py",
+        "report-py",
+        "test_report-py"
+      ],
+      "steps": [
+        "Read CONTRACT.md and the relevant brief in projects.md.",
+        "Attempt the change in a copy, then compare against the reference.",
+        "Use the supplied tests to study the contract; point your own tests at your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run reference acceptance checks",
+          "command": "python -m unittest -v test_report",
+          "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+        },
+        {
+          "label": "Run the open-ticket report",
+          "command": "python report.py tickets.csv --status open",
+          "expected": "JSON with count 2 and total_minutes 12."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+        "The reference tests do not grade your separately edited starter."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Make a compatible repair",
+      "goal": "Implement the count repair, input validation and optional status filter in your own copy.",
+      "fileIds": [
+        "README-md",
+        "CONTRACT-md",
+        "projects-md",
+        "tickets-csv",
+        "legacy_report-py",
+        "report-py",
+        "test_report-py"
+      ],
+      "steps": [
+        "Read CONTRACT.md and the relevant brief in projects.md.",
+        "Attempt the change in a copy, then compare against the reference.",
+        "Use the supplied tests to study the contract; point your own tests at your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run reference acceptance checks",
+          "command": "python -m unittest -v test_report",
+          "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+        },
+        {
+          "label": "Run the open-ticket report",
+          "command": "python report.py tickets.csv --status open",
+          "expected": "JSON with count 2 and total_minutes 12."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+        "The reference tests do not grade your separately edited starter."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Deliver and maintain the change",
+      "goal": "Add local file export, demonstrate failure preservation and write a short recovery and compatibility note.",
+      "fileIds": [
+        "README-md",
+        "CONTRACT-md",
+        "projects-md",
+        "tickets-csv",
+        "legacy_report-py",
+        "report-py",
+        "test_report-py"
+      ],
+      "steps": [
+        "Read CONTRACT.md and the relevant brief in projects.md.",
+        "Attempt the change in a copy, then compare against the reference.",
+        "Use the supplied tests to study the contract; point your own tests at your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run reference acceptance checks",
+          "command": "python -m unittest -v test_report",
+          "expected": "All reference tests pass; the legacy comparison demonstrates the known defect."
+        },
+        {
+          "label": "Run the open-ticket report",
+          "command": "python report.py tickets.csv --status open",
+          "expected": "JSON with count 2 and total_minutes 12."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "This kit uses only the Python standard library. Tests use temporary folders and fictional records.",
+        "The reference tests do not grade your separately edited starter."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "request-outcome": "foundation",
+    "acceptance-examples": "foundation",
+    "scope-decisions": "foundation",
+    "reproduce-environment": "foundation",
+    "trace-code": "foundation",
+    "characterization": "foundation",
+    "first-project": "foundation",
+    "regression-first": "intermediate",
+    "validation-boundary": "intermediate",
+    "change-location": "intermediate",
+    "boundary-cases": "intermediate",
+    "cli-compatibility": "intermediate",
+    "focused-review": "intermediate",
+    "repair-project": "intermediate",
+    "safe-file-update": "advanced",
+    "change-history": "advanced",
+    "compatibility-change": "advanced",
+    "operational-check": "advanced",
+    "rollback-plan": "advanced",
+    "maintenance-capstone": "advanced",
+    "dependency-change": "advanced"
+  }
+}

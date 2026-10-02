@@ -4,7 +4,7 @@ A personal, customizable notebook for learning software, AI, financial concepts 
 
 **[Open the notebook](https://abdul-shaikh-dev.github.io/learning-notebook/)** · **[Browse the source](paths/)**
 
-The notebook currently contains **30 learning paths and 668 lessons and challenges**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
+The notebook currently contains **34 learning paths and 752 lessons and challenges**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
 
 ## Choose a learning path
 
@@ -17,6 +17,8 @@ The notebook currently contains **30 learning paths and 668 lessons and challeng
 | Data and distributed systems | [Data Engineering](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-engineering) · [Messaging & Event-Driven Systems](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/messaging-events) · [Observability & Performance](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/observability-performance) |
 | Delivery and infrastructure | [Delivery & Operations](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/delivery-operations) · [Kubernetes](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/kubernetes) · [Cloud & Infrastructure as Code](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/cloud-infrastructure) |
 | Personal effectiveness | [Time, Attention & Energy](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/time-attention-energy) · [Task & Project Management](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/task-project-management) · [Habits & Behaviour Change](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/habits-behaviour-change) · [Learning How to Learn](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/learning-how-to-learn) · [Self-Awareness & Communication](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/self-awareness-communication) · [Plan and Review Your Week](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/weekly-planning-journey) |
+| Maths, data analysis and machine learning | [Practical maths & statistics](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/practical-maths-statistics) · [Data analysis with Python](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-analysis-python) · [Machine learning foundations](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/machine-learning-foundations) |
+| Software maintenance | [Requirements & software maintenance](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/requirements-maintenance) |
 | Financial concepts | [Financial foundations](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#explore) |
 
 ## Study at your own pace
@@ -31,6 +33,8 @@ Start at a course overview to see its prerequisites, learning outcomes and stage
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
 The Python Problem Solving path contains 30 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.
+
+The maths, data analysis and machine learning paths build from hand-calculated examples to local Python labs. Data analysis and machine learning use CPU-based scientific Python packages; installation instructions are included in their practice kits. Requirements & software maintenance follows one existing command through investigation, a compatible repair and file-export failure checks. Each new path includes three stage projects.
 
 ## Offline access and progress
 

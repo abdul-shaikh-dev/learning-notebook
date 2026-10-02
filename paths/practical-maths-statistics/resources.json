@@ -1,0 +1,192 @@
+{
+  "folder": "practical-maths-statistics-practice",
+  "files": [
+    {
+      "id": "foundation_project-py",
+      "href": "paths/practical-maths-statistics/practice/foundation_project.py",
+      "role": "reference",
+      "description": "foundation project"
+    },
+    {
+      "id": "intermediate_project-py",
+      "href": "paths/practical-maths-statistics/practice/intermediate_project.py",
+      "role": "reference",
+      "description": "intermediate project"
+    },
+    {
+      "id": "advanced_project-py",
+      "href": "paths/practical-maths-statistics/practice/advanced_project.py",
+      "role": "reference",
+      "description": "advanced project"
+    },
+    {
+      "id": "test_projects-py",
+      "href": "paths/practical-maths-statistics/practice/test_projects.py",
+      "role": "test",
+      "description": "Independent hand-calculated cases and invalid-input checks"
+    },
+    {
+      "id": "README-md",
+      "href": "paths/practical-maths-statistics/practice/README.md",
+      "role": "guide",
+      "description": "Setup, contracts and expected results"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Rates and rules",
+      "goal": "Build a small calculator that keeps count and elapsed-time units explicit.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Read the contracts in README.md.",
+        "Attempt the stage requirements in a separate folder.",
+        "Implement rate, relative_change and combined_rate with the contracts in README.md.",
+        "Reject zero durations, negative counts, nonfinite inputs and mismatched observations.",
+        "Show why 100 requests in 10 seconds plus 100 in 30 seconds gives 5 per second.",
+        "Run the reference and compare calculations after completing your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run stage reference",
+          "command": "python foundation_project.py",
+          "expected": "5.0 then -0.2."
+        },
+        {
+          "label": "Run independent checks",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "20 tests pass."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "7. Solve for an unknown and check it",
+          "href": "#topic/practical-maths-statistics/algebra-and-scaling"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "Run from the extracted folder with all Python files together.",
+        "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "A latency and alert report",
+      "goal": "Summarize fictional latencies and interpret two different conditional probabilities.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Read the contracts in README.md.",
+        "Attempt the stage requirements in a separate folder.",
+        "Calculate sample summaries for [10,10,10,10,100].",
+        "Calculate 8/17 for corrupted given flagged and distinguish it from 8/10 for flagged given corrupted.",
+        "Implement the known-sigma interval for mean=50, sigma=10 and n=100, and state its normal-population, independent-sampling assumptions.",
+        "Run the reference and compare calculations after completing your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run stage reference",
+          "command": "python intermediate_project.py",
+          "expected": "n=5, mean=28, median=10, sample_variance=1620; then 0.4706 and (48.04, 51.96)."
+        },
+        {
+          "label": "Run independent checks",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "20 tests pass."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "14. Interpret a confidence interval",
+          "href": "#topic/practical-maths-statistics/uncertainty-and-intervals"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "Run from the extracted folder with all Python files together.",
+        "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "A score with a sensitivity check",
+      "goal": "Compare two candidates using two preference weight sets and explain what the result supports.",
+      "fileIds": [
+        "foundation_project-py",
+        "intermediate_project-py",
+        "advanced_project-py",
+        "test_projects-py",
+        "README-md"
+      ],
+      "steps": [
+        "Read the contracts in README.md.",
+        "Attempt the stage requirements in a separate folder.",
+        "Implement dot, matvec and cosine with dimension and zero-vector checks.",
+        "Score [[0.9,0.4],[0.6,0.8]] using [0.8,0.2] and [0.5,0.5].",
+        "Report the rank reversal and propose a controlled comparison for a later deployment.",
+        "Run the reference and compare calculations after completing your attempt."
+      ],
+      "commands": [
+        {
+          "label": "Run stage reference",
+          "command": "python advanced_project.py",
+          "expected": "[0.8, 0.64] then [0.65, 0.7]."
+        },
+        {
+          "label": "Run independent checks",
+          "command": "python -m unittest -v test_projects.py",
+          "expected": "20 tests pass."
+        }
+      ],
+      "prerequisites": [
+        {
+          "label": "21. Combine calculation with an honest conclusion",
+          "href": "#topic/practical-maths-statistics/decision-and-capstone"
+        }
+      ],
+      "notes": [
+        "Python 3.11 or newer; standard library only.",
+        "Run from the extracted folder with all Python files together.",
+        "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "logic-and-conditions": "foundation",
+    "sets-and-overlap": "foundation",
+    "functions-and-domains": "foundation",
+    "units-and-rates": "foundation",
+    "percentages-and-change": "foundation",
+    "powers-and-growth": "foundation",
+    "algebra-and-scaling": "foundation",
+    "mean-median-and-outliers": "intermediate",
+    "variance-and-spread": "intermediate",
+    "probability-and-complements": "intermediate",
+    "conditional-probability": "intermediate",
+    "sampling-and-selection": "intermediate",
+    "expected-value": "intermediate",
+    "uncertainty-and-intervals": "intermediate",
+    "vectors-and-coordinates": "advanced",
+    "dot-products-and-scores": "advanced",
+    "matrices-and-shapes": "advanced",
+    "correlation-and-causation": "advanced",
+    "experiments-and-confounding": "advanced",
+    "feature-scaling": "advanced",
+    "decision-and-capstone": "advanced"
+  },
+  "bundle": {
+    "href": "paths/practical-maths-statistics/practice-bundle.zip"
+  }
+}

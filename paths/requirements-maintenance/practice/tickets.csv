@@ -1,0 +1,5 @@
+id,status,minutes
+A,open,0
+B,closed,5
+C,open,12
+D,cancelled,3

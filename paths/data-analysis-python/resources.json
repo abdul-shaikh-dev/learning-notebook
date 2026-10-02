@@ -1,0 +1,207 @@
+{
+  "folder": "data-analysis-python-practice",
+  "files": [
+    {
+      "id": "README-md",
+      "href": "paths/data-analysis-python/practice/README.md",
+      "role": "guide",
+      "description": "README.md"
+    },
+    {
+      "id": "support_tickets-csv",
+      "href": "paths/data-analysis-python/practice/support_tickets.csv",
+      "role": "data",
+      "description": "support tickets.csv"
+    },
+    {
+      "id": "teams-csv",
+      "href": "paths/data-analysis-python/practice/teams.csv",
+      "role": "data",
+      "description": "teams.csv"
+    },
+    {
+      "id": "analysis-py",
+      "href": "paths/data-analysis-python/practice/analysis.py",
+      "role": "reference",
+      "description": "analysis.py"
+    },
+    {
+      "id": "test_analysis-py",
+      "href": "paths/data-analysis-python/practice/test_analysis.py",
+      "role": "test",
+      "description": "test analysis.py"
+    },
+    {
+      "id": "test_dataset-py",
+      "href": "paths/data-analysis-python/practice/test_dataset.py",
+      "role": "test",
+      "description": "test dataset.py"
+    },
+    {
+      "id": "requirements-txt",
+      "href": "paths/data-analysis-python/practice/requirements.txt",
+      "role": "guide",
+      "description": "requirements.txt"
+    },
+    {
+      "id": "projects-md",
+      "href": "paths/data-analysis-python/practice/projects.md",
+      "role": "guide",
+      "description": "projects.md"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "foundation",
+      "title": "Inspect the support export",
+      "goal": "Load the supplied file, document one-row-per-ticket grain, check types and produce a short quality summary.",
+      "fileIds": [
+        "README-md",
+        "support_tickets-csv",
+        "teams-csv",
+        "analysis-py",
+        "test_analysis-py",
+        "test_dataset-py",
+        "requirements-txt",
+        "projects-md"
+      ],
+      "steps": [
+        "Attempt the stage brief in projects.md before opening the reference.",
+        "Run the dataset checks; install optional analysis dependencies for the full lab.",
+        "Compare your result with the reference and explain the stated limits."
+      ],
+      "commands": [
+        {
+          "label": "Dataset checks, standard library only",
+          "command": "python -m unittest -v test_dataset.py",
+          "expected": "All dataset tests pass."
+        },
+        {
+          "label": "Analysis checks after installing requirements",
+          "command": "python -m unittest -v test_analysis.py",
+          "expected": "All analysis tests pass."
+        },
+        {
+          "label": "Generate the report",
+          "command": "python analysis.py --out report-output",
+          "expected": "report-output contains report.json and counts.png."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "The input is fictional and cannot support real service or causal claims."
+      ]
+    },
+    {
+      "id": "intermediate",
+      "title": "Compare teams without multiplying rows",
+      "goal": "Attach team owners and calculate ticket counts, breach counts, rates and mean durations. Produce a labeled count chart.",
+      "fileIds": [
+        "README-md",
+        "support_tickets-csv",
+        "teams-csv",
+        "analysis-py",
+        "test_analysis-py",
+        "test_dataset-py",
+        "requirements-txt",
+        "projects-md"
+      ],
+      "steps": [
+        "Attempt the stage brief in projects.md before opening the reference.",
+        "Run the dataset checks; install optional analysis dependencies for the full lab.",
+        "Compare your result with the reference and explain the stated limits."
+      ],
+      "commands": [
+        {
+          "label": "Dataset checks, standard library only",
+          "command": "python -m unittest -v test_dataset.py",
+          "expected": "All dataset tests pass."
+        },
+        {
+          "label": "Analysis checks after installing requirements",
+          "command": "python -m unittest -v test_analysis.py",
+          "expected": "All analysis tests pass."
+        },
+        {
+          "label": "Generate the report",
+          "command": "python analysis.py --out report-output",
+          "expected": "report-output contains report.json and counts.png."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "The input is fictional and cannot support real service or causal claims."
+      ]
+    },
+    {
+      "id": "advanced",
+      "title": "Deliver a reproducible analysis",
+      "goal": "Create one command that validates the input and writes a report, chart and input provenance. Explain the limits of the fictional sample.",
+      "fileIds": [
+        "README-md",
+        "support_tickets-csv",
+        "teams-csv",
+        "analysis-py",
+        "test_analysis-py",
+        "test_dataset-py",
+        "requirements-txt",
+        "projects-md"
+      ],
+      "steps": [
+        "Attempt the stage brief in projects.md before opening the reference.",
+        "Run the dataset checks; install optional analysis dependencies for the full lab.",
+        "Compare your result with the reference and explain the stated limits."
+      ],
+      "commands": [
+        {
+          "label": "Dataset checks, standard library only",
+          "command": "python -m unittest -v test_dataset.py",
+          "expected": "All dataset tests pass."
+        },
+        {
+          "label": "Analysis checks after installing requirements",
+          "command": "python -m unittest -v test_analysis.py",
+          "expected": "All analysis tests pass."
+        },
+        {
+          "label": "Generate the report",
+          "command": "python analysis.py --out report-output",
+          "expected": "report-output contains report.json and counts.png."
+        }
+      ],
+      "prerequisites": [],
+      "notes": [
+        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "The input is fictional and cannot support real service or causal claims."
+      ]
+    }
+  ],
+  "lessonTasks": {
+    "question-and-grain": "foundation",
+    "load-and-inspect": "foundation",
+    "numpy-arrays": "foundation",
+    "types-and-dates": "foundation",
+    "select-and-filter": "foundation",
+    "missing-and-duplicates": "foundation",
+    "indexes-and-alignment": "foundation",
+    "derive-and-validate": "intermediate",
+    "group-and-denominators": "intermediate",
+    "joins-and-cardinality": "intermediate",
+    "distributions-and-outliers": "intermediate",
+    "dates-and-aggregation": "intermediate",
+    "charts-for-questions": "intermediate",
+    "reshape-for-comparison": "intermediate",
+    "association-and-comparison": "advanced",
+    "validation-functions": "advanced",
+    "functions-and-tests": "advanced",
+    "reproducible-report": "advanced",
+    "sensitivity-and-limits": "advanced",
+    "handoff-to-modeling": "advanced",
+    "chunking-and-weighting": "advanced"
+  },
+  "bundle": {
+    "href": "paths/data-analysis-python/practice-bundle.zip"
+  }
+}

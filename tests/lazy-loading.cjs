@@ -1,7 +1,9 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {lazyFiles}=require('../scripts/lazy-catalog.cjs');
 const files=lazyFiles(), metadata=vm.runInNewContext(files['content/catalog.js']+';LEARNING_PATHS');
-assert.ok(Buffer.byteLength(files['content/catalog.js'])<80000,'Navigation data should stay compact');
+// Keep the original roughly 120-byte-per-lesson budget as the catalog grows.
+const lessonCount=metadata.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0);
+assert.ok(Buffer.byteLength(files['content/catalog.js'])<120*lessonCount,'Navigation bytes per lesson should stay compact');
 assert.ok(metadata.every(p=>!p.resources&&!p.lessons?.some?.(l=>l.sections)));
 const full=require('../scripts/manifest.cjs').readPaths();
 for(const p of metadata){const original=full.find(x=>x.id===p.id);if(p.status!=='ready'){assert.equal(p.lessons.length,0);assert.ok(!files['content/courses/'+p.id+'.js']);continue;}assert.equal(Array.isArray(p.lessons)?p.lessons.length:p.lessons,Array.isArray(original.lessons)?original.lessons.length:original.lessons);}

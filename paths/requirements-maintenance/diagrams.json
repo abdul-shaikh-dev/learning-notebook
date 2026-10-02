@@ -1,0 +1,97 @@
+{
+  "safe-file-update": {
+    "title": "Preserve the old report until the new result is ready",
+    "summary": "Validation and temporary-file writes happen before replacement. Failure before a successful replacement leaves the destination unchanged in this single-writer local example.",
+    "nodes": [
+      {
+        "id": "input",
+        "label": "Validate all input",
+        "description": "Read and validate every CSV row before selecting a status or opening any output file."
+      },
+      {
+        "id": "result",
+        "label": "Calculate and serialize",
+        "description": "Create the selected count and total as a complete JSON string."
+      },
+      {
+        "id": "temp",
+        "label": "Write a temporary file",
+        "description": "Create it beside the destination, write the result and close it."
+      },
+      {
+        "id": "replace",
+        "label": "Replace the destination",
+        "description": "os.replace changes the destination after the temporary write succeeds."
+      },
+      {
+        "id": "old",
+        "label": "Keep the old destination",
+        "description": "A validation failure leaves the destination untouched. A replacement exception also triggers temporary-file cleanup."
+      }
+    ],
+    "edges": [
+      {
+        "from": "input",
+        "to": "result",
+        "label": "valid input"
+      },
+      {
+        "from": "result",
+        "to": "temp",
+        "label": "complete result"
+      },
+      {
+        "from": "temp",
+        "to": "replace",
+        "label": "write succeeds"
+      },
+      {
+        "from": "input",
+        "to": "old",
+        "label": "validation fails"
+      },
+      {
+        "from": "temp",
+        "to": "old",
+        "label": "write or replacement fails"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Validate before output",
+        "explanation": "No destination is opened while the CSV is still being checked.",
+        "activeNodes": [
+          "input",
+          "old"
+        ],
+        "activeEdges": [
+          3
+        ]
+      },
+      {
+        "title": "Prepare a complete file",
+        "explanation": "Calculation and temporary-file writing complete before the destination changes.",
+        "activeNodes": [
+          "result",
+          "temp"
+        ],
+        "activeEdges": [
+          1
+        ]
+      },
+      {
+        "title": "Replace or preserve",
+        "explanation": "A successful replacement installs the new report. A failure preserves the old destination and cleans the temporary file; power-loss durability remains outside this lab.",
+        "activeNodes": [
+          "temp",
+          "replace",
+          "old"
+        ],
+        "activeEdges": [
+          2,
+          4
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "holdout-splits": {
+    "title": "Fit, choose and test without crossing the boundary",
+    "summary": "Arrows show which data may influence fitting, threshold selection and final reporting. Test labels influence only the final report. The dates of all training outcomes precede the next partition in this fictional fixture.",
+    "direction": "LR",
+    "nodes": [
+      {
+        "id": "train",
+        "label": "144 training tickets",
+        "description": "Earlier tickets supply intake features and mature labels. Training cross-validation also stays inside these rows."
+      },
+      {
+        "id": "model",
+        "label": "Fitted pipeline",
+        "description": "Training rows fit imputation, category encoding, scaling and classifier coefficients."
+      },
+      {
+        "id": "validation",
+        "label": "48 validation tickets",
+        "description": "The fitted pipeline predicts these rows. Their labels choose a threshold by the declared cost."
+      },
+      {
+        "id": "policy",
+        "label": "Frozen model and threshold",
+        "description": "The selected threshold and fitted model stop changing before final evaluation."
+      },
+      {
+        "id": "test",
+        "label": "48 final test tickets",
+        "description": "The final rows supply new intake inputs and mature answers for the report. They never fit a preprocessing step or choose the threshold."
+      },
+      {
+        "id": "report",
+        "label": "Model and baseline report",
+        "description": "Compare both procedures on the same final rows. Include confusion counts, costs and the fictional-data limit."
+      }
+    ],
+    "edges": [
+      {
+        "from": "train",
+        "to": "model",
+        "label": "fit all preprocessing and coefficients"
+      },
+      {
+        "from": "model",
+        "to": "validation",
+        "label": "predict with fitted transformations"
+      },
+      {
+        "from": "validation",
+        "to": "policy",
+        "label": "choose threshold from validation cost"
+      },
+      {
+        "from": "policy",
+        "to": "report",
+        "label": "apply frozen procedure"
+      },
+      {
+        "from": "test",
+        "to": "report",
+        "label": "evaluate against final answers"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Fit using earlier rows",
+        "activeNodes": [
+          "train",
+          "model"
+        ],
+        "activeEdges": [
+          0
+        ],
+        "explanation": "A fit learns every transformation and the classifier using training data only. Within cross-validation, each earlier training fold gets its own fitted pipeline."
+      },
+      {
+        "title": "Select the action threshold",
+        "activeNodes": [
+          "model",
+          "validation",
+          "policy"
+        ],
+        "activeEdges": [
+          1,
+          2
+        ],
+        "explanation": "The validation probabilities stay fixed while thresholds change. The declared cost chooses one threshold; validation rows do not refit the model."
+      },
+      {
+        "title": "Report one frozen comparison",
+        "activeNodes": [
+          "policy",
+          "test",
+          "report"
+        ],
+        "activeEdges": [
+          3,
+          4
+        ],
+        "explanation": "Final labels contribute only to metrics. If those metrics prompt another model change, use new held-out data for the next final assessment."
+      }
+    ]
+  }
+}
